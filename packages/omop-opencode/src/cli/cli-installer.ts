@@ -178,7 +178,7 @@ export async function runCliInstaller(args: InstallArgs, version: string): Promi
   if (args.tui) {
     await maybePromptForGitHubStars(config.platform)
   }
-  console.log(color.dim("oMoMoMoMo... Enjoy!"))
+  console.log(color.dim("OmOP... Enjoy!"))
   console.log()
 
   if (hasOpenCode && (config.hasClaude || config.hasGemini || config.hasCopilot) && !args.skipAuth) {

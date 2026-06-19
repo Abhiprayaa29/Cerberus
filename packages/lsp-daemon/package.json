@@ -1,6 +1,6 @@
 {
   "name": "@code-yeongyu/lsp-daemon",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Shared per-user Language Server Protocol daemon over a unix socket, with a stdio MCP proxy and a tool client.",
   "type": "module",
   "packageManager": "npm@11.16.0",

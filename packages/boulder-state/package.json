@@ -1,6 +1,6 @@
 {
   "name": "@omop/boulder-state",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "type": "module",
   "private": true,
   "description": "Pure TypeScript boulder work-tracking state machine for oh-my-open-pentest.",

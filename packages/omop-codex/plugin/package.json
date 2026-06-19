@@ -1,6 +1,6 @@
 {
   "name": "@cerberuslabs/omop-codex-plugin",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Aggregate Codex plugin root for OMO components.",
   "type": "module",
   "packageManager": "npm@11.12.1",

@@ -5903,7 +5903,7 @@ var package_default;
 var init_package = __esm(() => {
   package_default = {
     name: "@omop/omop-codex",
-    version: "1.1.0",
+    version: "1.2.0",
     type: "module",
     private: true,
     description: "Codex harness adapter for oh-my-open-pentest. Vendored Codex plugin namespace (omo) + TypeScript installer + telemetry.",
@@ -6719,7 +6719,7 @@ async function existingNonRuntimeWrapper(path) {
     if (!stat2.isFile())
       return true;
     const content = await readFile2(path, "utf8");
-    return !content.includes(RUNTIME_WRAPPER_MARKER);
+    return !content.includes(RUNTIME_WRAPPER_MARKER) && !content.includes("OMO_GENERATED_RUNTIME_WRAPPER") && !content.includes("omo runtime wrapper");
   } catch (error) {
     if (isNodeErrorWithCode(error) && error.code === "ENOENT")
       return false;

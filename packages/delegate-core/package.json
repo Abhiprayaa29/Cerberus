@@ -1,6 +1,6 @@
 {
   "name": "@omop/delegate-core",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "type": "module",
   "private": true,
   "description": "Harness-neutral delegate task selection and retry primitives for oh-my-open-pentest.",

@@ -1,6 +1,6 @@
 {
   "name": "oh-my-open-pentest",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Autonomous Pentest Platform - AI-Driven Security Testing with Multi-Agent Orchestration, Scope Enforcement, and Automated Finding Reports",
   "main": "./dist/index.js",
   "types": "dist/index.d.ts",
@@ -28,7 +28,9 @@
     "packages/shared-skills",
     "packages/omop-codex",
     "packages/omop-opencode",
-    "packages/pentest-core"
+    "packages/pentest-core",
+    "packages/tools",
+    "packages/pentest-skills"
   ],
   "bin": {
     "oh-my-open-pentest": "bin/oh-my-open-pentest.js",

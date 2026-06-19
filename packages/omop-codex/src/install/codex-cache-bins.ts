@@ -166,7 +166,9 @@ async function existingNonRuntimeWrapper(path: string): Promise<boolean> {
     if (stat.isSymbolicLink()) return false
     if (!stat.isFile()) return true
     const content = await readFile(path, "utf8")
-    return !content.includes(RUNTIME_WRAPPER_MARKER)
+    return !content.includes(RUNTIME_WRAPPER_MARKER) &&
+           !content.includes("OMO_GENERATED_RUNTIME_WRAPPER") &&
+           !content.includes("omo runtime wrapper")
   } catch (error) {
     if (isNodeErrorWithCode(error) && error.code === "ENOENT") return false
     throw error
