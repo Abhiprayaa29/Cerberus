@@ -5,7 +5,7 @@
 				"hooks": [
 					{
 						"type": "command",
-						"command": "node \"${PLUGIN_ROOT}/components/rules/dist/cli.js\" hook post-tool-use || true",
+						"command": "cmd /c \"node \\\"${PLUGIN_ROOT}/components/rules/dist/cli.js\\\" hook post-tool-use || exit 0\"",
 						"timeout": 5,
 						"statusMessage": "(OmOP) Matching Project Rules"
 					}

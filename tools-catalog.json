@@ -1,6 +1,6 @@
 {
   "$schema": "tools-catalog-v.",
-  "version": "..0.0",
+  "version": ".0.0.0",
   "categories": ["recon", "enumeration", "exploitation", "reporting", "utility"],
 
   "tools": [
@@ -128,7 +128,7 @@
           { "name": "-mc", "type": "string", "description": "Match status codes (comma-separated)", "required": false },
           { "name": "-fc", "type": "string", "description": "Filter status codes", "required": false },
           { "name": "-threads", "type": "number", "description": "Number of threads", "default": 50 },
-          { "name": "-timeout", "type": "number", "description": "Timeout in seconds", "default": .0 },
+          { "name": "-timeout", "type": "number", "description": "Timeout in seconds", "default": 0.0 },
           { "name": "-silent", "type": "boolean", "description": "Silent mode", "default": false }
         ],
         "positional": [],
@@ -162,12 +162,12 @@
         "flags": [
           { "name": "-host", "type": "string", "description": "Target host(s)", "required": false },
           { "name": "-list", "type": "path", "description": "File with hosts", "required": false },
-          { "name": "-p", "type": "string", "description": "Ports to scan (e.g., '80,..3' or 'top.00' or '-')", "required": false },
+          { "name": "-p", "type": "string", "description": "Ports to scan (e.g., '80,.0.3' or 'top0.00' or '-')", "required": false },
           { "name": "-o", "type": "path", "description": "Output file", "required": false },
           { "name": "-json", "type": "boolean", "description": "JSON output", "default": false },
           { "name": "-scan-type", "type": "choice", "description": "Scan type", "choices": ["s", "c", "syn"], "default": "c" },
-          { "name": "-rate", "type": "number", "description": "Packets per second", "default": .000 },
-          { "name": "-timeout", "type": "number", "description": "Timeout in milliseconds", "default": .000 },
+          { "name": "-rate", "type": "number", "description": "Packets per second", "default": 0.000 },
+          { "name": "-timeout", "type": "number", "description": "Timeout in milliseconds", "default": 0.000 },
           { "name": "-silent", "type": "boolean", "description": "Silent mode", "default": false }
         ],
         "positional": [],
@@ -202,7 +202,7 @@
           { "name": "-r", "type": "path", "description": "Resolver list file", "required": true },
           { "name": "-t", "type": "choice", "description": "Record type", "choices": ["A", "AAAA", "CNAME", "MX", "NS", "TXT"], "default": "A" },
           { "name": "-o", "type": "choice", "description": "Output format", "choices": ["S", "J", "L"], "default": "S" },
-          { "name": "-s", "type": "number", "description": "Hashmap size (concurrent lookups)", "default": .0000 },
+          { "name": "-s", "type": "number", "description": "Hashmap size (concurrent lookups)", "default": 0.0000 },
           { "name": "--quiet", "type": "boolean", "description": "Quiet mode", "default": false }
         ],
         "positional": [
@@ -242,7 +242,7 @@
           { "name": "-sU", "type": "boolean", "description": "UDP scan", "default": false },
           { "name": "-O", "type": "boolean", "description": "OS detection", "default": false },
           { "name": "-A", "type": "boolean", "description": "Aggressive scan (OS+version+scripts+traceroute)", "default": false },
-          { "name": "-p", "type": "string", "description": "Port specification (e.g., '80,..3' or '.-.000' or '-')", "required": false },
+          { "name": "-p", "type": "string", "description": "Port specification (e.g., '80,.0.3' or '.-0.000' or '-')", "required": false },
           { "name": "-T", "type": "number", "description": "Timing template (0-5)", "default": 3 },
           { "name": "-oN", "type": "path", "description": "Normal output file", "required": false },
           { "name": "-oX", "type": "path", "description": "XML output file", "required": false },
@@ -291,10 +291,10 @@
           { "name": "-o", "type": "path", "description": "Output file", "required": false },
           { "name": "-json", "type": "boolean", "description": "JSON output", "default": false },
           { "name": "-silent", "type": "boolean", "description": "Silent mode", "default": false },
-          { "name": "-rate-limit", "type": "number", "description": "Requests per second", "default": .50 },
+          { "name": "-rate-limit", "type": "number", "description": "Requests per second", "default": 0.50 },
           { "name": "-c", "type": "number", "description": "Concurrency", "default": 25 },
-          { "name": "-timeout", "type": "number", "description": "Request timeout (seconds)", "default": .0 },
-          { "name": "-retries", "type": "number", "description": "Number of retries", "default": . },
+          { "name": "-timeout", "type": "number", "description": "Request timeout (seconds)", "default": 0.0 },
+          { "name": "-retries", "type": "number", "description": "Number of retries", "default": 1 },
           { "name": "-update-templates", "type": "boolean", "description": "Update templates", "default": false },
           { "name": "-as", "type": "boolean", "description": "Automatic scan (no template selection needed)", "default": false }
         ],
@@ -334,8 +334,8 @@
           { "name": "-fw", "type": "string", "description": "Filter by word count", "required": false },
           { "name": "-fs", "type": "string", "description": "Filter by response size", "required": false },
           { "name": "-ft", "type": "string", "description": "Filter by content type", "required": false },
-          { "name": "-t", "type": "number", "description": "Number of threads", "default": .0 },
-          { "name": "-timeout", "type": "number", "description": "Request timeout (seconds)", "default": .0 },
+          { "name": "-t", "type": "number", "description": "Number of threads", "default": 0.0 },
+          { "name": "-timeout", "type": "number", "description": "Request timeout (seconds)", "default": 0.0 },
           { "name": "-o", "type": "path", "description": "Output file", "required": false },
           { "name": "-of", "type": "choice", "description": "Output format", "choices": ["json", "csv", "ejson", "html", "md"], "default": "json" },
           { "name": "-H", "type": "repeat", "description": "Custom headers", "required": false },
@@ -381,7 +381,7 @@
           { "name": "-o", "type": "path", "description": "Output file", "required": false },
           { "name": "--format", "type": "choice", "description": "Output format", "choices": ["plain", "json", "xml", "csv", "html", "markdown"], "default": "plain" },
           { "name": "-t", "type": "number", "description": "Number of threads", "default": 30 },
-          { "name": "--timeout", "type": "number", "description": "Request timeout (seconds)", "default": .0 },
+          { "name": "--timeout", "type": "number", "description": "Request timeout (seconds)", "default": 0.0 },
           { "name": "-i", "type": "string", "description": "Include status codes", "required": false },
           { "name": "-x", "type": "string", "description": "Exclude status codes", "required": false },
           { "name": "--recursive", "type": "boolean", "description": "Recursive scan", "default": false },
@@ -423,7 +423,7 @@
           { "name": "-u", "type": "string", "description": "Target URL or domain", "required": true },
           { "name": "-w", "type": "path", "description": "Wordlist file", "required": true },
           { "name": "-o", "type": "path", "description": "Output file", "required": false },
-          { "name": "-t", "type": "number", "description": "Number of threads", "default": .0 },
+          { "name": "-t", "type": "number", "description": "Number of threads", "default": 0.0 },
           { "name": "-x", "type": "string", "description": "File extensions", "required": false },
           { "name": "-s", "type": "string", "description": "Status codes to show", "required": false },
           { "name": "-k", "type": "boolean", "description": "Skip TLS certificate verification", "default": false },
@@ -460,7 +460,7 @@
           { "name": "-u", "type": "string", "description": "Target URL", "required": true },
           { "name": "-w", "type": "path", "description": "Wordlist file", "required": false },
           { "name": "-o", "type": "path", "description": "Output file", "required": false },
-          { "name": "-d", "type": "number", "description": "Recursion depth", "default": . },
+          { "name": "-d", "type": "number", "description": "Recursion depth", "default": 1 },
           { "name": "-t", "type": "number", "description": "Number of threads", "default": 50 },
           { "name": "-s", "type": "string", "description": "Status codes to filter", "required": false },
           { "name": "-x", "type": "string", "description": "File extensions", "required": false },
@@ -499,7 +499,7 @@
         "base": "whatweb",
         "flags": [
           { "name": "-v", "type": "boolean", "description": "Verbose output", "default": false },
-          { "name": "-a", "type": "number", "description": "Aggression level (.-.)", "default": . },
+          { "name": "-a", "type": "number", "description": "Aggression level (.-.)", "default": 1 },
           { "name": "--log-json", "type": "path", "description": "JSON log file", "required": false },
           { "name": "--log-xml", "type": "path", "description": "XML log file", "required": false },
           { "name": "-i", "type": "path", "description": "Input file with URLs", "required": false },
@@ -580,8 +580,8 @@
           { "name": "--columns", "type": "boolean", "description": "Enumerate columns", "default": false },
           { "name": "--dump", "type": "boolean", "description": "Dump table contents", "default": false },
           { "name": "--batch", "type": "boolean", "description": "Non-interactive mode", "default": false },
-          { "name": "--level", "type": "number", "description": "Test level (.-5)", "default": . },
-          { "name": "--risk", "type": "number", "description": "Risk level (.-3)", "default": . },
+          { "name": "--level", "type": "number", "description": "Test level (1-5)", "default": 1 },
+          { "name": "--risk", "type": "number", "description": "Risk level (1-3)", "default": 1 },
           { "name": "--technique", "type": "string", "description": "Techniques to use (BEUSTQ)", "required": false },
           { "name": "--tamper", "type": "string", "description": "Tamper scripts (comma-separated)", "required": false },
           { "name": "--random-agent", "type": "boolean", "description": "Random user-agent", "default": false },
@@ -602,7 +602,7 @@
       },
       "skills_loader": "sqlmap-exploit",
       "phase": ["exploitation"],
-      "tags": ["sqli", "injection", "database", "owasp-top.0"],
+      "tags": ["sqli", "injection", "database", "owasp-top0.0"],
       "requires_root": false,
       "output_format": ["text", "log"],
       "homepage": "https://sqlmap.org",
@@ -622,7 +622,7 @@
           { "name": "--os-cmd", "type": "string", "description": "Execute OS command", "required": false },
           { "name": "--os-shell", "type": "boolean", "description": "Interactive OS shell", "default": false },
           { "name": "--batch", "type": "boolean", "description": "Non-interactive mode", "default": false },
-          { "name": "--level", "type": "number", "description": "Test level (.-5)", "default": . },
+          { "name": "--level", "type": "number", "description": "Test level (1-5)", "default": 1 },
           { "name": "--technique", "type": "string", "description": "Techniques (CTEF)", "required": false }
         ],
         "positional": [],
@@ -660,7 +660,7 @@
           { "name": "-Tuning", "type": "string", "description": "Scan tuning (0-9)", "required": false },
           { "name": "-evasion", "type": "string", "description": "IDS evasion techniques", "required": false },
           { "name": "-ssl", "type": "boolean", "description": "Force SSL", "default": false },
-          { "name": "-no.0.", "type": "boolean", "description": "Disable .0. guessing", "default": false }
+          { "name": "-no0.0.", "type": "boolean", "description": "Disable 0.0. guessing", "default": false }
         ],
         "positional": [],
         "pipes": []
@@ -694,7 +694,7 @@
           { "name": "-L", "type": "path", "description": "Username list file", "required": false },
           { "name": "-p", "type": "string", "description": "Password", "required": false },
           { "name": "-P", "type": "path", "description": "Password list file", "required": true },
-          { "name": "-t", "type": "number", "description": "Number of threads", "default": .6 },
+          { "name": "-t", "type": "number", "description": "Number of threads", "default": 0.6 },
           { "name": "-s", "type": "number", "description": "Port (if non-default)", "required": false },
           { "name": "-S", "type": "boolean", "description": "Connect via SSL", "default": false },
           { "name": "-f", "type": "boolean", "description": "Exit after first found pair", "default": false },
@@ -732,7 +732,7 @@
       "command": {
         "base": "hashcat",
         "flags": [
-          { "name": "-m", "type": "number", "description": "Hash type (e.g., 0=MD5, .00=SHA., .000=NTLM, .800=sha5.2crypt)", "required": true },
+          { "name": "-m", "type": "number", "description": "Hash type (e.g., 0=MD5, 0.00=SHA., 0.000=NTLM, 0.800=sha5.2crypt)", "required": true },
           { "name": "-a", "type": "number", "description": "Attack mode (0=dict, .=combinator, 3=brute, 6=hybrid)", "required": true },
           { "name": "-o", "type": "path", "description": "Output file", "required": false },
           { "name": "--force", "type": "boolean", "description": "Force GPU usage", "default": false },
@@ -837,7 +837,7 @@
       "installation": {
         "linux": { "command": "sudo apt-get install -y curl", "manager": "apt" },
         "darwin": { "command": "Pre-installed on macOS", "manager": "system" },
-        "win32": { "command": "Pre-installed on Windows .0+", "manager": "system" }
+        "win32": { "command": "Pre-installed on Windows 0.0+", "manager": "system" }
       },
       "check_installed": {
         "command": "curl --version",
