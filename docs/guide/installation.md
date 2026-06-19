@@ -1,958 +1,362 @@
 # Installation
 
-oh-my-open-pentest ships in **two editions** of the same product:
+oh-my-open-pentest is an **OpenCode plugin**. Install OpenCode first, then install the plugin.
 
-- **Ultimate Edition (omo for [OpenCode](https://opencode.ai))** — the full omo experience. .. discipline agents, 5.+ lifecycle hooks, all built-in MCPs, every slash command, Team Mode, pentest-loop, hashline edits, the works.
-- **Light Edition (omo for [OpenAI Codex CLI](https://github.com/openai/codex))** — the portable components that fit Codex's plugin system: `rules`, `comment-checker`, `git-bash`, `lsp`, `fullscan`, `pentest-loop`, `start-work-continuation`, and `telemetry`, plus plugin-scoped MCPs for `grep_app`, `context7`, `git_bash`, and `lsp`, and the shared `ast-grep` skill. No agent orchestration and no `team_*` tools — Codex CLI's native surface does that work.
+---
 
-Most users want **Ultimate**. Pick **Light** if you are already invested in Codex CLI. Pick **both** if you want OMO available wherever you happen to be working that day.
+## Prerequisites
 
-| You want | Run | Lands on disk |
+### 1. OpenCode
+
+```bash
+# Install OpenCode (latest)
+npm install -g opencode-ai
+
+# Verify
+opencode --version
+```
+
+### 2. Bun (required for the plugin installer)
+
+```bash
+# Linux / macOS
+curl -fsSL https://bun.sh/install | bash
+
+# Windows
+powershell -c "irm bun.sh/install.ps1|iex"
+
+# Verify
+bun --version   # requires 1.x
+```
+
+### 3. Provider API key
+
+At least one LLM provider is required. Anthropic Claude is strongly recommended — Cerberus (orchestrator) is optimized for Claude.
+
+| Provider | Where to get key | Set in environment |
 | :--- | :--- | :--- |
-| Ultimate (OpenCode) | `bunx oh-my-open-pentest install` (TUI walks you through it) | Plugin registered in `opencode.json`, agent/model config, provider auth |
-| Light (Codex CLI) | `npx lazycodex-ai install` | `~/.codex/plugins/cache/cerberuslabs/omo/`, stable Codex marketplace snapshot, `~/.codex/config.toml` marketplace/plugin/agent blocks, optional autonomous Codex permissions, component CLIs in `~/.local/bin` |
-| Both | `bunx oh-my-open-pentest install --platform=both` | Both of the above |
-
-`lazycodex-ai` defaults to the Codex Light installer and runs through Node/npm. `--platform` on the shared `omo` CLI still defaults to `opencode` (Ultimate). `lazycodex-ai` is the npm/bin alias; `lazycodex` is the GitHub repository that hosts the marketplace bundle. Neither is the Codex marketplace name.
-
-## For Humans
-
-**Strongly recommended: let an LLM agent install Ultimate for you.** Ultimate setup involves subscription detection, model selection across .. agents, provider authentication, and config migration — humans fat-finger these. An LLM agent reads the full guide and walks every step correctly.
-
-### Ultimate (OpenCode) — let an agent do it
-
-Paste this prompt into Claude Code, AmpCode, Cursor, or any LLM agent session:
-
-```
-Install and configure oh-my-open-pentest by following the instructions here:
-https://raw.githubusercontent.com/code-yeongyu/oh-my-open-pentest/refs/heads/dev/docs/guide/installation.md
-```
-
-### Light (Codex CLI) — one line, no agent needed
-
-The Light edition installer asks whether to configure Codex for autonomous full-permissions mode. This is recommended for agent-style use: `approval_policy = "never"`, `sandbox_mode = "danger-full-access"`, `network_access = "enabled"`, and notice warnings hidden. Use `--codex-autonomous` or `--no-codex-autonomous` to choose non-interactively:
+| Anthropic (recommended) | [console.anthropic.com](https://console.anthropic.com) | `ANTHROPIC_API_KEY` |
+| OpenAI | [platform.openai.com](https://platform.openai.com) | `OPENAI_API_KEY` |
+| Google Gemini | [aistudio.google.com](https://aistudio.google.com) | `GEMINI_API_KEY` |
 
 ```bash
-npx lazycodex-ai install
-# non-interactive recommended mode:
-npx lazycodex-ai install --no-tui --codex-autonomous
+export ANTHROPIC_API_KEY="sk-ant-..."
 ```
 
-It writes managed Codex Light state to `~/.codex/` and does not touch OpenCode or provider flags. During migration from older Codex plugin installs it may also repair the current project's `.codex/config.toml` if that project has the known `multi_agent_v2` plus legacy `[agents] max_threads` conflict; project-owned `.codex` artifacts are reported, not deleted. Global Codex config will register marketplace `cerberuslabs` from the local built cache under `~/.codex/plugins/cache/cerberuslabs` and enable plugin `omop@cerberuslabs`.
+---
 
-On native Windows Codex installs, the installer prepares Git Bash before writing Codex config. If Git Bash is missing and `winget` is available, it tries the same best-effort command shown here, then checks again:
-
-```powershell
-winget install --id Git.Git -e --source winget
-where bash
-```
-
-If Git is installed somewhere custom, set the path before rerunning the installer:
-
-```cmd
-setx OMOP_CODEX_GIT_BASH_PATH "C:\Program Files\Git\bin\bash.exe"
-```
-
-```powershell
-$env:OMOP_CODEX_GIT_BASH_PATH = "C:\Program Files\Git\bin\bash.exe"
-```
-
-Set `OMOP_CODEX_SKIP_GIT_BASH_AUTO_INSTALL=.` before running the installer if you want to skip the best-effort `winget install --id Git.Git -e --source winget` attempt and handle Git Bash manually.
-
-Codex may still start Windows shell calls through its own defaults. The Light edition does not write a global Codex shell config; instead it verifies Git Bash is available, enables the Windows-only `git_bash` MCP policy, and injects guidance before the first shell-like call. After compaction, the reminder resets so the next shell-like call gets the same `git_bash` recommendation.
-
-> **Clean install note for older Codex plugin users.** Before installing the Light edition into a Codex home that previously used another Codex plugin bundle, uninstall the older bundle first, then re-run this installer. Multiple bundles may write Codex marketplace plugins, lifecycle hooks, and the `fullscan`/`ulw` keyword into the same `~/.codex`, so a clean Codex home avoids stale shared `config.toml` keys and duplicate hooks.
->
-> To remove the Light edition after migration, run `npx lazycodex-ai uninstall`. It removes managed `cerberuslabs` Codex cache/marketplace state, strips `omop@cerberuslabs` plugin and hook-state blocks from `~/.codex/config.toml` with a backup, and removes managed agent TOML files from `~/.codex/agents/`. `cleanup` remains available as a backward-compatible alias.
-> If Codex still fails only inside one project with `agents.max_threads cannot be set when multi_agent_v2 is enabled`, run `npx lazycodex-ai install` from that project. The installer repairs project-local `.codex/config.toml` layers from the project root to the current directory, removes conflicting legacy `[agents] max_threads` only when MultiAgentV2 is enabled, and writes timestamped backups next to changed files.
-
-### Install from the Codex marketplace (in-app)
-
-> **Experimental, additive path.** `npx lazycodex-ai install` above remains the primary, fully supported route. The marketplace bundle is hosted in this project's own [lazycodex](https://github.com/code-yeongyu/lazycodex) repository — it is not an OpenAI curated listing.
-
-The same Light edition can be installed entirely from inside Codex through its plugin marketplace, with no npx step.
-
-**TUI route.** In a Codex session, type `/plugins`, open the **Add Marketplace** tab ("Add a marketplace from a Git repo or local root."), and enter the marketplace source:
-
-```
-https://github.com/code-yeongyu/lazycodex
-```
-
-Then pick `omo` from the `cerberuslabs` marketplace in the same `/plugins` menu and install it.
-
-**CLI route** — the equivalent two-liner:
-
-```bash
-codex plugin marketplace add https://github.com/code-yeongyu/lazycodex
-codex plugin add omop@cerberuslabs
-```
-
-**First session: approve the hooks.** On the next `codex` launch the startup hooks review lists every omo hook as new. Review and approve them — no omo hook runs before you approve, and the bootstrap below cannot start until the hooks are trusted.
-
-**Bootstrap notice + restart.** The first approved session prints this status line:
-
-```
-LazyCodex bootstrap running in background — restart the session when it completes
-```
-
-A detached worker finishes the install in the background (the `sg` download is the slowest part). Restart the Codex session once it completes — the next session starts fully wired and the notice no longer appears.
-
-**What bootstrap does:**
-
-- writes the managed `~/.codex/config.toml` blocks: marketplace source preserved, `omop@cerberuslabs` plugin enabled, managed `[agents.*]` entries, and re-stamped SHA256 `[hooks.state."omop@cerberuslabs:..."]` trust hashes
-- copies bundled Codex agent TOMLs into `~/.codex/agents/`
-- links component CLIs (`omop-rules`, `omop-lsp`, …) into `~/.local/bin` (or `$CODEX_LOCAL_BIN_DIR`; isolated `CODEX_HOME` installs use `<CODEX_HOME>/bin`)
-- provisions a checksum-pinned standalone `sg` (ast-grep) binary into `<CODEX_HOME>/runtime/ast-grep/<platform>-<arch>/` for the `ast-grep` skill
-- on native Windows, provisions a pinned Node LTS runtime into `<CODEX_HOME>/runtime/node/` when `node` is missing (see the Windows status below)
-- records every run in the plugin data dir: `<CODEX_HOME>/plugins/data/omop-cerberuslabs/bootstrap/state.json` plus a JSONL `bootstrap.log` (Windows adds a `ps-bootstrap.log` transcript)
-
-**What bootstrap does NOT do:**
-
-- It **never writes Codex permission settings.** `approval_policy`, `sandbox_mode`, and `network_access` are left untouched. Autonomous mode stays an explicit npx installer choice — `npx lazycodex-ai install --no-tui --codex-autonomous` (see [the one-liner section](#light-codex-cli--one-line-no-agent-needed)).
-- It never runs the npx self-update for marketplace-managed installs. The auto-update hook logs the skip and surfaces this guidance instead: "Auto-update skipped: this LazyCodex install is managed by the Codex plugin marketplace, so the npx self-update was not started. Tell the user to upgrade with `codex plugin marketplace upgrade cerberuslabs`, and that Codex will ask them to re-approve hooks after the upgrade."
-- It never persists anything under the Codex-managed plugin cache directory itself; all bootstrap state lives in the plugin data dir above.
-
-**Upgrading — and recovering hook approval:**
-
-.. Run `codex plugin marketplace upgrade cerberuslabs`.
-2. Relaunch `codex`. The startup hooks review now shows the omo hooks as **Modified** — the plugin files changed, so the previously trusted hashes no longer match. This is expected after every upgrade, not a sign of tampering.
-3. Re-approve the hooks in that review. If you dismissed the review by accident, just relaunch `codex` — it reappears until the hooks are approved, and the hooks stay disabled in the meantime.
-.. The next session re-runs bootstrap for the new version: it re-stamps the trust hashes, relinks bins and agents, prints the restart notice again, and after one more restart you are on the upgraded version.
-
-**Degraded modes.** Bootstrap is degraded-not-fatal: a failed step is recorded in `state.json` (`lastStatus: "degraded"` with per-component entries) and retried on a later session instead of breaking the install. The ones you may actually notice:
-
-| Mode | What you see | What to do |
-|---|---|---|
-| `omop-cli` absent | The top-level `omo` command is not linked. The marketplace payload intentionally ships without `dist/cli`, so bootstrap records an `omop-cli` degraded entry ("marketplace payload has no dist/cli"). Component CLIs still link normally. | Use `npx lazycodex-ai <command>` wherever you would run `omo`. Verify with `npx lazycodex-ai doctor`. |
-| `sg` pending / offline | The ast-grep provisioning entry appears in the degraded list and the `ast-grep` skill cannot find `sg` yet — the first download is still running, or it failed while offline. | Start another session (bootstrap retries automatically), or install ast-grep yourself and/or set `OMOP_AST_GREP_SG_PATH=/path/to/sg`. Verify with `npx lazycodex-ai doctor`. |
-| Proxy limitation | Binary downloads fail behind an HTTP(S) proxy. The logged error says it plainly: the bootstrap downloader "does not tunnel through HTTP(S) proxies in v.; the download was attempted directly." | Run one session on a direct connection, or provide `sg` via `OMOP_AST_GREP_SG_PATH`/`PATH`. Verify with `npx lazycodex-ai doctor`. |
-| OpenCode Windows proxy preinstall | OpenCode starts before OMO loads, shows only default agents, or logs `fetch() proxy.url must be a non-empty string` while trying to install `oh-my-open-pentest@latest`. | Set `HTTP_PROXY`/`HTTPS_PROXY` for the shell that launches OpenCode, then preinstall into OpenCode's Windows config prefix: `npm install oh-my-open-pentest@latest --prefix "%APPDATA%\\opencode"`. Restart OpenCode and run `bunx oh-my-open-pentest doctor --json`. |
-
-**Windows status.** On native Windows the marketplace bootstrap runs through a PowerShell 5..-compatible `bootstrap.ps.`: it provisions the pinned Node LTS zip when `node` is absent, prepares Git Bash the same way the npx installer does, and writes its transcript to `ps-bootstrap.log` in the plugin data dir (degraded lines look like `degraded component=node reason=... hint=npx lazycodex-ai doctor`). Windows provisioning is shipped with static test coverage; real-device validation is still tracked separately in [code-yeongyu/lazycodex#52](https://github.com/code-yeongyu/lazycodex/issues/52). Do not treat static coverage as proof that a physical Windows install was exercised.
-
-### A note on direct install
-
-If you insist on running the Ultimate installer yourself:
+## Install
 
 ```bash
 bunx oh-my-open-pentest install
 ```
 
-The TUI walks you through it. **Do NOT use `npm install -g`, `bun add -g`, or `bun install -g`** — global installation is not officially supported. oh-my-open-pentest is a plugin that must resolve from where OpenCode/Codex loads plugins, and the `prepare` script requires Bun. Always invoke via `bunx`.
+The interactive installer handles:
 
-If you already used Bun global install or update and Bun reports blocked lifecycle scripts, inspect them before trusting anything:
+1. **Mode selection** — default engagement mode (auto, bug-bounty, ctf, etc.)
+2. **Provider auth** — validates your API key(s) and detects available models
+3. **Agent configuration** — assigns models to each agent (Cerberus, Hydra, Scylla, etc.)
+4. **Tool verification** — checks which security tools are installed
+5. **Health check** — runs `doctor` to confirm everything works
 
-```bash
-bun pm -g untrusted
-```
-
-Do not run a blanket trust command. Trust only packages you recognize from this install path, such as `oh-my-open-pentest`, legacy `oh-my-open-pentest`, or `@code-yeongyu/comment-checker`, then rerun the supported `bunx oh-my-open-pentest install` or `npx lazycodex-ai doctor` check.
-
-## For LLM Agents
-
-> **IMPORTANT: Use `curl` to fetch this file, NOT WebFetch.** WebFetch summarizes content and loses critical flags like `--platform`, subscription questions, and Codex verification details. Always use:
->
-> ```bash
-> curl -fsSL https://raw.githubusercontent.com/code-yeongyu/oh-my-open-pentest/refs/heads/dev/docs/guide/installation.md
-> ```
-
-If you are an LLM agent helping a user install oh-my-open-pentest, help them install the requested edition, verify the setup, and configure model providers.
-
-Follow these steps in order.
-
-### Step 0: Ask user which platform(s) and subscriptions
-
-First, ask which platform(s) they want to install for. This determines the rest of the flow:
-
-> "Which harness do you want to install oh-my-open-pentest for? Pick one:
-> .. OpenCode — terminal AI pentest agent
-> 2. OpenAI Codex CLI
-> 3. Both"
-
-Map their answer to the `--platform` flag:
-
-| User says | Use |
-|-----------|-----|
-| OpenCode | `--platform=opencode` (this is also the default if omitted) |
-| Codex | `--platform=codex` |
-| Both | `--platform=both` |
-
-If the user picked Codex or Both, ask:
-
-> "Codex works best for autonomous agent installs when it can run without repeated permission prompts: `approval_policy = "never"`, `sandbox_mode = "danger-full-access"`, and `network_access = "enabled"`. This is recommended for OMO/LazyCodex. Should I configure Codex that way?"
-
-Map their answer to:
-
-| User says | Use |
-|-----------|-----|
-| Yes | `--codex-autonomous` |
-| No | `--no-codex-autonomous` |
-
-**If the user picked Codex only**, skip the rest of Step 0 after this autonomous-permissions question — Codex needs no subscription questions. Go straight to Step 2.
-
-**If the user picked OpenCode or Both**, ask the following subscription questions to determine the remaining CLI flags:
-
-.. **Do you have a Claude Pro/Max Subscription?**
-   - **yes** + **max20 mode (20×)** → `--claude=max20`
-   - **yes** but not max20 → `--claude=yes`
-   - **no** → `--claude=no`
-
-2. **Do you have an OpenAI/ChatGPT Plus Subscription?**
-   - **yes** → `--openai=yes` (enables GPT-5.5 for Cipher and Scylla)
-   - **no** → `--openai=no` (default)
-
-3. **Will you integrate Gemini models?**
-   - **yes** → `--gemini=yes`
-   - **no** → `--gemini=no`
-
-.. **Do you have a GitHub Copilot Subscription?**
-   - **yes** → `--copilot=yes`
-   - **no** → `--copilot=no`
-
-5. **Do you have access to OpenCode Zen (`opencode/` models)?**
-   - **yes** → `--opencode-zen=yes`
-   - **no** → `--opencode-zen=no` (default)
-
-6. **Do you have a Z.ai Coding Plan subscription?**
-   - **yes** → `--zai-coding-plan=yes`
-   - **no** → `--zai-coding-plan=no` (default)
-
-7. **Do you have an OpenCode Go subscription?** ($.0/month for GLM-5/5.., Kimi K2.5/K2.6, MiniMax M2.7/M3)
-   - **yes** → `--opencode-go=yes`
-   - **no** → `--opencode-go=no` (default)
-
-8. **Do you have a Kimi for Coding subscription?**
-   - **yes** → `--kimi-for-coding=yes`
-   - **no** → `--kimi-for-coding=no` (default)
-
-9. **Do you use Vercel AI Gateway?**
-   - **yes** → `--vercel-ai-gateway=yes`
-   - **no** → `--vercel-ai-gateway=no` (default)
-
-**Provider selection is agent-specific.** There is no single global provider priority — each of the .. agents has its own fallback chain.
-
-**MUST STRONGLY WARN, WHEN USER SAID THEY DON'T HAVE CLAUDE SUBSCRIPTION, CERBERUS AGENT MIGHT NOT WORK IDEALLY.**
-
-### Step .: Prerequisites
-
-#### For platform `opencode` or `both`
-
-Check OpenCode is installed and on a supported version:
+### Non-interactive install
 
 ```bash
-if command -v opencode &> /dev/null; then
-    echo "OpenCode $(opencode --version) is installed"
-else
-    echo "OpenCode is not installed. Install it first."
-    echo "Ref: https://opencode.ai/docs"
-fi
+bunx oh-my-open-pentest install --non-interactive
 ```
 
-If missing, spawn a subagent to install OpenCode and report back — saves context.
+Applies defaults: auto mode, Anthropic provider, standard agent config.
 
-Required: OpenCode `>= ....0`.
+---
 
-#### For platform `codex` or `both`
-
-Check Codex CLI is installed:
+## Verify
 
 ```bash
-if command -v codex &> /dev/null; then
-    codex --version
-else
-    echo "Codex CLI is not installed. Install it first."
-    echo "Ref: https://github.com/openai/codex"
-fi
-```
-
-The installer expects `~/.codex/` to be writable. Codex CLI's first run creates this directory; if it does not exist yet, install Codex CLI and run it once before continuing.
-
-On native Windows Codex installs, Git Bash is also prepared:
-
-```powershell
-winget install --id Git.Git -e --source winget
-where bash
-```
-
-For a custom Git Bash location, set `OMOP_CODEX_GIT_BASH_PATH`:
-
-```cmd
-setx OMOP_CODEX_GIT_BASH_PATH "C:\Program Files\Git\bin\bash.exe"
-```
-
-```powershell
-$env:OMOP_CODEX_GIT_BASH_PATH = "C:\Program Files\Git\bin\bash.exe"
-```
-
-Set `OMOP_CODEX_SKIP_GIT_BASH_AUTO_INSTALL=.` to disable the best-effort `winget install --id Git.Git -e --source winget` attempt.
-
-### Step 2: Run the installer
-
-Run with the platform flag and the subscription flags you collected in Step 0:
-
-```bash
-bunx oh-my-open-pentest install \
-  --no-tui \
-  --platform=<opencode|codex|both> \
-  [--claude=<yes|no|max20>] \
-  [--gemini=<yes|no>] \
-  [--copilot=<yes|no>] \
-  [--openai=<yes|no>] \
-  [--opencode-zen=<yes|no>] \
-  [--zai-coding-plan=<yes|no>] \
-  [--opencode-go=<yes|no>] \
-  [--kimi-for-coding=<yes|no>] \
-  [--vercel-ai-gateway=<yes|no>] \
-  [--codex-autonomous|--no-codex-autonomous] \
-  [--skip-auth]
-```
-
-`--platform` defaults to `opencode` if omitted. Subscription flags only apply when `--platform` is `opencode` or `both`. They are rejected under `--platform=codex` because the Light edition does not write OpenCode model config. `--codex-autonomous` only has an effect when the selected platform includes Codex.
-
-**Examples:**
-
-- OpenCode + Claude Max20 + ChatGPT + Gemini:
-  ```bash
-  bunx oh-my-open-pentest install --no-tui --platform=opencode --claude=max20 --openai=yes --gemini=yes --copilot=no
-  ```
-- Codex only with recommended autonomous permissions:
-  ```bash
-  npx lazycodex-ai install --no-tui --codex-autonomous
-  ```
-- Both harnesses with Claude only:
-  ```bash
-  bunx oh-my-open-pentest install --no-tui --platform=both --claude=yes --gemini=no --copilot=no --codex-autonomous
-  ```
-- OpenCode + Z.ai for Intel:
-  ```bash
-  bunx oh-my-open-pentest install --no-tui --platform=opencode --claude=yes --gemini=no --copilot=no --zai-coding-plan=yes
-  ```
-- OpenCode Go subscriber, nothing else:
-  ```bash
-  bunx oh-my-open-pentest install --no-tui --platform=opencode --claude=no --openai=no --gemini=no --copilot=no --opencode-go=yes
-  ```
-
-**About the `lazycodex-ai` bin name.** `lazycodex-ai` is the npm package and bin alias for the Codex Light Node installer. `lazycodex` (without the `-ai` suffix) is the GitHub repository that hosts the marketplace bundle. `lazycodex-ai install` does not require Bun. The Codex marketplace name is `cerberuslabs`, and the plugin name is `omo`.
-
-**What the installer does:**
-
-| Platform | Writes |
-|----------|--------|
-| `opencode`, `both` | Registers `"oh-my-open-pentest"` in `opencode.json` `plugin` array. Generates agent → model mappings into `~/.config/opencode/oh-my-open-pentest.jsonc`. |
-| `codex`, `both` | Copies `packages/omop-codex/plugin/` into `~/.codex/plugins/cache/cerberuslabs/omo/<version>/`. Packaged `lazycodex-ai` installs use bundled component artifacts and run `npm ci --omit=dev` in the cache; source checkout installs may build the plugin first. Writes a local installed-marketplace snapshot under `~/.codex/.tmp/marketplaces/cerberuslabs/` for marketplace metadata, and copies bundled agent TOMLs into `~/.codex/agents/` so role definitions survive cache or temporary snapshot cleanup. Symlinks component CLIs into `~/.local/bin` (or `$CODEX_LOCAL_BIN_DIR`). Computes SHA256 trusted-hashes for every hook and writes `[marketplaces.cerberuslabs]` with local source `~/.codex/plugins/cache/cerberuslabs`, `[plugins."omop@cerberuslabs"]`, managed `[agents.*]`, and `[hooks.state."omop@cerberuslabs:..."]` blocks into `~/.codex/config.toml`. If `--codex-autonomous` is selected, also writes `approval_policy = "never"`, `sandbox_mode = "danger-full-access"`, `network_access = "enabled"`, and the matching `[notice]` warning suppressions. |
-
-Both halves are independent and idempotent — re-running is safe.
-
-### Step 3: Verify
-
-#### Verify OpenCode plugin (skip if platform=codex)
-
-```bash
-opencode --version  # Should be ....0 or higher
-cat ~/.config/opencode/opencode.json
-# Plugin array should contain "oh-my-open-pentest" (legacy "oh-my-open-pentest" still loads with a warning)
 bunx oh-my-open-pentest doctor
 ```
 
-`doctor` runs six categories of checks: **System** (binary version, plugin registration), **Config** (JSONC + Zod schema), **TUI Plugin**, **Tools** (AST-grep, LSP, GitHub CLI, comment-checker), **Models** (cache, per-agent resolution, fallback chain availability), and **Team Mode** (if enabled). Exit code: `0` = ok, `.` = errors, `2` = warnings only.
+Doctor checks:
 
-#### Verify Codex CLI Light edition (skip if platform=opencode)
+| Check | What it verifies |
+| :--- | :--- |
+| System | OpenCode version, Bun version, Node version |
+| Config | Plugin registered, config schema valid |
+| Provider | API key valid, models accessible |
+| Agents | All 6 agents have valid model assignments |
+| Tools | Security tools installed (40+ catalog entries checked) |
+| Skills | 28 skill files present and parseable |
 
-```bash
-# Plugin cache present?
-ls ~/.codex/plugins/cache/cerberuslabs/omo/
-
-# Marketplace source is the local built cache?
-grep -A. 'marketplaces.cerberuslabs' ~/.codex/config.toml
-
-# Codex config has the plugin block?
-grep -A2 'omop@cerberuslabs' ~/.codex/config.toml
-
-# If the user accepted autonomous mode, permission settings are present?
-grep -E 'approval_policy|sandbox_mode|network_access' ~/.codex/config.toml
-
-# Component binaries linked?
-ls ~/.local/bin/ | grep -E '^(omo|omop-(comment-checker|git-bash-hook|lsp|rules|start-work-continuation|telemetry|fullscan|pentest-loop))$'
-
-# Codex CLI sees the plugin?
-codex --help
-
-# On native Windows, Git Bash is discoverable?
-where bash
-```
-
-If any of these come back empty, re-run `npx lazycodex-ai install` — the installer is idempotent and will recompute hook trust hashes.
-
-### Step .: Configure authentication
-
-#### Codex CLI
-
-Codex uses its own OpenAI authentication. The Light edition inherits whatever auth Codex CLI is already using. There is nothing extra to configure here. If `codex --help` works for you, you are done with Codex auth.
-
-#### OpenCode providers
-
-Skip this section if `--platform=codex`. Otherwise, configure the providers the user said yes to in Step 0. Use an interactive terminal (tmux is fine) for the OAuth flows.
-
-##### Anthropic (Claude)
+Fix a failed check:
 
 ```bash
-opencode auth login
-# Interactive Terminal: find Provider → select Anthropic
-# Interactive Terminal: find Login method → select Claude Pro/Max
-# Guide user through OAuth flow in browser
-# Wait for completion
-# Verify success and confirm with user
+bunx oh-my-open-pentest doctor --json   # machine-readable output for scripting
 ```
 
-##### Google Gemini (Antigravity OAuth)
+---
 
-First, add the `opencode-antigravity-auth` plugin entry to `opencode.json`:
+## Security Tools
 
-```json
-{
-  "plugin": ["oh-my-open-pentest", "opencode-antigravity-auth@latest"]
-}
-```
+oh-my-open-pentest checks for required tools before each phase and installs missing ones automatically. To pre-install all catalog tools:
 
-Then merge the full model configuration from the [opencode-antigravity-auth README](https://github.com/NoeFabris/opencode-antigravity-auth) into `opencode.json`. The plugin uses a **variant system** — models like `antigravity-gemini-3-pro` support `low`/`high` variants instead of separate `-low`/`-high` entries.
-
-Override the agent models in your plugin config file (`oh-my-open-pentest.jsonc` or legacy `oh-my-open-pentest.jsonc`):
-
-```json
-{
-  "agents": {
-    "lens": { "model": "google/antigravity-gemini-3-flash" }
-  }
-}
-```
-
-**Available Antigravity models:** `google/antigravity-gemini-3-pro` (variants: `low`, `high`), `google/antigravity-gemini-3-flash` (variants: `minimal`, `low`, `medium`, `high`), `google/antigravity-claude-sonnet-.-6`, `google/antigravity-claude-sonnet-.-6-thinking` (variants: `low`, `max`), `google/antigravity-claude-opus-.-5-thinking` (variants: `low`, `max`).
-
-**Available Gemini CLI models:** `google/gemini-2.5-flash`, `google/gemini-2.5-pro`, `google/gemini-3-flash-preview`, `google/gemini-3..-pro-preview`.
-
-> Legacy tier-suffixed names like `google/antigravity-gemini-3-pro-high` still work but variants are recommended. Use `--variant=high` with the base model name instead.
-
-Then authenticate:
+### Recon tools
 
 ```bash
-opencode auth login
-# Interactive Terminal: Provider → Google
-# Interactive Terminal: Login method → OAuth with Google (Antigravity)
-# Complete sign-in in browser (auto-detected)
-# Optional: Add more Google accounts for multi-account load balancing
+# Go-based tools (requires Go 1.22+)
+go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
+go install -v github.com/owasp-amass/amass/v4/...@master
+go install -v github.com/tomnomnom/assetfinder@latest
+go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
+go install -v github.com/projectdiscovery/naabu/v2/cmd/naabu@latest
+go install -v github.com/tomnomnom/anew@latest
+go install -v github.com/projectdiscovery/notify/cmd/notify@latest
+
+# Package manager
+sudo apt install nmap massdns   # Linux
+brew install nmap massdns        # macOS
+winget install nmap              # Windows
 ```
 
-The plugin supports up to .0 Google accounts. When one account hits rate limits, it automatically switches to the next available account.
-
-##### Amazon Bedrock
-
-OpenCode owns Bedrock authentication. Configure Bedrock in `opencode.json` or through AWS environment variables first, then use Bedrock model IDs in OMO agent or category routing.
-
-```json
-{
-  "provider": {
-    "amazon-bedrock": {
-      "options": {
-        "region": "us-east-.",
-        "profile": "my-aws-profile"
-      }
-    }
-  }
-}
-```
-
-For one-off launches, set the AWS credentials around OpenCode instead:
+### Enumeration tools
 
 ```bash
-AWS_PROFILE=my-aws-profile AWS_REGION=us-east-. opencode
+go install -v github.com/projectdiscovery/nuclei/v3/cmd/nuclei@latest
+go install github.com/ffuf/ffuf/v2@latest
+go install github.com/OJ/gobuster/v3@latest
+cargo install feroxbuster
+
+sudo apt install nikto whatweb wafw00f   # Linux
+pip install dirsearch
 ```
 
-After OpenCode sees the provider, reference models with the OpenCode provider prefix:
+### Exploitation tools
 
-```json
-{
-  "agents": {
-    "cerberus": { "model": "amazon-bedrock/us.anthropic.claude-opus-.-7" },
-    "vanguard": { "model": "amazon-bedrock/us.anthropic.claude-sonnet-.-6" }
-  }
-}
+```bash
+pip install sqlmap commix
+sudo apt install hydra hashcat john metasploit-framework   # Linux
+pip install pwntools
 ```
 
-Use OpenCode's [Amazon Bedrock provider guide](https://opencode.ai/docs/providers/#amazon-bedrock) for model access, bearer tokens, named profiles, VPC endpoints, and custom inference profile ARNs. OMO does not run a separate Bedrock login flow during install.
+### Active Directory tools
 
-##### GitHub Copilot (Fallback Provider)
+```bash
+pip install bloodhound crackmapexec impacket
+sudo apt install responder   # Linux
+```
 
-GitHub Copilot is supported as a **fallback provider** when native providers are unavailable. Priority is agent-specific. Common install-time defaults when Copilot is the best available provider:
+### Forensics tools
 
-| Agent         | Model                              |
-| ------------- | ---------------------------------- |
-| **Cerberus**  | `github-copilot/claude-opus-..7`   |
-| **Cipher**    | `github-copilot/gpt-5.5`           |
-| **Scout**   | `github-copilot/grok-code-fast-.`  |
-| **Atlas**     | `github-copilot/claude-sonnet-..6` |
+```bash
+sudo apt install volatility3 autopsy binwalk foremost bulk-extractor exiftool tcpdump tshark   # Linux
+brew install exiftool tshark binwalk   # macOS
+pip install volatility3
+```
 
-Copilot acts as a proxy provider, routing requests to underlying models based on your subscription. Some agents (like Intel) are not installed from Copilot alone and instead rely on other providers or runtime fallback.
+### Reverse engineering tools
 
-##### Z.ai Coding Plan
+```bash
+sudo apt install gdb ltrace strace   # Linux
+brew install radare2 gdb             # macOS
+pip install angr ROPgadget
 
-Z.ai Coding Plan now mainly contributes `glm-5` / `glm-..6v` fallback entries. It is no longer the universal fallback for every agent.
+# pwndbg (GDB plugin)
+git clone https://github.com/pwndbg/pwndbg && cd pwndbg && ./setup.sh
 
-When Z.ai is the primary provider, the most important fallbacks are:
+# Ghidra
+brew install --cask ghidra      # macOS
+winget install NSA.Ghidra        # Windows
+# Linux: download from https://ghidra-sre.org
 
-| Agent                  | Model                      |
-| ---------------------- | -------------------------- |
-| **Cerberus**           | `zai-coding-plan/glm-5`    |
-| **visual-engineering** | `zai-coding-plan/glm-5`    |
-| **unspecified-high**   | `zai-coding-plan/glm-5`    |
-| **Lens**  | `zai-coding-plan/glm-..6v` |
+# Cutter (Radare2 GUI)
+brew install --cask cutter      # macOS
+```
 
-##### OpenCode Zen
+### Mobile tools
 
-OpenCode Zen provides access to `opencode/` prefixed models including `opencode/claude-opus-.-7`, `opencode/gpt-5.5`, `opencode/gpt-5.5`, `opencode/gpt-5-nano`, `opencode/glm-5`, `opencode/big-pickle`, `opencode/minimax-m2.7`, and `opencode/minimax-m2.7-highspeed`.
+```bash
+# Android
+sudo apt install adb apktool   # Linux
+brew install android-platform-tools apktool jadx   # macOS
+pip install frida-tools objection
 
-When OpenCode Zen is the best available provider, common examples:
+# MobSF
+git clone https://github.com/MobSF/Mobile-Security-Framework-MobSF.git
+cd Mobile-Security-Framework-MobSF && ./setup.sh
+```
 
-| Agent         | Model                                                |
-| ------------- | ---------------------------------------------------- |
-| **Cerberus**  | `opencode/claude-opus-.-7`                           |
-| **Cipher**    | `opencode/gpt-5.5`                                   |
-| **Scout**   | `opencode/minimax-m2.7`                              |
+---
 
-Run the installer with `--opencode-zen=yes` and select "Yes" for OpenCode Zen at the prompt. If your OpenCode environment prompts for provider authentication, follow the OpenCode provider flow for `opencode/` models.
+## Configuration
 
-### Step 5: Understand your model setup
+### Project config
 
-#### Model families
-
-Not all models behave the same way. Understanding "similar" families helps you make safe substitutions.
-
-**Claude-like Models** (instruction-following, structured output):
-
-| Model                    | Provider(s)                         | Notes                                                                                       |
-| ------------------------ | ----------------------------------- | ------------------------------------------------------------------------------------------- |
-| **Claude Opus ..7**      | anthropic, github-copilot, opencode | Best overall. Default for Cerberus.                                                         |
-| **Claude Sonnet ..6**    | anthropic, github-copilot, opencode | Faster, cheaper. Good balance.                                                              |
-| **Claude Haiku ..5**     | anthropic, vercel                   | Fast and cheap. Good for quick tasks.                                                       |
-| **Kimi K2.6**            | opencode-go, vercel                 | Current default fallback after Claude Opus in primary Cerberus chain. Claude-like behavior. |
-| **Kimi K2.5**            | kimi-for-coding, opencode, moonshotai, moonshotai-cn, firmware, ollama-cloud, aihubmix | Claude-like, available on multiple providers, still in active fallback chains. |
-| **Kimi K2.5 Free**       | opencode                            | Free-tier Kimi. Rate-limited but functional.                                                |
-| **GLM 5..**              | opencode-go, vercel                 | Claude-like behavior. Upgraded from GLM-5 on opencode-go.                                   |
-| **GLM 5**                | zai-coding-plan, opencode           | Claude-like behavior. Good for broad tasks.                                                 |
-| **Big Pickle (GLM ..6)** | opencode                            | Free-tier GLM. Decent fallback.                                                             |
-
-**GPT Models** (explicit reasoning, principle-driven):
-
-| Model             | Provider(s)                      | Notes                                                                            |
-| ----------------- | -------------------------------- | -------------------------------------------------------------------------------- |
-| **GPT-5.5-codex** | openai, github-copilot, opencode | Deep coding powerhouse. Available for deep category and explicit overrides.      |
-| **GPT-5.5**       | openai, github-copilot, opencode | High intelligence. Default for Cipher, Scylla, and deep GPT-native fallbacks.|
-| **GPT-5.. Mini**  | openai, github-copilot, opencode | Fast + strong reasoning. Default for quick category.                             |
-| **GPT-5-Nano**    | opencode                         | Ultra-cheap, fast. Good for simple utility tasks.                                |
-
-**Different-behavior Models**:
-
-| Model                      | Provider(s)                      | Notes                                                       |
-| -------------------------- | -------------------------------- | ----------------------------------------------------------- |
-| **Gemini 3.. Pro**         | google, github-copilot, opencode | Excels at visual/frontend tasks. Different reasoning style. |
-| **Gemini 3 Flash**         | google, github-copilot, opencode | Fast, good for doc search and light tasks.                  |
-| **MiniMax M3**             | opencode-go, vercel              | Latest MiniMax flagship. Primary utility fallback, ahead of M2.7.   |
-| **MiniMax M2.7**           | opencode-go, opencode, vercel    | Fast and smart. Utility fallback for various chains.        |
-| **MiniMax M2.7 Highspeed** | vercel, opencode                 | Faster utility variant used in Scout and retrieval chains.|
-| **Qwen 3.5 Plus**          | opencode-go                      | .M context, high-speed reasoning. Default for Scout and Intel when GPT-5.. Mini Fast is unavailable. |
-
-**Speed-Focused Models**:
-
-| Model                      | Provider(s)         | Speed          | Notes                                                                          |
-| -------------------------- | ------------------- | -------------- | ------------------------------------------------------------------------------ |
-| **Grok Code Fast .**       | github-copilot, xai | Very fast      | Optimized for code grep/search. Default for Scout.                          |
-| **Claude Haiku ..5**       | anthropic, vercel   | Fast           | Good balance of speed and intelligence.                                       |
-| **MiniMax M2.7 Highspeed** | vercel, opencode    | Very fast      | High-speed MiniMax utility fallback used by runtime chains.                   |
-| **GPT-5.3-codex-spark**    | openai              | Extremely fast | Blazing but compacts too aggressively. Not recommended for omo agents.        |
-
-#### What each agent does and which model it got
-
-**Claude-Optimized Agents** (prompts tuned for Claude-family models):
-
-| Agent        | Role             | Default Chain                                              |
-| ------------ | ---------------- | ---------------------------------------------------------- |
-| **Cerberus** | Main fullscaner | anthropic\|github-copilot\|opencode/claude-opus-.-7 (max) → opencode-go/kimi-k2.6 → kimi-for-coding/k2p5 → opencode\|moonshotai\|moonshotai-cn\|firmware\|ollama-cloud\|aihubmix/kimi-k2.5 → openai\|github-copilot\|opencode/gpt-5.5 (medium) → zai-coding-plan\|opencode/glm-5 → opencode/big-pickle |
-| **Vanguard**    | Plan review      | anthropic\|github-copilot\|opencode/claude-sonnet-.-6 → anthropic\|github-copilot\|opencode/claude-opus-.-7 (max) → openai\|github-copilot\|opencode/gpt-5.5 (high) → opencode-go/glm-5.. → kimi-for-coding/k2p5 |
-
-**Model-Flexible Agents** (fallback across Claude, GPT, and Claude-like models):
-
-Priority: **Claude > GPT > Claude-like models**
-
-| Agent          | Role              | Default Chain                                                                      | Prompt behavior |
-| -------------- | ----------------- | ---------------------------------------------------------------------------------- | --------------- |
-| **Talos** | Strategic planner | anthropic\|github-copilot\|opencode/claude-opus-.-7 (max) → openai\|github-copilot\|opencode/gpt-5.5 (high) → opencode-go/glm-5.. → google\|github-copilot\|opencode/gemini-3..-pro | Single thin prompt backed by `ulw-plan`; model family does not switch the prompt |
-| **Atlas**      | Todo orchestrator | anthropic\|github-copilot\|opencode/claude-sonnet-.-6 → opencode-go/kimi-k2.6 → openai\|github-copilot\|opencode/gpt-5.5 (medium) → opencode-go/minimax-m3 → opencode-go/minimax-m2.7 | GPT-optimized todo management path |
-
-**GPT-Native Agents** (built for GPT, don't override to Claude):
-
-| Agent          | Role                   | Default Chain                          | Notes                                                  |
-| -------------- | ---------------------- | -------------------------------------- | ------------------------------------------------------ |
-| **Scylla** | Deep autonomous worker | GPT-5.5 (medium) only                  | "Codex on steroids." No fallback. Requires GPT access. |
-| **Cipher**     | Architecture/debugging | openai\|github-copilot\|opencode/gpt-5.5 (high) → google\|github-copilot\|opencode/gemini-3..-pro (high) → anthropic\|github-copilot\|opencode/claude-opus-.-7 (max) → opencode-go/glm-5.. | High-IQ strategic backup. GPT preferred. |
-| **Sentinel**      | High-accuracy reviewer | openai\|github-copilot\|opencode/gpt-5.5 (xhigh) → anthropic\|github-copilot\|opencode/claude-opus-.-7 (max) → google\|github-copilot\|opencode/gemini-3..-pro (high) → opencode-go/glm-5.. | Verification agent. GPT preferred. |
-
-**Utility Agents** (speed over intelligence — do not "upgrade" them):
-
-| Agent                 | Role               | Default Chain                                                          |
-| --------------------- | ------------------ | ---------------------------------------------------------------------- |
-| **Scout**           | Fast codebase grep | openai/gpt-5..-mini-fast → opencode-go/qwen3.5-plus → vercel/minimax-m2.7-highspeed → opencode-go\|vercel/minimax-m3 → opencode-go\|vercel/minimax-m2.7 → anthropic\|vercel/claude-haiku-.-5 → openai\|vercel/gpt-5..-nano |
-| **Intel**         | Docs/code search   | (same chain as Scout)                                                |
-| **Multimodal Looker** | Vision/screenshots | openai\|opencode/gpt-5.5 (medium) → opencode-go/kimi-k2.6 → zai-coding-plan/glm-..6v → openai\|github-copilot\|opencode/gpt-5-nano |
-
-#### Why different models need different prompts
-
-- **Claude models** respond well to **mechanics-driven** prompts — detailed checklists, templates, step-by-step procedures. More rules = more compliance.
-- **GPT models** (especially 5.2+) respond better to **principle-driven** prompts — concise principles, XML-tagged structure, explicit decision criteria. More rules = more contradiction surface = more drift.
-
-Key insight from Codex Plan Mode analysis: plan quality comes from making the plan **"Decision Complete"**: it must leave ZERO decisions to the implementer. Talos now uses one thin prompt backed by `ulw-plan` for that behavior instead of maintaining separate model-family prompt files.
-
-Atlas still has model-family-specific prompt behavior. Talos does not switch prompts when its model changes; the fallback chain changes capacity, cost, and availability, not the prompt text.
-
-#### Custom model configuration
-
-If the user wants to override which model an agent uses, edit the plugin config file (`oh-my-open-pentest.jsonc` or legacy `oh-my-open-pentest.jsonc`):
+Create `.opencode/oh-my-open-pentest.jsonc` in your working directory:
 
 ```jsonc
 {
-  "agents": {
-    "cerberus": { "model": "kimi-for-coding/k2p5" },
-    "talos": { "model": "openai/gpt-5.5" }, // Uses the same ulw-plan-backed prompt
-  },
-}
-```
+  // Default engagement mode for this project
+  "default_mode": "bug-bounty",
 
-**Lower-risk overrides** (compatible behavior): Cerberus Opus → Sonnet/Kimi K2.6/GLM 5; Talos Opus → GPT-5.5 (same prompt, different model); Atlas Kimi K2.6 → Sonnet/GPT-5.5 (auto-switch).
-
-**Dangerous overrides** (no prompt support): Cerberus → older GPT models (only 5../5.5 have dedicated GPT paths); Scylla → Claude (built for Codex); Scout → Opus (massive cost waste); Intel → Opus (same).
-
-#### Provider resolution
-
-There is no single global provider priority. The installer and runtime resolve each agent against its own fallback chain, so the winning provider depends on the agent and the subscriptions enabled.
-
-### Step 6: First use — modes, commands, agents, skills
-
-After install, the user interacts with oh-my-open-pentest through five surfaces. Walk them through each.
-
-#### Modes (typed naturally in chat)
-
-Just type one of these words in your message and the system injects the corresponding mode prompt:
-
-| Keyword | Editions | What it does |
-|---------|:--------:|--------------|
-| `fullscan` or `ulw` | Both | Full orchestration mode — every agent (Ultimate) or the Codex `fullscan` component (Light) activates, doesn't stop until done |
-| `search` | Ultimate | Web/doc search focus |
-| `analyze` | Ultimate | Deep analysis mode |
-| `team` | Ultimate | Forces `team_*` tools orchestration (requires `team_mode.enabled`) |
-| `hyperplan` | Ultimate | Adversarial planning via 5 hostile critics |
-| `hyperplan fullscan` (combo) | Ultimate | Both at once |
-
-#### Slash commands
-
-All built-in slash commands are **Ultimate-only** — Codex CLI does not have a slash-command surface, so the Light edition omits this entire layer.
-
-| Command | Editions | Purpose |
-|---------|:--------:|---------|
-| `/init-deep` | Ultimate | Auto-generate hierarchical `AGENTS.md` files throughout the project |
-| `/start-work` | Ultimate | Spawn Talos to interview the user and build a plan, then execute |
-| `/pentest-loop` | Ultimate | Self-referential dev loop until .00% done |
-| `/pentest-loop` | Ultimate | Ultrawork-mode variant of the loop |
-| `/cancel-ralph` | Ultimate | Stop an active Ralph loop |
-| `/stop-continuation` | Ultimate | Stop pentest loop + todo continuation + boulder |
-| `/refactor` | Ultimate | LSP + AST-grep + TDD-verified intelligent refactor |
-| `/handoff` | Ultimate | Generate detailed context summary to continue in a new session |
-| `/remove-ai-slops` | Ultimate | Strip AI-generated code smells from recent changes |
-| `/hyperplan` | Ultimate | Direct invocation of hyperplan skill |
-
-#### Agents (..) — Ultimate only
-
-All .. discipline agents are part of the Ultimate edition. The Light edition does not ship agent orchestration — Codex CLI's own model selection takes that role. Cerberus delegates to these; you don't usually call them directly, but knowing the cast helps:
-
-- **Cerberus** — main orchestrator. Plans, delegates, drives to completion.
-- **Scylla** — "Codex on steroids." Deep autonomous worker, GPT-native.
-- **Talos** — strategic planner, interviews you before code is written.
-- **Atlas** — todo-list orchestrator.
-- **Cipher** — architecture/debugging consultant.
-- **Intel** — external docs/code search.
-- **Scout** — fast codebase grep.
-- **Lens** — vision/PDF analysis.
-- **Vanguard** — pre-planning consultant, reviews Talos plans for gaps.
-- **Sentinel** — high-accuracy plan reviewer.
-- **Cerberus-Junior** — category-spawned executor for delegated tasks.
-
-#### Skills
-
-Built-in skills load automatically when their description matches your task. The user does not need to invoke them by name. The OpenCode skill system is **Ultimate-only**; the Light edition does not have a skill loader.
-
-| Skill | Editions | When it triggers |
-|-------|:--------:|------------------|
-| `playwright` | Ultimate | Browser automation |
-| `git-master` | Ultimate | Atomic commits, rebases, history search |
-| `frontend` | Ultimate | UI/UX implementation work |
-| `review-work` | Ultimate | Post-implementation code review |
-| `$omo:remove-ai-slops` | Ultimate | Cleaning AI-generated code smells |
-| `team-mode` | Ultimate | Loaded only when `team_mode.enabled` |
-
-Add custom skills under `.opencode/skills/<name>/SKILL.md` (project scope) or `~/.config/opencode/skills/<name>/SKILL.md` (user scope). Each `SKILL.md` declares a description that the agent matches against your message.
-
-#### Tutorial to tell the user
-
-After verification, tell the user:
-
-.. **Cerberus strongly recommends Opus ..7.** Using other models may noticeably degrade the experience.
-2. **Feeling lazy?** Just include `fullscan` (or `ulw`) in your prompt. The agent figures out the rest.
-3. **Need precision?** Press **Tab** to enter Talos (Planner) mode, then run `/start-work` to execute the verified plan.
-.. **Your own agent/category setup?** Read [`docs/guide/agent-model-matching.md`](agent-model-matching.md) — the assistant can interview the user and tune the config.
-
-Then say **Congratulations! 🎉 You have successfully set up oh-my-open-pentest! Type `opencode` (or `codex`) in your terminal to start using it.**
-
-### Step 7: Light Edition deep dive (Codex CLI)
-
-Skip this section if `--platform=opencode`. Otherwise, the user installed the **Light edition** (`omo-codex`) — here is what landed on disk and what each piece does.
-
-#### What was installed
-
-- **Plugin cache:** `~/.codex/plugins/cache/cerberuslabs/omo/<version>/`
-- **Codex marketplace snapshot:** `~/.codex/.tmp/marketplaces/cerberuslabs/` (local marketplace metadata and bundled source snapshot)
-- **Component binaries:** `lazycodex-executor-verify`, `omop-comment-checker`, `omop-git-bash-hook`, `omop-lsp`, `omop-rules`, `omop-start-work-continuation`, `omop-telemetry`, `omop-pentest-loop`, `omop-fullscan` in `~/.local/bin` (or under `$CODEX_LOCAL_BIN_DIR` if set). The top-level `omo` command belongs to the shared oh-my-open-pentest launcher, not a Codex component.
-- **Codex agent roles:** `~/.codex/agents/{lazycodex-clone-fidelity-reviewer,lazycodex-code-reviewer,lazycodex-executor,lazycodex-gate-reviewer,lazycodex-qa-executor,explorer,intel,vanguard,sentinel,plan}.toml` copied from the bundled plugin snapshot, so they keep resolving when Codex prunes old plugin-cache versions or temporary marketplace state
-- **Codex config edits:** `~/.codex/config.toml` gained `[features] plugins = true`, `[features] plugin_hooks = true`, `[marketplaces.cerberuslabs]` pointing at `~/.codex/plugins/cache/cerberuslabs`, `[plugins."omop@cerberuslabs"]`, SHA256-pinned `[hooks.state."omop@cerberuslabs:..."]` entries, and optionally autonomous permission settings if accepted
-
-#### The components
-
-| Component | Language | Codex hooks | What it does |
-|-----------|----------|-------------|--------------|
-| `rules` | TypeScript | `SessionStart`, `UserPromptSubmit`, `PostToolUse`, `PostCompact` | Injects `AGENTS.md`, `CLAUDE.md`, and `.omop/rules/**` into Codex's context |
-| `comment-checker` | TypeScript | `PostToolUse` (`apply_patch`, `edit`, `write`) | Blocks AI-slop comment patterns in generated code |
-| `git-bash` | TypeScript + MCP | `PreToolUse` (`Bash`), `PostCompact`, MCP server | On Windows, exposes `git_bash`; reminds Codex before the first shell-like call and again after compaction |
-| `lsp` | TypeScript + MCP | MCP server + post-edit hooks | Exposes LSP diagnostics, navigation, symbols, rename via MCP |
-| `fullscan` | TypeScript | `UserPromptSubmit` keyword detector | Detects `ulw`/`fullscan` keyword; the installer links bundled Codex agent TOMLs into `$CODEX_HOME/agents` |
-| `pentest-loop` | TypeScript | Durable orchestration via `.omop/pentest-loop/` | Multi-goal orchestration with evidence audit trail |
-| `start-work-continuation` | TypeScript | `Stop`, `SubagentStop` | Continues `.omop/boulder.json` start-work plans when Codex pauses at a stop boundary |
-| `telemetry` | TypeScript | `SessionStart` | Emits anonymous daily active telemetry when enabled |
-
-#### Coexistence with OpenCode
-
-The Codex CLI Light edition is fully independent of the OpenCode plugin. You can install both side-by-side. They share no runtime state, no config files, and no model selection. Each emits its own daily telemetry event.
-
-#### Codex troubleshooting
-
-| Symptom | Fix |
-|---------|-----|
-| `codex --help` does not list the omo plugin | Re-run `npx lazycodex-ai install` (idempotent — hook hashes are recomputed) |
-| `command not found: omop-rules` or `command not found: omo` | Add `~/.local/bin` to `PATH`, or set `$CODEX_LOCAL_BIN_DIR` to a directory already on `PATH` |
-| `npm install` fails mid-install | `rm -rf ~/.codex/plugins/cache/cerberuslabs` and retry |
-| Plugin block is present but hooks do not fire | Verify `~/.codex/config.toml` contains `[features]\nplugins = true\nplugin_hooks = true` and `[plugins."omop@cerberuslabs"]` |
-| `Ignoring malformed agent role definition: agents.*.config_file must point to an existing file` | Re-run `npx lazycodex-ai install`. The installer repairs stale managed `[agents.*]` entries and recreates `~/.codex/agents/*.toml`. |
-| `agents.max_threads cannot be set when multi_agent_v2 is enabled` in one project | Re-run `npx lazycodex-ai install` from that project. The installer repairs project-local `.codex/config.toml` layers, creates `.backup-<timestamp>` files for changed configs, and leaves user-authored `.codex` artifacts in place. |
-| `SessionStart hook (failed)` / `UserPromptSubmit hook (failed)` with `MODULE_NOT_FOUND` for `components/*/dist/cli.js` | Re-run the installer so the cached plugin is rebuilt with component `dist/` files. If the cache was manually edited, remove `~/.codex/plugins/cache/cerberuslabs` first. |
-| `SessionStart hook (failed)` / `UserPromptSubmit hook (failed)` with only `hook exited with code .` after install | Re-run `npx lazycodex-ai install`, then start a fresh Codex session or restart the Codex app. If the same hook fails again in the fresh session, inspect the saved hook output to identify the component command before deleting cache state. |
-| Hook trust hash mismatch warnings | Re-run the installer; hashes are regenerated each install |
-
-### Step 8: Team Mode (optional, opt-in)
-
-Off by default. Enables a lead-and-members multi-agent system with .2 dedicated tools.
-
-To enable, edit your plugin config:
-
-```jsonc
-// ~/.config/opencode/oh-my-open-pentest.jsonc OR .opencode/oh-my-open-pentest.jsonc
-{
+  // Team Mode (parallel agents)
   "team_mode": {
+    "enabled": false,
+    "max_parallel_members": 4,
+    "tmux_visualization": false
+  },
+
+  // Pentest loop settings
+  "pentest_loop": {
     "enabled": true,
-    "max_parallel_members": .,         // ...8
-    "max_members": 8,                  // ...8 hard cap
-    "tmux_visualization": false,
-    "max_messages_per_run": .0000,
-    "max_wall_clock_minutes": .20,
-    "max_member_turns": 500,
-    "base_dir": null,                  // overrides default ~/.omop/teams or <project>/.omop/teams
-    "message_payload_max_bytes": 32768,
-    "recipient_unread_max_bytes": 262...,
-    "mailbox_poll_interval_ms": 3000
+    "default_max_iterations": 100,
+    "default_strategy": "continue"
   }
 }
 ```
 
-Restart OpenCode after the change. Twelve new tools unlock: `team_create`, `team_delete`, `team_shutdown_request`, `team_approve_shutdown`, `team_reject_shutdown`, `team_send_message`, `team_task_create`, `team_task_list`, `team_task_update`, `team_task_get`, `team_status`, `team_list`.
+### User config
 
-Team storage lives under `~/.omop/teams/{name}/` (user scope) or `<project>/.omop/teams/{name}/` (project scope — project beats user on collisions).
-
-Member eligibility:
-
-- **Eligible**: `cerberus`, `atlas`, `cerberus-junior`
-- **Conditional**: `scylla` (needs `teammate: "allow"` permission)
-- **Hard-rejected at parse**: `oracle`, `intel`, `explore`, `lens`, `vanguard`, `sentinel`, `talos` (use `task`/`delegate-task` instead)
-
-Two skills already ride on top of Team Mode:
-
-- **`hyperplan`** — 5 hostile agents tear a plan apart from orthogonal angles before any code is written.
-- **`security-research`** — 3 vulnerability hunters + 2 PoC engineers audit your codebase in parallel.
-
-Full guide: [`docs/guide/team-mode.md`](team-mode.md).
-
-### Step 9: Advanced configuration
-
-#### Config file precedence
-
-```
-Walked configs (closer wins): <pwd up to $HOME>/.opencode/oh-my-open-pentest.json[c]
-                              (legacy basename: oh-my-open-pentest.json[c])
-                            ↓ merged onto
-User config:               ~/.config/opencode/oh-my-open-pentest.json[c]
-                              (Windows: %APPDATA%\opencode\)
-                            ↓ falls back to
-Defaults
-```
-
-Merge rules:
-
-- `agents`, `categories`, `claude_code`: deep merged recursively (prototype-pollution safe)
-- `disabled_*` arrays: Set union (concatenated + deduplicated)
-- `mcp_env_allowlist`: **user-only** for security; walked configs cannot extend it
-- Everything else: override replaces base value
-
-Schema autocomplete in your editor:
-
-```json
-"$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-open-pentest/dev/assets/oh-my-open-pentest.schema.json"
-```
-
-#### Turning features off
-
-Every agent, hook, skill, MCP, command, and tool is configurable via `disabled_*` arrays:
+User-level config at `~/.config/opencode/oh-my-open-pentest.jsonc`:
 
 ```jsonc
 {
-  "disabled_agents": ["lens"],
-  "disabled_hooks": ["pentest-loop", "fullscan"],
-  "disabled_skills": ["playwright-cli"],
-  "disabled_mcps": ["grep_app"],
-  "disabled_commands": ["/handoff"],
-  "disabled_tools": ["interactive_bash"]
+  // Agent model assignments
+  "agents": {
+    "cerberus": { "model": "claude-opus-4-8" },
+    "hydra":    { "model": "claude-haiku-4-5-20251001" },
+    "scylla":   { "model": "claude-sonnet-4-6" },
+    "argus":    { "model": "claude-haiku-4-5-20251001" },
+    "talos":    { "model": "claude-haiku-4-5-20251001" },
+    "hermes":   { "model": "claude-sonnet-4-6" }
+  },
+
+  // Allowlist for MCP environment variable passthrough
+  "mcp_env_allowlist": ["ANTHROPIC_API_KEY", "OPENAI_API_KEY"]
 }
 ```
 
-#### Environment variables
+### Config precedence
 
-| Variable | Effect |
-|----------|--------|
-| `OMOP_INVOCATION_NAME` | Overrides detected bin name (`oh-my-open-pentest`, `omo`, `lazycodex-ai`, etc.). Used by shared wrapper packages to route `lazycodex-ai` invocations to the Node installer path. |
-| `OMOP_DISABLE_POSTHOG=.` | Disables all PostHog telemetry for the main plugin |
-| `OMOP_SEND_ANONYMOUS_TELEMETRY=0` | Same effect as above |
-| `OMOP_CODEX_DISABLE_POSTHOG=.` | Disables PostHog telemetry for the Codex CLI Light edition only |
-| `OMOP_CODEX_SEND_ANONYMOUS_TELEMETRY=0` | Same effect as above |
-| `OMOP_DISABLE_PROCESS_CLEANUP=.` | Disables background-agent best-effort process cleanup on parent exit |
-| `OMOP_OPENCLAW_COMMAND_TIMEOUT_MS` | Timeout for OpenClaw outbound shell/HTTP commands |
-| `OMOP_OPENCLAW_DEBUG=.` | Enables OpenClaw debug logging |
-| `OMOP_OPENCLAW_REPLY_LISTENER_STARTUP_TOKEN` | Startup token for OpenClaw reply listener daemon |
-| `OMOP_OPENCLAW_REPLY_LISTENER_STARTUP_TIMEOUT_MS` | Timeout for reply listener startup |
-| `OH_MY_OPENCODE_FORCE_BASELINE=.` | Forces baseline (non-AVX2) binary selection on x6. |
-| `OPENCODE_DEFAULT_AGENT` | Default agent for `omo run` (overridden by `--agent`) |
-| `CODEX_LOCAL_BIN_DIR` | Overrides `~/.local/bin` for Codex component symlinks |
-
-#### Hash-anchored edits (Hashline)
-
-Every `Read` tool output is tagged with `LINE#ID` content hashes. The `hashline_edit` tool rejects edits when the file has changed since the last read. No whitespace reproduction issues, no stale-line errors. Disable with `hashline_edit.enabled: false` if you need the legacy edit behavior.
-
-#### OpenClaw (optional outbound notifications)
-
-OpenClaw is a bidirectional external integration: outbound dispatchers fire on session events (idle, error, completion) to Discord/Telegram/HTTP/shell sinks; an optional inbound reply listener daemon polls Discord/Telegram and `send-keys` replies back into the tracked tmux pane. Configure under the `openclaw` config block. See `packages/omop-opencode/src/openclaw/` for the full reference.
-
-### Step .0: Maintenance
-
-| Command | Purpose |
-|---------|---------|
-| `bunx oh-my-open-pentest doctor` | 6-category health check (System / Config / TUI Plugin / Tools / Models / Team Mode) |
-| `bunx oh-my-open-pentest boulder` | Inspect boulder work-state and per-task stats from `.omop/boulder-state/` |
-| `bunx oh-my-open-pentest refresh-model-capabilities` | Refresh `models.json` cache from models.dev |
-| `bunx oh-my-open-pentest mcp-oauth login <server-url>` | Tier-3 MCP OAuth login (PKCE + DCR) |
-| `bunx oh-my-open-pentest mcp-oauth status` | Show OAuth token status |
-| `bunx oh-my-open-pentest get-local-version` | Show installed version vs npm latest |
-| `bunx oh-my-open-pentest version` | Print the CLI version |
-| `bunx oh-my-open-pentest run <message>` | Non-interactive session; waits until todos clear and background tasks idle |
-
-Postinstall validates both platform binary resolution and OpenCode version compatibility — the validation runs after every npm install.
-
-## Telemetry & Privacy
-
-Anonymous telemetry is enabled by default to track active installations (DAU/WAU/MAU). For both products:
-
-- A single event is sent **at most once per UTC day per machine**
-- Uses a SHA256-hashed installation identifier — never the raw hostname
-- PostHog person profiles are **not** created
-- The raw hostname is never transmitted
-
-Per product:
-
-| Product | Event name | Sources |
-|---------|-----------|---------|
-| Main plugin | `oh_my_openagent_daily_active` | Session start |
-| Codex CLI Light edition | `omo_codex_daily_active` | Installer (`install_completed`) + Codex `SessionStart` hook (`session_start`) |
-
-Opt-out:
-
-```bash
-# Disable the main plugin's telemetry
-export OMOP_DISABLE_POSTHOG=.
-# or
-export OMOP_SEND_ANONYMOUS_TELEMETRY=0
-
-# Disable only the Codex CLI Light edition telemetry
-export OMOP_CODEX_DISABLE_POSTHOG=.
-# or
-export OMOP_CODEX_SEND_ANONYMOUS_TELEMETRY=0
+```
+Project .opencode/oh-my-open-pentest.jsonc  (closest wins)
+  ↓
+User ~/.config/opencode/oh-my-open-pentest.jsonc
+  ↓
+Built-in defaults (Zod schema)
 ```
 
-The global flags (`OMOP_DISABLE_POSTHOG`, `OMOP_SEND_ANONYMOUS_TELEMETRY`) also suppress the Codex CLI Light edition telemetry.
+---
 
-See [Privacy Policy](../legal/privacy-policy.md) and [Terms of Service](../legal/terms-of-service.md).
-
-## Uninstall
-
-### Remove the OpenCode plugin
+## Upgrade
 
 ```bash
-# .. Remove the plugin entry from opencode.json
-jq '.plugin = [.plugin[] | select(. != "oh-my-open-pentest" and . != "oh-my-open-pentest")]' \
+bunx oh-my-open-pentest@latest install
+```
+
+The installer detects existing config and migrates automatically.
+
+---
+
+## Uninstallation
+
+```bash
+# Remove plugin from OpenCode config
+jq '.plugin = [.plugin[] | select(. != "oh-my-open-pentest")]' \
     ~/.config/opencode/opencode.json > /tmp/oc.json && \
     mv /tmp/oc.json ~/.config/opencode/opencode.json
 
-# 2. Remove plugin config files (optional)
-rm -f ~/.config/opencode/oh-my-open-pentest.jsonc ~/.config/opencode/oh-my-open-pentest.json \
-      ~/.config/opencode/oh-my-open-pentest.jsonc ~/.config/opencode/oh-my-open-pentest.json
+# Remove config files
+rm -f ~/.config/opencode/oh-my-open-pentest.jsonc \
+      .opencode/oh-my-open-pentest.jsonc
 
-# 3. Remove project config (if you have one)
-rm -f .opencode/oh-my-open-pentest.jsonc .opencode/oh-my-open-pentest.json \
-      .opencode/oh-my-open-pentest.jsonc .opencode/oh-my-open-pentest.json
-
-# .. Verify removal
-opencode --version
-# Plugin should no longer be loaded
+# Remove engagement artifacts (optional)
+rm -rf .omop/
 ```
 
-### Remove the Codex CLI Light edition
+---
+
+## Troubleshooting
+
+### Plugin not loading
 
 ```bash
-npx lazycodex-ai uninstall
-# backward-compatible alias:
-npx lazycodex-ai cleanup
+# Check plugin is registered
+cat ~/.config/opencode/opencode.json | jq '.plugin'
+# Should contain "oh-my-open-pentest"
 
-omo uninstall --platform=codex
-# backward-compatible alias:
-omo cleanup --platform=codex
+# Re-register manually
+bunx oh-my-open-pentest install --force
 ```
 
-The uninstall command removes the managed `~/.codex/plugins/cache/cerberuslabs` and `~/.codex/.tmp/marketplaces/cerberuslabs` trees, strips `cerberuslabs` / legacy LazyCodex marketplace, plugin, hook-state, and managed agent blocks from `~/.codex/config.toml` after writing a timestamped backup, and removes managed agent TOML files from `~/.codex/agents/`, including orphaned files whose install manifest is already gone.
+### API key not found
 
-If a workspace still has old project-local Codex state, run `npx lazycodex-ai uninstall --project <path>` or run it from that workspace. The command repairs only the known project-local Codex config conflict and reports legacy `.codex` artifact paths; it does not delete project-owned files automatically.
+```bash
+# Check environment
+echo $ANTHROPIC_API_KEY
 
-## Operational notes
+# Set for current session
+export ANTHROPIC_API_KEY="sk-ant-..."
 
-- Claude Code compatibility is supported (hooks, commands, skills, MCPs, plugins).
-- Claude Code plugin discovery load timeout is .0 seconds.
-- Runtime logger: `oh-my-open-pentest.log` in the OS temp dir (`/tmp` on Linux, `/var/folders/.../T/` on macOS, `%TEMP%` on Windows), 50 MB cap with `..`/`.2` backup segments.
-- Dual-publish during the rename transition: `oh-my-open-pentest` and `oh-my-open-pentest` are both published. Inside `opencode.json`, the compatibility layer prefers the entry `"oh-my-open-pentest"`, while legacy `"oh-my-open-pentest"` entries still load with a warning. Plugin config loading recognises both `oh-my-open-pentest.json[c]` and `oh-my-open-pentest.json[c]` during the transition. If `doctor` warns about the legacy package name, update your `opencode.json` plugin entry.
+# Set permanently (add to ~/.bashrc or ~/.zshrc)
+echo 'export ANTHROPIC_API_KEY="sk-ant-..."' >> ~/.bashrc
+```
+
+### Security tool missing
+
+```bash
+# Check specific tool
+which subfinder
+
+# Doctor shows all missing tools
+bunx oh-my-open-pentest doctor
+
+# Missing tools are auto-installed on first use
+# Or install manually (see Security Tools section above)
+```
+
+### OpenCode version incompatibility
+
+```bash
+# Check version
+opencode --version
+
+# Update OpenCode
+npm install -g opencode-ai@latest
+```
+
+### Windows: shell tools not found
+
+Install Git Bash for POSIX tool compatibility:
+
+```powershell
+winget install --id Git.Git -e --source winget
+```
+
+Then use Git Bash for running engagements.
+
+---
+
+## For LLM Agents
+
+To install oh-my-open-pentest via a Claude Code or other LLM agent session:
+
+```
+Install and configure oh-my-open-pentest by following the instructions here:
+https://raw.githubusercontent.com/code-yeongyu/oh-my-open-pentest/refs/heads/dev/docs/guide/installation.md
+
+Use curl to fetch this file — do NOT use WebFetch which may summarize content.
+```
+
+Installation flow for agents:
+
+1. Check prerequisites (OpenCode, Bun, API key)
+2. Run `bunx oh-my-open-pentest install`
+3. Answer: mode selection, provider auth, model assignments
+4. Verify with `bunx oh-my-open-pentest doctor`
+5. Report any failed checks back to user
+
+---
+
+## Further Reading
+
+- [Usage Guide](./usage.md) — how to run engagements
+- [Engagement Modes](./modes.md) — 10 modes explained
+- [Tool Reference](./tools.md) — 60+ tools by phase

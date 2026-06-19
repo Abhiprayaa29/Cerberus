@@ -204,5 +204,7 @@ That's the goal.
 
 ## Further Reading
 
-- [Overview](./guide/overview.md)
-- [Engagement Guide](./guide/engagement.md)
+- [Engagement Workflow](./guide/pentest-workflow.md)
+- [Engagement Modes](./guide/modes.md)
+- [Tool Reference](./guide/tools.md)
+- [Team Mode](./guide/team-mode.md)

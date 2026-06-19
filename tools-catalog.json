@@ -1,7 +1,7 @@
 {
   "$schema": "tools-catalog-v.",
   "version": ".0.0.0",
-  "categories": ["recon", "enumeration", "exploitation", "reporting", "utility"],
+  "categories": ["recon", "enumeration", "exploitation", "reporting", "utility", "forensics", "reverse-engineering", "mobile"],
 
   "tools": [
     {
@@ -1480,6 +1480,748 @@
       "output_format": ["html", "json", "csv"],
       "homepage": "https://www.autopsy.com",
       "alternatives": ["volatility", "sleuthkit"]
+    },
+
+    {
+      "tools_name": "binwalk",
+      "description": "Firmware analysis and embedded file extraction. Identifies and extracts files from binary images including file systems, compression artifacts, and bootloaders.",
+      "category": "forensics",
+      "command": {
+        "base": "binwalk",
+        "flags": [
+          { "name": "-e", "type": "boolean", "description": "Automatically extract detected files", "default": false },
+          { "name": "-M", "type": "boolean", "description": "Recursively scan extracted files", "default": false },
+          { "name": "-E", "type": "boolean", "description": "Calculate entropy", "default": false },
+          { "name": "-B", "type": "boolean", "description": "Scan for common file signatures", "default": true },
+          { "name": "-A", "type": "boolean", "description": "Scan for executable code", "default": false },
+          { "name": "-C", "type": "path", "description": "Extract files to directory", "required": false },
+          { "name": "-d", "type": "number", "description": "Recursion depth limit", "default": 8 },
+          { "name": "-q", "type": "boolean", "description": "Quiet mode", "default": false }
+        ],
+        "positional": [
+          { "name": "target", "type": "path", "description": "Binary file to analyze", "required": true }
+        ],
+        "pipes": ["grep", "jq"]
+      },
+      "installation": {
+        "linux": { "command": "sudo apt-get install -y binwalk", "manager": "apt" },
+        "darwin": { "command": "brew install binwalk", "manager": "brew" },
+        "win32": { "command": "pip install binwalk", "manager": "pip" }
+      },
+      "check_installed": {
+        "command": "binwalk --version",
+        "exit_code": 0,
+        "parse_version": "Binwalk v([\\d.]+)"
+      },
+      "skills_loader": "binwalk-extract",
+      "phase": ["forensics", "reverse-engineering"],
+      "tags": ["firmware", "binary", "extraction", "entropy", "forensics"],
+      "requires_root": false,
+      "output_format": ["text", "csv"],
+      "homepage": "https://github.com/ReFirmLabs/binwalk",
+      "alternatives": ["foremost", "strings"]
+    },
+
+    {
+      "tools_name": "foremost",
+      "description": "File carving tool for recovering deleted or hidden files from disk images. Recovers files based on headers, footers, and internal data structures.",
+      "category": "forensics",
+      "command": {
+        "base": "foremost",
+        "flags": [
+          { "name": "-i", "type": "path", "description": "Input file (disk image, memory dump)", "required": true },
+          { "name": "-o", "type": "path", "description": "Output directory", "required": true },
+          { "name": "-t", "type": "string", "description": "File types to recover (e.g., jpg,pdf,zip)", "required": false },
+          { "name": "-v", "type": "boolean", "description": "Verbose mode", "default": false },
+          { "name": "-q", "type": "boolean", "description": "Quick mode (headers/footers only)", "default": false },
+          { "name": "-Q", "type": "boolean", "description": "Quiet mode", "default": false },
+          { "name": "-c", "type": "path", "description": "Custom config file", "required": false }
+        ],
+        "positional": [],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "sudo apt-get install -y foremost", "manager": "apt" },
+        "darwin": { "command": "brew install foremost", "manager": "brew" },
+        "win32": { "command": "Use WSL: sudo apt-get install -y foremost", "manager": "wsl" }
+      },
+      "check_installed": {
+        "command": "foremost -V",
+        "exit_code": 0
+      },
+      "skills_loader": "foremost-carve",
+      "phase": ["forensics"],
+      "tags": ["file-carving", "recovery", "disk-forensics", "deleted-files"],
+      "requires_root": false,
+      "output_format": ["text"],
+      "homepage": "http://foremost.sourceforge.net/",
+      "alternatives": ["scalpel", "autopsy", "binwalk"]
+    },
+
+    {
+      "tools_name": "bulk_extractor",
+      "description": "Fast digital forensics tool that extracts features from disk images without parsing the file system. Extracts emails, URLs, credit cards, phone numbers, and more.",
+      "category": "forensics",
+      "command": {
+        "base": "bulk_extractor",
+        "flags": [
+          { "name": "-o", "type": "path", "description": "Output directory", "required": true },
+          { "name": "-E", "type": "string", "description": "Enable scanner by name", "required": false },
+          { "name": "-e", "type": "string", "description": "Disable scanner by name", "required": false },
+          { "name": "-j", "type": "number", "description": "Number of threads", "default": 4 },
+          { "name": "-S", "type": "string", "description": "Option=value for scanner", "required": false },
+          { "name": "-R", "type": "boolean", "description": "Recursive directory scan", "default": false }
+        ],
+        "positional": [
+          { "name": "image", "type": "path", "description": "Disk image or directory", "required": true }
+        ],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "sudo apt-get install -y bulk-extractor", "manager": "apt" },
+        "darwin": { "command": "brew install bulk_extractor", "manager": "brew" },
+        "win32": { "command": "Download from https://github.com/simsong/bulk_extractor/releases", "manager": "manual" }
+      },
+      "check_installed": {
+        "command": "bulk_extractor --version",
+        "exit_code": 0,
+        "parse_version": "bulk_extractor ([\\d.]+)"
+      },
+      "skills_loader": "bulk-extractor-scan",
+      "phase": ["forensics"],
+      "tags": ["feature-extraction", "email", "url", "credit-card", "disk-forensics"],
+      "requires_root": false,
+      "output_format": ["text"],
+      "homepage": "https://github.com/simsong/bulk_extractor",
+      "alternatives": ["foremost", "autopsy"]
+    },
+
+    {
+      "tools_name": "exiftool",
+      "description": "Metadata extraction from files including images, audio, video, and documents. Essential for OSINT and forensic file analysis.",
+      "category": "forensics",
+      "command": {
+        "base": "exiftool",
+        "flags": [
+          { "name": "-json", "type": "boolean", "description": "JSON output", "default": false },
+          { "name": "-csv", "type": "boolean", "description": "CSV output", "default": false },
+          { "name": "-a", "type": "boolean", "description": "Show all metadata (including duplicates)", "default": false },
+          { "name": "-u", "type": "boolean", "description": "Unknown tags", "default": false },
+          { "name": "-G", "type": "boolean", "description": "Show group name for each tag", "default": false },
+          { "name": "-r", "type": "boolean", "description": "Recursive directory scan", "default": false },
+          { "name": "-ext", "type": "string", "description": "Process files with extension", "required": false }
+        ],
+        "positional": [
+          { "name": "target", "type": "path", "description": "File or directory", "required": true }
+        ],
+        "pipes": ["jq", "grep"]
+      },
+      "installation": {
+        "linux": { "command": "sudo apt-get install -y exiftool", "manager": "apt" },
+        "darwin": { "command": "brew install exiftool", "manager": "brew" },
+        "win32": { "command": "winget install OliverBetz.ExifTool", "manager": "winget" }
+      },
+      "check_installed": {
+        "command": "exiftool -ver",
+        "exit_code": 0,
+        "parse_version": "([\\d.]+)"
+      },
+      "skills_loader": "exiftool-metadata",
+      "phase": ["forensics", "recon"],
+      "tags": ["metadata", "exif", "osint", "image", "document"],
+      "requires_root": false,
+      "output_format": ["text", "json", "csv"],
+      "homepage": "https://exiftool.org",
+      "alternatives": []
+    },
+
+    {
+      "tools_name": "tcpdump",
+      "description": "Command-line network packet analyzer. Captures and analyzes network traffic. Essential for network forensics and protocol analysis.",
+      "category": "forensics",
+      "command": {
+        "base": "tcpdump",
+        "flags": [
+          { "name": "-i", "type": "string", "description": "Interface to capture on", "required": false },
+          { "name": "-r", "type": "path", "description": "Read from pcap file", "required": false },
+          { "name": "-w", "type": "path", "description": "Write output to pcap file", "required": false },
+          { "name": "-n", "type": "boolean", "description": "Don't resolve hostnames", "default": false },
+          { "name": "-v", "type": "boolean", "description": "Verbose output", "default": false },
+          { "name": "-X", "type": "boolean", "description": "Hex and ASCII output", "default": false },
+          { "name": "-A", "type": "boolean", "description": "ASCII output only", "default": false },
+          { "name": "-c", "type": "number", "description": "Stop after N packets", "required": false },
+          { "name": "-G", "type": "number", "description": "Rotate pcap every N seconds", "required": false }
+        ],
+        "positional": [
+          { "name": "filter", "type": "string", "description": "BPF filter expression", "required": false }
+        ],
+        "pipes": ["grep", "strings"]
+      },
+      "installation": {
+        "linux": { "command": "sudo apt-get install -y tcpdump", "manager": "apt" },
+        "darwin": { "command": "brew install tcpdump", "manager": "brew" },
+        "win32": { "command": "winget install WinPcap.WinPcap", "manager": "winget" }
+      },
+      "check_installed": {
+        "command": "tcpdump --version",
+        "exit_code": 0,
+        "parse_version": "tcpdump version ([\\d.]+)"
+      },
+      "skills_loader": "tcpdump-capture",
+      "phase": ["forensics"],
+      "tags": ["pcap", "network", "capture", "traffic-analysis"],
+      "requires_root": true,
+      "output_format": ["text", "binary"],
+      "homepage": "https://www.tcpdump.org",
+      "alternatives": ["wireshark", "tshark"]
+    },
+
+    {
+      "tools_name": "tshark",
+      "description": "Wireshark's command-line interface. Powerful PCAP analysis with protocol dissection, field extraction, and filtering. Scriptable alternative to Wireshark GUI.",
+      "category": "forensics",
+      "command": {
+        "base": "tshark",
+        "flags": [
+          { "name": "-r", "type": "path", "description": "Read from pcap file", "required": false },
+          { "name": "-i", "type": "string", "description": "Capture interface", "required": false },
+          { "name": "-w", "type": "path", "description": "Write to pcap file", "required": false },
+          { "name": "-Y", "type": "string", "description": "Display filter", "required": false },
+          { "name": "-T", "type": "choice", "description": "Output format", "choices": ["fields", "json", "jsonraw", "pdml", "ps", "psml", "tabs", "text"], "default": "text" },
+          { "name": "-e", "type": "string", "description": "Field to output (use with -T fields)", "required": false },
+          { "name": "-E", "type": "string", "description": "Field print option (header=y, separator=,)", "required": false },
+          { "name": "-z", "type": "string", "description": "Statistics command", "required": false },
+          { "name": "-q", "type": "boolean", "description": "Quiet mode", "default": false }
+        ],
+        "positional": [],
+        "pipes": ["jq", "grep"]
+      },
+      "installation": {
+        "linux": { "command": "sudo apt-get install -y tshark", "manager": "apt" },
+        "darwin": { "command": "brew install wireshark", "manager": "brew" },
+        "win32": { "command": "winget install WiresharkFoundation.Wireshark", "manager": "winget" }
+      },
+      "check_installed": {
+        "command": "tshark --version",
+        "exit_code": 0,
+        "parse_version": "TShark .* ([\\d.]+)"
+      },
+      "skills_loader": "tshark-analysis",
+      "phase": ["forensics"],
+      "tags": ["pcap", "network", "protocol", "wireshark", "traffic-analysis"],
+      "requires_root": false,
+      "output_format": ["text", "json"],
+      "homepage": "https://www.wireshark.org/docs/man-pages/tshark.html",
+      "alternatives": ["wireshark", "tcpdump"]
+    },
+
+    {
+      "tools_name": "ghidra",
+      "description": "NSA's open-source reverse engineering framework. Disassembly, decompilation, scripting, and binary analysis for multiple architectures including x86, ARM, MIPS, and more.",
+      "category": "reverse-engineering",
+      "command": {
+        "base": "ghidra",
+        "flags": [
+          { "name": "-import", "type": "path", "description": "Binary to import and analyze", "required": false },
+          { "name": "-process", "type": "path", "description": "Run headless analysis on file", "required": false },
+          { "name": "-postScript", "type": "path", "description": "Script to run after analysis", "required": false },
+          { "name": "-scriptPath", "type": "path", "description": "Path to custom scripts", "required": false },
+          { "name": "-log", "type": "path", "description": "Log file", "required": false }
+        ],
+        "positional": [],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "wget https://github.com/NationalSecurityAgency/ghidra/releases/download/Ghidra_11.1.2_build/ghidra_11.1.2_PUBLIC_20240709.zip && unzip ghidra_*.zip -d /opt/", "manager": "manual" },
+        "darwin": { "command": "brew install --cask ghidra", "manager": "brew" },
+        "win32": { "command": "winget install NSA.Ghidra", "manager": "winget" }
+      },
+      "check_installed": {
+        "command": "ghidraRun --version",
+        "exit_code": 0
+      },
+      "skills_loader": "ghidra-analyze",
+      "phase": ["reverse-engineering"],
+      "tags": ["disassembly", "decompilation", "nsa", "multi-arch", "re"],
+      "requires_root": false,
+      "output_format": ["text"],
+      "homepage": "https://ghidra-sre.org",
+      "alternatives": ["radare2", "cutter", "ida-free"]
+    },
+
+    {
+      "tools_name": "radare2",
+      "description": "Open-source portable reverse engineering framework. Disassembly, debugging, hex editing, binary diffing, and scripting via r2pipe. Supports 40+ architectures.",
+      "category": "reverse-engineering",
+      "command": {
+        "base": "r2",
+        "flags": [
+          { "name": "-d", "type": "boolean", "description": "Debug mode", "default": false },
+          { "name": "-A", "type": "boolean", "description": "Analyze binary on load (aaa)", "default": false },
+          { "name": "-w", "type": "boolean", "description": "Write mode", "default": false },
+          { "name": "-q", "type": "boolean", "description": "Quiet mode (no header)", "default": false },
+          { "name": "-c", "type": "string", "description": "Run r2 command on open", "required": false },
+          { "name": "-i", "type": "path", "description": "Run r2 script on open", "required": false },
+          { "name": "-p", "type": "string", "description": "Project name", "required": false }
+        ],
+        "positional": [
+          { "name": "binary", "type": "path", "description": "Binary file to open", "required": true }
+        ],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "git clone https://github.com/radareorg/radare2 && cd radare2 && sys/install.sh", "manager": "make" },
+        "darwin": { "command": "brew install radare2", "manager": "brew" },
+        "win32": { "command": "winget install radare2.radare2", "manager": "winget" }
+      },
+      "check_installed": {
+        "command": "r2 -version",
+        "exit_code": 0,
+        "parse_version": "radare2 ([\\d.]+)"
+      },
+      "skills_loader": "radare2-re",
+      "phase": ["reverse-engineering"],
+      "tags": ["disassembly", "debugging", "scripting", "multi-arch", "r2pipe"],
+      "requires_root": false,
+      "output_format": ["text", "json"],
+      "homepage": "https://rada.re",
+      "alternatives": ["ghidra", "cutter"]
+    },
+
+    {
+      "tools_name": "gdb",
+      "description": "GNU Project Debugger. Full-featured debugger for C/C++, assembly, and other compiled languages. Core tool for dynamic binary analysis and exploit development.",
+      "category": "reverse-engineering",
+      "command": {
+        "base": "gdb",
+        "flags": [
+          { "name": "-q", "type": "boolean", "description": "Quiet mode (no banner)", "default": false },
+          { "name": "--batch", "type": "boolean", "description": "Batch mode (non-interactive)", "default": false },
+          { "name": "-ex", "type": "string", "description": "Execute GDB command on load", "required": false },
+          { "name": "-x", "type": "path", "description": "Read commands from file", "required": false },
+          { "name": "--args", "type": "boolean", "description": "Binary arguments follow", "default": false },
+          { "name": "-p", "type": "number", "description": "Attach to process PID", "required": false }
+        ],
+        "positional": [
+          { "name": "binary", "type": "path", "description": "Binary to debug", "required": false }
+        ],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "sudo apt-get install -y gdb", "manager": "apt" },
+        "darwin": { "command": "brew install gdb", "manager": "brew" },
+        "win32": { "command": "winget install GnuWin32.GDB", "manager": "winget" }
+      },
+      "check_installed": {
+        "command": "gdb --version",
+        "exit_code": 0,
+        "parse_version": "GNU gdb .* ([\\d.]+)"
+      },
+      "skills_loader": "gdb-debug",
+      "phase": ["reverse-engineering"],
+      "tags": ["debugger", "dynamic-analysis", "exploit-dev", "c", "asm"],
+      "requires_root": false,
+      "output_format": ["text"],
+      "homepage": "https://www.gnu.org/software/gdb/",
+      "alternatives": ["pwndbg", "peda", "lldb"]
+    },
+
+    {
+      "tools_name": "pwndbg",
+      "description": "GDB plugin for exploit development. Provides enhanced commands for heap analysis, ROP gadget search, memory visualization, and CTF/pwn challenge solving on top of GDB.",
+      "category": "reverse-engineering",
+      "command": {
+        "base": "gdb",
+        "flags": [
+          { "name": "-q", "type": "boolean", "description": "Quiet mode", "default": true },
+          { "name": "-ex", "type": "string", "description": "pwndbg command (e.g., 'heap', 'rop', 'checksec')", "required": false }
+        ],
+        "positional": [
+          { "name": "binary", "type": "path", "description": "Binary to debug", "required": false }
+        ],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "git clone https://github.com/pwndbg/pwndbg && cd pwndbg && ./setup.sh", "manager": "make" },
+        "darwin": { "command": "git clone https://github.com/pwndbg/pwndbg && cd pwndbg && ./setup.sh", "manager": "make" },
+        "win32": { "command": "Use WSL: git clone https://github.com/pwndbg/pwndbg && cd pwndbg && ./setup.sh", "manager": "wsl" }
+      },
+      "check_installed": {
+        "command": "gdb -q -ex 'python import pwndbg; print(pwndbg.__version__)' -ex quit",
+        "exit_code": 0
+      },
+      "skills_loader": "pwndbg-exploit",
+      "phase": ["reverse-engineering", "exploitation"],
+      "tags": ["gdb", "heap", "rop", "pwn", "exploit-dev", "ctf"],
+      "requires_root": false,
+      "output_format": ["text"],
+      "homepage": "https://github.com/pwndbg/pwndbg",
+      "alternatives": ["peda", "gef"]
+    },
+
+    {
+      "tools_name": "ltrace",
+      "description": "Library call tracer. Intercepts and records dynamic library calls made by an executing process. Useful for reversing obfuscated binaries and understanding program behavior.",
+      "category": "reverse-engineering",
+      "command": {
+        "base": "ltrace",
+        "flags": [
+          { "name": "-p", "type": "number", "description": "Attach to process PID", "required": false },
+          { "name": "-o", "type": "path", "description": "Write output to file", "required": false },
+          { "name": "-e", "type": "string", "description": "Filter library calls (e.g., 'strcmp+memcmp')", "required": false },
+          { "name": "-f", "type": "boolean", "description": "Trace child processes", "default": false },
+          { "name": "-i", "type": "boolean", "description": "Show instruction pointer", "default": false },
+          { "name": "-S", "type": "boolean", "description": "Also trace syscalls", "default": false },
+          { "name": "-r", "type": "boolean", "description": "Show time relative to previous call", "default": false }
+        ],
+        "positional": [
+          { "name": "command", "type": "string", "description": "Command to trace", "required": false }
+        ],
+        "pipes": ["grep"]
+      },
+      "installation": {
+        "linux": { "command": "sudo apt-get install -y ltrace", "manager": "apt" },
+        "darwin": { "command": "Not available on macOS — use dtruss or dtrace", "manager": "n/a" },
+        "win32": { "command": "Use WSL: sudo apt-get install -y ltrace", "manager": "wsl" }
+      },
+      "check_installed": {
+        "command": "ltrace --version",
+        "exit_code": 0,
+        "parse_version": "ltrace version ([\\d.]+)"
+      },
+      "skills_loader": "ltrace-trace",
+      "phase": ["reverse-engineering"],
+      "tags": ["library-calls", "tracing", "dynamic-analysis", "linux"],
+      "requires_root": false,
+      "output_format": ["text"],
+      "homepage": "https://ltrace.org",
+      "alternatives": ["strace", "gdb"]
+    },
+
+    {
+      "tools_name": "strace",
+      "description": "System call tracer. Intercepts all system calls made by a process. Essential for understanding binary I/O behavior, file access, and privilege escalation analysis.",
+      "category": "reverse-engineering",
+      "command": {
+        "base": "strace",
+        "flags": [
+          { "name": "-p", "type": "number", "description": "Attach to process PID", "required": false },
+          { "name": "-o", "type": "path", "description": "Write output to file", "required": false },
+          { "name": "-e", "type": "string", "description": "Filter syscalls (e.g., 'trace=open,read')", "required": false },
+          { "name": "-f", "type": "boolean", "description": "Trace child processes", "default": false },
+          { "name": "-c", "type": "boolean", "description": "Count syscall frequency (summary)", "default": false },
+          { "name": "-t", "type": "boolean", "description": "Timestamp each call", "default": false },
+          { "name": "-s", "type": "number", "description": "Max string length to print", "default": 32 },
+          { "name": "-x", "type": "boolean", "description": "Print non-ASCII in hex", "default": false }
+        ],
+        "positional": [
+          { "name": "command", "type": "string", "description": "Command to trace", "required": false }
+        ],
+        "pipes": ["grep"]
+      },
+      "installation": {
+        "linux": { "command": "sudo apt-get install -y strace", "manager": "apt" },
+        "darwin": { "command": "Not available on macOS — use dtruss or dtrace", "manager": "n/a" },
+        "win32": { "command": "Use WSL: sudo apt-get install -y strace", "manager": "wsl" }
+      },
+      "check_installed": {
+        "command": "strace --version",
+        "exit_code": 0,
+        "parse_version": "strace -- version ([\\d.]+)"
+      },
+      "skills_loader": "strace-trace",
+      "phase": ["reverse-engineering"],
+      "tags": ["syscalls", "tracing", "dynamic-analysis", "linux", "file-access"],
+      "requires_root": false,
+      "output_format": ["text"],
+      "homepage": "https://strace.io",
+      "alternatives": ["ltrace", "gdb"]
+    },
+
+    {
+      "tools_name": "angr",
+      "description": "Python binary analysis framework. Symbolic execution, concolic testing, CFG recovery, and automated vulnerability discovery. Used for binary CTF challenges and security research.",
+      "category": "reverse-engineering",
+      "command": {
+        "base": "python3",
+        "flags": [
+          { "name": "-c", "type": "string", "description": "Inline angr Python code", "required": false }
+        ],
+        "positional": [
+          { "name": "script", "type": "path", "description": "Python script using angr", "required": false }
+        ],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "pip install angr", "manager": "pip" },
+        "darwin": { "command": "pip install angr", "manager": "pip" },
+        "win32": { "command": "pip install angr", "manager": "pip" }
+      },
+      "check_installed": {
+        "command": "python3 -c \"import angr; print(angr.__version__)\"",
+        "exit_code": 0,
+        "parse_version": "([\\d.]+)"
+      },
+      "skills_loader": "angr-symbolic",
+      "phase": ["reverse-engineering"],
+      "tags": ["symbolic-execution", "concolic", "binary-analysis", "cfg", "vulnerability-discovery"],
+      "requires_root": false,
+      "output_format": ["text"],
+      "homepage": "https://angr.io",
+      "alternatives": ["radare2", "ghidra"]
+    },
+
+    {
+      "tools_name": "cutter",
+      "description": "Free and open-source GUI for radare2. Provides a visual interface for reverse engineering including disassembly view, decompiler (Ghidra plugin), graph view, and scripting.",
+      "category": "reverse-engineering",
+      "command": {
+        "base": "cutter",
+        "flags": [],
+        "positional": [
+          { "name": "binary", "type": "path", "description": "Binary file to analyze", "required": false }
+        ],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "wget https://github.com/rizinorg/cutter/releases/download/v2.3.4/Cutter-v2.3.4-Linux-x86_64.AppImage && chmod +x Cutter-*.AppImage", "manager": "manual" },
+        "darwin": { "command": "brew install --cask cutter", "manager": "brew" },
+        "win32": { "command": "Download from https://github.com/rizinorg/cutter/releases", "manager": "manual" }
+      },
+      "check_installed": {
+        "command": "cutter --version",
+        "exit_code": 0
+      },
+      "skills_loader": "cutter-gui",
+      "phase": ["reverse-engineering"],
+      "tags": ["gui", "radare2", "decompiler", "graph-view", "re"],
+      "requires_root": false,
+      "output_format": ["text"],
+      "homepage": "https://cutter.re",
+      "alternatives": ["ghidra", "radare2"]
+    },
+
+    {
+      "tools_name": "apktool",
+      "description": "Android APK reverse engineering tool. Decompiles APK resources to near-original form, rebuilds APKs, and handles resource decoding (resources.arsc, XML manifests).",
+      "category": "mobile",
+      "command": {
+        "base": "apktool",
+        "flags": [
+          { "name": "d", "type": "boolean", "description": "Decompile APK", "default": false },
+          { "name": "b", "type": "boolean", "description": "Build APK from decompiled sources", "default": false },
+          { "name": "-o", "type": "path", "description": "Output directory/file", "required": false },
+          { "name": "-f", "type": "boolean", "description": "Force overwrite output directory", "default": false },
+          { "name": "-r", "type": "boolean", "description": "Do not decompile resources", "default": false },
+          { "name": "-s", "type": "boolean", "description": "Do not disassemble dex", "default": false },
+          { "name": "-q", "type": "boolean", "description": "Quiet mode", "default": false }
+        ],
+        "positional": [
+          { "name": "apk", "type": "path", "description": "APK file to decompile", "required": true }
+        ],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "sudo apt-get install -y apktool", "manager": "apt" },
+        "darwin": { "command": "brew install apktool", "manager": "brew" },
+        "win32": { "command": "winget install iBotPeaches.Apktool", "manager": "winget" }
+      },
+      "check_installed": {
+        "command": "apktool --version",
+        "exit_code": 0,
+        "parse_version": "([\\d.]+)"
+      },
+      "skills_loader": "apktool-decompile",
+      "phase": ["mobile", "reverse-engineering"],
+      "tags": ["android", "apk", "decompile", "smali", "resources"],
+      "requires_root": false,
+      "output_format": ["text"],
+      "homepage": "https://apktool.org",
+      "alternatives": ["jadx", "androguard"]
+    },
+
+    {
+      "tools_name": "jadx",
+      "description": "DEX to Java decompiler. Produces Java source code from Android DEX and APK files. Includes a GUI (jadx-gui) for browsing decompiled code, searching strings, and cross-referencing.",
+      "category": "mobile",
+      "command": {
+        "base": "jadx",
+        "flags": [
+          { "name": "-d", "type": "path", "description": "Output directory", "required": false },
+          { "name": "--show-bad-code", "type": "boolean", "description": "Show methods with bad decompilation", "default": false },
+          { "name": "--no-res", "type": "boolean", "description": "Skip resource decoding", "default": false },
+          { "name": "--no-src", "type": "boolean", "description": "Skip source decompilation", "default": false },
+          { "name": "--export-gradle", "type": "boolean", "description": "Save as Gradle project", "default": false },
+          { "name": "-r", "type": "boolean", "description": "Recursive decompile", "default": false },
+          { "name": "-j", "type": "number", "description": "Thread count", "default": 4 }
+        ],
+        "positional": [
+          { "name": "input", "type": "path", "description": "APK, DEX, or AAR file", "required": true }
+        ],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "wget https://github.com/skylot/jadx/releases/download/v1.5.0/jadx-1.5.0.zip && unzip jadx-*.zip -d /opt/jadx && ln -s /opt/jadx/bin/jadx /usr/local/bin/jadx", "manager": "manual" },
+        "darwin": { "command": "brew install jadx", "manager": "brew" },
+        "win32": { "command": "Download from https://github.com/skylot/jadx/releases", "manager": "manual" }
+      },
+      "check_installed": {
+        "command": "jadx --version",
+        "exit_code": 0,
+        "parse_version": "([\\d.]+)"
+      },
+      "skills_loader": "jadx-decompile",
+      "phase": ["mobile", "reverse-engineering"],
+      "tags": ["android", "dex", "java", "decompiler", "apk"],
+      "requires_root": false,
+      "output_format": ["text"],
+      "homepage": "https://github.com/skylot/jadx",
+      "alternatives": ["apktool", "androguard"]
+    },
+
+    {
+      "tools_name": "frida",
+      "description": "Dynamic instrumentation toolkit for Android, iOS, macOS, Windows, and Linux. Hook native functions, trace APIs, dump memory, bypass SSL pinning, and patch at runtime without source code.",
+      "category": "mobile",
+      "command": {
+        "base": "frida",
+        "flags": [
+          { "name": "-U", "type": "boolean", "description": "Connect to USB device", "default": false },
+          { "name": "-H", "type": "string", "description": "Connect to remote frida-server HOST:PORT", "required": false },
+          { "name": "-p", "type": "number", "description": "Attach to process PID", "required": false },
+          { "name": "-n", "type": "string", "description": "Attach to process by name", "required": false },
+          { "name": "-f", "type": "string", "description": "Spawn and attach to process", "required": false },
+          { "name": "-l", "type": "path", "description": "Load and execute JS script", "required": false },
+          { "name": "-e", "type": "string", "description": "Execute inline JS expression", "required": false },
+          { "name": "--no-pause", "type": "boolean", "description": "Don't pause spawned process", "default": false }
+        ],
+        "positional": [],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "pip install frida-tools", "manager": "pip" },
+        "darwin": { "command": "pip install frida-tools", "manager": "pip" },
+        "win32": { "command": "pip install frida-tools", "manager": "pip" }
+      },
+      "check_installed": {
+        "command": "frida --version",
+        "exit_code": 0,
+        "parse_version": "([\\d.]+)"
+      },
+      "skills_loader": "frida-instrument",
+      "phase": ["mobile", "reverse-engineering"],
+      "tags": ["dynamic-instrumentation", "hooking", "android", "ios", "ssl-bypass", "runtime"],
+      "requires_root": false,
+      "output_format": ["text"],
+      "homepage": "https://frida.re",
+      "alternatives": ["objection", "xposed"]
+    },
+
+    {
+      "tools_name": "objection",
+      "description": "Runtime mobile exploration toolkit built on Frida. Automates common mobile pentest tasks: SSL pinning bypass, root/jailbreak detection bypass, memory dumping, file system exploration, and class introspection.",
+      "category": "mobile",
+      "command": {
+        "base": "objection",
+        "flags": [
+          { "name": "-g", "type": "string", "description": "Gadget or bundle ID to target", "required": false },
+          { "name": "--network", "type": "boolean", "description": "Connect via network (not USB)", "default": false },
+          { "name": "--host", "type": "string", "description": "Remote frida-server host", "required": false },
+          { "name": "--port", "type": "number", "description": "Remote frida-server port", "default": 27042 },
+          { "name": "explore", "type": "boolean", "description": "Start interactive exploration REPL", "default": false },
+          { "name": "patchapk", "type": "boolean", "description": "Patch APK to embed frida-gadget", "default": false }
+        ],
+        "positional": [],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "pip install objection", "manager": "pip" },
+        "darwin": { "command": "pip install objection", "manager": "pip" },
+        "win32": { "command": "pip install objection", "manager": "pip" }
+      },
+      "check_installed": {
+        "command": "objection version",
+        "exit_code": 0,
+        "parse_version": "([\\d.]+)"
+      },
+      "skills_loader": "objection-explore",
+      "phase": ["mobile"],
+      "tags": ["android", "ios", "frida", "ssl-bypass", "root-bypass", "jailbreak-bypass", "repl"],
+      "requires_root": false,
+      "output_format": ["text"],
+      "homepage": "https://github.com/sensepost/objection",
+      "alternatives": ["frida", "medusa"]
+    },
+
+    {
+      "tools_name": "mobsf",
+      "description": "Mobile Security Framework — automated all-in-one mobile application security assessment tool. Static and dynamic analysis for Android APK/AAB and iOS IPA. REST API for CI/CD integration.",
+      "category": "mobile",
+      "command": {
+        "base": "python3",
+        "flags": [
+          { "name": "-m", "type": "string", "description": "Module to run (e.g., mobsf.manage runserver)", "required": false }
+        ],
+        "positional": [],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "git clone https://github.com/MobSF/Mobile-Security-Framework-MobSF.git && cd Mobile-Security-Framework-MobSF && ./setup.sh", "manager": "git+pip" },
+        "darwin": { "command": "git clone https://github.com/MobSF/Mobile-Security-Framework-MobSF.git && cd Mobile-Security-Framework-MobSF && ./setup.sh", "manager": "git+pip" },
+        "win32": { "command": "git clone https://github.com/MobSF/Mobile-Security-Framework-MobSF.git && cd Mobile-Security-Framework-MobSF && setup.bat", "manager": "git+pip" }
+      },
+      "check_installed": {
+        "command": "python3 -c \"import mobsf\"",
+        "exit_code": 0
+      },
+      "skills_loader": "mobsf-analysis",
+      "phase": ["mobile"],
+      "tags": ["android", "ios", "static-analysis", "dynamic-analysis", "rest-api", "automated"],
+      "requires_root": false,
+      "output_format": ["json", "html", "pdf"],
+      "homepage": "https://mobsf.github.io/Mobile-Security-Framework-MobSF/",
+      "alternatives": ["apktool", "jadx", "frida"]
+    },
+
+    {
+      "tools_name": "adb",
+      "description": "Android Debug Bridge — command-line interface for communicating with Android devices. Essential for mobile pentest: install/pull APKs, logcat, shell access, port forwarding, and device management.",
+      "category": "mobile",
+      "command": {
+        "base": "adb",
+        "flags": [
+          { "name": "-s", "type": "string", "description": "Direct command to specific device serial", "required": false },
+          { "name": "-d", "type": "boolean", "description": "Direct command to only USB-connected device", "default": false },
+          { "name": "-e", "type": "boolean", "description": "Direct command to only emulator", "default": false },
+          { "name": "shell", "type": "boolean", "description": "Run remote shell command", "default": false },
+          { "name": "install", "type": "boolean", "description": "Install APK on device", "default": false },
+          { "name": "pull", "type": "boolean", "description": "Copy file from device", "default": false },
+          { "name": "push", "type": "boolean", "description": "Copy file to device", "default": false },
+          { "name": "logcat", "type": "boolean", "description": "View device log output", "default": false },
+          { "name": "forward", "type": "boolean", "description": "Port forwarding", "default": false }
+        ],
+        "positional": [
+          { "name": "args", "type": "string", "description": "Command arguments", "required": false }
+        ],
+        "pipes": ["grep", "tee"]
+      },
+      "installation": {
+        "linux": { "command": "sudo apt-get install -y adb", "manager": "apt" },
+        "darwin": { "command": "brew install android-platform-tools", "manager": "brew" },
+        "win32": { "command": "winget install Google.PlatformTools", "manager": "winget" }
+      },
+      "check_installed": {
+        "command": "adb version",
+        "exit_code": 0,
+        "parse_version": "Android Debug Bridge version ([\\d.]+)"
+      },
+      "skills_loader": "adb-device",
+      "phase": ["mobile"],
+      "tags": ["android", "device", "shell", "apk", "logcat", "essential"],
+      "requires_root": false,
+      "output_format": ["text"],
+      "homepage": "https://developer.android.com/tools/adb",
+      "alternatives": []
     }
   ]
 }
