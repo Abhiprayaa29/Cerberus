@@ -17,7 +17,7 @@ Commander.js CLI with .. commands. Entry: `index.ts` → `runCli()` in `cli-prog
 | `version` | Print plugin version | Trivial 2-line subcommand |
 | `mcp-oauth` | OAuth token management | login (PKCE), logout, status |
 | `refresh-model-capabilities` | Refresh models.dev cache | Model capabilities refresh |
-| `boulder` | Boulder state inspector | Format work-state + tasks from `.omo/boulder-state/` |
+| `boulder` | Boulder state inspector | Format work-state + tasks from `.omop/boulder-state/` |
 | `cleanup` (alias `uninstall`) | Remove Codex Light state | Clean managed Codex cache/marketplace + repair project-local legacy Codex artifacts |
 | `sparkshell` | Shell-native inspection | Run Sparkshell inspection with explicit raw fallback |
 | `pentest-loop` | Codex pentest-loop CLI | Run the Codex LazyCodex pentest-loop CLI |

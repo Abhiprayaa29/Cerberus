@@ -33,7 +33,7 @@ Verified against `codex-cli 0...0.0` (node, jq, tmux, bun on macOS). Confirm wit
   stream (`hook/started` / `hook/completed`), not log scraping. See
   [references/app-server.md](references/app-server.md).
 - **The captured JSON / pane IS the evidence** — write it under
-  `.omo/evidence/<YYYYMMDD>-<slug>/` (no evidence file == the QA did not happen).
+  `.omop/evidence/<YYYYMMDD>-<slug>/` (no evidence file == the QA did not happen).
 
 ## Setup
 
@@ -65,7 +65,7 @@ Windows.
 |---|---|
 | `scripts/lib/common.sh --self-check` | deps present; isolated `CODEX_HOME` is created inside a sandbox and auto-removed on exit; mock model serves the Responses SSE; real `~/.codex` unchanged |
 | `scripts/app-server-drive.sh` | `--self-test`: a bare turn completes and the mock assistant text comes back. `--plugin`: installs local omo, drives a turn, and asserts `hook/completed` for `sessionStart,userPromptSubmit` |
-| `scripts/install-verify.sh` | local omo installs into the isolated home; `config.toml` enables `omo@cerberuslabs`; component bins + agent TOMLs linked in the sandbox; real `~/.codex` unchanged |
+| `scripts/install-verify.sh` | local omo installs into the isolated home; `config.toml` enables `omop@cerberuslabs`; component bins + agent TOMLs linked in the sandbox; real `~/.codex` unchanged |
 | `scripts/hook-unit-probe.sh` | the `fullscan` component injects `<fullscan-mode>` on an `ulw` UserPromptSubmit (also a manual `--component/--event` mode) |
 | `scripts/tui-smoke.sh` | the real codex TUI boots in the isolated home, renders, and survives (no early exit); captures the pane |
 
@@ -83,7 +83,7 @@ Windows.
 ## Capturing evidence
 
 ```bash
-ev=".omo/evidence/$(date +%Y%m%d)-codex-qa-<slug>"; mkdir -p "$ev"
+ev=".omop/evidence/$(date +%Y%m%d)-codex-qa-<slug>"; mkdir -p "$ev"
 bash scripts/app-server-drive.sh --plugin > "$ev/app-server-drive.json" 2>&.
 bash scripts/install-verify.sh --self-test > "$ev/install-verify.txt" 2>&.
 ```

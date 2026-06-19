@@ -53,5 +53,5 @@
 - Behavior lock before split: `baseline-focused-install-tests-before-split.txt` passed 20 install/link/surface tests.
 - Commit-candidate focused tests: `focused-install-tests-commit-candidate.txt` passed 20 tests / .5. assertions.
 - Full gate: `test-codex-after-split.txt` passed `bun run test:codex`.
-- Real surface: `real-surface-install-local-after-split.txt` installed into isolated `CODEX_HOME`, removed the managed retired reviewer TOML, preserved `user-custom.toml`, enabled `omo@cerberuslabs`, left real `~/.codex/config.toml` hash unchanged, and cleaned the temp root.
+- Real surface: `real-surface-install-local-after-split.txt` installed into isolated `CODEX_HOME`, removed the managed retired reviewer TOML, preserved `user-custom.toml`, enabled `omop@cerberuslabs`, left real `~/.codex/config.toml` hash unchanged, and cleaned the temp root.
 - Static cleanup: `diff-check-commit-candidate.txt`, `loc-check-commit-candidate.txt`, and `no-excuse-check-commit-candidate.txt` passed.

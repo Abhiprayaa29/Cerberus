@@ -168,7 +168,7 @@ function createWorkspace(input: WorkspaceInput): string {
 function createBoulderJson(input: BoulderInput): string {
 	const work = {
 		work_id: "work_1",
-		active_plan: ".omo/plans/plan.md",
+		active_plan: ".omop/plans/plan.md",
 		plan_name: "launch-plan",
 		status: input.status,
 		started_at: "2026-06-13T00:00:00.000Z",
@@ -178,7 +178,7 @@ function createBoulderJson(input: BoulderInput): string {
 		schema_version: 2,
 		active_work_id: "work_1",
 		works: { work_1: work },
-		active_plan: ".omo/plans/plan.md",
+		active_plan: ".omop/plans/plan.md",
 		plan_name: "legacy-launch-plan",
 		started_at: "2026-06-13T00:00:00.000Z",
 		status: input.status,

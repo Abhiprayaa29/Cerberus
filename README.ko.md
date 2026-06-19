@@ -40,7 +40,7 @@
 
 <div align="center">
 
-<a href="https://github.com/code-yeongyu/oh-my-open-pentest#oh-my-open-pentest"><img src="./.github/assets/omo-logo.png" alt="OmOP" width="200" /></a>
+<a href="https://github.com/code-yeongyu/oh-my-open-pentest#oh-my-open-pentest"><img src="./.github/assets/omop-logo.png" alt="OmOP" width="200" /></a>
 
 [![Oh My Open Pentest](./.github/assets/hero.jpg)](https://github.com/code-yeongyu/oh-my-open-pentest#oh-my-open-pentest)
 
@@ -177,8 +177,8 @@ Read this and tell me why it's not just another boilerplate: https://raw.githubu
 |   🔁   | **Pentest Loop / `/pentest-loop`**                             | Ultimate | 자기참조 루프. 100% 끝날 때까지 멈추지 않습니다.                                                                                                                                                                 |
 |   ✅   | **Todo Enforcer** (Boulder)                              | Ultimate | 에이전트가 놀고 있나요? 시스템이 다시 끌어옵니다. 당신의 작업은 반드시 끝납니다.                                                                                                                                |
 |   💬   | **Comment Checker**                                      | Both     | 주석에 AI 슬롭 금지. 동일한 `@code-yeongyu/comment-checker` 바이너리가 두 에디션 모두에서 동작.                                                                                                                  |
-|   📜   | **Rules Injection**                                      | Both     | `AGENTS.md` / `CLAUDE.md` / `.omo/rules/**` 계층형 컨텍스트 주입. Ultimate은 hook, Light는 `rules` 컴포넌트.                                                                                                     |
-|   🧬   | **Ulw Loop**                                            | Light    | `.omo/pentest-loop/` evidence audit 기반 영속 멀티 골 오케스트레이션. 현재 Codex 전용; OpenCode 사이드 포팅은 로드맵에 있음.                                                                                        |
+|   📜   | **Rules Injection**                                      | Both     | `AGENTS.md` / `CLAUDE.md` / `.omop/rules/**` 계층형 컨텍스트 주입. Ultimate은 hook, Light는 `rules` 컴포넌트.                                                                                                     |
+|   🧬   | **Ulw Loop**                                            | Light    | `.omop/pentest-loop/` evidence audit 기반 영속 멀티 골 오케스트레이션. 현재 Codex 전용; OpenCode 사이드 포팅은 로드맵에 있음.                                                                                        |
 |   🖥️   | **Tmux Integration**                                     | Ultimate | 풀 인터랙티브 터미널. REPL, 디버거, TUI 전부 라이브.                                                                                                                                                             |
 |   🔌   | **Claude Code Compatible**                               | Ultimate | 쓰시던 hook, command, skill, MCP, plugin 전부 그대로 동작합니다. (Codex는 자체 플러그인 시스템 보유.)                                                                                                            |
 |   🎯   | **Skill-Embedded MCPs**                                  | Ultimate | 스킬이 자기만의 MCP 서버를 들고 다닙니다. 컨텍스트 낭비 없음.                                                                                                                                                   |
@@ -363,7 +363,7 @@ oh-my-open-pentest를 제거하려면:
    rm -rf ~/.codex/plugins/cache/sisyphuslabs
    ```
 
-   그런 다음 `~/.codex/config.toml`을 열어 `[marketplaces.sisyphuslabs]`, `[plugins."omo@sisyphuslabs"]`, `[hooks.state."omo@sisyphuslabs:..."]` 블록들을 삭제하세요.
+   그런 다음 `~/.codex/config.toml`을 열어 `[marketplaces.sisyphuslabs]`, `[plugins."omop@sisyphuslabs"]`, `[hooks.state."omop@sisyphuslabs:..."]` 블록들을 삭제하세요.
 
 ## Features
 

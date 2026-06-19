@@ -76,7 +76,7 @@ function managedGlobalStatePaths(codexHome: string): readonly string[] {
     join(codexHome, "runtime", "ast-grep"),
     join(codexHome, "runtime", "node"),
     // codex core-plugins store convention: plugins/data/<plugin>-<marketplace>/
-    join(codexHome, "plugins", "data", "omo-cerberuslabs", "bootstrap"),
+    join(codexHome, "plugins", "data", "omop-cerberuslabs", "bootstrap"),
   ]
 }
 
@@ -108,7 +108,7 @@ async function walkForManagedBootstrapDirs(directory: string, depth: number, res
 }
 
 function isManagedBootstrapOwnerName(name: string): boolean {
-  return name.startsWith("omo") && name.slice("omo".length).includes("cerberuslabs")
+  return name.startsWith("omop") && name.slice("omop".length).includes("cerberuslabs")
 }
 
 export interface RemoveManagedPathSeams {
@@ -152,9 +152,9 @@ async function pruneEmptyRuntimeDirBestEffort(codexHome: string): Promise<void> 
 
 async function collectInstalledAgentPaths(codexHome: string, configPath: string): Promise<readonly string[]> {
   const manifestPaths: string[] = [
-    join(codexHome, ".tmp", "marketplaces", "cerberuslabs", "plugins", "omo", INSTALLED_AGENTS_MANIFEST),
+    join(codexHome, ".tmp", "marketplaces", "cerberuslabs", "plugins", "omop", INSTALLED_AGENTS_MANIFEST),
   ]
-  const versionRoot = join(codexHome, "plugins", "cache", "cerberuslabs", "omo")
+  const versionRoot = join(codexHome, "plugins", "cache", "cerberuslabs", "omop")
   if (await exists(versionRoot)) {
     const entries = await readdir(versionRoot, { withFileTypes: true })
     for (const entry of entries) {

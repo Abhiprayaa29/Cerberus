@@ -18,9 +18,9 @@ async function createInstalledCodexHome(): Promise<{ readonly codexHome: string;
   const root = await mkdtemp(join(tmpdir(), "omo-codex-doctor-"))
   const codexHome = join(root, ".codex")
   const binDir = join(root, "bin")
-  const pluginRoot = join(codexHome, "plugins", "cache", "cerberuslabs", "omo", "0.1.0")
+  const pluginRoot = join(codexHome, "plugins", "cache", "cerberuslabs", "omop", "0.1.0")
   await mkdir(join(pluginRoot, ".codex-plugin"), { recursive: true })
-  await mkdir(join(codexHome, ".tmp", "marketplaces", "cerberuslabs", "plugins", "omo"), { recursive: true })
+  await mkdir(join(codexHome, ".tmp", "marketplaces", "cerberuslabs", "plugins", "omop"), { recursive: true })
   await mkdir(join(codexHome, "agents"), { recursive: true })
   await mkdir(binDir, { recursive: true })
   await writeFile(join(pluginRoot, ".codex-plugin", "plugin.json"), JSON.stringify({ name: "omop", version: "4.7.5" }))
@@ -35,7 +35,7 @@ async function createInstalledCodexHome(): Promise<{ readonly codexHome: string;
       "[marketplaces.cerberuslabs]",
       `source = "${join(codexHome, "plugins", "cache", "cerberuslabs")}"`,
       "",
-      '[plugins."omo@cerberuslabs"]',
+      '[plugins."omop@cerberuslabs"]',
       "enabled = true",
       "",
       "[agents.plan]",
@@ -44,8 +44,8 @@ async function createInstalledCodexHome(): Promise<{ readonly codexHome: string;
     ].join("\n"),
   )
   await writeFile(join(codexHome, "agents", "plan.toml"), 'name = "plan"\n')
-  await createPlatformBin(binDir, "omo", join(pluginRoot, "dist", "cli.js"))
-  await createPlatformBin(binDir, "omo-rules", join(pluginRoot, "components", "rules", "dist", "cli.js"))
+  await createPlatformBin(binDir, "omop", join(pluginRoot, "dist", "cli.js"))
+  await createPlatformBin(binDir, "omop-rules", join(pluginRoot, "components", "rules", "dist", "cli.js"))
   return { codexHome, binDir, pluginRoot }
 }
 
@@ -64,7 +64,7 @@ describe("codex doctor checks", () => {
     // then
     expect(summary.codexPath).toBe("/usr/local/bin/codex")
     expect(summary.marketplaceName).toBe("cerberuslabs")
-    expect(summary.pluginName).toBe("omo")
+    expect(summary.pluginName).toBe("omop")
     expect(summary.pluginVersion).toBe("4.7.5")
     expect(summary.pluginVersionStamped).toBe(true)
     expect(summary.packageName).toBe("lazycodex-ai")
@@ -73,7 +73,7 @@ describe("codex doctor checks", () => {
     expect(summary.config.pluginEnabled).toBe(true)
     expect(summary.config.pluginsFeatureEnabled).toBe(true)
     expect(summary.config.pluginHooksFeatureEnabled).toBe(true)
-    expect(summary.linkedBins).toEqual(["omo", "omo-rules"])
+    expect(summary.linkedBins).toEqual(["omop", "omop-rules"])
   })
 
   test("#given missing Codex config #when checking Codex doctor #then fails with install guidance", async () => {
@@ -109,7 +109,7 @@ describe("codex doctor checks", () => {
         "[marketplaces.cerberuslabs]",
         `source = "${join(codexHome, "plugins", "cache", "cerberuslabs")}"`,
         "",
-        '[plugins."omo@cerberuslabs"]',
+        '[plugins."omop@cerberuslabs"]',
         "enabled = false",
         "",
         '[plugins."other@example"]',
@@ -139,7 +139,7 @@ describe("codex doctor checks", () => {
         "plugins = true",
         "plugin_hooks = true",
         "",
-        '[plugins."omo@cerberuslabs"]',
+        '[plugins."omop@cerberuslabs"]',
         "enabled = true",
       ].join("\n"),
     )
@@ -159,7 +159,7 @@ describe("codex doctor checks", () => {
   test("#given installed plugin without the omo runtime bin #when checking Codex doctor #then reports the missing omo command", async () => {
     // given
     const { codexHome, binDir } = await createInstalledCodexHome()
-    await rm(join(binDir, process.platform === "win32" ? "omo.cmd" : "omo"))
+    await rm(join(binDir, process.platform === "win32" ? "omo.cmd" : "omop"))
 
     // when
     const result = await checkCodex({
@@ -176,7 +176,7 @@ describe("codex doctor checks", () => {
   test("#given generated omo wrapper points at a deleted runtime target #when checking runtime wrapper #then warns with reinstall guidance", async () => {
     // given
     const { codexHome, binDir, pluginRoot } = await createInstalledCodexHome()
-    const wrapperPath = join(binDir, process.platform === "win32" ? "omo.cmd" : "omo")
+    const wrapperPath = join(binDir, process.platform === "win32" ? "omo.cmd" : "omop")
     await rm(wrapperPath)
     const missingCliPath = join(pluginRoot, "dist", "cli", "index.js")
     await writeFile(
@@ -213,10 +213,10 @@ describe("codex doctor checks", () => {
     expect(result.status).toBe("pass")
     expect(result.details).toContain("Codex: /usr/local/bin/codex")
     expect(result.details).toContain("Marketplace: cerberuslabs")
-    expect(result.details).toContain("Plugin: omo@4.7.5")
+    expect(result.details).toContain("Plugin: omop@4.7.5")
     expect(result.details).toContain("Distribution: lazycodex-ai@4.7.5")
-    expect(result.details).toContain("Enabled plugin: omo@cerberuslabs")
-    expect(result.details).toContain("Linked bins: omo, omo-rules")
+    expect(result.details).toContain("Enabled plugin: omop@cerberuslabs")
+    expect(result.details).toContain("Linked bins: omo, omop-rules")
     expect(result.details).toContain("Agents: plan")
   })
 
@@ -285,6 +285,6 @@ describe("codex doctor checks", () => {
     const content = await readFile(join(codexHome, "config.toml"), "utf8")
 
     // then
-    expect(content).toContain('[plugins."omo@cerberuslabs"]')
+    expect(content).toContain('[plugins."omop@cerberuslabs"]')
   })
 })

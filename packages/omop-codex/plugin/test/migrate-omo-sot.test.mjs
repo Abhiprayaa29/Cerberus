@@ -4,10 +4,10 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
 
-import { migrateOmoSotConfig } from "../scripts/migrate-omo-sot.mjs";
+import { migrateOmoSotConfig } from "../scripts/migrate-omop-sot.mjs";
 
 test("#given no OMO SOT #when seeding #then creates a parseable scaffold once", async () => {
-	const home = await mkdtemp(join(tmpdir(), "omo-sot-seed-"));
+	const home = await mkdtemp(join(tmpdir(), "omop-sot-seed-"));
 
 	const first = await migrateOmoSotConfig({ env: { HOME: home }, seed: true });
 	const before = await readFile(join(home, ".omo", "config.jsonc"), "utf8");
@@ -24,7 +24,7 @@ test("#given no OMO SOT #when seeding #then creates a parseable scaffold once", 
 });
 
 test("#given no OMO SOT and legacy CodeGraph env #when seeding #then creates scaffold with Codex scoped migration", async () => {
-	const home = await mkdtemp(join(tmpdir(), "omo-sot-seed-env-"));
+	const home = await mkdtemp(join(tmpdir(), "omop-sot-seed-env-"));
 
 	await migrateOmoSotConfig({
 		env: {
@@ -51,7 +51,7 @@ test("#given no OMO SOT and legacy CodeGraph env #when seeding #then creates sca
 });
 
 test("#given legacy CodeGraph env #when migrating #then adds Codex scoped codegraph values", async () => {
-	const home = await mkdtemp(join(tmpdir(), "omo-sot-env-"));
+	const home = await mkdtemp(join(tmpdir(), "omop-sot-env-"));
 	await mkdir(join(home, ".omo"), { recursive: true });
 	await writeFile(join(home, ".omo", "config.jsonc"), "{\n}\n");
 
@@ -77,7 +77,7 @@ test("#given legacy CodeGraph env #when migrating #then adds Codex scoped codegr
 });
 
 test("#given existing user SOT #when migrating env #then preserves user values and comments", async () => {
-	const home = await mkdtemp(join(tmpdir(), "omo-sot-preserve-"));
+	const home = await mkdtemp(join(tmpdir(), "omop-sot-preserve-"));
 	const configPath = join(home, ".omo", "config.jsonc");
 	await mkdir(join(home, ".omo"), { recursive: true });
 	await writeFile(
@@ -103,7 +103,7 @@ test("#given existing user SOT #when migrating env #then preserves user values a
 });
 
 test("#given existing Codex scoped SOT #when migrating env #then user value wins", async () => {
-	const home = await mkdtemp(join(tmpdir(), "omo-sot-user-wins-"));
+	const home = await mkdtemp(join(tmpdir(), "omop-sot-user-wins-"));
 	const configPath = join(home, ".omo", "config.jsonc");
 	await mkdir(join(home, ".omo"), { recursive: true });
 	await writeFile(configPath, '{\n  "[codex]": { "codegraph": { "enabled": true } }\n}\n');
@@ -115,7 +115,7 @@ test("#given existing Codex scoped SOT #when migrating env #then user value wins
 });
 
 test("#given opencode scoped SOT #when migrating env #then opencode block is not changed", async () => {
-	const home = await mkdtemp(join(tmpdir(), "omo-sot-opencode-"));
+	const home = await mkdtemp(join(tmpdir(), "omop-sot-opencode-"));
 	const configPath = join(home, ".omo", "config.jsonc");
 	await mkdir(join(home, ".omo"), { recursive: true });
 	await writeFile(configPath, '{\n  "[opencode]": { "codegraph": { "enabled": true } }\n}\n');
@@ -128,7 +128,7 @@ test("#given opencode scoped SOT #when migrating env #then opencode block is not
 });
 
 test("#given malformed existing SOT #when migrating #then leaves it untouched and warns", async () => {
-	const home = await mkdtemp(join(tmpdir(), "omo-sot-malformed-"));
+	const home = await mkdtemp(join(tmpdir(), "omop-sot-malformed-"));
 	const configPath = join(home, ".omo", "config.jsonc");
 	await mkdir(join(home, ".omo"), { recursive: true });
 	await writeFile(configPath, '{ "codegraph":');

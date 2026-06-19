@@ -11,7 +11,7 @@ export const AGENT_NAME_MAP: Record<string, string> = {
 
   // Talos variants → "talos"
   "OmO-Plan": "talos",
-  "omo-plan": "talos",
+  "omop-plan": "talos",
   "Planner-Cerberus": "talos",
   "planner-cerberus": "talos",
   "Talos - Plan Builder": "talos",

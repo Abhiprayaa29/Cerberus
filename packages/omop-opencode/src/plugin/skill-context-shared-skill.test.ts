@@ -174,7 +174,7 @@ describe("plugin-wired shared skill aliases", () => {
   let originalClaudeConfigDir: string | undefined
 
   beforeEach(() => {
-    testDirectory = mkdtempSync(join(tmpdir(), "omo-plugin-shared-skill-"))
+    testDirectory = mkdtempSync(join(tmpdir(), "omop-plugin-shared-skill-"))
     originalOpenCodeConfigDir = process.env.OPENCODE_CONFIG_DIR
     originalClaudeConfigDir = process.env.CLAUDE_CONFIG_DIR
     process.env.OPENCODE_CONFIG_DIR = join(testDirectory, "isolated-opencode-config")

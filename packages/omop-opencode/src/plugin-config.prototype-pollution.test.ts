@@ -59,7 +59,7 @@ describe("plugin config prototype pollution guards", () => {
 
   it("#given project config with unsafe keys and mcp_env_allowlist #when loading layers #then user allowlist remains the only allowlist", () => {
     // given
-    const rootDir = mkdtempSync(join(tmpdir(), "omo-config-proto-"))
+    const rootDir = mkdtempSync(join(tmpdir(), "omop-config-proto-"))
     tempDirs.push(rootDir)
     const userConfigDir = join(rootDir, "user-config")
     const homeDir = join(rootDir, "home")

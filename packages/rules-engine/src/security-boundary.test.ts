@@ -26,7 +26,7 @@ afterEach(() => {
 });
 
 describe("rules-core security boundary", () => {
-  it("#given a project .omo/rules directory symlink escapes the workspace #when finding rule files #then escaped rules are rejected", () => {
+  it("#given a project .omop/rules directory symlink escapes the workspace #when finding rule files #then escaped rules are rejected", () => {
     // given
     const root = createTestRoot("rules-core-project-dir-symlink-escape");
     const projectRoot = join(root, "repo");

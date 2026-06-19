@@ -62,7 +62,7 @@ The installer builds and copies the plugin into `~/.codex/plugins/cache/cerberus
 plugins = true
 plugin_hooks = true
 
-[plugins."omo@cerberuslabs"]
+[plugins."omop@cerberuslabs"]
 enabled = true
 ```
 

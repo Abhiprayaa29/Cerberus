@@ -33,7 +33,7 @@ export const PROJECT_SINGLE_FILES: readonly string[] = [".github/copilot-instruc
 /**
  * User-home rule directories.
  */
-export const USER_HOME_RULE_SUBDIRS: readonly string[] = [".omo/rules", ".opencode/rules", ".claude/rules"];
+export const USER_HOME_RULE_SUBDIRS: readonly string[] = [".omop/rules", ".opencode/rules", ".claude/rules"];
 
 /**
  * User-home single-file rules. The first one to exist wins per "first-match" semantics.
@@ -54,13 +54,13 @@ export const RULE_FILE_EXTENSIONS: readonly string[] = [".md", ".mdc"];
  * Per-rule source priority for deterministic ordering. Lower = earlier.
  */
 export const SOURCE_PRIORITY: ReadonlyMap<RuleSource, number> = new Map([
-	[".omo/rules", 0],
+	[".omop/rules", 0],
 	[".claude/rules", 1],
 	[".cursor/rules", 2],
 	[".github/instructions", 3],
 	[".github/copilot-instructions.md", 4],
 	["CONTEXT.md", 7],
-	["~/.omo/rules", 100],
+	["~/.omop/rules", 100],
 	["~/.opencode/rules", 101],
 	["~/.claude/rules", 102],
 	["plugin-bundled", 200],

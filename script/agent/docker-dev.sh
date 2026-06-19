@@ -8,7 +8,7 @@ set -euo pipefail
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 cd "$REPO_ROOT"
 
-IMAGE="${OMOP_DEV_IMAGE:-omo-dev}"
+IMAGE="${OMOP_DEV_IMAGE:-omop-dev}"
 WORKDIR="/workspaces/oh-my-open-pentest"
 
 echo "[docker-dev] building $IMAGE from .devcontainer/Dockerfile"

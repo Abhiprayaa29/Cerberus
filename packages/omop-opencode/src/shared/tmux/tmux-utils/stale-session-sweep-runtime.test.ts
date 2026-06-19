@@ -45,8 +45,8 @@ describe("sweepStaleOmoAgentSessions runtime runner integration", () => {
 
 		runTmuxCommandMock.mockResolvedValue({
 			success: true,
-			output: "omo-agents-99991\nomo-agents-99992",
-			stdout: "omo-agents-99991\nomo-agents-99992",
+			output: "omop-agents-99991\nomop-agents-99992",
+			stdout: "omop-agents-99991\nomop-agents-99992",
 			stderr: "",
 			exitCode: 0,
 		})

@@ -88,7 +88,7 @@ describe("sweepStaleOmoAgentSessionsWith", () => {
 
 	it("#given sessions with dead PIDs #when sweep called #then each dead session is killed once", async () => {
 		// given
-		fixture.setCandidates(["omo-agents-99991", "omo-agents-99992"])
+		fixture.setCandidates(["omop-agents-99991", "omop-agents-99992"])
 		fixture.setAlive(() => false)
 
 		// when
@@ -96,12 +96,12 @@ describe("sweepStaleOmoAgentSessionsWith", () => {
 
 		// then
 		expect(result).toBe(2)
-		expect(fixture.killed).toEqual(["omo-agents-99991", "omo-agents-99992"])
+		expect(fixture.killed).toEqual(["omop-agents-99991", "omop-agents-99992"])
 	})
 
 	it("#given suffixed sessions with dead PIDs #when sweep called #then they are also killed", async () => {
 		// given
-		fixture.setCandidates(["omo-agents-99991-1", "omo-agents-99992-abc123"])
+		fixture.setCandidates(["omop-agents-99991-1", "omop-agents-99992-abc123"])
 		fixture.setAlive(() => false)
 
 		// when
@@ -109,12 +109,12 @@ describe("sweepStaleOmoAgentSessionsWith", () => {
 
 		// then
 		expect(result).toBe(2)
-		expect(fixture.killed).toEqual(["omo-agents-99991-1", "omo-agents-99992-abc123"])
+		expect(fixture.killed).toEqual(["omop-agents-99991-1", "omop-agents-99992-abc123"])
 	})
 
 	it("#given session matches current PID #when sweep called #then it is NOT killed", async () => {
 		// given
-		fixture.setCandidates([`omo-agents-${fixture.deps.currentPid}`, "omo-agents-99999"])
+		fixture.setCandidates([`omop-agents-${fixture.deps.currentPid}`, "omop-agents-99999"])
 		fixture.setAlive(() => false)
 
 		// when
@@ -122,12 +122,12 @@ describe("sweepStaleOmoAgentSessionsWith", () => {
 
 		// then
 		expect(result).toBe(1)
-		expect(fixture.killed).toEqual(["omo-agents-99999"])
+		expect(fixture.killed).toEqual(["omop-agents-99999"])
 	})
 
 	it("#given session PID is still alive #when sweep called #then it is NOT killed", async () => {
 		// given
-		fixture.setCandidates(["omo-agents-88888"])
+		fixture.setCandidates(["omop-agents-88888"])
 		fixture.setAlive((pid) => pid === 88888)
 
 		// when
@@ -140,7 +140,7 @@ describe("sweepStaleOmoAgentSessionsWith", () => {
 
 	it("#given killSession returns false #when sweep called #then session is not counted toward killedCount", async () => {
 		// given
-		fixture.setCandidates(["omo-agents-55555"])
+		fixture.setCandidates(["omop-agents-55555"])
 		fixture.setAlive(() => false)
 		fixture.killSessionMock.mockImplementation(async () => false)
 
@@ -152,9 +152,9 @@ describe("sweepStaleOmoAgentSessionsWith", () => {
 		expect(fixture.killSessionMock).toHaveBeenCalledTimes(1)
 	})
 
-	it("#given non-matching sessions mixed in #when sweep called #then only supported omo-agents session names are considered", async () => {
+	it("#given non-matching sessions mixed in #when sweep called #then only supported omop-agents session names are considered", async () => {
 		// given
-		fixture.setCandidates(["main", "omo-agents-99999", "omo-agents-99999-1-2", "other-session", "omo-agents-abc"])
+		fixture.setCandidates(["main", "omop-agents-99999", "omop-agents-99999-1-2", "other-session", "omop-agents-abc"])
 		fixture.setAlive(() => false)
 
 		// when
@@ -162,7 +162,7 @@ describe("sweepStaleOmoAgentSessionsWith", () => {
 
 		// then
 		expect(result).toBe(1)
-		expect(fixture.killed).toEqual(["omo-agents-99999"])
+		expect(fixture.killed).toEqual(["omop-agents-99999"])
 	})
 })
 
@@ -175,7 +175,7 @@ describe("sweepTmuxSessionsWith", () => {
 
 	it("#given custom predicate for team sessions #when shared sweep called #then only matching sessions are killed", async () => {
 		// given
-		fixture.setCandidates(["omo-team-A", "omo-team-B", "main", "omo-agents-99999"])
+		fixture.setCandidates(["omop-team-A", "omop-team-B", "main", "omop-agents-99999"])
 
 		// when
 		const result = await sweepTmuxSessionsWith(fixture.deps, {
@@ -183,7 +183,7 @@ describe("sweepTmuxSessionsWith", () => {
 		})
 
 		// then
-		expect(result).toEqual(["omo-team-A", "omo-team-B"])
-		expect(fixture.killed).toEqual(["omo-team-A", "omo-team-B"])
+		expect(result).toEqual(["omop-team-A", "omop-team-B"])
+		expect(fixture.killed).toEqual(["omop-team-A", "omop-team-B"])
 	})
 })

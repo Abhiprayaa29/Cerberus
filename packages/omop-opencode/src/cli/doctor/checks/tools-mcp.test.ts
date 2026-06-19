@@ -25,7 +25,7 @@ afterEach(() => {
 describe("getUserMcpInfo", () => {
   it("loads valid project MCP servers", async () => {
     // given
-    const workspaceDirectory = createTemporaryDirectory("omo-tools-mcp-valid-")
+    const workspaceDirectory = createTemporaryDirectory("omop-tools-mcp-valid-")
     process.chdir(workspaceDirectory)
     writeFileSync(
       join(workspaceDirectory, ".mcp.json"),
@@ -52,7 +52,7 @@ describe("getUserMcpInfo", () => {
 
   it("skips malformed MCP config files", async () => {
     // given
-    const workspaceDirectory = createTemporaryDirectory("omo-tools-mcp-malformed-")
+    const workspaceDirectory = createTemporaryDirectory("omop-tools-mcp-malformed-")
     process.chdir(workspaceDirectory)
     writeFileSync(join(workspaceDirectory, ".mcp.json"), "{", "utf-8")
 
@@ -67,7 +67,7 @@ describe("getUserMcpInfo", () => {
 
   it("marks non-object MCP server entries invalid", async () => {
     // given
-    const workspaceDirectory = createTemporaryDirectory("omo-tools-mcp-invalid-")
+    const workspaceDirectory = createTemporaryDirectory("omop-tools-mcp-invalid-")
     mkdirSync(join(workspaceDirectory, ".claude"), { recursive: true })
     process.chdir(workspaceDirectory)
     writeFileSync(

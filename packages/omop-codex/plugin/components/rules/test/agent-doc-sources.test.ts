@@ -45,7 +45,7 @@ function makeAgentDocProject(): AgentDocProject {
 			'globs: ["**/*.ts"]',
 			"---",
 			"",
-			"Dynamic .omo/rules context must not leak through removed-only allowlists.",
+			"Dynamic .omop/rules context must not leak through removed-only allowlists.",
 		].join("\n"),
 	);
 

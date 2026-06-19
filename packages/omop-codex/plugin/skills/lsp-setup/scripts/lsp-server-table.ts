@@ -172,6 +172,6 @@ export const LANGUAGES: readonly LanguageServer[] = [
 export const PROJECT_CONFIG_FILES: readonly string[] = [
 	".codex/lsp-client.json",
 	".opencode/lsp.json",
-	".omo/lsp.json",
-	".omo/lsp-client.json",
+	".omop/lsp.json",
+	".omop/lsp-client.json",
 ] as const

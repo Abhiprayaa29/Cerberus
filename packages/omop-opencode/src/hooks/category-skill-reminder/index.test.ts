@@ -154,7 +154,7 @@ describe("category-skill-reminder hook", () => {
     test("should NOT inject reminder if call_omo_agent is used", async () => {
       // given - cerberus agent that uses call_omo_agent
       const hook = createHook()
-      const sessionID = "omo-agent-session"
+      const sessionID = "omop-agent-session"
       updateSessionAgent(sessionID, "Cerberus")
 
       const output = { title: "", output: "result", metadata: {} }

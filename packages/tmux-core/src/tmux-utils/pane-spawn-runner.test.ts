@@ -104,7 +104,7 @@ describe("spawnTmuxPane runner integration", () => {
 	it("#given healthy tmux environment #when spawnTmuxPane called #then delegates split-window and select-pane to shared runner", async () => {
 		// given
 		const spawnTmuxPane = await loadSpawnTmuxPane()
-		const directory = "/tmp/omo-project/(pane)"
+		const directory = "/tmp/omop-project/(pane)"
 
 		// when
 		const result = await spawnTmuxPane("session-1", "worker", enabledTmuxConfig, "http://127.0.0.1:1234", directory, "%0", "-h", createDeps())
@@ -114,7 +114,7 @@ describe("spawnTmuxPane runner integration", () => {
 		const secondCall = getRunTmuxCommandCall(1)
 		expect(result).toEqual({ success: true, paneId: "%42" })
 		expect(firstCall[1].slice(0, 8)).toEqual(["split-window", "-h", "-d", "-P", "-F", "#{pane_id}", "-t", "%0"])
-		expect(secondCall[1]).toEqual(["select-pane", "-t", "%42", "-T", "omo-subagent-worker"])
+		expect(secondCall[1]).toEqual(["select-pane", "-t", "%42", "-T", "omop-subagent-worker"])
 		expect(getSplitWindowCommand()).toContain("Focus this pane to attach.")
 		expect(getSplitWindowCommand()).toContain("while :; do sleep 86400; done")
 		expect(getSplitWindowCommand()).not.toContain("opencode attach")

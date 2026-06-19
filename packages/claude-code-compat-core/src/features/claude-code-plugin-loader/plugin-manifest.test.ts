@@ -20,7 +20,7 @@ describe("loadPluginManifest", () => {
 
   it("#given both manifest layouts #when loading a manifest directly #then the Claude plugin layout wins", async () => {
     //#given
-    const installPath = createTemporaryDirectory("omo-manifest-layout-")
+    const installPath = createTemporaryDirectory("omop-manifest-layout-")
     mkdirSync(join(installPath, ".claude-plugin"), { recursive: true })
     writeFileSync(
       join(installPath, ".claude-plugin", "plugin.json"),

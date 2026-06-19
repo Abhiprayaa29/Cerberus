@@ -13,19 +13,19 @@ describe("sweepStaleOmoAttachPanesWith", () => {
 			listCandidatePanes: async () => [
 				{
 					paneId: "%dead",
-					title: "omo-subagent-dead",
+					title: "omop-subagent-dead",
 					attachServerUrl: "",
 					commandLine: `/bin/sh -c "opencode attach http://127.0.0.1:4101 --session ses_dead --dir /tmp/project"`,
 				},
 				{
 					paneId: "%live",
-					title: "omo-subagent-live",
+					title: "omop-subagent-live",
 					attachServerUrl: "",
 					commandLine: `opencode attach 'http://127.0.0.1:4102/' --session 'ses_live' --dir '/tmp/project'`,
 				},
 				{
 					paneId: "%team",
-					title: "omo-team-member",
+					title: "omop-team-member",
 					attachServerUrl: "",
 					commandLine: `opencode attach 'http://127.0.0.1:4104/' --session 'ses_team' --dir '/tmp/project'`,
 				},
@@ -96,7 +96,7 @@ describe("sweepStaleOmoAttachPanesWith", () => {
 			listCandidatePanes: async () => [
 				{
 					paneId: "%stubborn",
-					title: "omo-subagent-stubborn",
+					title: "omop-subagent-stubborn",
 					attachServerUrl: "",
 					commandLine: "opencode attach http://127.0.0.1:4103 --session ses_dead",
 				},
@@ -123,13 +123,13 @@ describe("sweepStaleOmoAttachPanesWith", () => {
 			listCandidatePanes: async () => [
 				{
 					paneId: "%bad-health",
-					title: "omo-subagent-bad-health",
+					title: "omop-subagent-bad-health",
 					attachServerUrl: "",
 					commandLine: "opencode attach http://127.0.0.1:4106 --session ses_bad",
 				},
 				{
 					paneId: "%dead",
-					title: "omo-subagent-dead",
+					title: "omop-subagent-dead",
 					attachServerUrl: "",
 					commandLine: "opencode attach http://127.0.0.1:4107 --session ses_dead",
 				},
@@ -216,19 +216,19 @@ describe("sweepStaleOmoAttachPanesWith", () => {
 				},
 				{
 					paneId: "%command-private",
-					title: "omo-subagent-private",
+					title: "omop-subagent-private",
 					attachServerUrl: "",
 					commandLine: "opencode attach http://192.168.1.20:4108 --session ses_private",
 				},
 				{
 					paneId: "%command-external",
-					title: "omo-team-external",
+					title: "omop-team-external",
 					attachServerUrl: "",
 					commandLine: "opencode attach 'https://example.org:4108/' --session ses_external",
 				},
 				{
 					paneId: "%local",
-					title: "omo-subagent-local",
+					title: "omop-subagent-local",
 					attachServerUrl: "",
 					commandLine: "opencode attach http://localhost:4108 --session ses_local",
 				},

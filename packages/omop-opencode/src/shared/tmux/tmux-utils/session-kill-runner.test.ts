@@ -51,13 +51,13 @@ describe("killTmuxSessionIfExists runner integration", () => {
 		const killTmuxSessionIfExists = await loadKillTmuxSessionIfExists()
 
 		// when
-		const result = await killTmuxSessionIfExists("omo-agents")
+		const result = await killTmuxSessionIfExists("omop-agents")
 
 		// then
 		expect(result).toBe(true)
 		expect(runTmuxCommandMock.mock.calls).toEqual([
-			["sh", ["has-session", "-t", "omo-agents"]],
-			["sh", ["kill-session", "-t", "omo-agents"]],
+			["sh", ["has-session", "-t", "omop-agents"]],
+			["sh", ["kill-session", "-t", "omop-agents"]],
 		])
 	})
 })

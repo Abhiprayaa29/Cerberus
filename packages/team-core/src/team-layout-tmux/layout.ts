@@ -208,7 +208,7 @@ export async function removeTeamLayout(
       : undefined
 
     if (cleanupTarget?.ownedSession !== false) {
-      await resolvedDeps.runTmuxCommand(tmuxPath, ["kill-session", "-t", cleanupTarget?.targetSessionId ?? `omo-team-${teamRunId}`])
+      await resolvedDeps.runTmuxCommand(tmuxPath, ["kill-session", "-t", cleanupTarget?.targetSessionId ?? `omop-team-${teamRunId}`])
       return
     }
 

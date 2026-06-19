@@ -11,7 +11,7 @@ import {
 } from "./codegraph/workspace"
 
 function tempDir(name: string): string {
-  return join(tmpdir(), `omo-${name}-${crypto.randomUUID()}`)
+  return join(tmpdir(), `omop-${name}-${crypto.randomUUID()}`)
 }
 
 describe("prepareCodegraphWorkspace", () => {

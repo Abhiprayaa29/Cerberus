@@ -17,7 +17,7 @@ const BUNDLED_EXPLORER_TOML = 'description = "Scoutr agent"\nmodel_reasoning_eff
 const BUNDLED_METIS_TOML = 'description = "Vanguard agent"\nmodel_reasoning_effort = "high"\n';
 
 async function withSetupFixture(run) {
-	const root = await mkdtemp(join(tmpdir(), "omo-bootstrap-setup-"));
+	const root = await mkdtemp(join(tmpdir(), "omop-bootstrap-setup-"));
 	try {
 		const pluginRoot = join(root, "plugin");
 		const pluginData = join(root, "plugin-data");
@@ -26,7 +26,7 @@ async function withSetupFixture(run) {
 		await mkdir(join(pluginRoot, "hooks"), { recursive: true });
 		await mkdir(join(pluginRoot, "components", "fullscan", "agents"), { recursive: true });
 		// A complete npx-style payload ships dist/cli; the marketplace-payload
-		// (no dist/cli -> degraded omo-cli) path is covered by
+		// (no dist/cli -> degraded omop-cli) path is covered by
 		// bootstrap-binlinks.test.mjs.
 		await mkdir(join(pluginRoot, "dist", "cli"), { recursive: true });
 		await writeFile(join(pluginRoot, "dist", "cli", "index.js"), "");
@@ -89,12 +89,12 @@ test("#given a marketplace-flow CODEX_HOME #when the worker setup runs #then con
 
 		assert.deepEqual(outcome.degraded, []);
 		const config = await readConfig(fixture);
-		assert.match(config, /\[plugins\."omo@cerberuslabs"\]\nenabled = true/);
-		assert.match(config, /\[plugins\."omo@cerberuslabs"\.mcp_servers\.context7\]\nenabled = true/);
-		assert.match(config, /\[plugins\."omo@cerberuslabs"\.mcp_servers\.git_bash\]\nenabled = false/);
+		assert.match(config, /\[plugins\."omop@cerberuslabs"\]\nenabled = true/);
+		assert.match(config, /\[plugins\."omop@cerberuslabs"\.mcp_servers\.context7\]\nenabled = true/);
+		assert.match(config, /\[plugins\."omop@cerberuslabs"\.mcp_servers\.git_bash\]\nenabled = false/);
 		assert.match(
 			config,
-			/\[hooks\.state\."omo@cerberuslabs:hooks\/hooks\.json:session_start:0:0"\]\ntrusted_hash = "sha256:[0-9a-f]{64}"/,
+			/\[hooks\.state\."omop@cerberuslabs:hooks\/hooks\.json:session_start:0:0"\]\ntrusted_hash = "sha256:[0-9a-f]{64}"/,
 		);
 		assert.match(config, /\[agents\.explorer\]\nconfig_file = "\.\/agents\/explorer\.toml"/);
 		assert.match(config, /\[agents\.vanguard\]\nconfig_file = "\.\/agents\/vanguard\.toml"/);
@@ -223,8 +223,8 @@ test("#given win32 without Git Bash and auto-install skipped #when the worker se
 		const gitBashEntries = outcome.degraded.filter((entry) => entry.component === "git-bash");
 		assert.equal(gitBashEntries.length, 1);
 		const config = await readConfig(fixture);
-		assert.match(config, /\[plugins\."omo@cerberuslabs"\.mcp_servers\.git_bash\]\nenabled = false/);
-		assert.match(config, /\[plugins\."omo@cerberuslabs"\]\nenabled = true/, "setup must continue past a missing Git Bash");
+		assert.match(config, /\[plugins\."omop@cerberuslabs"\.mcp_servers\.git_bash\]\nenabled = false/);
+		assert.match(config, /\[plugins\."omop@cerberuslabs"\]\nenabled = true/, "setup must continue past a missing Git Bash");
 	});
 });
 
@@ -241,7 +241,7 @@ test("#given win32 with Git Bash and OMOP_CODEX_GIT_BASH_PATH #when the worker s
 
 		assert.deepEqual(outcome.degraded, []);
 		const config = await readConfig(fixture);
-		assert.match(config, /\[plugins\."omo@cerberuslabs"\.mcp_servers\.git_bash\]\nenabled = true/);
+		assert.match(config, /\[plugins\."omop@cerberuslabs"\.mcp_servers\.git_bash\]\nenabled = true/);
 		const manifest = JSON.parse(await readFile(join(fixture.pluginRoot, ".mcp.json"), "utf8"));
 		assert.equal(manifest.mcpServers.git_bash.env.OMOP_CODEX_GIT_BASH_PATH, bashPath);
 	});
@@ -274,7 +274,7 @@ test("#given the default worker step list #when the worker runs end to end #then
 		assert.equal(state.completedForVersion, PLUGIN_VERSION);
 		assert.equal(state.lastStatus, "success");
 		const config = await readConfig(fixture);
-		assert.match(config, /\[plugins\."omo@cerberuslabs"\]\nenabled = true/);
+		assert.match(config, /\[plugins\."omop@cerberuslabs"\]\nenabled = true/);
 		assert.ok(config.includes(`[marketplaces.cerberuslabs]\n${MARKETPLACE_SOURCE_LINE}`));
 	});
 });

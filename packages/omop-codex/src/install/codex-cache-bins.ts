@@ -7,7 +7,7 @@ import { RUNTIME_WRAPPER_MARKER, posixRuntimeWrapper, windowsRuntimeWrapper } fr
 
 type LinkPlatform = NodeJS.Platform
 
-const RESERVED_NESTED_BIN_NAMES = new Set(["omo", "lazycodex", "lazycodex-ai", "oh-my-open-pentest", "oh-my-open-pentest"])
+const RESERVED_NESTED_BIN_NAMES = new Set(["omop", "lazycodex", "lazycodex-ai", "oh-my-open-pentest", "oh-my-open-pentest"])
 
 export async function linkCachedPluginBins(input: {
   readonly binDir: string
@@ -39,12 +39,12 @@ export async function linkRootRuntimeBin(input: {
   const platform = input.platform ?? process.platform
   await mkdir(input.binDir, { recursive: true })
   if (platform === "win32") {
-    const linkPath = join(input.binDir, "omo.cmd")
+    const linkPath = join(input.binDir, "omop.cmd")
     await replaceRuntimeWrapper(linkPath, windowsRuntimeWrapper(cliPath, input.codexHome, input.binDir, nodeCliPath))
     return { name: "omop", path: linkPath, target: cliPath }
   }
 
-  const linkPath = join(input.binDir, "omo")
+  const linkPath = join(input.binDir, "omop")
   await replaceRuntimeWrapper(linkPath, posixRuntimeWrapper(cliPath, input.codexHome, input.binDir, nodeCliPath))
   await chmod(linkPath, 0o755)
   return { name: "omop", path: linkPath, target: cliPath }
@@ -155,7 +155,7 @@ async function replaceCommandShim(linkPath: string, targetPath: string): Promise
 }
 
 async function replaceRuntimeWrapper(linkPath: string, content: string): Promise<void> {
-  if (await existingNonRuntimeWrapper(linkPath)) throw new Error(`${linkPath} already exists and is not a generated OMO runtime wrapper`)
+  if (await existingNonRuntimeWrapper(linkPath)) throw new Error(`${linkPath} already exists and is not a generated OMOP runtime wrapper`)
   await rm(linkPath, { force: true })
   await writeFile(linkPath, content)
 }
@@ -168,7 +168,7 @@ async function existingNonRuntimeWrapper(path: string): Promise<boolean> {
     const content = await readFile(path, "utf8")
     return !content.includes(RUNTIME_WRAPPER_MARKER) &&
            !content.includes("OMO_GENERATED_RUNTIME_WRAPPER") &&
-           !content.includes("omo runtime wrapper")
+           !content.includes("omop runtime wrapper")
   } catch (error) {
     if (isNodeErrorWithCode(error) && error.code === "ENOENT") return false
     throw error

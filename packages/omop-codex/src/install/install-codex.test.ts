@@ -113,7 +113,7 @@ describe("install-codex", () => {
     const codexHome = await mkdtemp(join(tmpdir(), "omop-codex-home-"))
     const binDir = await mkdtemp(join(tmpdir(), "omop-codex-bin-"))
     const repoRoot = process.cwd()
-    const legacyCacheRoot = join(codexHome, "plugins", "cache", "code-yeongyu-codex-plugins", "omo", "0.1.0")
+    const legacyCacheRoot = join(codexHome, "plugins", "cache", "code-yeongyu-codex-plugins", "omop", "0.1.0")
     await mkdir(legacyCacheRoot, { recursive: true })
     await writeFile(join(legacyCacheRoot, ".mcp.json"), JSON.stringify({ mcpServers: { lsp: { args: ["old-lsp"] } } }))
 
@@ -130,14 +130,14 @@ describe("install-codex", () => {
     expect(configContent).toContain(`source = ${formatTomlString(join(codexHome, "plugins", "cache", "cerberuslabs"))}`)
     expect(configContent).not.toContain('source = "https://github.com/code-yeongyu/lazycodex.git"')
     expect(configContent).not.toContain('ref = "main"')
-    expect(configContent).toContain("[plugins.\"omo@cerberuslabs\"]")
+    expect(configContent).toContain("[plugins.\"omop@cerberuslabs\"]")
     expect(configContent).toContain("[hooks.state.")
     expect(configContent).not.toContain("code-yeongyu-codex-plugins")
     expect(configContent).not.toContain("[marketplaces.lazycodex]")
 
     const pluginPath = first.installed[0]?.path
     expect(pluginPath).toBeDefined()
-    expect(pluginPath).toContain(join("plugins", "cache", "cerberuslabs", "omo"))
+    expect(pluginPath).toContain(join("plugins", "cache", "cerberuslabs", "omop"))
     const stats = await stat(pluginPath ?? "")
     expect(stats.isDirectory()).toBe(true)
     const rootPackage = JSON.parse(await readFile(join(repoRoot, "package.json"), "utf8")) as { readonly name: string; readonly version: string }
@@ -178,7 +178,7 @@ describe("install-codex", () => {
     expect(marketplace.plugins).toEqual([{ name: "omop", source: { source: "local", path: `./omo/${rootPackage.version}` } }])
     let legacyCacheMissing = false
     try {
-      await stat(join(codexHome, "plugins", "cache", "code-yeongyu-codex-plugins", "omo"))
+      await stat(join(codexHome, "plugins", "cache", "code-yeongyu-codex-plugins", "omop"))
     } catch (error) {
       legacyCacheMissing = error instanceof Error
     }
@@ -206,7 +206,7 @@ describe("install-codex", () => {
     })
 
     // then
-    const sotInvocation = invocations.find((invocation) => invocation.args.some((arg) => arg.endsWith("migrate-omo-sot.mjs")))
+    const sotInvocation = invocations.find((invocation) => invocation.args.some((arg) => arg.endsWith("migrate-omop-sot.mjs")))
     expect(sotInvocation?.command).toBe(process.execPath)
     expect(sotInvocation?.args).toContain("--seed")
     expect(sotInvocation?.home).toBe(home)
@@ -231,7 +231,7 @@ describe("install-codex", () => {
 
     // then
     const configContent = await readFile(join(codexHome, "config.toml"), "utf8")
-    expect(configContent).toContain('[plugins."omo@cerberuslabs".mcp_servers.git_bash]')
+    expect(configContent).toContain('[plugins."omop@cerberuslabs".mcp_servers.git_bash]')
     expect(configContent).toContain("enabled = true")
     expect(configContent).toContain("pre_tool_use")
     expect(configContent).toContain("post_compact")
@@ -262,7 +262,7 @@ describe("install-codex", () => {
 
     // then
     const configContent = await readFile(join(codexHome, "config.toml"), "utf8")
-    expect(configContent).toContain('[plugins."omo@cerberuslabs".mcp_servers.git_bash]')
+    expect(configContent).toContain('[plugins."omop@cerberuslabs".mcp_servers.git_bash]')
     expect(configContent).toContain("enabled = false")
     const pluginPath = result.installed[0]?.path ?? ""
     const mcpManifest = JSON.parse(await readFile(join(pluginPath, ".mcp.json"), "utf8")) as {
@@ -287,7 +287,7 @@ describe("install-codex", () => {
     expect(wrapperWarnings.length).toBeGreaterThan(0)
     expect(wrapperWarnings.join("\n")).toContain(cliPath)
     const linkedNames = await readdir(binDir)
-    const rootCliBinName = process.platform === "win32" ? "omo.cmd" : "omo"
+    const rootCliBinName = process.platform === "win32" ? "omo.cmd" : "omop"
     expect(linkedNames).not.toContain(rootCliBinName)
   }, { timeout: INSTALL_CODEX_INTEGRATION_TEST_TIMEOUT_MS })
 

@@ -53,7 +53,7 @@ function createWindowState(overrides?: Partial<WindowState>): WindowState {
 function createContext(overrides?: Partial<ExecuteContext>): ExecuteContext {
 	return {
 		config: createConfig(),
-		directory: "/tmp/omo-project",
+		directory: "/tmp/omop-project",
 		serverUrl: "http://localhost:4096",
 		windowState: createWindowState(),
 		...overrides,

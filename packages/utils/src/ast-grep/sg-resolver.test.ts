@@ -7,7 +7,7 @@ import { findSgBinarySync } from "./sg-resolver"
 import { SG_PATH_ENV_KEY } from "./types"
 
 function tempDir(name: string): string {
-  return join(tmpdir(), `omo-${name}-${crypto.randomUUID()}`)
+  return join(tmpdir(), `omop-${name}-${crypto.randomUUID()}`)
 }
 
 function writeExecutable(filePath: string): void {

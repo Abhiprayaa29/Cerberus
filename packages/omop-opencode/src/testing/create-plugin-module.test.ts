@@ -143,7 +143,7 @@ describe("createPluginModule()", () => {
     it("#then startup self-heals the matching TUI plugin entry", async () => {
       // given
       const originalConfigDir = process.env.OPENCODE_CONFIG_DIR
-      const configDir = mkdtempSync(join(tmpdir(), "omo-server-tui-entry-"))
+      const configDir = mkdtempSync(join(tmpdir(), "omop-server-tui-entry-"))
       process.env.OPENCODE_CONFIG_DIR = configDir
       writeFileSync(join(configDir, "opencode.json"), JSON.stringify({ plugin: [PLUGIN_NAME] }), "utf-8")
 
@@ -172,7 +172,7 @@ describe("createPluginModule()", () => {
     it("#given sidebar is disabled #then startup does not write a TUI plugin entry", async () => {
       // given
       const originalConfigDir = process.env.OPENCODE_CONFIG_DIR
-      const configDir = mkdtempSync(join(tmpdir(), "omo-server-tui-disabled-"))
+      const configDir = mkdtempSync(join(tmpdir(), "omop-server-tui-disabled-"))
       process.env.OPENCODE_CONFIG_DIR = configDir
       writeFileSync(join(configDir, "opencode.json"), JSON.stringify({ plugin: [PLUGIN_NAME] }), "utf-8")
 

@@ -73,12 +73,12 @@ After each fix-commit-push: `gh pr checks --watch` to re-enter gate
 Once all 3 gates pass:
 ```bash
 gh pr merge --squash --delete-branch
-git worktree remove ../omo-wt/fix-atlas-worktree-path-crash
+git worktree remove ../omop-wt/fix-atlas-worktree-path-crash
 ```
 
 On merge failure (conflicts):
 ```bash
-cd ../omo-wt/fix-atlas-worktree-path-crash
+cd ../omop-wt/fix-atlas-worktree-path-crash
 git fetch origin dev
 git rebase origin/dev
 # Resolve conflicts if any

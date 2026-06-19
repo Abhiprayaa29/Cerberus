@@ -119,8 +119,8 @@ pass "doctor produces output"
 # When doctor resolves ast-grep, then it reports that exact path.
 FAKE_ENV_SG="$OUTPUT_DIR/fake-env/sg"
 fake_sg "$FAKE_ENV_SG"
-OMOP_AST_GREP_SG_PATH="$FAKE_ENV_SG" $HELPER doctor > "$OUTPUT_DIR/omo-env.out" 2>&1
-grep -Fq "ast-grep binary: $FAKE_ENV_SG" "$OUTPUT_DIR/omo-env.out" || fail "OMOP_AST_GREP_SG_PATH was not preferred: $(cat "$OUTPUT_DIR/omo-env.out")"
+OMOP_AST_GREP_SG_PATH="$FAKE_ENV_SG" $HELPER doctor > "$OUTPUT_DIR/omop-env.out" 2>&1
+grep -Fq "ast-grep binary: $FAKE_ENV_SG" "$OUTPUT_DIR/omop-env.out" || fail "OMOP_AST_GREP_SG_PATH was not preferred: $(cat "$OUTPUT_DIR/omop-env.out")"
 pass "OMOP_AST_GREP_SG_PATH resolves first"
 
 # Given HOME has an OMO runtime sg executable.
@@ -131,10 +131,10 @@ RUNTIME_BIN="sg"
 case "$RUNTIME_SLUG" in
   win32-*) RUNTIME_BIN="sg.exe" ;;
 esac
-FAKE_RUNTIME_SG="$RUNTIME_HOME/.omo/runtime/ast-grep/$RUNTIME_SLUG/$RUNTIME_BIN"
+FAKE_RUNTIME_SG="$RUNTIME_HOME/.omop/runtime/ast-grep/$RUNTIME_SLUG/$RUNTIME_BIN"
 fake_sg "$FAKE_RUNTIME_SG"
-HOME="$RUNTIME_HOME" CODEX_HOME= OMOP_AST_GREP_SG_PATH= $HELPER doctor > "$OUTPUT_DIR/omo-runtime.out" 2>&1
-grep -Fq "ast-grep binary: $FAKE_RUNTIME_SG" "$OUTPUT_DIR/omo-runtime.out" || fail "OMO HOME runtime was not resolved: $(cat "$OUTPUT_DIR/omo-runtime.out")"
+HOME="$RUNTIME_HOME" CODEX_HOME= OMOP_AST_GREP_SG_PATH= $HELPER doctor > "$OUTPUT_DIR/omop-runtime.out" 2>&1
+grep -Fq "ast-grep binary: $FAKE_RUNTIME_SG" "$OUTPUT_DIR/omop-runtime.out" || fail "OMO HOME runtime was not resolved: $(cat "$OUTPUT_DIR/omop-runtime.out")"
 pass "OMO HOME runtime resolves before standalone fallback"
 
 # 9. search w/o binary => either runs successfully (binary found) OR exits 3 with hint

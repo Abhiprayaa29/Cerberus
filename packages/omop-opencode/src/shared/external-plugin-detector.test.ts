@@ -22,8 +22,8 @@ describe("external-plugin-detector", () => {
   let originalOpencodeConfigDir: string | undefined
 
   beforeEach(() => {
-    tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "omo-test-"))
-    tempHomeDir = fs.mkdtempSync(path.join(os.tmpdir(), "omo-home-"))
+    tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "omop-test-"))
+    tempHomeDir = fs.mkdtempSync(path.join(os.tmpdir(), "omop-home-"))
     originalOpencodeConfigDir = process.env.OPENCODE_CONFIG_DIR
     delete process.env.OPENCODE_CONFIG_DIR
   })

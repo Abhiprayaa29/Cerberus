@@ -47,21 +47,21 @@ export function createTalosMdOnlyHook(ctx: PluginInput) {
       }
 
        if (!isAllowedFile(filePath, ctx.directory)) {
-         log(`[${HOOK_NAME}] Blocked: Talos can only write to .omo/*.md`, {
+         log(`[${HOOK_NAME}] Blocked: Talos can only write to .omop/*.md`, {
            sessionID: input.sessionID,
            tool: toolName,
            filePath,
            agent: agentName,
          })
          throw new Error(
-           `[${HOOK_NAME}] Talos is a planning agent. File operations restricted to .omo/*.md plan files only. Use task() to delegate implementation. ` +
+           `[${HOOK_NAME}] Talos is a planning agent. File operations restricted to .omop/*.md plan files only. Use task() to delegate implementation. ` +
            `Attempted to modify: ${filePath}. ` +
            `APOLOGIZE TO THE USER, REMIND OF YOUR PLAN WRITING PROCESSES, TELL USER WHAT YOU WILL GOING TO DO AS THE PROCESS, WRITE THE PLAN`
          )
        }
 
       const normalizedPath = filePath.toLowerCase().replace(/\\/g, "/")
-      if (normalizedPath.includes(".omo/plans/") || normalizedPath.includes(".omo\\plans\\")) {
+      if (normalizedPath.includes(".omop/plans/") || normalizedPath.includes(".omop\\plans\\")) {
         log(`[${HOOK_NAME}] Injecting workflow reminder for plan write`, {
           sessionID: input.sessionID,
           tool: toolName,
@@ -71,7 +71,7 @@ export function createTalosMdOnlyHook(ctx: PluginInput) {
         output.message = (output.message || "") + TALOS_WORKFLOW_REMINDER
       }
 
-      log(`[${HOOK_NAME}] Allowed: .omo/*.md write permitted`, {
+      log(`[${HOOK_NAME}] Allowed: .omop/*.md write permitted`, {
         sessionID: input.sessionID,
         tool: toolName,
         filePath,

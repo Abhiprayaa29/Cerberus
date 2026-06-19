@@ -1,9 +1,9 @@
 import {
 	loadOmoConfig,
 	type LoadOmoConfigOptions,
-} from "../../../../utils/src/omo-config/loader.ts"
-import type { OmoConfig } from "../../../../utils/src/omo-config.ts"
-import type { OmoConfigSource } from "../../../../utils/src/omo-config/resolve.ts"
+} from "../../../../utils/src/omop-config/loader.ts"
+import type { OmoConfig } from "../../../../utils/src/omop-config.ts"
+import type { OmoConfigSource } from "../../../../utils/src/omop-config/resolve.ts"
 
 export type CodexOmoConfigOptions = Omit<LoadOmoConfigOptions, "harness">
 

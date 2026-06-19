@@ -18,7 +18,7 @@ import { findRecentSessionPlanPath } from "./session-plan-affinity"
 
 export const HOOK_NAME = "start-work" as const
 const START_WORK_TEMPLATE_MARKER = "You are starting a Cerberus work session."
-const CONTEXT_INFO_MARKER = "<!-- omo-start-work-context -->"
+const CONTEXT_INFO_MARKER = "<!-- omop-start-work-context -->"
 
 interface StartWorkHookInput {
   sessionID: string

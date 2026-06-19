@@ -22,7 +22,7 @@ Full schema: [`src/config/schema/team-mode.ts`](../../config/schema/team-mode.ts
     "max_messages_per_run": .0000,          // ...∞
     "max_wall_clock_minutes": .20,          // ...∞
     "max_member_turns": 500,                // ...∞
-    "base_dir": null,                       // optional override of ~/.omo/teams or <project>/.omo/teams
+    "base_dir": null,                       // optional override of ~/.omop/teams or <project>/.omop/teams
     "message_payload_max_bytes": 32768,     // .02...∞ — per-message payload cap
     "recipient_unread_max_bytes": 262...,   // .02...∞ — per-recipient inbox cap
     "mailbox_poll_interval_ms": 3000        // 500..∞ — recipient poll cadence
@@ -104,8 +104,8 @@ team-mode/
 ## STORAGE LAYOUT
 
 ```
-~/.omo/teams/{name}/                       # user scope
-<project>/.omo/teams/{name}/               # project scope (wins on collision)
+~/.omop/teams/{name}/                       # user scope
+<project>/.omop/teams/{name}/               # project scope (wins on collision)
   ├── config.json                          # TeamSpec
   ├── state.json                           # runtime: members, sessionIDs, lifecycle
   ├── mailbox/                             # one .jsonl per recipient

@@ -7,22 +7,22 @@ import { fileURLToPath } from "node:url";
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
 
 const EXPECTED_COMPONENT_BINS = new Map([
-	["comment-checker", "omo-comment-checker"],
-	["lsp", "omo-lsp"],
-	["rules", "omo-rules"],
-	["start-work-continuation", "omo-start-work-continuation"],
-	["telemetry", "omo-telemetry"],
-	["fullscan", "omo-fullscan"],
-	["pentest-loop", "omo-pentest-loop"],
+	["comment-checker", "omop-comment-checker"],
+	["lsp", "omop-lsp"],
+	["rules", "omop-rules"],
+	["start-work-continuation", "omop-start-work-continuation"],
+	["telemetry", "omop-telemetry"],
+	["fullscan", "omop-fullscan"],
+	["pentest-loop", "omop-pentest-loop"],
 ]);
 
 const EXPECTED_USAGE_PREFIXES = new Map([
-	["comment-checker", "Usage: omo-comment-checker "],
-	["lsp", "Usage: omo-lsp "],
-	["rules", "Usage: omo-rules "],
-	["start-work-continuation", "Usage: omo-start-work-continuation "],
-	["telemetry", "Usage: omo-telemetry "],
-	["fullscan", "Usage: omo-fullscan "],
+	["comment-checker", "Usage: omop-comment-checker "],
+	["lsp", "Usage: omop-lsp "],
+	["rules", "Usage: omop-rules "],
+	["start-work-continuation", "Usage: omop-start-work-continuation "],
+	["telemetry", "Usage: omop-telemetry "],
+	["fullscan", "Usage: omop-fullscan "],
 ]);
 
 async function readJson(relativePath) {

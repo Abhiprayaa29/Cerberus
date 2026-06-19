@@ -52,7 +52,7 @@ describe("findPluginEntry", () => {
 
   beforeEach(() => {
     originalConfigDir = process.env.OPENCODE_CONFIG_DIR
-    temporaryDirectory = fs.mkdtempSync(path.join(os.tmpdir(), "omo-plugin-entry-test-"))
+    temporaryDirectory = fs.mkdtempSync(path.join(os.tmpdir(), "omop-plugin-entry-test-"))
     const emptyConfigDirectory = path.join(temporaryDirectory, "empty-config")
     fs.mkdirSync(emptyConfigDirectory, { recursive: true })
     process.env.OPENCODE_CONFIG_DIR = emptyConfigDirectory

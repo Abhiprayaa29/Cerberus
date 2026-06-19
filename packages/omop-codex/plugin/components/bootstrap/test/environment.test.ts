@@ -45,7 +45,7 @@ async function withTempDir<T>(prefix: string, run: (directory: string) => Promis
 }
 
 async function writePluginRoot(directory: string, options: { readonly withSnapshot: boolean }): Promise<string> {
-	const pluginRoot = join(directory, "plugins", "cerberuslabs", "omo", "4.9.2");
+	const pluginRoot = join(directory, "plugins", "cerberuslabs", "omop", "4.9.2");
 	await mkdir(pluginRoot, { recursive: true });
 	if (options.withSnapshot) {
 		await writeFile(join(pluginRoot, "lazycodex-install.json"), '{"packageName":"lazycodex-ai","version":"4.9.2"}\n');
@@ -55,49 +55,49 @@ async function writePluginRoot(directory: string, options: { readonly withSnapsh
 
 describe("detectInstallFlow", () => {
 	it("#given an install snapshot and no config #when detecting #then reports npx-local", async () => {
-		await withTempDir("omo-flow-", async (directory) => {
+		await withTempDir("omop-flow-", async (directory) => {
 			const pluginRoot = await writePluginRoot(directory, { withSnapshot: true });
 			expect(await detectInstallFlow({ pluginRoot })).toBe("npx-local");
 		});
 	});
 
 	it("#given no snapshot and no config #when detecting #then reports marketplace", async () => {
-		await withTempDir("omo-flow-", async (directory) => {
+		await withTempDir("omop-flow-", async (directory) => {
 			const pluginRoot = await writePluginRoot(directory, { withSnapshot: false });
 			expect(await detectInstallFlow({ pluginRoot })).toBe("marketplace");
 		});
 	});
 
 	it("#given no snapshot and a git marketplace source #when detecting #then both signals agree on marketplace", async () => {
-		await withTempDir("omo-flow-", async (directory) => {
+		await withTempDir("omop-flow-", async (directory) => {
 			const pluginRoot = await writePluginRoot(directory, { withSnapshot: false });
 			expect(await detectInstallFlow({ configToml: GIT_SOURCE_CONFIG, pluginRoot })).toBe("marketplace");
 		});
 	});
 
 	it("#given a snapshot and a local absolute marketplace source #when detecting #then both signals agree on npx-local", async () => {
-		await withTempDir("omo-flow-", async (directory) => {
+		await withTempDir("omop-flow-", async (directory) => {
 			const pluginRoot = await writePluginRoot(directory, { withSnapshot: true });
 			expect(await detectInstallFlow({ configToml: LOCAL_SOURCE_CONFIG, pluginRoot })).toBe("npx-local");
 		});
 	});
 
 	it("#given a snapshot but a git marketplace source #when detecting #then the disagreement reports unknown", async () => {
-		await withTempDir("omo-flow-", async (directory) => {
+		await withTempDir("omop-flow-", async (directory) => {
 			const pluginRoot = await writePluginRoot(directory, { withSnapshot: true });
 			expect(await detectInstallFlow({ configToml: GIT_SOURCE_CONFIG, pluginRoot })).toBe("unknown");
 		});
 	});
 
 	it("#given no snapshot but a local marketplace source #when detecting #then the disagreement reports unknown", async () => {
-		await withTempDir("omo-flow-", async (directory) => {
+		await withTempDir("omop-flow-", async (directory) => {
 			const pluginRoot = await writePluginRoot(directory, { withSnapshot: false });
 			expect(await detectInstallFlow({ configToml: LOCAL_SOURCE_CONFIG, pluginRoot })).toBe("unknown");
 		});
 	});
 
 	it("#given an unclassifiable marketplace source #when detecting #then reports unknown", async () => {
-		await withTempDir("omo-flow-", async (directory) => {
+		await withTempDir("omop-flow-", async (directory) => {
 			const pluginRoot = await writePluginRoot(directory, { withSnapshot: false });
 			const config = ['[marketplaces.cerberuslabs]', 'source = "./relative/checkout"', ""].join("\n");
 			expect(await detectInstallFlow({ configToml: config, pluginRoot })).toBe("unknown");
@@ -105,7 +105,7 @@ describe("detectInstallFlow", () => {
 	});
 
 	it("#given a quoted marketplace header #when detecting #then the section is still recognized", async () => {
-		await withTempDir("omo-flow-", async (directory) => {
+		await withTempDir("omop-flow-", async (directory) => {
 			const pluginRoot = await writePluginRoot(directory, { withSnapshot: false });
 			const config = ['[marketplaces."cerberuslabs"]', 'source = "https://github.com/lazycodex-ai/lazycodex"', ""].join("\n");
 			expect(await detectInstallFlow({ configToml: config, pluginRoot })).toBe("marketplace");
@@ -113,7 +113,7 @@ describe("detectInstallFlow", () => {
 	});
 
 	it("#given a config without the cerberuslabs marketplace #when detecting #then only the snapshot signal decides", async () => {
-		await withTempDir("omo-flow-", async (directory) => {
+		await withTempDir("omop-flow-", async (directory) => {
 			const pluginRoot = await writePluginRoot(directory, { withSnapshot: true });
 			const config = ['[marketplaces.other]', 'source = "https://github.com/other/marketplace.git"', ""].join("\n");
 			expect(await detectInstallFlow({ configToml: config, pluginRoot })).toBe("npx-local");
@@ -121,7 +121,7 @@ describe("detectInstallFlow", () => {
 	});
 
 	it("#given a windows drive marketplace source #when detecting with a snapshot #then reports npx-local", async () => {
-		await withTempDir("omo-flow-", async (directory) => {
+		await withTempDir("omop-flow-", async (directory) => {
 			const pluginRoot = await writePluginRoot(directory, { withSnapshot: true });
 			const config = ["[marketplaces.cerberuslabs]", 'source = "C:\\\\workspaces\\\\omo"', ""].join("\n");
 			expect(await detectInstallFlow({ configToml: config, pluginRoot })).toBe("npx-local");
@@ -131,9 +131,9 @@ describe("detectInstallFlow", () => {
 
 describe("detectInstallFlowFromEnvironment", () => {
 	it("#given a codex store layout with a git marketplace config #when detecting from environment #then reports marketplace", async () => {
-		await withTempDir("omo-flow-env-", async (directory) => {
+		await withTempDir("omop-flow-env-", async (directory) => {
 			const codexHome = join(directory, ".codex");
-			const pluginRoot = join(codexHome, "plugins", "cerberuslabs", "omo", "4.9.2");
+			const pluginRoot = join(codexHome, "plugins", "cerberuslabs", "omop", "4.9.2");
 			await mkdir(pluginRoot, { recursive: true });
 			await writeFile(join(codexHome, "config.toml"), GIT_SOURCE_CONFIG);
 
@@ -145,9 +145,9 @@ describe("detectInstallFlowFromEnvironment", () => {
 	});
 
 	it("#given a codex store layout with a local source and an install snapshot #when detecting from environment #then reports npx-local", async () => {
-		await withTempDir("omo-flow-env-", async (directory) => {
+		await withTempDir("omop-flow-env-", async (directory) => {
 			const codexHome = join(directory, ".codex");
-			const pluginRoot = join(codexHome, "plugins", "cerberuslabs", "omo", "4.9.2");
+			const pluginRoot = join(codexHome, "plugins", "cerberuslabs", "omop", "4.9.2");
 			await mkdir(pluginRoot, { recursive: true });
 			await writeFile(join(codexHome, "config.toml"), LOCAL_SOURCE_CONFIG);
 			await writeFile(join(pluginRoot, "lazycodex-install.json"), '{"packageName":"lazycodex-ai","version":"4.9.2"}\n');
@@ -162,7 +162,7 @@ describe("detectInstallFlowFromEnvironment", () => {
 
 describe("sync-lazycodex-marketplace output", () => {
 	it("#given a synced marketplace tree #when looking for the install snapshot #then it is absent and detection reports marketplace", async () => {
-		await withTempDir("omo-flow-sync-", async (directory) => {
+		await withTempDir("omop-flow-sync-", async (directory) => {
 			const sourceRoot = join(directory, "source");
 			const lazycodexRoot = join(directory, "lazycodex");
 			await writeSyncSourceFixture(sourceRoot);
@@ -174,7 +174,7 @@ describe("sync-lazycodex-marketplace output", () => {
 			);
 			expect(sync.status).toBe(0);
 
-			const syncedPluginRoot = join(lazycodexRoot, "plugins", "omo");
+			const syncedPluginRoot = join(lazycodexRoot, "plugins", "omop");
 			expect(existsSync(syncedPluginRoot)).toBe(true);
 			expect(existsSync(join(syncedPluginRoot, "lazycodex-install.json"))).toBe(false);
 			expect(await detectInstallFlowForTest(syncedPluginRoot)).toBe("marketplace");
@@ -190,19 +190,19 @@ describe("sync-lazycodex-marketplace output", () => {
 
 describe("resolveCodexHome", () => {
 	it("#given CODEX_HOME in the environment #when resolving #then the env value wins", async () => {
-		await withTempDir("omo-home-", async (directory) => {
+		await withTempDir("omop-home-", async (directory) => {
 			const resolution = await resolveCodexHome({
 				env: { CODEX_HOME: directory },
-				pluginRoot: join(directory, "plugins", "cerberuslabs", "omo", "4.9.2"),
+				pluginRoot: join(directory, "plugins", "cerberuslabs", "omop", "4.9.2"),
 			});
 			expect(resolution).toEqual({ path: directory, source: "env" });
 		});
 	});
 
 	it("#given a codex store layout #when resolving without env #then walking up finds the config.toml dir", async () => {
-		await withTempDir("omo-home-", async (directory) => {
+		await withTempDir("omop-home-", async (directory) => {
 			const codexHome = join(directory, ".codex");
-			const pluginRoot = join(codexHome, "plugins", "cerberuslabs", "omo", "4.9.2");
+			const pluginRoot = join(codexHome, "plugins", "cerberuslabs", "omop", "4.9.2");
 			await mkdir(pluginRoot, { recursive: true });
 			await writeFile(join(codexHome, "config.toml"), GIT_SOURCE_CONFIG);
 
@@ -213,7 +213,7 @@ describe("resolveCodexHome", () => {
 	});
 
 	it("#given config.toml six levels above the plugin root #when resolving #then the walk-up still finds it", async () => {
-		await withTempDir("omo-home-", async (directory) => {
+		await withTempDir("omop-home-", async (directory) => {
 			const pluginRoot = join(directory, "a", "b", "c", "d", "e", "f");
 			await mkdir(pluginRoot, { recursive: true });
 			await writeFile(join(directory, "config.toml"), "");
@@ -225,7 +225,7 @@ describe("resolveCodexHome", () => {
 	});
 
 	it("#given config.toml seven levels above the plugin root #when resolving #then the bounded walk falls back to the default home", async () => {
-		await withTempDir("omo-home-", async (directory) => {
+		await withTempDir("omop-home-", async (directory) => {
 			const pluginRoot = join(directory, "a", "b", "c", "d", "e", "f", "g");
 			await mkdir(pluginRoot, { recursive: true });
 			await writeFile(join(directory, "config.toml"), "");
@@ -237,8 +237,8 @@ describe("resolveCodexHome", () => {
 	});
 
 	it("#given no env and no config.toml ancestor #when resolving #then defaults to ~/.codex", async () => {
-		await withTempDir("omo-home-", async (directory) => {
-			const pluginRoot = join(directory, "plugins", "cerberuslabs", "omo", "4.9.2");
+		await withTempDir("omop-home-", async (directory) => {
+			const pluginRoot = join(directory, "plugins", "cerberuslabs", "omop", "4.9.2");
 			await mkdir(pluginRoot, { recursive: true });
 
 			const resolution = await resolveCodexHome({ env: {}, pluginRoot });
@@ -250,7 +250,7 @@ describe("resolveCodexHome", () => {
 
 describe("bootstrapLocks", () => {
 	it("#given free locks #when acquiring twice #then the second acquirer gets null and release leaves no lock files", async () => {
-		await withTempDir("omo-locks-", async (directory) => {
+		await withTempDir("omop-locks-", async (directory) => {
 			const pluginData = join(directory, "plugin-data");
 			const env = { PLUGIN_DATA: pluginData };
 
@@ -273,7 +273,7 @@ describe("bootstrapLocks", () => {
 	});
 
 	it("#given the auto-update lock already held #when acquiring #then returns null without leaking the bootstrap lock", async () => {
-		await withTempDir("omo-locks-", async (directory) => {
+		await withTempDir("omop-locks-", async (directory) => {
 			const pluginData = join(directory, "plugin-data");
 			const env = { PLUGIN_DATA: pluginData };
 			const autoUpdateLockPath = join(pluginData, "auto-update.json.lock");
@@ -289,7 +289,7 @@ describe("bootstrapLocks", () => {
 	});
 
 	it("#given an explicit auto-update lock override #when acquiring #then the override path is honored", async () => {
-		await withTempDir("omo-locks-", async (directory) => {
+		await withTempDir("omop-locks-", async (directory) => {
 			const pluginData = join(directory, "plugin-data");
 			const overridePath = join(directory, "custom-auto-update.lock");
 			const env = { LAZYCODEX_AUTO_UPDATE_LOCK_PATH: overridePath, PLUGIN_DATA: pluginData };
@@ -306,9 +306,9 @@ describe("bootstrapLocks", () => {
 	});
 
 	it("#given the path helpers #when resolving state and lock paths #then they follow the PLUGIN_DATA bootstrap layout", () => {
-		expect(resolveBootstrapStatePath("/data/omo-cerberuslabs")).toBe(join("/data/omo-cerberuslabs", "bootstrap", "state.json"));
-		expect(resolveBootstrapLockPath("/data/omo-cerberuslabs")).toBe(
-			join("/data/omo-cerberuslabs", "bootstrap", "state.json.lock"),
+		expect(resolveBootstrapStatePath("/data/omop-cerberuslabs")).toBe(join("/data/omop-cerberuslabs", "bootstrap", "state.json"));
+		expect(resolveBootstrapLockPath("/data/omop-cerberuslabs")).toBe(
+			join("/data/omop-cerberuslabs", "bootstrap", "state.json.lock"),
 		);
 	});
 });

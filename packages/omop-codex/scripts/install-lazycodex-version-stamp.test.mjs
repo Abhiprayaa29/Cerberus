@@ -18,7 +18,7 @@ test("#given cerberuslabs lazycodex install #when installing locally #then stamp
 		name: "cerberuslabs",
 		plugins: [{ name: "omop", source: "./plugin" }],
 	});
-	await writePluginAt(pluginRoot, "omo", "0.1.0");
+	await writePluginAt(pluginRoot, "omop", "0.1.0");
 	await writeJson(join(pluginRoot, "components", "pentest-loop", "package.json"), {
 		name: "@code-yeongyu/codex-pentest-loop",
 		version: "0.1.0",
@@ -65,7 +65,7 @@ test("#given cerberuslabs lazycodex install #when installing locally #then stamp
 		log: () => {},
 	});
 
-	const cacheRoot = join(codexHome, "plugins", "cache", "cerberuslabs", "omo", "4.7.6");
+	const cacheRoot = join(codexHome, "plugins", "cache", "cerberuslabs", "omop", "4.7.6");
 	assert.equal(result.installed[0].version, "4.7.6");
 	assert.equal(result.installed[0].path, cacheRoot);
 	const manifest = JSON.parse(await readFile(join(cacheRoot, ".codex-plugin", "plugin.json"), "utf8"));

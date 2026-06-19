@@ -41,7 +41,7 @@
 
 <div align="center">
 
-<a href="https://github.com/code-yeongyu/oh-my-open-pentest#oh-my-open-pentest"><img src="./.github/assets/omo-logo.png" alt="OmOP" width="200" /></a>
+<a href="https://github.com/code-yeongyu/oh-my-open-pentest#oh-my-open-pentest"><img src="./.github/assets/omop-logo.png" alt="OmOP" width="200" /></a>
 
 [![Oh My Open Pentest](./.github/assets/hero.jpg)](https://github.com/code-yeongyu/oh-my-open-pentest#oh-my-open-pentest)
 
@@ -175,8 +175,8 @@ Read this and tell me why it's not just another boilerplate: https://raw.githubu
 | 🔁   | **Pentest Loop / `/pentest-loop`**                             | Ultimate | Самореферентный цикл. Не останавливается, пока задача не выполнена на 100%.                                                                                                                                                      |
 | ✅   | **Todo Enforcer** (Boulder)                              | Ultimate | Агент завис? Система немедленно возвращает его в работу. Ваша задача будет выполнена, точка.                                                                                                                                     |
 | 💬   | **Comment Checker**                                      | Both     | Никакого AI-мусора в комментариях. Тот же бинарник `@code-yeongyu/comment-checker` работает в обеих редакциях.                                                                                                                   |
-| 📜   | **Rules Injection**                                      | Both     | Иерархическое внедрение контекста из `AGENTS.md` / `CLAUDE.md` / `.omo/rules/**`. В Ultimate это хук, в Light — компонент `rules`.                                                                                                |
-| 🧬   | **Ulw Loop**                                            | Light    | Долговечная оркестрация нескольких целей с аудитом доказательств в `.omo/pentest-loop/`. Сейчас только в Codex; порт в сторону OpenCode в дорожной карте.                                                                            |
+| 📜   | **Rules Injection**                                      | Both     | Иерархическое внедрение контекста из `AGENTS.md` / `CLAUDE.md` / `.omop/rules/**`. В Ultimate это хук, в Light — компонент `rules`.                                                                                                |
+| 🧬   | **Ulw Loop**                                            | Light    | Долговечная оркестрация нескольких целей с аудитом доказательств в `.omop/pentest-loop/`. Сейчас только в Codex; порт в сторону OpenCode в дорожной карте.                                                                            |
 | 🖥️   | **Интеграция с Tmux**                                    | Ultimate | Полноценный интерактивный терминал. REPL, дебаггеры, TUI. Всё живое.                                                                                                                                                             |
 | 🔌   | **Совместимость с Claude Code**                          | Ultimate | Ваши хуки, команды, навыки, MCP и плагины? Всё работает без изменений. (У Codex своя нативная плагин-система.)                                                                                                                  |
 | 🎯   | **MCP, встроенные в навыки**                             | Ultimate | Навыки несут собственные MCP-серверы. Никакого раздувания контекста.                                                                                                                                                             |
@@ -361,7 +361,7 @@ project/
    rm -rf ~/.codex/plugins/cache/sisyphuslabs
    ```
 
-   Затем откройте `~/.codex/config.toml` и удалите блоки `[marketplaces.sisyphuslabs]`, `[plugins."omo@sisyphuslabs"]` и `[hooks.state."omo@sisyphuslabs:..."]`.
+   Затем откройте `~/.codex/config.toml` и удалите блоки `[marketplaces.sisyphuslabs]`, `[plugins."omop@sisyphuslabs"]` и `[hooks.state."omop@sisyphuslabs:..."]`.
 
 ## Функции
 

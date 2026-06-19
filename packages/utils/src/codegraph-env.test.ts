@@ -10,7 +10,7 @@ import {
 } from "./codegraph/env"
 
 describe("buildCodegraphEnv", () => {
-  it("forces telemetry off and scopes the CodeGraph install cache under ~/.omo/codegraph", () => {
+  it("forces telemetry off and scopes the CodeGraph install cache under ~/.omop/codegraph", () => {
     // given
     const homeDir = "/Users/alice"
 

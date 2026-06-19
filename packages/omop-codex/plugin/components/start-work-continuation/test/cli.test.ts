@@ -93,7 +93,7 @@ function createWorkspace(sessionIds: readonly string[]): string {
 	writeFileSync(join(root, ".omo", "plans", "plan.md"), "## TODOs\n\n- [ ] Task one\n");
 	const work = {
 		work_id: "w1",
-		active_plan: ".omo/plans/plan.md",
+		active_plan: ".omop/plans/plan.md",
 		plan_name: "cli plan",
 		session_ids: sessionIds,
 		status: "active",

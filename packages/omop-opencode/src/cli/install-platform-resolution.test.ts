@@ -6,7 +6,7 @@ import { resolveCleanupPlatform, resolveInstallArgs } from "./cli-program"
 describe("install platform resolution", () => {
   test("leaves omo install without --platform unresolved for config defaults", () => {
     // given
-    const invocationName = "omo"
+    const invocationName = "omop"
 
     // when
     const args = resolveInstallArgs({ tui: true }, invocationName)
@@ -17,7 +17,7 @@ describe("install platform resolution", () => {
 
   test("resolves explicit --platform=codex", () => {
     // given
-    const invocationName = "omo"
+    const invocationName = "omop"
 
     // when
     const args = resolveInstallArgs({ tui: true, platform: "codex" }, invocationName)
@@ -28,7 +28,7 @@ describe("install platform resolution", () => {
 
   test("preserves explicit Codex autonomous install flag", () => {
     // given
-    const invocationName = "omo"
+    const invocationName = "omop"
 
     // when
     const args = resolveInstallArgs({ tui: true, platform: "codex", codexAutonomous: true }, invocationName)
@@ -39,7 +39,7 @@ describe("install platform resolution", () => {
 
   test("resolves explicit --platform=both", () => {
     // given
-    const invocationName = "omo"
+    const invocationName = "omop"
 
     // when
     const args = resolveInstallArgs({ tui: true, platform: "both" }, invocationName)
@@ -50,7 +50,7 @@ describe("install platform resolution", () => {
 
   test("resolves explicit --platform=opencode", () => {
     // given
-    const invocationName = "omo"
+    const invocationName = "omop"
 
     // when
     const args = resolveInstallArgs({ tui: true, platform: "opencode" }, invocationName)
@@ -136,7 +136,7 @@ describe("cleanup platform resolution", () => {
 
   test("leaves omo cleanup without --platform unresolved", () => {
     // given
-    const invocationName = "omo"
+    const invocationName = "omop"
 
     // when
     const platform = resolveCleanupPlatform({}, invocationName)

@@ -29,7 +29,7 @@ cqa_run_component() {
   local payload
   payload="$(jq -nc --arg p "$prompt" --arg cwd "${QA_CWD:-$PWD}" \
     '{hook_event_name:"UserPromptSubmit",prompt:$p,cwd:$cwd,session_id:"cqa-unit",model:"mock-model"}')"
-  printf '%s' "$payload" | PLUGIN_ROOT="$root" PLUGIN_DATA="$CODEX_HOME/plugins/data/omo-$comp" node "$cli" hook "$event"
+  printf '%s' "$payload" | PLUGIN_ROOT="$root" PLUGIN_DATA="$CODEX_HOME/plugins/data/omop-$comp" node "$cli" hook "$event"
 }
 
 cqa_self_test() {

@@ -30,7 +30,7 @@ const BUNDLED_ONLY_ENV = {
 };
 
 const PROJECT_AND_BUNDLED_ENV = {
-	CODEX_RULES_ENABLED_SOURCES: ".omo/rules,plugin-bundled",
+	CODEX_RULES_ENABLED_SOURCES: ".omop/rules,plugin-bundled",
 	CODEX_RULES_MAX_RESULT_CHARS: "40000",
 };
 
@@ -273,7 +273,7 @@ describe("plugin bundled rules", () => {
 		// when
 		const output = await runSessionStartHook(sessionStartInput(root), {
 			pluginDataRoot: pluginData,
-			env: { CODEX_RULES_ENABLED_SOURCES: ".omo/rules" },
+			env: { CODEX_RULES_ENABLED_SOURCES: ".omop/rules" },
 		});
 
 		// then

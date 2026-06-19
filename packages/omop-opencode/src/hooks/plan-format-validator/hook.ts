@@ -82,13 +82,13 @@ function isPlanWrite(tool: string, args: Record<string, unknown>): string | null
 
 function isPlanFilePath(filePath: string): boolean {
   const normalized = filePath.toLowerCase().replace(/\\/g, "/")
-  return normalized.includes(".omo/plans/") && normalized.endsWith(".md")
+  return normalized.includes(".omop/plans/") && normalized.endsWith(".md")
 }
 
 /**
  * Programmatic plan format validator.
  *
- * After any agent writes to a `.omo/plans/*.md` file, compares the
+ * After any agent writes to a `.omop/plans/*.md` file, compares the
  * raw top-level checkbox count against `getPlanProgress()` to detect
  * malformed task labels. Warns the agent when some or all tasks
  * will be skipped by the progress counter.

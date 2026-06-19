@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test"
 
-import { HARNESS_IDS, SETTING_HARNESS_SUPPORT, validateOmoConfig } from "./omo-config"
+import { HARNESS_IDS, SETTING_HARNESS_SUPPORT, validateOmoConfig } from "./omop-config"
 
 describe("validateOmoConfig", () => {
   it("accepts codegraph settings with codex and opencode override blocks", () => {
@@ -9,7 +9,7 @@ describe("validateOmoConfig", () => {
       codegraph: {
         auto_provision: true,
         enabled: true,
-        install_dir: "~/.omo/codegraph",
+        install_dir: "~/.omop/codegraph",
         telemetry: false,
         watch_debounce_ms: 2_000,
       },
@@ -52,8 +52,8 @@ describe("validateOmoConfig", () => {
     const enabledSupport = SETTING_HARNESS_SUPPORT["codegraph.enabled"]
 
     // then
-    expect(harnesses).toEqual(["codex", "opencode", "omo"])
-    expect(enabledSupport).toEqual(["codex", "opencode", "omo"])
+    expect(harnesses).toEqual(["codex", "opencode", "omop"])
+    expect(enabledSupport).toEqual(["codex", "opencode", "omop"])
   })
 
   it("flags settings used under unsupported harness blocks", () => {

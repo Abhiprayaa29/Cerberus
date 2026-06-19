@@ -8,7 +8,7 @@ import { transitionRuntimeState } from "../team-state-store/store"
 function normalizeTeamLayout(teamRunId: string, layout: TeamLayoutResult): TeamLayoutResult {
   return {
     ...layout,
-    targetSessionId: layout.targetSessionId ?? `omo-team-${teamRunId}`,
+    targetSessionId: layout.targetSessionId ?? `omop-team-${teamRunId}`,
     ownedSession: layout.ownedSession ?? true,
   }
 }

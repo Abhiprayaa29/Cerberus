@@ -35,7 +35,7 @@ interface Task {
 
 ## STORAGE
 
-- Location: `.omo/tasks/` directory
+- Location: `.omop/tasks/` directory
 - Format: JSON files, one per task
 - Atomic writes: temp file → rename
 - Locking: file-based lock for concurrent access

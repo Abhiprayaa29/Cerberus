@@ -92,7 +92,7 @@ export async function spawnTmuxPane(
 		return { success: false }
 	}
 
-	const title = `omo-subagent-${description.slice(0, 20)}`
+	const title = `omop-subagent-${description.slice(0, 20)}`
 	const titleResult = await runTmuxCommand(tmux, ["select-pane", "-t", paneId, "-T", title])
 	if (titleResult.exitCode !== 0) {
 		log("[spawnTmuxPane] WARNING: failed to set pane title", {

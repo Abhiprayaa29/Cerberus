@@ -71,7 +71,7 @@ describe("lazycodex install surface", () => {
         expect(wrapper).toContain(expectedTarget)
         expect(wrapper).toContain("CODEX_HOME")
         expect(wrapper).toContain("OMOP_SPARKSHELL_APP_SERVER_SOCKET")
-        expect(wrapper).toContain("omo-pentest-loop")
+        expect(wrapper).toContain("omop-pentest-loop")
         expect(wrapper).toContain("bun runtime not found")
         expect(wrapper).toContain("https://bun.sh")
       } else if (process.platform === "win32") {
@@ -132,7 +132,7 @@ describe("lazycodex install surface", () => {
     // then
     const agentName = "lazycodex-gate-reviewer"
     const agentPath = join(codexHome, "agents", `${agentName}.toml`)
-    const snapshotAgentPath = join(marketplaceRoot, "plugins", "omo", "components", "fullscan", "agents", `${agentName}.toml`)
+    const snapshotAgentPath = join(marketplaceRoot, "plugins", "omop", "components", "fullscan", "agents", `${agentName}.toml`)
     expect((await stat(agentPath)).isFile()).toBe(true)
     expect(await readFile(agentPath, "utf8")).toBe(await readFile(snapshotAgentPath, "utf8"))
     expect(await readFile(agentPath, "utf8")).toContain(`name = "${agentName}"`)

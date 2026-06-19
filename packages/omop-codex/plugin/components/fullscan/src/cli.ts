@@ -9,7 +9,7 @@ const subcommand = process.argv[3];
 if (command === "hook" && subcommand === "user-prompt-submit") {
 	await runHookCli();
 } else {
-	process.stderr.write("Usage: omo-fullscan hook user-prompt-submit\n");
+	process.stderr.write("Usage: omop-fullscan hook user-prompt-submit\n");
 	process.exitCode = 1;
 }
 

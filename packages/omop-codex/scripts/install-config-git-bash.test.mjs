@@ -13,13 +13,13 @@ test("#given windows platform with Git Bash enabled #when updating config #then 
 	await writeFile(
 		configPath,
 		[
-			'[plugins."omo@cerberuslabs"]',
+			'[plugins."omop@cerberuslabs"]',
 			"enabled = true",
 			"",
-			'[plugins."omo@cerberuslabs".mcp_servers.lsp]',
+			'[plugins."omop@cerberuslabs".mcp_servers.lsp]',
 			"enabled = true",
 			"",
-			'[hooks.state."omo@cerberuslabs:hooks/hooks.json:post_tool_use:0:0"]',
+			'[hooks.state."omop@cerberuslabs:hooks/hooks.json:post_tool_use:0:0"]',
 			'trusted_hash = "sha256:keep"',
 			"",
 		].join("\n"),
@@ -31,18 +31,18 @@ test("#given windows platform with Git Bash enabled #when updating config #then 
 		repoRoot: "/repo/packages/omop-codex",
 		marketplaceName: "cerberuslabs",
 		marketplaceSource: { sourceType: "local", source: "/repo/packages/omop-codex/cache/cerberuslabs" },
-		pluginNames: ["omo"],
+		pluginNames: ["omop"],
 		platform: "win32",
 		gitBashEnabled: true,
-		trustedHookStates: [{ key: "omo@cerberuslabs:hooks/hooks.json:post_tool_use:0:0", trustedHash: "sha256:keep" }],
+		trustedHookStates: [{ key: "omop@cerberuslabs:hooks/hooks.json:post_tool_use:0:0", trustedHash: "sha256:keep" }],
 	});
 
 	// then
 	const content = await readFile(configPath, "utf8");
-	assert.match(content, /\[plugins\."omo@cerberuslabs"\.mcp_servers\.lsp\]/);
-	assert.match(content, /\[plugins\."omo@cerberuslabs"\.mcp_servers\.git_bash\]/);
-	assert.match(content, /\[hooks\.state\."omo@cerberuslabs:hooks\/hooks\.json:post_tool_use:0:0"\]/);
-	assert.match(content, /\[plugins\."omo@cerberuslabs"\.mcp_servers\.git_bash\][\s\S]*?enabled = true/);
+	assert.match(content, /\[plugins\."omop@cerberuslabs"\.mcp_servers\.lsp\]/);
+	assert.match(content, /\[plugins\."omop@cerberuslabs"\.mcp_servers\.git_bash\]/);
+	assert.match(content, /\[hooks\.state\."omop@cerberuslabs:hooks\/hooks\.json:post_tool_use:0:0"\]/);
+	assert.match(content, /\[plugins\."omop@cerberuslabs"\.mcp_servers\.git_bash\][\s\S]*?enabled = true/);
 });
 
 test("#given windows platform without Git Bash enabled #when updating config #then disables git_bash plugin mcp policy", async () => {
@@ -56,15 +56,15 @@ test("#given windows platform without Git Bash enabled #when updating config #th
 		repoRoot: "/repo/packages/omop-codex",
 		marketplaceName: "cerberuslabs",
 		marketplaceSource: { sourceType: "local", source: "/repo/packages/omop-codex/cache/cerberuslabs" },
-		pluginNames: ["omo"],
+		pluginNames: ["omop"],
 		platform: "win32",
 		gitBashEnabled: false,
 	});
 
 	// then
 	const content = await readFile(configPath, "utf8");
-	assert.match(content, /\[plugins\."omo@cerberuslabs"\.mcp_servers\.git_bash\]/);
-	assert.match(content, /\[plugins\."omo@cerberuslabs"\.mcp_servers\.git_bash\][\s\S]*?enabled = false/);
+	assert.match(content, /\[plugins\."omop@cerberuslabs"\.mcp_servers\.git_bash\]/);
+	assert.match(content, /\[plugins\."omop@cerberuslabs"\.mcp_servers\.git_bash\][\s\S]*?enabled = false/);
 });
 
 test("#given non-windows platforms #when updating config #then disables git_bash plugin mcp policy", async () => {
@@ -79,13 +79,13 @@ test("#given non-windows platforms #when updating config #then disables git_bash
 			repoRoot: "/repo/packages/omop-codex",
 			marketplaceName: "cerberuslabs",
 			marketplaceSource: { sourceType: "local", source: "/repo/packages/omop-codex/cache/cerberuslabs" },
-			pluginNames: ["omo"],
+			pluginNames: ["omop"],
 			platform,
 		});
 
 		// then
 		const content = await readFile(configPath, "utf8");
-		assert.match(content, /\[plugins\."omo@cerberuslabs"\.mcp_servers\.git_bash\]/);
-		assert.match(content, /\[plugins\."omo@cerberuslabs"\.mcp_servers\.git_bash\][\s\S]*?enabled = false/);
+		assert.match(content, /\[plugins\."omop@cerberuslabs"\.mcp_servers\.git_bash\]/);
+		assert.match(content, /\[plugins\."omop@cerberuslabs"\.mcp_servers\.git_bash\][\s\S]*?enabled = false/);
 	}
 });

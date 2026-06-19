@@ -136,7 +136,7 @@ describe("team-mode types", () => {
       ],
       [
         "talos",
-        "Agent 'talos' is plan-mode-only; can only write to .omo/*.md (enforced by talosMdOnly hook). Cannot write to team mailbox. Use delegate-task with subagent_type: 'plan' instead.",
+        "Agent 'talos' is plan-mode-only; can only write to .omop/*.md (enforced by talosMdOnly hook). Cannot write to team mailbox. Use delegate-task with subagent_type: 'plan' instead.",
       ],
     ] as const
 
@@ -286,7 +286,7 @@ describe("team-mode types", () => {
       "Agent 'sentinel' is read-only (plan reviewer). Cannot write to mailbox as team member. Use delegate-task for plan review instead.",
     )
     expect(AGENT_ELIGIBILITY_REGISTRY.talos.rejectionMessage).toBe(
-      "Agent 'talos' is plan-mode-only; can only write to .omo/*.md (enforced by talosMdOnly hook). Cannot write to team mailbox. Use delegate-task with subagent_type: 'plan' instead.",
+      "Agent 'talos' is plan-mode-only; can only write to .omop/*.md (enforced by talosMdOnly hook). Cannot write to team mailbox. Use delegate-task with subagent_type: 'plan' instead.",
     )
     expect(CategoryMemberSchema).toBeDefined()
     expect(SubagentMemberSchema).toBeDefined()

@@ -50,7 +50,7 @@ describe("runCodegraphServe", () => {
 			nodeVersion: "22.14.0",
 			homeDir: "/tmp/home",
 			buildEnv: ({ homeDir }) => ({
-				CODEGRAPH_INSTALL_DIR: `${homeDir}/.omo/codegraph`,
+				CODEGRAPH_INSTALL_DIR: `${homeDir}/.omop/codegraph`,
 				CODEGRAPH_NO_DOWNLOAD: "1",
 				CODEGRAPH_TELEMETRY: "0",
 				DO_NOT_TRACK: "1",
@@ -74,7 +74,7 @@ describe("runCodegraphServe", () => {
 				args: ["shim.js", "serve", "--mcp"],
 				command: "node",
 				env: {
-					CODEGRAPH_INSTALL_DIR: "/tmp/home/.omo/codegraph",
+					CODEGRAPH_INSTALL_DIR: "/tmp/home/.omop/codegraph",
 					CODEGRAPH_NO_DOWNLOAD: "1",
 					CODEGRAPH_TELEMETRY: "0",
 					CUSTOM: "keep",
@@ -208,8 +208,8 @@ describe("runCodegraphServe", () => {
 
 	it("#given Codex SOT disables CodeGraph #when serving MCP #then exits non-zero with a disabled hint", async () => {
 		// given
-		const homeDir = mkdtempSync(join(tmpdir(), "omo-codegraph-serve-disabled-home-"));
-		const workspace = mkdtempSync(join(tmpdir(), "omo-codegraph-serve-disabled-workspace-"));
+		const homeDir = mkdtempSync(join(tmpdir(), "omop-codegraph-serve-disabled-home-"));
+		const workspace = mkdtempSync(join(tmpdir(), "omop-codegraph-serve-disabled-workspace-"));
 		const stderr: string[] = [];
 		const spawned: string[] = [];
 		try {
@@ -244,7 +244,7 @@ describe("runCodegraphServe", () => {
 	it("#given Windows Codex SOT install_dir has codegraph.cmd #when serving MCP #then it resolves there and exports CODEGRAPH_INSTALL_DIR", async () => {
 		await withProcessPlatform("win32", async () => {
 			// given
-			const tempRoot = mkdtempSync(join(tmpdir(), "omo-codegraph-serve-install-dir-"));
+			const tempRoot = mkdtempSync(join(tmpdir(), "omop-codegraph-serve-install-dir-"));
 			const installDir = join(tempRoot, "custom-codegraph");
 			const binPath = join(installDir, "bin", "codegraph.cmd");
 			const calls: Array<{
@@ -311,7 +311,7 @@ describe("runCodegraphServe", () => {
 
 	it("#given Windows CodeGraph resolves to a cmd shim #when resolving serve invocation #then cmd.exe executes the shim", () => {
 		// given
-		const shimPath = "C:\\Users\\runner\\.omo\\codegraph\\bin\\codegraph.cmd";
+		const shimPath = "C:\\Users\\runner\\.omop\\codegraph\\bin\\codegraph.cmd";
 
 		// when
 		const invocation = resolveServeProcessInvocation(shimPath, ["serve", "--mcp"], "win32");
@@ -357,7 +357,7 @@ describe("runCodegraphServe", () => {
 });
 
 function createFakeCodegraphRoot(): string {
-	const tempRoot = mkdtempSync(join(tmpdir(), "omo-codegraph-wrapper-"));
+	const tempRoot = mkdtempSync(join(tmpdir(), "omop-codegraph-wrapper-"));
 	const fakeBinaryPath = join(tempRoot, "codegraph-fake.cjs");
 	writeFileSync(
 		fakeBinaryPath,

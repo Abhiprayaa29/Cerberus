@@ -54,9 +54,9 @@ export function daemonPaths(
 function resolveSocketPath(dir: string, version: string): string {
 	const digest = createHash("sha256").update(dir).digest("hex").slice(0, 16);
 	if (process.platform === "win32") {
-		return `\\\\.\\pipe\\omo-lsp-${version}-${digest}`;
+		return `\\\\.\\pipe\\omop-lsp-${version}-${digest}`;
 	}
 	const natural = join(dir, "daemon.sock");
 	if (natural.length < MAX_SOCKET_PATH_LENGTH) return natural;
-	return join(tmpdir(), `omo-lsp-${version}-${digest}.sock`);
+	return join(tmpdir(), `omop-lsp-${version}-${digest}.sock`);
 }

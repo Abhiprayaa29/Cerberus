@@ -115,7 +115,7 @@ describe("createBuiltinMcps", () => {
     const result = createBuiltinMcps([], { codegraph: { enabled: true } }, {
       codegraph: {
         fileExists: () => false,
-        homeDir: "/tmp/omo-codegraph-missing-home",
+        homeDir: "/tmp/omop-codegraph-missing-home",
       },
       cwd: process.cwd(),
       resolveExecutable: (commandName: string) => ({ command: commandName, available: false }),
@@ -129,8 +129,8 @@ describe("createBuiltinMcps", () => {
   test("should resolve enabled local MCP runtime commands before registration", async () => {
     // given
     mock.restore()
-    const nodePath = "/tmp/omo-runtime/node"
-    const bunPath = "/tmp/omo-runtime/bun"
+    const nodePath = "/tmp/omop-runtime/node"
+    const bunPath = "/tmp/omop-runtime/bun"
     const { createBuiltinMcps } = await import(`../index?runtime=${Date.now()}-${Math.random()}`)
 
     // when

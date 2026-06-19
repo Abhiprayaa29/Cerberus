@@ -38,7 +38,7 @@ describe("applyHookConfig", () => {
   })
 
   function createTempCwd(): string {
-    const tempDir = mkdtempSync(join(tmpdir(), "omo-hook-config-cwd-"))
+    const tempDir = mkdtempSync(join(tmpdir(), "omop-hook-config-cwd-"))
     tempDirs.push(tempDir)
     return tempDir
   }

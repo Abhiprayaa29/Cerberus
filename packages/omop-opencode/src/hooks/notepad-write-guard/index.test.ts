@@ -43,7 +43,7 @@ describe("createNotepadWriteGuardHook", () => {
 
   test("#given current omo notepad file #when write executes #then rejects", async () => {
     const hook = createNotepadWriteGuardHook()
-    await expectWriteBlocked(hook, ".omo/notepads/foo/decisions.md")
+    await expectWriteBlocked(hook, ".omop/notepads/foo/decisions.md")
   })
 
   test("#given regular src file #when write executes #then allows (not intercepted)", async () => {

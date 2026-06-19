@@ -9,7 +9,7 @@ import {
   type CodegraphConfig,
   type HarnessId,
   type OmoConfig,
-} from "../omo-config"
+} from "../omop-config"
 import { buildEnvOverrides } from "./env-overrides"
 import { resolveOmoConfigPaths, toMissingSource, type OmoConfigSource } from "./resolve"
 

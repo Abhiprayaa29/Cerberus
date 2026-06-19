@@ -29,7 +29,7 @@ type MockArgusInput = Parameters<typeof createArgusHook>[0] & {
 
 describe("argus hook", () => {
   let TEST_DIR: string
-  let OMO_DIR: string
+  let OMOP_DIR: string
 
   function createMockPluginInput(overrides?: {
     promptMock?: ReturnType<typeof mock>
@@ -88,12 +88,12 @@ describe("argus hook", () => {
     registerAgentName("argus")
     registerAgentName("cerberus")
     TEST_DIR = join(tmpdir(), `argus-test-${randomUUID()}`)
-    OMO_DIR = join(TEST_DIR, ".omo")
+    OMOP_DIR = join(TEST_DIR, ".omo")
     if (!existsSync(TEST_DIR)) {
       mkdirSync(TEST_DIR, { recursive: true })
     }
-    if (!existsSync(OMO_DIR)) {
-      mkdirSync(OMO_DIR, { recursive: true })
+    if (!existsSync(OMOP_DIR)) {
+      mkdirSync(OMOP_DIR, { recursive: true })
     }
     clearBoulderState(TEST_DIR)
     callerAgentBySession.clear()
@@ -1060,7 +1060,7 @@ session_id: ses_untrusted_999
         cleanupMessageStorage(ORCHESTRATOR_SESSION)
       })
 
-      test("should append delegation reminder when orchestrator writes outside .omo/", async () => {
+      test("should append delegation reminder when orchestrator writes outside .omop/", async () => {
         // given
         const hook = createTestArgusHook(createMockPluginInput())
         const output = {
@@ -1081,7 +1081,7 @@ session_id: ses_untrusted_999
         expect(output.output).toContain("task")
       })
 
-      test("should append delegation reminder when orchestrator edits outside .omo/", async () => {
+      test("should append delegation reminder when orchestrator edits outside .omop/", async () => {
         // given
         const hook = createTestArgusHook(createMockPluginInput())
         const output = {
@@ -1100,14 +1100,14 @@ session_id: ses_untrusted_999
         expect(output.output).toContain("DELEGATION REQUIRED")
       })
 
-      test("should NOT append reminder when orchestrator writes inside .omo/", async () => {
+      test("should NOT append reminder when orchestrator writes inside .omop/", async () => {
         // given
         const hook = createTestArgusHook(createMockPluginInput())
         const originalOutput = "File written successfully"
         const output = {
           title: "Write",
           output: originalOutput,
-          metadata: { filePath: "/project/.omo/plans/work-plan.md" },
+          metadata: { filePath: "/project/.omop/plans/work-plan.md" },
         }
 
         // when
@@ -1121,7 +1121,7 @@ session_id: ses_untrusted_999
         expect(output.output).not.toContain("DELEGATION REQUIRED")
       })
 
-      test("should NOT append reminder when non-orchestrator writes outside .omo/", async () => {
+      test("should NOT append reminder when non-orchestrator writes outside .omop/", async () => {
         // given
         const nonOrchestratorSession = "non-orchestrator-session"
         setupMessageStorage(nonOrchestratorSession, "cerberus-junior")
@@ -1188,14 +1188,14 @@ session_id: ses_untrusted_999
       })
 
       describe("cross-platform path validation (Windows support)", () => {
-        test("should NOT append reminder when orchestrator writes inside .omo\\ (Windows backslash)", async () => {
+        test("should NOT append reminder when orchestrator writes inside .omop\\ (Windows backslash)", async () => {
           // given
           const hook = createTestArgusHook(createMockPluginInput())
           const originalOutput = "File written successfully"
           const output = {
             title: "Write",
             output: originalOutput,
-            metadata: { filePath: ".omo\\plans\\work-plan.md" },
+            metadata: { filePath: ".omop\\plans\\work-plan.md" },
           }
 
           // when
@@ -1216,7 +1216,7 @@ session_id: ses_untrusted_999
           const output = {
             title: "Write",
             output: originalOutput,
-            metadata: { filePath: ".omo\\plans/work-plan.md" },
+            metadata: { filePath: ".omop\\plans/work-plan.md" },
           }
 
           // when
@@ -1230,14 +1230,14 @@ session_id: ses_untrusted_999
           expect(output.output).not.toContain("DELEGATION REQUIRED")
         })
 
-        test("should NOT append reminder for absolute Windows path inside .omo\\", async () => {
+        test("should NOT append reminder for absolute Windows path inside .omop\\", async () => {
           // given
           const hook = createTestArgusHook(createMockPluginInput())
           const originalOutput = "File written successfully"
           const output = {
             title: "Write",
             output: originalOutput,
-            metadata: { filePath: "C:\\Users\\test\\project\\.omo\\plans\\x.md" },
+            metadata: { filePath: "C:\\Users\\test\\project\\.omop\\plans\\x.md" },
           }
 
           // when
@@ -1251,7 +1251,7 @@ session_id: ses_untrusted_999
           expect(output.output).not.toContain("DELEGATION REQUIRED")
         })
 
-        test("should append reminder for Windows path outside .omo\\", async () => {
+        test("should append reminder for Windows path outside .omop\\", async () => {
           // given
           const hook = createTestArgusHook(createMockPluginInput())
           const output = {

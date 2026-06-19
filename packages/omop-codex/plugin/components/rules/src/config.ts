@@ -99,14 +99,14 @@ function sourcesWithoutBundledRules(): RuleSource[] {
 
 function toRuleSource(value: string): RuleSource | null {
 	switch (value) {
-		case ".omo/rules":
+		case ".omop/rules":
 		case ".claude/rules":
 		case ".cursor/rules":
 		case ".github/instructions":
 		case ".github/copilot-instructions.md":
 		case "CONTEXT.md":
 		case "plugin-bundled":
-		case "~/.omo/rules":
+		case "~/.omop/rules":
 		case "~/.opencode/rules":
 		case "~/.claude/rules":
 			return value;

@@ -872,31 +872,31 @@ describe("Scylla environment context toggle", () => {
     )
   }
 
-  test("includes <omo-env> tag when disable flag is unset", async () => {
+  test("includes <omop-env> tag when disable flag is unset", async () => {
     // #when
     const agents = await buildAgents(undefined)
 
     // #then
     expect(agents.scylla).toBeDefined()
-    expect(agents.scylla.prompt).toContain("<omo-env>")
+    expect(agents.scylla.prompt).toContain("<omop-env>")
   })
 
-  test("includes <omo-env> tag when disable flag is false", async () => {
+  test("includes <omop-env> tag when disable flag is false", async () => {
     // #when
     const agents = await buildAgents(false)
 
     // #then
     expect(agents.scylla).toBeDefined()
-    expect(agents.scylla.prompt).toContain("<omo-env>")
+    expect(agents.scylla.prompt).toContain("<omop-env>")
   })
 
-  test("omits <omo-env> tag when disable flag is true", async () => {
+  test("omits <omop-env> tag when disable flag is true", async () => {
     // #when
     const agents = await buildAgents(true)
 
     // #then
     expect(agents.scylla).toBeDefined()
-    expect(agents.scylla.prompt).not.toContain("<omo-env>")
+    expect(agents.scylla.prompt).not.toContain("<omop-env>")
   })
 })
 
@@ -931,31 +931,31 @@ describe("Cerberus and Intel environment context toggle", () => {
     )
   }
 
-  test("includes <omo-env> for cerberus and intel when disable flag is unset", async () => {
+  test("includes <omop-env> for cerberus and intel when disable flag is unset", async () => {
     const agents = await buildAgents(undefined)
 
     expect(agents.cerberus).toBeDefined()
     expect(agents.intel).toBeDefined()
-    expect(agents.cerberus.prompt).toContain("<omo-env>")
-    expect(agents.intel.prompt).toContain("<omo-env>")
+    expect(agents.cerberus.prompt).toContain("<omop-env>")
+    expect(agents.intel.prompt).toContain("<omop-env>")
   })
 
-  test("includes <omo-env> for cerberus and intel when disable flag is false", async () => {
+  test("includes <omop-env> for cerberus and intel when disable flag is false", async () => {
     const agents = await buildAgents(false)
 
     expect(agents.cerberus).toBeDefined()
     expect(agents.intel).toBeDefined()
-    expect(agents.cerberus.prompt).toContain("<omo-env>")
-    expect(agents.intel.prompt).toContain("<omo-env>")
+    expect(agents.cerberus.prompt).toContain("<omop-env>")
+    expect(agents.intel.prompt).toContain("<omop-env>")
   })
 
-  test("omits <omo-env> for cerberus and intel when disable flag is true", async () => {
+  test("omits <omop-env> for cerberus and intel when disable flag is true", async () => {
     const agents = await buildAgents(true)
 
     expect(agents.cerberus).toBeDefined()
     expect(agents.intel).toBeDefined()
-    expect(agents.cerberus.prompt).not.toContain("<omo-env>")
-    expect(agents.intel.prompt).not.toContain("<omo-env>")
+    expect(agents.cerberus.prompt).not.toContain("<omop-env>")
+    expect(agents.intel.prompt).not.toContain("<omop-env>")
   })
 })
 
@@ -972,7 +972,7 @@ describe("Argus is unaffected by environment context toggle", () => {
     fetchSpy.mockRestore()
   })
 
-  test("argus prompt is unchanged and never contains <omo-env>", async () => {
+  test("argus prompt is unchanged and never contains <omop-env>", async () => {
     const agentsDefault = await createBuiltinAgents(
       [],
       {},
@@ -1007,8 +1007,8 @@ describe("Argus is unaffected by environment context toggle", () => {
 
     expect(agentsDefault.argus).toBeDefined()
     expect(agentsDisabled.argus).toBeDefined()
-    expect(agentsDefault.argus.prompt).not.toContain("<omo-env>")
-    expect(agentsDisabled.argus.prompt).not.toContain("<omo-env>")
+    expect(agentsDefault.argus.prompt).not.toContain("<omop-env>")
+    expect(agentsDisabled.argus.prompt).not.toContain("<omop-env>")
     expect(agentsDisabled.argus.prompt).toBe(agentsDefault.argus.prompt)
   })
 })

@@ -22,14 +22,14 @@ test(
 			name: "cerberuslabs",
 			plugins: [{ name: "omop", source: "./plugins/omo" }],
 		});
-		await writePluginAt(pluginRoot, "omo", "0.1.0");
+		await writePluginAt(pluginRoot, "omop", "0.1.0");
 		await mkdir(agentsRoot, { recursive: true });
 		for (const agentName of ["explorer", "intel", "plan"]) {
 			await writeFile(join(agentsRoot, `${agentName}.toml`), `name = "${agentName}"\n`);
 		}
 		await mkdir(join(codexHome, "agents"), { recursive: true });
 		await symlink(
-			join(codexHome, "plugins", "cache", legacyCodexPluginMarketplace, "omo", "0.1.0", "components", "fullscan", "agents", "explorer.toml"),
+			join(codexHome, "plugins", "cache", legacyCodexPluginMarketplace, "omop", "0.1.0", "components", "fullscan", "agents", "explorer.toml"),
 			join(codexHome, "agents", "explorer.toml"),
 		);
 
@@ -42,7 +42,7 @@ test(
 		});
 
 		assert.equal(result.installed.length, 1);
-		const snapshotPluginPath = join(codexHome, ".tmp", "marketplaces", "cerberuslabs", "plugins", "omo");
+		const snapshotPluginPath = join(codexHome, ".tmp", "marketplaces", "cerberuslabs", "plugins", "omop");
 		for (const agentName of ["explorer", "intel", "plan"]) {
 			const agentPath = join(codexHome, "agents", `${agentName}.toml`);
 			const agentStat = await lstat(agentPath);
@@ -73,7 +73,7 @@ test(
 			name: "cerberuslabs",
 			plugins: [{ name: "omop", source: "./plugins/omo" }],
 		});
-		await writePluginAt(pluginRoot, "omo", "0.1.0");
+		await writePluginAt(pluginRoot, "omop", "0.1.0");
 		await mkdir(agentsRoot, { recursive: true });
 		await writeFile(join(agentsRoot, "explorer.toml"), 'name = "explorer"\n');
 		const snapshotRoot = join(codexHome, ".tmp", "marketplaces", "cerberuslabs");
@@ -111,7 +111,7 @@ test("#given local cerberuslabs install #when temporary marketplace snapshot is 
 		name: "cerberuslabs",
 		plugins: [{ name: "omop", source: "./plugins/omo" }],
 	});
-	await writePluginAt(pluginRoot, "omo", "0.1.0");
+	await writePluginAt(pluginRoot, "omop", "0.1.0");
 	await mkdir(agentsRoot, { recursive: true });
 	await writeFile(join(agentsRoot, "explorer.toml"), 'name = "explorer"\n');
 	await writeFile(join(agentsRoot, "plan.toml"), 'name = "plan"\n');
@@ -143,7 +143,7 @@ test(
 			name: "cerberuslabs",
 			plugins: [{ name: "omop", source: "./plugins/omo" }],
 		});
-		await writePluginAt(pluginRoot, "omo", "0.1.0");
+		await writePluginAt(pluginRoot, "omop", "0.1.0");
 		await mkdir(agentsRoot, { recursive: true });
 		await writeFile(
 			join(agentsRoot, "plan.toml"),
@@ -178,7 +178,7 @@ test(
 			name: "cerberuslabs",
 			plugins: [{ name: "omop", source: "./plugins/omo" }],
 		});
-		await writePluginAt(pluginRoot, "omo", "0.1.0");
+		await writePluginAt(pluginRoot, "omop", "0.1.0");
 		await mkdir(agentsRoot, { recursive: true });
 		await writeFile(
 			join(agentsRoot, "plan.toml"),
@@ -220,7 +220,7 @@ test(
 			name: "cerberuslabs",
 			plugins: [{ name: "omop", source: "./plugins/omo" }],
 		});
-		await writePluginAt(pluginRoot, "omo", "0.1.0");
+		await writePluginAt(pluginRoot, "omop", "0.1.0");
 		await mkdir(agentsRoot, { recursive: true });
 		await writeFile(
 			join(agentsRoot, "plan.toml"),
@@ -265,7 +265,7 @@ test(
 			name: "cerberuslabs",
 			plugins: [{ name: "omop", source: "./plugins/omo" }],
 		});
-		await writePluginAt(pluginRoot, "omo", "0.1.0");
+		await writePluginAt(pluginRoot, "omop", "0.1.0");
 		await mkdir(agentsRoot, { recursive: true });
 		await writeFile(
 			join(agentsRoot, "explorer.toml"),
@@ -306,7 +306,7 @@ test(
 			name: "cerberuslabs",
 			plugins: [{ name: "omop", source: "./plugins/omo" }],
 		});
-		await writePluginAt(pluginRoot, "omo", "0.1.0");
+		await writePluginAt(pluginRoot, "omop", "0.1.0");
 		await mkdir(agentsRoot, { recursive: true });
 		await writeFile(
 			join(agentsRoot, "plan.toml"),
@@ -330,7 +330,7 @@ test(
 		});
 
 		const snapshotPlan = await readFile(
-			join(codexHome, ".tmp", "marketplaces", "cerberuslabs", "plugins", "omo", "components", "fullscan", "agents", "plan.toml"),
+			join(codexHome, ".tmp", "marketplaces", "cerberuslabs", "plugins", "omop", "components", "fullscan", "agents", "plan.toml"),
 			"utf8",
 		);
 		assert.ok(snapshotPlan.includes('model_reasoning_effort = "xhigh"'));

@@ -49,7 +49,7 @@ describe("auto-update checker catch fallbacks", () => {
 
   it("returns null when local dev package JSON is malformed", () => {
     // given
-    const directory = mkdtempSync(join(tmpdir(), "omo-local-dev-version-"))
+    const directory = mkdtempSync(join(tmpdir(), "omop-local-dev-version-"))
     temporaryDirectory = directory
     const packageDirectory = join(directory, "packages", PACKAGE_NAME)
     const configDirectory = join(directory, ".opencode")
@@ -70,7 +70,7 @@ describe("auto-update checker catch fallbacks", () => {
 
   it("returns null when local dev version read throws a non-Error", () => {
     // given
-    const directory = mkdtempSync(join(tmpdir(), "omo-local-dev-version-"))
+    const directory = mkdtempSync(join(tmpdir(), "omop-local-dev-version-"))
     temporaryDirectory = directory
     const packageDirectory = join(directory, "packages", PACKAGE_NAME)
     const configDirectory = join(directory, ".opencode")

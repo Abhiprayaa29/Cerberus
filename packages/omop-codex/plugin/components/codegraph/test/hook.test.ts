@@ -21,12 +21,12 @@ describe("CodeGraph SessionStart hook", () => {
 		// given
 		const stdout: string[] = [];
 		const spawned: WorkerSpawnInvocation[] = [];
-		const homeDir = mkdtempSync(join(tmpdir(), "omo-codegraph-hook-home-"));
+		const homeDir = mkdtempSync(join(tmpdir(), "omop-codegraph-hook-home-"));
 		try {
 			// when
 			const exitCode = await runCodegraphCli({
 				argv: ["node", "cli.js", "hook", "session-start"],
-				cwd: mkdtempSync(join(tmpdir(), "omo-codegraph-hook-workspace-")),
+				cwd: mkdtempSync(join(tmpdir(), "omop-codegraph-hook-workspace-")),
 				env: { HOME: homeDir },
 				stdin: Readable.from(["{}"]),
 				stdout: { write: (chunk) => stdout.push(chunk) },
@@ -70,8 +70,8 @@ describe("CodeGraph SessionStart hook", () => {
 
 	it("#given HOME OMO config disables Codex CodeGraph #when SessionStart fires #then it skips without spawning", async () => {
 		// given
-		const homeDir = mkdtempSync(join(tmpdir(), "omo-codegraph-sot-home-"));
-		const workspace = mkdtempSync(join(tmpdir(), "omo-codegraph-sot-workspace-"));
+		const homeDir = mkdtempSync(join(tmpdir(), "omop-codegraph-sot-home-"));
+		const workspace = mkdtempSync(join(tmpdir(), "omop-codegraph-sot-workspace-"));
 		const stdout: string[] = [];
 		const spawned: WorkerSpawnInvocation[] = [];
 		try {
@@ -102,8 +102,8 @@ describe("CodeGraph SessionStart hook", () => {
 
 	it("#given project Codex SOT disables global CodeGraph enablement #when SessionStart fires #then project config wins", async () => {
 		// given
-		const homeDir = mkdtempSync(join(tmpdir(), "omo-codegraph-project-sot-home-"));
-		const workspace = mkdtempSync(join(tmpdir(), "omo-codegraph-project-sot-workspace-"));
+		const homeDir = mkdtempSync(join(tmpdir(), "omop-codegraph-project-sot-home-"));
+		const workspace = mkdtempSync(join(tmpdir(), "omop-codegraph-project-sot-workspace-"));
 		const stdout: string[] = [];
 		const spawned: WorkerSpawnInvocation[] = [];
 		try {
@@ -133,7 +133,7 @@ describe("CodeGraph SessionStart hook", () => {
 
 	it("#given env disables CodeGraph over SOT enablement #when SessionStart fires #then it skips without spawning", async () => {
 		// given
-		const homeDir = mkdtempSync(join(tmpdir(), "omo-codegraph-env-home-"));
+		const homeDir = mkdtempSync(join(tmpdir(), "omop-codegraph-env-home-"));
 		const stdout: string[] = [];
 		const spawned: WorkerSpawnInvocation[] = [];
 		try {
@@ -160,7 +160,7 @@ describe("CodeGraph SessionStart hook", () => {
 		// given
 		const stdout: string[] = [];
 		const spawned: WorkerSpawnInvocation[] = [];
-		const workspace = mkdtempSync(join(tmpdir(), "omo-codegraph-workspace-"));
+		const workspace = mkdtempSync(join(tmpdir(), "omop-codegraph-workspace-"));
 
 		try {
 			// when
@@ -200,8 +200,8 @@ describe("CodeGraph SessionStart hook", () => {
 
 	it("#given an unsupported local Node and a PATH CodeGraph command #when worker runs #then it skips without touching the workspace", async () => {
 		// given
-		const workspace = mkdtempSync(join(tmpdir(), "omo-codegraph-worker-node-"));
-		const homeDir = mkdtempSync(join(tmpdir(), "omo-codegraph-worker-node-home-"));
+		const workspace = mkdtempSync(join(tmpdir(), "omop-codegraph-worker-node-"));
+		const homeDir = mkdtempSync(join(tmpdir(), "omop-codegraph-worker-node-home-"));
 		const outcomes: unknown[] = [];
 
 		try {
@@ -239,8 +239,8 @@ describe("CodeGraph SessionStart hook", () => {
 
 	it("#given an unsupported local Node but bundled CodeGraph resolves through CODEGRAPH_NODE_BIN #when worker runs #then it bootstraps with the compatible runtime", async () => {
 		// given
-		const workspace = mkdtempSync(join(tmpdir(), "omo-codegraph-worker-compatible-node-"));
-		const homeDir = mkdtempSync(join(tmpdir(), "omo-codegraph-worker-compatible-node-home-"));
+		const workspace = mkdtempSync(join(tmpdir(), "omop-codegraph-worker-compatible-node-"));
+		const homeDir = mkdtempSync(join(tmpdir(), "omop-codegraph-worker-compatible-node-home-"));
 		const nodeBin = "/opt/node22/bin/node";
 		const calls: Array<{ readonly args: readonly string[]; readonly command: string }> = [];
 		const outcomes: unknown[] = [];
@@ -258,8 +258,8 @@ describe("CodeGraph SessionStart hook", () => {
 						throw new Error("provisioning should not run when bundled CodeGraph resolved");
 					},
 					prepareWorkspace: () => ({
-						dataDir: join(homeDir, ".omo/codegraph/projects/test"),
-						dataRoot: join(homeDir, ".omo/codegraph"),
+						dataDir: join(homeDir, ".omop/codegraph/projects/test"),
+						dataRoot: join(homeDir, ".omop/codegraph"),
 						linked: true,
 						mode: "global-linked",
 						projectLink: join(workspace, ".codegraph"),
@@ -287,8 +287,8 @@ describe("CodeGraph SessionStart hook", () => {
 
 	it("#given CodeGraph cannot be resolved or provisioned #when worker runs #then it logs a graceful skip", async () => {
 		// given
-		const workspace = mkdtempSync(join(tmpdir(), "omo-codegraph-worker-"));
-		const homeDir = mkdtempSync(join(tmpdir(), "omo-codegraph-worker-home-"));
+		const workspace = mkdtempSync(join(tmpdir(), "omop-codegraph-worker-"));
+		const homeDir = mkdtempSync(join(tmpdir(), "omop-codegraph-worker-home-"));
 		const outcomes: unknown[] = [];
 		const calls: string[] = [];
 
@@ -308,8 +308,8 @@ describe("CodeGraph SessionStart hook", () => {
 					prepareWorkspace: () => {
 						calls.push("prepareWorkspace");
 						return {
-							dataDir: join(homeDir, ".omo/codegraph/projects/test"),
-							dataRoot: join(homeDir, ".omo/codegraph"),
+							dataDir: join(homeDir, ".omop/codegraph/projects/test"),
+							dataRoot: join(homeDir, ".omop/codegraph"),
 							linked: true,
 							mode: "global-linked",
 							projectLink: join(workspace, ".codegraph"),
@@ -342,8 +342,8 @@ describe("CodeGraph SessionStart hook", () => {
 
 	it("#given CodeGraph is unavailable and auto provisioning is disabled #when worker runs #then it leaves the project untouched", async () => {
 		// given
-		const workspace = mkdtempSync(join(tmpdir(), "omo-codegraph-worker-unavailable-"));
-		const homeDir = mkdtempSync(join(tmpdir(), "omo-codegraph-worker-unavailable-home-"));
+		const workspace = mkdtempSync(join(tmpdir(), "omop-codegraph-worker-unavailable-"));
+		const homeDir = mkdtempSync(join(tmpdir(), "omop-codegraph-worker-unavailable-home-"));
 		const outcomes: unknown[] = [];
 
 		try {
@@ -386,9 +386,9 @@ describe("CodeGraph SessionStart hook", () => {
 	it("#given Windows install_dir has codegraph.cmd #when worker resolves provisioned CodeGraph #then it uses the cmd shim", async () => {
 		await withProcessPlatform("win32", async () => {
 			// given
-			const workspace = mkdtempSync(join(tmpdir(), "omo-codegraph-worker-win32-"));
-			const homeDir = mkdtempSync(join(tmpdir(), "omo-codegraph-worker-win32-home-"));
-			const installDir = mkdtempSync(join(tmpdir(), "omo-codegraph-worker-win32-install-"));
+			const workspace = mkdtempSync(join(tmpdir(), "omop-codegraph-worker-win32-"));
+			const homeDir = mkdtempSync(join(tmpdir(), "omop-codegraph-worker-win32-home-"));
+			const installDir = mkdtempSync(join(tmpdir(), "omop-codegraph-worker-win32-install-"));
 			const binPath = join(installDir, "bin", "codegraph.cmd");
 			const calls: { readonly args: readonly string[]; readonly command: string; readonly env: Record<string, string> }[] = [];
 			const outcomes: unknown[] = [];
@@ -409,8 +409,8 @@ describe("CodeGraph SessionStart hook", () => {
 							throw new Error("provisioning should not run when install_dir binary exists");
 						},
 						prepareWorkspace: () => ({
-							dataDir: join(homeDir, ".omo/codegraph/projects/test"),
-							dataRoot: join(homeDir, ".omo/codegraph"),
+							dataDir: join(homeDir, ".omop/codegraph/projects/test"),
+							dataRoot: join(homeDir, ".omop/codegraph"),
 							linked: true,
 							mode: "global-linked",
 							projectLink: join(workspace, ".codegraph"),
@@ -444,7 +444,7 @@ describe("CodeGraph SessionStart hook", () => {
 
 	it("#given Windows codegraph.cmd #when default worker runner builds invocation #then it runs through cmd.exe", () => {
 		// given
-		const command = "C:\\Users\\test\\.omo\\codegraph\\bin\\codegraph.cmd";
+		const command = "C:\\Users\\test\\.omop\\codegraph\\bin\\codegraph.cmd";
 
 		// when
 		const invocation = resolveCodegraphCommandInvocation(command, ["status", "--json"], "win32");
@@ -458,7 +458,7 @@ describe("CodeGraph SessionStart hook", () => {
 
 	it("#given non-Windows codegraph command #when default worker runner builds invocation #then it executes directly", () => {
 		// given
-		const command = "/home/test/.omo/codegraph/bin/codegraph";
+		const command = "/home/test/.omop/codegraph/bin/codegraph";
 
 		// when
 		const invocation = resolveCodegraphCommandInvocation(command, ["sync"], "linux");
@@ -473,8 +473,8 @@ describe("CodeGraph SessionStart hook", () => {
 			{ action: "synced", args: [["status", "--json"], ["sync"]], stdout: '{"initialized":true}' },
 		] as const) {
 			// given
-			const workspace = mkdtempSync(join(tmpdir(), "omo-codegraph-status-"));
-			const homeDir = mkdtempSync(join(tmpdir(), "omo-codegraph-status-home-"));
+			const workspace = mkdtempSync(join(tmpdir(), "omop-codegraph-status-"));
+			const homeDir = mkdtempSync(join(tmpdir(), "omop-codegraph-status-home-"));
 			const calls: { readonly args: readonly string[]; readonly command: string; readonly env: Record<string, string> }[] = [];
 			const outcomes: unknown[] = [];
 			try {
@@ -489,8 +489,8 @@ describe("CodeGraph SessionStart hook", () => {
 						ensureGitignored: () => true,
 						ensureProvisioned: () => Promise.resolve({ binPath: "/tmp/codegraph", provisioned: true }),
 						prepareWorkspace: () => ({
-							dataDir: join(homeDir, ".omo/codegraph/projects/test"),
-							dataRoot: join(homeDir, ".omo/codegraph"),
+							dataDir: join(homeDir, ".omop/codegraph/projects/test"),
+							dataRoot: join(homeDir, ".omop/codegraph"),
 							linked: true,
 							mode: "global-linked",
 							projectLink: join(workspace, ".codegraph"),

@@ -97,7 +97,7 @@ describe("auto-slash command executor plugin dispatch", () => {
 
   beforeEach(() => {
     clearCommandLoaderCache()
-    tempDir = mkdtempSync(join(tmpdir(), "omo-executor-plugin-test-"))
+    tempDir = mkdtempSync(join(tmpdir(), "omop-executor-plugin-test-"))
     envSnapshot = {
       CLAUDE_CONFIG_DIR: process.env.CLAUDE_CONFIG_DIR,
       CLAUDE_PLUGINS_HOME: process.env.CLAUDE_PLUGINS_HOME,

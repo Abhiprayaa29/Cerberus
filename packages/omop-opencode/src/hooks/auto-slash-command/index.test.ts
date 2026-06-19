@@ -49,7 +49,7 @@ describe("createAutoSlashCommandHook", () => {
     spyOn(shared, "log").mockImplementation((message: string, data?: unknown) => {
       logCalls.push([message, data])
     })
-    tempDir = mkdtempSync(join(tmpdir(), "omo-auto-slash-hook-test-"))
+    tempDir = mkdtempSync(join(tmpdir(), "omop-auto-slash-hook-test-"))
     originalWorkingDirectory = process.cwd()
 
     const autoSlashCommandModule = await import(`./hook?test=${Date.now()}-${Math.random()}`)

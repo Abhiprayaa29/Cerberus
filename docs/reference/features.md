@@ -87,7 +87,7 @@ For projects that must keep all agent scratch work under the repository, add a
 project `AGENTS.md` rule with an explicit writable path:
 
 ```md
-Use ./.omo/session-work/ for clones, downloaded docs, scratch files, and
+Use ./.omop/session-work/ for clones, downloaded docs, scratch files, and
 temporary outputs. Do not write under /tmp, /var, or other OS temp directories
 unless the user approves it.
 ```
@@ -759,7 +759,7 @@ TaskUpdate({ id: "T-002", status: "completed" });
 // T-003 now unblocked
 ```
 
-**Storage**: Tasks are stored as JSON files in `.omo/tasks/`.
+**Storage**: Tasks are stored as JSON files in `.omop/tasks/`.
 
 **Difference from TodoWrite**:
 

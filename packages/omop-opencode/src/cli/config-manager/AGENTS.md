@@ -20,14 +20,14 @@
 | `detect-current-config.ts` | Read existing OpenCode config, detect installed plugins |
 | `ensure-config-directory-exists.ts` | Create `.opencode/` dir if missing |
 | `format-error-with-suggestion.ts` | Format errors with actionable suggestions |
-| `generate-omo-config.ts` | Generate `oh-my-open-pentest.jsonc` from install selections |
+| `generate-omop-config.ts` | Generate `oh-my-open-pentest.jsonc` from install selections |
 | `jsonc-provider-editor.ts` | Read/write JSONC files with comment preservation |
 | `npm-dist-tags.ts` | Fetch latest version from npm registry (dist-tags) |
 | `opencode-binary.ts` | Detect OpenCode binary location, verify it's installed |
 | `opencode-config-format.ts` | OpenCode config format constants and type guards |
 | `parse-opencode-config-file.ts` | Parse opencode.json/opencode.jsonc with fallback |
 | `plugin-name-with-version.ts` | Resolve `oh-my-open-pentest@X.Y.Z` for installation |
-| `write-omo-config.ts` | Write generated config to `.opencode/oh-my-open-pentest.jsonc` |
+| `write-omop-config.ts` | Write generated config to `.opencode/oh-my-open-pentest.jsonc` |
 
 ## USAGE PATTERN
 
@@ -38,8 +38,8 @@ Functions are called sequentially by `src/cli/install.ts` / `src/cli/tui-install
 2. detect-current-config (check what's already set up)
 3. opencode-binary (verify opencode installed)
 .. npm-dist-tags (get latest version)
-5. generate-omo-config (build config from user selections)
-6. write-omo-config
+5. generate-omop-config (build config from user selections)
+6. write-omop-config
 7. add-plugin-to-opencode-config
 8. add-provider-config (for each provider selected)
 9. bun-install

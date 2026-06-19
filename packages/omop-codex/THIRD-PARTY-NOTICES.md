@@ -116,7 +116,7 @@ listed as a shipped codex component here.
 ### @cerberuslabs/omop-codex-plugin@...0.0
 - License: MIT, from `.codex-plugin/plugin.json`.
 - Copyright: Yeongyu Kim and contributors.
-- Where-bundled: aggregate Codex plugin namespace `omo@cerberuslabs`.
+- Where-bundled: aggregate Codex plugin namespace `omop@cerberuslabs`.
 
 ### Node.js runtime bootstrap payload@2...6.0
 - License: Node.js MIT license plus bundled third-party notices for runtime dependencies.

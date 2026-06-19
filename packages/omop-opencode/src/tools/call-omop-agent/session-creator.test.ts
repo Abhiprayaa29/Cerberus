@@ -4,7 +4,7 @@ import { createOrGetSession } from "./session-creator"
 import { _resetForTesting, subagentSessions } from "../../features/claude-code-session-state"
 import { unsafeTestValue } from "../../../../../test-support/unsafe-test-value"
 
-describe("call-omo-agent createOrGetSession", () => {
+describe("call-omop-agent createOrGetSession", () => {
   test("creates child session without overriding permission and tracks it as subagent session", async () => {
     // given
     _resetForTesting()

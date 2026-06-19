@@ -53,8 +53,8 @@ describe("findRuleCandidates", () => {
 
 		// then
 		expect(candidates.map(candidateSummary)).toEqual([
-			".omo/rules:0:src/.omo/rules/local.md",
-			".omo/rules:1:.omo/rules/root.md",
+			".omop/rules:0:src/.omop/rules/local.md",
+			".omop/rules:1:.omop/rules/root.md",
 			"~/.opencode/rules:9999:.opencode/rules/global.md",
 		]);
 	});
@@ -68,7 +68,7 @@ describe("findRuleCandidates", () => {
 			projectRoot,
 			targetFile: targetPath,
 			homeDir: homeRoot,
-			disabledSources: new Set([".omo/rules", "~/.opencode/rules", "plugin-bundled"]),
+			disabledSources: new Set([".omop/rules", "~/.opencode/rules", "plugin-bundled"]),
 		});
 
 		// then
@@ -90,8 +90,8 @@ describe("findRuleCandidates", () => {
 
 		// then
 		expect(candidates.map(candidateSummary)).toEqual([
-			".omo/rules:0:src/.omo/rules/local.md",
-			".omo/rules:1:.omo/rules/root.md",
+			".omop/rules:0:src/.omop/rules/local.md",
+			".omop/rules:1:.omop/rules/root.md",
 		]);
 	});
 });

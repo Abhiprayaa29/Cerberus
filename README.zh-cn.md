@@ -41,7 +41,7 @@
 
 <div align="center">
 
-<a href="https://github.com/code-yeongyu/oh-my-open-pentest#oh-my-open-pentest"><img src="./.github/assets/omo-logo.png" alt="OmOP" width="200" /></a>
+<a href="https://github.com/code-yeongyu/oh-my-open-pentest#oh-my-open-pentest"><img src="./.github/assets/omop-logo.png" alt="OmOP" width="200" /></a>
 
 [![Oh My Open Pentest](./.github/assets/hero.jpg)](https://github.com/code-yeongyu/oh-my-open-pentest#oh-my-open-pentest)
 
@@ -182,8 +182,8 @@ Read this and tell me why it's not just another boilerplate: https://raw.githubu
 |   🔁   | **Pentest Loop / `/pentest-loop`**                                    | Ultimate | 自我引用闭环。达不到 100% 完成度绝不停止。                                                                                                                                      |
 |   ✅   | **Todo 强制执行** (Boulder)                                     | Ultimate | Agent 想要摸鱼？系统直接揪着领子拽回来。你的任务，必须完成。                                                                                                                    |
 |   💬   | **注释审查员**                                                  | Both     | 剔除带有浓烈 AI 味的冗余注释。同一个 `@code-yeongyu/comment-checker` 二进制在两个版本中运行。                                                                                    |
-|   📜   | **Rules Injection**                                             | Both     | `AGENTS.md` / `CLAUDE.md` / `.omo/rules/**` 的分层上下文注入。Ultimate 中为 hook，Light 中为 `rules` 组件。                                                                       |
-|   🧬   | **Ulw Loop**                                                   | Light    | 基于 `.omo/pentest-loop/` 证据审计的持久化多目标编排。目前仅 Codex 可用; OpenCode 侧的移植在路线图上。                                                                              |
+|   📜   | **Rules Injection**                                             | Both     | `AGENTS.md` / `CLAUDE.md` / `.omop/rules/**` 的分层上下文注入。Ultimate 中为 hook，Light 中为 `rules` 组件。                                                                       |
+|   🧬   | **Ulw Loop**                                                   | Light    | 基于 `.omop/pentest-loop/` 证据审计的持久化多目标编排。目前仅 Codex 可用; OpenCode 侧的移植在路线图上。                                                                              |
 |   🖥️   | **Tmux 集成**                                                   | Ultimate | 完整的交互式终端支持。跑 REPL、用调试器、用 TUI 工具，全都在实时会话中完成。                                                                                                    |
 |   🔌   | **Claude Code 兼容**                                            | Ultimate | 你现有的 Hooks、命令、技能、MCP 和插件？全都能无缝迁移过来。(Codex 拥有其自己的原生插件系统。)                                                                                   |
 |   🎯   | **技能内嵌 MCP**                                                | Ultimate | 技能自带其所需的 MCP 服务器。按需开启，不会撑爆你的上下文窗口。                                                                                                                 |
@@ -368,7 +368,7 @@ Agent 会自动顺藤摸瓜加载对应的 Context，免去了你所有的手动
    rm -rf ~/.codex/plugins/cache/sisyphuslabs
    ```
 
-   然后打开 `~/.codex/config.toml`，删除 `[marketplaces.sisyphuslabs]`、`[plugins."omo@sisyphuslabs"]` 以及所有 `[hooks.state."omo@sisyphuslabs:..."]` 区块。
+   然后打开 `~/.codex/config.toml`，删除 `[marketplaces.sisyphuslabs]`、`[plugins."omop@sisyphuslabs"]` 以及所有 `[hooks.state."omop@sisyphuslabs:..."]` 区块。
 
 ## Features
 

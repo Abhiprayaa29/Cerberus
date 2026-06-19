@@ -91,7 +91,7 @@ Codebase relevant: <yes/no> · External: <yes/no> · Browsing: <yes/no> · Verif
 Then create the session directory:
 
 ```bash
-mkdir -p .omo/ultraresearch/$(date +%Y%m%d-%H%M%S)
+mkdir -p .omop/ultraresearch/$(date +%Y%m%d-%H%M%S)
 ```
 
 This is `$SESSION_DIR`. The orchestrator owns the journal: you write every file in it; workers never do. Maintain:

@@ -17,7 +17,7 @@ describe("migrateLegacyPluginEntry", () => {
   let testDir = ""
 
   beforeEach(() => {
-    testDir = join(tmpdir(), `omo-migrate-entry-${Date.now()}-${Math.random().toString(36).slice(2)}`)
+    testDir = join(tmpdir(), `omop-migrate-entry-${Date.now()}-${Math.random().toString(36).slice(2)}`)
     mkdirSync(testDir, { recursive: true })
   })
 

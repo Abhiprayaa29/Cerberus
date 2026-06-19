@@ -17,15 +17,15 @@
    ```
    The installer reads `CODEX_HOME` (and `OMOP_CODEX_PROJECT` for project scope), so an isolated home keeps the real `~/.codex/{config.toml,plugins,agents}` UNTOUCHED.
 2. **RUN THE CODEX GATE:** `bun run test:codex` (installer + config migration + plugin component suite; the canonical Codex compatibility gate, ubuntu/macos/windows in CI).
-3. **DRIVE CODEX UNDER tmux** in that isolated `CODEX_HOME`: confirm the plugin loads, `omo@cerberuslabs` is enabled in the sandbox `config.toml`, and the hooks actually fire (`SessionStart` / `UserPromptSubmit` / `PreToolUse` / `PostToolUse` / `PostCompact` / `Stop` / `SubagentStop`). **CONFIRM YOUR REAL `~/.codex/config.toml` WAS NOT TOUCHED.**
+3. **DRIVE CODEX UNDER tmux** in that isolated `CODEX_HOME`: confirm the plugin loads, `omop@cerberuslabs` is enabled in the sandbox `config.toml`, and the hooks actually fire (`SessionStart` / `UserPromptSubmit` / `PreToolUse` / `PostToolUse` / `PostCompact` / `Stop` / `SubagentStop`). **CONFIRM YOUR REAL `~/.codex/config.toml` WAS NOT TOUCHED.**
 
-**RECORD THE EVIDENCE UNDER `.omo/evidence/<YYYYMMDD>-<short-slug>/`** (one organized subfolder per change): WHY THERE IS NO REGRESSION (the isolated-install transcript, before/after of the real `~/.codex` proving it is untouched, exact commands and output) and PROOF THAT EVERY INTENDED CHANGE LANDED (the new behavior observed inside the isolated Codex). See the root [`AGENTS.md`](../../AGENTS.md) "STOP. QA IS MANDATORY" section for the full cross-harness mandate.
+**RECORD THE EVIDENCE UNDER `.omop/evidence/<YYYYMMDD>-<short-slug>/`** (one organized subfolder per change): WHY THERE IS NO REGRESSION (the isolated-install transcript, before/after of the real `~/.codex` proving it is untouched, exact commands and output) and PROOF THAT EVERY INTENDED CHANGE LANDED (the new behavior observed inside the isolated Codex). See the root [`AGENTS.md`](../../AGENTS.md) "STOP. QA IS MANDATORY" section for the full cross-harness mandate.
 
 **ALWAYS. EVERY TIME. NO EXCEPTIONS.**
 
 ## OVERVIEW
 
-`@omop/omop-codex` (private, v0...0): the Codex harness adapter = the **Light Edition** (omo for the OpenAI Codex CLI). Vendors a Codex plugin namespace `omo` + a TypeScript installer + telemetry. Public distribution = the `lazycodex` bin/npm alias and the [`code-yeongyu/lazycodex`](https://github.com/code-yeongyu/lazycodex) marketplace repo. Codex marketplace identity = `cerberuslabs` / plugin `omo` (`omo@cerberuslabs`); `lazycodex` is the alias only. Full identity + the publish/deploy pipeline live in the root [`AGENTS.md`](../../AGENTS.md) "CODEX LIGHT EDITION" section.
+`@omop/omop-codex` (private, v0...0): the Codex harness adapter = the **Light Edition** (omo for the OpenAI Codex CLI). Vendors a Codex plugin namespace `omo` + a TypeScript installer + telemetry. Public distribution = the `lazycodex` bin/npm alias and the [`code-yeongyu/lazycodex`](https://github.com/code-yeongyu/lazycodex) marketplace repo. Codex marketplace identity = `cerberuslabs` / plugin `omo` (`omop@cerberuslabs`); `lazycodex` is the alias only. Full identity + the publish/deploy pipeline live in the root [`AGENTS.md`](../../AGENTS.md) "CODEX LIGHT EDITION" section.
 
 ## LAYOUT
 
@@ -46,7 +46,7 @@
 
 ## INSTALL (mechanics)
 
-Source entry: `src/install/install-codex.ts` plus `src/install/install-local-cli.ts`; generated Node entrypoints live at `packages/omop-codex/scripts/install*.mjs` for stable published paths. Targets: plugin cache `~/.codex/plugins/cache/cerberuslabs/omo/<version>/`; local marketplace snapshot under `~/.codex/.tmp/marketplaces/cerberuslabs/plugins/omo/`; durable agent TOML copies under `~/.codex/agents/`; enables `omo@cerberuslabs` in `~/.codex/config.toml`; component CLIs into `~/.local/bin`. Windows: Git Bash preflight (`winget install --id Git.Git`); override `OMOP_CODEX_GIT_BASH_PATH`, skip auto-install with `OMOP_CODEX_SKIP_GIT_BASH_AUTO_INSTALL=.`. Non-Windows keeps the `git_bash` MCP manifest bundled but writes `enabled = false`.
+Source entry: `src/install/install-codex.ts` plus `src/install/install-local-cli.ts`; generated Node entrypoints live at `packages/omop-codex/scripts/install*.mjs` for stable published paths. Targets: plugin cache `~/.codex/plugins/cache/cerberuslabs/omo/<version>/`; local marketplace snapshot under `~/.codex/.tmp/marketplaces/cerberuslabs/plugins/omo/`; durable agent TOML copies under `~/.codex/agents/`; enables `omop@cerberuslabs` in `~/.codex/config.toml`; component CLIs into `~/.local/bin`. Windows: Git Bash preflight (`winget install --id Git.Git`); override `OMOP_CODEX_GIT_BASH_PATH`, skip auto-install with `OMOP_CODEX_SKIP_GIT_BASH_AUTO_INSTALL=.`. Non-Windows keeps the `git_bash` MCP manifest bundled but writes `enabled = false`.
 
 ## CONFIG MIGRATION (SessionStart)
 
@@ -54,7 +54,7 @@ The plugin `SessionStart` hook (matcher `^startup$`) runs `plugin/scripts/auto-u
 
 ## TELEMETRY
 
-Event `omo_codex_daily_active`, at most once per UTC day per machine. Two sources: install (`install_completed`) + plugin `SessionStart` (`session_start`). Id `sha256("omop-codex:" + hostname)`; dedup state `~/.local/share/omop-codex/posthog-activity.json`; PostHog person profiles disabled. Opt-out: `OMOP_CODEX_DISABLE_POSTHOG=.` / `OMOP_CODEX_SEND_ANONYMOUS_TELEMETRY=0` (global `OMO_*` flags also disable). Parity with the main plugin pinned by `src/telemetry/cross-package-equivalence.test.ts`.
+Event `omo_codex_daily_active`, at most once per UTC day per machine. Two sources: install (`install_completed`) + plugin `SessionStart` (`session_start`). Id `sha256("omop-codex:" + hostname)`; dedup state `~/.local/share/omop-codex/posthog-activity.json`; PostHog person profiles disabled. Opt-out: `OMOP_CODEX_DISABLE_POSTHOG=.` / `OMOP_CODEX_SEND_ANONYMOUS_TELEMETRY=0` (global `OMOP_*` flags also disable). Parity with the main plugin pinned by `src/telemetry/cross-package-equivalence.test.ts`.
 
 ## DEPLOY (sync script)
 

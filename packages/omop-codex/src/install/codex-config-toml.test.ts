@@ -37,7 +37,7 @@ describe("codex-config-toml", () => {
       repoRoot: "/repo/packages/omop-codex",
       marketplaceName: "debug",
       marketplaceSource: { sourceType: "local", source: "/repo/packages/omop-codex" },
-      pluginNames: ["omo"],
+      pluginNames: ["omop"],
       autonomousPermissions: true,
     })
 
@@ -68,7 +68,7 @@ describe("codex-config-toml", () => {
       repoRoot: "/repo/packages/omop-codex",
       marketplaceName: "debug",
       marketplaceSource: { sourceType: "local", source: "/repo/packages/omop-codex" },
-      pluginNames: ["omo"],
+      pluginNames: ["omop"],
     })
 
     // then
@@ -101,7 +101,7 @@ describe("codex-config-toml", () => {
       repoRoot: "/repo/packages/omop-codex",
       marketplaceName: "debug",
       marketplaceSource: { sourceType: "local", source: "/repo/packages/omop-codex" },
-      pluginNames: ["omo"],
+      pluginNames: ["omop"],
     })
 
     // then
@@ -124,7 +124,7 @@ describe("codex-config-toml", () => {
       repoRoot: "/repo/packages/omop-codex",
       marketplaceName: "debug",
       marketplaceSource: { sourceType: "local", source: "/repo/packages/omop-codex" },
-      pluginNames: ["omo"],
+      pluginNames: ["omop"],
     })
 
     // then
@@ -145,13 +145,13 @@ describe("codex-config-toml", () => {
       repoRoot: "/repo/packages/omop-codex",
       marketplaceName: "cerberuslabs",
       marketplaceSource: { sourceType: "local", source: "/repo/packages/omop-codex/cache/cerberuslabs" },
-      pluginNames: ["omo"],
+      pluginNames: ["omop"],
     })
 
     // then
     const content = await readFile(configPath, "utf8")
-    expect(content).toContain('[plugins."omo@cerberuslabs".mcp_servers.context7]')
-    expect(content).toMatch(/\[plugins\."omo@cerberuslabs"\.mcp_servers\.context7\][\s\S]*?enabled = true/)
+    expect(content).toContain('[plugins."omop@cerberuslabs".mcp_servers.context7]')
+    expect(content).toMatch(/\[plugins\."omop@cerberuslabs"\.mcp_servers\.context7\][\s\S]*?enabled = true/)
     expect(content).not.toContain("[mcp_servers.context7]")
     expect(content).not.toContain("@upstash/context7-mcp")
     expect(content).not.toContain("YOUR_API_KEY")
@@ -178,7 +178,7 @@ describe("codex-config-toml", () => {
       repoRoot: "/repo/packages/omop-codex",
       marketplaceName: "debug",
       marketplaceSource: { sourceType: "local", source: "/repo/packages/omop-codex" },
-      pluginNames: ["omo"],
+      pluginNames: ["omop"],
     })
 
     // then
@@ -213,7 +213,7 @@ describe("codex-config-toml", () => {
       repoRoot: "/repo/packages/omop-codex",
       marketplaceName: "debug",
       marketplaceSource: { sourceType: "local", source: "/repo/packages/omop-codex" },
-      pluginNames: ["omo"],
+      pluginNames: ["omop"],
     })
 
     // then
@@ -248,7 +248,7 @@ describe("codex-config-toml", () => {
       repoRoot: "/repo/packages/omop-codex",
       marketplaceName: "debug",
       marketplaceSource: { sourceType: "local", source: "/repo/packages/omop-codex" },
-      pluginNames: ["omo"],
+      pluginNames: ["omop"],
     })
 
     // then
@@ -287,7 +287,7 @@ describe("codex-config-toml", () => {
       repoRoot: "/repo/packages/omop-codex",
       marketplaceName: "debug",
       marketplaceSource: { sourceType: "local", source: "/repo/packages/omop-codex" },
-      pluginNames: ["omo"],
+      pluginNames: ["omop"],
       agentConfigs: [{ name: "explorer", configFile: "./agents/explorer.toml" }],
     })
 
@@ -311,13 +311,13 @@ describe("codex-config-toml", () => {
         'source_type = "git"',
         'source = "https://github.com/code-yeongyu/codex-plugins.git"',
         "",
-        '[plugins."omo@code-yeongyu-codex-plugins"]',
+        '[plugins."omop@code-yeongyu-codex-plugins"]',
         "enabled = true",
         "",
-        '[plugins."omo@code-yeongyu-codex-plugins".mcp_servers.lsp]',
+        '[plugins."omop@code-yeongyu-codex-plugins".mcp_servers.lsp]',
         "enabled = true",
         "",
-        '[hooks.state."omo@code-yeongyu-codex-plugins:hooks/hooks.json:post_tool_use:0:0"]',
+        '[hooks.state."omop@code-yeongyu-codex-plugins:hooks/hooks.json:post_tool_use:0:0"]',
         'trusted_hash = "sha256:old"',
         "",
         "[marketplaces.lazycodex]",
@@ -325,10 +325,10 @@ describe("codex-config-toml", () => {
         'source_type = "local"',
         'source = "/tmp/stale-lazycodex-cache"',
         "",
-        '[plugins."omo@lazycodex"]',
+        '[plugins."omop@lazycodex"]',
         "enabled = true",
         "",
-        '[hooks.state."omo@lazycodex:hooks/hooks.json:post_tool_use:0:0"]',
+        '[hooks.state."omop@lazycodex:hooks/hooks.json:post_tool_use:0:0"]',
         'trusted_hash = "sha256:stale"',
         "",
       ].join("\n"),
@@ -343,8 +343,8 @@ describe("codex-config-toml", () => {
         sourceType: "local",
         source: "/repo/packages/omop-codex/cache/cerberuslabs",
       },
-      pluginNames: ["omo"],
-      trustedHookStates: [{ key: "omo@cerberuslabs:hooks/hooks.json:post_tool_use:0:0", trustedHash: "sha256:abc" }],
+      pluginNames: ["omop"],
+      trustedHookStates: [{ key: "omop@cerberuslabs:hooks/hooks.json:post_tool_use:0:0", trustedHash: "sha256:abc" }],
       agentConfigs: [
         { name: "explorer", configFile: "./agents/explorer.toml" },
         { name: "intel", configFile: "./agents/intel.toml" },
@@ -359,8 +359,8 @@ describe("codex-config-toml", () => {
         sourceType: "local",
         source: "/repo/packages/omop-codex/cache/cerberuslabs",
       },
-      pluginNames: ["omo"],
-      trustedHookStates: [{ key: "omo@cerberuslabs:hooks/hooks.json:post_tool_use:0:0", trustedHash: "sha256:abc" }],
+      pluginNames: ["omop"],
+      trustedHookStates: [{ key: "omop@cerberuslabs:hooks/hooks.json:post_tool_use:0:0", trustedHash: "sha256:abc" }],
       agentConfigs: [
         { name: "explorer", configFile: "./agents/explorer.toml" },
         { name: "intel", configFile: "./agents/intel.toml" },
@@ -378,8 +378,8 @@ describe("codex-config-toml", () => {
     expect(content).toContain('source = "/repo/packages/omop-codex/cache/cerberuslabs"')
     expect(content).not.toContain('source = "https://github.com/code-yeongyu/lazycodex.git"')
     expect(content).not.toContain('ref = "main"')
-    expect(content).toContain("[plugins.\"omo@cerberuslabs\"]")
-    expect(content).toContain("[hooks.state.\"omo@cerberuslabs:hooks/hooks.json:post_tool_use:0:0\"]")
+    expect(content).toContain("[plugins.\"omop@cerberuslabs\"]")
+    expect(content).toContain("[hooks.state.\"omop@cerberuslabs:hooks/hooks.json:post_tool_use:0:0\"]")
     expect(content).toContain("[agents.explorer]")
     expect(content).toContain('config_file = "./agents/explorer.toml"')
     expect(content).toContain("[agents.intel]")
@@ -387,7 +387,7 @@ describe("codex-config-toml", () => {
     expect(content).toContain("[agents.plan]")
     expect(content).toContain('config_file = "./agents/plan.toml"')
     expect(content).not.toContain("[marketplaces.lazycodex]")
-    expect(content).not.toContain("omo@lazycodex")
+    expect(content).not.toContain("omop@lazycodex")
     expect(content).not.toContain("/tmp/stale-lazycodex-cache")
     expect(content).not.toContain("code-yeongyu-codex-plugins")
   })
@@ -411,7 +411,7 @@ describe("codex-config-toml", () => {
       repoRoot: "/repo/packages/omop-codex",
       marketplaceName: "cerberuslabs",
       marketplaceSource: { sourceType: "local", source: "/repo/packages/omop-codex" },
-      pluginNames: ["omo"],
+      pluginNames: ["omop"],
       preserveMarketplaceSource: true,
     })
 
@@ -435,7 +435,7 @@ describe("codex-config-toml", () => {
       repoRoot: "/repo/packages/omop-codex",
       marketplaceName: "debug",
       marketplaceSource: { sourceType: "local", source: "/repo/packages/omop-codex" },
-      pluginNames: ["omo"],
+      pluginNames: ["omop"],
     })
 
     // then
@@ -443,7 +443,7 @@ describe("codex-config-toml", () => {
     const content = await readFile(targetPath, "utf8")
     expect(linkStats.isSymbolicLink()).toBe(true)
     expect(content).toContain("[marketplaces.debug]")
-    expect(content).toContain("[plugins.\"omo@debug\"]")
+    expect(content).toContain("[plugins.\"omop@debug\"]")
   })
 
   test("repairs existing agent config_file entries without dropping descriptions", async () => {
@@ -466,7 +466,7 @@ describe("codex-config-toml", () => {
       repoRoot: "/repo/packages/omop-codex",
       marketplaceName: "debug",
       marketplaceSource: { sourceType: "local", source: "/repo/packages/omop-codex" },
-      pluginNames: ["omo"],
+      pluginNames: ["omop"],
       agentConfigs: [{ name: "explorer", configFile: "./agents/explorer.toml" }],
     })
 
@@ -494,7 +494,7 @@ describe("codex-config-toml", () => {
         source: "https://github.com/code-yeongyu/lazycodex.git",
         ref: "main",
       },
-      pluginNames: ["omo"],
+      pluginNames: ["omop"],
     })
 
     // then
@@ -517,7 +517,7 @@ describe("codex-config-toml", () => {
       repoRoot: "/repo/packages/omop-codex",
       marketplaceName: "debug",
       marketplaceSource: { sourceType: "local", source: "/repo/packages/omop-codex" },
-      pluginNames: ["omo"],
+      pluginNames: ["omop"],
       agentConfigs: [{ name: "review.agent", configFile: "./agents/review.agent.toml" }],
     })
 

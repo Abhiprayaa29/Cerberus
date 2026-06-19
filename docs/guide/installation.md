@@ -38,7 +38,7 @@ npx lazycodex-ai install
 npx lazycodex-ai install --no-tui --codex-autonomous
 ```
 
-It writes managed Codex Light state to `~/.codex/` and does not touch OpenCode or provider flags. During migration from older Codex plugin installs it may also repair the current project's `.codex/config.toml` if that project has the known `multi_agent_v2` plus legacy `[agents] max_threads` conflict; project-owned `.codex` artifacts are reported, not deleted. Global Codex config will register marketplace `cerberuslabs` from the local built cache under `~/.codex/plugins/cache/cerberuslabs` and enable plugin `omo@cerberuslabs`.
+It writes managed Codex Light state to `~/.codex/` and does not touch OpenCode or provider flags. During migration from older Codex plugin installs it may also repair the current project's `.codex/config.toml` if that project has the known `multi_agent_v2` plus legacy `[agents] max_threads` conflict; project-owned `.codex` artifacts are reported, not deleted. Global Codex config will register marketplace `cerberuslabs` from the local built cache under `~/.codex/plugins/cache/cerberuslabs` and enable plugin `omop@cerberuslabs`.
 
 On native Windows Codex installs, the installer prepares Git Bash before writing Codex config. If Git Bash is missing and `winget` is available, it tries the same best-effort command shown here, then checks again:
 
@@ -63,7 +63,7 @@ Codex may still start Windows shell calls through its own defaults. The Light ed
 
 > **Clean install note for older Codex plugin users.** Before installing the Light edition into a Codex home that previously used another Codex plugin bundle, uninstall the older bundle first, then re-run this installer. Multiple bundles may write Codex marketplace plugins, lifecycle hooks, and the `fullscan`/`ulw` keyword into the same `~/.codex`, so a clean Codex home avoids stale shared `config.toml` keys and duplicate hooks.
 >
-> To remove the Light edition after migration, run `npx lazycodex-ai uninstall`. It removes managed `cerberuslabs` Codex cache/marketplace state, strips `omo@cerberuslabs` plugin and hook-state blocks from `~/.codex/config.toml` with a backup, and removes managed agent TOML files from `~/.codex/agents/`. `cleanup` remains available as a backward-compatible alias.
+> To remove the Light edition after migration, run `npx lazycodex-ai uninstall`. It removes managed `cerberuslabs` Codex cache/marketplace state, strips `omop@cerberuslabs` plugin and hook-state blocks from `~/.codex/config.toml` with a backup, and removes managed agent TOML files from `~/.codex/agents/`. `cleanup` remains available as a backward-compatible alias.
 > If Codex still fails only inside one project with `agents.max_threads cannot be set when multi_agent_v2 is enabled`, run `npx lazycodex-ai install` from that project. The installer repairs project-local `.codex/config.toml` layers from the project root to the current directory, removes conflicting legacy `[agents] max_threads` only when MultiAgentV2 is enabled, and writes timestamped backups next to changed files.
 
 ### Install from the Codex marketplace (in-app)
@@ -84,7 +84,7 @@ Then pick `omo` from the `cerberuslabs` marketplace in the same `/plugins` menu 
 
 ```bash
 codex plugin marketplace add https://github.com/code-yeongyu/lazycodex
-codex plugin add omo@cerberuslabs
+codex plugin add omop@cerberuslabs
 ```
 
 **First session: approve the hooks.** On the next `codex` launch the startup hooks review lists every omo hook as new. Review and approve them — no omo hook runs before you approve, and the bootstrap below cannot start until the hooks are trusted.
@@ -99,12 +99,12 @@ A detached worker finishes the install in the background (the `sg` download is t
 
 **What bootstrap does:**
 
-- writes the managed `~/.codex/config.toml` blocks: marketplace source preserved, `omo@cerberuslabs` plugin enabled, managed `[agents.*]` entries, and re-stamped SHA256 `[hooks.state."omo@cerberuslabs:..."]` trust hashes
+- writes the managed `~/.codex/config.toml` blocks: marketplace source preserved, `omop@cerberuslabs` plugin enabled, managed `[agents.*]` entries, and re-stamped SHA256 `[hooks.state."omop@cerberuslabs:..."]` trust hashes
 - copies bundled Codex agent TOMLs into `~/.codex/agents/`
-- links component CLIs (`omo-rules`, `omo-lsp`, …) into `~/.local/bin` (or `$CODEX_LOCAL_BIN_DIR`; isolated `CODEX_HOME` installs use `<CODEX_HOME>/bin`)
+- links component CLIs (`omop-rules`, `omop-lsp`, …) into `~/.local/bin` (or `$CODEX_LOCAL_BIN_DIR`; isolated `CODEX_HOME` installs use `<CODEX_HOME>/bin`)
 - provisions a checksum-pinned standalone `sg` (ast-grep) binary into `<CODEX_HOME>/runtime/ast-grep/<platform>-<arch>/` for the `ast-grep` skill
 - on native Windows, provisions a pinned Node LTS runtime into `<CODEX_HOME>/runtime/node/` when `node` is missing (see the Windows status below)
-- records every run in the plugin data dir: `<CODEX_HOME>/plugins/data/omo-cerberuslabs/bootstrap/state.json` plus a JSONL `bootstrap.log` (Windows adds a `ps-bootstrap.log` transcript)
+- records every run in the plugin data dir: `<CODEX_HOME>/plugins/data/omop-cerberuslabs/bootstrap/state.json` plus a JSONL `bootstrap.log` (Windows adds a `ps-bootstrap.log` transcript)
 
 **What bootstrap does NOT do:**
 
@@ -123,7 +123,7 @@ A detached worker finishes the install in the background (the `sg` download is t
 
 | Mode | What you see | What to do |
 |---|---|---|
-| `omo-cli` absent | The top-level `omo` command is not linked. The marketplace payload intentionally ships without `dist/cli`, so bootstrap records an `omo-cli` degraded entry ("marketplace payload has no dist/cli"). Component CLIs still link normally. | Use `npx lazycodex-ai <command>` wherever you would run `omo`. Verify with `npx lazycodex-ai doctor`. |
+| `omop-cli` absent | The top-level `omo` command is not linked. The marketplace payload intentionally ships without `dist/cli`, so bootstrap records an `omop-cli` degraded entry ("marketplace payload has no dist/cli"). Component CLIs still link normally. | Use `npx lazycodex-ai <command>` wherever you would run `omo`. Verify with `npx lazycodex-ai doctor`. |
 | `sg` pending / offline | The ast-grep provisioning entry appears in the degraded list and the `ast-grep` skill cannot find `sg` yet — the first download is still running, or it failed while offline. | Start another session (bootstrap retries automatically), or install ast-grep yourself and/or set `OMOP_AST_GREP_SG_PATH=/path/to/sg`. Verify with `npx lazycodex-ai doctor`. |
 | Proxy limitation | Binary downloads fail behind an HTTP(S) proxy. The logged error says it plainly: the bootstrap downloader "does not tunnel through HTTP(S) proxies in v.; the download was attempted directly." | Run one session on a direct connection, or provide `sg` via `OMOP_AST_GREP_SG_PATH`/`PATH`. Verify with `npx lazycodex-ai doctor`. |
 | OpenCode Windows proxy preinstall | OpenCode starts before OMO loads, shows only default agents, or logs `fetch() proxy.url must be a non-empty string` while trying to install `oh-my-open-pentest@latest`. | Set `HTTP_PROXY`/`HTTPS_PROXY` for the shell that launches OpenCode, then preinstall into OpenCode's Windows config prefix: `npm install oh-my-open-pentest@latest --prefix "%APPDATA%\\opencode"`. Restart OpenCode and run `bunx oh-my-open-pentest doctor --json`. |
@@ -339,7 +339,7 @@ bunx oh-my-open-pentest install \
 | Platform | Writes |
 |----------|--------|
 | `opencode`, `both` | Registers `"oh-my-open-pentest"` in `opencode.json` `plugin` array. Generates agent → model mappings into `~/.config/opencode/oh-my-open-pentest.jsonc`. |
-| `codex`, `both` | Copies `packages/omop-codex/plugin/` into `~/.codex/plugins/cache/cerberuslabs/omo/<version>/`. Packaged `lazycodex-ai` installs use bundled component artifacts and run `npm ci --omit=dev` in the cache; source checkout installs may build the plugin first. Writes a local installed-marketplace snapshot under `~/.codex/.tmp/marketplaces/cerberuslabs/` for marketplace metadata, and copies bundled agent TOMLs into `~/.codex/agents/` so role definitions survive cache or temporary snapshot cleanup. Symlinks component CLIs into `~/.local/bin` (or `$CODEX_LOCAL_BIN_DIR`). Computes SHA256 trusted-hashes for every hook and writes `[marketplaces.cerberuslabs]` with local source `~/.codex/plugins/cache/cerberuslabs`, `[plugins."omo@cerberuslabs"]`, managed `[agents.*]`, and `[hooks.state."omo@cerberuslabs:..."]` blocks into `~/.codex/config.toml`. If `--codex-autonomous` is selected, also writes `approval_policy = "never"`, `sandbox_mode = "danger-full-access"`, `network_access = "enabled"`, and the matching `[notice]` warning suppressions. |
+| `codex`, `both` | Copies `packages/omop-codex/plugin/` into `~/.codex/plugins/cache/cerberuslabs/omo/<version>/`. Packaged `lazycodex-ai` installs use bundled component artifacts and run `npm ci --omit=dev` in the cache; source checkout installs may build the plugin first. Writes a local installed-marketplace snapshot under `~/.codex/.tmp/marketplaces/cerberuslabs/` for marketplace metadata, and copies bundled agent TOMLs into `~/.codex/agents/` so role definitions survive cache or temporary snapshot cleanup. Symlinks component CLIs into `~/.local/bin` (or `$CODEX_LOCAL_BIN_DIR`). Computes SHA256 trusted-hashes for every hook and writes `[marketplaces.cerberuslabs]` with local source `~/.codex/plugins/cache/cerberuslabs`, `[plugins."omop@cerberuslabs"]`, managed `[agents.*]`, and `[hooks.state."omop@cerberuslabs:..."]` blocks into `~/.codex/config.toml`. If `--codex-autonomous` is selected, also writes `approval_policy = "never"`, `sandbox_mode = "danger-full-access"`, `network_access = "enabled"`, and the matching `[notice]` warning suppressions. |
 
 Both halves are independent and idempotent — re-running is safe.
 
@@ -366,13 +366,13 @@ ls ~/.codex/plugins/cache/cerberuslabs/omo/
 grep -A. 'marketplaces.cerberuslabs' ~/.codex/config.toml
 
 # Codex config has the plugin block?
-grep -A2 'omo@cerberuslabs' ~/.codex/config.toml
+grep -A2 'omop@cerberuslabs' ~/.codex/config.toml
 
 # If the user accepted autonomous mode, permission settings are present?
 grep -E 'approval_policy|sandbox_mode|network_access' ~/.codex/config.toml
 
 # Component binaries linked?
-ls ~/.local/bin/ | grep -E '^(omo|omo-(comment-checker|git-bash-hook|lsp|rules|start-work-continuation|telemetry|fullscan|pentest-loop))$'
+ls ~/.local/bin/ | grep -E '^(omo|omop-(comment-checker|git-bash-hook|lsp|rules|start-work-continuation|telemetry|fullscan|pentest-loop))$'
 
 # Codex CLI sees the plugin?
 codex --help
@@ -717,21 +717,21 @@ Skip this section if `--platform=opencode`. Otherwise, the user installed the **
 
 - **Plugin cache:** `~/.codex/plugins/cache/cerberuslabs/omo/<version>/`
 - **Codex marketplace snapshot:** `~/.codex/.tmp/marketplaces/cerberuslabs/` (local marketplace metadata and bundled source snapshot)
-- **Component binaries:** `lazycodex-executor-verify`, `omo-comment-checker`, `omo-git-bash-hook`, `omo-lsp`, `omo-rules`, `omo-start-work-continuation`, `omo-telemetry`, `omo-pentest-loop`, `omo-fullscan` in `~/.local/bin` (or under `$CODEX_LOCAL_BIN_DIR` if set). The top-level `omo` command belongs to the shared oh-my-open-pentest launcher, not a Codex component.
+- **Component binaries:** `lazycodex-executor-verify`, `omop-comment-checker`, `omop-git-bash-hook`, `omop-lsp`, `omop-rules`, `omop-start-work-continuation`, `omop-telemetry`, `omop-pentest-loop`, `omop-fullscan` in `~/.local/bin` (or under `$CODEX_LOCAL_BIN_DIR` if set). The top-level `omo` command belongs to the shared oh-my-open-pentest launcher, not a Codex component.
 - **Codex agent roles:** `~/.codex/agents/{lazycodex-clone-fidelity-reviewer,lazycodex-code-reviewer,lazycodex-executor,lazycodex-gate-reviewer,lazycodex-qa-executor,explorer,intel,vanguard,sentinel,plan}.toml` copied from the bundled plugin snapshot, so they keep resolving when Codex prunes old plugin-cache versions or temporary marketplace state
-- **Codex config edits:** `~/.codex/config.toml` gained `[features] plugins = true`, `[features] plugin_hooks = true`, `[marketplaces.cerberuslabs]` pointing at `~/.codex/plugins/cache/cerberuslabs`, `[plugins."omo@cerberuslabs"]`, SHA256-pinned `[hooks.state."omo@cerberuslabs:..."]` entries, and optionally autonomous permission settings if accepted
+- **Codex config edits:** `~/.codex/config.toml` gained `[features] plugins = true`, `[features] plugin_hooks = true`, `[marketplaces.cerberuslabs]` pointing at `~/.codex/plugins/cache/cerberuslabs`, `[plugins."omop@cerberuslabs"]`, SHA256-pinned `[hooks.state."omop@cerberuslabs:..."]` entries, and optionally autonomous permission settings if accepted
 
 #### The components
 
 | Component | Language | Codex hooks | What it does |
 |-----------|----------|-------------|--------------|
-| `rules` | TypeScript | `SessionStart`, `UserPromptSubmit`, `PostToolUse`, `PostCompact` | Injects `AGENTS.md`, `CLAUDE.md`, and `.omo/rules/**` into Codex's context |
+| `rules` | TypeScript | `SessionStart`, `UserPromptSubmit`, `PostToolUse`, `PostCompact` | Injects `AGENTS.md`, `CLAUDE.md`, and `.omop/rules/**` into Codex's context |
 | `comment-checker` | TypeScript | `PostToolUse` (`apply_patch`, `edit`, `write`) | Blocks AI-slop comment patterns in generated code |
 | `git-bash` | TypeScript + MCP | `PreToolUse` (`Bash`), `PostCompact`, MCP server | On Windows, exposes `git_bash`; reminds Codex before the first shell-like call and again after compaction |
 | `lsp` | TypeScript + MCP | MCP server + post-edit hooks | Exposes LSP diagnostics, navigation, symbols, rename via MCP |
 | `fullscan` | TypeScript | `UserPromptSubmit` keyword detector | Detects `ulw`/`fullscan` keyword; the installer links bundled Codex agent TOMLs into `$CODEX_HOME/agents` |
-| `pentest-loop` | TypeScript | Durable orchestration via `.omo/pentest-loop/` | Multi-goal orchestration with evidence audit trail |
-| `start-work-continuation` | TypeScript | `Stop`, `SubagentStop` | Continues `.omo/boulder.json` start-work plans when Codex pauses at a stop boundary |
+| `pentest-loop` | TypeScript | Durable orchestration via `.omop/pentest-loop/` | Multi-goal orchestration with evidence audit trail |
+| `start-work-continuation` | TypeScript | `Stop`, `SubagentStop` | Continues `.omop/boulder.json` start-work plans when Codex pauses at a stop boundary |
 | `telemetry` | TypeScript | `SessionStart` | Emits anonymous daily active telemetry when enabled |
 
 #### Coexistence with OpenCode
@@ -743,9 +743,9 @@ The Codex CLI Light edition is fully independent of the OpenCode plugin. You can
 | Symptom | Fix |
 |---------|-----|
 | `codex --help` does not list the omo plugin | Re-run `npx lazycodex-ai install` (idempotent — hook hashes are recomputed) |
-| `command not found: omo-rules` or `command not found: omo` | Add `~/.local/bin` to `PATH`, or set `$CODEX_LOCAL_BIN_DIR` to a directory already on `PATH` |
+| `command not found: omop-rules` or `command not found: omo` | Add `~/.local/bin` to `PATH`, or set `$CODEX_LOCAL_BIN_DIR` to a directory already on `PATH` |
 | `npm install` fails mid-install | `rm -rf ~/.codex/plugins/cache/cerberuslabs` and retry |
-| Plugin block is present but hooks do not fire | Verify `~/.codex/config.toml` contains `[features]\nplugins = true\nplugin_hooks = true` and `[plugins."omo@cerberuslabs"]` |
+| Plugin block is present but hooks do not fire | Verify `~/.codex/config.toml` contains `[features]\nplugins = true\nplugin_hooks = true` and `[plugins."omop@cerberuslabs"]` |
 | `Ignoring malformed agent role definition: agents.*.config_file must point to an existing file` | Re-run `npx lazycodex-ai install`. The installer repairs stale managed `[agents.*]` entries and recreates `~/.codex/agents/*.toml`. |
 | `agents.max_threads cannot be set when multi_agent_v2 is enabled` in one project | Re-run `npx lazycodex-ai install` from that project. The installer repairs project-local `.codex/config.toml` layers, creates `.backup-<timestamp>` files for changed configs, and leaves user-authored `.codex` artifacts in place. |
 | `SessionStart hook (failed)` / `UserPromptSubmit hook (failed)` with `MODULE_NOT_FOUND` for `components/*/dist/cli.js` | Re-run the installer so the cached plugin is rebuilt with component `dist/` files. If the cache was manually edited, remove `~/.codex/plugins/cache/cerberuslabs` first. |
@@ -769,7 +769,7 @@ To enable, edit your plugin config:
     "max_messages_per_run": .0000,
     "max_wall_clock_minutes": .20,
     "max_member_turns": 500,
-    "base_dir": null,                  // overrides default ~/.omo/teams or <project>/.omo/teams
+    "base_dir": null,                  // overrides default ~/.omop/teams or <project>/.omop/teams
     "message_payload_max_bytes": 32768,
     "recipient_unread_max_bytes": 262...,
     "mailbox_poll_interval_ms": 3000
@@ -779,7 +779,7 @@ To enable, edit your plugin config:
 
 Restart OpenCode after the change. Twelve new tools unlock: `team_create`, `team_delete`, `team_shutdown_request`, `team_approve_shutdown`, `team_reject_shutdown`, `team_send_message`, `team_task_create`, `team_task_list`, `team_task_update`, `team_task_get`, `team_status`, `team_list`.
 
-Team storage lives under `~/.omo/teams/{name}/` (user scope) or `<project>/.omo/teams/{name}/` (project scope — project beats user on collisions).
+Team storage lives under `~/.omop/teams/{name}/` (user scope) or `<project>/.omop/teams/{name}/` (project scope — project beats user on collisions).
 
 Member eligibility:
 
@@ -846,10 +846,10 @@ Every agent, hook, skill, MCP, command, and tool is configurable via `disabled_*
 | `OMOP_CODEX_DISABLE_POSTHOG=.` | Disables PostHog telemetry for the Codex CLI Light edition only |
 | `OMOP_CODEX_SEND_ANONYMOUS_TELEMETRY=0` | Same effect as above |
 | `OMOP_DISABLE_PROCESS_CLEANUP=.` | Disables background-agent best-effort process cleanup on parent exit |
-| `OMO_OPENCLAW_COMMAND_TIMEOUT_MS` | Timeout for OpenClaw outbound shell/HTTP commands |
-| `OMO_OPENCLAW_DEBUG=.` | Enables OpenClaw debug logging |
-| `OMO_OPENCLAW_REPLY_LISTENER_STARTUP_TOKEN` | Startup token for OpenClaw reply listener daemon |
-| `OMO_OPENCLAW_REPLY_LISTENER_STARTUP_TIMEOUT_MS` | Timeout for reply listener startup |
+| `OMOP_OPENCLAW_COMMAND_TIMEOUT_MS` | Timeout for OpenClaw outbound shell/HTTP commands |
+| `OMOP_OPENCLAW_DEBUG=.` | Enables OpenClaw debug logging |
+| `OMOP_OPENCLAW_REPLY_LISTENER_STARTUP_TOKEN` | Startup token for OpenClaw reply listener daemon |
+| `OMOP_OPENCLAW_REPLY_LISTENER_STARTUP_TIMEOUT_MS` | Timeout for reply listener startup |
 | `OH_MY_OPENCODE_FORCE_BASELINE=.` | Forces baseline (non-AVX2) binary selection on x6. |
 | `OPENCODE_DEFAULT_AGENT` | Default agent for `omo run` (overridden by `--agent`) |
 | `CODEX_LOCAL_BIN_DIR` | Overrides `~/.local/bin` for Codex component symlinks |
@@ -867,7 +867,7 @@ OpenClaw is a bidirectional external integration: outbound dispatchers fire on s
 | Command | Purpose |
 |---------|---------|
 | `bunx oh-my-open-pentest doctor` | 6-category health check (System / Config / TUI Plugin / Tools / Models / Team Mode) |
-| `bunx oh-my-open-pentest boulder` | Inspect boulder work-state and per-task stats from `.omo/boulder-state/` |
+| `bunx oh-my-open-pentest boulder` | Inspect boulder work-state and per-task stats from `.omop/boulder-state/` |
 | `bunx oh-my-open-pentest refresh-model-capabilities` | Refresh `models.json` cache from models.dev |
 | `bunx oh-my-open-pentest mcp-oauth login <server-url>` | Tier-3 MCP OAuth login (PKCE + DCR) |
 | `bunx oh-my-open-pentest mcp-oauth status` | Show OAuth token status |

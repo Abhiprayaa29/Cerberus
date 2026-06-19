@@ -13,7 +13,7 @@ const BUNDLED_ONLY_ENV = {
 	CODEX_RULES_ENABLED_SOURCES: "plugin-bundled",
 };
 const PROJECT_AND_BUNDLED_ENV = {
-	CODEX_RULES_ENABLED_SOURCES: ".omo/rules,plugin-bundled",
+	CODEX_RULES_ENABLED_SOURCES: ".omop/rules,plugin-bundled",
 };
 const tempDirectories: string[] = [];
 let originalPluginRoot: string | undefined;

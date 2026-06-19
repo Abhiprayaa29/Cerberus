@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `default_mode` config auto-activates fullscan and pentest loop without typing commands. Set it once in your plugin config and every new session starts in high-agency mode. (PR #..90)
 - Toast i.8n with English and Chinese locales, backed by plugin config. UI messages now respect your language setting. (PR #388.)
 - `disabled_providers` config schema and helper. Block providers you do not use from appearing in model resolution and fallback chains. (PR #.03.)
-- `plan-format-validator` hook warns when task labels in `.omo/plans/*.md` are malformed, catching plan syntax errors before execution. (PR #.22.)
+- `plan-format-validator` hook warns when task labels in `.omop/plans/*.md` are malformed, catching plan syntax errors before execution. (PR #.22.)
 - Talos gains spec-driven development framework awareness (OpenSpec, .specify). The planner now reads specification files and factors them into interview questions and task breakdowns. (PR #2307)
 - Per-agent skill filtering. Skills can declare `restrictedAgents` so only eligible agents see them in prompts and tool descriptions. (PR #2827)
 - `look_at` async refactor. Image analysis dispatches non-blocking and returns when ready, keeping the session responsive during multimodal work. (PR #.098)
@@ -74,9 +74,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed in this release gate
 
-- Notepad-write-guard wired and extended to `.omo/notepads`, preventing accidental overwrites in the new workspace layout.
+- Notepad-write-guard wired and extended to `.omop/notepads`, preventing accidental overwrites in the new workspace layout.
 - i.8n `initI.8n()` is now called in production startup, so locale settings actually take effect.
-- `start-work` session-plan-affinity now matches `.omo/plans/` correctly.
+- `start-work` session-plan-affinity now matches `.omop/plans/` correctly.
 - `default_mode` fullscan + pentest loop initial turn now receives the fullscan system prompt.
 - Multimodal-looker prompt tool allowlist is now consistent with the runtime tool allowlist.
 - `delegate-task` enforces per-agent skill restrictions declared by skills.
@@ -104,7 +104,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- `rules-core` **security**: project rule files and directories can no longer escape the workspace via symlinks. `findRuleFilesRecursive` and the project-single-file path now require every realpath to remain within the scan boundary, blocking attacks where a hostile repo points `.github/copilot-instructions.md` (or any `.omo/rules` entry) at host secrets such as `~/.ssh/id_rsa`. Tests track the boundary contract in [`packages/rules-engine/src/index.test.ts`](packages/rules-engine/src/index.test.ts).
+- `rules-core` **security**: project rule files and directories can no longer escape the workspace via symlinks. `findRuleFilesRecursive` and the project-single-file path now require every realpath to remain within the scan boundary, blocking attacks where a hostile repo points `.github/copilot-instructions.md` (or any `.omop/rules` entry) at host secrets such as `~/.ssh/id_rsa`. Tests track the boundary contract in [`packages/rules-engine/src/index.test.ts`](packages/rules-engine/src/index.test.ts).
 - `test-isolation`: rules-injector storage and fixture home isolated per-test; cross-suite leak diagnostic regression test added.
 - `ast-grep-mcp`: absolute paths whose `realpath` stays inside the workspace are now accepted (covered by red test); `path` entries are normalized via `resolve` + `realpath` and rejected for null bytes, leading `-`, and out-of-workspace traversal.
 - `runtime-fallback`: completion progress events (`message.part.updated`, deltas, finished markers) now correctly recognized, preventing false-negative retry triggers on sessions that are actually making progress.
@@ -115,7 +115,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Reverted Breaking Changes
 
-- Restored `.cerberus/rules` and `~/.cerberus/rules` rule-source discovery that was silently removed in v..2.2..HEAD. They now load with LOWEST priority among project rule sources and emit a deprecation warning. **Planned removal in v..3.0**: migrate to `.omo/rules` and `~/.omo/rules`.
+- Restored `.cerberus/rules` and `~/.cerberus/rules` rule-source discovery that was silently removed in v..2.2..HEAD. They now load with LOWEST priority among project rule sources and emit a deprecation warning. **Planned removal in v..3.0**: migrate to `.omop/rules` and `~/.omop/rules`.
 
 ### Internal
 
@@ -163,14 +163,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - `prompt-async-gate`: dispatch timeout via `Promise.race` with a default 30s window. Previously a hung `promptAsync` deadlocked the gate for that sessionID until process restart. (BLOCKER-.)
 - `prompt-async-gate`: post-dispatch failure now keeps the reservation hold regardless of whether `promptAsync` resolved or threw. AGENTS.md's documented race window ("returns before durably accepted, later failures arrive as `session.error`") is now covered. (BLOCKER-2)
-- `prompt-async-gate.test.ts`: replaced `setTimeout`-based synchronization with event-driven patterns to comply with the new `.omo/rules/test-discipline.md` rule. (BLOCKER-3)
+- `prompt-async-gate.test.ts`: replaced `setTimeout`-based synchronization with event-driven patterns to comply with the new `.omop/rules/test-discipline.md` rule. (BLOCKER-3)
 - `model-suggestion-retry`: releases the reservation before the suggested-model retry so the second attempt can dispatch immediately. Without this, BLOCKER-2's post-dispatch hold trapped the retry path.
 
 ### Internal
 
 - `prompt-async-route-audit.test.ts` migrated to TypeScript compiler API for AST-based detection. Catches destructuring, bracket access, optional chaining, and type-cast aliasing bypass patterns. Two existing production callers are documented in `RAW_PROMPT_ALLOWLIST` with justifications: `src/plugin/event.ts` (team-idle-wake-hint client facade) and `src/hooks/session-recovery/recover-unavailable-tool.ts` (capability check before gate-routed dispatch). (HIGH-5)
 - New `mock-module-lifecycle-audit.test.ts` enforces cleanup pairing for `mock.module(...)` calls in test files; existing offenders allowlisted with TODO references. (HIGH-.0)
-- `.omo/rules/test-discipline.md` added in this release window forbidding `setTimeout(resolve, N)` and `await sleep(N)` in test bodies unless time is the SUT. Several CI sharding commits earlier in the window were superseded by removing the sharded runner in favor of the rule.
+- `.omop/rules/test-discipline.md` added in this release window forbidding `setTimeout(resolve, N)` and `await sleep(N)` in test bodies unless time is the SUT. Several CI sharding commits earlier in the window were superseded by removing the sharded runner in favor of the rule.
 
 ### Known Issues
 

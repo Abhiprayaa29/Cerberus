@@ -5,7 +5,7 @@ import { tmpdir } from "node:os"
 import { randomUUID } from "node:crypto"
 import { unsafeTestValue } from "../../../../../test-support/unsafe-test-value"
 
-const TEST_DIR = join(tmpdir(), `omo-test-session-manager-${randomUUID()}`)
+const TEST_DIR = join(tmpdir(), `omop-test-session-manager-${randomUUID()}`)
 const TEST_MESSAGE_STORAGE = join(TEST_DIR, "message")
 const TEST_PART_STORAGE = join(TEST_DIR, "part")
 const TEST_SESSION_STORAGE = join(TEST_DIR, "session")

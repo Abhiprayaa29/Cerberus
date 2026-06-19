@@ -33,7 +33,7 @@ test("#given autonomous permissions requested #when script installer updates con
 		repoRoot: "/repo/packages/omop-codex",
 		marketplaceName: "debug",
 		marketplaceSource: { sourceType: "local", source: "/repo/packages/omop-codex" },
-		pluginNames: ["omo"],
+		pluginNames: ["omop"],
 		autonomousPermissions: true,
 	});
 
@@ -72,7 +72,7 @@ test("#given autonomous permissions disabled #when script installer updates conf
 		repoRoot: "/repo/packages/omop-codex",
 		marketplaceName: "debug",
 		marketplaceSource: { sourceType: "local", source: "/repo/packages/omop-codex" },
-		pluginNames: ["omo"],
+		pluginNames: ["omop"],
 		autonomousPermissions: false,
 	});
 

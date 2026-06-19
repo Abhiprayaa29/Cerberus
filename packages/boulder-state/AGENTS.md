@@ -4,7 +4,7 @@
 
 ## OVERVIEW
 
-Tracks the active work plan (the "boulder") across sessions, worktrees, and subagent task delegations. State persists in `<worktree-root>/.omo/boulder.json` (`schema_version: 2`). Zero npm dependencies — pure functional state machine over JSON. Package: `@omop/boulder-state`.
+Tracks the active work plan (the "boulder") across sessions, worktrees, and subagent task delegations. State persists in `<worktree-root>/.omop/boulder.json` (`schema_version: 2`). Zero npm dependencies — pure functional state machine over JSON. Package: `@omop/boulder-state`.
 
 ## STATE MODEL
 
@@ -29,6 +29,6 @@ Every `BoulderState` carries `active_work_id` + a `works` map. The root-level fi
 
 - **Prototype-pollution guard:** `RESERVED_KEYS = {__proto__, prototype, constructor}` — task upserts reject matching keys.
 - **Session IDs are normalized** with an `opencode:` / `codex:` prefix (`normalizeSessionId`).
-- **`writeBoulderState` self-creates `.omo/.gitignore`** (`*`, `!/rules/`) on first `mkdir`.
+- **`writeBoulderState` self-creates `.omop/.gitignore`** (`*`, `!/rules/`) on first `mkdir`.
 - **Plan parsing** recognizes only `## TODOs` and `## Final Verification Wave` sections; counts numbered `..`/`F..` items, skips indented checkboxes.
 - Parent: [`packages/AGENTS.md`](../AGENTS.md).

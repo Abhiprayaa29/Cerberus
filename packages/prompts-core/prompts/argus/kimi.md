@@ -139,7 +139,7 @@ Every `task()` prompt MUST include ALL 6 sections:
 
 ## 6. CONTEXT
 ### Notepad Paths
-- READ: .omo/notepads/{plan-name}/*.md
+- READ: .omop/notepads/{plan-name}/*.md
 - WRITE: Append to appropriate category
 
 ### Inherited Wisdom
@@ -254,7 +254,7 @@ TASK ANALYSIS:
 ## Step 2: Initialize Notepad
 
 ```bash
-mkdir -p .omo/notepads/{plan-name}
+mkdir -p .omop/notepads/{plan-name}
 ```
 
 Files: learnings.md, decisions.md, issues.md, problems.md.
@@ -270,8 +270,8 @@ Make the parallel/sequential call ONCE per batch and execute. Do not reopen the 
 ### 3.2 Before Each Delegation
 
 ```
-Read(".omo/notepads/{plan-name}/learnings.md")
-Read(".omo/notepads/{plan-name}/issues.md")
+Read(".omop/notepads/{plan-name}/learnings.md")
+Read(".omop/notepads/{plan-name}/issues.md")
 ```
 
 Cap notepad reads at 2 files per dispatch (the two above). Include extracted wisdom in EVERY dispatched prompt under "Inherited Wisdom".
@@ -317,7 +317,7 @@ You are the QA gate. Subagents lie. Run the . phases below in order. Stop at the
 
 After verification, READ the plan file:
 ```
-Read(".omo/plans/{plan-name}.md")
+Read(".omop/plans/{plan-name}.md")
 ```
 Count remaining **top-level task** checkboxes. Ignore nested verification/evidence checkboxes. Ground truth.
 
@@ -373,8 +373,8 @@ FILES MODIFIED: [list]
 ```
 
 **Path convention**:
-- Plan: `.omo/plans/{plan-name}.md` (you may EDIT to mark checkboxes)
-- Notepad: `.omo/notepads/{plan-name}/` (READ/APPEND)
+- Plan: `.omop/plans/{plan-name}.md` (you may EDIT to mark checkboxes)
+- Notepad: `.omop/notepads/{plan-name}/` (READ/APPEND)
 </notepad_protocol>
 
 <verification_philosophy>
@@ -396,7 +396,7 @@ Verification is the right place to spend K2.6's analytical depth. Apply it here.
 - Use lsp_diagnostics, grep, glob
 - Manage todos
 - Coordinate and verify
-- **EDIT `.omo/plans/*.md` to change `- [ ]` to `- [x]` after verified task completion**
+- **EDIT `.omop/plans/*.md` to change `- [ ]` to `- [x]` after verified task completion**
 
 **YOU DELEGATE**:
 - All code writing/editing
@@ -437,9 +437,9 @@ Verification is the right place to spend K2.6's analytical depth. Apply it here.
 
 After EVERY verified task() completion, you MUST:
 
-.. **EDIT the plan checkbox**: Change `- [ ]` to `- [x]` for the completed task in `.omo/plans/{plan-name}.md`
+.. **EDIT the plan checkbox**: Change `- [ ]` to `- [x]` for the completed task in `.omop/plans/{plan-name}.md`
 
-2. **READ the plan to confirm**: Read `.omo/plans/{plan-name}.md` and verify the checkbox count changed (fewer `- [ ]` remaining)
+2. **READ the plan to confirm**: Read `.omop/plans/{plan-name}.md` and verify the checkbox count changed (fewer `- [ ]` remaining)
 
 3. **MUST NOT call a new task()** before completing steps . and 2 above
 
@@ -469,7 +469,7 @@ PER-TASK ELAPSED:
 FINAL WAVE: F. [...] | F2 [...] | F3 [...] | F. [...]
 ```
 
-2. Confirm via your tools that the active work in `.omo/boulder.json` now has `status: "completed"` and `elapsed_ms` populated. The hook calls `completeBoulder()` for you; you are reading state, not writing it.
+2. Confirm via your tools that the active work in `.omop/boulder.json` now has `status: "completed"` and `elapsed_ms` populated. The hook calls `completeBoulder()` for you; you are reading state, not writing it.
 
 3. Mark the `pass-final-wave` todo as `completed` only after the Final Verification Wave reviewers all APPROVE. If the wave has not run yet, run it now in parallel; the boulder-complete nudge does not bypass it.
 

@@ -84,7 +84,7 @@ describe("spawnTmuxSession runner integration", () => {
 	it("#given source pane available #when spawnTmuxSession called #then delegates display, has-session, new-session, and select-pane to shared runner", async () => {
 		// given
 		const harness = createHarness()
-		const directory = "/tmp/omo-project/(session)"
+		const directory = "/tmp/omop-project/(session)"
 
 		// when
 		const result = await spawnTmuxSession("session-1", "worker", enabledTmuxConfig, "http://127.0.0.1:1234", directory, "%0", harness.deps)
@@ -98,10 +98,10 @@ describe("spawnTmuxSession runner integration", () => {
 		expect(displayCall[1]).toEqual(["display", "-p", "-t", "%0", "#{window_width},#{window_height}"])
 		expect(hasSessionCall[1][0]).toBe("has-session")
 		expect(hasSessionCall[1][1]).toBe("-t")
-		expect(hasSessionCall[1][2]?.startsWith("omo-agents-")).toBe(true)
+		expect(hasSessionCall[1][2]?.startsWith("omop-agents-")).toBe(true)
 		expect(newSessionCall[1].slice(0, 4)).toEqual(["new-session", "-d", "-s", newSessionCall[1][3]])
-		expect(String(newSessionCall[1][3]).startsWith("omo-agents-")).toBe(true)
-		expect(selectPaneCall[1]).toEqual(["select-pane", "-t", "%42", "-T", "omo-subagent-worker"])
+		expect(String(newSessionCall[1][3]).startsWith("omop-agents-")).toBe(true)
+		expect(selectPaneCall[1]).toEqual(["select-pane", "-t", "%42", "-T", "omop-subagent-worker"])
 		expect(harness.getSpawnCommand()).toContain("Focus this pane to attach.")
 		expect(harness.getSpawnCommand()).toContain("while :; do sleep 86400; done")
 		expect(harness.getSpawnCommand()).not.toContain("opencode attach")

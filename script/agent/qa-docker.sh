@@ -32,8 +32,8 @@ if ! command -v docker >/dev/null 2>&1 || ! docker info >/dev/null 2>&1; then
   exit 3
 fi
 
-dev_image="omo-dev"
-qa_image="omo-qa"
+dev_image="omop-dev"
+qa_image="omop-qa"
 
 if [ "${1:-}" = "--clean" ]; then
   docker rmi -f "$qa_image" "$dev_image" >/dev/null 2>&1 || true

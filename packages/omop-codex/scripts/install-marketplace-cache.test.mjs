@@ -115,20 +115,20 @@ test("#given cerberuslabs marketplace #when installing #then registers the local
 		name: "cerberuslabs",
 		plugins: [{ name: "omop", source: "./plugins/omo" }],
 	});
-	await writePluginAt(join(codexPackageRoot, "plugin"), "omo", "0.1.0");
+	await writePluginAt(join(codexPackageRoot, "plugin"), "omop", "0.1.0");
 	await mkdir(join(repoRoot, "packages", "lsp-tools-mcp", "dist"), { recursive: true });
 	await writeJson(join(repoRoot, "packages", "lsp-tools-mcp", "package.json"), {
 		name: "@example/lsp-tools-mcp",
 		version: "0.1.0",
 		type: "module",
-		bin: { "omo-lsp": "./dist/cli.js" },
+		bin: { "omop-lsp": "./dist/cli.js" },
 	});
 	await writeFile(join(repoRoot, "packages", "lsp-tools-mcp", "dist", "cli.js"), "#!/usr/bin/env node\n");
 	await writeJson(join(codexPackageRoot, "plugin", ".mcp.json"), {
 		mcpServers: { lsp: { command: "node", args: ["../../lsp-tools-mcp/dist/cli.js", "mcp"], cwd: "." } },
 	});
-	await mkdir(join(codexHome, "plugins", "cache", legacyCodexPluginMarketplace, "omo", "0.1.0"), { recursive: true });
-	const legacyPluginKey = `omo@${legacyCodexPluginMarketplace}`;
+	await mkdir(join(codexHome, "plugins", "cache", legacyCodexPluginMarketplace, "omop", "0.1.0"), { recursive: true });
+	const legacyPluginKey = `omop@${legacyCodexPluginMarketplace}`;
 	await writeFile(
 		join(codexHome, "config.toml"),
 		[
@@ -145,18 +145,18 @@ test("#given cerberuslabs marketplace #when installing #then registers the local
 
 	const config = await readFile(join(codexHome, "config.toml"), "utf8");
 	assert.match(config, /\[marketplaces\.cerberuslabs\]/);
-	assert.match(config, /\[plugins\."omo@cerberuslabs"\]\nenabled = true/);
+	assert.match(config, /\[plugins\."omop@cerberuslabs"\]\nenabled = true/);
 	assert.doesNotMatch(config, new RegExp(legacyCodexPluginMarketplace));
 	const marketplace = JSON.parse(
 		await readFile(join(codexHome, "plugins", "cache", "cerberuslabs", ".agents", "plugins", "marketplace.json"), "utf8"),
 	);
 	assert.deepEqual(marketplace.plugins, [{ name: "omop", source: { source: "local", path: "./omo/0.1.0" } }]);
-	const cachedMcp = JSON.parse(await readFile(join(codexHome, "plugins", "cache", "cerberuslabs", "omo", "0.1.0", ".mcp.json"), "utf8"));
+	const cachedMcp = JSON.parse(await readFile(join(codexHome, "plugins", "cache", "cerberuslabs", "omop", "0.1.0", ".mcp.json"), "utf8"));
 	assert.equal(cachedMcp.mcpServers.lsp.args[0], join(repoRoot, "packages", "lsp-tools-mcp", "dist", "cli.js"));
 	assert.equal((await stat(cachedMcp.mcpServers.lsp.args[0])).isFile(), true);
-	const snapshotPluginRoot = join(codexHome, ".tmp", "marketplaces", "cerberuslabs", "plugins", "omo");
+	const snapshotPluginRoot = join(codexHome, ".tmp", "marketplaces", "cerberuslabs", "plugins", "omop");
 	const snapshotMcp = JSON.parse(await readFile(join(snapshotPluginRoot, ".mcp.json"), "utf8"));
 	assert.equal(snapshotMcp.mcpServers.lsp.args[0], join(repoRoot, "packages", "lsp-tools-mcp", "dist", "cli.js"));
 	assert.equal((await stat(snapshotMcp.mcpServers.lsp.args[0])).isFile(), true);
-	await assert.rejects(stat(join(codexHome, "plugins", "cache", legacyCodexPluginMarketplace, "omo")), /code: 'ENOENT'|ENOENT/);
+	await assert.rejects(stat(join(codexHome, "plugins", "cache", legacyCodexPluginMarketplace, "omop")), /code: 'ENOENT'|ENOENT/);
 });

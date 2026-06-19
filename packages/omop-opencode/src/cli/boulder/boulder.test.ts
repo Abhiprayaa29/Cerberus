@@ -6,7 +6,7 @@ import { afterEach, describe, expect, it } from "bun:test"
 import { boulder } from "./boulder"
 
 function createTempDirectory(): string {
-  return mkdtempSync(join(tmpdir(), "omo-boulder-cli-"))
+  return mkdtempSync(join(tmpdir(), "omop-boulder-cli-"))
 }
 
 function seedPlanAndState(directory: string): void {

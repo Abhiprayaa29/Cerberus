@@ -76,14 +76,14 @@ export interface LoadedRule extends RuleCandidate {
  * Source identifier for rule files. Used for deterministic ordering and display.
  */
 export type RuleSource =
-	| ".omo/rules"
+	| ".omop/rules"
 	| ".claude/rules"
 	| ".cursor/rules"
 	| ".github/instructions"
 	| ".github/copilot-instructions.md"
 	| "CONTEXT.md"
 	| "plugin-bundled"
-	| "~/.omo/rules"
+	| "~/.omop/rules"
 	| "~/.opencode/rules"
 	| "~/.claude/rules";
 

@@ -10,7 +10,7 @@ const corpusPaths = [
   ".agents/skills/security-research/SKILL.md",
   "packages/omop-opencode/src/features/builtin-skills/dev-browser/SKILL.md",
   "packages/omop-opencode/src/features/builtin-skills/git-master/SKILL.md",
-  ".omo/rules/test-discipline.md",
+  ".omop/rules/test-discipline.md",
 ] as const;
 
 const syntheticRuleCorpus = [

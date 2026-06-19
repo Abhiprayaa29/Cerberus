@@ -86,7 +86,7 @@ describe("plugin command discovery utility", () => {
   let tempDir = ""
 
   beforeEach(() => {
-    tempDir = mkdtempSync(join(tmpdir(), "omo-shared-plugin-discovery-test-"))
+    tempDir = mkdtempSync(join(tmpdir(), "omop-shared-plugin-discovery-test-"))
     writePluginFixture(tempDir)
   })
 

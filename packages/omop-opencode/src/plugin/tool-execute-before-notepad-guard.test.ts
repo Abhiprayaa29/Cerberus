@@ -55,21 +55,21 @@ describe("tool.execute.before notepad-write-guard dispatch", () => {
   test("#given guard enabled #when Write targets current .omo notepad #then blocks", async () => {
     await expectBlocked({
       tool: "Write",
-      filePath: ".omo/notepads/plan.md",
+      filePath: ".omop/notepads/plan.md",
     })
   })
 
   test("#given guard enabled #when Write targets other .omo path #then allows", async () => {
     await runTool({
       tool: "Write",
-      filePath: ".omo/somewhere-else.md",
+      filePath: ".omop/somewhere-else.md",
     })
   })
 
   test("#given guard enabled #when Edit targets current .omo notepad #then allows", async () => {
     await runTool({
       tool: "Edit",
-      filePath: ".omo/notepads/plan.md",
+      filePath: ".omop/notepads/plan.md",
     })
   })
 })

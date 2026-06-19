@@ -29,7 +29,7 @@ const unixSocketTest = process.platform === "win32" ? test.skip : test
 describe("sparkshell appserver routing", () => {
   unixSocketTest("#given appserver socket #when direct argv runs #then wire client initializes before command exec", async () => {
     // given
-    const tempDir = await mkdtemp(join(tmpdir(), "omo-sparkshell-appserver-"))
+    const tempDir = await mkdtemp(join(tmpdir(), "omop-sparkshell-appserver-"))
     const socketPath = join(tempDir, "appserver.sock")
     const methods: string[] = []
     let initialized = false
@@ -84,7 +84,7 @@ describe("sparkshell appserver routing", () => {
 
   unixSocketTest("#given unresponsive appserver socket #when direct argv runs #then raw fallback is bounded", async () => {
     // given
-    const tempDir = await mkdtemp(join(tmpdir(), "omo-sparkshell-timeout-"))
+    const tempDir = await mkdtemp(join(tmpdir(), "omop-sparkshell-timeout-"))
     const socketPath = join(tempDir, "appserver.sock")
     const server = Bun.serve({
       unix: socketPath,

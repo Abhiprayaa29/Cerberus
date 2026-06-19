@@ -26,14 +26,14 @@ const MARKETPLACE_NAME = "cerberuslabs"
 const PLUGIN_NAME = "omop"
 const DEFAULT_PLUGIN_VERSION = "0.1.0"
 const CODEX_BIN_NAMES = [
-  "omo",
-  "omo-rules",
-  "omo-lsp",
-  "omo-comment-checker",
-  "omo-fullscan",
-  "omo-start-work-continuation",
-  "omo-telemetry",
-  "omo-git-bash-hook",
+  "omop",
+  "omop-rules",
+  "omop-lsp",
+  "omop-comment-checker",
+  "omop-fullscan",
+  "omop-start-work-continuation",
+  "omop-telemetry",
+  "omop-git-bash-hook",
 ] as const
 
 export async function gatherCodexSummary(deps: CodexDoctorDeps = {}): Promise<CodexDoctorSummary> {
@@ -80,7 +80,7 @@ export async function checkCodex(deps: CodexDoctorDeps = {}): Promise<CheckResul
       `Plugin: ${summary.pluginName}@${summary.pluginVersion ?? "unknown"}${summary.pluginVersionStamped ? "" : " (placeholder, not stamped)"}`,
       `Distribution: ${summary.packageName ?? "unknown"}@${summary.packageVersion ?? "unknown"}`,
       `Config: ${summary.configPath}`,
-      `Enabled plugin: ${summary.config.pluginEnabled ? "omo@cerberuslabs" : "missing"}`,
+      `Enabled plugin: ${summary.config.pluginEnabled ? "omop@cerberuslabs" : "missing"}`,
       `Linked bins: ${summary.linkedBins.length > 0 ? summary.linkedBins.join(", ") : "none"}`,
       `Agents: ${summary.agents.length > 0 ? summary.agents.join(", ") : "none"}`,
     ],
@@ -116,7 +116,7 @@ function buildCodexIssues(summary: CodexDoctorSummary): DoctorIssue[] {
       affects: ["version reporting"],
     })
   }
-  if (summary.pluginRoot !== null && !summary.linkedBins.includes("omo")) {
+  if (summary.pluginRoot !== null && !summary.linkedBins.includes("omop")) {
     issues.push({
       title: "omo runtime command is not linked",
       description:
@@ -129,7 +129,7 @@ function buildCodexIssues(summary: CodexDoctorSummary): DoctorIssue[] {
   if (!summary.config.pluginEnabled) {
     issues.push({
       title: "Codex plugin is not enabled",
-      description: 'Expected [plugins."omo@cerberuslabs"] enabled = true in Codex config.',
+      description: 'Expected [plugins."omop@cerberuslabs"] enabled = true in Codex config.',
       fix: "Run: npx lazycodex-ai install",
       severity: "error",
       affects: ["plugin loading"],
@@ -172,7 +172,7 @@ async function readCodexConfigSummary(configPath: string): Promise<CodexConfigSu
   return {
     exists: true,
     marketplaceConfigured: content.includes("[marketplaces.cerberuslabs]"),
-    pluginEnabled: settingEnabled(sectionBody(content, 'plugins."omo@cerberuslabs"'), "enabled"),
+    pluginEnabled: settingEnabled(sectionBody(content, 'plugins."omop@cerberuslabs"'), "enabled"),
     pluginsFeatureEnabled: featureEnabled(content, "plugins"),
     pluginHooksFeatureEnabled: featureEnabled(content, "plugin_hooks"),
   }

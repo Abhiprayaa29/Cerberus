@@ -8,15 +8,15 @@ const CLI_URL = new URL("../components/bootstrap/dist/cli.js", import.meta.url);
 const { runBootstrapWorker, runWorkerSetup } = await import(CLI_URL.href);
 
 const MARKETPLACE_SOURCE_LINE = 'source = "https://github.com/code-yeongyu/lazycodex.git"';
-const COMPONENT_BIN_NAME = "omo-toolbox";
-const OMO_CLI_DEGRADED_ENTRY = {
-	component: "omo-cli",
+const COMPONENT_BIN_NAME = "omop-toolbox";
+const OMOP_CLI_DEGRADED_ENTRY = {
+	component: "omop-cli",
 	hint: "use npx lazycodex-ai for the omo CLI",
 	reason: "marketplace payload has no dist/cli",
 };
 
 async function withBinLinkFixture(run) {
-	const root = await mkdtemp(join(tmpdir(), "omo-bootstrap-binlinks-"));
+	const root = await mkdtemp(join(tmpdir(), "omop-bootstrap-binlinks-"));
 	try {
 		const binDir = join(root, "bin");
 		const codexHome = join(root, "codex-home");
@@ -34,7 +34,7 @@ async function withBinLinkFixture(run) {
 // under its own root and old version dirs are deleted on upgrade
 // (core-plugins store.rs), which is why stale bin links MUST be re-pointed.
 async function writeVersionedRoot(root, version, { withRuntimeCli = false } = {}) {
-	const pluginRoot = join(root, "store", "omo", version);
+	const pluginRoot = join(root, "store", "omop", version);
 	await mkdir(join(pluginRoot, ".codex-plugin"), { recursive: true });
 	await writeFile(
 		join(pluginRoot, ".codex-plugin", "plugin.json"),
@@ -203,14 +203,14 @@ test("#given platform win32 #when the worker setup links bins #then component bi
 	});
 });
 
-test("#given a marketplace payload without dist/cli #when the worker setup runs #then it records the degraded omo-cli entry, logs the skip warning, and leaves no broken or omo link", async () => {
+test("#given a marketplace payload without dist/cli #when the worker setup runs #then it records the degraded omop-cli entry, logs the skip warning, and leaves no broken or omo link", async () => {
 	await withBinLinkFixture(async (fixture) => {
 		const pluginRoot = await writeVersionedRoot(fixture.root, "1.0.0");
 
 		const outcome = await runWorkerSetup(setupOptions(fixture, pluginRoot, { now: 7_000, platform: process.platform }));
 
-		assert.deepEqual(outcome.degraded, [OMO_CLI_DEGRADED_ENTRY]);
-		await assert.rejects(() => lstat(join(fixture.binDir, "omo")), "no omo wrapper may be written without dist/cli");
+		assert.deepEqual(outcome.degraded, [OMOP_CLI_DEGRADED_ENTRY]);
+		await assert.rejects(() => lstat(join(fixture.binDir, "omop")), "no omo wrapper may be written without dist/cli");
 		await assert.rejects(() => lstat(join(fixture.binDir, "omo.cmd")), "no Windows omo wrapper may be written without dist/cli");
 		await assertNoDanglingEntries(fixture.binDir);
 		const log = await readFile(join(fixture.pluginData, "bootstrap", "bootstrap.log"), "utf8");
@@ -233,11 +233,11 @@ test("#given a payload shipping dist/cli #when the worker setup runs with no bin
 
 		assert.deepEqual(outcome.degraded, []);
 		const defaultBinDir = join(fixture.codexHome, "bin");
-		const wrapperName = process.platform === "win32" ? "omo.cmd" : "omo";
+		const wrapperName = process.platform === "win32" ? "omo.cmd" : "omop";
 		const wrapper = await readFile(join(defaultBinDir, wrapperName), "utf8");
 		assert.ok(wrapper.includes(join(pluginRoot, "dist", "cli", "index.js")));
 		if (process.platform !== "win32") {
-			assert.ok((await stat(join(defaultBinDir, "omo"))).mode & 0o111, "the posix omo wrapper must be executable");
+			assert.ok((await stat(join(defaultBinDir, "omop"))).mode & 0o111, "the posix omo wrapper must be executable");
 			assert.equal(
 				await readlink(join(defaultBinDir, COMPONENT_BIN_NAME)),
 				join(pluginRoot, "components", "toolbox", "dist", "cli.js"),

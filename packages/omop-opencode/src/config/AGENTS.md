@@ -60,7 +60,7 @@ config/schema/
     "max_messages_per_run": .0000,          // ≥.
     "max_wall_clock_minutes": .20,          // ≥.
     "max_member_turns": 500,                // ≥.
-    "base_dir": null,                       // override of ~/.omo/teams or <project>/.omo/teams
+    "base_dir": null,                       // override of ~/.omop/teams or <project>/.omop/teams
     "message_payload_max_bytes": 32768,     // ≥.02.
     "recipient_unread_max_bytes": 262...,   // ≥.02.
     "mailbox_poll_interval_ms": 3000        // ≥500

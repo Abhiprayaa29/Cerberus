@@ -47,7 +47,7 @@ test("#given custom CODEX_HOME and PATH without omo #when installing locally wit
 		name: "cerberuslabs",
 		plugins: [{ name: "omop", source: "./plugins/omo" }],
 	});
-	await writePluginAt(pluginRoot, "omo", "0.1.0");
+	await writePluginAt(pluginRoot, "omop", "0.1.0");
 	await mkdir(join(repoRoot, "dist", "cli"), { recursive: true });
 	await writeFile(join(repoRoot, "dist", "cli", "index.js"), "#!/usr/bin/env bun\n");
 
@@ -62,7 +62,7 @@ test("#given custom CODEX_HOME and PATH without omo #when installing locally wit
 	});
 
 	assert.equal(result.installed.length, 1);
-	const wrapper = await readFile(join(codexHome, "bin", "omo"), "utf8");
+	const wrapper = await readFile(join(codexHome, "bin", "omop"), "utf8");
 	assert.match(wrapper, /OMOP_GENERATED_RUNTIME_WRAPPER/);
 	assert.match(
 		wrapper,
@@ -70,7 +70,7 @@ test("#given custom CODEX_HOME and PATH without omo #when installing locally wit
 	);
 	assert.match(wrapper, /CODEX_HOME/);
 	assert.match(wrapper, /OMOP_SPARKSHELL_APP_SERVER_SOCKET/);
-	assert.match(wrapper, /omo-pentest-loop/);
+	assert.match(wrapper, /omop-pentest-loop/);
 });
 
 test("#given repoRoot without root CLI dist #when installing locally #then warns about the skipped omo runtime wrapper", async () => {
@@ -84,7 +84,7 @@ test("#given repoRoot without root CLI dist #when installing locally #then warns
 		name: "cerberuslabs",
 		plugins: [{ name: "omop", source: "./plugins/omo" }],
 	});
-	await writePluginAt(pluginRoot, "omo", "0.1.0");
+	await writePluginAt(pluginRoot, "omop", "0.1.0");
 
 	const logs = [];
 	await installMarketplaceLocally({
@@ -102,7 +102,7 @@ test("#given repoRoot without root CLI dist #when installing locally #then warns
 		logs.some((line) => line.includes("omo runtime wrapper") && line.includes(cliPath)),
 		`expected a warning naming the missing ${cliPath}; got:\n${logs.join("\n")}`,
 	);
-	await assert.rejects(readFile(join(codexHome, "bin", "omo"), "utf8"));
+	await assert.rejects(readFile(join(codexHome, "bin", "omop"), "utf8"));
 });
 
 test("#given explicit CODEX_LOCAL_BIN_DIR #when resolving local installer bin dir #then preserves installed omo precedence", () => {

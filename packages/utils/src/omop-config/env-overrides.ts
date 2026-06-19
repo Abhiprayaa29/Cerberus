@@ -1,4 +1,4 @@
-import type { CodegraphConfig, HarnessId, OmoConfig } from "../omo-config"
+import type { CodegraphConfig, HarnessId, OmoConfig } from "../omop-config"
 
 type CodegraphSettingKey = keyof CodegraphConfig
 type MutableCodegraphConfig = {

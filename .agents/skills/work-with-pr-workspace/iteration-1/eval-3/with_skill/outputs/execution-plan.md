@@ -4,8 +4,8 @@
 
 ```bash
 git fetch origin dev
-git worktree add ../omo-wt/refactor-delegate-task-constants origin/dev -b refactor/split-delegate-task-constants
-cd ../omo-wt/refactor-delegate-task-constants
+git worktree add ../omop-wt/refactor-delegate-task-constants origin/dev -b refactor/split-delegate-task-constants
+cd ../omop-wt/refactor-delegate-task-constants
 ```
 
 ## Phase .: Implement
@@ -70,7 +70,7 @@ gh pr create --base dev --title "refactor(delegate-task): split constants.ts int
 
 ```bash
 gh pr merge --squash --delete-branch
-git worktree remove ../omo-wt/refactor-delegate-task-constants
+git worktree remove ../omop-wt/refactor-delegate-task-constants
 ```
 
 ## Import Update Strategy

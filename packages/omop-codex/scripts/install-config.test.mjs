@@ -17,7 +17,7 @@ test("#given empty Codex config #when script installer updates config #then enab
 		repoRoot: "/repo/packages/omop-codex",
 		marketplaceName: "debug",
 		marketplaceSource: { sourceType: "local", source: "/repo/packages/omop-codex" },
-		pluginNames: ["omo"],
+		pluginNames: ["omop"],
 	});
 
 	// then
@@ -38,7 +38,7 @@ test("#given empty Codex config #when script installer updates config #then leav
 		repoRoot: "/repo/packages/omop-codex",
 		marketplaceName: "debug",
 		marketplaceSource: { sourceType: "local", source: "/repo/packages/omop-codex" },
-		pluginNames: ["omo"],
+		pluginNames: ["omop"],
 	});
 
 	// then
@@ -59,13 +59,13 @@ test("#given cerberuslabs omo install #when script installer updates config #the
 		repoRoot: "/repo/packages/omop-codex",
 		marketplaceName: "cerberuslabs",
 		marketplaceSource: { sourceType: "local", source: "/repo/packages/omop-codex/cache/cerberuslabs" },
-		pluginNames: ["omo"],
+		pluginNames: ["omop"],
 	});
 
 	// then
 	const config = await readFile(configPath, "utf8");
-	assert.match(config, /\[plugins\."omo@cerberuslabs"\.mcp_servers\.context7\]/);
-	assert.match(config, /\[plugins\."omo@cerberuslabs"\.mcp_servers\.context7\][\s\S]*?enabled = true/);
+	assert.match(config, /\[plugins\."omop@cerberuslabs"\.mcp_servers\.context7\]/);
+	assert.match(config, /\[plugins\."omop@cerberuslabs"\.mcp_servers\.context7\][\s\S]*?enabled = true/);
 	assert.doesNotMatch(config, /\[mcp_servers\.context7\]/);
 	assert.doesNotMatch(config, /@upstash\/context7-mcp/);
 	assert.doesNotMatch(config, /YOUR_API_KEY/);
@@ -92,7 +92,7 @@ test("#given existing Context7 MCP config #when script installer updates config 
 		repoRoot: "/repo/packages/omop-codex",
 		marketplaceName: "debug",
 		marketplaceSource: { sourceType: "local", source: "/repo/packages/omop-codex" },
-		pluginNames: ["omo"],
+		pluginNames: ["omop"],
 	});
 
 	// then
@@ -118,7 +118,7 @@ test("#given Codex config is a symlink #when script installer updates config #th
 		repoRoot: "/repo/packages/omop-codex",
 		marketplaceName: "cerberuslabs",
 		marketplaceSource: { sourceType: "local", source: "/repo/packages/omop-codex/cache/cerberuslabs" },
-		pluginNames: ["omo"],
+		pluginNames: ["omop"],
 	});
 
 	// then
@@ -126,7 +126,7 @@ test("#given Codex config is a symlink #when script installer updates config #th
 	const targetConfig = await readFile(targetPath, "utf8");
 	assert.equal(configStat.isSymbolicLink(), true);
 	assert.match(targetConfig, /plugins = true/);
-	assert.match(targetConfig, /\[plugins\."omo@cerberuslabs"\]/);
+	assert.match(targetConfig, /\[plugins\."omop@cerberuslabs"\]/);
 });
 
 test("#given cerberuslabs config without explicit source #when script installer updates config #then uses local marketplace", async () => {
@@ -140,7 +140,7 @@ test("#given cerberuslabs config without explicit source #when script installer 
 		repoRoot: "/repo/packages/omop-codex",
 		marketplaceName: "cerberuslabs",
 		marketplaceSource: { sourceType: "local", source: "/repo/packages/omop-codex" },
-		pluginNames: ["omo"],
+		pluginNames: ["omop"],
 	});
 
 	// then
@@ -173,7 +173,7 @@ test("#given existing MultiAgentV2 table #when script installer updates config #
 		repoRoot: "/repo/packages/omop-codex",
 		marketplaceName: "debug",
 		marketplaceSource: { sourceType: "local", source: "/repo/packages/omop-codex" },
-		pluginNames: ["omo"],
+		pluginNames: ["omop"],
 	});
 
 	// then
@@ -196,7 +196,7 @@ test("#given empty Codex config #when script installer updates config #then sets
 		repoRoot: "/repo/packages/omop-codex",
 		marketplaceName: "debug",
 		marketplaceSource: { sourceType: "local", source: "/repo/packages/omop-codex" },
-		pluginNames: ["omo"],
+		pluginNames: ["omop"],
 	});
 
 	// then
@@ -226,7 +226,7 @@ test("#given user config hiding spawn_agent metadata #when script installer upda
 		repoRoot: "/repo/packages/omop-codex",
 		marketplaceName: "debug",
 		marketplaceSource: { sourceType: "local", source: "/repo/packages/omop-codex" },
-		pluginNames: ["omo"],
+		pluginNames: ["omop"],
 	});
 
 	// then
@@ -259,7 +259,7 @@ test("#given legacy boolean MultiAgentV2 flag and table #when script installer u
 		repoRoot: "/repo/packages/omop-codex",
 		marketplaceName: "debug",
 		marketplaceSource: { sourceType: "local", source: "/repo/packages/omop-codex" },
-		pluginNames: ["omo"],
+		pluginNames: ["omop"],
 	});
 
 	// then
@@ -292,7 +292,7 @@ test("#given legacy agents max_threads #when script installer updates config #th
 		repoRoot: "/repo/packages/omop-codex",
 		marketplaceName: "debug",
 		marketplaceSource: { sourceType: "local", source: "/repo/packages/omop-codex" },
-		pluginNames: ["omo"],
+		pluginNames: ["omop"],
 	});
 
 	// then
@@ -329,7 +329,7 @@ test("#given managed agent role sections #when script installer updates config #
 		repoRoot: "/repo/packages/omop-codex",
 		marketplaceName: "debug",
 		marketplaceSource: { sourceType: "local", source: "/repo/packages/omop-codex" },
-		pluginNames: ["omo"],
+		pluginNames: ["omop"],
 		agentConfigs: [{ name: "explorer", configFile: "./agents/explorer.toml" }],
 	});
 
@@ -348,13 +348,13 @@ test("#given existing trust and lsp blocks #when updating config #then existing 
 	await writeFile(
 		configPath,
 		[
-			'[plugins."omo@cerberuslabs"]',
+			'[plugins."omop@cerberuslabs"]',
 			"enabled = true",
 			"",
-			'[plugins."omo@cerberuslabs".mcp_servers.lsp]',
+			'[plugins."omop@cerberuslabs".mcp_servers.lsp]',
 			"enabled = true",
 			"",
-			'[hooks.state."omo@cerberuslabs:hooks/hooks.json:post_tool_use:0:0"]',
+			'[hooks.state."omop@cerberuslabs:hooks/hooks.json:post_tool_use:0:0"]',
 			'trusted_hash = "sha256:keep"',
 			"",
 		].join("\n"),
@@ -366,14 +366,14 @@ test("#given existing trust and lsp blocks #when updating config #then existing 
 		repoRoot: "/repo/packages/omop-codex",
 		marketplaceName: "cerberuslabs",
 		marketplaceSource: { sourceType: "local", source: "/repo/packages/omop-codex/cache/cerberuslabs" },
-		pluginNames: ["omo"],
-		trustedHookStates: [{ key: "omo@cerberuslabs:hooks/hooks.json:post_tool_use:0:0", trustedHash: "sha256:keep" }],
+		pluginNames: ["omop"],
+		trustedHookStates: [{ key: "omop@cerberuslabs:hooks/hooks.json:post_tool_use:0:0", trustedHash: "sha256:keep" }],
 	});
 
 	// then
 	const content = await readFile(configPath, "utf8");
-	assert.match(content, /\[plugins\."omo@cerberuslabs"\]/);
-	assert.match(content, /\[plugins\."omo@cerberuslabs"\.mcp_servers\.lsp\]/);
-	assert.match(content, /\[hooks\.state\."omo@cerberuslabs:hooks\/hooks\.json:post_tool_use:0:0"\]/);
+	assert.match(content, /\[plugins\."omop@cerberuslabs"\]/);
+	assert.match(content, /\[plugins\."omop@cerberuslabs"\.mcp_servers\.lsp\]/);
+	assert.match(content, /\[hooks\.state\."omop@cerberuslabs:hooks\/hooks\.json:post_tool_use:0:0"\]/);
 	assert.match(content, /trusted_hash = "sha256:keep"/);
 });

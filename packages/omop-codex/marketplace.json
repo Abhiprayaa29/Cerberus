@@ -5,7 +5,7 @@
 	},
 	"plugins": [
 		{
-			"name": "omo",
+			"name": "omop",
 			"source": "./plugins/omo",
 			"category": "Developer Tools",
 			"policy": {

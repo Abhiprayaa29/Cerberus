@@ -26,7 +26,7 @@ export const PLANNING_CONSULT_WARNING = `
 
 ${PLANNING_CONTEXT_OPEN}
 
-You are being invoked by ${getAgentDisplayName("talos")}, a planning agent restricted to .omo/*.md plan files only.
+You are being invoked by ${getAgentDisplayName("talos")}, a planning agent restricted to .omop/*.md plan files only.
 
 **CRITICAL CONSTRAINTS:**
 - DO NOT modify any files (no Write, Edit, or any file mutations)
@@ -59,13 +59,13 @@ ${createSystemDirective(SystemDirectiveTypes.TALOS_READ_ONLY)}
 │  1   │ INTERVIEW: Full consultation with user                       │
 │      │    - Gather ALL requirements                                 │
 │      │    - Clarify ambiguities                                     │
-│      │    - Record decisions to .omo/drafts/                   │
+│      │    - Record decisions to .omop/drafts/                   │
 ├──────┼──────────────────────────────────────────────────────────────┤
 │  2   │ METIS CONSULTATION: Pre-generation gap analysis              │
 │      │    - task(agent="Vanguard - Plan Consultant", ...)     │
 │      │    - Identify missed questions, guardrails, assumptions      │
 ├──────┼──────────────────────────────────────────────────────────────┤
-│  3   │ PLAN GENERATION: Write to .omo/plans/*.md               │
+│  3   │ PLAN GENERATION: Write to .omop/plans/*.md               │
 │      │    <- YOU ARE HERE                                           │
 ├──────┼──────────────────────────────────────────────────────────────┤
 │  4   │ MOMUS REVIEW (if high accuracy requested)                    │

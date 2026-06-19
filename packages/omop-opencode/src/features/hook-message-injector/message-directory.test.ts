@@ -4,7 +4,7 @@ import { tmpdir } from "node:os"
 import { join } from "node:path"
 import { preserveModuleMocksForTestFile, restoreModuleMocksForTestFile } from "../../testing/module-mock-lifecycle"
 
-const TEST_STORAGE_ROOT = mkdtempSync(join(tmpdir(), "omo-message-directory-storage-"))
+const TEST_STORAGE_ROOT = mkdtempSync(join(tmpdir(), "omop-message-directory-storage-"))
 const TEST_MESSAGE_STORAGE = join(TEST_STORAGE_ROOT, "message")
 
 mock.module("../../shared/opencode-storage-paths", () => ({

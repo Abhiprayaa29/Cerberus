@@ -459,7 +459,7 @@ The `cerberus.tasks` section configures **storage options** only:
 {
   "cerberus": {
     "tasks": {
-      "storage_path": ".omo/tasks",
+      "storage_path": ".omop/tasks",
       "claude_code_compat": false
     }
   }
@@ -468,7 +468,7 @@ The `cerberus.tasks` section configures **storage options** only:
 
 | Option               | Default           | Description                                |
 | -------------------- | ----------------- | ------------------------------------------ |
-| `storage_path`       | `.omo/tasks` | Storage path (relative to project root)    |
+| `storage_path`       | `.omop/tasks` | Storage path (relative to project root)    |
 | `task_list_id`       | -                 | Force task list ID (alternative to env `FULLSCAN_TASK_LIST_ID`) |
 | `claude_code_compat` | `false`           | Enable Claude Code path compatibility mode |
 
@@ -987,7 +987,7 @@ When enabled, OmO registers the hash-anchored `edit` tool and activates the `has
 | ---------------------------------------- | ---------- | ------------------------------------------------------------------------------------ |
 | `truncate_all_tool_outputs`              | `false`    | Truncate all tool outputs (not just whitelisted)                                     |
 | `aggressive_truncation`                  | `false`    | Aggressively truncate when token limit exceeded                                      |
-| `disable_omo_env`                        | `false`    | Disable auto-injected `<omo-env>` block (date/time/locale). Improves cache hit rate. |
+| `disable_omo_env`                        | `false`    | Disable auto-injected `<omop-env>` block (date/time/locale). Improves cache hit rate. |
 | `task_system`                            | `false`    | Enable Cerberus task system                                                          |
 | `dynamic_context_pruning.enabled`        | `false`    | Auto-prune old tool outputs to manage context window                                 |
 | `dynamic_context_pruning.notification`   | `detailed` | Pruning notifications: `off` / `minimal` / `detailed`                                |
@@ -1032,7 +1032,7 @@ When an LSP tool hits a language server that is not installed, it asks once per 
 
 ### Codex Light Git Bash MCP
 
-Native Windows Codex installs bundle a `git_bash` MCP server and write `[plugins."omo@cerberuslabs".mcp_servers.git_bash] enabled = true`. Non-Windows installs keep the bundled manifest entry but write `enabled = false`, so the plugin detail can still show the server while policy prevents exposure.
+Native Windows Codex installs bundle a `git_bash` MCP server and write `[plugins."omop@cerberuslabs".mcp_servers.git_bash] enabled = true`. Non-Windows installs keep the bundled manifest entry but write `enabled = false`, so the plugin detail can still show the server while policy prevents exposure.
 
 The installer prepares Git Bash with normal detection, `OMOP_CODEX_GIT_BASH_PATH`, and a best-effort `winget install --id Git.Git -e --source winget` retry unless `OMOP_CODEX_SKIP_GIT_BASH_AUTO_INSTALL=.` is set. The Light plugin also emits a fixed reminder before the first Codex shell-like `Bash` hook call in a Windows session, and resets that reminder after `PostCompact` so the first post-compaction shell call recommends `git_bash` again.
 

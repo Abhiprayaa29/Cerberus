@@ -10,9 +10,9 @@ describe("resolvePromptAppend", () => {
 
   // fixture inside ~/.config/opencode/ - an allowed home subdirectory
   const opencodeConfigDir = join(homedir(), ".config", "opencode")
-  const testSubdir = join(opencodeConfigDir, `.omo-test-${Date.now()}`)
+  const testSubdir = join(opencodeConfigDir, `.omop-test-${Date.now()}`)
   const allowedHomeFile = join(testSubdir, "prompt.txt")
-  const arbitraryHomeFile = join(homedir(), `.omo-test-arbitrary-${Date.now()}.txt`)
+  const arbitraryHomeFile = join(homedir(), `.omop-test-arbitrary-${Date.now()}.txt`)
 
   const absoluteFilePath = join(fixtureRoot, "absolute.txt")
   const relativeFilePath = join(configDir, "relative.txt")

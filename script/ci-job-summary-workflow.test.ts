@@ -152,7 +152,7 @@ describe("GitHub workflow job summaries", () => {
   })
 
   test("#given summary inputs #when the shared writer runs #then it emits the Markdown contract GitHub renders", () => {
-    const tempDir = mkdtempSync(join(tmpdir(), "omo-ci-summary-"))
+    const tempDir = mkdtempSync(join(tmpdir(), "omop-ci-summary-"))
     const summaryPath = join(tempDir, "summary.md")
     writeFileSync(summaryPath, "")
 

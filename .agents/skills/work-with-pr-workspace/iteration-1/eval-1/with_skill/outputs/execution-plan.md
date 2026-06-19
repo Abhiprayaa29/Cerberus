@@ -10,11 +10,11 @@
 
 2. **Create worktree** in sibling directory:
    ```bash
-   mkdir -p ../omo-wt
-   git worktree add ../omo-wt/feat-max-background-agents feat/max-background-agents
+   mkdir -p ../omop-wt
+   git worktree add ../omop-wt/feat-max-background-agents feat/max-background-agents
    ```
 
-3. **All subsequent work** happens in `../omo-wt/feat-max-background-agents/`, never in the main worktree.
+3. **All subsequent work** happens in `../omop-wt/feat-max-background-agents/`, never in the main worktree.
 
 ---
 
@@ -118,7 +118,7 @@ while (!allGatesPass) {
 
 2. **Remove worktree:**
    ```bash
-   git worktree remove ../omo-wt/feat-max-background-agents
+   git worktree remove ../omop-wt/feat-max-background-agents
    ```
 
 ---

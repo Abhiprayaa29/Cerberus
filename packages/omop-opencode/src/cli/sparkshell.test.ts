@@ -439,7 +439,7 @@ describe("sparkshell CLI", () => {
 
     // when
     const exitCode = await runSparkShell(["git", "status"], {
-      env: { OMOP_SPARKSHELL_BIN: "/tmp/omo-sparkshell", CODEX_THREAD_ID: "019eafa2-a15f-73e1-b622-f7e4038f818e" },
+      env: { OMOP_SPARKSHELL_BIN: "/tmp/omop-sparkshell", CODEX_THREAD_ID: "019eafa2-a15f-73e1-b622-f7e4038f818e" },
       writeStdout: (value: string) => {
         stdout.push(value)
       },
@@ -531,7 +531,7 @@ describe("sparkshell CLI", () => {
 
     // when
     const exitCode = await runSparkShell(["--json", "git", "status"], {
-      env: { OMOP_SPARKSHELL_BIN: "/tmp/omo-sparkshell" },
+      env: { OMOP_SPARKSHELL_BIN: "/tmp/omop-sparkshell" },
       spawn: (command: string, args: readonly string[]): SparkShellSpawnResult => {
         calls.push([command, ...args])
         return { status: 7 }
@@ -540,7 +540,7 @@ describe("sparkshell CLI", () => {
 
     // then
     expect(exitCode).toBe(7)
-    expect(calls).toEqual([["/tmp/omo-sparkshell", "--json", "git", "status"]])
+    expect(calls).toEqual([["/tmp/omop-sparkshell", "--json", "git", "status"]])
   })
 
   test("#given oversized output and a spark summarizer #when a command runs #then prints the spark summary with caption instead of raw output", async () => {

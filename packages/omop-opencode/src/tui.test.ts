@@ -40,7 +40,7 @@ describe("TUI sidebar polling", () => {
   let tempDir = ""
 
   beforeEach(() => {
-    tempDir = mkdtempSync(join(tmpdir(), "omo-tui-test-"))
+    tempDir = mkdtempSync(join(tmpdir(), "omop-tui-test-"))
   })
 
   afterEach(() => {
@@ -71,7 +71,7 @@ describe("TUI sidebar polling", () => {
         register: (nextRegistration: TuiSlotPlugin): string => {
           calls.push("register")
           registration = nextRegistration
-          return "omo-sidebar-slot"
+          return "omop-sidebar-slot"
         },
       },
       renderer: {

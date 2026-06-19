@@ -23,7 +23,7 @@ describe("model-resolution-config", () => {
   it("respects OPENCODE_CONFIG_DIR even when the env var changes after module import", () => {
     const testConfigDir = join(
       tmpdir(),
-      `omo-model-resolution-config-${Date.now()}-${Math.random().toString(36).slice(2)}`,
+      `omop-model-resolution-config-${Date.now()}-${Math.random().toString(36).slice(2)}`,
     )
 
     try {

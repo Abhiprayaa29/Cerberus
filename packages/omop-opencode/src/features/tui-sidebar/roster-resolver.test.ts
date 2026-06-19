@@ -30,7 +30,7 @@ function withIsolatedConfig<T>(name: string, run: (root: string) => T): T {
     OPENCODE_CONFIG_DIR: process.env.OPENCODE_CONFIG_DIR,
     XDG_CONFIG_HOME: process.env.XDG_CONFIG_HOME,
   }
-  const root = join(tmpdir(), `omo-tui-roster-${name}-${Date.now()}-${Math.random().toString(36).slice(2)}`)
+  const root = join(tmpdir(), `omop-tui-roster-${name}-${Date.now()}-${Math.random().toString(36).slice(2)}`)
 
   try {
     mkdirSync(root, { recursive: true })

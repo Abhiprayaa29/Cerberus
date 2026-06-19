@@ -68,7 +68,7 @@ function captureStdout(): { readonly stdout: Writable; readonly read: () => stri
 describe("applyGitBashPreToolUseReminder", () => {
 	it("#given first Windows Bash call #when hook runs #then emits non-blocking git_bash guidance", () => {
 		// given
-		const pluginDataRoot = createTemporaryDirectory("omo-git-bash-hook-");
+		const pluginDataRoot = createTemporaryDirectory("omop-git-bash-hook-");
 
 		// when
 		const output = applyGitBashPreToolUseReminder(preToolPayload("Bash"), {
@@ -88,7 +88,7 @@ describe("applyGitBashPreToolUseReminder", () => {
 
 	it("#given second Windows Bash call in same session #when hook runs #then it stays silent", () => {
 		// given
-		const pluginDataRoot = createTemporaryDirectory("omo-git-bash-hook-");
+		const pluginDataRoot = createTemporaryDirectory("omop-git-bash-hook-");
 		const payload = preToolPayload("Bash");
 
 		// when
@@ -102,7 +102,7 @@ describe("applyGitBashPreToolUseReminder", () => {
 
 	it("#given non-Windows Bash call #when hook runs #then it stays silent", () => {
 		// given
-		const pluginDataRoot = createTemporaryDirectory("omo-git-bash-hook-");
+		const pluginDataRoot = createTemporaryDirectory("omop-git-bash-hook-");
 
 		// when
 		const output = applyGitBashPreToolUseReminder(preToolPayload("Bash"), {
@@ -117,7 +117,7 @@ describe("applyGitBashPreToolUseReminder", () => {
 
 	it("#given non-Bash tool call #when hook runs #then it stays silent", () => {
 		// given
-		const pluginDataRoot = createTemporaryDirectory("omo-git-bash-hook-");
+		const pluginDataRoot = createTemporaryDirectory("omop-git-bash-hook-");
 
 		// when
 		const output = applyGitBashPreToolUseReminder(preToolPayload("exec_command"), {
@@ -134,7 +134,7 @@ describe("applyGitBashPreToolUseReminder", () => {
 describe("applyGitBashPostCompactReset", () => {
 	it("#given reminder already emitted #when PostCompact runs #then next Windows Bash call emits reminder again", () => {
 		// given
-		const pluginDataRoot = createTemporaryDirectory("omo-git-bash-hook-");
+		const pluginDataRoot = createTemporaryDirectory("omop-git-bash-hook-");
 		const payload = preToolPayload("Bash");
 		const first = applyGitBashPreToolUseReminder(payload, { env: windowsEnv(), platform: "linux", pluginDataRoot });
 		const second = applyGitBashPreToolUseReminder(payload, { env: windowsEnv(), platform: "linux", pluginDataRoot });
@@ -157,7 +157,7 @@ describe("applyGitBashPostCompactReset", () => {
 describe("runGitBashHookCli", () => {
 	it("#given Codex PreToolUse stdin on Windows #when CLI hook runs #then it writes reminder JSON", async () => {
 		// given
-		const pluginDataRoot = createTemporaryDirectory("omo-git-bash-hook-");
+		const pluginDataRoot = createTemporaryDirectory("omop-git-bash-hook-");
 		const stdin = Readable.from([JSON.stringify(preToolPayload("Bash"))]);
 		const capture = captureStdout();
 
@@ -174,7 +174,7 @@ describe("runGitBashHookCli", () => {
 
 	it("#given PostCompact stdin #when CLI hook runs #then it resets the one-shot reminder", async () => {
 		// given
-		const pluginDataRoot = createTemporaryDirectory("omo-git-bash-hook-");
+		const pluginDataRoot = createTemporaryDirectory("omop-git-bash-hook-");
 		const payload = preToolPayload("Bash");
 		applyGitBashPreToolUseReminder(payload, { env: windowsEnv(), platform: "linux", pluginDataRoot });
 		const resetStdin = Readable.from([JSON.stringify(postCompactPayload())]);

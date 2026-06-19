@@ -128,7 +128,7 @@ describe("buildSystemContent — nativeSkillInfos merging", () => {
   test("#given a nativeSkill name not in availableSkills #when block is built #then native name appears", () => {
     // given
     const availableSkills: AvailableSkill[] = [
-      { name: "omo-skill", description: "From OMO disk", location: "project" },
+      { name: "omop-skill", description: "From OMO disk", location: "project" },
     ]
     const nativeSkillInfos = [
       { name: "test-driven-development", description: "TDD discipline", location: "/fake/SKILL.md" },
@@ -143,7 +143,7 @@ describe("buildSystemContent — nativeSkillInfos merging", () => {
 
     // then
     expect(result).toBeDefined()
-    expect(result).toContain("omo-skill")
+    expect(result).toContain("omop-skill")
     expect(result).toContain("test-driven-development")
     expect(result).toContain("TDD discipline")
   })
@@ -151,7 +151,7 @@ describe("buildSystemContent — nativeSkillInfos merging", () => {
   test("#given a name in BOTH availableSkills AND nativeSkillInfos #when block is built #then OMO description wins", () => {
     // given
     const availableSkills: AvailableSkill[] = [
-      { name: "shared", description: "omo-version-of-shared", location: "project" },
+      { name: "shared", description: "omop-version-of-shared", location: "project" },
     ]
     const nativeSkillInfos = [
       { name: "shared", description: "native-version-of-shared", location: "/fake/SKILL.md" },
@@ -166,7 +166,7 @@ describe("buildSystemContent — nativeSkillInfos merging", () => {
 
     // then
     expect(result).toBeDefined()
-    expect(result).toContain("omo-version-of-shared")
+    expect(result).toContain("omop-version-of-shared")
     expect(result).not.toContain("native-version-of-shared")
   })
 

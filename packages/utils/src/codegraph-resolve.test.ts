@@ -195,7 +195,7 @@ describe("resolveCodegraphCommand", () => {
 
   it("uses provisioned binaries before PATH", () => {
     // given
-    const provisioned = "/home/me/.omo/codegraph/bin/codegraph"
+    const provisioned = "/home/me/.omop/codegraph/bin/codegraph"
 
     // when
     const result = resolveCodegraphCommand({
@@ -220,7 +220,7 @@ describe("resolveCodegraphCommand", () => {
     // given
     const missing = {
       fileExists: () => false,
-      homeDir: "/tmp/omo-codegraph-resolve-missing-home",
+      homeDir: "/tmp/omop-codegraph-resolve-missing-home",
       provisioned: () => null,
       requireResolve: () => {
         throw new Error("not bundled")

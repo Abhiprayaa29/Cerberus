@@ -5,7 +5,7 @@ import { resolveRuntimeExecutable } from "./runtime-executable"
 describe("resolveRuntimeExecutable", () => {
   test("#given lookup returns an absolute command #when resolving #then marks the executable available", () => {
     // given
-    const nodePath = join("/tmp", "omo-runtime", "node")
+    const nodePath = join("/tmp", "omop-runtime", "node")
 
     // when
     const result = resolveRuntimeExecutable("node", {
@@ -23,7 +23,7 @@ describe("resolveRuntimeExecutable", () => {
     // when
     const result = resolveRuntimeExecutable(commandName, {
       which: () => null,
-      execPath: join("/tmp", "omo-runtime", "bun"),
+      execPath: join("/tmp", "omop-runtime", "bun"),
     })
 
     // then
@@ -36,8 +36,8 @@ describe("resolveRuntimeExecutable", () => {
 
     // when
     const result = resolveRuntimeExecutable(unsafeName, {
-      which: () => join("/tmp", "omo-runtime", "node"),
-      execPath: join("/tmp", "omo-runtime", "node"),
+      which: () => join("/tmp", "omop-runtime", "node"),
+      execPath: join("/tmp", "omop-runtime", "node"),
     })
 
     // then
@@ -46,7 +46,7 @@ describe("resolveRuntimeExecutable", () => {
 
   test("#given the host process is node #when resolving node #then uses process execPath before PATH lookup", () => {
     // given
-    const nodePath = join("/tmp", "omo-runtime", "node")
+    const nodePath = join("/tmp", "omop-runtime", "node")
 
     // when
     const result = resolveRuntimeExecutable("node", {

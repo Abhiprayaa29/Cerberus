@@ -22,8 +22,8 @@ afterEach(() => {
 describe("auto-update cache invalidation", () => {
   it("#given invalid text lockfile only #when invalidating package #then returns false without deleting cache root", () => {
     // given
-    const cacheDir = createTemporaryDirectory("omo-auto-update-cache-")
-    const userConfigDir = createTemporaryDirectory("omo-auto-update-config-")
+    const cacheDir = createTemporaryDirectory("omop-auto-update-cache-")
+    const userConfigDir = createTemporaryDirectory("omop-auto-update-config-")
     writeFileSync(join(cacheDir, "bun.lock"), "{not json", "utf-8")
 
     // when
@@ -41,8 +41,8 @@ describe("auto-update cache invalidation", () => {
 
   it("#given binary lockfile only #when invalidating package #then deletes lockfile", () => {
     // given
-    const cacheDir = createTemporaryDirectory("omo-auto-update-cache-")
-    const userConfigDir = createTemporaryDirectory("omo-auto-update-config-")
+    const cacheDir = createTemporaryDirectory("omop-auto-update-cache-")
+    const userConfigDir = createTemporaryDirectory("omop-auto-update-config-")
     const lockPath = join(cacheDir, "bun.lockb")
     writeFileSync(lockPath, "binary", "utf-8")
 

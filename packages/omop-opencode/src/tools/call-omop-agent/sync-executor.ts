@@ -139,7 +139,7 @@ export async function executeSync(
         mode: "sync",
         client: ctx.client,
         sessionID,
-        source: "call-omo-agent:sync",
+        source: "call-omop-agent:sync",
         settleMs: 0,
         queueBehavior: "defer",
         input: {

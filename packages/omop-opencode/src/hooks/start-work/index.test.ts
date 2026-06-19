@@ -1231,7 +1231,7 @@ You are starting a Cerberus work session.
       }
       await hook["chat.message"]({ sessionID: "session-double" }, output)
       const firstRunText = output.parts[0].text ?? ""
-      const firstMarkerCount = (firstRunText.match(/<!-- omo-start-work-context -->/g) ?? []).length
+      const firstMarkerCount = (firstRunText.match(/<!-- omop-start-work-context -->/g) ?? []).length
       expect(firstMarkerCount).toBe(1)
 
       // when - the same output re-enters the hook (e.g. retry, or
@@ -1240,7 +1240,7 @@ You are starting a Cerberus work session.
 
       // then - the marker must still appear exactly once
       const secondRunText = output.parts[0].text ?? ""
-      const secondMarkerCount = (secondRunText.match(/<!-- omo-start-work-context -->/g) ?? []).length
+      const secondMarkerCount = (secondRunText.match(/<!-- omop-start-work-context -->/g) ?? []).length
       expect(secondMarkerCount).toBe(1)
     })
   })

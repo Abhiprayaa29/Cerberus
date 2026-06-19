@@ -55,14 +55,14 @@ describe("codex-cache security boundaries", () => {
     const binDir = join(root, "bin")
     await mkdir(pluginRoot, { recursive: true })
     await writeFile(join(root, "outside.js"), "#!/usr/bin/env node\n")
-    await writeFile(join(pluginRoot, "package.json"), JSON.stringify({ name: "@scope/omo", bin: { "omo-escape": "../outside.js" } }))
+    await writeFile(join(pluginRoot, "package.json"), JSON.stringify({ name: "@scope/omo", bin: { "omop-escape": "../outside.js" } }))
 
     // when
     const linked = linkCachedPluginBins({ binDir, pluginRoot, platform: "linux" })
 
     // then
     await expect(linked).rejects.toThrow("Package bin target must stay inside package root")
-    await expect(readlink(join(binDir, "omo-escape"))).rejects.toThrow()
+    await expect(readlink(join(binDir, "omop-escape"))).rejects.toThrow()
   })
 
   test("#given marketplace cache disappears between checks #when pruning marketplace cache #then missing roots are ignored", async () => {
@@ -87,7 +87,7 @@ describe("codex-cache security boundaries", () => {
     await symlink(join(root, "missing-marketplace"), join(cacheParent, "debug"))
 
     // when
-    const pruned = pruneMarketplacePluginCaches({ codexHome: join(root, "codex-home"), marketplaceName: "debug", pluginNames: ["omo"] })
+    const pruned = pruneMarketplacePluginCaches({ codexHome: join(root, "codex-home"), marketplaceName: "debug", pluginNames: ["omop"] })
 
     // then
     await expect(pruned).resolves.toBeUndefined()

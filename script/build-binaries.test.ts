@@ -170,7 +170,7 @@ describe("build-binaries", () => {
         env: {
           ...process.env,
           BUN_BINARY: join(tempDir, "missing-bun"),
-          OMOP_INVOCATION_NAME: "omo",
+          OMOP_INVOCATION_NAME: "omop",
           OMOP_WRAPPER_PACKAGE_ROOT: tempDir,
         },
       });

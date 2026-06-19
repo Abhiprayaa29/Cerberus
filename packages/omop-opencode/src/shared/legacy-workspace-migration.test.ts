@@ -8,7 +8,7 @@ describe("migrateLegacyWorkspaceDirectory", () => {
   let testDirectory = ""
 
   beforeEach(() => {
-    testDirectory = join(tmpdir(), `omo-workspace-migration-${Date.now()}-${Math.random().toString(36).slice(2)}`)
+    testDirectory = join(tmpdir(), `omop-workspace-migration-${Date.now()}-${Math.random().toString(36).slice(2)}`)
     mkdirSync(testDirectory, { recursive: true })
   })
 

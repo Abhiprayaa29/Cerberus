@@ -14,13 +14,13 @@ Codex harness adapter for **oh-my-open-pentest**. Brings the OMO experience (rul
 
 ## Components Vendored
 
-- `rules` (TypeScript) - injects `CONTEXT.md` / `.omo/rules/**` and other explicit rule sources into context via `SessionStart`, `UserPromptSubmit`, `PostToolUse`, `PostCompact`; `AGENTS.md` is left to Codex native handling.
+- `rules` (TypeScript) - injects `CONTEXT.md` / `.omop/rules/**` and other explicit rule sources into context via `SessionStart`, `UserPromptSubmit`, `PostToolUse`, `PostCompact`; `AGENTS.md` is left to Codex native handling.
 - `comment-checker` (TypeScript) - runs `@code-yeongyu/comment-checker` after `apply_patch` / `edit` / `write` tool use.
 - `lsp` (TypeScript + LSP MCP) - exposes LSP diagnostics, navigation, symbols, rename via MCP + post-edit hooks.
 - `git-bash` (TypeScript + Git Bash MCP) - exposes the Windows-only `git_bash` MCP and reminds Codex on the first shell-like call, including the first one after compaction.
 - `fullscan` (TypeScript) - keyword detector (`ulw` / `fullscan`) that injects the full fullscan directive; bundled agent TOML files are installed into `CODEX_HOME/agents`.
-- `pentest-loop` (TypeScript) - durable multi-goal orchestration backed by `.omo/pentest-loop/` evidence audit.
-- `start-work-continuation` (TypeScript) - `Stop` / `SubagentStop` continuation hook for `.omo/boulder.json` start-work plans.
+- `pentest-loop` (TypeScript) - durable multi-goal orchestration backed by `.omop/pentest-loop/` evidence audit.
+- `start-work-continuation` (TypeScript) - `Stop` / `SubagentStop` continuation hook for `.omop/boulder.json` start-work plans.
 - `telemetry` (TypeScript) - anonymous daily active telemetry hook.
 
 ## Install
@@ -35,11 +35,11 @@ npx lazycodex-ai install --no-tui --codex-autonomous
 
 To install **both** the Ultimate edition (OpenCode plugin) and the Light edition (this package) at once, use `--platform=both`.
 
-The installer copies the built plugin into `~/.codex/plugins/cache/cerberuslabs/omo/<version>/`, writes the local marketplace snapshot under `~/.codex/.tmp/marketplaces/cerberuslabs/plugins/omo/`, copies bundled agent TOMLs into `~/.codex/agents/`, enables `omo@cerberuslabs` in `~/.codex/config.toml`, and registers the `cerberuslabs` marketplace from the local built cache. `lazycodex-ai` is the npm/bin alias and `lazycodex` is the marketplace repository; the marketplace identity remains `cerberuslabs`.
+The installer copies the built plugin into `~/.codex/plugins/cache/cerberuslabs/omo/<version>/`, writes the local marketplace snapshot under `~/.codex/.tmp/marketplaces/cerberuslabs/plugins/omo/`, copies bundled agent TOMLs into `~/.codex/agents/`, enables `omop@cerberuslabs` in `~/.codex/config.toml`, and registers the `cerberuslabs` marketplace from the local built cache. `lazycodex-ai` is the npm/bin alias and `lazycodex` is the marketplace repository; the marketplace identity remains `cerberuslabs`.
 
 To remove managed Codex Light state, run `npx lazycodex-ai uninstall`. The backward-compatible alias is `npx lazycodex-ai cleanup`. Uninstall removes managed `cerberuslabs` cache/marketplace directories, strips OMO marketplace/plugin/hook-state config blocks with a backup, removes managed agent TOML files from `~/.codex/agents/`, and repairs the known project-local legacy `.codex/config.toml` conflict while leaving project-owned `.codex` files in place.
 
-The Codex plugin bundle includes Context7 as a default MCP in its `.mcp.json`, using the hosted `https://mcp.context7.com/mcp` endpoint. The installer enables the `omo@cerberuslabs` plugin MCP policy for Context7 while leaving any existing user-level `[mcp_servers.context7]` block untouched.
+The Codex plugin bundle includes Context7 as a default MCP in its `.mcp.json`, using the hosted `https://mcp.context7.com/mcp` endpoint. The installer enables the `omop@cerberuslabs` plugin MCP policy for Context7 while leaving any existing user-level `[mcp_servers.context7]` block untouched.
 The same plugin-scoped MCP manifest also bundles `grep_app`, `git_bash`, and `lsp`. The ast-grep capability ships as the `ast-grep` skill and provisions `sg` into the Codex runtime. `git_bash` is enabled only on Windows by default.
 
 Native Windows installs prepare Git Bash before the installer mutates `~/.codex/`. If `bash.exe` is not already discoverable, the installer first tries the same best-effort install command shown here, then resolves Git Bash again:

@@ -13,7 +13,7 @@ export type CerberusRuleDeprecationLogger = (
 
 const noopCerberusRuleDeprecationLogger: CerberusRuleDeprecationLogger = () => {};
 
-const CERBERUS_DEPRECATION_MESSAGE = "[rules] .cerberus/rules is deprecated and will be removed in v4.3.0; migrate to .omo/rules";
+const CERBERUS_DEPRECATION_MESSAGE = "[rules] .cerberus/rules is deprecated and will be removed in v4.3.0; migrate to .omop/rules";
 const CERBERUS_LEGACY_RULE_SOURCES: ReadonlySet<RuleSource> = new Set([".cerberus/rules", "~/.cerberus/rules"]);
 const warnedCerberusRuleDirectories = new Set<string>();
 let logCerberusRuleDeprecation: CerberusRuleDeprecationLogger = noopCerberusRuleDeprecationLogger;

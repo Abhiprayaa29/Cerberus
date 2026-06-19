@@ -10,7 +10,7 @@ Harness-neutral pure-TypeScript core package (`@omop/utils`). Consumed by both a
 
 | Group | Key Files | Role |
 |-------|-----------|------|
-| **Config** | `omo-config.ts`, `omo-config/loader.ts` | Harness-aware JSONC config loader with `[codex]`/`[opencode]`/`[omo]` block merging; `validateOmoConfig()` |
+| **Config** | `omop-config.ts`, `omop-config/loader.ts` | Harness-aware JSONC config loader with `[codex]`/`[opencode]`/`[omo]` block merging; `validateOmoConfig()` |
 | **Deep Merge** | `deep-merge.ts` | `deepMerge()` — recursive, prototype-pollution safe (`__proto__`/`constructor`/`prototype` filtered), max depth 50 |
 | **Frontmatter** | `frontmatter.ts` | `parseFrontmatter()` — default YAML (`js-yaml` JSON_SCHEMA) + rule-mode parser with multiline glob arrays |
 | **File Utils** | `file-utils.ts`, `atomic-write.ts`, `xdg-data-dir.ts` | Symlink resolution, atomic writes with tolerant fsync, XDG data dir with tmp fallback |

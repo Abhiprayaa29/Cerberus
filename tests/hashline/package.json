@@ -1,6 +1,6 @@
 {
   "name": "hashline-edit-tests",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "private": true,
   "type": "module",
   "description": "Hashline edit tool integration tests using Vercel AI SDK",

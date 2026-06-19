@@ -49,7 +49,7 @@ function createPluginConfig() {
 describe("team-mode tool registry wiring", () => {
   test("registers team tools from a fresh-install minimal user config", async () => {
     // given
-    const rootDir = mkdtempSync(join(tmpdir(), "omo-team-mode-fresh-install-"))
+    const rootDir = mkdtempSync(join(tmpdir(), "omop-team-mode-fresh-install-"))
     tempDirs.push(rootDir)
     const userConfigDir = join(rootDir, "home", ".config", "opencode")
     const projectDir = join(rootDir, "project")

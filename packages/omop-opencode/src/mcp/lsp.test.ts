@@ -23,8 +23,8 @@ afterEach(() => {
 describe("createLspMcpConfig", () => {
   it("resolves bundled dist cli from module root when cwd is unrelated", () => {
     // given
-    const packageRoot = createTemporaryDirectory("omo-lsp-package-root-")
-    const unrelatedCwd = createTemporaryDirectory("omo-lsp-unrelated-cwd-")
+    const packageRoot = createTemporaryDirectory("omop-lsp-package-root-")
+    const unrelatedCwd = createTemporaryDirectory("omop-lsp-unrelated-cwd-")
     const moduleFilePath = join(packageRoot, "dist", "index.js")
     const cliPath = join(packageRoot, "packages", "lsp-daemon", "dist", "cli.js")
     const nodePath = join(packageRoot, "bin", "node")
@@ -46,7 +46,7 @@ describe("createLspMcpConfig", () => {
 
   it("uses the bun daemon source cli when the engine dist is already built", () => {
     // given
-    const packageRoot = createTemporaryDirectory("omo-lsp-source-root-")
+    const packageRoot = createTemporaryDirectory("omop-lsp-source-root-")
     const moduleFilePath = join(packageRoot, "src", "mcp", "lsp.ts")
     const sourceCliPath = join(packageRoot, "packages", "lsp-daemon", "src", "cli.ts")
     const toolsDistPath = join(packageRoot, "packages", "lsp-tools-mcp", "dist", "cli.js")
@@ -59,7 +59,7 @@ describe("createLspMcpConfig", () => {
 
     // when
     const config = createLspMcpConfig({
-      cwd: createTemporaryDirectory("omo-lsp-source-cwd-"),
+      cwd: createTemporaryDirectory("omop-lsp-source-cwd-"),
       moduleUrl: pathToFileURL(moduleFilePath).href,
       resolveExecutable: createResolver({ bun: bunPath }),
     })
@@ -71,7 +71,7 @@ describe("createLspMcpConfig", () => {
 
   it("prefers an ancestor dist cli before an earlier source cli candidate", () => {
     // given
-    const packageRoot = createTemporaryDirectory("omo-lsp-order-root-")
+    const packageRoot = createTemporaryDirectory("omop-lsp-order-root-")
     const moduleFilePath = join(packageRoot, "nested", "src", "mcp", "lsp.ts")
     const nearerSourceCliPath = join(packageRoot, "nested", "src", "mcp", "packages", "lsp-daemon", "src", "cli.ts")
     const nearerToolsDistPath = join(packageRoot, "nested", "src", "mcp", "packages", "lsp-tools-mcp", "dist", "cli.js")
@@ -88,7 +88,7 @@ describe("createLspMcpConfig", () => {
 
     // when
     const config = createLspMcpConfig({
-      cwd: createTemporaryDirectory("omo-lsp-order-cwd-"),
+      cwd: createTemporaryDirectory("omop-lsp-order-cwd-"),
       moduleUrl: pathToFileURL(moduleFilePath).href,
       resolveExecutable: createResolver({ bun: bunPath, node: nodePath }),
     })
@@ -100,7 +100,7 @@ describe("createLspMcpConfig", () => {
 
   it("uses the nearest source cli when no dist cli exists in the ancestor walk", () => {
     // given
-    const packageRoot = createTemporaryDirectory("omo-lsp-source-order-root-")
+    const packageRoot = createTemporaryDirectory("omop-lsp-source-order-root-")
     const moduleFilePath = join(packageRoot, "nested", "src", "mcp", "lsp.ts")
     const nearerSourceCliPath = join(packageRoot, "nested", "src", "mcp", "packages", "lsp-daemon", "src", "cli.ts")
     const nearerToolsDistPath = join(packageRoot, "nested", "src", "mcp", "packages", "lsp-tools-mcp", "dist", "cli.js")
@@ -119,7 +119,7 @@ describe("createLspMcpConfig", () => {
 
     // when
     const config = createLspMcpConfig({
-      cwd: createTemporaryDirectory("omo-lsp-source-order-cwd-"),
+      cwd: createTemporaryDirectory("omop-lsp-source-order-cwd-"),
       moduleUrl: pathToFileURL(moduleFilePath).href,
       resolveExecutable: createResolver({ bun: bunPath }),
     })
@@ -131,7 +131,7 @@ describe("createLspMcpConfig", () => {
 
   it("does not run the bun daemon source cli when the engine dist is missing; bootstraps instead", () => {
     // given
-    const packageRoot = createTemporaryDirectory("omo-lsp-source-no-engine-root-")
+    const packageRoot = createTemporaryDirectory("omop-lsp-source-no-engine-root-")
     const moduleFilePath = join(packageRoot, "src", "mcp", "lsp.ts")
     const sourceCliPath = join(packageRoot, "packages", "lsp-daemon", "src", "cli.ts")
     const bunPath = join(packageRoot, "bin", "bun")
@@ -149,7 +149,7 @@ describe("createLspMcpConfig", () => {
 
     // when
     const config = createLspMcpConfig({
-      cwd: createTemporaryDirectory("omo-lsp-source-no-engine-cwd-"),
+      cwd: createTemporaryDirectory("omop-lsp-source-no-engine-cwd-"),
       moduleUrl: pathToFileURL(moduleFilePath).href,
       resolveExecutable: createResolver({ bun: bunPath, node: nodePath, npm: npmPath }),
     })
@@ -163,8 +163,8 @@ describe("createLspMcpConfig", () => {
 
   it("does not resolve the MCP command from the opened workspace", () => {
     // given
-    const packageRoot = createTemporaryDirectory("omo-lsp-safe-package-root-")
-    const workspaceRoot = createTemporaryDirectory("omo-lsp-malicious-workspace-")
+    const packageRoot = createTemporaryDirectory("omop-lsp-safe-package-root-")
+    const workspaceRoot = createTemporaryDirectory("omop-lsp-malicious-workspace-")
     const moduleFilePath = join(packageRoot, "dist", "index.js")
     const workspaceCliPath = join(workspaceRoot, "packages", "lsp-daemon", "dist", "cli.js")
     const gitPath = join(packageRoot, "bin", "git")
@@ -198,7 +198,7 @@ describe("createLspMcpConfig", () => {
 
   it("disables the MCP config when the vendored LSP package metadata is missing", () => {
     // given
-    const packageRoot = createTemporaryDirectory("omo-lsp-no-package-root-")
+    const packageRoot = createTemporaryDirectory("omop-lsp-no-package-root-")
     const moduleFilePath = join(packageRoot, "dist", "index.js")
     const bunPath = join(packageRoot, "bin", "bun")
     const nodePath = join(packageRoot, "bin", "node")
@@ -208,7 +208,7 @@ describe("createLspMcpConfig", () => {
 
     // when
     const config = createLspMcpConfig({
-      cwd: createTemporaryDirectory("omo-lsp-no-package-cwd-"),
+      cwd: createTemporaryDirectory("omop-lsp-no-package-cwd-"),
       moduleUrl: pathToFileURL(moduleFilePath).href,
       resolveExecutable: createResolver({ bun: bunPath, node: nodePath, npm: npmPath }),
     })
@@ -219,7 +219,7 @@ describe("createLspMcpConfig", () => {
 
   it("returns a vendored package bootstrap command when no LSP cli entrypoint exists", () => {
     // given
-    const packageRoot = createTemporaryDirectory("omo-lsp-missing-root-")
+    const packageRoot = createTemporaryDirectory("omop-lsp-missing-root-")
     const moduleFilePath = join(packageRoot, "dist", "index.js")
     const bunPath = join(packageRoot, "bin", "bun")
     const nodePath = join(packageRoot, "bin", "node")
@@ -235,7 +235,7 @@ describe("createLspMcpConfig", () => {
 
     // when
     const config = createLspMcpConfig({
-      cwd: createTemporaryDirectory("omo-lsp-missing-cwd-"),
+      cwd: createTemporaryDirectory("omop-lsp-missing-cwd-"),
       moduleUrl: pathToFileURL(moduleFilePath).href,
       resolveExecutable: createResolver({ bun: bunPath, node: nodePath, npm: npmPath }),
     })
@@ -258,7 +258,7 @@ describe("createLspMcpConfig", () => {
 
   it("disables the MCP config when no runtime can launch any LSP candidate", () => {
     // given
-    const packageRoot = createTemporaryDirectory("omo-lsp-no-runtime-root-")
+    const packageRoot = createTemporaryDirectory("omop-lsp-no-runtime-root-")
     const moduleFilePath = join(packageRoot, "dist", "index.js")
     const cliPath = join(packageRoot, "packages", "lsp-daemon", "dist", "cli.js")
     mkdirSync(join(packageRoot, "dist"), { recursive: true })
@@ -267,7 +267,7 @@ describe("createLspMcpConfig", () => {
 
     // when
     const config = createLspMcpConfig({
-      cwd: createTemporaryDirectory("omo-lsp-no-runtime-cwd-"),
+      cwd: createTemporaryDirectory("omop-lsp-no-runtime-cwd-"),
       moduleUrl: pathToFileURL(moduleFilePath).href,
       resolveExecutable: createResolver({}),
     })
@@ -275,8 +275,8 @@ describe("createLspMcpConfig", () => {
     // then
     expect(config.enabled).toBe(false)
     expect(config.environment?.LSP_TOOLS_MCP_PROJECT_CONFIG).toContain(".opencode/lsp.json")
-    expect(config.environment?.LSP_TOOLS_MCP_PROJECT_CONFIG).toContain(".omo/lsp.json")
-    expect(config.environment?.LSP_TOOLS_MCP_PROJECT_CONFIG).toContain(".omo/lsp-client.json")
+    expect(config.environment?.LSP_TOOLS_MCP_PROJECT_CONFIG).toContain(".omop/lsp.json")
+    expect(config.environment?.LSP_TOOLS_MCP_PROJECT_CONFIG).toContain(".omop/lsp-client.json")
   })
 })
 

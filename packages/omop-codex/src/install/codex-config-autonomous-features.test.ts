@@ -35,7 +35,7 @@ describe("codex-config autonomous features", () => {
       repoRoot: "/repo/packages/omop-codex",
       marketplaceName: "debug",
       marketplaceSource: { sourceType: "local", source: "/repo/packages/omop-codex" },
-      pluginNames: ["omo"],
+      pluginNames: ["omop"],
       autonomousPermissions: true,
     })
 
@@ -74,7 +74,7 @@ describe("codex-config autonomous features", () => {
       repoRoot: "/repo/packages/omop-codex",
       marketplaceName: "debug",
       marketplaceSource: { sourceType: "local", source: "/repo/packages/omop-codex" },
-      pluginNames: ["omo"],
+      pluginNames: ["omop"],
       autonomousPermissions: false,
     })
 

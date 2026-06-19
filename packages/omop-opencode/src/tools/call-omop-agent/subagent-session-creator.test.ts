@@ -4,7 +4,7 @@ import { resolveOrCreateSessionId } from "./subagent-session-creator"
 import { _resetForTesting, subagentSessions } from "../../features/claude-code-session-state"
 import { unsafeTestValue } from "../../../../../test-support/unsafe-test-value"
 
-describe("call-omo-agent resolveOrCreateSessionId", () => {
+describe("call-omop-agent resolveOrCreateSessionId", () => {
   const originalPlatform = process.platform
 
   function buildInput(options: {

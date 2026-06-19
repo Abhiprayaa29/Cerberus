@@ -91,7 +91,7 @@ export function buildSparkExecArgs(env: RuntimeEnv, lastMessagePath: string): re
 export function createDefaultSparkSummarizer(env: RuntimeEnv, cwd: string): SparkSummarizer {
   return (request: SparkSummaryRequest): string | null => {
     const binary = env[SPARKSHELL_SPARK_BIN_ENV]?.trim() || "codex"
-    const tempDir = mkdtempSync(join(tmpdir(), "omo-sparkshell-spark-"))
+    const tempDir = mkdtempSync(join(tmpdir(), "omop-sparkshell-spark-"))
     const lastMessagePath = join(tempDir, "last-message.txt")
     try {
       const result = spawnSync(

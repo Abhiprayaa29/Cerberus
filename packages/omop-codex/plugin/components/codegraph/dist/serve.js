@@ -251,7 +251,7 @@ function resolveCodegraphCommand(options = {}) {
   };
 }
 
-// ../../../../utils/src/omo-config/loader.ts
+// ../../../../utils/src/omop-config/loader.ts
 import { existsSync as existsSync3, readFileSync } from "node:fs";
 import { homedir as homedir3 } from "node:os";
 
@@ -1126,17 +1126,17 @@ function parseJsoncSafe(content) {
   };
 }
 
-// ../../../../utils/src/omo-config.ts
-var HARNESS_IDS = ["codex", "opencode", "omo"];
+// ../../../../utils/src/omop-config.ts
+var HARNESS_IDS = ["codex", "opencode", "omop"];
 var SETTING_HARNESS_SUPPORT = {
   "codegraph.auto_provision": HARNESS_IDS,
   "codegraph.enabled": HARNESS_IDS,
   "codegraph.install_dir": HARNESS_IDS,
   "codegraph.telemetry": HARNESS_IDS,
-  "codegraph.watch_debounce_ms": ["opencode", "omo"]
+  "codegraph.watch_debounce_ms": ["opencode", "omop"]
 };
 
-// ../../../../utils/src/omo-config/env-overrides.ts
+// ../../../../utils/src/omop-config/env-overrides.ts
 var CODEGRAPH_ENV_KEYS = [
   ["auto_provision", "AUTO_PROVISION", "boolean"],
   ["enabled", "ENABLED", "boolean"],
@@ -1208,7 +1208,7 @@ function buildEnvOverrides(harness, env, warnings, merge) {
   return config;
 }
 
-// ../../../../utils/src/omo-config/resolve.ts
+// ../../../../utils/src/omop-config/resolve.ts
 import { existsSync as existsSync2 } from "node:fs";
 import { dirname as dirname2, isAbsolute, join as join4, relative, resolve } from "node:path";
 function containsPath(parent, child) {
@@ -1251,7 +1251,7 @@ function toMissingSource(candidate) {
   };
 }
 
-// ../../../../utils/src/omo-config/loader.ts
+// ../../../../utils/src/omop-config/loader.ts
 var BUILT_IN_DEFAULTS = {
   codegraph: {
     auto_provision: true,

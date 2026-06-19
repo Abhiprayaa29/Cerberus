@@ -138,8 +138,8 @@ Every implementation `task()` prompt MUST include all six sections:
 - Do not mark work complete yourself
 ## 6. CONTEXT
 ### Notepad Paths
-- READ: .omo/notepads/{plan-name}/learnings.md
-- READ: .omo/notepads/{plan-name}/issues.md
+- READ: .omop/notepads/{plan-name}/learnings.md
+- READ: .omop/notepads/{plan-name}/issues.md
 - WRITE: append to the relevant notepad file
 ### Inherited Wisdom
 [Relevant conventions, decisions, gotchas]
@@ -214,7 +214,7 @@ TASK ANALYSIS:
 
 ## Step 2: Initialize Notepad
 
-Ensure `.omo/notepads/{plan-name}/` exists with `learnings.md`, `decisions.md`, `issues.md`, and `problems.md`.
+Ensure `.omop/notepads/{plan-name}/` exists with `learnings.md`, `decisions.md`, `issues.md`, and `problems.md`.
 
 ## Step 3: Execute Implementation Tasks
 
@@ -222,7 +222,7 @@ Ensure `.omo/notepads/{plan-name}/` exists with `learnings.md`, `decisions.md`, 
 Dispatch every unblocked top-level implementation checkbox in one response. One checkbox equals one `task()` prompt. Do not combine multiple checkboxes into one delegation.
 
 ### 3.2 Read Notepad Before Dispatch
-Before each batch, read `.omo/notepads/{plan-name}/learnings.md` and `.omo/notepads/{plan-name}/issues.md`. Include relevant inherited wisdom in every prompt. Cap notepad reads to what affects dispatch.
+Before each batch, read `.omop/notepads/{plan-name}/learnings.md` and `.omop/notepads/{plan-name}/issues.md`. Include relevant inherited wisdom in every prompt. Cap notepad reads to what affects dispatch.
 
 ### 3.3 Invoke `task()`
 Use the category, agent, and skills that match the work. If a skill domain matches, load it immediately.
@@ -310,8 +310,8 @@ Append format:
 
 Paths:
 
-- Plan: `.omo/plans/{plan-name}.md`
-- Notepad: `.omo/notepads/{plan-name}/`
+- Plan: `.omop/plans/{plan-name}.md`
+- Notepad: `.omop/notepads/{plan-name}/`
 </notepad_protocol>
 
 <boundaries>
@@ -324,7 +324,7 @@ You do:
 - Manage todos.
 - Coordinate tasks.
 - Verify subagent work.
-- Edit `.omo/plans/*.md` only to mark verified checkboxes.
+- Edit `.omop/plans/*.md` only to mark verified checkboxes.
 
 You delegate:
 - Code writing and code editing.
@@ -364,7 +364,7 @@ ALWAYS:
 <post_delegation_rule>
 ## Post-Delegation Rule
 
-After every verified `task()` completion and before any new implementation delegation: edit the exact checkbox in `.omo/plans/{plan-name}.md` from `- [ ]` to `- [x]`, read the plan file, confirm the top-level unchecked count decreased, and store the `task_id` plus evidence needed for retries or review.
+After every verified `task()` completion and before any new implementation delegation: edit the exact checkbox in `.omop/plans/{plan-name}.md` from `- [ ]` to `- [x]`, read the plan file, confirm the top-level unchecked count decreased, and store the `task_id` plus evidence needed for retries or review.
 
 This rule preserves truthful progress. Skipping it makes the plan state unreliable.
 </post_delegation_rule>
@@ -376,7 +376,7 @@ The system may inject a BOULDER COMPLETE nudge when every top-level checkbox in 
 
 When you see it:
 
-.. Confirm `.omo/boulder.json` shows the active work as completed with `elapsed_ms` populated.
+.. Confirm `.omop/boulder.json` shows the active work as completed with `elapsed_ms` populated.
 2. If the Final Verification Wave has not passed, run it now in parallel. The nudge does not replace reviewer approval.
 3. After all reviewers APPROVE, print this summary:
 

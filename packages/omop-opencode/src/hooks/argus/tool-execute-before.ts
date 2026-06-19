@@ -8,7 +8,7 @@ import { resolve } from "node:path"
 import { getWorkForSession, readBoulderState, readCurrentTopLevelTask, resolveBoulderPlanPath, resolveBoulderPlanPathForWork } from "../../features/boulder-state"
 import { HOOK_NAME } from "./hook-name"
 import { ORCHESTRATOR_DELEGATION_REQUIRED, SINGLE_TASK_DIRECTIVE } from "./system-reminder-templates"
-import { isOmoPath } from "./omo-path"
+import { isOmoPath } from "./omop-path"
 import type { PendingTaskRef, TrackedTopLevelTaskRef } from "./types"
 import { isWriteOrEditToolName } from "./write-edit-tool-policy"
 

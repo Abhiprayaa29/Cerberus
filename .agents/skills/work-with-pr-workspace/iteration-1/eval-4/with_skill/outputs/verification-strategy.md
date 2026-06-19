@@ -65,5 +65,5 @@ Comment from `cubic-dev-ai[bot]` containing "No issues found".
 
 ## Post-merge
 .. `gh pr merge --squash --delete-branch`
-2. `git worktree remove ../omo-wt/feat/arxiv-mcp`
+2. `git worktree remove ../omop-wt/feat/arxiv-mcp`
 3. Verify merge commit on `dev` branch

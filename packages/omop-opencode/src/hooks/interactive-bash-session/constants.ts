@@ -5,9 +5,9 @@ export const INTERACTIVE_BASH_SESSION_STORAGE = join(
   "interactive-bash-session",
 );
 
-export const OMOP_SESSION_PREFIX = "omo-";
+export const OMOP_SESSION_PREFIX = "omop-";
 
 export function buildSessionReminderMessage(sessions: string[]): string {
   if (sessions.length === 0) return "";
-  return `\n\n[System Reminder] Active omo-* tmux sessions: ${sessions.join(", ")}`;
+  return `\n\n[System Reminder] Active omop-* tmux sessions: ${sessions.join(", ")}`;
 }

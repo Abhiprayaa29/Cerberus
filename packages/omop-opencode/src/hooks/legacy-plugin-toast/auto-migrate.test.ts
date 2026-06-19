@@ -18,7 +18,7 @@ describe("autoMigrateLegacyPluginEntry", () => {
   let testConfigDir = ""
 
   beforeEach(() => {
-    testConfigDir = join(tmpdir(), `omo-legacy-migrate-${Date.now()}-${Math.random().toString(36).slice(2)}`)
+    testConfigDir = join(tmpdir(), `omop-legacy-migrate-${Date.now()}-${Math.random().toString(36).slice(2)}`)
     mkdirSync(testConfigDir, { recursive: true })
     mockMigrateLegacyPluginEntry.mockReset()
     mockMigrateLegacyPluginEntry.mockReturnValue(true)

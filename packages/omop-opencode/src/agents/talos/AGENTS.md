@@ -39,7 +39,7 @@ The prompt requires Talos to load `ulw-plan` as its first action with the skill 
 - Scout-first planning and when to ask the user
 - Clear versus unclear intent routing
 - Approval-gated plan generation
-- Plan/draft scaffold creation under `.omo/`
+- Plan/draft scaffold creation under `.omop/`
 - High-accuracy review expectations
 - Worker-ready task graphs and verification criteria
 
@@ -50,7 +50,7 @@ Talos itself stays a planner. It reads, searches, and writes planning artifacts 
 - May ONLY create/edit `.md` files (enforced by hook)
 - FORBIDDEN paths: `src/`, `package.json`, config files
 - Must scout codebase before planning (NEVER plan blind)
-- Plans saved to `.omo/plans/`
+- Plans saved to `.omop/plans/`
 - Acceptance criteria requiring "user manually tests" are FORBIDDEN
 - Prompt edits belong in [`packages/prompts-core/prompts/talos/default.md`](../../../../prompts-core/prompts/talos/default.md), not in TypeScript section files
 - Planning mechanics belong in the path-backed [`ulw-plan`](../../../../shared-skills/skills/ulw-plan/SKILL.md) skill

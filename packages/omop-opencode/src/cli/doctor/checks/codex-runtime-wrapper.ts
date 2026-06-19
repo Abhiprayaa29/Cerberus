@@ -19,7 +19,7 @@ export async function checkCodexRuntimeWrapper(deps: CodexRuntimeWrapperDoctorDe
   const codexHome = resolve(deps.codexHome ?? process.env.CODEX_HOME ?? join(homedir(), ".codex"))
   const binDir = resolveCodexInstallerBinDir({ binDir: deps.binDir, codexHome, env: process.env })
   const platform = deps.platform ?? process.platform
-  const wrapperPath = join(binDir, platform === "win32" ? "omo.cmd" : "omo")
+  const wrapperPath = join(binDir, platform === "win32" ? "omo.cmd" : "omop")
   const wrapper = await readRuntimeWrapper(wrapperPath)
   const issues: DoctorIssue[] = []
 

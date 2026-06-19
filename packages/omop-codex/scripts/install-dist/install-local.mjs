@@ -5903,7 +5903,7 @@ var package_default;
 var init_package = __esm(() => {
   package_default = {
     name: "@omop/omop-codex",
-    version: "1.2.0",
+    version: "1.3.0",
     type: "module",
     private: true,
     description: "Codex harness adapter for oh-my-open-pentest. Vendored Codex plugin namespace (omo) + TypeScript installer + telemetry.",
@@ -6489,7 +6489,7 @@ function isNodeErrorWithCode2(error) {
 import { join as join2 } from "node:path";
 var RUNTIME_WRAPPER_MARKER = "OMOP_GENERATED_RUNTIME_WRAPPER";
 function posixRuntimeWrapper(cliPath, codexHome, binDir, nodeCliPath) {
-  const ulwLoopBin = toPosixPath(join2(binDir, "omo-pentest-loop"));
+  const ulwLoopBin = toPosixPath(join2(binDir, "omop-pentest-loop"));
   const nodeCli = escapePosixDoubleQuoted(toPosixPath(nodeCliPath));
   const escapedCliPath = escapePosixDoubleQuoted(toPosixPath(cliPath));
   const escapedCodexHome = escapePosixDoubleQuoted(toPosixPath(codexHome));
@@ -6535,7 +6535,7 @@ function posixRuntimeWrapper(cliPath, codexHome, binDir, nodeCliPath) {
 `);
 }
 function windowsRuntimeWrapper(cliPath, codexHome, binDir, nodeCliPath) {
-  const ulwLoopBin = join2(binDir, "omo-pentest-loop.cmd");
+  const ulwLoopBin = join2(binDir, "omop-pentest-loop.cmd");
   return [
     "@echo off",
     `rem ${RUNTIME_WRAPPER_MARKER}`,
@@ -6577,7 +6577,7 @@ function escapePosixDoubleQuoted(value) {
 }
 
 // packages/omop-codex/src/install/codex-cache-bins.ts
-var RESERVED_NESTED_BIN_NAMES = new Set(["omo", "lazycodex", "lazycodex-ai", "oh-my-open-pentest", "oh-my-open-pentest"]);
+var RESERVED_NESTED_BIN_NAMES = new Set(["omop", "lazycodex", "lazycodex-ai", "oh-my-open-pentest", "oh-my-open-pentest"]);
 async function linkCachedPluginBins(input) {
   const binLinks = await discoverPackageBins(input.pluginRoot);
   const platform = input.platform ?? process.platform;
@@ -6598,11 +6598,11 @@ async function linkRootRuntimeBin(input) {
   const platform = input.platform ?? process.platform;
   await mkdir(input.binDir, { recursive: true });
   if (platform === "win32") {
-    const linkPath2 = join3(input.binDir, "omo.cmd");
+    const linkPath2 = join3(input.binDir, "omop.cmd");
     await replaceRuntimeWrapper(linkPath2, windowsRuntimeWrapper(cliPath, input.codexHome, input.binDir, nodeCliPath));
     return { name: "omop", path: linkPath2, target: cliPath };
   }
-  const linkPath = join3(input.binDir, "omo");
+  const linkPath = join3(input.binDir, "omop");
   await replaceRuntimeWrapper(linkPath, posixRuntimeWrapper(cliPath, input.codexHome, input.binDir, nodeCliPath));
   await chmod(linkPath, 493);
   return { name: "omop", path: linkPath, target: cliPath };
@@ -6707,7 +6707,7 @@ node "${targetPath}" %*\r
 }
 async function replaceRuntimeWrapper(linkPath, content) {
   if (await existingNonRuntimeWrapper(linkPath))
-    throw new Error(`${linkPath} already exists and is not a generated OMO runtime wrapper`);
+    throw new Error(`${linkPath} already exists and is not a generated OMOP runtime wrapper`);
   await rm2(linkPath, { force: true });
   await writeFile(linkPath, content);
 }
@@ -6719,7 +6719,7 @@ async function existingNonRuntimeWrapper(path) {
     if (!stat2.isFile())
       return true;
     const content = await readFile2(path, "utf8");
-    return !content.includes(RUNTIME_WRAPPER_MARKER) && !content.includes("OMO_GENERATED_RUNTIME_WRAPPER") && !content.includes("omo runtime wrapper");
+    return !content.includes(RUNTIME_WRAPPER_MARKER) && !content.includes("OMO_GENERATED_RUNTIME_WRAPPER") && !content.includes("omop runtime wrapper");
   } catch (error) {
     if (isNodeErrorWithCode(error) && error.code === "ENOENT")
       return false;
@@ -7609,12 +7609,12 @@ enabled = true
   return replaceOrInsertSetting(config, section, "enabled", "true");
 }
 function ensureOmoBuiltinMcpPolicies(config, input) {
-  if (input.marketplaceName !== "cerberuslabs" || !input.pluginNames.includes("omo"))
+  if (input.marketplaceName !== "cerberuslabs" || !input.pluginNames.includes("omop"))
     return config;
   const gitBashEnabled = (input.platform ?? process.platform) === "win32" && input.gitBashEnabled === true;
-  let nextConfig = ensurePluginMcpEnabled(config, "omo@cerberuslabs", "context7", true);
-  nextConfig = ensurePluginMcpEnabled(nextConfig, "omo@cerberuslabs", "codegraph", true);
-  nextConfig = ensurePluginMcpEnabled(nextConfig, "omo@cerberuslabs", "git_bash", gitBashEnabled);
+  let nextConfig = ensurePluginMcpEnabled(config, "omop@cerberuslabs", "context7", true);
+  nextConfig = ensurePluginMcpEnabled(nextConfig, "omop@cerberuslabs", "codegraph", true);
+  nextConfig = ensurePluginMcpEnabled(nextConfig, "omop@cerberuslabs", "git_bash", gitBashEnabled);
   return nextConfig;
 }
 function ensureHookTrusted(config, state) {
@@ -8500,7 +8500,7 @@ async function readDistributionManifest(repoRoot) {
   }
 }
 function resolveLazyCodexPluginVersion(input) {
-  if (input.marketplaceName === "cerberuslabs" && input.pluginName === "omo" && input.distributionManifest !== undefined) {
+  if (input.marketplaceName === "cerberuslabs" && input.pluginName === "omop" && input.distributionManifest !== undefined) {
     return input.distributionManifest.version;
   }
   return input.manifestVersion ?? "local";
@@ -8922,11 +8922,11 @@ function resolveCodexInstallerBinDir(input) {
   return resolve7(homeDir, ".local", "bin");
 }
 
-// packages/omop-codex/src/install/omo-sot-migration.ts
+// packages/omop-codex/src/install/omop-sot-migration.ts
 import { join as join23 } from "node:path";
 async function seedAndMigrateOmoSot(input) {
   const commandEnv = { ...input.env };
-  const scriptPath = join23(input.repoRoot, "packages", "omop-codex", "plugin", "scripts", "migrate-omo-sot.mjs");
+  const scriptPath = join23(input.repoRoot, "packages", "omop-codex", "plugin", "scripts", "migrate-omop-sot.mjs");
   try {
     await input.runCommand(process.execPath, [scriptPath, "--seed"], {
       cwd: input.repoRoot,
@@ -11891,9 +11891,9 @@ var sharedSubunitLogger = () => {};
 function log(message, data) {
   sharedSubunitLogger(message, data);
 }
-// packages/utils/src/omo-config.ts
-var HARNESS_IDS = ["codex", "opencode", "omo"];
-// packages/utils/src/omo-config/loader.ts
+// packages/utils/src/omop-config.ts
+var HARNESS_IDS = ["codex", "opencode", "omop"];
+// packages/utils/src/omop-config/loader.ts
 var HARNESS_BLOCK_KEYS = HARNESS_IDS.map((harness) => `[${harness}]`);
 // packages/utils/src/ast-grep/sg-manifest.ts
 function normalizeRuntimePlatform(platform = process.platform) {
@@ -12717,7 +12717,7 @@ function describeResult(result) {
   return result.reason;
 }
 async function installAstGrepForCodex(options) {
-  const plugin = options.installed.find((entry) => entry.name === "omo");
+  const plugin = options.installed.find((entry) => entry.name === "omop");
   if (plugin === undefined)
     return;
   const platform = options.platform ?? process.platform;
@@ -12804,7 +12804,7 @@ async function runCodexInstaller(options = {}) {
       sourcePath,
       version: version2
     });
-    if (marketplace.name === "cerberuslabs" && plugin.name === "omo") {
+    if (marketplace.name === "cerberuslabs" && plugin.name === "omop") {
       await stampLazyCodexPluginVersion({ pluginRoot: plugin.path, version: version2 });
       await writeLazyCodexInstallSnapshot({ pluginRoot: plugin.path, distributionManifest });
     }
@@ -12812,7 +12812,7 @@ async function runCodexInstaller(options = {}) {
     for (const link of links) {
       log2(`Linked ${link.name} -> ${link.target}`);
     }
-    if (marketplace.name === "cerberuslabs" && plugin.name === "omo") {
+    if (marketplace.name === "cerberuslabs" && plugin.name === "omop") {
       const runtimeLink = await linkRootRuntimeBin({ binDir, codexHome, repoRoot, platform });
       if (runtimeLink !== null)
         log2(`Linked ${runtimeLink.name} -> ${runtimeLink.target}`);
@@ -13135,11 +13135,11 @@ async function runDelegatedOmoCommand(parsed, options) {
     options.log(`${invocation.command} ${invocation.args.join(" ")}`);
     return;
   }
-  const env3 = { ...process.env, OMOP_INVOCATION_NAME: "omo" };
+  const env3 = { ...process.env, OMOP_INVOCATION_NAME: "omop" };
   await options.runCommand(invocation.command, invocation.args, { cwd: options.cwd, env: env3 });
 }
 function buildDelegatedOmoInvocation(parsed) {
-  const args = ["--yes", "--package", "oh-my-open-pentest", "omo", parsed.command];
+  const args = ["--yes", "--package", "oh-my-open-pentest", "omop", parsed.command];
   if (parsed.command === "install") {
     args.push("--platform=codex");
     if (parsed.noTui)

@@ -19,7 +19,7 @@ async function writeRuntimeWrapperFixture({ withNodeCli = false } = {}) {
 		await mkdir(join(repoRoot, "dist", "cli-node"), { recursive: true });
 		await writeFile(
 			join(repoRoot, "dist", "cli-node", "index.js"),
-			'console.log("OMO_NODE_OK", process.argv.slice(2).join(" "));\n',
+			'console.log("OMOP_NODE_OK", process.argv.slice(2).join(" "));\n',
 		);
 	}
 	await mkdir(homeDir, { recursive: true });
@@ -71,7 +71,7 @@ test("#given OMOP_RUNTIME=node and a node CLI bundle #when running the omo runti
 	});
 
 	assert.equal(result.status, 0, result.stderr);
-	assert.match(result.stdout, /OMO_NODE_OK --help/);
+	assert.match(result.stdout, /OMOP_NODE_OK --help/);
 });
 
 test("#given bun absent everywhere and a node CLI bundle #when running the omo runtime wrapper #then falls back to node", async (t) => {
@@ -84,7 +84,7 @@ test("#given bun absent everywhere and a node CLI bundle #when running the omo r
 	});
 
 	assert.equal(result.status, 0, result.stderr);
-	assert.match(result.stdout, /OMO_NODE_OK --version/);
+	assert.match(result.stdout, /OMOP_NODE_OK --version/);
 });
 
 test("#given bun absent and no node CLI bundle #when running the omo runtime wrapper #then the error names both runtimes", async (t) => {
@@ -185,14 +185,14 @@ test("#given managed legacy Codex component symlink #when linking bins #then rem
 	const root = await makeTempDir();
 	const pluginRoot = join(root, "plugin");
 	const binDir = join(root, "bin");
-	const oldTarget = join(root, "codex-home", "plugins", "cache", "legacy-market", "omo", "0.0.1", "components", "rules", "dist", "cli.js");
+	const oldTarget = join(root, "codex-home", "plugins", "cache", "legacy-market", "omop", "0.0.1", "components", "rules", "dist", "cli.js");
 
 	await mkdir(join(pluginRoot, "dist"), { recursive: true });
-	await mkdir(join(root, "codex-home", "plugins", "cache", "legacy-market", "omo", "0.0.1", "components", "rules", "dist"), { recursive: true });
+	await mkdir(join(root, "codex-home", "plugins", "cache", "legacy-market", "omop", "0.0.1", "components", "rules", "dist"), { recursive: true });
 	await mkdir(binDir, { recursive: true });
 	await writeJson(join(pluginRoot, "package.json"), {
 		name: "@example/omo",
-		bin: { "omo-rules": "./dist/cli.js" },
+		bin: { "omop-rules": "./dist/cli.js" },
 	});
 	await writeFile(join(pluginRoot, "dist", "cli.js"), "#!/usr/bin/env node\n");
 	await writeFile(oldTarget, "#!/usr/bin/env node\n");
@@ -201,17 +201,17 @@ test("#given managed legacy Codex component symlink #when linking bins #then rem
 	await linkCachedPluginBins({ binDir, pluginRoot, platform: "linux" });
 
 	await assert.rejects(readlink(join(binDir, "codex-rules")));
-	assert.equal(await readlink(join(binDir, "omo-rules")), join(pluginRoot, "dist", "cli.js"));
+	assert.equal(await readlink(join(binDir, "omop-rules")), join(pluginRoot, "dist", "cli.js"));
 });
 
 test("#given managed legacy Codex LSP symlink #when linking bins #then removes stale lsp symlink", async () => {
 	const root = await makeTempDir();
 	const pluginRoot = join(root, "plugin");
 	const binDir = join(root, "bin");
-	const oldTarget = join(root, "codex-home", "plugins", "cache", "legacy-market", "omo", "0.0.1", "components", "lsp", "dist", "cli.js");
+	const oldTarget = join(root, "codex-home", "plugins", "cache", "legacy-market", "omop", "0.0.1", "components", "lsp", "dist", "cli.js");
 
 	await mkdir(join(pluginRoot, "dist"), { recursive: true });
-	await mkdir(join(root, "codex-home", "plugins", "cache", "legacy-market", "omo", "0.0.1", "components", "lsp", "dist"), { recursive: true });
+	await mkdir(join(root, "codex-home", "plugins", "cache", "legacy-market", "omop", "0.0.1", "components", "lsp", "dist"), { recursive: true });
 	await mkdir(binDir, { recursive: true });
 	await writeJson(join(pluginRoot, "package.json"), {
 		name: "@example/omo",
@@ -224,7 +224,7 @@ test("#given managed legacy Codex LSP symlink #when linking bins #then removes s
 	await linkCachedPluginBins({ binDir, pluginRoot, platform: "linux" });
 
 	await assert.rejects(readlink(join(binDir, "codex-lsp")));
-	assert.equal(await readlink(join(binDir, "omo")), join(pluginRoot, "dist", "cli.js"));
+	assert.equal(await readlink(join(binDir, "omop")), join(pluginRoot, "dist", "cli.js"));
 });
 
 test("#given nested component declares reserved omo bin #when linking bins #then skips the nested top-level command", async () => {
@@ -241,7 +241,7 @@ test("#given nested component declares reserved omo bin #when linking bins #then
 		name: "@example/pentest-loop",
 		bin: {
 			omo: "./dist/cli.js",
-			"omo-pentest-loop": "./dist/cli.js",
+			"omop-pentest-loop": "./dist/cli.js",
 		},
 	});
 	await writeFile(join(componentRoot, "dist", "cli.js"), "#!/usr/bin/env node\n");
@@ -249,10 +249,10 @@ test("#given nested component declares reserved omo bin #when linking bins #then
 	const linked = await linkCachedPluginBins({ binDir, pluginRoot, platform: "linux" });
 
 	assert.deepEqual(linked, [
-		{ name: "omo-pentest-loop", path: join(binDir, "omo-pentest-loop"), target: join(componentRoot, "dist", "cli.js") },
+		{ name: "omop-pentest-loop", path: join(binDir, "omop-pentest-loop"), target: join(componentRoot, "dist", "cli.js") },
 	]);
-	await assert.rejects(readlink(join(binDir, "omo")));
-	assert.equal(await readlink(join(binDir, "omo-pentest-loop")), join(componentRoot, "dist", "cli.js"));
+	await assert.rejects(readlink(join(binDir, "omop")));
+	assert.equal(await readlink(join(binDir, "omop-pentest-loop")), join(componentRoot, "dist", "cli.js"));
 });
 
 test("#given stale managed pentest-loop omo symlink #when linking bins #then removes it without touching user-owned omo", async () => {
@@ -260,26 +260,26 @@ test("#given stale managed pentest-loop omo symlink #when linking bins #then rem
 	const pluginRoot = join(root, "plugin");
 	const componentRoot = join(pluginRoot, "components", "rules");
 	const binDir = join(root, "bin");
-	const oldTarget = join(root, "codex-home", "plugins", "cache", "cerberuslabs", "omo", "0.1.0", "components", "pentest-loop", "dist", "cli.js");
+	const oldTarget = join(root, "codex-home", "plugins", "cache", "cerberuslabs", "omop", "0.1.0", "components", "pentest-loop", "dist", "cli.js");
 
 	await mkdir(join(componentRoot, "dist"), { recursive: true });
-	await mkdir(join(root, "codex-home", "plugins", "cache", "cerberuslabs", "omo", "0.1.0", "components", "pentest-loop", "dist"), { recursive: true });
+	await mkdir(join(root, "codex-home", "plugins", "cache", "cerberuslabs", "omop", "0.1.0", "components", "pentest-loop", "dist"), { recursive: true });
 	await mkdir(binDir, { recursive: true });
 	await writeJson(join(pluginRoot, "package.json"), {
 		name: "@example/omo",
 	});
 	await writeJson(join(componentRoot, "package.json"), {
 		name: "@example/rules",
-		bin: { "omo-rules": "./dist/cli.js" },
+		bin: { "omop-rules": "./dist/cli.js" },
 	});
 	await writeFile(join(componentRoot, "dist", "cli.js"), "#!/usr/bin/env node\n");
 	await writeFile(oldTarget, "#!/usr/bin/env node\n");
-	await symlink(oldTarget, join(binDir, "omo"));
+	await symlink(oldTarget, join(binDir, "omop"));
 
 	await linkCachedPluginBins({ binDir, pluginRoot, platform: "linux" });
 
-	await assert.rejects(readlink(join(binDir, "omo")));
-	assert.equal(await readlink(join(binDir, "omo-rules")), join(componentRoot, "dist", "cli.js"));
+	await assert.rejects(readlink(join(binDir, "omop")));
+	assert.equal(await readlink(join(binDir, "omop-rules")), join(componentRoot, "dist", "cli.js"));
 });
 
 test("#given stale local-source pentest-loop omo symlink #when linking bins #then removes it", async () => {
@@ -297,16 +297,16 @@ test("#given stale local-source pentest-loop omo symlink #when linking bins #the
 	});
 	await writeJson(join(componentRoot, "package.json"), {
 		name: "@example/rules",
-		bin: { "omo-rules": "./dist/cli.js" },
+		bin: { "omop-rules": "./dist/cli.js" },
 	});
 	await writeFile(join(componentRoot, "dist", "cli.js"), "#!/usr/bin/env node\n");
 	await writeFile(oldTarget, "#!/usr/bin/env node\n");
-	await symlink(oldTarget, join(binDir, "omo"));
+	await symlink(oldTarget, join(binDir, "omop"));
 
 	await linkCachedPluginBins({ binDir, pluginRoot, platform: "linux" });
 
-	await assert.rejects(readlink(join(binDir, "omo")));
-	assert.equal(await readlink(join(binDir, "omo-rules")), join(componentRoot, "dist", "cli.js"));
+	await assert.rejects(readlink(join(binDir, "omop")));
+	assert.equal(await readlink(join(binDir, "omop-rules")), join(componentRoot, "dist", "cli.js"));
 });
 
 test("#given user-owned legacy Codex symlink #when linking bins #then preserves the user symlink", async () => {
@@ -320,7 +320,7 @@ test("#given user-owned legacy Codex symlink #when linking bins #then preserves 
 	await mkdir(binDir, { recursive: true });
 	await writeJson(join(pluginRoot, "package.json"), {
 		name: "@example/omo",
-		bin: { "omo-rules": "./dist/cli.js" },
+		bin: { "omop-rules": "./dist/cli.js" },
 	});
 	await writeFile(join(pluginRoot, "dist", "cli.js"), "#!/usr/bin/env node\n");
 	await writeFile(userTarget, "#!/usr/bin/env node\n");
@@ -329,7 +329,7 @@ test("#given user-owned legacy Codex symlink #when linking bins #then preserves 
 	await linkCachedPluginBins({ binDir, pluginRoot, platform: "linux" });
 
 	assert.equal(await readlink(join(binDir, "codex-rules")), userTarget);
-	assert.equal(await readlink(join(binDir, "omo-rules")), join(pluginRoot, "dist", "cli.js"));
+	assert.equal(await readlink(join(binDir, "omop-rules")), join(pluginRoot, "dist", "cli.js"));
 });
 
 test("#given user-owned legacy Codex symlink with component-like target #when linking bins #then preserves it", async () => {
@@ -343,7 +343,7 @@ test("#given user-owned legacy Codex symlink with component-like target #when li
 	await mkdir(binDir, { recursive: true });
 	await writeJson(join(pluginRoot, "package.json"), {
 		name: "@example/omo",
-		bin: { "omo-rules": "./dist/cli.js" },
+		bin: { "omop-rules": "./dist/cli.js" },
 	});
 	await writeFile(join(pluginRoot, "dist", "cli.js"), "#!/usr/bin/env node\n");
 	await writeFile(userTarget, "#!/usr/bin/env node\n");
@@ -352,7 +352,7 @@ test("#given user-owned legacy Codex symlink with component-like target #when li
 	await linkCachedPluginBins({ binDir, pluginRoot, platform: "linux" });
 
 	assert.equal(await readlink(join(binDir, "codex-rules")), userTarget);
-	assert.equal(await readlink(join(binDir, "omo-rules")), join(pluginRoot, "dist", "cli.js"));
+	assert.equal(await readlink(join(binDir, "omop-rules")), join(pluginRoot, "dist", "cli.js"));
 });
 
 test("#given package bin name escapes bin directory #when linking bins #then rejects without writing outside link", async () => {
@@ -392,5 +392,5 @@ test("#given package bin target escapes plugin root #when linking bins #then rej
 		linkCachedPluginBins({ binDir, pluginRoot, platform: "linux" }),
 		/Package bin target must stay inside package root/,
 	);
-	await assert.rejects(readlink(join(binDir, "omo")));
+	await assert.rejects(readlink(join(binDir, "omop")));
 });

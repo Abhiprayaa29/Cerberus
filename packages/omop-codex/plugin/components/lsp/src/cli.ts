@@ -25,7 +25,7 @@ async function main(): Promise<void> {
 		return;
 	}
 
-	stderr.write("Usage: omo-lsp [mcp | hook post-tool-use | hook post-compact]\n");
+	stderr.write("Usage: omop-lsp [mcp | hook post-tool-use | hook post-compact]\n");
 	process.exitCode = 2;
 }
 

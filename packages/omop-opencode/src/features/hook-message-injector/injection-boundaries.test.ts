@@ -5,7 +5,7 @@ import { join } from "node:path"
 import { unsafeTestValue } from "../../../../../test-support/unsafe-test-value"
 import { preserveModuleMocksForTestFile, restoreModuleMocksForTestFile } from "../../testing/module-mock-lifecycle"
 
-const TEST_STORAGE_ROOT = mkdtempSync(join(tmpdir(), "omo-injector-storage-"))
+const TEST_STORAGE_ROOT = mkdtempSync(join(tmpdir(), "omop-injector-storage-"))
 const TEST_MESSAGE_STORAGE = join(TEST_STORAGE_ROOT, "message")
 const TEST_PART_STORAGE = join(TEST_STORAGE_ROOT, "part")
 const mockIsSqliteBackend = mock(() => false)
@@ -61,7 +61,7 @@ function readJsonFile<TValue>(filePath: string): TValue {
 }
 
 function createMessageDir(): string {
-  const directory = mkdtempSync(join(tmpdir(), "omo-injector-message-dir-"))
+  const directory = mkdtempSync(join(tmpdir(), "omop-injector-message-dir-"))
   tempDirs.push(directory)
   mkdirSync(directory, { recursive: true })
   return directory

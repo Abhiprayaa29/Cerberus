@@ -24,7 +24,7 @@ describe("codex fullscan package metadata", () => {
 		// then
 		expect(packageJson.type).toBe("module");
 		expect(packageJson.packageManager).toBe("npm@11.12.1");
-		expect(packageJson.bin["omo-fullscan"]).toBe("./dist/cli.js");
+		expect(packageJson.bin["omop-fullscan"]).toBe("./dist/cli.js");
 		expect(scripts["build"]).toBe(
 			"node scripts/sync-directive.mjs && node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\" && bun build src/cli.ts --target node --format esm --outfile dist/cli.js",
 		);

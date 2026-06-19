@@ -213,7 +213,7 @@ async function linkComponentBinsStep(options: WorkerSetupOptions, degraded: Boot
 
 // The marketplace payload intentionally ships without <pluginRoot>/dist/cli
 // (thin payload), so linkRootRuntimeBin returning null is the expected
-// degraded mode there: record the omo-cli ledger entry and log the same
+// degraded mode there: record the omop-cli ledger entry and log the same
 // warning install-local.mjs prints instead of leaving a broken `omo` link.
 async function linkRuntimeWrapperStep(
 	options: WorkerSetupOptions,
@@ -230,16 +230,16 @@ async function linkRuntimeWrapperStep(
 		});
 		if (linked !== null) return;
 		degraded.push({
-			component: "omo-cli",
+			component: "omop-cli",
 			hint: "use npx lazycodex-ai for the omo CLI",
 			reason: "marketplace payload has no dist/cli",
 		});
-		await appendBootstrapLog(options.pluginData, options.now ?? Date.now(), "omo-cli-degraded", {
+		await appendBootstrapLog(options.pluginData, options.now ?? Date.now(), "omop-cli-degraded", {
 			warning: `Warning: skipped the omo runtime wrapper because ${cliPath} is missing; omo sparkshell/pentest-loop commands will be unavailable until a package shipping dist/cli is installed`,
 		});
 	} catch (error) {
 		degraded.push({
-			component: "omo-cli",
+			component: "omop-cli",
 			hint: BOOTSTRAP_DOCTOR_HINT,
 			reason: `failed to link the omo runtime wrapper into ${binDir}: ${errorMessage(error)}`,
 		});

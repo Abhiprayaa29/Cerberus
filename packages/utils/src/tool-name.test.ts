@@ -36,7 +36,7 @@ describe("transformToolName", () => {
   describe("kebab-case and snake_case conversion", () => {
     test.each([
       ["converts snake_case to PascalCase", "delegate_task", "DelegateTask"],
-      ["converts kebab-case to PascalCase", "call-omo-agent", "CallOmoAgent"],
+      ["converts kebab-case to PascalCase", "call-omop-agent", "CallOmoAgent"],
     ] as const)("%s", (_label, toolName, expected) => {
       // when
       const result = transformToolName(toolName)

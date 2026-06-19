@@ -13,13 +13,13 @@ describe("Codex config Git Bash MCP policy", () => {
     await writeFile(
       configPath,
       [
-        '[plugins."omo@cerberuslabs"]',
+        '[plugins."omop@cerberuslabs"]',
         "enabled = true",
         "",
-        '[plugins."omo@cerberuslabs".mcp_servers.lsp]',
+        '[plugins."omop@cerberuslabs".mcp_servers.lsp]',
         "enabled = true",
         "",
-        '[hooks.state."omo@cerberuslabs:hooks/hooks.json:post_tool_use:0:0"]',
+        '[hooks.state."omop@cerberuslabs:hooks/hooks.json:post_tool_use:0:0"]',
         'trusted_hash = "sha256:keep"',
         "",
       ].join("\n"),
@@ -31,18 +31,18 @@ describe("Codex config Git Bash MCP policy", () => {
       repoRoot: "/repo/packages/omop-codex",
       marketplaceName: "cerberuslabs",
       marketplaceSource: { sourceType: "local", source: "/repo/packages/omop-codex/cache/cerberuslabs" },
-      pluginNames: ["omo"],
+      pluginNames: ["omop"],
       platform: "win32",
       gitBashEnabled: true,
-      trustedHookStates: [{ key: "omo@cerberuslabs:hooks/hooks.json:post_tool_use:0:0", trustedHash: "sha256:keep" }],
+      trustedHookStates: [{ key: "omop@cerberuslabs:hooks/hooks.json:post_tool_use:0:0", trustedHash: "sha256:keep" }],
     })
 
     // then
     const content = await readFile(configPath, "utf8")
-    expect(content).toContain('[plugins."omo@cerberuslabs".mcp_servers.lsp]')
-    expect(content).toContain('[plugins."omo@cerberuslabs".mcp_servers.git_bash]')
-    expect(content).toContain("[hooks.state.\"omo@cerberuslabs:hooks/hooks.json:post_tool_use:0:0\"]")
-    expect(content).toMatch(/\[plugins\."omo@cerberuslabs"\.mcp_servers\.git_bash\][\s\S]*?enabled = true/)
+    expect(content).toContain('[plugins."omop@cerberuslabs".mcp_servers.lsp]')
+    expect(content).toContain('[plugins."omop@cerberuslabs".mcp_servers.git_bash]')
+    expect(content).toContain("[hooks.state.\"omop@cerberuslabs:hooks/hooks.json:post_tool_use:0:0\"]")
+    expect(content).toMatch(/\[plugins\."omop@cerberuslabs"\.mcp_servers\.git_bash\][\s\S]*?enabled = true/)
   })
 
   test("#given windows platform without Git Bash enabled #when updating cerberuslabs plugin config #then disables git_bash plugin mcp policy", async () => {
@@ -56,15 +56,15 @@ describe("Codex config Git Bash MCP policy", () => {
       repoRoot: "/repo/packages/omop-codex",
       marketplaceName: "cerberuslabs",
       marketplaceSource: { sourceType: "local", source: "/repo/packages/omop-codex/cache/cerberuslabs" },
-      pluginNames: ["omo"],
+      pluginNames: ["omop"],
       platform: "win32",
       gitBashEnabled: false,
     })
 
     // then
     const content = await readFile(configPath, "utf8")
-    expect(content).toContain('[plugins."omo@cerberuslabs".mcp_servers.git_bash]')
-    expect(content).toMatch(/\[plugins\."omo@cerberuslabs"\.mcp_servers\.git_bash\][\s\S]*?enabled = false/)
+    expect(content).toContain('[plugins."omop@cerberuslabs".mcp_servers.git_bash]')
+    expect(content).toMatch(/\[plugins\."omop@cerberuslabs"\.mcp_servers\.git_bash\][\s\S]*?enabled = false/)
   })
 
   test("#given non-windows platforms #when updating cerberuslabs plugin config #then disables git_bash plugin mcp policy", async () => {
@@ -79,17 +79,17 @@ describe("Codex config Git Bash MCP policy", () => {
         repoRoot: "/repo/packages/omop-codex",
         marketplaceName: "cerberuslabs",
         marketplaceSource: { sourceType: "local", source: "/repo/packages/omop-codex/cache/cerberuslabs" },
-        pluginNames: ["omo"],
+        pluginNames: ["omop"],
         platform,
       })
 
       // then
       const content = await readFile(configPath, "utf8")
-      expect(content).toContain('[plugins."omo@cerberuslabs".mcp_servers.git_bash]')
-      expect(content).toContain('[plugins."omo@cerberuslabs".mcp_servers.codegraph]')
-      expect(content).toMatch(/\[plugins\."omo@cerberuslabs"\.mcp_servers\.git_bash\][\s\S]*?enabled = false/)
-      expect(content).toMatch(/\[plugins\."omo@cerberuslabs"\.mcp_servers\.codegraph\][\s\S]*?enabled = true/)
-      expect(content).toContain('[plugins."omo@cerberuslabs"]')
+      expect(content).toContain('[plugins."omop@cerberuslabs".mcp_servers.git_bash]')
+      expect(content).toContain('[plugins."omop@cerberuslabs".mcp_servers.codegraph]')
+      expect(content).toMatch(/\[plugins\."omop@cerberuslabs"\.mcp_servers\.git_bash\][\s\S]*?enabled = false/)
+      expect(content).toMatch(/\[plugins\."omop@cerberuslabs"\.mcp_servers\.codegraph\][\s\S]*?enabled = true/)
+      expect(content).toContain('[plugins."omop@cerberuslabs"]')
       expect(content).toContain("enabled = true")
     }
   })

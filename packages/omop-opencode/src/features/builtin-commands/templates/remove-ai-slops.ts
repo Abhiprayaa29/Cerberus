@@ -124,9 +124,9 @@ Team mode is enabled for this session. The rules below **override Phase 2-4** of
 
 1. Load the \`team-mode\` skill via the \`skill\` tool for lifecycle, message protocol, broadcast rules, 32KB message cap, and 4 parallel worker cap.
 2. Call \`team_list\` and verify no active run named \`slop-squad\` exists. If one does, it is an orphan from a crashed prior session — \`team_shutdown_request\` + \`team_approve_shutdown\` + \`team_delete\` it before proceeding. Do not rename the team or run concurrent sessions under the same name.
-3. If \`~/.omo/teams/slop-squad/config.json\` is missing, write it using the spec below.
+3. If \`~/.omop/teams/slop-squad/config.json\` is missing, write it using the spec below.
 
-**Team spec** (\`~/.omo/teams/slop-squad/config.json\`):
+**Team spec** (\`~/.omop/teams/slop-squad/config.json\`):
 
 \`\`\`json
 {
@@ -203,7 +203,7 @@ Before producing the summary report, dismantle the team on EVERY exit path — s
 2. \`team_delete(teamRunId=<id>)\`.
 3. \`team_list\` to confirm no residual \`slop-squad\` run.
 
-The \`~/.omo/teams/slop-squad/config.json\` declaration file stays on disk; it is reused next session.
+The \`~/.omop/teams/slop-squad/config.json\` declaration file stays on disk; it is reused next session.
 
 ## MUST NOT (team mode)
 

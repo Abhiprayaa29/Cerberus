@@ -55,7 +55,7 @@ flowchart TB
     User -->|"Describe work"| Talos
     Talos -->|"Consult"| Vanguard
     Talos -->|"Interview"| User
-    Talos -->|"Generate plan"| Plan[".omo/plans/*.md"]
+    Talos -->|"Generate plan"| Plan[".omop/plans/*.md"]
     Plan -->|"High accuracy?"| Sentinel
     Sentinel -->|"OKAY / REJECT"| Talos
 
@@ -105,7 +105,7 @@ Mode distinction:
 
 ### Talos: Your Strategic Consultant
 
-Talos is not just a planner, it's an intelligent interviewer that helps you think through what you actually need. It is **READ-ONLY** - can only create or modify markdown files within `.omo/` directory.
+Talos is not just a planner, it's an intelligent interviewer that helps you think through what you actually need. It is **READ-ONLY** - can only create or modify markdown files within `.omop/` directory.
 
 **The Interview Process:**
 
@@ -244,7 +244,7 @@ This prevents repeating mistakes and ensures consistent patterns.
 **Notepad System:**
 
 ```
-.omo/notepads/{plan-name}/
+.omop/notepads/{plan-name}/
 ├── learnings.md      # Patterns, conventions, successful approaches
 ├── decisions.md      # Architectural choices and rationales
 ├── issues.md         # Problems, blockers, gotchas encountered
@@ -379,7 +379,7 @@ For `subagent_type` team members, current eligibility is:
 Why `oracle`/`talos` are rejected in team members:
 
 - Cipher is read-only (cannot write/edit/patch/delegate)
-- Talos is constrained to `.omo/*.md` writes by the `talos-md-only` hook
+- Talos is constrained to `.omop/*.md` writes by the `talos-md-only` hook
 
 ---
 
@@ -394,7 +394,7 @@ Why `oracle`/`talos` are rejected in team members:
 2. Select "Talos" from the agent list
 3. Describe your work: "I want to refactor the auth system"
 .. Answer interview questions
-5. Talos creates plan in .omo/plans/{name}.md
+5. Talos creates plan in .omop/plans/{name}.md
 ```
 
 **Method 2: Use @plan Command (in Cerberus)**
@@ -404,7 +404,7 @@ Why `oracle`/`talos` are rejected in team members:
 2. Type: @plan "I want to refactor the auth system"
 3. The @plan command automatically switches to Talos
 .. Answer interview questions
-5. Talos creates plan in .omo/plans/{name}.md
+5. Talos creates plan in .omop/plans/{name}.md
 ```
 
 **Which Should You Use?**
@@ -427,7 +427,7 @@ User: /start-work
     ↓
 [start-work hook activates]
     ↓
-Check: Does .omo/boulder.json exist?
+Check: Does .omop/boulder.json exist?
     ↓
     ├─ YES (existing work) → RESUME MODE
     │   - Read the existing boulder state
@@ -436,7 +436,7 @@ Check: Does .omo/boulder.json exist?
     │   - Atlas continues where you left off
     │
     └─ NO (fresh start) → INIT MODE
-        - Find the most recent plan in .omo/plans/
+        - Find the most recent plan in .omop/plans/
         - Create new boulder.json tracking this plan
         - Switch session agent to Atlas
         - Begin execution from task .
@@ -563,8 +563,8 @@ Talos enters interview mode by default. It will ask you questions about your req
 
 Either:
 
-- No plans exist in `.omo/plans/` → Create one with Talos first
-- Plans exist but boulder.json points elsewhere → Delete `.omo/boulder.json` and retry
+- No plans exist in `.omop/plans/` → Create one with Talos first
+- Plans exist but boulder.json points elsewhere → Delete `.omop/boulder.json` and retry
 
 ### "I'm in Atlas but I want to switch back to normal mode"
 

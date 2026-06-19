@@ -9,7 +9,7 @@ import { CODEGRAPH_PROVISION_MANIFEST } from "./codegraph/manifest"
 import { ensureCodegraphProvisioned } from "./codegraph/provision"
 
 function tempDir(name: string): string {
-  return join(tmpdir(), `omo-${name}-${crypto.randomUUID()}`)
+  return join(tmpdir(), `omop-${name}-${crypto.randomUUID()}`)
 }
 
 function fixtureArchive(

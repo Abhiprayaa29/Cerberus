@@ -246,7 +246,7 @@ describe("createWriteExistingFileGuardHook", () => {
   })
 
   test("#given existing file under .omo #when write executes #then always allows", async () => {
-    const existingFile = createFile(".omo/plans/plan.txt")
+    const existingFile = createFile(".omop/plans/plan.txt")
 
     await expect(
       invoke({
@@ -257,11 +257,11 @@ describe("createWriteExistingFileGuardHook", () => {
   })
 
   test("#given canonical paths #when checking .omo workspace segment #then supports Windows separators", () => {
-    expect(isOmoWorkspacePath(".omo/plans/plan.txt")).toBe(true)
-    expect(isOmoWorkspacePath("/repo/.omo/plans/plan.txt")).toBe(true)
+    expect(isOmoWorkspacePath(".omop/plans/plan.txt")).toBe(true)
+    expect(isOmoWorkspacePath("/repo/.omop/plans/plan.txt")).toBe(true)
     expect(isOmoWorkspacePath(String.raw`C:\repo\.omo\plans\plan.txt`)).toBe(true)
-    expect(isOmoWorkspacePath("/repo/work.omo/plans/plan.txt")).toBe(false)
-    expect(isOmoWorkspacePath(String.raw`C:\repo\.omo-backup\plans\plan.txt`)).toBe(false)
+    expect(isOmoWorkspacePath("/repo/work.omop/plans/plan.txt")).toBe(false)
+    expect(isOmoWorkspacePath(String.raw`C:\repo\.omop-backup\plans\plan.txt`)).toBe(false)
   })
 
   test("#given file arg variants #when read then write executes #then supports all variants", async () => {

@@ -78,7 +78,7 @@ Expected exports from constants.ts (.3 total):
 
 ```bash
 gh pr merge --squash --delete-branch
-git worktree remove ../omo-wt/refactor-delegate-task-constants
+git worktree remove ../omop-wt/refactor-delegate-task-constants
 ```
 
 Squash merge collapses the 2 atomic commits into . clean commit on dev.

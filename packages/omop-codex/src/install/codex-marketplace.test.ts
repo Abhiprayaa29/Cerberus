@@ -22,7 +22,7 @@ describe("codex-marketplace", () => {
     // then
     expect(marketplace.name).toBe("cerberuslabs")
     expect(sourcePath).toBe(join(pkgRoot, "plugin"))
-    expect(manifest.name).toBe("omo")
+    expect(manifest.name).toBe("omop")
   })
 
   test("rejects traversal source path", async () => {

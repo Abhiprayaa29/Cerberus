@@ -7,7 +7,7 @@ import type {
 	ResolveCodegraphCommandOptions,
 } from "../../../../../utils/src/codegraph/resolve.ts";
 import type { CodegraphWorkspacePreparation as SharedCodegraphWorkspacePreparation } from "../../../../../utils/src/codegraph/workspace.ts";
-import type { CodegraphConfig as SharedCodegraphConfig } from "../../../../../utils/src/omo-config.ts";
+import type { CodegraphConfig as SharedCodegraphConfig } from "../../../../../utils/src/omop-config.ts";
 
 export type SessionStartAction = "skipped-disabled" | "spawned";
 export type WorkerAction = "failed" | "initialized" | "skipped-disabled" | "skipped-status" | "skipped-unavailable" | "skipped-unsupported-node" | "synced";

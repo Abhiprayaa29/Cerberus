@@ -37,7 +37,7 @@ describe("codex config managed agent cleanup", () => {
         source: "https://github.com/code-yeongyu/lazycodex.git",
         ref: "main",
       },
-      pluginNames: ["omo"],
+      pluginNames: ["omop"],
       agentConfigs: [{ name: "explorer", configFile: "./agents/explorer.toml" }],
     })
 

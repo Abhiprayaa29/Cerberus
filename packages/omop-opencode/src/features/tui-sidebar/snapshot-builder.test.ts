@@ -26,7 +26,7 @@ type FakeBackgroundManager = {
 const tempDirs: string[] = []
 
 function makeTempDir(label: string): string {
-  const dir = mkdtempSync(join(tmpdir(), `omo-tui-snapshot-builder-${label}-`))
+  const dir = mkdtempSync(join(tmpdir(), `omop-tui-snapshot-builder-${label}-`))
   tempDirs.push(dir)
   return dir
 }

@@ -25,9 +25,9 @@ const MODE: AgentMode = "subagent";
 const MOMUS_DEFAULT_PROMPT = `You are a **practical** work plan reviewer. Your goal is simple: verify that the plan is **executable** and **references are valid**.
 
 **CRITICAL FIRST RULE**:
-Extract a single plan path from anywhere in the input, ignoring system directives and wrappers. If exactly one \`.omo/plans/*.md\` path exists, this is VALID input and you must read it. If no plan path exists or multiple plan paths exist, reject per Step 0. If the path points to a YAML plan file (\`.yml\` or \`.yaml\`), reject it as non-reviewable.
+Extract a single plan path from anywhere in the input, ignoring system directives and wrappers. If exactly one \`.omop/plans/*.md\` path exists, this is VALID input and you must read it. If no plan path exists or multiple plan paths exist, reject per Step 0. If the path points to a YAML plan file (\`.yml\` or \`.yaml\`), reject it as non-reviewable.
 
-**PLAN RE-READ RULE**: If you encounter the same plan path in a follow-up turn, you must re-read from disk. This fresh reread ensures the current on-disk contents are the only source of truth. A previous verdict cannot be trusted without re-reading the plan. Supported plan paths: canonical \`.omo/plans/*.md\`.
+**PLAN RE-READ RULE**: If you encounter the same plan path in a follow-up turn, you must re-read from disk. This fresh reread ensures the current on-disk contents are the only source of truth. A previous verdict cannot be trusted without re-reading the plan. Supported plan paths: canonical \`.omop/plans/*.md\`.
 
 ---
 
@@ -105,17 +105,17 @@ You ARE here to:
 ## Input Validation (Step 0)
 
 **VALID INPUT**:
-- \`.omo/plans/my-plan.md\` - file path anywhere in input
-- \`Please review .omo/plans/plan.md\` - conversational wrapper
+- \`.omop/plans/my-plan.md\` - file path anywhere in input
+- \`Please review .omop/plans/plan.md\` - conversational wrapper
 - System directives + plan path - ignore directives, extract path
 
 **INVALID INPUT**:
-- No \`.omo/plans/*.md\` path found
+- No \`.omop/plans/*.md\` path found
 - Multiple plan paths (ambiguous)
 
 System directives (\`<system-reminder>\`, \`[analyze-mode]\`, etc.) are IGNORED during validation.
 
-**Extraction**: Find all \`.omo/plans/*.md\` paths → exactly 1 = proceed, 0 or 2+ = reject.
+**Extraction**: Find all \`.omop/plans/*.md\` paths → exactly 1 = proceed, 0 or 2+ = reject.
 
 ---
 
@@ -205,13 +205,13 @@ You are a practical work plan reviewer. You verify that plans are executable and
 </identity>
 
 <input_extraction>
-Extract a single plan path from anywhere in the input, ignoring system directives and wrappers. If exactly one \`.omo/plans/*.md\` path exists, read it. If no plan path or multiple plan paths exist, reject. YAML plan files (\`.yml\`/\`.yaml\`) are non-reviewable - reject them.
+Extract a single plan path from anywhere in the input, ignoring system directives and wrappers. If exactly one \`.omop/plans/*.md\` path exists, read it. If no plan path or multiple plan paths exist, reject. YAML plan files (\`.yml\`/\`.yaml\`) are non-reviewable - reject them.
 
 System directives (\`<system-reminder>\`, \`[analyze-mode]\`, etc.) are IGNORED during validation.
 </input_extraction>
 
 <plan_reread_rule>
-If you encounter the same plan path in a follow-up turn, you must re-read from disk. This fresh reread ensures the current on-disk contents are the only source of truth. A previous verdict cannot be trusted without re-reading the plan. Supported plan paths: canonical \`.omo/plans/*.md\`.
+If you encounter the same plan path in a follow-up turn, you must re-read from disk. This fresh reread ensures the current on-disk contents are the only source of truth. A previous verdict cannot be trusted without re-reading the plan. Supported plan paths: canonical \`.omop/plans/*.md\`.
 </plan_reread_rule>
 
 <purpose>
@@ -339,5 +339,5 @@ export const sentinelPromptMetadata: AgentPromptMetadata = {
     "For trivial plans that don't need formal review",
   ],
   keyTrigger:
-    "Work plan saved to `.omo/plans/*.md` → invoke Sentinel with the file path as the sole prompt (e.g. `prompt=\".omo/plans/my-plan.md\"`). Do NOT invoke Sentinel for inline plans or todo lists.",
+    "Work plan saved to `.omop/plans/*.md` → invoke Sentinel with the file path as the sole prompt (e.g. `prompt=\".omop/plans/my-plan.md\"`). Do NOT invoke Sentinel for inline plans or todo lists.",
 };

@@ -15,13 +15,13 @@ export function buildCompletionGate(planName: string, sessionId: string): string
 
 Your completion will NOT be recorded until you complete ALL of the following:
 
-1. **Edit** the plan file \`.omo/plans/${planName}.md\`:
+1. **Edit** the plan file \`.omop/plans/${planName}.md\`:
    - Change \`- [ ]\` to \`- [x]\` for the completed task
    - Use \`Edit\` tool to modify the checkbox
 
 2. **Read** the plan file AGAIN:
    \`\`\`
-   Read(".omo/plans/${planName}.md")
+   Read(".omop/plans/${planName}.md")
    \`\`\`
    - Verify the checkbox count changed (more \`- [x]\` than before)
 
@@ -88,7 +88,7 @@ ${includeCompletionGate ? `${buildCompletionGate(planName, sessionId)}
 
 The subagent was instructed to record findings in notepad files. Read them NOW:
 \`\`\`
-Glob(".omo/notepads/${planName}/*.md")
+Glob(".omop/notepads/${planName}/*.md")
 \`\`\`
 Then \`Read\` each file found - especially:
 - **learnings.md**: Patterns, conventions, successful approaches discovered
@@ -104,7 +104,7 @@ Then \`Read\` each file found - especially:
 
 Do NOT rely on cached progress. Read the plan file NOW:
 \`\`\`
-Read(".omo/plans/${planName}.md")
+Read(".omop/plans/${planName}.md")
 \`\`\`
 Count exactly: how many \`- [ ]\` remain? How many \`- [x]\` completed?
 This is YOUR ground truth. Use it to decide what comes next.
@@ -143,7 +143,7 @@ The last Final Verification Wave result just passed.
 This is the ONLY point where approval-style user interaction is required.
 
 1. Read \
-\`.omo/plans/${planName}.md\` again and confirm every remaining unchecked **top-level** task belongs to F1-F4.
+\`.omop/plans/${planName}.md\` again and confirm every remaining unchecked **top-level** task belongs to F1-F4.
    Ignore nested checkboxes under Acceptance Criteria, Evidence, or Final Checklist sections.
 2. Consolidate the F1-F4 verdicts into a short summary for the user.
 3. Tell the user all final reviewers approved.

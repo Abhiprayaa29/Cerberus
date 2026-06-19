@@ -21,12 +21,12 @@ export async function runDelegatedOmoCommand(
     options.log(`${invocation.command} ${invocation.args.join(" ")}`)
     return
   }
-  const env = { ...process.env, OMOP_INVOCATION_NAME: "omo" }
+  const env = { ...process.env, OMOP_INVOCATION_NAME: "omop" }
   await options.runCommand(invocation.command, invocation.args, { cwd: options.cwd, env })
 }
 
 export function buildDelegatedOmoInvocation(parsed: LazyCodexDelegatedCommand): DelegatedOmoInvocation {
-  const args = ["--yes", "--package", "oh-my-open-pentest", "omo", parsed.command]
+  const args = ["--yes", "--package", "oh-my-open-pentest", "omop", parsed.command]
   if (parsed.command === "install") {
     args.push("--platform=codex")
     if (parsed.noTui) args.push("--no-tui")

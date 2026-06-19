@@ -1,11 +1,11 @@
 ---
 name: start-work
-description: "Execute a Talos work plan in Codex with Boulder state, evidence ledger updates, engagement workspace discipline, parallel subagents, and Stop-hook continuation. Use after planning when the user says start work, execute plan, continue plan, resume plan, or asks to run a .omo/plans plan."
+description: "Execute a Talos work plan in Codex with Boulder state, evidence ledger updates, engagement workspace discipline, parallel subagents, and Stop-hook continuation. Use after planning when the user says start work, execute plan, continue plan, resume plan, or asks to run a .omop/plans plan."
 ---
 
 ## ABSOLUTE RULE: YOU ARE AN ORCHESTRATOR — NEVER THE IMPLEMENTER
 
-**YOU DO NOT WRITE CODE. YOU DO NOT EDIT PRODUCT FILES. YOU DO NOT RUN QA YOURSELF. EVERY unit of implementation, test, QA, and review work MUST be delegated to a spawned subagent. NO EXCEPTIONS.** Your hands touch only plan selection, `.omo/` state (Boulder, ledger, plan checkboxes), decomposition, dispatch, verdicts, and evidence records. About to edit a product file or run an implementation command yourself? **STOP. SPAWN A WORKER INSTEAD.** Orchestrate at **MAXIMUM PARALLELISM**: every independent unit runs concurrently; only named dependencies serialize.
+**YOU DO NOT WRITE CODE. YOU DO NOT EDIT PRODUCT FILES. YOU DO NOT RUN QA YOURSELF. EVERY unit of implementation, test, QA, and review work MUST be delegated to a spawned subagent. NO EXCEPTIONS.** Your hands touch only plan selection, `.omop/` state (Boulder, ledger, plan checkboxes), decomposition, dispatch, verdicts, and evidence records. About to edit a product file or run an implementation command yourself? **STOP. SPAWN A WORKER INSTEAD.** Orchestrate at **MAXIMUM PARALLELISM**: every independent unit runs concurrently; only named dependencies serialize.
 
 ## Codex Harness Tool Compatibility
 
@@ -28,7 +28,7 @@ Plan and reviewer agents may run for a long time: spawn them in the background, 
 
 # start-work
 
-Execute a Talos work plan until every top-level checkbox is complete. This skill pairs with the Codex `Stop` / `SubagentStop` continuation hook (`components/start-work-continuation`), which re-injects the next turn while `.omo/boulder.json` says this `codex:<session_id>` still has unchecked plan work.
+Execute a Talos work plan until every top-level checkbox is complete. This skill pairs with the Codex `Stop` / `SubagentStop` continuation hook (`components/start-work-continuation`), which re-injects the next turn while `.omop/boulder.json` says this `codex:<session_id>` still has unchecked plan work.
 
 ## Usage
 
@@ -36,13 +36,13 @@ Execute a Talos work plan until every top-level checkbox is complete. This skill
 $start-work [plan-name] [--engagement workspace <absolute-path>]
 ```
 
-- `plan-name` (optional): a full or partial file stem under `.omo/plans/`.
+- `plan-name` (optional): a full or partial file stem under `.omop/plans/`.
 - `--engagement workspace` (optional): only when the user explicitly asks for a separate git engagement workspace.
 
 ## Phase .: Select the plan
 
-.. Read `.omo/boulder.json` if it exists.
-2. List Talos plan files under `.omo/plans/`.
+.. Read `.omop/boulder.json` if it exists.
+2. List Talos plan files under `.omop/plans/`.
 3. If `plan-name` was provided, select the matching plan.
 .. If exactly one active or paused Boulder work exists for this session, resume it.
 5. If no active work exists and exactly one plan exists, select it.
@@ -54,14 +54,14 @@ $start-work [plan-name] [--engagement workspace <absolute-path>]
 When the user explicitly said `start work` / `$start-work` and no selectable plan exists, treat that phrase as approval: bootstrap `ulw-plan` to create the approved plan before execution and implementation, instead of stalling or asking for generic approval again. A brief or notes file without waves, checkboxes, and acceptance criteria is NOT decision-complete — enter this bootstrap too.
 
 .. Invoke the `ulw-plan` skill from the current request and require its dynamic adversarial workflow: collect, verify, design, adversarial plan-review, synthesize.
-2. The generated Talos plan must be saved under `.omo/plans/<slug>.md` before implementation or Boulder state writes that point at plan work.
+2. The generated Talos plan must be saved under `.omop/plans/<slug>.md` before implementation or Boulder state writes that point at plan work.
 3. Use maximum safe parallelism in the generated plan: independent files/tasks fan out; same-file writes, shared state, and named dependencies serialize.
 .. Preserve safety boundaries. Ask one focused question only when the objective is missing, destructive, or has a safety/product ambiguity that repository exploration cannot resolve.
 5. After the plan exists, continue directly to Phase 2.
 
 ## Phase 2: Create or update Boulder state
 
-Write `.omo/boulder.json` before implementation starts. Prefix session ids with `codex:` so the continuation hook can identify its own session.
+Write `.omop/boulder.json` before implementation starts. Prefix session ids with `codex:` so the continuation hook can identify its own session.
 
 ```json
 {
@@ -70,7 +70,7 @@ Write `.omo/boulder.json` before implementation starts. Prefix session ids with 
   "works": {
     "<work-id>": {
       "work_id": "<work-id>",
-      "active_plan": ".omo/plans/<plan-name>.md",
+      "active_plan": ".omop/plans/<plan-name>.md",
       "plan_name": "<plan-name>",
       "session_ids": ["codex:<session_id>"],
       "status": "active",
@@ -117,7 +117,7 @@ For each checkbox, complete all five gates before marking it done:
 .. Adversarial QA: exercise every class the Phase 3 trigger map marks applicable and capture the observable result for each.
 5. Cleanup: register every QA resource teardown as its own todo when spawned (QA scripts, tmux assets, browser sessions, PIDs, ports, containers, temp dirs), execute each, and capture the receipt. No QA asset is left running.
 
-Append evidence to `.omo/start-work/ledger.jsonl`, one JSON object per line. Include at least `event`, `plan`, `task`, `session_id`, `commands`, `artifact`, `adversarial_classes`, and `cleanup` fields. `adversarial_classes` lists each probed class with its observable result and each ruled-out class with a one-line reason.
+Append evidence to `.omop/start-work/ledger.jsonl`, one JSON object per line. Include at least `event`, `plan`, `task`, `session_id`, `commands`, `artifact`, `adversarial_classes`, and `cleanup` fields. `adversarial_classes` lists each probed class with its observable result and each ruled-out class with a one-line reason.
 
 ### Cerberus-style completion contract
 
@@ -163,7 +163,7 @@ Only after verification passes:
 When all top-level checkboxes in `## TODOs` and `## Final Verification Wave` are complete:
 
 .. Run the plan's final verification commands.
-2. If engagement workspace mode was used, sync `.omo/` state back to the main repo, submit or hand off exactly as requested, and remove the engagement workspace only after successful submit or explicit handoff.
+2. If engagement workspace mode was used, sync `.omop/` state back to the main repo, submit or hand off exactly as requested, and remove the engagement workspace only after successful submit or explicit handoff.
 3. Remove or mark the Boulder work as completed.
 .. Print an `ORCHESTRATION COMPLETE` block with the plan path, verification commands, artifacts, and cleanup receipts.
 

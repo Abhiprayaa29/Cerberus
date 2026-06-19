@@ -129,7 +129,7 @@ function registerModuleMocks(): void {
       spawnTmuxWindow: mockSpawnTmuxWindow,
       spawnTmuxSession: mockSpawnTmuxSession,
       killTmuxSessionIfExists: mockKillTmuxSessionIfExists,
-      getIsolatedSessionName: (pid: number = 12345) => `omo-agents-${pid}`,
+      getIsolatedSessionName: (pid: number = 12345) => `omop-agents-${pid}`,
       sweepStaleOmoAgentSessions: mockSweepStaleOmoAgentSessions,
       sweepStaleOmoAttachPanes: mockSweepStaleOmoAttachPanes,
     }
@@ -705,7 +705,7 @@ describe('TmuxSessionManager', () => {
               height: 44,
               left: 100,
               top: 0,
-              title: 'omo-subagent-Task 1',
+              title: 'omop-subagent-Task 1',
               isActive: false,
             },
           ],
@@ -946,7 +946,7 @@ describe('TmuxSessionManager', () => {
               height: 11,
               left: 80,
               top: 0,
-              title: 'omo-subagent-Task 1',
+              title: 'omop-subagent-Task 1',
               isActive: false,
             },
           ],
@@ -1817,7 +1817,7 @@ describe('TmuxSessionManager', () => {
               height: 44,
               left: 100,
               top: 0,
-              title: 'omo-subagent-Task',
+              title: 'omop-subagent-Task',
               isActive: false,
             },
           ],
@@ -2009,7 +2009,7 @@ describe('TmuxSessionManager', () => {
               height: 44,
               left: 110,
               top: 0,
-              title: 'omo-subagent-Second Task',
+              title: 'omop-subagent-Second Task',
               isActive: false,
             },
           ],
@@ -2034,7 +2034,7 @@ describe('TmuxSessionManager', () => {
               height: 44,
               left: 110,
               top: 0,
-              title: 'omo-subagent-Second Task',
+              title: 'omop-subagent-Second Task',
               isActive: false,
             },
           ],
@@ -2110,7 +2110,7 @@ describe('TmuxSessionManager', () => {
               height: 44,
               left: 110,
               top: 0,
-              title: 'omo-subagent-Second Task',
+              title: 'omop-subagent-Second Task',
               isActive: false,
             },
           ],
@@ -2135,7 +2135,7 @@ describe('TmuxSessionManager', () => {
               height: 44,
               left: 110,
               top: 0,
-              title: 'omo-subagent-Second Task',
+              title: 'omop-subagent-Second Task',
               isActive: false,
             },
           ],
@@ -2233,7 +2233,7 @@ describe('TmuxSessionManager', () => {
                 height: 44,
                 left: 110,
                 top: 0,
-                title: 'omo-subagent-Second Task',
+                title: 'omop-subagent-Second Task',
                 isActive: false,
               },
             ],
@@ -2258,7 +2258,7 @@ describe('TmuxSessionManager', () => {
                 height: 44,
                 left: 110,
                 top: 0,
-                title: 'omo-subagent-Second Task',
+                title: 'omop-subagent-Second Task',
                 isActive: false,
               },
             ],
@@ -2333,7 +2333,7 @@ describe('TmuxSessionManager', () => {
                 height: 44,
                 left: 110,
                 top: 0,
-                title: 'omo-subagent-Second Task',
+                title: 'omop-subagent-Second Task',
                 isActive: false,
               },
             ],
@@ -2358,7 +2358,7 @@ describe('TmuxSessionManager', () => {
                 height: 44,
                 left: 110,
                 top: 0,
-                title: 'omo-subagent-Second Task',
+                title: 'omop-subagent-Second Task',
                 isActive: false,
               },
             ],
@@ -2424,7 +2424,7 @@ describe('TmuxSessionManager', () => {
                 height: 44,
                 left: 110,
                 top: 0,
-                title: 'omo-subagent-Second Task',
+                title: 'omop-subagent-Second Task',
                 isActive: false,
               },
             ],
@@ -2541,7 +2541,7 @@ describe('TmuxSessionManager', () => {
 
       // then
       expect(mockKillTmuxSessionIfExists).toHaveBeenCalledTimes(1)
-      expect(mockKillTmuxSessionIfExists.mock.calls[0]?.[0]).toMatch(/^omo-agents-\d+$/)
+      expect(mockKillTmuxSessionIfExists.mock.calls[0]?.[0]).toMatch(/^omop-agents-\d+$/)
     })
 
     test('#given two manager instances #when both cleanup #then each kills its own isolated session name, not a shared one', async () => {
@@ -2565,8 +2565,8 @@ describe('TmuxSessionManager', () => {
       expect(mockKillTmuxSessionIfExists).toHaveBeenCalledTimes(2)
       const firstTarget = mockKillTmuxSessionIfExists.mock.calls[0]?.[0]
       const secondTarget = mockKillTmuxSessionIfExists.mock.calls[1]?.[0]
-      expect(firstTarget).toMatch(/^omo-agents-\d+$/)
-      expect(secondTarget).toMatch(/^omo-agents-\d+$/)
+      expect(firstTarget).toMatch(/^omop-agents-\d+$/)
+      expect(secondTarget).toMatch(/^omop-agents-\d+$/)
     })
 
     test('#given tmux isolation is "inline" #when cleanup runs #then killTmuxSessionIfExists is NOT invoked', async () => {
@@ -2745,7 +2745,7 @@ describe('TmuxSessionManager', () => {
       mockIsInsideTmux.mockReturnValue(true)
       mockQueryWindowState.mockImplementation(async () => createWindowState({
         agentPanes: [
-          { paneId: '%stuck', width: 40, height: 44, left: 110, top: 0, title: 'omo-subagent-zombie', isActive: false },
+          { paneId: '%stuck', width: 40, height: 44, left: 110, top: 0, title: 'omop-subagent-zombie', isActive: false },
         ],
       }))
 
@@ -2782,7 +2782,7 @@ describe('TmuxSessionManager', () => {
       mockIsInsideTmux.mockReturnValue(true)
       mockQueryWindowState.mockImplementation(async () => createWindowState({
         agentPanes: [
-          { paneId: '%stuck', width: 40, height: 44, left: 110, top: 0, title: 'omo-subagent-zombie', isActive: false },
+          { paneId: '%stuck', width: 40, height: 44, left: 110, top: 0, title: 'omop-subagent-zombie', isActive: false },
         ],
       }))
 
@@ -2820,7 +2820,7 @@ describe('TmuxSessionManager', () => {
       mockIsInsideTmux.mockReturnValue(true)
       mockQueryWindowState.mockImplementation(async () => createWindowState({
         agentPanes: [
-          { paneId: '%stuck', width: 40, height: 44, left: 110, top: 0, title: 'omo-subagent-zombie', isActive: false },
+          { paneId: '%stuck', width: 40, height: 44, left: 110, top: 0, title: 'omop-subagent-zombie', isActive: false },
         ],
       }))
 
@@ -2946,7 +2946,7 @@ describe('DecisionEngine', () => {
             height: 11,
             left: 80,
             top: 0,
-            title: 'omo-subagent-Old',
+            title: 'omop-subagent-Old',
             isActive: false,
           },
         ],

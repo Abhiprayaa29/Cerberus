@@ -35,7 +35,7 @@ describe("config check", () => {
       const originalConfigDir = process.env.OPENCODE_CONFIG_DIR
       const testConfigDir = join(
         tmpdir(),
-        `omo-doctor-config-${Date.now()}-${Math.random().toString(36).slice(2)}`,
+        `omop-doctor-config-${Date.now()}-${Math.random().toString(36).slice(2)}`,
       )
 
       try {
@@ -68,7 +68,7 @@ describe("config check", () => {
       const originalCwd = process.cwd()
       const testRootDir = join(
         tmpdir(),
-        `omo-doctor-layered-config-${Date.now()}-${Math.random().toString(36).slice(2)}`,
+        `omop-doctor-layered-config-${Date.now()}-${Math.random().toString(36).slice(2)}`,
       )
       const projectDir = join(testRootDir, "project")
       const childDir = join(projectDir, "child", "deep")
@@ -111,7 +111,7 @@ describe("config check", () => {
       const originalXdgCache = process.env.XDG_CACHE_HOME
       const testRootDir = join(
         tmpdir(),
-        `omo-doctor-custom-provider-${Date.now()}-${Math.random().toString(36).slice(2)}`,
+        `omop-doctor-custom-provider-${Date.now()}-${Math.random().toString(36).slice(2)}`,
       )
       const pluginConfigDir = join(testRootDir, "plugin")
       const xdgConfigDir = join(testRootDir, "xdg-config")
@@ -181,7 +181,7 @@ describe("config check", () => {
       const originalConfigDir = process.env.OPENCODE_CONFIG_DIR
       const testConfigDir = join(
         tmpdir(),
-        `omo-doctor-reasoning-effort-max-${Date.now()}-${Math.random().toString(36).slice(2)}`,
+        `omop-doctor-reasoning-effort-max-${Date.now()}-${Math.random().toString(36).slice(2)}`,
       )
 
       try {

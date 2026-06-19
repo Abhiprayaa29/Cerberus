@@ -16,7 +16,7 @@ Internal **Bun-targeted** MCP-layer package (`@omop/git-bash-mcp`, private). Ser
 
 | File | Role |
 |------|------|
-| `cli.ts` | Bin `omo-git-bash`. `mcp` subcommand → `runMcpStdioServer()` |
+| `cli.ts` | Bin `omop-git-bash`. `mcp` subcommand → `runMcpStdioServer()` |
 | `mcp.ts` | `handleGitBashMcpRequest()` + tool registration over `runJsonRpcStdioServer` |
 | `runner.ts` | `runGitBashCommand()` — spawns `bash.exe -lc`, temp-fd output capture, timeout kill |
 | `git-bash-resolver.ts` | re-exports `resolveGitBash(ForCurrentProcess)` from `@omop/utils/runtime` |

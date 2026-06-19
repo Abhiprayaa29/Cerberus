@@ -31,7 +31,7 @@ async function createLauncherFixture(
     await mkdir(join(wrapperPackageRoot, "dist", "cli-node"), { recursive: true });
     await writeFile(
       join(wrapperPackageRoot, "dist", "cli-node", "index.js"),
-      'console.log("OMO_NODE_OK", process.argv.slice(2).join(" "));\n',
+      'console.log("OMOP_NODE_OK", process.argv.slice(2).join(" "));\n',
     );
   }
   const launcherPath = join(root, "launcher.mjs");
@@ -74,7 +74,7 @@ describe("platform launcher runtime fallback (lazycodex#47)", () => {
     const result = runLauncher(fixture, { BUN_BINARY: "/nonexistent/bun" });
 
     expect(result.status).toBe(0);
-    expect(result.stdout).toContain("OMO_NODE_OK --help");
+    expect(result.stdout).toContain("OMOP_NODE_OK --help");
     expect(result.stderr).toContain("node CLI");
   });
 
@@ -87,7 +87,7 @@ describe("platform launcher runtime fallback (lazycodex#47)", () => {
 
       // then: fallback to node CLI still works
       expect(result.status).toBe(0);
-      expect(result.stdout).toContain("OMO_NODE_OK --help");
+      expect(result.stdout).toContain("OMOP_NODE_OK --help");
       expect(result.stderr).toContain("node CLI");
       return;
     }
@@ -100,7 +100,7 @@ describe("platform launcher runtime fallback (lazycodex#47)", () => {
     const result = runLauncher(fixture, { BUN_BINARY: sigillBun });
 
     expect(result.status).toBe(0);
-    expect(result.stdout).toContain("OMO_NODE_OK --help");
+    expect(result.stdout).toContain("OMOP_NODE_OK --help");
     expect(result.stderr.toLowerCase()).toContain("cpu");
   });
 
@@ -115,7 +115,7 @@ describe("platform launcher runtime fallback (lazycodex#47)", () => {
 
       expect(result.status).toBe(0);
       expect(result.stdout).toContain("BUN_OK");
-      expect(result.stdout).not.toContain("OMO_NODE_OK");
+      expect(result.stdout).not.toContain("OMOP_NODE_OK");
       return;
     }
 
@@ -127,7 +127,7 @@ describe("platform launcher runtime fallback (lazycodex#47)", () => {
 
     expect(result.status).toBe(0);
     expect(result.stdout).toContain("BUN_OK");
-    expect(result.stdout).not.toContain("OMO_NODE_OK");
+    expect(result.stdout).not.toContain("OMOP_NODE_OK");
   });
 
   it("#given OMOP_RUNTIME=node #when launching #then skips bun even when it works", async () => {
@@ -142,7 +142,7 @@ describe("platform launcher runtime fallback (lazycodex#47)", () => {
     const result = runLauncher(fixture, { BUN_BINARY: fakeBun, OMOP_RUNTIME: "node" });
 
     expect(result.status).toBe(0);
-    expect(result.stdout).toContain("OMO_NODE_OK --help");
+    expect(result.stdout).toContain("OMOP_NODE_OK --help");
     expect(result.stdout).not.toContain("BUN_OK");
   });
 

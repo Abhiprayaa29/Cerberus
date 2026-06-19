@@ -14,7 +14,7 @@ describe("executeHookCommand", () => {
   let tempDirectory = ""
 
   beforeEach(() => {
-    tempDirectory = mkdtempSync(join(tmpdir(), "omo-exec-hook-cmd-"))
+    tempDirectory = mkdtempSync(join(tmpdir(), "omop-exec-hook-cmd-"))
   })
 
   afterEach(() => {

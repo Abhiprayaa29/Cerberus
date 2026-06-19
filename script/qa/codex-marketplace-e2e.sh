@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Task 16 e2e marketplace QA against real codex (plan: .omo/plans/codex-marketplace-bootstrap.md).
-# Usage: bash script/qa/codex-marketplace-e2e.sh 2>&1 | tee .omo/evidence/task-16-e2e.log
+# Task 16 e2e marketplace QA against real codex (plan: .omop/plans/codex-marketplace-bootstrap.md).
+# Usage: bash script/qa/codex-marketplace-e2e.sh 2>&1 | tee .omop/evidence/task-16-e2e.log
 # Traps this script must dodge (facts that live outside this repo):
 # - the user's zsh AND fish shells wrap `codex` with `--profile quotio`, so the script
 #   body uses `command codex` and tmux launches the absolute resolved binary via `env`.
@@ -17,7 +17,7 @@ set -u -o pipefail
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
 REPO_ROOT=$(cd -- "$SCRIPT_DIR/../.." && pwd)
 
-EVID="$REPO_ROOT/.omo/evidence"
+EVID="$REPO_ROOT/.omop/evidence"
 FINAL="$EVID/final-qa"
 NEG_LOG="$EVID/task-16-e2e-negative.log"
 
@@ -232,7 +232,7 @@ write_readme() {
     echo "# Task 16 — codex marketplace end-to-end QA evidence"
     echo
     echo "Run: $(date -u +%Y-%m-%dT%H:%M:%SZ) | codex: $("$CODEX_BIN" --version 2>/dev/null | head -1) | host: $(uname -sm)"
-    echo "Script: script/qa/codex-marketplace-e2e.sh | Main log: .omo/evidence/task-16-e2e.log | Negative log: .omo/evidence/task-16-e2e-negative.log"
+    echo "Script: script/qa/codex-marketplace-e2e.sh | Main log: .omop/evidence/task-16-e2e.log | Negative log: .omop/evidence/task-16-e2e-negative.log"
     echo
     echo "## Assert results"
     echo
@@ -401,10 +401,10 @@ EOF
   PDATA="$QAHOME/$PDATA_REL"
   if [ "$add_rc" -eq 0 ] && [ "$add_version" = "$SRC_VERSION" ] && [ -f "$IROOT/.codex-plugin/plugin.json" ] &&
     [ -s "$IROOT/components/bootstrap/dist/cli.js" ]; then
-    pass 3b "plugin add installed omo@$MARKETPLACE_NAME v$add_version at $IROOT" "step3-plugin-add.json"
+    pass 3b "plugin add installed omop@$MARKETPLACE_NAME v$add_version at $IROOT" "step3-plugin-add.json"
   else
     cat "$add_json" "$FINAL/step3-plugin-add.stderr.txt" 2>/dev/null
-    fail 3b "plugin add installed omo@$MARKETPLACE_NAME (expected v$SRC_VERSION)" "step3-plugin-add.json"
+    fail 3b "plugin add installed omop@$MARKETPLACE_NAME (expected v$SRC_VERSION)" "step3-plugin-add.json"
   fi
   CODEX_HOME="$QAHOME" command codex plugin list --json >"$FINAL/step3-plugin-list.json" 2>/dev/null || true
 
@@ -529,10 +529,10 @@ EOF
   if "$NODE_BIN" -e '
     const fs = require("node:fs");
     const text = fs.readFileSync(process.argv[1], "utf8");
-    const section = /\[plugins\."omo@cerberuslabs"\]([\s\S]*?)(\n\[|$)/.exec(text);
+    const section = /\[plugins\."omop@cerberuslabs"\]([\s\S]*?)(\n\[|$)/.exec(text);
     if (!section || !/enabled\s*=\s*true/.test(section[1])) process.exit(1);
   ' "$QAHOME/config.toml"; then
-    pass 7a "config.toml enables the plugin ([plugins.\"omo@cerberuslabs\"] enabled = true)" "step7-config.toml"
+    pass 7a "config.toml enables the plugin ([plugins.\"omop@cerberuslabs\"] enabled = true)" "step7-config.toml"
   else
     fail 7a "config.toml enables the plugin" "step7-config.toml"
   fi
@@ -555,7 +555,7 @@ EOF
     const fs = require("node:fs");
     const path = require("node:path");
     const [root, from, to] = process.argv.slice(1);
-    const manifest = path.join(root, "plugins", "omo", ".codex-plugin", "plugin.json");
+    const manifest = path.join(root, "plugins", "omop", ".codex-plugin", "plugin.json");
     const parsed = JSON.parse(fs.readFileSync(manifest, "utf8"));
     parsed.version = to;
     fs.writeFileSync(manifest, `${JSON.stringify(parsed, null, "\t")}\n`);
@@ -563,8 +563,8 @@ EOF
       if (!fs.existsSync(file)) return;
       fs.writeFileSync(file, fs.readFileSync(file, "utf8").split(`LazyCodex(${from})`).join(`LazyCodex(${to})`));
     };
-    stamp(path.join(root, "plugins", "omo", "hooks", "hooks.json"));
-    const components = path.join(root, "plugins", "omo", "components");
+    stamp(path.join(root, "plugins", "omop", "hooks", "hooks.json"));
+    const components = path.join(root, "plugins", "omop", "components");
     for (const entry of fs.readdirSync(components)) {
       stamp(path.join(components, entry, "hooks", "hooks.json"));
     }

@@ -4,8 +4,8 @@
 
 .. **Create worktree + branch**
    ```bash
-   git worktree add ../omo-arxiv-mcp dev
-   cd ../omo-arxiv-mcp
+   git worktree add ../omop-arxiv-mcp dev
+   cd ../omop-arxiv-mcp
    git checkout -b feat/arxiv-mcp
    ```
 

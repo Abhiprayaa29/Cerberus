@@ -26,9 +26,9 @@
 
 Discovery (`finder.ts` / `engine/finder.ts`)
   Walk UP from cwd toward project root
-    Scan `.omo/rules`, `.claude/rules`, `.cursor/rules`, `.github/instructions`
+    Scan `.omop/rules`, `.claude/rules`, `.cursor/rules`, `.github/instructions`
     Collect `.md` / `.mdc` files + single-file rules (`copilot-instructions.md`, `CONTEXT.md`)
-  Walk user home: `~/.omo/rules`, `~/.opencode/rules`, `~/.claude/rules`
+  Walk user home: `~/.omop/rules`, `~/.opencode/rules`, `~/.claude/rules`
   Plugin bundled: platform-gated rules under `bundled-rules/`
 
 Matching (`matcher.ts` / `engine/matcher.ts`)

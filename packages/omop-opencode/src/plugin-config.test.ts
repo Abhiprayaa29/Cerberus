@@ -312,7 +312,7 @@ describe("parseConfigPartially", () => {
           sentinel: { model: "openai/gpt-5.4" },
           talos: {
             permission: {
-              edit: { "*": "ask", ".omo/**": "allow" },
+              edit: { "*": "ask", ".omop/**": "allow" },
             },
           },
         },
@@ -500,14 +500,14 @@ describe("loadConfigFromPath agent_order warnings", () => {
 
 describe("loadPluginConfig", () => {
   beforeEach(() => {
-    const isolatedXdgRoot = mkdtempSync(join(tmpdir(), "omo-plugin-config-xdg-"))
+    const isolatedXdgRoot = mkdtempSync(join(tmpdir(), "omop-plugin-config-xdg-"))
     tempDirs.push(isolatedXdgRoot)
     process.env.XDG_CONFIG_HOME = isolatedXdgRoot
   })
 
   it("should only honor mcp_env_allowlist from user config", async () => {
     // given
-    const rootDir = mkdtempSync(join(tmpdir(), "omo-plugin-config-"))
+    const rootDir = mkdtempSync(join(tmpdir(), "omop-plugin-config-"))
     const userConfigDir = join(rootDir, "user-config")
     const projectDir = join(rootDir, "project")
     const projectConfigDir = join(projectDir, ".opencode")
@@ -537,7 +537,7 @@ describe("loadPluginConfig", () => {
 
   it("should ignore edits to the renamed legacy backup after migration", async () => {
     // given
-    const rootDir = mkdtempSync(join(tmpdir(), "omo-plugin-config-legacy-"))
+    const rootDir = mkdtempSync(join(tmpdir(), "omop-plugin-config-legacy-"))
     const userConfigDir = join(rootDir, "user-config")
     const projectDir = join(rootDir, "project")
     const projectConfigDir = join(projectDir, ".opencode")
@@ -567,7 +567,7 @@ describe("loadPluginConfig", () => {
 
   it("should still load config from legacy path when migration fails", async () => {
     // given - legacy config exists but canonical path is not writable
-    const rootDir = mkdtempSync(join(tmpdir(), "omo-plugin-config-fail-"))
+    const rootDir = mkdtempSync(join(tmpdir(), "omop-plugin-config-fail-"))
     const userConfigDir = join(rootDir, "user-config")
     const projectDir = join(rootDir, "project")
     const projectConfigDir = join(projectDir, ".opencode")
@@ -604,7 +604,7 @@ describe("loadPluginConfig", () => {
 
   it("should load migrated legacy project config on the first load", async () => {
     // given
-    const rootDir = mkdtempSync(join(tmpdir(), "omo-plugin-config-first-load-"))
+    const rootDir = mkdtempSync(join(tmpdir(), "omop-plugin-config-first-load-"))
     const userConfigDir = join(rootDir, "user-config")
     const projectDir = join(rootDir, "project")
     const projectConfigDir = join(projectDir, ".opencode")
@@ -631,7 +631,7 @@ describe("loadPluginConfig", () => {
   it("does not rewrite explicit user-selected openai/gpt-5.4 models during config load", async () => {
     // given
     const { userConfigDir, projectDir } =
-      createLoadPluginConfigTestContext("omo-plugin-config-preserve-user-model-")
+      createLoadPluginConfigTestContext("omop-plugin-config-preserve-user-model-")
     const userConfigPath = join(userConfigDir, "oh-my-open-pentest.json")
     writeJsonFile(userConfigPath, {
       agents: {
@@ -661,7 +661,7 @@ describe("loadPluginConfig", () => {
 
   it("should preserve explicit user git_master settings when project config omits git_master", async () => {
     // given
-    const rootDir = mkdtempSync(join(tmpdir(), "omo-plugin-config-git-master-user-"))
+    const rootDir = mkdtempSync(join(tmpdir(), "omop-plugin-config-git-master-user-"))
     const userConfigDir = join(rootDir, "user-config")
     const projectDir = join(rootDir, "project")
     const projectConfigDir = join(projectDir, ".opencode")
@@ -705,7 +705,7 @@ describe("loadPluginConfig", () => {
 
   it("should merge explicit git_master keys from user and project configs", async () => {
     // given
-    const rootDir = mkdtempSync(join(tmpdir(), "omo-plugin-config-git-master-merge-"))
+    const rootDir = mkdtempSync(join(tmpdir(), "omop-plugin-config-git-master-merge-"))
     const userConfigDir = join(rootDir, "user-config")
     const projectDir = join(rootDir, "project")
     const projectConfigDir = join(projectDir, ".opencode")
@@ -749,7 +749,7 @@ describe("loadPluginConfig", () => {
   describe("team_mode.tmux_visualization", () => {
     it("#given canonical user config enables team_mode and legacy config also exists #when loadPluginConfig runs #then tmux_visualization remains false", async () => {
       // given
-      const { userConfigDir, projectDir } = createLoadPluginConfigTestContext("omo-plugin-config-team-mode-user-")
+      const { userConfigDir, projectDir } = createLoadPluginConfigTestContext("omop-plugin-config-team-mode-user-")
 
       writeJsonFile(join(userConfigDir, "oh-my-open-pentest.json"), {
         team_mode: {
@@ -777,7 +777,7 @@ describe("loadPluginConfig", () => {
 
     it("#given canonical user config lacks team_mode and legacy config only enables team_mode #when loadPluginConfig runs #then canonical config wins and tmux_visualization stays effectively false", async () => {
       // given
-      const { userConfigDir, projectDir } = createLoadPluginConfigTestContext("omo-plugin-config-team-mode-legacy-")
+      const { userConfigDir, projectDir } = createLoadPluginConfigTestContext("omop-plugin-config-team-mode-legacy-")
 
       writeJsonFile(join(userConfigDir, "oh-my-open-pentest.json"), {
         hashline_edit: true,
@@ -801,7 +801,7 @@ describe("loadPluginConfig", () => {
 
     it("#given canonical user config lacks team_mode and legacy config sets tmux_visualization=true #when loadPluginConfig runs #then legacy team_mode is not promoted into the loaded config", async () => {
       // given
-      const { userConfigDir, projectDir } = createLoadPluginConfigTestContext("omo-plugin-config-team-mode-visualization-")
+      const { userConfigDir, projectDir } = createLoadPluginConfigTestContext("omop-plugin-config-team-mode-visualization-")
 
       writeJsonFile(join(userConfigDir, "oh-my-open-pentest.json"), {
         hashline_edit: true,
@@ -827,7 +827,7 @@ describe("loadPluginConfig", () => {
 
   it("should merge configs from ancestor directories with closer winning", async () => {
     // given
-    const rootDir = mkdtempSync(join(tmpdir(), "omo-plugin-config-walk-"))
+    const rootDir = mkdtempSync(join(tmpdir(), "omop-plugin-config-walk-"))
     const userConfigDir = join(rootDir, "user-config")
     const homeDir = join(rootDir, "home")
     const workDir = join(homeDir, "work")
@@ -869,7 +869,7 @@ describe("loadPluginConfig", () => {
 
   it("should load user config from the default global directory even when OPENCODE_CONFIG_DIR is set", async () => {
     // given
-    const rootDir = mkdtempSync(join(tmpdir(), "omo-plugin-config-additive-user-"))
+    const rootDir = mkdtempSync(join(tmpdir(), "omop-plugin-config-additive-user-"))
     const defaultGlobalConfigDir = join(rootDir, "xdg", "opencode")
     const customConfigDir = join(rootDir, "custom-opencode")
     const projectDir = join(rootDir, "project")
@@ -902,7 +902,7 @@ describe("loadPluginConfig", () => {
 
   it("should layer ancestor configs so each contributes fields not overridden by closer ones", async () => {
     // given
-    const rootDir = mkdtempSync(join(tmpdir(), "omo-plugin-config-walk-layer-"))
+    const rootDir = mkdtempSync(join(tmpdir(), "omop-plugin-config-walk-layer-"))
     const userConfigDir = join(rootDir, "user-config")
     const homeDir = join(rootDir, "home")
     const workDir = join(homeDir, "work")
@@ -943,7 +943,7 @@ describe("loadPluginConfig", () => {
 
   it("should preserve mcp_env_allowlist as user-only when ancestors set their own allowlists", async () => {
     // given
-    const rootDir = mkdtempSync(join(tmpdir(), "omo-plugin-config-walk-allowlist-"))
+    const rootDir = mkdtempSync(join(tmpdir(), "omop-plugin-config-walk-allowlist-"))
     const userConfigDir = join(rootDir, "user-config")
     const homeDir = join(rootDir, "home")
     const workDir = join(homeDir, "work")
@@ -985,7 +985,7 @@ describe("loadPluginConfig", () => {
 
   it("should stop walking at $HOME and ignore configs above it", async () => {
     // given
-    const rootDir = mkdtempSync(join(tmpdir(), "omo-plugin-config-walk-stop-"))
+    const rootDir = mkdtempSync(join(tmpdir(), "omop-plugin-config-walk-stop-"))
     const userConfigDir = join(rootDir, "user-config")
     const aboveHomeDir = join(rootDir, "above-home")
     const homeDir = join(aboveHomeDir, "home")
@@ -1022,7 +1022,7 @@ describe("loadPluginConfig", () => {
 
   it("should not walk above the start directory when start is outside $HOME", async () => {
     // given
-    const rootDir = mkdtempSync(join(tmpdir(), "omo-plugin-config-walk-outside-"))
+    const rootDir = mkdtempSync(join(tmpdir(), "omop-plugin-config-walk-outside-"))
     const userConfigDir = join(rootDir, "user-config")
     const homeDir = join(rootDir, "home")
     const outsideHomeRoot = join(rootDir, "outside-home")
@@ -1058,7 +1058,7 @@ describe("loadPluginConfig", () => {
 
   it("should merge git_master overrides across ancestors with closer winning", async () => {
     // given
-    const rootDir = mkdtempSync(join(tmpdir(), "omo-plugin-config-walk-git-master-"))
+    const rootDir = mkdtempSync(join(tmpdir(), "omop-plugin-config-walk-git-master-"))
     const userConfigDir = join(rootDir, "user-config")
     const homeDir = join(rootDir, "home")
     const workDir = join(homeDir, "work")
@@ -1116,7 +1116,7 @@ describe("loadPluginConfig", () => {
 
   it("should resolve agent_definitions relative to each ancestor's own .opencode directory", async () => {
     // given
-    const rootDir = mkdtempSync(join(tmpdir(), "omo-plugin-config-walk-agent-defs-"))
+    const rootDir = mkdtempSync(join(tmpdir(), "omop-plugin-config-walk-agent-defs-"))
     const userConfigDir = join(rootDir, "user-config")
     const homeDir = join(rootDir, "home")
     const workDir = join(homeDir, "work")
@@ -1156,7 +1156,7 @@ describe("loadPluginConfig", () => {
 
   it("should migrate legacy basenames found in ancestor directories", async () => {
     // given
-    const rootDir = mkdtempSync(join(tmpdir(), "omo-plugin-config-walk-legacy-"))
+    const rootDir = mkdtempSync(join(tmpdir(), "omop-plugin-config-walk-legacy-"))
     const userConfigDir = join(rootDir, "user-config")
     const homeDir = join(rootDir, "home")
     const workDir = join(homeDir, "work")
@@ -1193,7 +1193,7 @@ describe("loadPluginConfig", () => {
     // given - a project config that disables github-copilot + vercel and has
     // agents/categories whose primary or fallback chains reference them.
     const { userConfigDir, projectDir, projectConfigDir } =
-      createLoadPluginConfigTestContext("omo-plugin-config-disabled-providers-")
+      createLoadPluginConfigTestContext("omop-plugin-config-disabled-providers-")
 
     writeFileSync(
       join(projectConfigDir, "oh-my-open-pentest.jsonc"),
@@ -1263,7 +1263,7 @@ describe("loadPluginConfig", () => {
 
   it("is a no-op for chains when disabled_providers is absent", async () => {
     const { userConfigDir, projectDir, projectConfigDir } =
-      createLoadPluginConfigTestContext("omo-plugin-config-disabled-providers-noop-")
+      createLoadPluginConfigTestContext("omop-plugin-config-disabled-providers-noop-")
 
     writeFileSync(
       join(projectConfigDir, "oh-my-open-pentest.jsonc"),

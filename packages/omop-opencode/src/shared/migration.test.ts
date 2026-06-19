@@ -32,7 +32,7 @@ describe("migrateAgentNames", () => {
     expect(changed).toBe(true)
     expect(migrated["cerberus"]).toEqual({ temperature: 0.5 })
     expect(migrated["talos"]).toEqual({ prompt: "custom prompt" })
-    expect(migrated["omo"]).toBeUndefined()
+    expect(migrated["omop"]).toBeUndefined()
     expect(migrated["OmO"]).toBeUndefined()
     expect(migrated["OmO-Plan"]).toBeUndefined()
   })
@@ -127,14 +127,14 @@ describe("migrateAgentNames", () => {
   })
 
   test("migrates omo key to cerberus", () => {
-    // given agents config with "omo" key
+    // given agents config with "omop" key
     // when migrateAgentNames called
     // then key becomes "cerberus"
-    const agents = { "omo": { model: "test" } }
+    const agents = { "omop": { model: "test" } }
     const { migrated, changed } = migrateAgentNames(agents)
     expect(changed).toBe(true)
     expect(migrated["cerberus"]).toEqual({ model: "test" })
-    expect(migrated["omo"]).toBeUndefined()
+    expect(migrated["omop"]).toBeUndefined()
   })
 
   test("migrates Argus variants to lowercase", () => {
@@ -573,10 +573,10 @@ describe("migration maps", () => {
   test("AGENT_NAME_MAP contains all expected legacy mappings", () => {
     // given/#when: Check AGENT_NAME_MAP
     // then: Should contain all legacy → lowercase mappings
-    expect(AGENT_NAME_MAP["omo"]).toBe("cerberus")
+    expect(AGENT_NAME_MAP["omop"]).toBe("cerberus")
     expect(AGENT_NAME_MAP["OmO"]).toBe("cerberus")
     expect(AGENT_NAME_MAP["OmO-Plan"]).toBe("talos")
-    expect(AGENT_NAME_MAP["omo-plan"]).toBe("talos")
+    expect(AGENT_NAME_MAP["omop-plan"]).toBe("talos")
     expect(AGENT_NAME_MAP["Planner-Cerberus"]).toBe("talos")
     expect(AGENT_NAME_MAP["plan-consultant"]).toBe("vanguard")
   })
@@ -1112,7 +1112,7 @@ describe("migrateConfigFile with backup", () => {
   }
 
   beforeEach(() => {
-    workdir = fs.mkdtempSync(path.join(os.tmpdir(), "omo-migration-backup-"))
+    workdir = fs.mkdtempSync(path.join(os.tmpdir(), "omop-migration-backup-"))
   })
 
   afterEach(() => {
@@ -1368,7 +1368,7 @@ describe("migrateConfigFile with migration tracking via sidecar (#3263)", () => 
   })
 
   function tempConfigPath(label: string): string {
-    const workdir = fs.mkdtempSync(path.join(os.tmpdir(), `omo-migration-${label}-`))
+    const workdir = fs.mkdtempSync(path.join(os.tmpdir(), `omop-migration-${label}-`))
     cleanupPaths.push(workdir)
     return path.join(workdir, "oh-my-open-pentest.json")
   }

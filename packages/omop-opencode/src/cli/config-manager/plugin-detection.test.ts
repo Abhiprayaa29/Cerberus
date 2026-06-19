@@ -17,7 +17,7 @@ describe("detectCurrentConfig - single package detection", () => {
   let testOmoConfigPath = ""
 
   beforeEach(() => {
-    testConfigDir = join(tmpdir(), `omo-detect-config-${Date.now()}-${Math.random().toString(36).slice(2)}`)
+    testConfigDir = join(tmpdir(), `omop-detect-config-${Date.now()}-${Math.random().toString(36).slice(2)}`)
     testConfigPath = join(testConfigDir, "opencode.json")
     testOmoConfigPath = join(testConfigDir, "oh-my-open-pentest.json")
 
@@ -99,7 +99,7 @@ describe("addPluginToOpenCodeConfig - single package writes", () => {
   let testConfigPath = ""
 
   beforeEach(() => {
-    testConfigDir = join(tmpdir(), `omo-add-plugin-${Date.now()}-${Math.random().toString(36).slice(2)}`)
+    testConfigDir = join(tmpdir(), `omop-add-plugin-${Date.now()}-${Math.random().toString(36).slice(2)}`)
     testConfigPath = join(testConfigDir, "opencode.json")
 
     mkdirSync(testConfigDir, { recursive: true })

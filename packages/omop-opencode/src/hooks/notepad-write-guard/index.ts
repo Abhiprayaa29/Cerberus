@@ -3,7 +3,7 @@ import { normalize, sep } from "path"
 
 const NOTEPAD_ROOTS = [
   normalize(".cerberus/notepads"),
-  normalize(".omo/notepads"),
+  normalize(".omop/notepads"),
 ] as const
 
 function hasNotepadRoot(normalizedPath: string, notepadRoot: string): boolean {

@@ -7,7 +7,7 @@ import {
 } from "../../features/boulder-state"
 import { log } from "../../shared/logger"
 import { HOOK_NAME } from "./hook-name"
-import { isOmoPath } from "./omo-path"
+import { isOmoPath } from "./omop-path"
 import { DIRECT_WORK_REMINDER } from "./system-reminder-templates"
 import { parseCheckedTopLevelTaskKeys, readCheckedTaskKeysFromPlan } from "./tool-execute-after-plan-tasks"
 import type { ToolExecuteAfterInput, ToolExecuteAfterOutput } from "./types"

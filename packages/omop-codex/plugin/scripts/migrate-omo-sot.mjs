@@ -5,9 +5,9 @@ import { homedir } from "node:os";
 import { dirname, join } from "node:path";
 import { pathToFileURL } from "node:url";
 
-import { addCodexCodegraphValues, hasOwn, isRecord, recordAt } from "./migrate-omo-sot/editor.mjs";
-import { parseJsonc } from "./migrate-omo-sot/jsonc.mjs";
-import { SCAFFOLD } from "./migrate-omo-sot/scaffold.mjs";
+import { addCodexCodegraphValues, hasOwn, isRecord, recordAt } from "./migrate-omop-sot/editor.mjs";
+import { parseJsonc } from "./migrate-omop-sot/jsonc.mjs";
+import { SCAFFOLD } from "./migrate-omop-sot/scaffold.mjs";
 
 const CODEGRAPH_KEYS = ["auto_provision", "enabled", "install_dir", "telemetry"];
 const ENV_MAPPINGS = [

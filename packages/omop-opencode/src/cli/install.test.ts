@@ -21,7 +21,7 @@ describe("install CLI - binary check behavior", () => {
 
   beforeEach(() => {
     // given temporary config directory
-    tempDir = join(tmpdir(), `omo-test-${Date.now()}-${Math.random().toString(36).slice(2)}`)
+    tempDir = join(tmpdir(), `omop-test-${Date.now()}-${Math.random().toString(36).slice(2)}`)
     mkdirSync(tempDir, { recursive: true })
     originalFetch = globalThis.fetch
 

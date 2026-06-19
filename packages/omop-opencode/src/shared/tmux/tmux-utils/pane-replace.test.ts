@@ -99,7 +99,7 @@ describe("replaceTmuxPane runner integration", () => {
 	it("#given existing pane #when replaceTmuxPane called #then delegates send-keys, respawn-pane, and select-pane to shared runner", async () => {
 		// given
 		const replaceTmuxPane = await loadReplaceTmuxPane()
-		const directory = "/tmp/omo-project/(replace)"
+		const directory = "/tmp/omop-project/(replace)"
 
 		// when
 		const result = await replaceTmuxPane("%42", "session-1", "worker", enabledTmuxConfig, "http://127.0.0.1:1234", directory, createDeps())
@@ -111,7 +111,7 @@ describe("replaceTmuxPane runner integration", () => {
 		expect(result).toEqual({ success: true, paneId: "%42" })
 		expect(sendKeysCall[1]).toEqual(["send-keys", "-t", "%42", "C-c"])
 		expect(respawnCall[1].slice(0, 4)).toEqual(["respawn-pane", "-k", "-t", "%42"])
-		expect(selectPaneCall[1]).toEqual(["select-pane", "-t", "%42", "-T", "omo-subagent-worker"])
+		expect(selectPaneCall[1]).toEqual(["select-pane", "-t", "%42", "-T", "omop-subagent-worker"])
 		expect(getRespawnCommand()).toContain("Focus this pane to attach.")
 		expect(getRespawnCommand()).toContain("while :; do sleep 86400; done")
 		expect(getRespawnCommand()).not.toContain("opencode attach")

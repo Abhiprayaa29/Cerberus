@@ -51,25 +51,25 @@ describe("git-worktree", () => {
 
   test("#given notepad path #when formatting omo plan changes #then does not report notepad updated", () => {
     const summary = formatFileChanges([
-      { path: ".omo/plans/work.md", added: 1, removed: 0, status: "modified" },
-    ], ".omo/notepads/work/notes.md")
+      { path: ".omop/plans/work.md", added: 1, removed: 0, status: "modified" },
+    ], ".omop/notepads/work/notes.md")
 
     expect(summary).not.toContain("[NOTEPAD UPDATED]")
   })
 
   test("#given notepad path #when formatting omo notepad changes #then reports notepad updated", () => {
     const summary = formatFileChanges([
-      { path: ".omo/notepads/work/notes.md", added: 1, removed: 0, status: "modified" },
-    ], ".omo/notepads/work/notes.md")
+      { path: ".omop/notepads/work/notes.md", added: 1, removed: 0, status: "modified" },
+    ], ".omop/notepads/work/notes.md")
 
     expect(summary).toContain("[NOTEPAD UPDATED]")
-    expect(summary).toContain(".omo/notepads/work/notes.md")
+    expect(summary).toContain(".omop/notepads/work/notes.md")
   })
 
   test("#given notepad path #when formatting another omo notepad change #then does not report active notepad updated", () => {
     const summary = formatFileChanges([
-      { path: ".omo/notepads/other/notes.md", added: 1, removed: 0, status: "modified" },
-    ], ".omo/notepads/work/notes.md")
+      { path: ".omop/notepads/other/notes.md", added: 1, removed: 0, status: "modified" },
+    ], ".omop/notepads/work/notes.md")
 
     expect(summary).not.toContain("[NOTEPAD UPDATED]")
   })

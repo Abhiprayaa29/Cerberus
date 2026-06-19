@@ -31,8 +31,8 @@ afterEach(() => {
 describe("getInstalledLspServers", () => {
   it("returns empty when lsp MCP is disabled via config", async () => {
     // given
-    const userConfigDirectory = createTemporaryDirectory("omo-tools-lsp-user-")
-    const workspaceDirectory = createTemporaryDirectory("omo-tools-lsp-workspace-")
+    const userConfigDirectory = createTemporaryDirectory("omop-tools-lsp-user-")
+    const workspaceDirectory = createTemporaryDirectory("omop-tools-lsp-workspace-")
     const projectConfigDirectory = join(workspaceDirectory, ".opencode")
     mkdirSync(projectConfigDirectory, { recursive: true })
     createLspDistCli(workspaceDirectory)
@@ -54,8 +54,8 @@ describe("getInstalledLspServers", () => {
 
   it("returns bundled lsp server info when lsp MCP uses bootstrap fallback", async () => {
     // given
-    const userConfigDirectory = createTemporaryDirectory("omo-tools-lsp-user-")
-    const workspaceDirectory = createTemporaryDirectory("omo-tools-lsp-bootstrap-")
+    const userConfigDirectory = createTemporaryDirectory("omop-tools-lsp-user-")
+    const workspaceDirectory = createTemporaryDirectory("omop-tools-lsp-bootstrap-")
     clearPluginConfigFileDetectionCache()
 
     const { getInstalledLspServers } = await import(`./tools-lsp?t=${Date.now()}-bootstrap`)
@@ -69,8 +69,8 @@ describe("getInstalledLspServers", () => {
 
   it("returns bundled lsp server info when MCP is enabled", async () => {
     // given
-    const userConfigDirectory = createTemporaryDirectory("omo-tools-lsp-user-")
-    const workspaceDirectory = createTemporaryDirectory("omo-tools-lsp-enabled-")
+    const userConfigDirectory = createTemporaryDirectory("omop-tools-lsp-user-")
+    const workspaceDirectory = createTemporaryDirectory("omop-tools-lsp-enabled-")
     createLspDistCli(workspaceDirectory)
     clearPluginConfigFileDetectionCache()
 
@@ -85,8 +85,8 @@ describe("getInstalledLspServers", () => {
 
   it("ignores malformed OMO config files when detecting disabled MCPs", async () => {
     // given
-    const userConfigDirectory = createTemporaryDirectory("omo-tools-lsp-user-")
-    const workspaceDirectory = createTemporaryDirectory("omo-tools-lsp-malformed-")
+    const userConfigDirectory = createTemporaryDirectory("omop-tools-lsp-user-")
+    const workspaceDirectory = createTemporaryDirectory("omop-tools-lsp-malformed-")
     mkdirSync(userConfigDirectory, { recursive: true })
     writeFileSync(join(userConfigDirectory, "oh-my-open-pentest.json"), "{", "utf-8")
     clearPluginConfigFileDetectionCache()

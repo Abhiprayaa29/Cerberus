@@ -33,7 +33,7 @@ describe("codex-cache install", () => {
     })
 
     // then
-    expect(installed.path).toBe(join(codexHome, "plugins", "cache", "debug", "omo", "0.1.0"))
+    expect(installed.path).toBe(join(codexHome, "plugins", "cache", "debug", "omop", "0.1.0"))
     expect(await readFile(join(installed.path, "components", "rules", "payload.txt"), "utf8")).toBe("payload\n")
     await expect(stat(join(installed.path, ".git"))).rejects.toThrow()
     await expect(stat(join(installed.path, "node_modules"))).rejects.toThrow()

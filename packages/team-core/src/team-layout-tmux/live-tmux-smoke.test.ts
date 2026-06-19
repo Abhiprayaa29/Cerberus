@@ -222,9 +222,9 @@ describe("team-mode live tmux smoke", () => {
 			return
 		}
 
-		const callerSessionName = `omo-smoke-${Date.now()}`
+		const callerSessionName = `omop-smoke-${Date.now()}`
 		const { callerSessionId, callerPaneId, socketPath } = await createCallerSession(callerSessionName)
-		const tempRoot = path.join("/tmp", `omo-live-tmux-${randomUUID()}`)
+		const tempRoot = path.join("/tmp", `omop-live-tmux-${randomUUID()}`)
 		await mkdir(path.join(tempRoot, "lead"), { recursive: true })
 		await mkdir(path.join(tempRoot, "member-two"), { recursive: true })
 

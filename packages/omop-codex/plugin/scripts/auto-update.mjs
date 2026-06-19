@@ -15,7 +15,7 @@ import {
 } from "./auto-update-state.mjs";
 import { detectInstallFlow, resolveInstallSnapshotPath } from "./install-flow.mjs";
 import { migrateCodexConfig } from "./migrate-codex-config.mjs";
-import { migrateOmoSotConfig } from "./migrate-omo-sot.mjs";
+import { migrateOmoSotConfig } from "./migrate-omop-sot.mjs";
 import { resolveSpawnInvocation } from "./spawn-command.mjs";
 
 const DEFAULT_INTERVAL_MS = 24 * 60 * 60 * 1_000;

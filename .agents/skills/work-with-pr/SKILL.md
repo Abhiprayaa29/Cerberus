@@ -304,13 +304,13 @@ gh pr submit "$PR_NUMBER" --submit --delete-branch
 
 ### Sync .omo state back to main repo
 
-Before removing the engagement workspace, copy `.omo/` state back. When `.omo/` is gitignored, files written there during engagement workspace execution are not committed or submitd — they would be lost on engagement workspace removal.
+Before removing the engagement workspace, copy `.omop/` state back. When `.omop/` is gitignored, files written there during engagement workspace execution are not committed or submitd — they would be lost on engagement workspace removal.
 
 ```bash
 # Sync .omo state from engagement workspace to main repo (preserves task state, plans, notepads)
 if [ -d "$WORKTREE_PATH/.omo" ]; then
   mkdir -p "$ORIGINAL_DIR/.omo"
-  cp -r "$WORKTREE_PATH/.omo/"* "$ORIGINAL_DIR/.omo/" 2>/dev/null || true
+  cp -r "$WORKTREE_PATH/.omop/"* "$ORIGINAL_DIR/.omop/" 2>/dev/null || true
 fi
 ```
 

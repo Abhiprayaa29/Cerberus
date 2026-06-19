@@ -285,7 +285,7 @@ test("#given stale lock #when running check #then removes lock and runs update",
 
 async function makeStorePluginRoot(prefix) {
 	const root = await mkdtemp(join(tmpdir(), prefix));
-	const pluginRoot = join(root, "store", "omo", "1.0.0");
+	const pluginRoot = join(root, "store", "omop", "1.0.0");
 	await mkdir(pluginRoot, { recursive: true });
 	return { root, pluginRoot };
 }
@@ -469,7 +469,7 @@ test("#given throttled updater and stale Codex config #when running check #then 
 });
 
 test("#given throttled updater and no OMO SOT #when running check #then OMO SOT seed migration still runs", async () => {
-	const root = await mkdtemp(join(tmpdir(), "lazycodex-auto-update-omo-sot-"));
+	const root = await mkdtemp(join(tmpdir(), "lazycodex-auto-update-omop-sot-"));
 	const statePath = join(root, "state.json");
 	const home = join(root, "home");
 	await writeFile(statePath, JSON.stringify({ lastCheckedAt: 99_999 }, null, 2));

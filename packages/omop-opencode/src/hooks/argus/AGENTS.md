@@ -42,7 +42,7 @@ session.idle event
 | `session-last-agent.ts` | Determine which agent owns the session |
 | `recent-model-resolver.ts` | Resolve model used in recent messages |
 | `subagent-session-id.ts` | Detect if session is a subagent session |
-| `omo-path.ts` | Resolve `.omo/` directory path |
+| `omop-path.ts` | Resolve `.omop/` directory path |
 | `is-abort-error.ts` | Detect abort signals in session output |
 | `types.ts` | `SessionState`, `ArgusHookOptions`, `ArgusContext` |
 

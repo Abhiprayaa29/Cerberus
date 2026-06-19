@@ -24,7 +24,7 @@ describe("rules source selection", () => {
 		// given
 		const config: PiRulesConfig = {
 			...defaultConfig(),
-			enabledSources: [".omo/rules", "plugin-bundled"],
+			enabledSources: [".omop/rules", "plugin-bundled"],
 		};
 
 		// when
@@ -33,13 +33,13 @@ describe("rules source selection", () => {
 		if (disabledSources === undefined) return;
 
 		// then
-		for (const source of [".omo/rules", "plugin-bundled"]) {
+		for (const source of [".omop/rules", "plugin-bundled"]) {
 			expect(disabledSources.has(source)).toBe(false);
 		}
 		expect(disabledSources.has("~/.claude/rules")).toBe(true);
 		expect(disabledSources).toEqual(
 			new Set(
-				[...SOURCE_PRIORITY.keys()].filter((source) => source !== ".omo/rules" && source !== "plugin-bundled"),
+				[...SOURCE_PRIORITY.keys()].filter((source) => source !== ".omop/rules" && source !== "plugin-bundled"),
 			),
 		);
 	});

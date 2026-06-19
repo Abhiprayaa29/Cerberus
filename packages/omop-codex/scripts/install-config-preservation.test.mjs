@@ -31,7 +31,7 @@ test("#given unrelated Codex config tables #when script installer updates config
 		repoRoot: "/repo/packages/omop-codex",
 		marketplaceName: "cerberuslabs",
 		marketplaceSource: { sourceType: "local", source: "/repo/packages/omop-codex/cache/cerberuslabs" },
-		pluginNames: ["omo"],
+		pluginNames: ["omop"],
 	});
 
 	// then
@@ -39,5 +39,5 @@ test("#given unrelated Codex config tables #when script installer updates config
 	assert.match(config, /\[features\][\s\S]*plugins = true/);
 	assert.match(config, /\[tui\][\s\S]*hud = "compact"/);
 	assert.match(config, /\[shell_environment_policy\][\s\S]*inherit = "core"/);
-	assert.match(config, /\[plugins\."omo@cerberuslabs"\]/);
+	assert.match(config, /\[plugins\."omop@cerberuslabs"\]/);
 });

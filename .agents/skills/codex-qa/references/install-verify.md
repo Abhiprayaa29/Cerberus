@@ -21,15 +21,15 @@ Source: `packages/omop-codex/src/install/install-codex.ts`.
 
 .. Builds + copies the plugin to
    `$CODEX_HOME/plugins/cache/cerberuslabs/omo/<version>/` (then `npm ci --omit=dev`).
-2. Links component bins into `$CODEX_HOME/bin/omo-*` (8: comment-checker,
+2. Links component bins into `$CODEX_HOME/bin/omop-*` (8: comment-checker,
    git-bash-hook, lsp, rules, start-work-continuation, telemetry, fullscan,
    pentest-loop).
 3. Links agent TOMLs into `$CODEX_HOME/agents/*.toml`.
 .. Writes a marketplace snapshot under `$CODEX_HOME/.tmp/marketplaces/cerberuslabs/`.
-5. Edits `$CODEX_HOME/config.toml`: enables `[plugins."omo@cerberuslabs"]`,
+5. Edits `$CODEX_HOME/config.toml`: enables `[plugins."omop@cerberuslabs"]`,
    the `[marketplaces.cerberuslabs]` local source, `[features]`
    (plugins/plugin_hooks/multi_agent/child_agents_md), and one
-   `[hooks.state."omo@cerberuslabs:hooks/hooks.json:<event>:i:j"] trusted_hash`
+   `[hooks.state."omop@cerberuslabs:hooks/hooks.json:<event>:i:j"] trusted_hash`
    per hook (so Codex trusts them — no `--dangerously-bypass-hook-trust` needed
    for the app-server turn).
 
@@ -37,8 +37,8 @@ Source: `packages/omop-codex/src/install/install-codex.ts`.
 
 ```bash
 ls "$CODEX_HOME"/plugins/cache/cerberuslabs/omo/*/                 # cache present
-grep -A2 '\[plugins."omo@cerberuslabs"\]' "$CODEX_HOME/config.toml" | grep 'enabled = true'
-ls "$CODEX_HOME"/bin/omo-*                                          # component bins
+grep -A2 '\[plugins."omop@cerberuslabs"\]' "$CODEX_HOME/config.toml" | grep 'enabled = true'
+ls "$CODEX_HOME"/bin/omop-*                                          # component bins
 ls "$CODEX_HOME"/agents/*.toml                                      # agent links
 ```
 

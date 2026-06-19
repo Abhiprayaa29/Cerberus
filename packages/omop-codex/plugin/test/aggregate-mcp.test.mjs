@@ -61,9 +61,9 @@ test(
 		].sort();
 
 		// then
-		assert.deepEqual(binNames, ["omo-git-bash", "omo-lsp"]);
+		assert.deepEqual(binNames, ["omop-git-bash", "omop-lsp"]);
 		for (const name of binNames) {
-			assert.match(name, /^omo-/);
+			assert.match(name, /^omop-/);
 		}
 	},
 );

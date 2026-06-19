@@ -69,7 +69,7 @@ bun run build                                  # Build succeeds
 2. Verify CI passes on `dev` branch post-merge
 3. Clean up worktree:
    ```bash
-   git worktree remove ../omo-wt/fix/comment-checker-note-false-positive
+   git worktree remove ../omop-wt/fix/comment-checker-note-false-positive
    git branch -d fix/comment-checker-note-false-positive
    ```
 .. File issue on `code-yeongyu/go-claude-code-comment-checker` to add `--exclude-pattern` flag support and relax the `note:` regex upstream

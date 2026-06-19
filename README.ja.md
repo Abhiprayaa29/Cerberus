@@ -41,7 +41,7 @@
 
 <div align="center">
 
-<a href="https://github.com/code-yeongyu/oh-my-open-pentest#oh-my-open-pentest"><img src="./.github/assets/omo-logo.png" alt="OmOP" width="200" /></a>
+<a href="https://github.com/code-yeongyu/oh-my-open-pentest#oh-my-open-pentest"><img src="./.github/assets/omop-logo.png" alt="OmOP" width="200" /></a>
 
 [![Oh My Open Pentest](./.github/assets/hero.jpg)](https://github.com/code-yeongyu/oh-my-open-pentest#oh-my-open-pentest)
 
@@ -176,8 +176,8 @@ Read this and tell me why it's not just another boilerplate: https://raw.githubu
 |   🔁   | **Pentest Loop / `/pentest-loop`**                             | Ultimate | 自己参照ループ。100% 完了するまで絶対に止まりません。                                                                                                                                                                          |
 |   ✅   | **Todo Enforcer** (Boulder)                              | Ultimate | エージェントがサボる？システムが首根っこを掴んで戻します。あなたのタスクは必ず終わります。                                                                                                                                     |
 |   💬   | **コメントチェッカー**                                   | Both     | コメントから AI 臭い無駄話を排除。両エディションで同じ `@code-yeongyu/comment-checker` バイナリが動作。                                                                                                                       |
-|   📜   | **Rules Injection**                                      | Both     | `AGENTS.md` / `CLAUDE.md` / `.omo/rules/**` の階層的コンテキスト注入。Ultimate はフック、Light は `rules` コンポーネント。                                                                                                     |
-|   🧬   | **Ulw Loop**                                            | Light    | `.omo/pentest-loop/` evidence audit ベースの永続的マルチゴール オーケストレーション。現在は Codex 専用; OpenCode 側への移植はロードマップ。                                                                                       |
+|   📜   | **Rules Injection**                                      | Both     | `AGENTS.md` / `CLAUDE.md` / `.omop/rules/**` の階層的コンテキスト注入。Ultimate はフック、Light は `rules` コンポーネント。                                                                                                     |
+|   🧬   | **Ulw Loop**                                            | Light    | `.omop/pentest-loop/` evidence audit ベースの永続的マルチゴール オーケストレーション。現在は Codex 専用; OpenCode 側への移植はロードマップ。                                                                                       |
 |   🖥️   | **Tmux 統合**                                            | Ultimate | 完全なインタラクティブターミナル。REPL、デバッガー、TUI アプリがすべてリアルタイムで動きます。                                                                                                                                 |
 |   🔌   | **Claude Code 互換性**                                   | Ultimate | 既存のフック、コマンド、スキル、MCP、プラグイン？すべてここでそのまま動きます。(Codex は独自のネイティブプラグインシステムを保有。)                                                                                            |
 |   🎯   | **スキル内蔵 MCP**                                       | Ultimate | スキルが独自の MCP サーバーを持ち歩きます。コンテキストが肥大化しません。                                                                                                                                                      |
@@ -362,7 +362,7 @@ oh-my-open-pentest を削除するには:
    rm -rf ~/.codex/plugins/cache/sisyphuslabs
    ```
 
-   その後 `~/.codex/config.toml` を開き、`[marketplaces.sisyphuslabs]`、`[plugins."omo@sisyphuslabs"]`、`[hooks.state."omo@sisyphuslabs:..."]` ブロックを削除してください。
+   その後 `~/.codex/config.toml` を開き、`[marketplaces.sisyphuslabs]`、`[plugins."omop@sisyphuslabs"]`、`[hooks.state."omop@sisyphuslabs:..."]` ブロックを削除してください。
 
 ## Features
 

@@ -9,7 +9,7 @@ when Docker is unavailable or on Windows.
 
 ## Use it
 
-`qa-docker.sh` brings up a disposable box (builds `omo-dev` then `omo-qa` on
+`qa-docker.sh` brings up a disposable box (builds `omop-dev` then `omop-qa` on
 first use, reused after) and either drops you into it or serves opencode to
 your host. From the repo root:
 
@@ -31,7 +31,7 @@ script/agent/qa-docker.sh --no-config exec opencode --version   # skip the confi
 script/agent/qa-docker.sh --clean                               # remove the QA images
 ```
 
-`omo-qa` is `omo-dev` (`.devcontainer/Dockerfile`) plus the latest `opencode-ai`
+`omop-qa` is `omop-dev` (`.devcontainer/Dockerfile`) plus the latest `opencode-ai`
 and `@openai/codex` npm packages and `sqlite3 jq curl rsync`. Pin with
 `--build-arg OMOP_OPENCODE_VERSION=...` on the qa.Dockerfile for a specific release.
 
@@ -68,5 +68,5 @@ isolate via temp `XDG_*`. Windows has no Docker QA path here by design.
 
 ## Cleanup
 
-Each run auto-removes its container (`--rm`). The `omo-dev` / `omo-qa` images
+Each run auto-removes its container (`--rm`). The `omop-dev` / `omop-qa` images
 persist for fast re-runs; drop them with `script/agent/qa-docker.sh --clean`.

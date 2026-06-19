@@ -1,6 +1,6 @@
 {
   "name": "@code-yeongyu/codex-telemetry",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "Codex plugin component that emits omop-codex anonymous daily-active telemetry on SessionStart.",
   "type": "module",
   "packageManager": "npm@11.12.1",
@@ -16,14 +16,14 @@
   "keywords": [
     "codex",
     "codex-plugin",
-    "omo",
+    "omop",
     "telemetry",
     "posthog",
     "hooks",
     "daily-active"
   ],
   "bin": {
-    "omo-telemetry": "./dist/cli.js"
+    "omop-telemetry": "./dist/cli.js"
   },
   "files": [
     "dist",

@@ -25,7 +25,7 @@ test("#given a lazycodex passthrough command #when delegating to omo #then reset
 	assert.equal(received.runOptions.cwd, "/tmp/project");
 	assert.equal(
 		received.runOptions.env?.OMOP_INVOCATION_NAME,
-		"omo",
+		"omop",
 		"delegated omo command must run with OMOP_INVOCATION_NAME=omo to avoid infinite recursion",
 	);
 });
@@ -52,7 +52,7 @@ test("#given OMOP_INVOCATION_NAME=lazycodex in the parent env #when delegating a
 	}
 
 	// then
-	assert.equal(received.env.OMOP_INVOCATION_NAME, "omo");
+	assert.equal(received.env.OMOP_INVOCATION_NAME, "omop");
 });
 
 test("#given a dry-run passthrough #when delegating #then logs the invocation without invoking runCommand", async () => {

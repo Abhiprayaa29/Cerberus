@@ -4,14 +4,14 @@
 	"works": {
 		"work_.": {
 			"work_id": "work_.",
-			"active_plan": "/repo/.omo/plans/plan-with-unchecked.md",
+			"active_plan": "/repo/.omop/plans/plan-with-unchecked.md",
 			"plan_name": "completed-plan",
 			"status": "completed",
 			"started_at": "2026-05-28T00:00:00Z",
 			"session_ids": ["codex:sess_abc"]
 		}
 	},
-	"active_plan": "/repo/.omo/plans/plan-with-unchecked.md",
+	"active_plan": "/repo/.omop/plans/plan-with-unchecked.md",
 	"plan_name": "completed-plan",
 	"started_at": "2026-05-28T00:00:00Z",
 	"status": "completed",

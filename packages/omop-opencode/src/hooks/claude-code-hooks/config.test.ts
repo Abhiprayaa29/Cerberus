@@ -15,7 +15,7 @@ describe("loadClaudeHooksConfig", () => {
   beforeEach(() => {
     //#given
     originalWorkingDirectory = process.cwd()
-    tempDirectory = mkdtempSync(join(tmpdir(), "omo-claude-hooks-config-"))
+    tempDirectory = mkdtempSync(join(tmpdir(), "omop-claude-hooks-config-"))
     customSettingsPath = join(tempDirectory, "custom-settings.json")
     mkdirSync(join(tempDirectory, ".claude"), { recursive: true })
     process.chdir(tempDirectory)
@@ -310,7 +310,7 @@ describe("setPluginHooksConfigs", () => {
 
   test("#given configs set for directory A #when loading config from directory B #then plugin hooks are NOT included", async () => {
     // given
-    const dirA = "/tmp/omo-test-dir-a"
+    const dirA = "/tmp/omop-test-dir-a"
     const dirB = process.cwd()
     setPluginHooksConfigs(dirA, [
       {

@@ -10,7 +10,7 @@ Vendored, Node-targeted MCP-layer package (`@code-yeongyu/lsp-daemon`). Runs ONE
 
 | File | Role |
 |------|------|
-| `cli.ts` | Bin `omo-lsp-daemon`. `mcp` (default) → `runMcpStdioProxy()`; `daemon` → `runDaemon()` |
+| `cli.ts` | Bin `omop-lsp-daemon`. `mcp` (default) → `runMcpStdioProxy()`; `daemon` → `runDaemon()` |
 | `proxy.ts` | `runMcpStdioProxy()` — reads JSON-RPC lines from stdin; `tools/call` → daemon via client; other LSP MCP requests handled locally |
 | `daemon-server.ts` | `startDaemonServer()` — `net.createServer` on the socket, owns the LSP manager, idle auto-shutdown, pid/endpoint files, SIGTERM/SIGINT cleanup |
 | `daemon-client.ts` | `callToolViaDaemon()` / `callDiagnosticsViaDaemon()` — connect to socket, send tool call, await response |
@@ -25,7 +25,7 @@ Vendored, Node-targeted MCP-layer package (`@code-yeongyu/lsp-daemon`). Runs ONE
 ## FLOW
 
 ```
-session → omo-lsp-daemon (mcp proxy, stdio)
+session → omop-lsp-daemon (mcp proxy, stdio)
    ├─ ensureDaemonRunning(): probe socket
    │     ├─ reachable → reuse
    │     └─ down → tryAcquireLock → spawn detached `cli.js daemon` → poll until reachable
@@ -38,6 +38,6 @@ session → omo-lsp-daemon (mcp proxy, stdio)
 
 - **Per-request context threading:** the proxy injects `_context` (cwd + env allowlist) into each `tools/call`; the daemon runs that request inside `runWithRequestContext` so one shared process correctly serves many working directories.
 - **Idle shutdown:** daemon self-exits after 30 min (`DEFAULT_IDLE_SHUTDOWN_MS`) once there are no live connections AND `getLspManager().clientCount() === 0`. Live LSP clients keep it warm.
-- **Socket path:** `$CODEX_LSP_DAEMON_DIR` → else `$PLUGIN_DATA/daemon` → else `~/.codex/codex-lsp/daemon/`, all under a `v<version>` dir. Unix socket `daemon.sock`; falls back to a hashed `tmpdir()` path when the natural path exceeds .00 chars; Windows uses a `\\.\pipe\omo-lsp-*` named pipe.
+- **Socket path:** `$CODEX_LSP_DAEMON_DIR` → else `$PLUGIN_DATA/daemon` → else `~/.codex/codex-lsp/daemon/`, all under a `v<version>` dir. Unix socket `daemon.sock`; falls back to a hashed `tmpdir()` path when the natural path exceeds .00 chars; Windows uses a `\\.\pipe\omop-lsp-*` named pipe.
 - **Spawn is detached + log-redirected:** child runs `node cli.js daemon` with `stdio: ["ignore", logFd, logFd]` (→ `daemon.log`) and `unref()`, so the parent session never blocks on it.
 - **Build before use:** `bun run build:lsp-daemon` (`npm ci` + `npm run build`) before anything needing `dist/`. Shipped via the root `package.json` `files` array (`packages/lsp-daemon/{package.json,dist}`).

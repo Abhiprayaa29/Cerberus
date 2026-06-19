@@ -5,7 +5,7 @@ import path from "node:path";
 import type { CodexPostCompactInput, CodexSessionStartInput, CodexUserPromptSubmitInput } from "../src/codex-hook.js";
 
 export const PROJECT_RULES_ENV = {
-	CODEX_RULES_ENABLED_SOURCES: "CONTEXT.md,.omo/rules",
+	CODEX_RULES_ENABLED_SOURCES: "CONTEXT.md,.omop/rules",
 	CODEX_RULES_MAX_RESULT_CHARS: "50000",
 	CODEX_RULES_MAX_RULE_CHARS: "30000",
 };

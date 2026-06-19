@@ -18,7 +18,7 @@ The runtime has no npm production dependencies, so a clean Codex marketplace cop
 Project-level sources:
 
 - `CONTEXT.md`
-- `.omo/rules/**/*.md`
+- `.omop/rules/**/*.md`
 - `.claude/rules/**/*.md`
 - `.cursor/rules/**/*.md`
 - `.github/instructions/**/*.md`
@@ -59,7 +59,7 @@ plugin_hooks = true
 multi_agent = true
 child_agents_md = true
 
-[plugins."omo@cerberuslabs"]
+[plugins."omop@cerberuslabs"]
 enabled = true
 ```
 

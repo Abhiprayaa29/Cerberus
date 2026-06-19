@@ -50,7 +50,7 @@ describe("OhMyOpenCodeConfigSchema codegraph", () => {
         codegraph: {
           auto_provision: false,
           enabled: true,
-          install_dir: "~/.omo/codegraph",
+          install_dir: "~/.omop/codegraph",
           telemetry: false,
           watch_debounce_ms: 250,
         },

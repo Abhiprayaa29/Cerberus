@@ -92,7 +92,7 @@ function createCodexDoctorResult(): DoctorResult {
       pluginsFeatureEnabled: true,
       pluginHooksFeatureEnabled: true,
     },
-    linkedBins: ["omo", "omo-rules"],
+    linkedBins: ["omop", "omop-rules"],
     agents: ["plan"],
   }
   return base
@@ -164,9 +164,9 @@ describe("formatDoctorOutput", () => {
       //#then
       expect(output).toContain("Codex")
       expect(output).toContain("/usr/local/bin/codex")
-      expect(output).toContain("Plugin     omo@4.7.5")
+      expect(output).toContain("Plugin     omop@4.7.5")
       expect(output).toContain("Package    lazycodex-ai@4.7.5")
-      expect(output).toContain("Bins       omo · omo-rules")
+      expect(output).toContain("Bins       omo · omop-rules")
       expect(output).not.toContain("opencode")
     })
   })
@@ -227,7 +227,7 @@ describe("formatDoctorOutput", () => {
       //#then
       expect(output).toContain("Codex Information")
       expect(output).toContain("marketplace cerberuslabs")
-      expect(output).toContain("plugin     omo@4.7.5")
+      expect(output).toContain("plugin     omop@4.7.5")
       expect(output).toContain("package    lazycodex-ai@4.7.5")
       expect(output).not.toContain("OpenCode")
     })

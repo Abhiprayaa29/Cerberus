@@ -3,7 +3,7 @@ export const HOOK_NAME = "cerberus-junior-notepad"
 export const NOTEPAD_DIRECTIVE = `
 <Work_Context>
 ## Notepad Location (for recording learnings)
-NOTEPAD PATH: .omo/notepads/{plan-name}/
+NOTEPAD PATH: .omop/notepads/{plan-name}/
 - learnings.md: Record patterns, conventions, successful approaches
 - issues.md: Record problems, blockers, gotchas encountered
 - decisions.md: Record architectural choices and rationales
@@ -13,7 +13,7 @@ You SHOULD append findings to notepad files after completing work.
 IMPORTANT: Always APPEND to notepad files - never overwrite or use Edit tool.
 
 ## Plan Location (subagent: READ ONLY)
-PLAN PATH: .omo/plans/{plan-name}.md
+PLAN PATH: .omop/plans/{plan-name}.md
 
 SUBAGENT PLAN RESTRICTION (applies to YOU, the delegated worker — NOT to the Orchestrator):
 - You may READ the plan to understand your assigned tasks

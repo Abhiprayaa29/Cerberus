@@ -155,7 +155,7 @@ export async function handleWriteExistingFileGuardToolExecuteBefore(params: {
   }
 
   if (isOmoWorkspacePath(canonicalPath)) {
-    log("[write-existing-file-guard] Allowing .omo/** overwrite", {
+    log("[write-existing-file-guard] Allowing .omop/** overwrite", {
       sessionID: input.sessionID,
       filePath,
     })

@@ -50,32 +50,32 @@ describe("killTmuxSessionIfExists", () => {
 		getTmuxPathMock.mockResolvedValue("tmux")
 	})
 
-	it("#given omo-agents session exists #when killTmuxSessionIfExists called #then kill-session invoked and returns true", async () => {
+	it("#given omop-agents session exists #when killTmuxSessionIfExists called #then kill-session invoked and returns true", async () => {
 		// given
 		const killTmuxSessionIfExists = await loadKillTmuxSessionIfExists()
 
 		// when
-		const result = await killTmuxSessionIfExists("omo-agents")
+		const result = await killTmuxSessionIfExists("omop-agents")
 
 		// then
 		expect(result).toBe(true)
 		expect(runTmuxCommandMock.mock.calls).toEqual([
-			["tmux", ["has-session", "-t", "omo-agents"]],
-			["tmux", ["kill-session", "-t", "omo-agents"]],
+			["tmux", ["has-session", "-t", "omop-agents"]],
+			["tmux", ["kill-session", "-t", "omop-agents"]],
 		])
 	})
 
-	it("#given omo-agents session does NOT exist #when killTmuxSessionIfExists called #then NO kill-session invocation and returns false", async () => {
+	it("#given omop-agents session does NOT exist #when killTmuxSessionIfExists called #then NO kill-session invocation and returns false", async () => {
 		// given
 		const killTmuxSessionIfExists = await loadKillTmuxSessionIfExists()
 		runTmuxCommandMock.mockResolvedValueOnce({ success: false, output: "", stdout: "", stderr: "", exitCode: 1 })
 
 		// when
-		const result = await killTmuxSessionIfExists("omo-agents")
+		const result = await killTmuxSessionIfExists("omop-agents")
 
 		// then
 		expect(result).toBe(false)
-		expect(runTmuxCommandMock.mock.calls).toEqual([["tmux", ["has-session", "-t", "omo-agents"]]])
+		expect(runTmuxCommandMock.mock.calls).toEqual([["tmux", ["has-session", "-t", "omop-agents"]]])
 	})
 
 	it("#given not inside tmux #when killTmuxSessionIfExists called #then returns false without runner calls", async () => {
@@ -84,7 +84,7 @@ describe("killTmuxSessionIfExists", () => {
 		isInsideTmuxMock.mockReturnValue(false)
 
 		// when
-		const result = await killTmuxSessionIfExists("omo-agents")
+		const result = await killTmuxSessionIfExists("omop-agents")
 
 		// then
 		expect(result).toBe(false)
@@ -97,7 +97,7 @@ describe("killTmuxSessionIfExists", () => {
 		getTmuxPathMock.mockResolvedValue(undefined)
 
 		// when
-		const result = await killTmuxSessionIfExists("omo-agents")
+		const result = await killTmuxSessionIfExists("omop-agents")
 
 		// then
 		expect(result).toBe(false)
@@ -112,7 +112,7 @@ describe("killTmuxSessionIfExists", () => {
 			.mockResolvedValueOnce({ success: false, output: "", stdout: "", stderr: "no session", exitCode: 1 })
 
 		// when
-		const result = await killTmuxSessionIfExists("omo-agents")
+		const result = await killTmuxSessionIfExists("omop-agents")
 
 		// then
 		expect(result).toBe(false)

@@ -104,7 +104,7 @@ describe("dependencies check", () => {
       const requireFromHere = createRequire(import.meta.url)
       let resolveMessage: unknown
       try {
-        requireFromHere.resolve("definitely-not-a-real-package-omo-doctor-test/package.json")
+        requireFromHere.resolve("definitely-not-a-real-package-omop-doctor-test/package.json")
         throw new Error("expected the require.resolve probe to fail")
       } catch (error) {
         resolveMessage = error

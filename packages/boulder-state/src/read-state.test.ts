@@ -26,7 +26,7 @@ function createWork(input: {
 }): BoulderWorkState {
   return {
     work_id: input.workId,
-    active_plan: `.omo/plans/${input.workId}.md`,
+    active_plan: `.omop/plans/${input.workId}.md`,
     plan_name: input.workId,
     status: "active",
     started_at: input.startedAt,
@@ -226,7 +226,7 @@ describe("getWorkForSession", () => {
     const directory = createTempDirectory()
     writeState(directory, {
       schema_version: 2,
-      active_plan: ".omo/plans/mirror.md",
+      active_plan: ".omop/plans/mirror.md",
       plan_name: "mirror",
       status: "active",
       started_at: "2026-06-05T01:00:00.000Z",

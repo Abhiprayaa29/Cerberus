@@ -1,4 +1,4 @@
-export const HARNESS_IDS = ["codex", "opencode", "omo"] as const
+export const HARNESS_IDS = ["codex", "opencode", "omop"] as const
 
 export type HarnessId = (typeof HARNESS_IDS)[number]
 
@@ -28,7 +28,7 @@ export const SETTING_HARNESS_SUPPORT: Record<SettingPath, readonly HarnessId[]> 
   "codegraph.enabled": HARNESS_IDS,
   "codegraph.install_dir": HARNESS_IDS,
   "codegraph.telemetry": HARNESS_IDS,
-  "codegraph.watch_debounce_ms": ["opencode", "omo"],
+  "codegraph.watch_debounce_ms": ["opencode", "omop"],
 } as const
 
 export interface OmoConfigValidationResult {
@@ -38,7 +38,7 @@ export interface OmoConfigValidationResult {
 
 const HARNESS_BLOCK_KEYS: Record<string, HarnessId> = {
   "[codex]": "codex",
-  "[omo]": "omo",
+  "[omo]": "omop",
   "[opencode]": "opencode",
 }
 

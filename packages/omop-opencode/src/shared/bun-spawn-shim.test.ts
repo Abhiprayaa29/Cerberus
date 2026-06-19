@@ -82,7 +82,7 @@ describe("bun-spawn-shim", () => {
   test("#given missing executable #when spawn invoked #then the error is surfaced to the caller", async () => {
     let observedError: unknown
     try {
-      const proc = spawn(["__omo-shim-missing-binary__"], { stdout: "pipe", stderr: "pipe" })
+      const proc = spawn(["__omop-shim-missing-binary__"], { stdout: "pipe", stderr: "pipe" })
       await proc.exited
     } catch (error) {
       observedError = error

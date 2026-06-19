@@ -8,7 +8,7 @@ describe("migrateLegacyConfigFile", () => {
   let testDir = ""
 
   beforeEach(() => {
-    testDir = join(tmpdir(), `omo-migrate-config-${Date.now()}-${Math.random().toString(36).slice(2)}`)
+    testDir = join(tmpdir(), `omop-migrate-config-${Date.now()}-${Math.random().toString(36).slice(2)}`)
     mkdirSync(testDir, { recursive: true })
   })
 

@@ -119,7 +119,7 @@ After making changes, you can test your local build in OpenCode:
 
 The cross-harness one-command bootstrap is the single source of truth for all development environments.
 
-- **`script/agent/setup.sh`** verifies Bun, Node, and git, warns if tmux is missing, runs `bun install`, and builds when `dist/index.js` is missing or `OMO_AGENT_FORCE_BUILD=.` is set.
+- **`script/agent/setup.sh`** verifies Bun, Node, and git, warns if tmux is missing, runs `bun install`, and builds when `dist/index.js` is missing or `OMOP_AGENT_FORCE_BUILD=.` is set.
 - **`script/agent/cleanup.sh`** removes regenerable transients by default. Pass `--deep` to also drop `dist/` and `node_modules/`.
 
 All harnesses delegate to these scripts:
@@ -242,7 +242,7 @@ Tests are co-located as `*.test.ts` files and follow a given/when/then style.
 | Types            | Use `bun-types`, not `@types/node`                                        |
 | Directory Naming | kebab-case (`ast-grep/`, `claude-code-hooks/`)                            |
 | File Operations  | Never use bash commands (mkdir/touch/rm) for file creation in code        |
-| Tool Structure   | `index.ts` (barrel), `types.ts`, `constants.ts`, and concern-split implementation files named after what they do. Generic catch-all dump modules are banned (see `.omo/rules/file-size-architectural-smell.md`). |
+| Tool Structure   | `index.ts` (barrel), `types.ts`, `constants.ts`, and concern-split implementation files named after what they do. Generic catch-all dump modules are banned (see `.omop/rules/file-size-architectural-smell.md`). |
 | Hook Pattern     | `createXXXHook(deps)` function naming                                     |
 | Exports          | Barrel pattern (`export * from "./module"` in index.ts)                   |
 
@@ -321,7 +321,7 @@ export function createMyHook(deps: { logger: Logger }) {
 
 ## QA Discipline
 
-Any change to `packages/omop-opencode` (the OpenCode side) must be QA'd with the `opencode-qa` skill. Any change to `packages/omop-codex` (the Codex Light side) must be QA'd with the `codex-qa` skill. Record QA evidence under `.omo/evidence/<date>-<slug>/`.
+Any change to `packages/omop-opencode` (the OpenCode side) must be QA'd with the `opencode-qa` skill. Any change to `packages/omop-codex` (the Codex Light side) must be QA'd with the `codex-qa` skill. Record QA evidence under `.omop/evidence/<date>-<slug>/`.
 
 "It typechecks" or "`bun test` is green" is not QA. You must drive the real harness and record the observed behavior.
 
@@ -351,7 +351,7 @@ Any change to `packages/omop-opencode` (the OpenCode side) must be QA'd with the
 - [ ] `bun test` passes
 - [ ] `bun run test:codex` passes (if Codex-side changed)
 - [ ] Tested locally with OpenCode
-- [ ] QA evidence recorded under `.omo/evidence/` (if harness-connected changes)
+- [ ] QA evidence recorded under `.omop/evidence/` (if harness-connected changes)
 - [ ] Updated documentation if needed (README, AGENTS.md)
 - [ ] No version changes in `package.json`
 

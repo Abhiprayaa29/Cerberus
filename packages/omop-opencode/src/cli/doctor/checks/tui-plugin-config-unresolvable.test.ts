@@ -30,7 +30,7 @@ describe("tui-plugin-config unresolvable named entries", () => {
     originalConfigDir = process.env.OPENCODE_CONFIG_DIR
     testConfigDir = join(
       tmpdir(),
-      `omo-doctor-tui-unresolvable-${Date.now()}-${Math.random().toString(36).slice(2)}`,
+      `omop-doctor-tui-unresolvable-${Date.now()}-${Math.random().toString(36).slice(2)}`,
     )
     mkdirSync(testConfigDir, { recursive: true })
     process.env.OPENCODE_CONFIG_DIR = testConfigDir

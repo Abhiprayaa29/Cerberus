@@ -5,8 +5,8 @@
 .. Create worktree from `origin/dev`:
    ```bash
    git fetch origin dev
-   git worktree add ../omo-wt/fix/comment-checker-note-false-positive origin/dev
-   cd ../omo-wt/fix/comment-checker-note-false-positive
+   git worktree add ../omop-wt/fix/comment-checker-note-false-positive origin/dev
+   cd ../omop-wt/fix/comment-checker-note-false-positive
    git checkout -b fix/comment-checker-note-false-positive
    bun install
    ```
@@ -108,5 +108,5 @@ gh pr create --base dev \
 gh pr merge --squash --auto
 # Cleanup worktree
 cd <repo-root>
-git worktree remove ../omo-wt/fix/comment-checker-note-false-positive
+git worktree remove ../omop-wt/fix/comment-checker-note-false-positive
 ```

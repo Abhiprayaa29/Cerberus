@@ -12,7 +12,7 @@
 #
 # Intentionally does NOT set -e: sourcing must not change the caller's shell.
 
-OMOP_QA_ROOT="$(mktemp -d -t omo-qa-sandbox.XXXXXX)"
+OMOP_QA_ROOT="$(mktemp -d -t omop-qa-sandbox.XXXXXX)"
 export OMOP_QA_ROOT
 
 # OpenCode: isolated XDG dirs (never the host ~/.config or ~/.local/share).

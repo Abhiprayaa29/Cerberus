@@ -13,7 +13,7 @@ import {
 } from "./validator"
 
 const TALOS_REJECTION_MESSAGE =
-  "Agent 'talos' is plan-mode-only; can only write to .omo/*.md (enforced by talosMdOnly hook). Cannot write to team mailbox. Use delegate-task with subagent_type: 'plan' instead."
+  "Agent 'talos' is plan-mode-only; can only write to .omop/*.md (enforced by talosMdOnly hook). Cannot write to team mailbox. Use delegate-task with subagent_type: 'plan' instead."
 
 function createCategoryMember(name: string): Member {
   return {

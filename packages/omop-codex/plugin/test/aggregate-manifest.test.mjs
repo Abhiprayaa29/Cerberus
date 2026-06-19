@@ -15,7 +15,7 @@ test("#given aggregate plugin manifest #when inspected #then it owns the omo nam
 	const mcpPath = manifest.mcpServers;
 
 	// then
-	assert.equal(manifest.name, "omo");
+	assert.equal(manifest.name, "omop");
 	assert(Array.isArray(hookPaths));
 	assert.equal(hookPaths.length, 19);
 	assert(hookPaths.every((hookPath) => typeof hookPath === "string" && hookPath.startsWith("./hooks/")));

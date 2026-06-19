@@ -4,14 +4,14 @@ export const SCAFFOLD = `{
     // "enabled": true,
     // "auto_provision": true,
     // "telemetry": false,
-    // "install_dir": "~/.omo/codegraph"
+    // "install_dir": "~/.omop/codegraph"
   },
 
   "[codex]": {
     "codegraph": {
       // "enabled": true,
       // "auto_provision": true,
-      // "install_dir": "~/.omo/codegraph",
+      // "install_dir": "~/.omop/codegraph",
       // "telemetry": false
     }
   },
@@ -20,7 +20,7 @@ export const SCAFFOLD = `{
     "codegraph": {
       // "enabled": true,
       // "auto_provision": true,
-      // "install_dir": "~/.omo/codegraph",
+      // "install_dir": "~/.omop/codegraph",
       // "telemetry": false,
       // "watch_debounce_ms": 250
     }

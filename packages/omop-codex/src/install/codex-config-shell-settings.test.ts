@@ -19,7 +19,7 @@ describe("codex-config shell settings", () => {
       repoRoot: "/repo/packages/omop-codex",
       marketplaceName: "debug",
       marketplaceSource: { sourceType: "local", source: "/repo/packages/omop-codex" },
-      pluginNames: ["omo"],
+      pluginNames: ["omop"],
     })
 
     // then

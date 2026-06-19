@@ -20,7 +20,7 @@ describe("codex cache path helpers", () => {
     const cacheRoot = resolveCodexPluginCacheRoot(codexHome)
 
     // then
-    expect(cacheRoot).toBe(join(codexHome, "plugins", "cache", "cerberuslabs", "omo"))
+    expect(cacheRoot).toBe(join(codexHome, "plugins", "cache", "cerberuslabs", "omop"))
   })
 
   test("resolves cached component CLI paths under a plugin version root", () => {
@@ -37,8 +37,8 @@ describe("codex cache path helpers", () => {
   test("selects the newest cached component CLI from an OMO cache tree", () => {
     // given
     const root = join(tmpdir(), `omop-codex-cache-newest-${randomUUID()}`)
-    const oldCli = join(root, "plugins", "cache", "cerberuslabs", "omo", "0.1.0", "components", "pentest-loop", "dist", "cli.js")
-    const newCli = join(root, "plugins", "cache", "cerberuslabs", "omo", "0.2.0", "components", "pentest-loop", "dist", "cli.js")
+    const oldCli = join(root, "plugins", "cache", "cerberuslabs", "omop", "0.1.0", "components", "pentest-loop", "dist", "cli.js")
+    const newCli = join(root, "plugins", "cache", "cerberuslabs", "omop", "0.2.0", "components", "pentest-loop", "dist", "cli.js")
     mkdirSync(dirname(oldCli), { recursive: true })
     mkdirSync(dirname(newCli), { recursive: true })
     writeFileSync(oldCli, "#!/usr/bin/env node\n")
@@ -58,16 +58,16 @@ describe("codex cache path helpers", () => {
 
     // when
     const candidates = resolveCodexComponentBinCandidates({
-      executableName: "omo-pentest-loop",
+      executableName: "omop-pentest-loop",
       env: { CODEX_LOCAL_BIN_DIR: explicitBinDir },
       homeDir: root,
     })
 
     // then
     expect(candidates).toEqual([
-      join(explicitBinDir, "omo-pentest-loop"),
-      join(root, ".local", "bin", "omo-pentest-loop"),
-      join(root, ".codex", "bin", "omo-pentest-loop"),
+      join(explicitBinDir, "omop-pentest-loop"),
+      join(root, ".local", "bin", "omop-pentest-loop"),
+      join(root, ".codex", "bin", "omop-pentest-loop"),
     ])
   })
 })

@@ -71,7 +71,7 @@ bunx oh-my-open-pentest install
 | `--no-codex-autonomous` | Leave existing Codex permission settings unchanged when installing Light or Both |
 | `--skip-auth` | Skip authentication setup hints |
 
-When using the `lazycodex-ai` bin alias, `install` defaults to `--platform=codex`. `lazycodex-ai` is only the npm/bin alias; `lazycodex` is the marketplace repository name. The Codex config uses marketplace `cerberuslabs` and plugin `omo`, enabled as `omo@cerberuslabs`, with the marketplace source set to the local built cache under `~/.codex/plugins/cache/cerberuslabs`.
+When using the `lazycodex-ai` bin alias, `install` defaults to `--platform=codex`. `lazycodex-ai` is only the npm/bin alias; `lazycodex` is the marketplace repository name. The Codex config uses marketplace `cerberuslabs` and plugin `omo`, enabled as `omop@cerberuslabs`, with the marketplace source set to the local built cache under `~/.codex/plugins/cache/cerberuslabs`.
 
 Subscription flags (`--claude`, `--openai`, etc.) only apply when `--platform` is `opencode` or `both`. They are rejected under `--platform=codex` because the Light edition does not write OpenCode model config. `--codex-autonomous` and `--no-codex-autonomous` only affect installs where the selected platform includes Codex.
 
@@ -111,7 +111,7 @@ omo uninstall --platform=codex
 | `--project <path>` | Project directory to inspect for project-local legacy Codex artifacts |
 | `--json` | Output structured JSON result |
 
-The command removes the managed `cerberuslabs` plugin cache and marketplace snapshot, strips `omo@cerberuslabs` plugin, hook-state, and managed agent blocks from `~/.codex/config.toml` after writing a backup, and removes managed agent TOML files from `~/.codex/agents/`, including orphaned files whose install manifest is already gone. Project-owned `.codex` artifacts are reported, not deleted.
+The command removes the managed `cerberuslabs` plugin cache and marketplace snapshot, strips `omop@cerberuslabs` plugin, hook-state, and managed agent blocks from `~/.codex/config.toml` after writing a backup, and removes managed agent TOML files from `~/.codex/agents/`, including orphaned files whose install manifest is already gone. Project-owned `.codex` artifacts are reported, not deleted.
 
 ---
 

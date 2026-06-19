@@ -36,7 +36,7 @@ afterEach(() => {
 })
 
 function createMessageDir(): string {
-  const directory = mkdtempSync(join(tmpdir(), "omo-injector-message-dir-"))
+  const directory = mkdtempSync(join(tmpdir(), "omop-injector-message-dir-"))
   tempDirs.push(directory)
   mkdirSync(directory, { recursive: true })
   return directory

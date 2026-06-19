@@ -103,7 +103,7 @@ describe("system check", () => {
   describe("#given malformed config JSONC", () => {
     it("marks the config invalid without throwing", async () => {
       //#given
-      const configPath = join(tmpdir(), "omo-system-config-malformed.jsonc")
+      const configPath = join(tmpdir(), "omop-system-config-malformed.jsonc")
       const deps = {
         findOpenCodeBinary: async () => ({
           binary: "opencode",

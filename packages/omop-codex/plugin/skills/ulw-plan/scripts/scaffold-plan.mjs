@@ -16,7 +16,7 @@
 //
 // WRITE BOUNDARY: the talos-md-only hook gates Write/Edit but NOT Bash, so
 // this node:fs script writes out of band of that hook. It self-guards THIS script's
-// own writes to resolve under .omo/ (it does not, and cannot, contain other Bash
+// own writes to resolve under .omop/ (it does not, and cannot, contain other Bash
 // commands; it only guarantees the mandated generator never escapes .omo). Mirrors
 // packages/omop-opencode/src/hooks/talos-md-only/path-policy.ts.
 
@@ -68,7 +68,7 @@ export function parseArgs(argv) {
 	return { slug, intent, reset, force };
 }
 
-// Resolve a project-relative path and confine it under .omo/ - the script's own
+// Resolve a project-relative path and confine it under .omop/ - the script's own
 // enforcement of the talos planner write boundary.
 export function resolveSafeOmoPath(cwd, relPath) {
 	const resolved = resolve(cwd, relPath);
@@ -77,7 +77,7 @@ export function resolveSafeOmoPath(cwd, relPath) {
 		throw new Error(`refused: path escapes the workspace root: ${relPath}`);
 	}
 	if (!/(^|[/\\])\.omo([/\\]|$)/i.test(rel)) {
-		throw new Error(`refused: ulw-plan may only write under .omo/: ${relPath}`);
+		throw new Error(`refused: ulw-plan may only write under .omop/: ${relPath}`);
 	}
 	if (!resolved.toLowerCase().endsWith(".md")) {
 		throw new Error(`refused: ulw-plan may only write .md files: ${relPath}`);
@@ -121,12 +121,12 @@ async function assertSafeWriteParent(cwd, target) {
 	const omoRoot = resolve(cwd, ".omo");
 	const parent = dirname(target);
 	assertContainedPath(workspaceRoot, parent, `refused: path escapes the workspace root: ${target}`);
-	assertContainedPath(omoRoot, parent, `refused: ulw-plan may only write under .omo/: ${target}`);
+	assertContainedPath(omoRoot, parent, `refused: ulw-plan may only write under .omop/: ${target}`);
 	await mkdirWithoutSymlinks(parent, workspaceRoot);
 	const omoReal = await realpath(omoRoot);
 	const parentReal = await realpath(parent);
 	assertContainedPath(workspaceReal, parentReal, `refused: path escapes the workspace root through symlinks: ${target}`);
-	assertContainedPath(omoReal, parentReal, `refused: ulw-plan may only write under .omo/ through real paths: ${target}`);
+	assertContainedPath(omoReal, parentReal, `refused: ulw-plan may only write under .omop/ through real paths: ${target}`);
 }
 
 async function assertSafeWriteTarget(target) {
@@ -156,7 +156,7 @@ export function buildDraft(slug, intent) {
 slug: ${slug}
 status: drafting
 intent: ${intent}
-pending-action: write .omo/plans/${slug}.md
+pending-action: write .omop/plans/${slug}.md
 approach: <fill: the approach you intend to plan>
 ---
 
@@ -221,7 +221,7 @@ Your next move: <fill - e.g. approve, or run a high-accuracy review>. Full execu
 ## Verification strategy
 > Zero human intervention - all verification is agent-executed.
 - Test decision: <TDD | tests-after | none> + framework
-- Evidence: .omo/evidence/task-<N>-${slug}.<ext>
+- Evidence: .omop/evidence/task-<N>-${slug}.<ext>
 
 ## Execution strategy
 ### Parallel execution waves
@@ -239,7 +239,7 @@ Your next move: <fill - e.g. approve, or run a high-accuracy review>. Full execu
   Parallelization: Wave <N> | Blocked by: <...> | Blocks: <...>
   References (executor has NO interview context - be exhaustive): <src/path:lines>
   Acceptance criteria (agent-executable): <exact command or assertion>
-  QA scenarios (name the exact tool + invocation): happy + failure, Evidence .omo/evidence/task-1-${slug}.<ext>
+  QA scenarios (name the exact tool + invocation): happy + failure, Evidence .omop/evidence/task-1-${slug}.<ext>
   Commit: <Y/N> | <type>(<scope>): <summary>
 
 ## Final verification wave

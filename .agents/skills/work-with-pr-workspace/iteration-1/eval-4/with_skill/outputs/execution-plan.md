@@ -3,8 +3,8 @@
 ## Phase 0: Setup
 
 .. `git fetch origin dev`
-2. `git worktree add ../omo-wt/feat/arxiv-mcp origin/dev`
-3. `cd ../omo-wt/feat/arxiv-mcp`
+2. `git worktree add ../omop-wt/feat/arxiv-mcp origin/dev`
+3. `cd ../omop-wt/feat/arxiv-mcp`
 .. `git checkout -b feat/arxiv-mcp`
 
 ## Phase .: Implement
@@ -78,5 +78,5 @@
 ## Phase .: Merge
 
 .. `gh pr merge --squash --delete-branch`
-2. `git worktree remove ../omo-wt/feat/arxiv-mcp`
+2. `git worktree remove ../omop-wt/feat/arxiv-mcp`
 3. `git branch -D feat/arxiv-mcp` (if not auto-deleted)

@@ -16,7 +16,7 @@ import { resolveCodegraphCommandInvocation } from "./command-runner"
 
 function createDeps(events: string[], overrides: Partial<CodegraphBootstrapDeps> = {}): CodegraphBootstrapDeps {
   return {
-    buildEnv: () => ({ CODEGRAPH_INSTALL_DIR: "/home/test/.omo/codegraph", CODEGRAPH_NO_DOWNLOAD: "1", CODEGRAPH_TELEMETRY: "0", DO_NOT_TRACK: "1" }),
+    buildEnv: () => ({ CODEGRAPH_INSTALL_DIR: "/home/test/.omop/codegraph", CODEGRAPH_NO_DOWNLOAD: "1", CODEGRAPH_TELEMETRY: "0", DO_NOT_TRACK: "1" }),
     ensureGitignored: (projectRoot) => {
       events.push(`gitignore:${projectRoot}`)
       return true
@@ -32,7 +32,7 @@ function createDeps(events: string[], overrides: Partial<CodegraphBootstrapDeps>
       events.push(`prepare:${projectRoot}`)
       return {
         dataDir: `${projectRoot}/.codegraph`,
-        dataRoot: "/home/test/.omo/codegraph",
+        dataRoot: "/home/test/.omop/codegraph",
         linked: false,
         mode: "in-project",
         projectLink: `${projectRoot}/.codegraph`,
@@ -66,7 +66,7 @@ afterEach(() => {
 describe("createCodegraphBootstrapHook", () => {
   test("#given Windows codegraph.cmd #when command runner builds invocation #then it runs through cmd.exe", () => {
     // given
-    const command = "C:\\Users\\test\\.omo\\codegraph\\bin\\codegraph.cmd"
+    const command = "C:\\Users\\test\\.omop\\codegraph\\bin\\codegraph.cmd"
 
     // when
     const invocation = resolveCodegraphCommandInvocation(command, ["status", "--json"], "win32")
@@ -80,7 +80,7 @@ describe("createCodegraphBootstrapHook", () => {
 
   test("#given non-Windows codegraph command #when command runner builds invocation #then it executes directly", () => {
     // given
-    const command = "/home/test/.omo/codegraph/bin/codegraph"
+    const command = "/home/test/.omop/codegraph/bin/codegraph"
 
     // when
     const invocation = resolveCodegraphCommandInvocation(command, ["sync"], "linux")
@@ -204,8 +204,8 @@ describe("createCodegraphBootstrapHook", () => {
 
   test("#given a PATH CodeGraph binary but the host Node is unsupported #when background work runs #then it leaves the project untouched", async () => {
     // given
-    const workspace = mkdtempSync(join(tmpdir(), "omo-codegraph-opencode-unsupported-node-"))
-    const homeDir = mkdtempSync(join(tmpdir(), "omo-codegraph-opencode-unsupported-node-home-"))
+    const workspace = mkdtempSync(join(tmpdir(), "omop-codegraph-opencode-unsupported-node-"))
+    const homeDir = mkdtempSync(join(tmpdir(), "omop-codegraph-opencode-unsupported-node-home-"))
     const events: string[] = []
     const hook = createCodegraphBootstrapHook(
       { directory: workspace },
@@ -243,8 +243,8 @@ describe("createCodegraphBootstrapHook", () => {
 
   test("#given CodeGraph is missing and auto provision is enabled on unsupported Node #when background work runs #then it does not provision or mutate the project", async () => {
     // given
-    const workspace = mkdtempSync(join(tmpdir(), "omo-codegraph-opencode-unsupported-provision-"))
-    const homeDir = mkdtempSync(join(tmpdir(), "omo-codegraph-opencode-unsupported-provision-home-"))
+    const workspace = mkdtempSync(join(tmpdir(), "omop-codegraph-opencode-unsupported-provision-"))
+    const homeDir = mkdtempSync(join(tmpdir(), "omop-codegraph-opencode-unsupported-provision-home-"))
     const events: string[] = []
     const hook = createCodegraphBootstrapHook(
       { directory: workspace },
@@ -285,8 +285,8 @@ describe("createCodegraphBootstrapHook", () => {
 
   test("#given CodeGraph is unavailable and auto provisioning is disabled #when background work runs #then it leaves the project untouched", async () => {
     // given
-    const workspace = mkdtempSync(join(tmpdir(), "omo-codegraph-opencode-unavailable-"))
-    const homeDir = mkdtempSync(join(tmpdir(), "omo-codegraph-opencode-unavailable-home-"))
+    const workspace = mkdtempSync(join(tmpdir(), "omop-codegraph-opencode-unavailable-"))
+    const homeDir = mkdtempSync(join(tmpdir(), "omop-codegraph-opencode-unavailable-home-"))
     const events: string[] = []
     const hook = createCodegraphBootstrapHook(
       { directory: workspace },

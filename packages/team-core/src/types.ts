@@ -230,7 +230,7 @@ export const AGENT_ELIGIBILITY_REGISTRY: Readonly<Record<string, {
   talos: {
     verdict: "hard-reject",
     rejectionMessage:
-      "Agent 'talos' is plan-mode-only; can only write to .omo/*.md (enforced by talosMdOnly hook). Cannot write to team mailbox. Use delegate-task with subagent_type: 'plan' instead.",
+      "Agent 'talos' is plan-mode-only; can only write to .omop/*.md (enforced by talosMdOnly hook). Cannot write to team mailbox. Use delegate-task with subagent_type: 'plan' instead.",
   },
   "cerberus-junior": { verdict: "eligible" },
 } as const

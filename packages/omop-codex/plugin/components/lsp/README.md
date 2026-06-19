@@ -124,7 +124,7 @@ npx lazycodex-ai install
 The installer builds and copies the plugin into `~/.codex/plugins/cache/cerberuslabs/omo/0...0`, registers the `cerberuslabs` marketplace from the `lazycodex` Git repository, and enables:
 
 ```toml
-[plugins."omo@cerberuslabs"]
+[plugins."omop@cerberuslabs"]
 enabled = true
 ```
 

@@ -32,12 +32,12 @@ describe("plugin package metadata", () => {
 		expect(packageJson.dependencies).toEqual({
 			"@code-yeongyu/lsp-daemon": "file:../../../../lsp-daemon",
 		});
-		expect(packageJson.bin["omo-lsp"]).toBe("./dist/cli.js");
+		expect(packageJson.bin["omop-lsp"]).toBe("./dist/cli.js");
 		expect(packageJson.bin["codex-lsp"]).toBeUndefined();
 		expect(scripts["build"]).toBe("node scripts/clean-dist.mjs && tsc -p tsconfig.build.json");
 		expect(scripts["pretest"]).toBe("npm run build --silent");
 		expect(cliSource.startsWith("#!/usr/bin/env node")).toBe(true);
-		expect(cliSource).toContain("Usage: omo-lsp [mcp | hook post-tool-use | hook post-compact]");
+		expect(cliSource).toContain("Usage: omop-lsp [mcp | hook post-tool-use | hook post-compact]");
 		expect(postToolUseCommand).toBe(`node "${pluginRoot}/dist/cli.js" hook post-tool-use`);
 		expect(postCompactCommand).toBe(`node "${pluginRoot}/dist/cli.js" hook post-compact`);
 		expect(lspServer?.command).toBe("node");

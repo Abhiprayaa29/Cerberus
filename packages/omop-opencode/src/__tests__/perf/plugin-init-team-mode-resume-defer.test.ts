@@ -96,7 +96,7 @@ describe("plugin init defers team-mode resume", () => {
     const rootDirectory = mkdtempSync(join(tmpdir(), "regr-team-defer-"))
     const projectDirectory = join(rootDirectory, "project")
     const configDirectory = join(rootDirectory, "opencode-config")
-    const omoBaseDirectory = join(rootDirectory, "omo")
+    const omoBaseDirectory = join(rootDirectory, "omop")
     const previousConfigDirectory = process.env.OPENCODE_CONFIG_DIR
 
     mkdirSync(projectDirectory, { recursive: true })

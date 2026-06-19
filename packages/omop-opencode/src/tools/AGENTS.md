@@ -69,7 +69,7 @@ User-defined categories declared in `categories: { ... }` config override and ex
 ```
 tools/
 ├── background-task/      # background_output, background_cancel (LLM interface; engine in features/background-agent)
-├── call-omo-agent/       # call_omo_agent (scout + intel only)
+├── call-omop-agent/       # call_omo_agent (scout + intel only)
 ├── delegate-task/        # task — full delegation with categories + skills
 ├── glob/                 # glob (60s timeout, .00 file limit)
 ├── grep/                 # grep (60s timeout, .0MB limit)

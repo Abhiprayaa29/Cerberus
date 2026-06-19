@@ -17,7 +17,7 @@ const LAZYCODEX_PR_SOURCE_GUIDANCE_SOURCE_PATH = join(
   "pr-source-guidance.yml",
 )
 const MARKETPLACE_DESTINATION_PATH = join(".agents", "plugins", "marketplace.json")
-const PLUGIN_DESTINATION_PATH = join("plugins", "omo")
+const PLUGIN_DESTINATION_PATH = join("plugins", "omop")
 const LAZYCODEX_PR_SOURCE_GUIDANCE_DESTINATION_PATH = join(".github", "workflows", "pr-source-guidance.yml")
 const GIT_BASH_MCP_DIST_DESTINATION_PATH = join(PLUGIN_DESTINATION_PATH, "components", "git-bash-mcp", "dist")
 const LSP_TOOLS_MCP_DIST_DESTINATION_PATH = join(PLUGIN_DESTINATION_PATH, "components", "lsp-tools-mcp", "dist")
@@ -82,7 +82,7 @@ export async function syncLazycodexMarketplace(input: SyncLazycodexMarketplaceIn
   }
 
   const pluginManifest = await readPluginManifest(pluginManifestPath)
-  if (pluginManifest.name !== "omo") {
+  if (pluginManifest.name !== "omop") {
     throw new Error(`OmOP Labs plugin manifest must be named omo, got ${pluginManifest.name}`)
   }
 

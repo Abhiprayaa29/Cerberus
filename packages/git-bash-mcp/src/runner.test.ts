@@ -20,7 +20,7 @@ afterEach(() => {
 
 describe("Git Bash runner", () => {
   it("#given fake bash executable #when command runs #then invokes bash with -lc and command payload", async () => {
-    const directory = createTemporaryDirectory("omo-git-bash-runner-");
+    const directory = createTemporaryDirectory("omop-git-bash-runner-");
     const argvPath = join(directory, "argv.txt");
     const fakeBashPath = process.platform === "win32" ? join(directory, "bash.cmd") : join(directory, "bash");
     const fakeBashScript = process.platform === "win32"

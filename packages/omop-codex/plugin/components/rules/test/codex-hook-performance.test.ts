@@ -77,13 +77,13 @@ describe("codex rules hook performance", () => {
 			// when
 			const firstOutput = await runPostToolUseHook(postToolUseInput(root, targetPath), {
 				pluginDataRoot: pluginData,
-				env: { CODEX_RULES_ENABLED_SOURCES: ".omo/rules" },
+				env: { CODEX_RULES_ENABLED_SOURCES: ".omop/rules" },
 			});
 			const firstRunRuleFileReads = ruleFileReads;
 			ruleFileReads = 0;
 			const secondOutput = await runPostToolUseHook(postToolUseInput(root, targetPath), {
 				pluginDataRoot: pluginData,
-				env: { CODEX_RULES_ENABLED_SOURCES: ".omo/rules" },
+				env: { CODEX_RULES_ENABLED_SOURCES: ".omop/rules" },
 			});
 
 			// then

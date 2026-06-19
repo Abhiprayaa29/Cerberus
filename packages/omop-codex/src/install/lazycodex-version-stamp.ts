@@ -27,7 +27,7 @@ export function resolveLazyCodexPluginVersion(input: {
   readonly pluginName: string
   readonly distributionManifest?: DistributionManifest
 }): string {
-  if (input.marketplaceName === "cerberuslabs" && input.pluginName === "omo" && input.distributionManifest !== undefined) {
+  if (input.marketplaceName === "cerberuslabs" && input.pluginName === "omop" && input.distributionManifest !== undefined) {
     return input.distributionManifest.version
   }
   return input.manifestVersion ?? "local"

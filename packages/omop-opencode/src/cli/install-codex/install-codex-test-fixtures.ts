@@ -4,14 +4,14 @@ import { join } from "node:path"
 
 export const EXPECTED_OMOP_COMPONENT_BINS = [
   { name: "omop", target: join("dist", "cli", "index.js"), kind: "runtime-wrapper" },
-  { name: "omo-comment-checker", target: join("components", "comment-checker", "dist", "cli.js") },
-  { name: "omo-git-bash-hook", target: join("components", "git-bash", "dist", "cli.js") },
-  { name: "omo-lsp", target: join("components", "lsp", "dist", "cli.js") },
-  { name: "omo-rules", target: join("components", "rules", "dist", "cli.js") },
-  { name: "omo-start-work-continuation", target: join("components", "start-work-continuation", "dist", "cli.js") },
-  { name: "omo-telemetry", target: join("components", "telemetry", "dist", "cli.js") },
-  { name: "omo-pentest-loop", target: join("components", "pentest-loop", "dist", "cli.js") },
-  { name: "omo-fullscan", target: join("components", "fullscan", "dist", "cli.js") },
+  { name: "omop-comment-checker", target: join("components", "comment-checker", "dist", "cli.js") },
+  { name: "omop-git-bash-hook", target: join("components", "git-bash", "dist", "cli.js") },
+  { name: "omop-lsp", target: join("components", "lsp", "dist", "cli.js") },
+  { name: "omop-rules", target: join("components", "rules", "dist", "cli.js") },
+  { name: "omop-start-work-continuation", target: join("components", "start-work-continuation", "dist", "cli.js") },
+  { name: "omop-telemetry", target: join("components", "telemetry", "dist", "cli.js") },
+  { name: "omop-pentest-loop", target: join("components", "pentest-loop", "dist", "cli.js") },
+  { name: "omop-fullscan", target: join("components", "fullscan", "dist", "cli.js") },
 ] as const
 
 export function expectedBinName(name: string): string {

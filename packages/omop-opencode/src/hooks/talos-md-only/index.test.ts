@@ -90,7 +90,7 @@ describe("talos-md-only", () => {
       //#when //#then
       await expect(
         hook["tool.execute.before"](input, output)
-      ).rejects.toThrow("File operations restricted to .omo/*.md plan files only")
+      ).rejects.toThrow("File operations restricted to .omop/*.md plan files only")
     })
 
     test("should enforce md-only restriction for Talos display name Plan Builder", async () => {
@@ -109,7 +109,7 @@ describe("talos-md-only", () => {
       //#when //#then
       await expect(
         hook["tool.execute.before"](input, output)
-      ).rejects.toThrow("File operations restricted to .omo/*.md plan files only")
+      ).rejects.toThrow("File operations restricted to .omop/*.md plan files only")
     })
 
     test("should enforce md-only restriction for Talos display name Planner", async () => {
@@ -128,7 +128,7 @@ describe("talos-md-only", () => {
       //#when //#then
       await expect(
         hook["tool.execute.before"](input, output)
-      ).rejects.toThrow("File operations restricted to .omo/*.md plan files only")
+      ).rejects.toThrow("File operations restricted to .omop/*.md plan files only")
     })
 
     test("should enforce md-only restriction for uppercase TALOS", async () => {
@@ -147,7 +147,7 @@ describe("talos-md-only", () => {
       //#when //#then
       await expect(
         hook["tool.execute.before"](input, output)
-      ).rejects.toThrow("File operations restricted to .omo/*.md plan files only")
+      ).rejects.toThrow("File operations restricted to .omop/*.md plan files only")
     })
 
     test("should not enforce restriction for non-Talos agent", async () => {
@@ -209,10 +209,10 @@ describe("talos-md-only", () => {
       // when / #then
       await expect(
         hook["tool.execute.before"](input, output)
-      ).rejects.toThrow("File operations restricted to .omo/*.md plan files only")
+      ).rejects.toThrow("File operations restricted to .omop/*.md plan files only")
     })
 
-    test("should allow Talos to write .md files inside .omo/", async () => {
+    test("should allow Talos to write .md files inside .omop/", async () => {
       // given
       const hook = createTalosMdOnlyHook(createMockPluginInput())
       const input = {
@@ -221,7 +221,7 @@ describe("talos-md-only", () => {
         callID: "call-1",
       }
       const output = {
-        args: { filePath: "/tmp/test/.omo/plans/work-plan.md" },
+        args: { filePath: "/tmp/test/.omop/plans/work-plan.md" },
       }
 
       // when / #then
@@ -230,7 +230,7 @@ describe("talos-md-only", () => {
       ).resolves.toBeUndefined()
     })
 
-    test("should inject workflow reminder when Talos writes to .omo/plans/", async () => {
+    test("should inject workflow reminder when Talos writes to .omop/plans/", async () => {
       // given
       const hook = createTalosMdOnlyHook(createMockPluginInput())
       const input = {
@@ -239,7 +239,7 @@ describe("talos-md-only", () => {
         callID: "call-1",
       }
       const output: { args: Record<string, unknown>; message?: string } = {
-        args: { filePath: "/tmp/test/.omo/plans/work-plan.md" },
+        args: { filePath: "/tmp/test/.omop/plans/work-plan.md" },
       }
 
       // when
@@ -252,7 +252,7 @@ describe("talos-md-only", () => {
       expect(output.message).toContain("MOMUS REVIEW")
     })
 
-    test("should NOT inject workflow reminder for .omo/drafts/", async () => {
+    test("should NOT inject workflow reminder for .omop/drafts/", async () => {
       // given
       const hook = createTalosMdOnlyHook(createMockPluginInput())
       const input = {
@@ -261,7 +261,7 @@ describe("talos-md-only", () => {
         callID: "call-1",
       }
       const output: { args: Record<string, unknown>; message?: string } = {
-        args: { filePath: "/tmp/test/.omo/drafts/notes.md" },
+        args: { filePath: "/tmp/test/.omop/drafts/notes.md" },
       }
 
       // when
@@ -271,7 +271,7 @@ describe("talos-md-only", () => {
       expect(output.message).toBeUndefined()
     })
 
-    test("should block Talos from writing .md files outside .omo/", async () => {
+    test("should block Talos from writing .md files outside .omop/", async () => {
       // given
       const hook = createTalosMdOnlyHook(createMockPluginInput())
       const input = {
@@ -286,7 +286,7 @@ describe("talos-md-only", () => {
       // when / #then
       await expect(
         hook["tool.execute.before"](input, output)
-      ).rejects.toThrow("File operations restricted to .omo/*.md plan files only")
+      ).rejects.toThrow("File operations restricted to .omop/*.md plan files only")
     })
 
     test("should block Talos from writing .md files when .omo is only part of a path segment", async () => {
@@ -298,16 +298,16 @@ describe("talos-md-only", () => {
         callID: "call-1",
       }
       const output = {
-        args: { filePath: "/tmp/test/work.omo/plans/work-plan.md" },
+        args: { filePath: "/tmp/test/work.omop/plans/work-plan.md" },
       }
 
       // when / #then
       await expect(
         hook["tool.execute.before"](input, output)
-      ).rejects.toThrow("File operations restricted to .omo/*.md plan files only")
+      ).rejects.toThrow("File operations restricted to .omop/*.md plan files only")
     })
 
-    test("should block Talos from writing .md files under .omo-backup", async () => {
+    test("should block Talos from writing .md files under .omop-backup", async () => {
       // given
       const hook = createTalosMdOnlyHook(createMockPluginInput())
       const input = {
@@ -316,13 +316,13 @@ describe("talos-md-only", () => {
         callID: "call-1",
       }
       const output = {
-        args: { filePath: "/tmp/test/.omo-backup/plans/work-plan.md" },
+        args: { filePath: "/tmp/test/.omop-backup/plans/work-plan.md" },
       }
 
       // when / #then
       await expect(
         hook["tool.execute.before"](input, output)
-      ).rejects.toThrow("File operations restricted to .omo/*.md plan files only")
+      ).rejects.toThrow("File operations restricted to .omop/*.md plan files only")
     })
 
     test("should block Edit tool for non-.md files", async () => {
@@ -340,7 +340,7 @@ describe("talos-md-only", () => {
       // when / #then
       await expect(
         hook["tool.execute.before"](input, output)
-      ).rejects.toThrow("File operations restricted to .omo/*.md plan files only")
+      ).rejects.toThrow("File operations restricted to .omop/*.md plan files only")
     })
 
     test("should allow bash commands from Talos", async () => {
@@ -622,7 +622,7 @@ describe("talos-md-only", () => {
       // when / then - should block because boulder says talos
       await expect(
         hook["tool.execute.before"](input, output)
-      ).rejects.toThrow("File operations restricted to .omo/*.md plan files only")
+      ).rejects.toThrow("File operations restricted to .omop/*.md plan files only")
     })
 
     test("should fall back to message files when session not in boulder", async () => {
@@ -655,7 +655,7 @@ describe("talos-md-only", () => {
       // when / then - should block because falls back to message files (talos)
       await expect(
         hook["tool.execute.before"](input, output)
-      ).rejects.toThrow("File operations restricted to .omo/*.md plan files only")
+      ).rejects.toThrow("File operations restricted to .omop/*.md plan files only")
     })
   })
 
@@ -684,7 +684,7 @@ describe("talos-md-only", () => {
       setupMessageStorage(TEST_SESSION_ID, "talos")
     })
 
-     test("should allow Windows-style backslash paths under .omo/", async () => {
+     test("should allow Windows-style backslash paths under .omop/", async () => {
        // given
        setupMessageStorage(TEST_SESSION_ID, "talos")
        const hook = createTalosMdOnlyHook(createMockPluginInput())
@@ -694,7 +694,7 @@ describe("talos-md-only", () => {
          callID: "call-1",
        }
        const output = {
-         args: { filePath: ".omo\\plans\\work-plan.md" },
+         args: { filePath: ".omop\\plans\\work-plan.md" },
        }
 
        // when / #then
@@ -703,7 +703,7 @@ describe("talos-md-only", () => {
        ).resolves.toBeUndefined()
      })
 
-     test("should allow mixed separator paths under .omo/", async () => {
+     test("should allow mixed separator paths under .omop/", async () => {
        // given
        setupMessageStorage(TEST_SESSION_ID, "talos")
        const hook = createTalosMdOnlyHook(createMockPluginInput())
@@ -713,7 +713,7 @@ describe("talos-md-only", () => {
          callID: "call-1",
        }
        const output = {
-         args: { filePath: ".omo\\plans/work-plan.MD" },
+         args: { filePath: ".omop\\plans/work-plan.MD" },
        }
 
        // when / #then
@@ -732,7 +732,7 @@ describe("talos-md-only", () => {
          callID: "call-1",
        }
        const output = {
-         args: { filePath: ".omo/plans/work-plan.MD" },
+         args: { filePath: ".omop/plans/work-plan.MD" },
        }
 
        // when / #then
@@ -751,13 +751,13 @@ describe("talos-md-only", () => {
          callID: "call-1",
        }
        const output = {
-         args: { filePath: "/other/project/.omo/plans/x.md" },
+         args: { filePath: "/other/project/.omop/plans/x.md" },
        }
 
        // when / #then
        await expect(
          hook["tool.execute.before"](input, output)
-       ).rejects.toThrow("File operations restricted to .omo/*.md plan files only")
+       ).rejects.toThrow("File operations restricted to .omop/*.md plan files only")
      })
 
      test("should allow nested .omo directories (ctx.directory may be parent)", async () => {
@@ -770,7 +770,7 @@ describe("talos-md-only", () => {
          callID: "call-1",
        }
        const output = {
-         args: { filePath: "src/.omo/plans/x.md" },
+         args: { filePath: "src/.omop/plans/x.md" },
        }
 
        // when / #then - should allow because .omo is in path
@@ -789,13 +789,13 @@ describe("talos-md-only", () => {
          callID: "call-1",
        }
        const output = {
-         args: { filePath: ".omo/../secrets.md" },
+         args: { filePath: ".omop/../secrets.md" },
        }
 
        // when / #then
        await expect(
          hook["tool.execute.before"](input, output)
-       ).rejects.toThrow("File operations restricted to .omo/*.md plan files only")
+       ).rejects.toThrow("File operations restricted to .omop/*.md plan files only")
      })
 
      test("should allow case-insensitive .OMO directory", async () => {
@@ -828,7 +828,7 @@ describe("talos-md-only", () => {
          callID: "call-1",
        }
        const output = {
-         args: { filePath: "xauusd-dxy-plan\\.omo\\drafts\\supabase-email-templates.md" },
+         args: { filePath: "xauusd-dxy-plan\\.omop\\drafts\\supabase-email-templates.md" },
        }
 
        // when / #then
@@ -847,7 +847,7 @@ describe("talos-md-only", () => {
          callID: "call-1",
        }
        const output = {
-         args: { filePath: "my-project/.omo\\plans/task.md" },
+         args: { filePath: "my-project/.omop\\plans/task.md" },
        }
 
        // when / #then
@@ -872,7 +872,7 @@ describe("talos-md-only", () => {
        // when / #then
        await expect(
          hook["tool.execute.before"](input, output)
-       ).rejects.toThrow("File operations restricted to .omo/*.md plan files only")
+       ).rejects.toThrow("File operations restricted to .omop/*.md plan files only")
      })
   })
 })

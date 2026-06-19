@@ -83,7 +83,7 @@ describe("resolveSkillContent — nativeSkills integration", () => {
 
     // then — OMO wins on name collision (mergeNativeSkills skips already-known names)
     expect(result.error).toBeNull()
-    expect(result.content).toContain("OMO_DISK_BODY")
+    expect(result.content).toContain("OMOP_DISK_BODY")
     expect(result.content).not.toContain("NATIVE_BODY")
   })
 

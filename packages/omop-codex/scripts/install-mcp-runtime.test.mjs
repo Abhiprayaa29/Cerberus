@@ -17,13 +17,13 @@ test("#given external MCP package runtime #when installing cached plugin #then r
 		name: "@example/does-not-matter",
 		version: "0.1.0",
 		type: "module",
-		bin: { "omo-lsp": "./dist/cli.js" },
+		bin: { "omop-lsp": "./dist/cli.js" },
 	});
 	await writeJson(join(gitBashPackageRoot, "package.json"), {
 		name: "@example/git-bash-mcp",
 		version: "0.1.0",
 		type: "module",
-		bin: { "omo-git-bash": "./dist/cli.js" },
+		bin: { "omop-git-bash": "./dist/cli.js" },
 	});
 	await writeJson(join(sourceRoot, "package.json"), {
 		name: "@example/omo",
@@ -150,7 +150,7 @@ test("#given external MCP package not in the generated bundled runtime set #when
 		name: "@example/language-tools",
 		version: "0.1.0",
 		type: "module",
-		bin: { "omo-language-tools": "./dist/cli.js" },
+		bin: { "omop-language-tools": "./dist/cli.js" },
 	});
 	await writeJson(join(runtimePackageRoot, "dist", "cli.js"), { executable: true });
 	await writeJson(join(sourceRoot, "package.json"), {

@@ -7,8 +7,8 @@ import { parseJsonc } from "../../shared/jsonc-parser"
 import { CONFIG_BASENAME, LEGACY_CONFIG_BASENAME } from "../../shared/plugin-identity"
 import type { InstallConfig } from "../types"
 import { resetConfigContext } from "./config-context"
-import { generateOmoConfig } from "./generate-omo-config"
-import { writeOmoConfig } from "./write-omo-config"
+import { generateOmoConfig } from "./generate-omop-config"
+import { writeOmoConfig } from "./write-omop-config"
 
 const installConfig: InstallConfig = {
   hasClaude: true,
@@ -37,7 +37,7 @@ describe("writeOmoConfig", () => {
   let testConfigPath = ""
 
   beforeEach(() => {
-    testConfigDir = join(tmpdir(), `omo-write-config-${Date.now()}-${Math.random().toString(36).slice(2)}`)
+    testConfigDir = join(tmpdir(), `omop-write-config-${Date.now()}-${Math.random().toString(36).slice(2)}`)
     testConfigPath = join(testConfigDir, `${CONFIG_BASENAME}.json`)
 
     mkdirSync(testConfigDir, { recursive: true })

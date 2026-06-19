@@ -406,21 +406,21 @@ describe("team-layout-tmux", () => {
     expect(commands.some((args) => args[0] === "kill-session")).toBe(false)
   })
 
-  test("#given ownedSession=true, targetSessionId='omo-team-xyz' #when removeTeamLayout runs #then kill-session is called with -t omo-team-xyz (legacy behavior preserved)", async () => {
+  test("#given ownedSession=true, targetSessionId='omop-team-xyz' #when removeTeamLayout runs #then kill-session is called with -t omop-team-xyz (legacy behavior preserved)", async () => {
     // given
     const { removeTeamLayout } = await loadLayoutModule()
 
     // when
     await removeTeamLayout("run-cleanup", {
       ownedSession: true,
-      targetSessionId: "omo-team-xyz",
+      targetSessionId: "omop-team-xyz",
       focusWindowId: "@10",
       gridWindowId: "@11",
     }, tmuxMgr as never)
 
     // then
     const commands = getCommands()
-    expect(commands).toContainEqual(["kill-session", "-t", "omo-team-xyz"])
+    expect(commands).toContainEqual(["kill-session", "-t", "omop-team-xyz"])
   })
 
   test("#given ownedSession=false and the first kill-window fails #when removeTeamLayout runs #then the second kill-window still fires", async () => {

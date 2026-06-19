@@ -54,7 +54,7 @@ async function writeManifestFixture(
 describe("downloadChecksummedAsset", () => {
 	it("#given a fetch that returns the pinned bytes #when downloading #then the destination holds exactly those bytes and no partial files remain", async () => {
 		// given
-		const directory = createTemporaryDirectory("omo-bootstrap-download-");
+		const directory = createTemporaryDirectory("omop-bootstrap-download-");
 		const payload = new TextEncoder().encode("pinned asset payload");
 		const destination = join(directory, "asset.zip");
 		const { calls, fetchImpl } = fetchReturning(payload);
@@ -76,7 +76,7 @@ describe("downloadChecksummedAsset", () => {
 
 	it("#given a fetch that returns corrupted bytes #when downloading #then a checksum mismatch error names both hashes and the partial file is deleted", async () => {
 		// given
-		const directory = createTemporaryDirectory("omo-bootstrap-download-");
+		const directory = createTemporaryDirectory("omop-bootstrap-download-");
 		const pinned = new TextEncoder().encode("pinned asset payload");
 		const corrupted = new TextEncoder().encode("corrupted asset payload");
 		const destination = join(directory, "asset.zip");
@@ -110,7 +110,7 @@ describe("downloadChecksummedAsset", () => {
 
 	it("#given a non-2xx response #when downloading #then a typed download-failed error is thrown and nothing is written", async () => {
 		// given
-		const directory = createTemporaryDirectory("omo-bootstrap-download-");
+		const directory = createTemporaryDirectory("omop-bootstrap-download-");
 		const destination = join(directory, "asset.zip");
 
 		// when
@@ -136,7 +136,7 @@ describe("downloadChecksummedAsset", () => {
 
 	it("#given HTTPS_PROXY is set #when the direct download attempt fails #then the error names the v1 proxy limitation", async () => {
 		// given
-		const directory = createTemporaryDirectory("omo-bootstrap-download-");
+		const directory = createTemporaryDirectory("omop-bootstrap-download-");
 		const calls: string[] = [];
 		const fetchImpl: FetchLike = async (url) => {
 			calls.push(url);
@@ -170,7 +170,7 @@ describe("downloadChecksummedAsset", () => {
 
 	it("#given no proxy env #when the direct download attempt fails #then the error does not mention proxies", async () => {
 		// given
-		const directory = createTemporaryDirectory("omo-bootstrap-download-");
+		const directory = createTemporaryDirectory("omop-bootstrap-download-");
 		const fetchImpl: FetchLike = async () => {
 			throw new Error("getaddrinfo ENOTFOUND example.invalid");
 		};
@@ -199,7 +199,7 @@ describe("downloadChecksummedAsset", () => {
 describe("downloadFromManifest", () => {
 	it("#given a manifest with a platform entry #when downloading for that platform #then the asset lands under its URL basename in the destination dir", async () => {
 		// given
-		const directory = createTemporaryDirectory("omo-bootstrap-manifest-");
+		const directory = createTemporaryDirectory("omop-bootstrap-manifest-");
 		const manifestsDir = join(directory, "manifests");
 		const destinationDir = join(directory, "downloads");
 		const payload = new TextEncoder().encode("tool binary zip bytes");
@@ -229,7 +229,7 @@ describe("downloadFromManifest", () => {
 
 	it("#given a manifest without the requested platform #when downloading #then a typed unsupported-platform error is thrown before any fetch", async () => {
 		// given
-		const directory = createTemporaryDirectory("omo-bootstrap-manifest-");
+		const directory = createTemporaryDirectory("omop-bootstrap-manifest-");
 		const manifestsDir = join(directory, "manifests");
 		await writeManifestFixture(manifestsDir, {
 			"darwin-arm64": { sha256: sha256Hex(new Uint8Array()), url: "https://example.invalid/tool.zip" },

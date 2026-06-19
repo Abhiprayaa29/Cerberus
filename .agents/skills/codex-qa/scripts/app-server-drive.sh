@@ -20,7 +20,7 @@
 #                      "sessionStart,userPromptSubmit")
 #   --keep             do not delete the isolated home (for inspection)
 #
-# The captured JSON summary IS the evidence; redirect it into .omo/evidence/.
+# The captured JSON summary IS the evidence; redirect it into .omop/evidence/.
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 . "$SCRIPT_DIR/lib/common.sh"
@@ -36,7 +36,7 @@ cqa_drive() {
       cqa_log "install failed; tail:"; tail -20 "$CQA_HOME_ROOT/install.log" >&2 2>/dev/null
       return 1
     fi
-    grep -q 'omo@sisyphuslabs' "$CODEX_HOME/config.toml" || { cqa_fail "omo not enabled in isolated config.toml"; return 1; }
+    grep -q 'omop@sisyphuslabs' "$CODEX_HOME/config.toml" || { cqa_fail "omo not enabled in isolated config.toml"; return 1; }
   fi
   cqa_start_mock || return 1
   local out

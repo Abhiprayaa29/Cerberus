@@ -17,7 +17,7 @@ test("#given empty Codex config #when script installer updates config #then sets
 		repoRoot: "/repo/packages/omop-codex",
 		marketplaceName: "debug",
 		marketplaceSource: { sourceType: "local", source: "/repo/packages/omop-codex" },
-		pluginNames: ["omo"],
+		pluginNames: ["omop"],
 	});
 
 	// then
@@ -52,7 +52,7 @@ test("#given existing model and reasoning config #when script installer updates 
 		repoRoot: "/repo/packages/omop-codex",
 		marketplaceName: "debug",
 		marketplaceSource: { sourceType: "local", source: "/repo/packages/omop-codex" },
-		pluginNames: ["omo"],
+		pluginNames: ["omop"],
 	});
 
 	// then
@@ -92,7 +92,7 @@ test("#given user-customized model config #when script installer updates config 
 		repoRoot: "/repo/packages/omop-codex",
 		marketplaceName: "debug",
 		marketplaceSource: { sourceType: "local", source: "/repo/packages/omop-codex" },
-		pluginNames: ["omo"],
+		pluginNames: ["omop"],
 	});
 
 	// then
@@ -129,7 +129,7 @@ test("#given bundled model catalog #when script installer updates config #then r
 		repoRoot,
 		marketplaceName: "debug",
 		marketplaceSource: { sourceType: "local", source: repoRoot },
-		pluginNames: ["omo"],
+		pluginNames: ["omop"],
 	});
 
 	// then

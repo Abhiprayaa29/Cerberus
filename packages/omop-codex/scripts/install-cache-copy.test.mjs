@@ -92,11 +92,11 @@ test("#given existing cache #when npm install fails #then previous active cache 
 	const root = await makeTempDir();
 	const codexHome = join(root, "codex-home");
 	const sourceRoot = join(root, "plugin");
-	const cacheRoot = join(codexHome, "plugins", "cache", "debug", "omo", "0.1.0");
+	const cacheRoot = join(codexHome, "plugins", "cache", "debug", "omop", "0.1.0");
 	await mkdir(sourceRoot, { recursive: true });
 	await mkdir(cacheRoot, { recursive: true });
 	await writeFile(join(sourceRoot, "package.json"), JSON.stringify({ name: "@scope/omo", version: "0.1.0" }));
-	await writeFile(join(cacheRoot, "package.json"), JSON.stringify({ name: "@scope/omo-old", version: "0.0.9" }));
+	await writeFile(join(cacheRoot, "package.json"), JSON.stringify({ name: "@scope/omop-old", version: "0.0.9" }));
 
 	// when
 	await assert.rejects(
@@ -114,8 +114,8 @@ test("#given existing cache #when npm install fails #then previous active cache 
 	);
 
 	// then
-	assert.equal(await readFile(join(cacheRoot, "package.json"), "utf8"), JSON.stringify({ name: "@scope/omo-old", version: "0.0.9" }));
-	const cacheParentEntries = await readdir(join(codexHome, "plugins", "cache", "debug", "omo"));
+	assert.equal(await readFile(join(cacheRoot, "package.json"), "utf8"), JSON.stringify({ name: "@scope/omop-old", version: "0.0.9" }));
+	const cacheParentEntries = await readdir(join(codexHome, "plugins", "cache", "debug", "omop"));
 	assert.deepEqual(cacheParentEntries, ["0.1.0"]);
 });
 
@@ -124,11 +124,11 @@ test("#given existing cache #when final promotion fails #then previous active ca
 	const root = await makeTempDir();
 	const codexHome = join(root, "codex-home");
 	const sourceRoot = join(root, "plugin");
-	const cacheRoot = join(codexHome, "plugins", "cache", "debug", "omo", "0.1.0");
+	const cacheRoot = join(codexHome, "plugins", "cache", "debug", "omop", "0.1.0");
 	await mkdir(sourceRoot, { recursive: true });
 	await mkdir(cacheRoot, { recursive: true });
 	await writeFile(join(sourceRoot, "package.json"), JSON.stringify({ name: "@scope/omo", version: "0.1.0" }));
-	await writeFile(join(cacheRoot, "package.json"), JSON.stringify({ name: "@scope/omo-old", version: "0.0.9" }));
+	await writeFile(join(cacheRoot, "package.json"), JSON.stringify({ name: "@scope/omop-old", version: "0.0.9" }));
 
 	// when
 	await assert.rejects(
@@ -148,7 +148,7 @@ test("#given existing cache #when final promotion fails #then previous active ca
 	);
 
 	// then
-	assert.equal(await readFile(join(cacheRoot, "package.json"), "utf8"), JSON.stringify({ name: "@scope/omo-old", version: "0.0.9" }));
-	const cacheParentEntries = await readdir(join(codexHome, "plugins", "cache", "debug", "omo"));
+	assert.equal(await readFile(join(cacheRoot, "package.json"), "utf8"), JSON.stringify({ name: "@scope/omop-old", version: "0.0.9" }));
+	const cacheParentEntries = await readdir(join(codexHome, "plugins", "cache", "debug", "omop"));
 	assert.deepEqual(cacheParentEntries, ["0.1.0"]);
 });

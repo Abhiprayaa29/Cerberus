@@ -33,7 +33,7 @@ describe("daemon paths", () => {
 		const paths = daemonPaths({ CODEX_LSP_DAEMON_DIR: "/d" }, "1.2.3");
 		expect(paths.dir).toBe(join("/d", "v1.2.3"));
 		if (process.platform === "win32") {
-			expect(paths.socket.startsWith("\\\\.\\pipe\\omo-lsp-1.2.3-")).toBe(true);
+			expect(paths.socket.startsWith("\\\\.\\pipe\\omop-lsp-1.2.3-")).toBe(true);
 		} else {
 			expect(paths.socket).toBe(join("/d", "v1.2.3", "daemon.sock"));
 		}
@@ -45,7 +45,7 @@ describe("daemon paths", () => {
 		const longDir = `/${"x".repeat(120)}`;
 		const paths = daemonPaths({ CODEX_LSP_DAEMON_DIR: longDir }, "1.0.0");
 		if (process.platform === "win32") {
-			expect(paths.socket.startsWith("\\\\.\\pipe\\omo-lsp-1.0.0-")).toBe(true);
+			expect(paths.socket.startsWith("\\\\.\\pipe\\omop-lsp-1.0.0-")).toBe(true);
 		} else {
 			expect(paths.socket.startsWith(tmpdir())).toBe(true);
 			expect(paths.socket.length).toBeLessThan(100);

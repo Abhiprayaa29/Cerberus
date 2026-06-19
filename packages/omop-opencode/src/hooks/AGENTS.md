@@ -69,7 +69,7 @@ Hook name allowlist for `disabled_hooks`: all configurable hook names enumerated
 | `hashlineReadEnhancer` | tool.execute.after | Tag every Read output with `LINE#ID` content hashes |
 | `jsonErrorRecovery` | tool.execute.after | Detect JSON parse errors, inject correction reminder |
 | `fsyncSkipWarning` | tool.execute.after | Warn when fsync is skipped for atomic writes |
-| `notepadWriteGuard` | tool.execute.before | Block `Write` to append-only notepad paths (`.omo/notepads`, `.cerberus/notepads`) |
+| `notepadWriteGuard` | tool.execute.before | Block `Write` to append-only notepad paths (`.omop/notepads`, `.cerberus/notepads`) |
 | `planFormatValidator` | tool.execute.before | Validate plan/todo checkbox format on `Write`/`Edit` of boulder plans |
 
 ### Tier 3: Transform Hooks (5)

@@ -19,7 +19,7 @@ const {
 const PLUGIN_VERSION = "9.9.9";
 
 async function withFixture(run, options = {}) {
-	const root = await mkdtemp(join(tmpdir(), "omo-bootstrap-orch-"));
+	const root = await mkdtemp(join(tmpdir(), "omop-bootstrap-orch-"));
 	try {
 		const pluginRoot = join(root, "plugin");
 		const pluginData = join(root, "plugin-data");

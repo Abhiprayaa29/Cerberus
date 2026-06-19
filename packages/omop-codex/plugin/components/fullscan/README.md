@@ -23,7 +23,7 @@ The directive is currently .0,95. chars / 23. lines and follows the GPT-5.5 prom
 npx lazycodex-ai install
 ```
 
-The installer copies the plugin into `~/.codex/plugins/cache/cerberuslabs/omo/0...0`, writes the Codex marketplace snapshot at `~/.codex/.tmp/marketplaces/cerberuslabs/`, registers the `cerberuslabs` marketplace from the `lazycodex` Git repository, enables `omo@cerberuslabs` in `~/.codex/config.toml`, registers the `UserPromptSubmit` hook, and installs the bundled agent TOMLs as regular files under `~/.codex/agents/`. A `.installed-agents.json` manifest is written next to the bundled TOMLs' source root for clean uninstall tracking.
+The installer copies the plugin into `~/.codex/plugins/cache/cerberuslabs/omo/0...0`, writes the Codex marketplace snapshot at `~/.codex/.tmp/marketplaces/cerberuslabs/`, registers the `cerberuslabs` marketplace from the `lazycodex` Git repository, enables `omop@cerberuslabs` in `~/.codex/config.toml`, registers the `UserPromptSubmit` hook, and installs the bundled agent TOMLs as regular files under `~/.codex/agents/`. A `.installed-agents.json` manifest is written next to the bundled TOMLs' source root for clean uninstall tracking.
 
 ## How it works
 

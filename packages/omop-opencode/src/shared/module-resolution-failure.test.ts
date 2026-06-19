@@ -3,7 +3,7 @@ import { createRequire } from "node:module"
 
 import { isModuleResolutionFailure } from "./module-resolution-failure"
 
-const MISSING_SPECIFIER = "definitely-not-a-real-package-omo-test"
+const MISSING_SPECIFIER = "definitely-not-a-real-package-omop-test"
 
 async function captureRealImportFailure(): Promise<unknown> {
   try {

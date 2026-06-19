@@ -20,7 +20,7 @@ describe("codex-config-reasoning", () => {
       repoRoot: "/repo/packages/omop-codex",
       marketplaceName: "debug",
       marketplaceSource: { sourceType: "local", source: "/repo/packages/omop-codex" },
-      pluginNames: ["omo"],
+      pluginNames: ["omop"],
     })
 
     // then
@@ -55,7 +55,7 @@ describe("codex-config-reasoning", () => {
       repoRoot: "/repo/packages/omop-codex",
       marketplaceName: "debug",
       marketplaceSource: { sourceType: "local", source: "/repo/packages/omop-codex" },
-      pluginNames: ["omo"],
+      pluginNames: ["omop"],
     })
 
     // then
@@ -96,7 +96,7 @@ describe("codex-config-reasoning", () => {
       repoRoot: "/repo/packages/omop-codex",
       marketplaceName: "debug",
       marketplaceSource: { sourceType: "local", source: "/repo/packages/omop-codex" },
-      pluginNames: ["omo"],
+      pluginNames: ["omop"],
     })
 
     // then
@@ -133,7 +133,7 @@ describe("codex-config-reasoning", () => {
       repoRoot,
       marketplaceName: "debug",
       marketplaceSource: { sourceType: "local", source: repoRoot },
-      pluginNames: ["omo"],
+      pluginNames: ["omop"],
     })
 
     // then

@@ -4,7 +4,7 @@
 	"works": {
 		"opencode_work": {
 			"work_id": "opencode_work",
-			"active_plan": "/repo/.omo/plans/opencode-plan.md",
+			"active_plan": "/repo/.omop/plans/opencode-plan.md",
 			"plan_name": "opencode-plan",
 			"status": "active",
 			"started_at": "2026-05-28T00:00:00Z",
@@ -12,14 +12,14 @@
 		},
 		"codex_work": {
 			"work_id": "codex_work",
-			"active_plan": "/repo/.omo/plans/plan-with-unchecked.md",
+			"active_plan": "/repo/.omop/plans/plan-with-unchecked.md",
 			"plan_name": "codex-plan",
 			"status": "paused",
 			"started_at": "2026-05-28T00:00:00Z",
 			"session_ids": ["codex:def"]
 		}
 	},
-	"active_plan": "/repo/.omo/plans/opencode-plan.md",
+	"active_plan": "/repo/.omop/plans/opencode-plan.md",
 	"plan_name": "legacy-opencode-plan",
 	"started_at": "2026-05-28T00:00:00Z",
 	"status": "active",

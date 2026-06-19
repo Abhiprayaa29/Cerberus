@@ -619,7 +619,7 @@ describe("look-at tool", () => {
     })
 
     test("sends JSON files as text instead of unsupported application/json file parts", async () => {
-      const temporaryDirectory = mkdtempSync(join(tmpdir(), "omo-look-at-json-"))
+      const temporaryDirectory = mkdtempSync(join(tmpdir(), "omop-look-at-json-"))
       const jsonPath = join(temporaryDirectory, "sample.json")
       writeFileSync(jsonPath, JSON.stringify({ hello: "world" }), "utf-8")
 

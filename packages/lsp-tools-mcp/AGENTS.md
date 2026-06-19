@@ -21,7 +21,7 @@ Vendored, Node-targeted MCP-layer package (`@code-yeongyu/lsp-tools-mcp`). Serve
 
 | File | Role |
 |------|------|
-| `cli.ts` | Bin `omo-lsp`. `mcp` subcommand → `runMcpStdioServer()` |
+| `cli.ts` | Bin `omop-lsp`. `mcp` subcommand → `runMcpStdioServer()` |
 | `mcp.ts` | Re-exports `@omop/lsp-core/mcp` (stdio MCP server + JSON-RPC handler) |
 | `tools.ts` | Re-exports `@omop/lsp-core/tools` (tool definitions + runtime dispatch) |
 | `request-context.ts` | Re-exports `@omop/lsp-core/request-context` |

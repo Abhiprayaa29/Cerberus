@@ -53,7 +53,7 @@ describe("paths", () => {
 
   test("#given team runtime ids contain traversal #when runtime paths are built #then they are rejected before escaping base dir", () => {
     // given
-    const baseDir = "/tmp/omo-contained"
+    const baseDir = "/tmp/omop-contained"
 
     // when
     const runtimeStatePath = () => getRuntimeStateDir(baseDir, "../../escape")
@@ -113,7 +113,7 @@ describe("paths", () => {
 
   test("ensureBaseDirs creates all dirs with mode 0700", async () => {
     // given
-    const baseDir = path.join(tmpdir(), `omo-test-${randomUUID()}`)
+    const baseDir = path.join(tmpdir(), `omop-test-${randomUUID()}`)
 
     // when
     await ensureBaseDirs(baseDir)
@@ -139,7 +139,7 @@ describe("paths", () => {
   test("ensureBaseDirs swallows EPERM from chmod and logs a warning instead of aborting team-mode init", async () => {
     // given: directories exist with permissive mode that chmod cannot tighten
     // (mirrors macOS network mount / non-owner / SIP cases reported in #4023).
-    const baseDir = path.join(tmpdir(), `omo-test-eperm-${randomUUID()}`)
+    const baseDir = path.join(tmpdir(), `omop-test-eperm-${randomUUID()}`)
     temporaryDirectories.push(baseDir)
     await mkdir(baseDir, { recursive: true })
     await mkdir(path.join(baseDir, "teams"), { recursive: true })

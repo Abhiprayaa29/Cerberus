@@ -31,8 +31,8 @@ spawnTmuxPane / spawnTmuxSession / spawnTmuxWindow
 ## NOTES
 
 - **Cmux compatibility:** `cmux-detect.ts` redirects tmux commands to `cmux __tmux-compat` when `CMUX_SOCKET_PATH` or `cmuxterm` is detected.
-- **Isolation levels:** `TmuxIsolation` (`inline`, `window`, `session`) controls whether subagent panes split inline, spawn a named window (`omo-agents`), or an isolated session (`omo-agents-<pid>`).
+- **Isolation levels:** `TmuxIsolation` (`inline`, `window`, `session`) controls whether subagent panes split inline, spawn a named window (`omop-agents`), or an isolated session (`omop-agents-<pid>`).
 - **Adapter shim pattern:** `omo-opencode/src/shared/tmux/` re-exports `runTmuxCommand` and wires `getTmuxPath` from `interactive-bash/tmux-path-resolver` into DI deps (`adapter-deps.ts`). `team-core` consumes the same primitives directly for team-mode tmux layouts.
-- **Stale session sweep:** `stale-session-sweep.ts` matches `omo-agents-<pid>` sessions, skips the current PID, and kills sessions whose owner process is dead.
+- **Stale session sweep:** `stale-session-sweep.ts` matches `omop-agents-<pid>` sessions, skips the current PID, and kills sessions whose owner process is dead.
 
 Parent: [packages/AGENTS.md](../AGENTS.md)

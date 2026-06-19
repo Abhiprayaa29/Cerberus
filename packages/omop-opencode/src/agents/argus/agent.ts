@@ -146,7 +146,7 @@ export const argusPromptMetadata: AgentPromptMetadata = {
     },
   ],
   useWhen: [
-    "User provides a todo list path (.omo/plans/{name}.md)",
+    "User provides a todo list path (.omop/plans/{name}.md)",
     "Multiple tasks need to be completed in sequence or parallel",
     "Work requires coordination across multiple specialized agents",
   ],

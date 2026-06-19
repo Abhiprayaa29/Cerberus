@@ -34,12 +34,12 @@ function isSparkShellAppServerConfigured(env: RuntimeEnv = process.env): boolean
 export function resolveOmoInvocation(env: RuntimeEnv = process.env, deps: OmoResolutionDeps = {}): string | null {
 	const fileExists = deps.fileExists ?? existsSync;
 	const platform = deps.platform ?? process.platform;
-	const binNames = platform === "win32" ? ["omo.cmd", "omo.exe", "omo"] : ["omo"];
+	const binNames = platform === "win32" ? ["omo.cmd", "omo.exe", "omop"] : ["omop"];
 	const pathDelimiter = platform === "win32" ? ";" : ":";
 	const pathEntries = (env["PATH"] ?? "").split(pathDelimiter).filter((entry) => entry.trim().length > 0);
 	for (const pathEntry of pathEntries) {
 		for (const binName of binNames) {
-			if (fileExists(join(pathEntry, binName))) return "omo";
+			if (fileExists(join(pathEntry, binName))) return "omop";
 		}
 	}
 	for (const candidateDir of omoCandidateBinDirs(env)) {
@@ -72,7 +72,7 @@ export function getSparkShellRuntimeAwareness(env: RuntimeEnv = process.env, dep
 	}
 
 	const resolved = resolveOmoInvocation(env, deps);
-	const invocation = resolved ?? (isTruthy(override) ? "omo" : null);
+	const invocation = resolved ?? (isTruthy(override) ? "omop" : null);
 	if (invocation === null) {
 		return "";
 	}

@@ -16,7 +16,7 @@ import {
 
 const tempDirectories: string[] = [];
 const PROJECT_ONLY_ENV = {
-	CODEX_RULES_ENABLED_SOURCES: "CONTEXT.md,.omo/rules",
+	CODEX_RULES_ENABLED_SOURCES: "CONTEXT.md,.omop/rules",
 };
 const SESSION_ID = "session-post-compact-directive";
 
@@ -53,7 +53,7 @@ describe("codex rules post-compaction read directive", () => {
 		expect(context).toContain("MUST READ");
 		expect(context).toContain("NO EXCUSES");
 		expect(context).toContain("CONTEXT.md");
-		expect(context).toContain(".omo/rules/typescript.md");
+		expect(context).toContain(".omop/rules/typescript.md");
 		expect(context).not.toContain("A".repeat(50));
 		expect(context).not.toContain("B".repeat(50));
 		expect(context.length).toBeLessThan(2_000);

@@ -18,7 +18,7 @@ describe("createCodegraphMcpConfig", () => {
       config: { enabled: true },
       env: {},
       fileExists: () => false,
-      homeDir: "/tmp/omo-codegraph-test-home",
+      homeDir: "/tmp/omop-codegraph-test-home",
       nodeVersionForExecutable: (candidate) => (candidate === nodePath ? "22.14.0" : "26.3.0"),
       resolveExecutable: createResolver({ codegraph: codegraphPath, node: nodePath }),
     })
@@ -40,7 +40,7 @@ describe("createCodegraphMcpConfig", () => {
       cwd: "/workspace/project",
       config: { enabled: true },
       fileExists: () => false,
-      homeDir: "/tmp/omo-codegraph-test-home",
+      homeDir: "/tmp/omop-codegraph-test-home",
       resolveExecutable,
     })
 
@@ -59,7 +59,7 @@ describe("createCodegraphMcpConfig", () => {
       config: { enabled: true },
       env: { OMOP_CODEGRAPH_BIN: "/nonexistent" },
       fileExists: () => false,
-      homeDir: "/tmp/omo-codegraph-test-home",
+      homeDir: "/tmp/omop-codegraph-test-home",
       resolveExecutable,
     })
 
@@ -79,7 +79,7 @@ describe("createCodegraphMcpConfig", () => {
       config: { enabled: true },
       env: {},
       fileExists: () => false,
-      homeDir: "/tmp/omo-codegraph-test-home",
+      homeDir: "/tmp/omop-codegraph-test-home",
       nodeVersionForExecutable: (candidate) => (candidate === nodePath ? "26.3.0" : "0.0.0"),
       requireResolve: () => {
         throw new Error("bundled package absent")
@@ -102,7 +102,7 @@ describe("createCodegraphMcpConfig", () => {
       config: { enabled: true },
       env: { OMOP_CODEGRAPH_BIN: codegraphPath },
       fileExists: (filePath) => filePath === codegraphPath,
-      homeDir: "/tmp/omo-codegraph-test-home",
+      homeDir: "/tmp/omop-codegraph-test-home",
       nodeVersionForExecutable: () => "26.3.0",
       resolveExecutable: createResolver({}),
     })
@@ -124,7 +124,7 @@ describe("createCodegraphMcpConfig", () => {
       config: { enabled: true },
       env: { CODEGRAPH_NODE_BIN: nodeBin },
       fileExists: (filePath) => filePath === shim || filePath === nodeBin,
-      homeDir: "/tmp/omo-codegraph-test-home",
+      homeDir: "/tmp/omop-codegraph-test-home",
       nodeVersionForExecutable: (candidate) => (candidate === nodeBin ? "22.22.3" : "26.3.0"),
       requireResolve: () => packageJson,
       resolveExecutable: createResolver({}),
@@ -146,7 +146,7 @@ describe("createCodegraphMcpConfig", () => {
       cwd: "/workspace/project",
       config: { enabled: true },
       fileExists: () => false,
-      homeDir: "/tmp/omo-codegraph-test-home",
+      homeDir: "/tmp/omop-codegraph-test-home",
       resolveExecutable: createResolver({ codegraph: codegraphPath }),
     })
 
@@ -167,7 +167,7 @@ describe("createCodegraphMcpConfig", () => {
       config: { enabled: true, install_dir: installDir },
       env: {},
       fileExists: (filePath) => filePath === provisionedPath,
-      homeDir: "/tmp/omo-codegraph-test-home",
+      homeDir: "/tmp/omop-codegraph-test-home",
       nodeVersionForExecutable: (candidate) => (candidate === nodePath ? "22.14.0" : "26.3.0"),
       requireResolve: () => {
         throw new Error("bundled package absent")

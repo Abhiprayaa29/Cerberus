@@ -10,7 +10,7 @@ Harness-neutral domain primitives for team-mode: registry, mailbox, tasklist, st
 
 | Area | Files | Purpose |
 |------|-------|---------|
-| **Registry** | `team-registry/paths.ts`, `loader.ts`, `validator.ts`, `team-spec-input-normalizer.ts` | Discover/load `config.json` from `~/.omo/teams/{name}/` and `<project>/.omo/teams/{name}/`. Validate member eligibility, hyperplan composition, and path traversal guards. |
+| **Registry** | `team-registry/paths.ts`, `loader.ts`, `validator.ts`, `team-spec-input-normalizer.ts` | Discover/load `config.json` from `~/.omop/teams/{name}/` and `<project>/.omop/teams/{name}/`. Validate member eligibility, hyperplan composition, and path traversal guards. |
 | **Mailbox** | `team-mailbox/send.ts`, `inbox.ts`, `poll.ts`, `ack.ts`, `reservation.ts` | Async member messaging with payload caps, broadcast gating, unread polling, delivery reservations, and pending-delivery recovery. |
 | **Tasklist** | `team-tasklist/store.ts`, `list.ts`, `get.ts`, `claim.ts`, `update.ts`, `dependencies.ts` | Shared task CRUD with atomic claiming, dependency tracking, and status transitions. |
 | **State Store** | `team-state-store/store.ts`, `locks.ts`, `resume.ts`, `runtime-cleanup.ts`, `session-liveness.ts` | Durable runtime `state.json` with atomic file locks, allowed status transitions, resume/recovery, and stale-run cleanup. |
@@ -19,7 +19,7 @@ Harness-neutral domain primitives for team-mode: registry, mailbox, tasklist, st
 
 ## STORAGE
 
-Team specs live under `~/.omo/teams/{name}/config.json` (user) and `<project>/.omo/teams/{name}/config.json` (project). Runtime state, mailbox inboxes, and tasks are stored under `~/.omo/runtime/{teamRunId}/`. Worktrees are under `~/.omo/worktrees/{teamRunId}/{member}/`.
+Team specs live under `~/.omop/teams/{name}/config.json` (user) and `<project>/.omop/teams/{name}/config.json` (project). Runtime state, mailbox inboxes, and tasks are stored under `~/.omop/runtime/{teamRunId}/`. Worktrees are under `~/.omop/worktrees/{teamRunId}/{member}/`.
 
 ## NOTES
 

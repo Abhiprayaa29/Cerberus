@@ -18,7 +18,7 @@ tracked during cross-repository development:
 Installation state after the porting round:
 
 - **omo** — `~/.bun/install/global/node_modules/oh-my-open-pentest` is a symlink to the local workspace, so `bun run build` immediately publishes the rebuilt `dist/`. Verified via `grep -c transcriptHydration dist/index.js` → 6.
-- **codex-rules** — now installed through the aggregate OMO Codex plugin cache at `~/.codex/plugins/cache/cerberuslabs/omo/<version>/components/rules`, enabled by `[plugins."omo@cerberuslabs"]`.
+- **codex-rules** — now installed through the aggregate OMO Codex plugin cache at `~/.codex/plugins/cache/cerberuslabs/omo/<version>/components/rules`, enabled by `[plugins."omop@cerberuslabs"]`.
 - **pi-rules** — pi-mono consumes the package source directly; no separate install step.
 
 ## .. Performance baseline

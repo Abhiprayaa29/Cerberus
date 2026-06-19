@@ -27,7 +27,7 @@ describe("createTranscriptHydrationStore", () => {
 							type: "tool",
 							output:
 								ruleMarker("AGENTS.md") +
-								ruleMarker(".omo/rules/typescript.md"),
+								ruleMarker(".omop/rules/typescript.md"),
 						},
 					],
 				},
@@ -42,7 +42,7 @@ describe("createTranscriptHydrationStore", () => {
 
 		// then
 		expect([...relativePaths].sort()).toEqual([
-			".omo/rules/typescript.md",
+			".omop/rules/typescript.md",
 			"AGENTS.md",
 		]);
 	});

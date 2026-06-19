@@ -19,7 +19,7 @@ describe("interactive_bash", () => {
 
   test("#given kill-server after tmux global options #when executed #then still prohibits it", async () => {
     // given
-    const args = { tmux_command: "-L omo-socket kill-server" }
+    const args = { tmux_command: "-L omop-socket kill-server" }
 
     // when
     const output = await executeInteractiveBash(args)

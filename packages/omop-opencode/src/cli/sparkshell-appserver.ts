@@ -111,7 +111,7 @@ class JsonRpcSparkShellAppServerClient implements SparkShellAppServerClient {
     const socket = await connectUnixWebSocket(this.#socketPath)
     try {
       const initialize = parseInitializeResult(await this.#request(socket, "initialize", {
-        clientInfo: { name: "omo-sparkshell", version: "0.0.0" },
+        clientInfo: { name: "omop-sparkshell", version: "0.0.0" },
         capabilities: {
           experimentalApi: true,
           requestAttestation: false,

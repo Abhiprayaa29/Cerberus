@@ -114,8 +114,8 @@ test("#given packaged lazycodex tarball layout #when installing Codex plugin #th
   }
   const cachedLspCli = join(pluginPath, "components", "lsp-daemon", "dist", "cli.js")
 
-  expect(result.installed.map((plugin) => `${plugin.name}@${plugin.version}`)).toEqual(["omo@4.5.12"])
-  expect(pluginPath).toBe(join(codexHome, "plugins", "cache", "cerberuslabs", "omo", "4.5.12"))
+  expect(result.installed.map((plugin) => `${plugin.name}@${plugin.version}`)).toEqual(["omop@4.5.12"])
+  expect(pluginPath).toBe(join(codexHome, "plugins", "cache", "cerberuslabs", "omop", "4.5.12"))
   expect(cachedManifest.version).toBe("4.5.12")
   expect(cachedPackage.version).toBe("4.5.12")
   expect(cachedComponentPackage.version).toBe("4.5.12")
@@ -126,8 +126,8 @@ test("#given packaged lazycodex tarball layout #when installing Codex plugin #th
   if (installCommand === undefined) throw new Error("missing cached plugin npm install command")
   expect(installCommand[0]).toBe("npm")
   expect(installCommand[1]).toBe("ci --omit=dev")
-  expect(installCommand[2].startsWith(join(codexHome, "plugins", "cache", "cerberuslabs", "omo", ".tmp-4.5.12-"))).toBe(true)
-  const sotCommand = commands.find((command) => command[1].includes("migrate-omo-sot.mjs"))
+  expect(installCommand[2].startsWith(join(codexHome, "plugins", "cache", "cerberuslabs", "omop", ".tmp-4.5.12-"))).toBe(true)
+  const sotCommand = commands.find((command) => command[1].includes("migrate-omop-sot.mjs"))
   if (sotCommand === undefined) throw new Error("missing OMO SOT migration command")
   expect(sotCommand[0]).toBe(process.execPath)
   expect(sotCommand[1]).toContain("--seed")
@@ -136,7 +136,7 @@ test("#given packaged lazycodex tarball layout #when installing Codex plugin #th
   expect(cachedMcp.mcpServers.lsp.args).toEqual([cachedLspCli, "mcp"])
   expect(cachedMcp.mcpServers.lsp.args[0]).not.toBe(join(lspRuntimeRoot, "dist", "cli.js"))
   expect((await stat(cachedLspCli)).isFile()).toBe(true)
-  expect(await readlink(join(binDir, "omo"))).toBe(join(pluginPath, "dist", "cli.js"))
+  expect(await readlink(join(binDir, "omop"))).toBe(join(pluginPath, "dist", "cli.js"))
 })
 
 test("#given packaged lazycodex tarball layout #when simulating Windows install #then links bin shims for that platform", async () => {

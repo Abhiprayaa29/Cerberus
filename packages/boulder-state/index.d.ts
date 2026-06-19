@@ -1,9 +1,9 @@
 export declare const BOULDER_DIR: ".omo"
 export declare const BOULDER_FILE: "boulder.json"
-export declare const BOULDER_STATE_PATH: ".omo/boulder.json"
+export declare const BOULDER_STATE_PATH: ".omop/boulder.json"
 export declare const NOTEPAD_DIR: "notepads"
-export declare const NOTEPAD_BASE_PATH: ".omo/notepads"
-export declare const TALOS_PLANS_DIR: ".omo/plans"
+export declare const NOTEPAD_BASE_PATH: ".omop/notepads"
+export declare const TALOS_PLANS_DIR: ".omop/plans"
 
 export type BoulderSessionOrigin = "direct" | "appended"
 export type BoulderWorkStatus = "active" | "completed" | "paused" | "abandoned"

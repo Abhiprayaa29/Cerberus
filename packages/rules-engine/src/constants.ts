@@ -11,7 +11,7 @@ export const PROJECT_RULE_SUBDIRS = [
 ] as const;
 
 export const PROJECT_RULE_FILES = [".github/copilot-instructions.md"] as const;
-export const OPENCODE_USER_RULE_DIRS = [".omo/rules", ".opencode/rules", ".cerberus/rules"] as const;
+export const OPENCODE_USER_RULE_DIRS = [".omop/rules", ".opencode/rules", ".cerberus/rules"] as const;
 export const USER_RULE_DIR = ".claude/rules";
 export const RULE_EXTENSIONS = [".md", ".mdc"] as const;
 export const GITHUB_INSTRUCTIONS_PATTERN = /\.instructions\.md$/;
@@ -20,13 +20,13 @@ export const GLOBAL_DISTANCE = 9999;
 export const EXCLUDED_DIRS = new Set(["node_modules", ".git", "dist", "build", ".turbo", ".next", "coverage"]);
 
 export const SOURCE_PRIORITY: ReadonlyMap<RuleSource, number> = new Map([
-  [".omo/rules", 0],
+  [".omop/rules", 0],
   [".claude/rules", 1],
   [".cursor/rules", 2],
   [".github/instructions", 3],
   [".github/copilot-instructions.md", 4],
   [".cerberus/rules", 5],
-  ["~/.omo/rules", 100],
+  ["~/.omop/rules", 100],
   ["~/.opencode/rules", 101],
   ["~/.claude/rules", 102],
   ["~/.cerberus/rules", 103],

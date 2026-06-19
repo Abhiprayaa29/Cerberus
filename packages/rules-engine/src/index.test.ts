@@ -19,7 +19,7 @@ import { _resetCerberusRuleDeprecationWarningStateForTesting, _setCerberusRuleDe
 
 let testRoot: string | null = null;
 
-const CERBERUS_DEPRECATION_MESSAGE = "[rules] .cerberus/rules is deprecated and will be removed in v4.3.0; migrate to .omo/rules";
+const CERBERUS_DEPRECATION_MESSAGE = "[rules] .cerberus/rules is deprecated and will be removed in v4.3.0; migrate to .omop/rules";
 
 function createTestRoot(name: string): string {
   testRoot = join(tmpdir(), `${name}-${Date.now()}-${Math.random()}`);
@@ -48,7 +48,7 @@ describe("rules-core", () => {
     mkdirSync(join(root, ".github", "instructions"), { recursive: true });
     mkdirSync(join(root, "src"), { recursive: true });
     writeFileSync(join(root, ".github", "copilot-instructions.md"), "copilot");
-    writeFileSync(join(root, ".omo", "rules", "omo.md"), "omo");
+    writeFileSync(join(root, ".omo", "rules", "omo.md"), "omop");
     writeFileSync(join(root, ".cerberus", "rules", "cerberus.md"), "cerberus");
     writeFileSync(join(root, ".claude", "rules", "claude.md"), "claude");
     writeFileSync(join(root, ".cursor", "rules", "cursor.md"), "cursor");
@@ -60,7 +60,7 @@ describe("rules-core", () => {
     // then
     expect(found.map((rule) => rule.relativePath)).toEqual([
       ".github/copilot-instructions.md",
-      ".omo/rules/omo.md",
+      ".omop/rules/omo.md",
       ".claude/rules/claude.md",
       ".cursor/rules/cursor.md",
       ".github/instructions/github.instructions.md",
@@ -112,14 +112,14 @@ describe("rules-core", () => {
     mkdirSync(join(root, ".omo", "rules"), { recursive: true });
     mkdirSync(join(root, ".cerberus", "rules"), { recursive: true });
     mkdirSync(join(root, "src"), { recursive: true });
-    writeFileSync(join(root, ".omo", "rules", "shared.md"), "omo");
+    writeFileSync(join(root, ".omo", "rules", "shared.md"), "omop");
     writeFileSync(join(root, ".cerberus", "rules", "shared.md"), "legacy");
     writeFileSync(join(root, ".cerberus", "rules", "legacy.md"), "legacy");
 
     // when
     const found = findRuleFiles(root, root, join(root, "src", "index.ts"));
     const relativePaths = found.map((rule) => rule.relativePath);
-    const omoSharedIndex = relativePaths.indexOf(".omo/rules/shared.md");
+    const omoSharedIndex = relativePaths.indexOf(".omop/rules/shared.md");
     const cerberusSharedIndex = relativePaths.indexOf(".cerberus/rules/shared.md");
 
     // then
@@ -152,7 +152,7 @@ describe("rules-core", () => {
     expect(deprecationWarnings).toHaveLength(1);
   });
 
-  it("#given a workspace directory has no project marker (no .git, no package.json, etc.) AND contains .omo/rules/ #when findRuleFiles is called #then the .omo/rules/ files are still discovered", () => {
+  it("#given a workspace directory has no project marker (no .git, no package.json, etc.) AND contains .omop/rules/ #when findRuleFiles is called #then the .omop/rules/ files are still discovered", () => {
     // given
     const root = createTestRoot("rules-core-markerless-workspace");
     const homeDir = join(root, "home");

@@ -6,7 +6,7 @@ import { tmpdir } from "node:os"
 
 const testDirs: string[] = []
 
-const TEST_STORAGE_ROOT = join(tmpdir(), `omo-run-json-storage-${Date.now()}`)
+const TEST_STORAGE_ROOT = join(tmpdir(), `omop-run-json-storage-${Date.now()}`)
 const TEST_MESSAGE_STORAGE = join(TEST_STORAGE_ROOT, "message")
 const sessionLastAgentBySessionID = new Map<string, string | null>()
 
@@ -45,7 +45,7 @@ afterEach(() => {
 })
 
 function createTempDir(): string {
-  const directory = mkdtempSync(join(tmpdir(), "omo-run-json-backend-"))
+  const directory = mkdtempSync(join(tmpdir(), "omop-run-json-backend-"))
   testDirs.push(directory)
   return directory
 }

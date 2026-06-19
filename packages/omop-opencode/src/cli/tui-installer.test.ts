@@ -159,7 +159,7 @@ describe("runTuiInstaller", () => {
 
   it("registers the TUI plugin entry after adding the OpenCode server plugin", async () => {
     const originalConfigDir = process.env.OPENCODE_CONFIG_DIR
-    const configDir = mkdtempSync(join(tmpdir(), "omo-tui-installer-entry-"))
+    const configDir = mkdtempSync(join(tmpdir(), "omop-tui-installer-entry-"))
     process.env.OPENCODE_CONFIG_DIR = configDir
 
     try {

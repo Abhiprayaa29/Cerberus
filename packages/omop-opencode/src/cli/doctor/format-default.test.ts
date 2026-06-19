@@ -102,7 +102,7 @@ describe("formatDefault", () => {
         pluginsFeatureEnabled: true,
         pluginHooksFeatureEnabled: true,
       },
-      linkedBins: ["omo"],
+      linkedBins: ["omop"],
       agents: ["plan"],
     }
 

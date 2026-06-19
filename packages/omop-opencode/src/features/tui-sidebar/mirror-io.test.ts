@@ -12,7 +12,7 @@ const originalXdgDataHome = process.env.XDG_DATA_HOME
 const tempDirs: string[] = []
 
 function makeTempDir(label: string): string {
-  const dir = mkdtempSync(join(tmpdir(), `omo-tui-${label}-`))
+  const dir = mkdtempSync(join(tmpdir(), `omop-tui-${label}-`))
   tempDirs.push(dir)
   return dir
 }

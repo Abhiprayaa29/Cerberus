@@ -19,7 +19,7 @@ describe("findRecentSessionPlanPath", () => {
             {
               parts: [
                 {
-                  text: "Plan saved to .omo/plans/foo-bar.md",
+                  text: "Plan saved to .omop/plans/foo-bar.md",
                 },
               ],
             },
@@ -49,7 +49,7 @@ describe("findRecentSessionPlanPath", () => {
             {
               parts: [
                 {
-                  text: `Plan saved to ${directory}\\.omo\\plans\\foo-bar.md`,
+                  text: `Plan saved to ${directory}\\.omop\\plans\\foo-bar.md`,
                 },
               ],
             },

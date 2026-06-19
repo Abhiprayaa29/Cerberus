@@ -51,7 +51,7 @@ describe("lsp-daemon MCP proxy protocol pins", () => {
 const noSpawn = (): Promise<void> => Promise.resolve();
 
 function inertPaths(): DaemonPaths {
-	return daemonPaths({ CODEX_LSP_DAEMON_DIR: "/tmp/omo-lsp-daemon-protocol-pin" }, "test");
+	return daemonPaths({ CODEX_LSP_DAEMON_DIR: "/tmp/omop-lsp-daemon-protocol-pin" }, "test");
 }
 
 function inputStream(messages: readonly object[]): Readable {

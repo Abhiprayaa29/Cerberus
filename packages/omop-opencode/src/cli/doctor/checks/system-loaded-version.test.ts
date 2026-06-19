@@ -53,8 +53,8 @@ describe("system loaded version", () => {
   describe("getLoadedPluginVersion", () => {
     it("prefers the config directory when both installs exist", () => {
       //#given
-      const configDir = createTemporaryDirectory("omo-config-")
-      const cacheHome = createTemporaryDirectory("omo-cache-")
+      const configDir = createTemporaryDirectory("omop-config-")
+      const cacheHome = createTemporaryDirectory("omop-cache-")
       const cacheDir = join(cacheHome, "opencode")
 
       process.env.OPENCODE_CONFIG_DIR = configDir
@@ -86,8 +86,8 @@ describe("system loaded version", () => {
 
     it("falls back to the cache directory for legacy installs", () => {
       //#given
-      const configDir = createTemporaryDirectory("omo-config-")
-      const cacheHome = createTemporaryDirectory("omo-cache-")
+      const configDir = createTemporaryDirectory("omop-config-")
+      const cacheHome = createTemporaryDirectory("omop-cache-")
       const cacheDir = join(cacheHome, "opencode")
 
       process.env.OPENCODE_CONFIG_DIR = configDir
@@ -113,7 +113,7 @@ describe("system loaded version", () => {
 
     it("detects installs published under the canonical plugin name", () => {
       //#given
-      const configDir = createTemporaryDirectory("omo-config-")
+      const configDir = createTemporaryDirectory("omop-config-")
 
       process.env.OPENCODE_CONFIG_DIR = configDir
 
@@ -135,8 +135,8 @@ describe("system loaded version", () => {
 
     it("detects installs under OpenCode's packages/<name>@<tag> directory", () => {
       //#given
-      const configDir = createTemporaryDirectory("omo-config-")
-      const cacheHome = createTemporaryDirectory("omo-cache-")
+      const configDir = createTemporaryDirectory("omop-config-")
+      const cacheHome = createTemporaryDirectory("omop-cache-")
       const cacheDir = join(cacheHome, "opencode")
 
       process.env.OPENCODE_CONFIG_DIR = configDir
@@ -162,8 +162,8 @@ describe("system loaded version", () => {
 
     it("prefers the flat node_modules install over a packages/<name>@<tag> install in the same root", () => {
       //#given
-      const configDir = createTemporaryDirectory("omo-config-")
-      const cacheHome = createTemporaryDirectory("omo-cache-")
+      const configDir = createTemporaryDirectory("omop-config-")
+      const cacheHome = createTemporaryDirectory("omop-cache-")
       const cacheDir = join(cacheHome, "opencode")
 
       process.env.OPENCODE_CONFIG_DIR = configDir
@@ -190,8 +190,8 @@ describe("system loaded version", () => {
 
     it("falls back to require.resolve when neither config nor cache directory has an install", () => {
       //#given
-      const configDir = createTemporaryDirectory("omo-config-")
-      const cacheHome = createTemporaryDirectory("omo-cache-")
+      const configDir = createTemporaryDirectory("omop-config-")
+      const cacheHome = createTemporaryDirectory("omop-cache-")
 
       process.env.OPENCODE_CONFIG_DIR = configDir
       process.env.XDG_CACHE_HOME = cacheHome
@@ -207,8 +207,8 @@ describe("system loaded version", () => {
 
     it("prefers candidate install path over require.resolve fallback when candidate exists", () => {
       //#given
-      const configDir = createTemporaryDirectory("omo-config-")
-      const cacheHome = createTemporaryDirectory("omo-cache-")
+      const configDir = createTemporaryDirectory("omop-config-")
+      const cacheHome = createTemporaryDirectory("omop-cache-")
 
       process.env.OPENCODE_CONFIG_DIR = configDir
       process.env.XDG_CACHE_HOME = cacheHome
@@ -230,7 +230,7 @@ describe("system loaded version", () => {
 
     it("returns null versions when selected package JSON files are invalid", () => {
       //#given
-      const configDir = createTemporaryDirectory("omo-config-")
+      const configDir = createTemporaryDirectory("omop-config-")
 
       process.env.OPENCODE_CONFIG_DIR = configDir
 
@@ -250,8 +250,8 @@ describe("system loaded version", () => {
 
     it("#given no config or cache install #when resolving the loaded version #then the resolved manifest path is package.json-shaped and any existing manifest carries an accepted name", () => {
       //#given
-      const configDir = createTemporaryDirectory("omo-config-")
-      const cacheHome = createTemporaryDirectory("omo-cache-")
+      const configDir = createTemporaryDirectory("omop-config-")
+      const cacheHome = createTemporaryDirectory("omop-cache-")
 
       process.env.OPENCODE_CONFIG_DIR = configDir
       process.env.XDG_CACHE_HOME = cacheHome
@@ -269,8 +269,8 @@ describe("system loaded version", () => {
 
     it("resolves symlinked config directories before selecting install path", () => {
       //#given
-      const realConfigDir = createTemporaryDirectory("omo-real-config-")
-      const symlinkBaseDir = createTemporaryDirectory("omo-symlink-base-")
+      const realConfigDir = createTemporaryDirectory("omop-real-config-")
+      const symlinkBaseDir = createTemporaryDirectory("omop-symlink-base-")
       const symlinkConfigDir = join(symlinkBaseDir, "config-link")
 
       symlinkSync(realConfigDir, symlinkConfigDir, process.platform === "win32" ? "junction" : "dir")

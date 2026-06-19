@@ -416,14 +416,14 @@ describe("createRuleInjectionProcessor", () => {
 		);
 
 		// then
-		expect(output.output).toContain("[Rule: src/.omo/rules/nested.md]");
-		expect(output.output).toContain("[Rule: .omo/rules/root.md]");
+		expect(output.output).toContain("[Rule: src/.omop/rules/nested.md]");
+		expect(output.output).toContain("[Rule: .omop/rules/root.md]");
 		expect(
-			output.output.indexOf("[Rule: src/.omo/rules/nested.md]"),
-		).toBeLessThan(output.output.indexOf("[Rule: .omo/rules/root.md]"));
+			output.output.indexOf("[Rule: src/.omop/rules/nested.md]"),
+		).toBeLessThan(output.output.indexOf("[Rule: .omop/rules/root.md]"));
 		expect(output.output).toContain("[Match: matched]\ntruncated:nested-rule");
 		expect(output.output).toContain(
-			"[Note: Content was truncated to save context window space. For full context, please read the file directly: src/.omo/rules/nested.md]",
+			"[Note: Content was truncated to save context window space. For full context, please read the file directly: src/.omop/rules/nested.md]",
 		);
 	});
 

@@ -3,10 +3,10 @@ import { tmpdir } from "node:os"
 import { join } from "node:path"
 import { describe, expect, test } from "bun:test"
 
-import { loadOmoConfig } from "./omo-config/loader"
+import { loadOmoConfig } from "./omop-config/loader"
 
 function makeTempHome(): string {
-  return Bun.fileURLToPath(new URL(`omo-config-loader-${crypto.randomUUID()}/`, `file://${tmpdir()}/`))
+  return Bun.fileURLToPath(new URL(`omop-config-loader-${crypto.randomUUID()}/`, `file://${tmpdir()}/`))
 }
 
 function writeConfig(path: string, content: string): void {

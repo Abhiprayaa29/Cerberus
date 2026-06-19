@@ -55,19 +55,19 @@ function runHookCli(input: string, subcommand = "post-tool-use", env: NodeJS.Pro
 
 const tempDirectories: string[] = [];
 const PROJECT_ONLY_ENV = {
-	CODEX_RULES_ENABLED_SOURCES: "CONTEXT.md,.omo/rules",
+	CODEX_RULES_ENABLED_SOURCES: "CONTEXT.md,.omop/rules",
 };
 
 const AGENTS_AND_RULES_ENV = {
-	CODEX_RULES_ENABLED_SOURCES: "AGENTS.md,.omo/rules",
+	CODEX_RULES_ENABLED_SOURCES: "AGENTS.md,.omop/rules",
 };
 
 const CLAUDE_AND_RULES_ENV = {
-	CODEX_RULES_ENABLED_SOURCES: "CLAUDE.md,.omo/rules",
+	CODEX_RULES_ENABLED_SOURCES: "CLAUDE.md,.omop/rules",
 };
 
 const RULES_ONLY_ENV = {
-	CODEX_RULES_ENABLED_SOURCES: ".omo/rules",
+	CODEX_RULES_ENABLED_SOURCES: ".omop/rules",
 };
 
 afterEach(() => {

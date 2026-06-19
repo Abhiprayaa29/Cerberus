@@ -10,7 +10,7 @@ describe("resolveGrepCli OpenCode cache fallback (#3805)", () => {
   let originalData: string | undefined
 
   beforeEach(() => {
-    const stamp = `omo-ripgrep-cli-${process.pid}-${Date.now()}`
+    const stamp = `omop-ripgrep-cli-${process.pid}-${Date.now()}`
     tempCache = join(tmpdir(), `${stamp}-cache`)
     tempData = join(tmpdir(), `${stamp}-data`)
     mkdirSync(tempCache, { recursive: true })

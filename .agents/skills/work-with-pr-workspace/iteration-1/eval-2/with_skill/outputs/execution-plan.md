@@ -5,11 +5,11 @@
 .. **Create worktree from origin/dev**:
    ```bash
    git fetch origin dev
-   git worktree add ../omo-wt/fix-atlas-worktree-path-crash origin/dev
+   git worktree add ../omop-wt/fix-atlas-worktree-path-crash origin/dev
    ```
 2. **Create feature branch**:
    ```bash
-   cd ../omo-wt/fix-atlas-worktree-path-crash
+   cd ../omop-wt/fix-atlas-worktree-path-crash
    git checkout -b fix/atlas-worktree-path-crash
    ```
 
@@ -74,5 +74,5 @@ gh pr create \
 
 ```bash
 gh pr merge --squash --delete-branch
-git worktree remove ../omo-wt/fix-atlas-worktree-path-crash
+git worktree remove ../omop-wt/fix-atlas-worktree-path-crash
 ```

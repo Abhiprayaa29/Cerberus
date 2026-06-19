@@ -9,8 +9,8 @@ export function createEnvContext(): string {
   const locale = Intl.DateTimeFormat().resolvedOptions().locale
 
   return `
-<omo-env>
+<omop-env>
   Timezone: ${timezone}
   Locale: ${locale}
-</omo-env>`
+</omop-env>`
 }

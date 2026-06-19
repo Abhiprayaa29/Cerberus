@@ -4,7 +4,7 @@
   "type": "module",
   "private": true,
   "bin": {
-    "omo-git-bash": "dist/cli.js"
+    "omop-git-bash": "dist/cli.js"
   },
   "exports": {
     ".": {

@@ -61,7 +61,7 @@ describe("loadOpencodePlugins", () => {
     describe("#when loading plugins repeatedly", () => {
       it("#then returns the cached plugin entries on the second load", async () => {
         // given
-        const projectDirectory = createTempDir("omo-load-opencode-project-")
+        const projectDirectory = createTempDir("omop-load-opencode-project-")
         const initialPlugins = [
           `file://${join(projectDirectory, "plugin-a.ts")}`,
           `file://${join(projectDirectory, "plugin-b.ts")}`,
@@ -90,7 +90,7 @@ describe("loadOpencodePlugins", () => {
     describe("#when loading the same directory again", () => {
       it("#then re-reads plugin config files from disk", async () => {
         // given
-        const projectDirectory = createTempDir("omo-load-opencode-project-")
+        const projectDirectory = createTempDir("omop-load-opencode-project-")
         const initialPlugins = [
           `file://${join(projectDirectory, "plugin-a.ts")}`,
           `file://${join(projectDirectory, "plugin-b.ts")}`,
@@ -128,8 +128,8 @@ describe("loadOpencodePlugins", () => {
     describe("#when loading plugins for the project", () => {
       it("#then includes plugin entries from the profile config directory", async () => {
         // given
-        const projectDirectory = createTempDir("omo-load-opencode-project-")
-        const profileDirectory = createTempDir("omo-load-opencode-profile-")
+        const projectDirectory = createTempDir("omop-load-opencode-project-")
+        const profileDirectory = createTempDir("omop-load-opencode-profile-")
         process.env.OPENCODE_CONFIG_DIR = profileDirectory
         const projectPlugin = `file://${join(projectDirectory, "src", "index.ts")}`
         const profilePlugin = `file://${join(profileDirectory, "profile-plugin.ts")}`

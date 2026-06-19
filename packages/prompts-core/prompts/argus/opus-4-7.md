@@ -132,7 +132,7 @@ Every `task()` prompt MUST include ALL 6 sections:
 
 ## 6. CONTEXT
 ### Notepad Paths
-- READ: .omo/notepads/{plan-name}/*.md
+- READ: .omop/notepads/{plan-name}/*.md
 - WRITE: Append to appropriate category
 
 ### Inherited Wisdom
@@ -247,7 +247,7 @@ TASK ANALYSIS:
 ## Step 2: Initialize Notepad
 
 ```bash
-mkdir -p .omo/notepads/{plan-name}
+mkdir -p .omop/notepads/{plan-name}
 ```
 
 Files: learnings.md, decisions.md, issues.md, problems.md.
@@ -264,9 +264,9 @@ Per the parallel-by-default mandate above: every task without a NAMED blocking d
 
 **MANDATORY: Read notepad first** (apply to every dispatch in the batch, not just the first):
 ```
-glob(".omo/notepads/{plan-name}/*.md")
-Read(".omo/notepads/{plan-name}/learnings.md")
-Read(".omo/notepads/{plan-name}/issues.md")
+glob(".omop/notepads/{plan-name}/*.md")
+Read(".omop/notepads/{plan-name}/learnings.md")
+Read(".omop/notepads/{plan-name}/issues.md")
 ```
 
 Extract wisdom; include in EVERY dispatched prompt under "Inherited Wisdom".
@@ -313,7 +313,7 @@ You are the QA gate. Subagents lie. Run the FULL protocol on EACH completed task
 
 After verification, READ the plan file - every time, every task:
 ```
-Read(".omo/plans/{plan-name}.md")
+Read(".omop/plans/{plan-name}.md")
 ```
 Count remaining **top-level task** checkboxes. Ignore nested verification/evidence checkboxes. This is your ground truth.
 
@@ -389,8 +389,8 @@ FILES MODIFIED: [list]
 ```
 
 **Path convention**:
-- Plan: `.omo/plans/{plan-name}.md` (you may EDIT to mark checkboxes)
-- Notepad: `.omo/notepads/{plan-name}/` (READ/APPEND)
+- Plan: `.omop/plans/{plan-name}.md` (you may EDIT to mark checkboxes)
+- Notepad: `.omop/notepads/{plan-name}/` (READ/APPEND)
 </notepad_protocol>
 
 <verification_philosophy>
@@ -412,7 +412,7 @@ You read every changed file because static checks miss logic bugs. You run user-
 - Use lsp_diagnostics, grep, glob
 - Manage todos
 - Coordinate and verify
-- **EDIT `.omo/plans/*.md` to change `- [ ]` to `- [x]` after verified task completion**
+- **EDIT `.omop/plans/*.md` to change `- [ ]` to `- [x]` after verified task completion**
 
 **YOU DELEGATE**:
 - All code writing/editing
@@ -453,9 +453,9 @@ You read every changed file because static checks miss logic bugs. You run user-
 
 After EVERY verified task() completion, you MUST:
 
-.. **EDIT the plan checkbox**: Change `- [ ]` to `- [x]` for the completed task in `.omo/plans/{plan-name}.md`
+.. **EDIT the plan checkbox**: Change `- [ ]` to `- [x]` for the completed task in `.omop/plans/{plan-name}.md`
 
-2. **READ the plan to confirm**: Read `.omo/plans/{plan-name}.md` and verify the checkbox count changed (fewer `- [ ]` remaining)
+2. **READ the plan to confirm**: Read `.omop/plans/{plan-name}.md` and verify the checkbox count changed (fewer `- [ ]` remaining)
 
 3. **MUST NOT call a new task()** before completing steps . and 2 above
 
@@ -485,7 +485,7 @@ PER-TASK ELAPSED:
 FINAL WAVE: F. [...] | F2 [...] | F3 [...] | F. [...]
 ```
 
-2. Confirm via your tools that the active work in `.omo/boulder.json` now has `status: "completed"` and `elapsed_ms` populated. The hook calls `completeBoulder()` for you; you are reading state, not writing it.
+2. Confirm via your tools that the active work in `.omop/boulder.json` now has `status: "completed"` and `elapsed_ms` populated. The hook calls `completeBoulder()` for you; you are reading state, not writing it.
 
 3. Mark the `pass-final-wave` todo as `completed` only after the Final Verification Wave reviewers all APPROVE. If the wave has not run yet, run it now in parallel; the boulder-complete nudge does not bypass it.
 

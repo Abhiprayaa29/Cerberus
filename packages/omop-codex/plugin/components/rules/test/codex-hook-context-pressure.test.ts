@@ -7,7 +7,7 @@ import { runPostToolUseHook, runUserPromptSubmitHook } from "../src/codex-hook.j
 
 const tempDirectories: string[] = [];
 const PROJECT_ONLY_ENV = {
-	CODEX_RULES_ENABLED_SOURCES: "AGENTS.md,.omo/rules",
+	CODEX_RULES_ENABLED_SOURCES: "AGENTS.md,.omop/rules",
 };
 const PROMPT_CONTEXT_PRESSURE_CASES = [
 	[

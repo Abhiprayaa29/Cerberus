@@ -45,15 +45,15 @@ function parseHookOutput(value: unknown): HookOutput {
 	};
 }
 
-const fixtureRoot = mkdtempSync(join(tmpdir(), "codex-sparkshell-omo-bin-"));
+const fixtureRoot = mkdtempSync(join(tmpdir(), "codex-sparkshell-omop-bin-"));
 const omoOnPathDir = join(fixtureRoot, "path-bin");
 const emptyHomeDir = join(fixtureRoot, "empty-home");
 const localBinHomeDir = join(fixtureRoot, "local-bin-home");
 mkdirSync(omoOnPathDir, { recursive: true });
 mkdirSync(emptyHomeDir, { recursive: true });
 mkdirSync(join(localBinHomeDir, ".local", "bin"), { recursive: true });
-writeFileSync(join(omoOnPathDir, "omo"), "#!/bin/sh\n");
-writeFileSync(join(localBinHomeDir, ".local", "bin", "omo"), "#!/bin/sh\n");
+writeFileSync(join(omoOnPathDir, "omop"), "#!/bin/sh\n");
+writeFileSync(join(localBinHomeDir, ".local", "bin", "omop"), "#!/bin/sh\n");
 
 describe("Codex Sparkshell awareness", () => {
 	afterAll(() => {
@@ -65,7 +65,7 @@ describe("Codex Sparkshell awareness", () => {
 		const env = {
 			CODEX_INTERNAL_ORIGINATOR_OVERRIDE: "Codex Desktop",
 			CODEX_SHELL: "1",
-			CODEX_RULES_ENABLED_SOURCES: ".omo/rules",
+			CODEX_RULES_ENABLED_SOURCES: ".omop/rules",
 			PATH: omoOnPathDir,
 			HOME: emptyHomeDir,
 		};
@@ -99,7 +99,7 @@ describe("Codex Sparkshell awareness", () => {
 	it("#given inactive env #when SessionStart runs #then emits no Sparkshell guidance", async () => {
 		// given
 		const env = {
-			CODEX_RULES_ENABLED_SOURCES: ".omo/rules",
+			CODEX_RULES_ENABLED_SOURCES: ".omop/rules",
 		};
 
 		// when
@@ -125,7 +125,7 @@ describe("Codex Sparkshell awareness", () => {
 		const env = {
 			OMOP_SPARKSHELL_APP_SERVER_SOCKET: "/tmp/app-server-control.sock",
 			CODEX_THREAD_ID: "thread-sparkshell-cli",
-			CODEX_RULES_ENABLED_SOURCES: ".omo/rules",
+			CODEX_RULES_ENABLED_SOURCES: ".omop/rules",
 			PATH: omoOnPathDir,
 			HOME: emptyHomeDir,
 		};
@@ -153,7 +153,7 @@ describe("Codex Sparkshell awareness", () => {
 		const env = {
 			CODEX_INTERNAL_ORIGINATOR_OVERRIDE: "Codex Desktop",
 			CODEX_SHELL: "1",
-			CODEX_RULES_ENABLED_SOURCES: ".omo/rules",
+			CODEX_RULES_ENABLED_SOURCES: ".omop/rules",
 			PATH: join(fixtureRoot, "missing-path-entry"),
 			HOME: emptyHomeDir,
 		};
@@ -181,7 +181,7 @@ describe("Codex Sparkshell awareness", () => {
 		const env = {
 			CODEX_INTERNAL_ORIGINATOR_OVERRIDE: "Codex Desktop",
 			CODEX_SHELL: "1",
-			CODEX_RULES_ENABLED_SOURCES: ".omo/rules",
+			CODEX_RULES_ENABLED_SOURCES: ".omop/rules",
 			PATH: join(fixtureRoot, "missing-path-entry"),
 			HOME: localBinHomeDir,
 		};
@@ -202,7 +202,7 @@ describe("Codex Sparkshell awareness", () => {
 
 		// then
 		const context = parseAdditionalContext(output);
-		expect(context).toContain(`${join(localBinHomeDir, ".local", "bin", "omo")} sparkshell <command>`);
+		expect(context).toContain(`${join(localBinHomeDir, ".local", "bin", "omop")} sparkshell <command>`);
 		expect(context).not.toContain("`omo sparkshell <command>`");
 	});
 
@@ -210,7 +210,7 @@ describe("Codex Sparkshell awareness", () => {
 		// given
 		const env = {
 			OMOP_SPARKSHELL_AWARENESS: "1",
-			CODEX_RULES_ENABLED_SOURCES: ".omo/rules",
+			CODEX_RULES_ENABLED_SOURCES: ".omop/rules",
 		};
 
 		// when
@@ -237,7 +237,7 @@ describe("Codex Sparkshell awareness", () => {
 			OMOP_SPARKSHELL_AWARENESS: "0",
 			CODEX_INTERNAL_ORIGINATOR_OVERRIDE: "Codex Desktop",
 			CODEX_SHELL: "1",
-			CODEX_RULES_ENABLED_SOURCES: ".omo/rules",
+			CODEX_RULES_ENABLED_SOURCES: ".omop/rules",
 		};
 
 		// when
@@ -264,7 +264,7 @@ describe("Codex Sparkshell awareness", () => {
 		const env = {
 			CODEX_INTERNAL_ORIGINATOR_OVERRIDE: "Codex Desktop",
 			CODEX_SHELL: "1",
-			CODEX_RULES_ENABLED_SOURCES: ".omo/rules",
+			CODEX_RULES_ENABLED_SOURCES: ".omop/rules",
 			PATH: omoOnPathDir,
 			HOME: emptyHomeDir,
 		};

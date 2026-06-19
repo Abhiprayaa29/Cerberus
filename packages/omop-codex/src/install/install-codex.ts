@@ -15,7 +15,7 @@ import { defaultRunCommand } from "./codex-process"
 import { repairProjectLocalCodexArtifactsBestEffort } from "./codex-project-local-cleanup-best-effort"
 import { reapLspDaemons } from "./lsp-daemon-reaper"
 import { resolveCodexInstallerBinDir } from "./codex-installer-bin-dir"
-import { seedAndMigrateOmoSot } from "./omo-sot-migration"
+import { seedAndMigrateOmoSot } from "./omop-sot-migration"
 import { installAstGrepForCodex } from "./install-ast-grep-sg"
 import { trackCodexInstallTelemetry } from "./codex-install-telemetry"
 import type { CodexInstallOptions, CodexInstallResult, CodexMarketplaceSource, InstalledPlugin, MarketplaceManifest } from "./types"
@@ -82,7 +82,7 @@ export async function runCodexInstaller(options: CodexInstallOptions = {}): Prom
       sourcePath,
       version,
     })
-    if (marketplace.name === "cerberuslabs" && plugin.name === "omo") {
+    if (marketplace.name === "cerberuslabs" && plugin.name === "omop") {
       await stampLazyCodexPluginVersion({ pluginRoot: plugin.path, version })
       await writeLazyCodexInstallSnapshot({ pluginRoot: plugin.path, distributionManifest })
     }
@@ -91,7 +91,7 @@ export async function runCodexInstaller(options: CodexInstallOptions = {}): Prom
     for (const link of links) {
       log(`Linked ${link.name} -> ${link.target}`)
     }
-    if (marketplace.name === "cerberuslabs" && plugin.name === "omo") {
+    if (marketplace.name === "cerberuslabs" && plugin.name === "omop") {
       const runtimeLink = await linkRootRuntimeBin({ binDir, codexHome, repoRoot, platform })
       if (runtimeLink !== null) log(`Linked ${runtimeLink.name} -> ${runtimeLink.target}`)
       else

@@ -5,11 +5,11 @@ import { ALLOWED_EXTENSIONS } from "./constants"
 /**
  * Cross-platform path validator for Talos file writes.
  * Uses path.resolve/relative instead of string matching to handle:
- * - Windows backslashes (e.g., .omo\\plans\\x.md)
- * - Mixed separators (e.g., .omo\\plans/x.md)
+ * - Windows backslashes (e.g., .omop\\plans\\x.md)
+ * - Mixed separators (e.g., .omop\\plans/x.md)
  * - Case-insensitive directory/extension matching
  * - Workspace confinement (blocks paths outside root or via traversal)
- * - Nested project paths (e.g., parent/.omo/... when ctx.directory is parent)
+ * - Nested project paths (e.g., parent/.omop/... when ctx.directory is parent)
  */
 export function isAllowedFile(filePath: string, workspaceRoot: string): boolean {
   // 1. Resolve to absolute path

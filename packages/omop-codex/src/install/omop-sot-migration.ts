@@ -9,7 +9,7 @@ export async function seedAndMigrateOmoSot(input: {
   readonly runCommand: RunCommand
 }): Promise<void> {
   const commandEnv: NodeJS.ProcessEnv = { ...input.env }
-  const scriptPath = join(input.repoRoot, "packages", "omop-codex", "plugin", "scripts", "migrate-omo-sot.mjs")
+  const scriptPath = join(input.repoRoot, "packages", "omop-codex", "plugin", "scripts", "migrate-omop-sot.mjs")
   try {
     await input.runCommand(process.execPath, [scriptPath, "--seed"], {
       cwd: input.repoRoot,

@@ -12,7 +12,7 @@ async function writePluginMcpManifest(pluginRoot: string, manifest: unknown): Pr
 describe("lazycodex marketplace validation guards", () => {
   test("#given an array mcpServers manifest #when validating the plugin bundle #then the manifest is rejected", async () => {
     // given
-    const pluginRoot = await mkdtemp(join(tmpdir(), "omo-marketplace-array-manifest-"))
+    const pluginRoot = await mkdtemp(join(tmpdir(), "omop-marketplace-array-manifest-"))
     await writePluginMcpManifest(pluginRoot, { mcpServers: [] })
 
     try {
@@ -28,7 +28,7 @@ describe("lazycodex marketplace validation guards", () => {
 
   test("#given an array root mcp manifest #when validating the plugin bundle #then the manifest is rejected", async () => {
     // given
-    const pluginRoot = await mkdtemp(join(tmpdir(), "omo-marketplace-array-root-"))
+    const pluginRoot = await mkdtemp(join(tmpdir(), "omop-marketplace-array-root-"))
     await writePluginMcpManifest(pluginRoot, [])
 
     try {

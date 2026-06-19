@@ -83,7 +83,7 @@ describe("session-notification", () => {
   const tempDirs: string[] = []
 
   function createTempDir(): string {
-    const directory = mkdtempSync(join(tmpdir(), "omo-session-notification-"))
+    const directory = mkdtempSync(join(tmpdir(), "omop-session-notification-"))
     tempDirs.push(directory)
     return directory
   }

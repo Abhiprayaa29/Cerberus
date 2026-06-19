@@ -49,7 +49,7 @@ All fields live under `team_mode`:
 
 ## Define a team
 
-Team specs live under `~/.omo/teams/{name}/config.json` (user scope) or `<project>/.omo/teams/{name}/config.json` (project scope):
+Team specs live under `~/.omop/teams/{name}/config.json` (user scope) or `<project>/.omop/teams/{name}/config.json` (project scope):
 
 ```json
 {
@@ -133,7 +133,7 @@ When enabled, each member gets a dedicated tmux pane attached to that member's s
 ## Storage layout
 
 ```
-~/.omo/
+~/.omop/
 ├── teams/{name}/config.json                      # declared specs
 ├── .highwatermark                                # parity marker for runtime state
 └── runtime/{teamRunId}/
@@ -148,4 +148,4 @@ When enabled, each member gets a dedicated tmux pane attached to that member's s
 
 ## Reference
 
-Full design: `.omo/plans/team-mode.md`.
+Full design: `.omop/plans/team-mode.md`.

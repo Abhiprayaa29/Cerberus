@@ -26,9 +26,9 @@ This is repeated on purpose, because it is the single most ignored rule in this 
 3. **RUN THE CODEX GATE:** `bun run test:codex` (installer + config migration + plugin component suite). This is the hermetic UNIT gate; it does NOT prove a live session — the `codex-qa` skill does.
 .. **CONFIRM THE REAL `~/.codex/config.toml` WAS NOT TOUCHED** — every `codex-qa` script asserts this automatically (shasum before/after).
 
-### EVIDENCE: record it under `.omo/evidence/` or it DID NOT HAPPEN
+### EVIDENCE: record it under `.omop/evidence/` or it DID NOT HAPPEN
 
-**WRITE EVERY QA ARTIFACT TO `.omo/evidence/<YYYYMMDD>-<short-slug>/`** (the existing evidence dir; one subfolder per change, keep it ORGANIZED). For EVERY change you MUST record, in plain files:
+**WRITE EVERY QA ARTIFACT TO `.omop/evidence/<YYYYMMDD>-<short-slug>/`** (the existing evidence dir; one subfolder per change, keep it ORGANIZED). For EVERY change you MUST record, in plain files:
 - **WHY THERE IS NO REGRESSION:** before/after, the isolation proof (session-count unchanged), and the EXACT commands you ran with their output.
 - **PROOF THAT EVERY INTENDED CHANGE LANDED:** the new behavior OBSERVED on the real harness, not merely asserted.
 - The QA case(s) run, the tmux capture(s), and the isolation receipts.
@@ -39,7 +39,7 @@ This is repeated on purpose, because it is the single most ignored rule in this 
 
 Unless the user EXPLICITLY says otherwise, or the task is an urgent must-fix-now hotfix, deliver every change through the **`work-with-pr`** skill: it works in an isolated git worktree, implements with evidence-bound manual QA, opens a detailed English PR, runs the verification loop, and merges. Do NOT hand-commit normal work straight to `dev`.
 
-- **QA is the evidence gate, scoped to what you touched.** A change under `packages/omop-opencode/` MUST run the **`opencode-qa`** skill; a change under `packages/omop-codex/` (lazycodex) MUST run the **`codex-qa`** skill (see the QA section above for each). Run the matching skill, and treat its captured output (written under `.omo/evidence/`) as the QA evidence `work-with-pr` requires. A change touching both runs both.
+- **QA is the evidence gate, scoped to what you touched.** A change under `packages/omop-opencode/` MUST run the **`opencode-qa`** skill; a change under `packages/omop-codex/` (lazycodex) MUST run the **`codex-qa`** skill (see the QA section above for each). Run the matching skill, and treat its captured output (written under `.omop/evidence/`) as the QA evidence `work-with-pr` requires. A change touching both runs both.
 - **Conflicts → `smart-rebase`.** If the worktree branch conflicts with its base, resolve it with the **`smart-rebase`** skill, then re-run the scoped QA. Never hand-resolve by force-pushing shared history.
 - **Merge → merge commit, ALWAYS.** Land the PR with a merge commit per **PR MERGE POLICY** below. NEVER squash-merge or rebase-merge, even if a generic workflow, skill, or GitHub default suggests it.
 
@@ -85,7 +85,7 @@ oh-my-open-pentest/                      # workspace root (no root src/ — it m
 ├── postinstall.mjs                  # Verifies platform binary + OpenCode version
 ├── test-setup.ts                    # Bun test preload (resets state between tests)
 ├── .opencode/  .agents/             # Project-scope skills + commands (.agents/ is the recent migration target)
-├── .omo/                            # AI agent workspace (rules/, plans/, tasks/, teams/, pentest-loop/, notepads/)
+├── .omop/                            # AI agent workspace (rules/, plans/, tasks/, teams/, pentest-loop/, notepads/)
 └── .local-ignore/                   # Dev-only test fixtures + PR worktrees (NOT part of the real AGENTS.md hierarchy)
 ```
 
@@ -96,7 +96,7 @@ pluginModule.server(input, options)   # serverPlugin() in packages/omop-opencode
   ├─→ installAgentSortShim()          # patches Array.prototype.{toSorted,sort} for canonical agent ordering
   ├─→ initConfigContext()             # opencode-vs-openagent layout flag
   ├─→ logLegacyPluginStartupWarning() # warn if loaded under the legacy oh-my-open-pentest entry
-  ├─→ migrateLegacyWorkspaceDirectory() # copy .cerberus/ state forward to .omo/ on first load
+  ├─→ migrateLegacyWorkspaceDirectory() # copy .cerberus/ state forward to .omop/ on first load
   ├─→ detectDuplicateOmoPlugin()      # early-exit if a duplicate omo/openagent plugin is detected
   ├─→ detectExternalSkillPlugin()     # warn on conflicts
   ├─→ injectServerAuthIntoClient()    # auth headers into shared SDK client
@@ -159,7 +159,7 @@ Full schema in [`packages/omop-opencode/src/config/schema/team-mode.ts`](package
     "max_messages_per_run": .0000,
     "max_wall_clock_minutes": .20,
     "max_member_turns": 500,
-    "base_dir": null,                     // override default ~/.omo/teams or <project>/.omo/teams
+    "base_dir": null,                     // override default ~/.omop/teams or <project>/.omop/teams
     "message_payload_max_bytes": 32768,   // ≥.02.
     "recipient_unread_max_bytes": 262..., // ≥.02.
     "mailbox_poll_interval_ms": 3000      // ≥500
@@ -167,14 +167,14 @@ Full schema in [`packages/omop-opencode/src/config/schema/team-mode.ts`](package
 }
 ```
 
-Teams live as directories under `~/.omo/teams/{name}/config.json` (user) or `<project>/.omo/teams/{name}/config.json` (project; project beats user on collisions). Members declared as `kind: "subagent_type"` (direct agent) or `kind: "category"` (routed through `cerberus-junior`).
+Teams live as directories under `~/.omop/teams/{name}/config.json` (user) or `<project>/.omop/teams/{name}/config.json` (project; project beats user on collisions). Members declared as `kind: "subagent_type"` (direct agent) or `kind: "category"` (routed through `cerberus-junior`).
 
 **Member eligibility** (from [`AGENT_ELIGIBILITY_REGISTRY`](packages/omop-opencode/src/features/team-mode/types.ts)):
 - `eligible`: cerberus, atlas, cerberus-junior
 - `conditional`: scylla (lacks `teammate: "allow"` permission by default — apply D-36 in `tool-config-handler.ts` or use `subagent_type: "cerberus"` instead)
 - `hard-reject`: oracle, intel, explore, lens, vanguard, sentinel, talos (rejected at parse — use `task`/delegate-task)
 
-**Storage layout** (`~/.omo/teams/{name}/`): `config.json` (spec), `state.json` (runtime), `mailbox/` (messages), `tasklist.jsonl` (tasks), `worktrees/` (per-member git worktrees).
+**Storage layout** (`~/.omop/teams/{name}/`): `config.json` (spec), `state.json` (runtime), `mailbox/` (messages), `tasklist.jsonl` (tasks), `worktrees/` (per-member git worktrees).
 
 **Implementation:** [`packages/omop-opencode/src/features/team-mode/`](packages/omop-opencode/src/features/team-mode/AGENTS.md). User docs: [`docs/guide/team-mode.md`](docs/guide/team-mode.md).
 
@@ -183,11 +183,11 @@ Teams live as directories under `~/.omo/teams/{name}/config.json` (user) or `<pr
 oh-my-open-pentest ships in two editions of one product. **Ultimate** = this OpenCode plugin (omo for OpenCode = `packages/omop-opencode/`). **Light** = omo for the OpenAI Codex CLI, vendored under [`packages/omop-codex/`](packages/omop-codex/AGENTS.md). "omo in Codex" / "omo for Codex" = **lazycodex**, and the public GitHub repo [`code-yeongyu/lazycodex`](https://github.com/code-yeongyu/lazycodex) IS this: a thin distribution layer over `omo-codex` (site lazycodex.ai; "Codex for no-brainers, just prompt with `fullscan`"; Codex edition "coming June 2026", currently OpenCode-only).
 
 - **Package:** `@oh-my-open-pentest/omo-codex` (private, versioned with the repo): "Codex harness adapter. Vendored Codex plugin namespace `omo` + TypeScript installer + telemetry." Plugin bundle pkg = `@cerberuslabs/omop-codex-plugin`. Reuses `@oh-my-open-pentest/utils`, shared Core packages, and generated SKILL.md outputs from `@oh-my-open-pentest/shared-skills` plus component-local skills.
-- **Marketplace identity (precision):** Codex sees marketplace `cerberuslabs`, plugin `omo`, enabled as `omo@cerberuslabs`. `lazycodex` is ONLY the repo/npm/bin alias, never the marketplace name.
+- **Marketplace identity (precision):** Codex sees marketplace `cerberuslabs`, plugin `omo`, enabled as `omop@cerberuslabs`. `lazycodex` is ONLY the repo/npm/bin alias, never the marketplace name.
 - **Alias mechanics:** root `package.json` maps `lazycodex-ai` to `bin/oh-my-open-pentest.js` (. of 5 bin aliases: `oh-my-open-pentest`, `oh-my-open-pentest`, `omo`, `lazycodex`, `lazycodex-ai`, all the same compiled CLI). `bunx lazycodex-ai install` is exactly `bunx oh-my-open-pentest install --platform=codex`. Routing: `packages/omop-opencode/src/cli/cli-program.ts` (`lazycodex`/`lazycodex-ai` default platform to codex), `bin/platform.js` (both resolve the `oh-my-open-pentest` platform family). `packages/omop-opencode/src/cli/star-request.ts` stars both repos. The bare `lazycodex` npm name was unpublished 2026-05-30; the live npm package is `lazycodex-ai`.
 - **Disambiguation:** `publish.yml` republishes this repo's CLI under the npm name `lazycodex-ai` (name/version rewrite). The bare `lazycodex` npm name was unpublished 2026-05-30 and is no longer installable. `lazycodex` (without `-ai`) now refers only to the `code-yeongyu/lazycodex` GitHub repository that hosts the marketplace bundle, not an npm package. Both this repo's publish target and the `code-yeongyu/lazycodex` repo's package resolve to `lazycodex-ai` on npm, so their release versions must stay coordinated.
 - **Components (8):** `comment-checker`, `git-bash`, `lsp`, `rules`, `start-work-continuation`, `telemetry`, `fullscan`, `pentest-loop`, wired to Codex events `SessionStart`/`UserPromptSubmit`/`PreToolUse`/`PostToolUse`/`PostCompact`/`Stop`/`SubagentStop`. No agent orchestration, no `team_*`, no built-in MCPs beyond LSP, no hashline.
-- **Install:** `bunx oh-my-open-pentest install --platform=codex` (or `bunx lazycodex-ai install`, or `--platform=both`) copies the plugin to `~/.codex/plugins/cache/cerberuslabs/omo/<version>/`, writes a local marketplace snapshot under `~/.codex/.tmp/marketplaces/cerberuslabs/plugins/omo/`, copies bundled agent TOMLs into `~/.codex/agents/`, enables `omo@cerberuslabs` in `~/.codex/config.toml`, links component CLIs into `~/.local/bin`. Windows: Git Bash preflight (`winget install --id Git.Git`). Installer source lives in [`packages/omop-codex/src/install/`](packages/omop-codex/src/install/); `packages/omop-codex/scripts/install*.mjs` are generated/bundled Node entrypoints that keep the published CLI paths stable.
+- **Install:** `bunx oh-my-open-pentest install --platform=codex` (or `bunx lazycodex-ai install`, or `--platform=both`) copies the plugin to `~/.codex/plugins/cache/cerberuslabs/omo/<version>/`, writes a local marketplace snapshot under `~/.codex/.tmp/marketplaces/cerberuslabs/plugins/omo/`, copies bundled agent TOMLs into `~/.codex/agents/`, enables `omop@cerberuslabs` in `~/.codex/config.toml`, links component CLIs into `~/.local/bin`. Windows: Git Bash preflight (`winget install --id Git.Git`). Installer source lives in [`packages/omop-codex/src/install/`](packages/omop-codex/src/install/); `packages/omop-codex/scripts/install*.mjs` are generated/bundled Node entrypoints that keep the published CLI paths stable.
 - **Deploy / publish** ([`.github/workflows/publish.yml`](.github/workflows/publish.yml), manual dispatch):
   - `publish_lazycodex` (default **true**) publishes the npm alias `lazycodex-ai`: rewrites root `package.json` name to `lazycodex-ai` + version to the release + optionalDeps `oh-my-open-pentest-*` to `oh-my-open-pentest-*`, skips when `registry.npmjs.org/lazycodex-ai/${VERSION}` exists, publishes `--access public --provenance --tag latest`, then restores `package.json`. (The bare `lazycodex` npm name was unpublished 2026-05-30; `lazycodex-ai` is the live package.)
 - Codex marketplace sync is **automatic for every stable release** (no manual toggle; the old `sync_lazycodex_marketplace` input was removed). The release-job steps are gated on `needs.release-metadata.outputs.dist_tag == ''` (stable only; prereleases skip) and require secret `LAZYCODEX_SYNC_TOKEN` (enforced up-front by the `preflight-trust` token check, also gated on stable). They check out `code-yeongyu/lazycodex`, build the plugin + lsp-tools-mcp + lsp-daemon + git-bash-mcp, run [`script/sync-lazycodex-marketplace.ts`](script/sync-lazycodex-marketplace.ts) `<source-root> <lazycodex-root>`, then `git push origin HEAD:main`.
@@ -315,7 +315,7 @@ bunx oh-my-open-pentest mcp-oauth login <server-url>  # Tier-3 MCP OAuth (PKCE +
 
 ## DEVELOPMENT ENVIRONMENT
 
-Cross-harness, one-command dev setup. The **single source of truth** is [`script/agent/setup.sh`](script/agent/setup.sh): it verifies the toolchain (bun/node/git, warns if tmux is missing), runs `bun install`, and runs `bun run build` only when `dist/index.js` is missing or `OMO_AGENT_FORCE_BUILD=.` (cheap to re-run). [`script/agent/cleanup.sh`](script/agent/cleanup.sh) removes regenerable transients by default and takes `--deep` to also drop `dist/`, vendored `packages/*/dist/`, and `node_modules/`. Every harness below delegates to those two scripts, so there is exactly one place to maintain. Claude Code reads [`CLAUDE.md`](CLAUDE.md) (a symlink to this AGENTS.md) and OpenCode reads this file, so every harness shares one infra.
+Cross-harness, one-command dev setup. The **single source of truth** is [`script/agent/setup.sh`](script/agent/setup.sh): it verifies the toolchain (bun/node/git, warns if tmux is missing), runs `bun install`, and runs `bun run build` only when `dist/index.js` is missing or `OMOP_AGENT_FORCE_BUILD=.` (cheap to re-run). [`script/agent/cleanup.sh`](script/agent/cleanup.sh) removes regenerable transients by default and takes `--deep` to also drop `dist/`, vendored `packages/*/dist/`, and `node_modules/`. Every harness below delegates to those two scripts, so there is exactly one place to maintain. Claude Code reads [`CLAUDE.md`](CLAUDE.md) (a symlink to this AGENTS.md) and OpenCode reads this file, so every harness shares one infra.
 
 | Harness | Committed wiring | Runs |
 |---------|------------------|------|
@@ -363,7 +363,7 @@ Cross-harness, one-command dev setup. The **single source of truth** is [`script
 - **Build:** `bun build` (ESM, entry `packages/omop-opencode/src/index.ts`) + `tsc --emitDeclarationOnly`, external: `zod`.
 - **CI tests:** root tests run through plain `bun test`; `packages/web/**` has its own package-level CI workflow.
 - **Barrel `index.ts` files** establish module boundaries within `packages/omop-opencode/src/`.
-- **Architecture rules** enforced via the `rules-injector` hook reading `.omo/rules/*.md` (e.g. `test-discipline.md`, `file-size-architectural-smell.md`, `typescript-programmer.md`).
+- **Architecture rules** enforced via the `rules-injector` hook reading `.omop/rules/*.md` (e.g. `test-discipline.md`, `file-size-architectural-smell.md`, `typescript-programmer.md`).
 - **Windows builds:** run on `windows-latest` (not cross-compiled) to avoid Bun segfaults.
 - **Platform binaries:** detect AVX2 + libc family at runtime, fallback to baseline if needed.
 - **IntentGate (`keyword-detector`):** classifies user intent (`fullscan`/`ulw`, `search`, `analyze`, `team`) and injects mode-specific prompts.
@@ -371,9 +371,9 @@ Cross-harness, one-command dev setup. The **single source of truth** is [`script
 - **zauc-mocks pattern:** directories named `zauc-mocks-*` (under `packages/omop-opencode/src/hooks/`, `tools/`, `mcp/`, `shared/`) hold `mock.module()` setup that must load alphabetically before the tests that consume those mocked modules. The `zauc-` prefix is purely a sort-order hack for `bun:test` discovery; these are NOT hooks/tools.
 - **Test discipline meta-audits:** two files (`packages/omop-opencode/src/shared/mock-module-lifecycle-audit.test.ts` and `prompt-async-route-audit.test.ts`) parse the entire codebase via the TS compiler API and FAIL the suite when an architectural invariant is violated (`mock.module()` without restore, raw `session.promptAsync` outside the gate).
 - **Docs:** see [`docs/guide/`](docs/guide) for user-facing guides (overview, installation, orchestration, agent-model-matching, team-mode), [`docs/reference/`](docs/reference) for CLI/configuration/features reference. See also [`CHANGELOG.md`](CHANGELOG.md), [`docs/reference/prompt-async-gate-rfc.md`](docs/reference/prompt-async-gate-rfc.md), and [`docs/reference/release-process.md`](docs/reference/release-process.md).
-- **Rules files** (auto-injected by `rules-injector` hook): scans `.omo/rules/`, `.claude/rules/`, `.cursor/rules/`, `.github/instructions/`, plus `.github/copilot-instructions.md` and `.mdc` files.
+- **Rules files** (auto-injected by `rules-injector` hook): scans `.omop/rules/`, `.claude/rules/`, `.cursor/rules/`, `.github/instructions/`, plus `.github/copilot-instructions.md` and `.mdc` files.
 - **Process cleanup:** Background-agent error handlers are now log-only — no force-exit on transient errors. Opt out entirely via `OMOP_DISABLE_PROCESS_CLEANUP=.` env var.
 - **First-prompt watchdog:** `packages/omop-opencode/src/hooks/runtime-fallback/first-prompt-watchdog.ts` detects subagent sessions producing no progress within 90s and triggers fallback / abort.
 - **ParentWakeNotifier:** Background-agent parent-wake state in `packages/omop-opencode/src/features/background-agent/parent-wake-notifier.ts` with dependency-injected client and enqueue callback.
-- **Workspace migration:** Runtime state migrated from `.cerberus/` → `.omo/`. Legacy `.cerberus/` still exists during transition; `packages/omop-opencode/src/shared/legacy-workspace-migration.ts` copies it forward on first load.
+- **Workspace migration:** Runtime state migrated from `.cerberus/` → `.omop/`. Legacy `.cerberus/` still exists during transition; `packages/omop-opencode/src/shared/legacy-workspace-migration.ts` copies it forward on first load.
 - **CI nuance:** PRs targeting `master` are hard-blocked — they MUST target `dev`. CI auto-commits schema changes on master push and creates a draft "next" release on dev push.

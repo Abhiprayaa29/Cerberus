@@ -49,11 +49,11 @@ async function createInstalledFixture(options: FixtureOptions = {}): Promise<Fix
   const root = await mkdtemp(join(tmpdir(), "omo-codex-components-doctor-"))
   const codexHome = join(root, ".codex")
   const binDir = join(root, "bin")
-  const pluginRoot = join(codexHome, "plugins", "cache", "cerberuslabs", "omo", PLUGIN_VERSION)
+  const pluginRoot = join(codexHome, "plugins", "cache", "cerberuslabs", "omop", PLUGIN_VERSION)
   await mkdir(join(pluginRoot, ".codex-plugin"), { recursive: true })
   await mkdir(binDir, { recursive: true })
   await writeFile(join(pluginRoot, ".codex-plugin", "plugin.json"), JSON.stringify({ name: "omop", version: PLUGIN_VERSION }))
-  await writeFile(join(codexHome, "config.toml"), ['[plugins."omo@cerberuslabs"]', "enabled = true", ""].join("\n"))
+  await writeFile(join(codexHome, "config.toml"), ['[plugins."omop@cerberuslabs"]', "enabled = true", ""].join("\n"))
 
   await writeBundleFile(
     pluginRoot,
@@ -105,7 +105,7 @@ async function createInstalledFixture(options: FixtureOptions = {}): Promise<Fix
     ? { completedForVersion: PLUGIN_VERSION, lastAttemptAt: 1_770_000_000_000, lastStatus: "success", degraded: [] }
     : options.bootstrapState
   if (bootstrapState !== null) {
-    const statePath = join(codexHome, "plugins", "data", "omo-cerberuslabs", "bootstrap", "state.json")
+    const statePath = join(codexHome, "plugins", "data", "omop-cerberuslabs", "bootstrap", "state.json")
     await mkdir(dirname(statePath), { recursive: true })
     await writeFile(statePath, JSON.stringify(bootstrapState))
   }
@@ -284,7 +284,7 @@ describe("codex components doctor check", () => {
         lastStatus: "degraded",
         degraded: [
           { component: "ast_grep", reason: "download failed: checksum mismatch", hint: "npx lazycodex-ai doctor" },
-          { component: "omo-cli", reason: "payload has no dist/cli" },
+          { component: "omop-cli", reason: "payload has no dist/cli" },
         ],
       },
     })
@@ -297,13 +297,13 @@ describe("codex components doctor check", () => {
     expect(result.details).toContain(
       "degraded component=ast_grep reason=download failed: checksum mismatch hint=npx lazycodex-ai doctor",
     )
-    expect(result.details).toContain("degraded component=omo-cli reason=payload has no dist/cli")
+    expect(result.details).toContain("degraded component=omop-cli reason=payload has no dist/cli")
   })
 
   test("#given malformed bootstrap state json #when checking components #then treats bootstrap as pending without crashing", async () => {
     // given
     const fixture = await createInstalledFixture({ bootstrapState: null })
-    const statePath = join(fixture.codexHome, "plugins", "data", "omo-cerberuslabs", "bootstrap", "state.json")
+    const statePath = join(fixture.codexHome, "plugins", "data", "omop-cerberuslabs", "bootstrap", "state.json")
     await mkdir(dirname(statePath), { recursive: true })
     await writeFile(statePath, "{not-json")
 

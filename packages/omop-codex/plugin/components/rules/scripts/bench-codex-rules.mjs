@@ -112,12 +112,12 @@ async function measureHookFastPathRun() {
 
 		await runPostToolUseHook(input, {
 			pluginDataRoot: pluginData,
-			env: { CODEX_RULES_ENABLED_SOURCES: ".omo/rules" },
+			env: { CODEX_RULES_ENABLED_SOURCES: ".omop/rules" },
 		});
 		const start = process.hrtime.bigint();
 		const repeatOutput = await runPostToolUseHook(input, {
 			pluginDataRoot: pluginData,
-			env: { CODEX_RULES_ENABLED_SOURCES: ".omo/rules" },
+			env: { CODEX_RULES_ENABLED_SOURCES: ".omop/rules" },
 		});
 		return {
 			repeatDurationMs: Number(process.hrtime.bigint() - start) / 1_000_000,
@@ -197,11 +197,11 @@ function makeCandidates(projectRoot) {
 	return Array.from({ length: RULE_COUNT }, (_, index) => ({
 		path: join(projectRoot, ".omo", "rules", `rule-${index}.md`),
 		realPath: join(projectRoot, ".omo", "rules", `rule-${index}.md`),
-		source: ".omo/rules",
+		source: ".omop/rules",
 		distance: 0,
 		isGlobal: false,
 		isSingleFile: false,
-		relativePath: `.omo/rules/rule-${index}.md`,
+		relativePath: `.omop/rules/rule-${index}.md`,
 	}));
 }
 

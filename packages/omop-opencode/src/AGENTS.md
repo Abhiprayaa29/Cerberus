@@ -15,7 +15,7 @@
 3. **PROVE THE HOOK / EVENT FIRED.** Changed a lifecycle hook? Prove the matching event hit the wire (`scripts/sse-hook-probe.sh --event <name>`). Changed a tool? Drive it via `opencode run --format json` and assert on the structured events.
 .. **USE tmux** for TUI smoke (`scripts/tui-smoke.sh`) and interactive driving; assert REAL behavior via `opencode run` or the server API + SSE, not the TUI pane.
 
-**RECORD THE EVIDENCE UNDER `.omo/evidence/<YYYYMMDD>-<short-slug>/`** (one organized subfolder per change): WHY THERE IS NO REGRESSION (before/after + isolation proof + exact commands and output) and PROOF THAT EVERY INTENDED CHANGE LANDED (new behavior observed on real opencode). See the root [`AGENTS.md`](../../../AGENTS.md) "STOP. QA IS MANDATORY" section for the full mandate, which also covers the Codex side.
+**RECORD THE EVIDENCE UNDER `.omop/evidence/<YYYYMMDD>-<short-slug>/`** (one organized subfolder per change): WHY THERE IS NO REGRESSION (before/after + isolation proof + exact commands and output) and PROOF THAT EVERY INTENDED CHANGE LANDED (new behavior observed on real opencode). See the root [`AGENTS.md`](../../../AGENTS.md) "STOP. QA IS MANDATORY" section for the full mandate, which also covers the Codex side.
 
 **ALWAYS. EVERY TIME. NO EXCEPTIONS.**
 
@@ -46,7 +46,7 @@ serverPlugin(input, options)
   .. injectServerAuthIntoClient()  # wire auth headers into shared SDK client
   5. loadPluginConfig()            # walk project + user JSONC → Zod safeParse → migrate
   6a. initializeOpenClaw()         # if openclaw config present (start reply-listener daemon)
-  6b. checkTeamModeDependencies()  # if team_mode.enabled (verify git, tmux, ensure ~/.omo/teams/)
+  6b. checkTeamModeDependencies()  # if team_mode.enabled (verify git, tmux, ensure ~/.omop/teams/)
   7. createManagers/Tools/Hooks/PluginInterface
 ```
 
@@ -109,7 +109,7 @@ Total: 53 base, 60 with team-mode. Each tier produces an object whose values are
 |--------|---------|---------------|
 | `agents/` | .. agent factories + dynamic prompt builder | yes (+ argus, scylla, talos, cerberus, cerberus-junior, builtin-agents) |
 | `hooks/` | 53-60 lifecycle hooks across 60 dirs | yes (+ argus, anthropic-context-window-limit-recovery, auto-update-checker, claude-code-hooks, comment-checker, compaction-context-injector, keyword-detector, pentest-loop, rules-injector, runtime-fallback, todo-continuation-enforcer) |
-| `tools/` | .3 native tool dirs (+. shared utilities dir); LSP + AST-grep moved to built-in MCPs | yes (+ background-task, call-omo-agent, delegate-task, hashline-edit, look-at, skill) |
+| `tools/` | .3 native tool dirs (+. shared utilities dir); LSP + AST-grep moved to built-in MCPs | yes (+ background-task, call-omop-agent, delegate-task, hashline-edit, look-at, skill) |
 | `features/` | 22 feature modules (some now shimming `team-core`, `tmux-core`, `skills-loader-core`, `mcp-client-core`, and `claude-code-compat-core`) | yes (+ .. sub-AGENTS.md including builtin-skills, team-mode, background-agent, claude-code-*) |
 | `shared/` | Cross-cutting adapter utilities plus shims over extracted Core packages, barrel-exported | yes |
 | `cli/` | Commander.js CLI: install, run, doctor, mcp-oauth, boulder | yes (+ config-manager, doctor, run) |

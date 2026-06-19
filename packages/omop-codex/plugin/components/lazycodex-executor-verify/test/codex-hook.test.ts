@@ -37,7 +37,7 @@ describe("lazycodex executor SubagentStop verifier", () => {
 		const parsed = parseBlockOutput(output);
 		expect(parsed.decision).toBe("block");
 		expect(parsed.reason).toContain("너는 방금 작업을 완료했다고 보고했고, 그건 거짓말이다.");
-		expect(parsed.reason).toContain(".omo/evidence/");
+		expect(parsed.reason).toContain(".omop/evidence/");
 		expect(parsed.reason).toContain("EVIDENCE_RECORDED: <path>");
 		expect(parsed.reason).not.toContain("2번째");
 	});
@@ -76,7 +76,7 @@ describe("lazycodex executor SubagentStop verifier", () => {
 
 		// when
 		const output = runSubagentStopHook(
-			createInput(cwd, { last_assistant_message: "done\nEVIDENCE_RECORDED: .omo/evidence/receipt.txt" }),
+			createInput(cwd, { last_assistant_message: "done\nEVIDENCE_RECORDED: .omop/evidence/receipt.txt" }),
 			nodeFileSystem,
 		);
 
@@ -94,7 +94,7 @@ describe("lazycodex executor SubagentStop verifier", () => {
 
 		// when
 		const output = runSubagentStopHook(
-			createInput(cwd, { last_assistant_message: "done\nEVIDENCE_RECORDED: .omo/evidence/empty.txt" }),
+			createInput(cwd, { last_assistant_message: "done\nEVIDENCE_RECORDED: .omop/evidence/empty.txt" }),
 			nodeFileSystem,
 		);
 
@@ -109,7 +109,7 @@ describe("lazycodex executor SubagentStop verifier", () => {
 
 		// when
 		const output = runSubagentStopHook(
-			createInput(cwd, { last_assistant_message: "done\nEVIDENCE_RECORDED: .omo/evidence/receipt-dir" }),
+			createInput(cwd, { last_assistant_message: "done\nEVIDENCE_RECORDED: .omop/evidence/receipt-dir" }),
 			nodeFileSystem,
 		);
 
@@ -126,7 +126,7 @@ describe("lazycodex executor SubagentStop verifier", () => {
 
 		// when
 		const output = runSubagentStopHook(
-			createInput(cwd, { last_assistant_message: "done\nEVIDENCE_RECORDED: .omo/evidence/passwd-link" }),
+			createInput(cwd, { last_assistant_message: "done\nEVIDENCE_RECORDED: .omop/evidence/passwd-link" }),
 			nodeFileSystem,
 		);
 
@@ -146,7 +146,7 @@ describe("lazycodex executor SubagentStop verifier", () => {
 
 		// when
 		const output = runSubagentStopHook(
-			createInput(cwd, { last_assistant_message: "done\nEVIDENCE_RECORDED: .omo/evidence/outside-dir/receipt.txt" }),
+			createInput(cwd, { last_assistant_message: "done\nEVIDENCE_RECORDED: .omop/evidence/outside-dir/receipt.txt" }),
 			nodeFileSystem,
 		);
 
@@ -191,7 +191,7 @@ describe("lazycodex executor SubagentStop verifier", () => {
 
 		// when
 		const output = runSubagentStopHook(
-			createInput(cwd, { last_assistant_message: "done\nEVIDENCE_RECORDED: .omo/evidence/../outside.txt" }),
+			createInput(cwd, { last_assistant_message: "done\nEVIDENCE_RECORDED: .omop/evidence/../outside.txt" }),
 			nodeFileSystem,
 		);
 

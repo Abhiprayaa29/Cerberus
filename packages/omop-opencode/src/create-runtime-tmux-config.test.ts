@@ -21,7 +21,7 @@ describe("createRuntimeTmuxConfig", () => {
 
   describe("#given the runtime does not expose Bun", () => {
     test("#when interactive bash availability is checked from a bundled module #then it returns false without crashing", async () => {
-      const outdir = mkdtempSync(join(tmpdir(), "omo-desktop-runtime-"))
+      const outdir = mkdtempSync(join(tmpdir(), "omop-desktop-runtime-"))
 
       try {
         const build = await Bun.build({

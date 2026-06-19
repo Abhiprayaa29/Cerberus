@@ -25,7 +25,7 @@ function describeResult(result: Awaited<ReturnType<RunAstGrepSkillInstall>>): st
 }
 
 export async function installAstGrepForCodex(options: CodexAstGrepInstallOptions): Promise<void> {
-  const plugin = options.installed.find((entry) => entry.name === "omo")
+  const plugin = options.installed.find((entry) => entry.name === "omop")
   if (plugin === undefined) return
   const platform = options.platform ?? process.platform
   const targetDir = astGrepRuntimeDir(options.codexHome, platform, options.arch ?? process.arch)

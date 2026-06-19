@@ -54,7 +54,7 @@ describe("CONTRIBUTING.md accuracy", () => {
     // then
     expect(content).toContain("bun test")
     expect(content).toContain("test:codex")
-    expect(content).toContain(".omo/evidence")
+    expect(content).toContain(".omop/evidence")
     expect(content).toContain("opencode-qa")
     expect(content).toContain("codex-qa")
   })

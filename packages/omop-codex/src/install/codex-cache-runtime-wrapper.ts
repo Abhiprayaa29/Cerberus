@@ -3,7 +3,7 @@ import { join } from "node:path"
 export const RUNTIME_WRAPPER_MARKER = "OMOP_GENERATED_RUNTIME_WRAPPER"
 
 export function posixRuntimeWrapper(cliPath: string, codexHome: string, binDir: string, nodeCliPath: string): string {
-  const ulwLoopBin = toPosixPath(join(binDir, "omo-pentest-loop"))
+  const ulwLoopBin = toPosixPath(join(binDir, "omop-pentest-loop"))
   const nodeCli = escapePosixDoubleQuoted(toPosixPath(nodeCliPath))
   const escapedCliPath = escapePosixDoubleQuoted(toPosixPath(cliPath))
   const escapedCodexHome = escapePosixDoubleQuoted(toPosixPath(codexHome))
@@ -49,7 +49,7 @@ export function posixRuntimeWrapper(cliPath: string, codexHome: string, binDir: 
 }
 
 export function windowsRuntimeWrapper(cliPath: string, codexHome: string, binDir: string, nodeCliPath: string): string {
-  const ulwLoopBin = join(binDir, "omo-pentest-loop.cmd")
+  const ulwLoopBin = join(binDir, "omop-pentest-loop.cmd")
   return [
     "@echo off",
     `rem ${RUNTIME_WRAPPER_MARKER}`,

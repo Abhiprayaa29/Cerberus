@@ -46,7 +46,7 @@ export function resolvePromptAppend(promptAppend: string, configDir?: string): s
       projectRoot,
       allowedHomeSubdirs: [...ALLOWED_HOME_SUBDIRS],
     })
-    return `[WARNING: Path rejected: ${promptAppend} (resolved outside project root ${projectRoot} and allowed home directories; file:// prompts must reside within the project directory, ~/.config/opencode/, ~/.config/oh-my-open-pentest/, ~/.omo/, or ~/.opencode/)]`
+    return `[WARNING: Path rejected: ${promptAppend} (resolved outside project root ${projectRoot} and allowed home directories; file:// prompts must reside within the project directory, ~/.config/opencode/, ~/.config/oh-my-open-pentest/, ~/.omop/, or ~/.opencode/)]`
   }
 
   if (!existsSync(filePath)) {

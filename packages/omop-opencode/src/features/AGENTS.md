@@ -47,7 +47,7 @@ Core orchestration engine. `BackgroundManager` manages task lifecycle:
 ### team-mode (~.3k LOC)
 
 Parallel multi-agent coordination, OFF by default. Harness-neutral domain primitives are extracted to `packages/team-core/`; this directory owns OpenCode-specific spawning, tool registration, and hook integration. Subdirs:
-- `team-registry/` — load/validate `~/.omo/teams/{name}/config.json`
+- `team-registry/` — load/validate `~/.omop/teams/{name}/config.json`
 - `team-state-store/` — durable runtime state with atomic locks
 - `team-runtime/` — `team_create`, status, shutdown lifecycle
 - `team-mailbox/` — async messaging (send/poll/ack)

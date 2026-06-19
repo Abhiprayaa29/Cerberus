@@ -9,7 +9,7 @@ import { ensureTuiPluginEntry } from "./add-tui-plugin-to-tui-config"
 const tempDirs: string[] = []
 
 function tempConfigDir(): string {
-  const dir = mkdtempSync(join(tmpdir(), "omo-tui-config-"))
+  const dir = mkdtempSync(join(tmpdir(), "omop-tui-config-"))
   tempDirs.push(dir)
   return dir
 }

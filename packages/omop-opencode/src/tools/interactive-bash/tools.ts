@@ -99,7 +99,7 @@ function findSubcommandIndex(parts: string[]): number {
 function getTargetSessionName(parts: string[]): string {
   const sessionIdx = parts.findIndex(p => p === "-t" || p.startsWith("-t"))
   if (sessionIdx === -1) {
-    return "omo-session"
+    return "omop-session"
   }
 
   const sessionToken = parts[sessionIdx] ?? ""
@@ -112,7 +112,7 @@ function getTargetSessionName(parts: string[]): string {
     return sessionToken.slice(2)
   }
 
-  return "omo-session"
+  return "omop-session"
 }
 
 function buildBlockedTmuxCommandMessage(command: string, parts: string[]): string {
@@ -146,7 +146,7 @@ Use scoped cleanup only:
 tmux kill-session -t <session-name>
 \`\`\`
 
-If you created an omo-* session, kill only that exact session. Do not retry kill-server with Bash or any other tool.`
+If you created an omop-* session, kill only that exact session. Do not retry kill-server with Bash or any other tool.`
 }
 
 type InteractiveBashArgs = {

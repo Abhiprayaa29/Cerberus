@@ -173,7 +173,7 @@ async function readBootstrapLog(pluginData: string): Promise<string> {
 describe("runSgProvision", () => {
 	it("#given resolution misses #when provisioning from a pinned zip #then the standalone binary lands at the resolver probe path with mode 755 and no staging leftovers", async () => {
 		// given
-		const root = createTemporaryDirectory("omo-bootstrap-provision-");
+		const root = createTemporaryDirectory("omop-bootstrap-provision-");
 		const codexHome = join(root, "codex-home");
 		const manifestDir = join(root, "manifests");
 		const { calls, fetchImpl } = fetchReturning(FIXTURE_ZIP);
@@ -206,7 +206,7 @@ describe("runSgProvision", () => {
 
 	it("#given a preexisting sg resolution #when provisioning #then it short-circuits without fetching and records a preexisting note in the log", async () => {
 		// given
-		const root = createTemporaryDirectory("omo-bootstrap-provision-");
+		const root = createTemporaryDirectory("omop-bootstrap-provision-");
 		const codexHome = join(root, "codex-home");
 		const manifestDir = join(root, "manifests");
 		const { calls, fetchImpl } = fetchReturning(FIXTURE_ZIP);
@@ -232,7 +232,7 @@ describe("runSgProvision", () => {
 
 	it("#given OMOP_BOOTSTRAP_FORCE_PROVISION=1 #when a preexisting sg would resolve #then resolution is bypassed and provisioning still runs", async () => {
 		// given
-		const root = createTemporaryDirectory("omo-bootstrap-provision-");
+		const root = createTemporaryDirectory("omop-bootstrap-provision-");
 		const codexHome = join(root, "codex-home");
 		const manifestDir = join(root, "manifests");
 		const { calls, fetchImpl } = fetchReturning(FIXTURE_ZIP);
@@ -267,7 +267,7 @@ describe("runSgProvision", () => {
 
 	it("#given a tampered checksum #when provisioning #then a degraded ast_grep entry names the mismatch and no file is left under runtime", async () => {
 		// given
-		const root = createTemporaryDirectory("omo-bootstrap-provision-");
+		const root = createTemporaryDirectory("omop-bootstrap-provision-");
 		const codexHome = join(root, "codex-home");
 		const manifestDir = join(root, "manifests");
 		const context = makeContext({ codexHome, manifestDir, pluginData: join(root, "data") });
@@ -292,7 +292,7 @@ describe("runSgProvision", () => {
 
 	it("#given a binary that reports the wrong version #when provisioning #then the provisioned file is removed and a degraded entry names both versions", async () => {
 		// given
-		const root = createTemporaryDirectory("omo-bootstrap-provision-");
+		const root = createTemporaryDirectory("omop-bootstrap-provision-");
 		const codexHome = join(root, "codex-home");
 		const manifestDir = join(root, "manifests");
 		const context = makeContext({ codexHome, manifestDir, pluginData: join(root, "data") });
@@ -318,7 +318,7 @@ describe("runSgProvision", () => {
 
 	it("#given the shared provisioner download fails #when provisioning #then a degraded entry names the download failure and leaves runtime empty", async () => {
 		// given
-		const root = createTemporaryDirectory("omo-bootstrap-provision-");
+		const root = createTemporaryDirectory("omop-bootstrap-provision-");
 		const codexHome = join(root, "codex-home");
 		const manifestDir = join(root, "manifests");
 		const calls: string[] = [];
@@ -349,7 +349,7 @@ describe("runSgProvision", () => {
 
 	it("#given win32 #when provisioning #then the destination binary is sg.exe extracted from the .exe entry", async () => {
 		// given
-		const root = createTemporaryDirectory("omo-bootstrap-provision-");
+		const root = createTemporaryDirectory("omop-bootstrap-provision-");
 		const codexHome = join(root, "codex-home");
 		const manifestDir = join(root, "manifests");
 		const windowsZip = makeZip([
@@ -387,7 +387,7 @@ describe("runSgProvision", () => {
 describe("worker sg step wiring", () => {
 	it("#given --only sg with injected seams #when the worker runs #then the default sg step provisions through the manifest-dir flag and writes a success state", async () => {
 		// given
-		const root = createTemporaryDirectory("omo-bootstrap-provision-worker-");
+		const root = createTemporaryDirectory("omop-bootstrap-provision-worker-");
 		const codexHome = join(root, "codex-home");
 		const manifestDir = join(root, "manifests");
 		const pluginData = join(root, "data");
@@ -427,7 +427,7 @@ describe("worker sg step wiring", () => {
 
 	it("#given --only sg with a tampered manifest #when the worker runs #then it finishes degraded with an ast_grep checksum entry and exit-0 semantics", async () => {
 		// given
-		const root = createTemporaryDirectory("omo-bootstrap-provision-worker-");
+		const root = createTemporaryDirectory("omop-bootstrap-provision-worker-");
 		const codexHome = join(root, "codex-home");
 		const manifestDir = join(root, "manifests");
 		const pluginData = join(root, "data");

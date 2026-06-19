@@ -51,7 +51,7 @@ describe("tui-plugin-config check", () => {
     originalConfigDir = process.env.OPENCODE_CONFIG_DIR
     testConfigDir = join(
       tmpdir(),
-      `omo-doctor-tui-${Date.now()}-${Math.random().toString(36).slice(2)}`,
+      `omop-doctor-tui-${Date.now()}-${Math.random().toString(36).slice(2)}`,
     )
     mkdirSync(testConfigDir, { recursive: true })
     process.env.OPENCODE_CONFIG_DIR = testConfigDir

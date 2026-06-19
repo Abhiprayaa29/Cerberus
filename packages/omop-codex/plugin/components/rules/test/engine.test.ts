@@ -12,11 +12,11 @@ function makeCandidate(overrides: Partial<RuleCandidate> = {}): RuleCandidate {
 	const candidate = {
 		path: join(projectRoot, ".omo", "rules", "typescript.md"),
 		realPath: join(projectRoot, ".omo", "rules", "typescript.md"),
-		source: ".omo/rules",
+		source: ".omop/rules",
 		distance: 0,
 		isGlobal: false,
 		isSingleFile: false,
-		relativePath: ".omo/rules/typescript.md",
+		relativePath: ".omop/rules/typescript.md",
 	} satisfies RuleCandidate;
 	return { ...candidate, ...overrides };
 }
@@ -240,7 +240,7 @@ describe("rule engine default source selection", () => {
 		expect(capturedDisabledSources?.has("AGENTS.md")).toBe(false);
 		expect(capturedDisabledSources?.has("~/.claude/CLAUDE.md")).toBe(false);
 		expect(capturedDisabledSources?.has("plugin-bundled")).toBe(false);
-		expect(capturedDisabledSources?.has(".omo/rules")).toBe(true);
+		expect(capturedDisabledSources?.has(".omop/rules")).toBe(true);
 	});
 });
 
@@ -278,7 +278,7 @@ describe("rule engine static loading", () => {
 
 	it("#given project candidate resolves outside project #when loading static rules #then the rule is skipped with a diagnostic", () => {
 		// given
-		const outsidePath = "/tmp/codex-rules-outside/.omo/rules/typescript.md";
+		const outsidePath = "/tmp/codex-rules-outside/.omop/rules/typescript.md";
 		const outsideCandidate = makeCandidate({
 			path: outsidePath,
 			realPath: outsidePath,

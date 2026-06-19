@@ -38,7 +38,7 @@ describe("agent dev-environment scripts", () => {
       expect(body).toContain("tmux") // non-fatal warning path
       expect(body).toContain("bun install")
       expect(body).toContain("bun run build")
-      expect(body).toContain("OMO_AGENT_FORCE_BUILD") // idempotent skip-build guard
+      expect(body).toContain("OMOP_AGENT_FORCE_BUILD") // idempotent skip-build guard
       expect(body).toContain(".env") // credential sourcing
       expect(body).toContain("--ignore-scripts")
       expect(body).toContain("1.3.12")

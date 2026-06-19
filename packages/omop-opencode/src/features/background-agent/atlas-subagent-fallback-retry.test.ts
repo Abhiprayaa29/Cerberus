@@ -22,7 +22,7 @@ type SessionCreateArgs = {
 type PromptCall = { readonly path: { readonly id: string }; readonly body?: unknown }
 
 const originalXdgCacheHome = process.env.XDG_CACHE_HOME
-const testDirectory = "/tmp/omo-argus-fallback-test"
+const testDirectory = "/tmp/omop-argus-fallback-test"
 let cacheCounter = 0
 
 beforeEach(() => {

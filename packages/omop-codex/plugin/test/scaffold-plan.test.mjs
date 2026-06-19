@@ -51,14 +51,14 @@ test("#given resolveSafeOmoPath #when the target escapes .omo or the workspace #
 	const cwd = "/tmp/ws";
 
 	// then --- the talos-md-only hook gates Write/Edit but not Bash, so the script self-guards its own writes
-	assert.ok(resolveSafeOmoPath(cwd, ".omo/plans/x.md").endsWith("x.md"));
+	assert.ok(resolveSafeOmoPath(cwd, ".omop/plans/x.md").endsWith("x.md"));
 	assert.throws(() => resolveSafeOmoPath(cwd, "../escape/x.md"));
 	assert.throws(() => resolveSafeOmoPath(cwd, "src/x.md"));
-	assert.throws(() => resolveSafeOmoPath(cwd, ".omo/plans/x.txt"));
+	assert.throws(() => resolveSafeOmoPath(cwd, ".omop/plans/x.txt"));
 	assert.throws(() => resolveSafeOmoPath(cwd, "/etc/passwd.md"));
 });
 
-test("#given scaffold #when .omo/plans is a symlink outside the workspace #then it refuses before the plan write escapes", async () => {
+test("#given scaffold #when .omop/plans is a symlink outside the workspace #then it refuses before the plan write escapes", async () => {
 	// given
 	const { scaffold } = await import(scriptUrl);
 	const dir = await mkdtemp(join(tmpdir(), "ulwp-"));
@@ -76,7 +76,7 @@ test("#given scaffold #when .omo/plans is a symlink outside the workspace #then 
 	}
 });
 
-test("#given scaffold #when .omo/drafts is a symlink outside the workspace #then it refuses before the draft write escapes", async () => {
+test("#given scaffold #when .omop/drafts is a symlink outside the workspace #then it refuses before the draft write escapes", async () => {
 	// given
 	const { scaffold } = await import(scriptUrl);
 	const dir = await mkdtemp(join(tmpdir(), "ulwp-"));

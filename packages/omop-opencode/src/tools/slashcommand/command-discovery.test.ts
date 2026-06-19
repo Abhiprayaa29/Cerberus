@@ -114,7 +114,7 @@ describe("slashcommand command discovery plugin integration", () => {
   let envSnapshot: EnvSnapshot
 
   beforeEach(() => {
-    tempDir = mkdtempSync(join(tmpdir(), "omo-command-discovery-test-"))
+    tempDir = mkdtempSync(join(tmpdir(), "omop-command-discovery-test-"))
     envSnapshot = {
       CLAUDE_CONFIG_DIR: process.env.CLAUDE_CONFIG_DIR,
       CLAUDE_PLUGINS_HOME: process.env.CLAUDE_PLUGINS_HOME,
@@ -320,7 +320,7 @@ describe("non-directory commands path", () => {
   let savedEnv: Record<string, string | undefined>
 
   beforeEach(() => {
-    testDir = mkdtempSync(join(tmpdir(), "omo-cmd-file-"))
+    testDir = mkdtempSync(join(tmpdir(), "omop-cmd-file-"))
     savedEnv = {
       CLAUDE_CONFIG_DIR: process.env.CLAUDE_CONFIG_DIR,
       OPENCODE_CONFIG_DIR: process.env.OPENCODE_CONFIG_DIR,

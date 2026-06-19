@@ -6,7 +6,7 @@
 # (.cursor/environment.json install), Claude Code (.claude/settings.json
 # SessionStart), and the devcontainer (postCreateCommand). Idempotent and safe
 # to re-run: it skips the (slow) build when dist/index.js already exists unless
-# OMO_AGENT_FORCE_BUILD=1.
+# OMOP_AGENT_FORCE_BUILD=1.
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
@@ -57,11 +57,11 @@ node_major="$(node --version 2>/dev/null | sed -E 's/^v?([0-9]+).*/\1/')"
 log "installing dependencies (bun install --ignore-scripts)"
 bun install --ignore-scripts
 
-if [ ! -f "$REPO_ROOT/dist/index.js" ] || [ "${OMO_AGENT_FORCE_BUILD:-0}" = "1" ]; then
-  log "building plugin (dist/index.js missing or OMO_AGENT_FORCE_BUILD=1)"
+if [ ! -f "$REPO_ROOT/dist/index.js" ] || [ "${OMOP_AGENT_FORCE_BUILD:-0}" = "1" ]; then
+  log "building plugin (dist/index.js missing or OMOP_AGENT_FORCE_BUILD=1)"
   bun run build
 else
-  log "dist/index.js present - skipping build (set OMO_AGENT_FORCE_BUILD=1 to force a rebuild)"
+  log "dist/index.js present - skipping build (set OMOP_AGENT_FORCE_BUILD=1 to force a rebuild)"
 fi
 
 log "ready. Run 'bun test' to verify, or 'source script/agent/qa-sandbox.sh' for isolated QA."

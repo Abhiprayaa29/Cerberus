@@ -43,7 +43,7 @@ describe("createInteractiveBashSessionTracker", () => {
     tracker.handleTmuxCommand({
       sessionID: "session-1",
       subCommand: "new-session",
-      sessionName: "omo-shell",
+      sessionName: "omop-shell",
       toolOutput: "",
     });
 
@@ -51,7 +51,7 @@ describe("createInteractiveBashSessionTracker", () => {
     await tracker.handleSessionDeleted("session-1");
 
     // then
-    expect(mockSpawnWithWindowsHide).toHaveBeenCalledWith(["tmux", "kill-session", "-t", "omo-shell"], {
+    expect(mockSpawnWithWindowsHide).toHaveBeenCalledWith(["tmux", "kill-session", "-t", "omop-shell"], {
       stdout: "ignore",
       stderr: "ignore",
     });

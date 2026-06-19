@@ -49,7 +49,7 @@ describe("runAstGrepSkillInstall", () => {
       platform: "linux",
       skillDir: "/skills/ast-grep",
       spawnProcess,
-      targetDir: "/home/test/.omo/runtime/ast-grep/linux-x64",
+      targetDir: "/home/test/.omop/runtime/ast-grep/linux-x64",
     })
 
     // then
@@ -76,7 +76,7 @@ describe("runAstGrepSkillInstall", () => {
       platform: "linux",
       skillDir: "/skills/ast-grep",
       spawnProcess,
-      targetDir: "/home/test/.omo/runtime/ast-grep/linux-x64",
+      targetDir: "/home/test/.omop/runtime/ast-grep/linux-x64",
       timeoutMs: 1,
     })
 

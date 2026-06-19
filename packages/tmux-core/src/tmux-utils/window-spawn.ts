@@ -5,7 +5,7 @@ import { isServerRunning } from "./server-health"
 import type { runTmuxCommand as RunTmuxCommand } from "../runner"
 import { buildTmuxPlaceholderCommand } from "./pane-command"
 
-const ISOLATED_WINDOW_NAME = "omo-agents"
+const ISOLATED_WINDOW_NAME = "omop-agents"
 
 export type SpawnTmuxWindowDeps = {
 	readonly log: (message: string, data?: unknown) => void
@@ -88,7 +88,7 @@ export async function spawnTmuxWindow(
 		return { success: false }
 	}
 
-	const title = `omo-subagent-${description.slice(0, 20)}`
+	const title = `omop-subagent-${description.slice(0, 20)}`
 	const titleResult = await runTmuxCommand(tmux, ["select-pane", "-t", paneId, "-T", title])
 	if (titleResult.exitCode !== 0) {
 		log("[spawnTmuxWindow] WARNING: failed to set pane title", {
