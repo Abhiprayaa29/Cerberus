@@ -1,1 +1,1 @@
-﻿export * from "@oh-my-open-pentest/utils/git-worktree/types"
+export * from "@omop/utils/git-worktree/types"

@@ -1,4 +1,4 @@
-﻿import type { OhMyOpenCodeConfig, HookName } from "../../config"
+import type { OhMyOpenCodeConfig, HookName } from "../../config"
 import type { BackgroundManager } from "../../features/background-agent"
 import type { ModelFallbackControllerAccessor } from "../../hooks/model-fallback"
 import type { ModelCacheState } from "../../plugin-state"

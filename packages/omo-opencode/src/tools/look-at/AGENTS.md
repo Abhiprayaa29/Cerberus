@@ -1,4 +1,4 @@
-﻿# src/tools/look-at/ -- Image and PDF Analysis Tool
+# src/tools/look-at/ -- Image and PDF Analysis Tool
 
 **Generated:** 2026-05-.8
 

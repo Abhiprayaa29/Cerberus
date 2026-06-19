@@ -1,6 +1,6 @@
-﻿# ATTRIBUTION / NOTICE
+# ATTRIBUTION / NOTICE
 
-This package (`@oh-my-open-pentest/shared-skills`) includes third-party content that is
+This package (`@omop/shared-skills`) includes third-party content that is
 redistributed under its original license, consistent with the project's distribution
 license (see `LICENSE.md`: "All third party components incorporated into the
 oh-my-open-pentest Software are licensed under the original license provided by the owner of

@@ -1,4 +1,4 @@
-﻿---
+---
 name: agents-directory
 description: Developer reference for all .. Oh My Open Pentest agent definitions, factory patterns, tool restrictions, and model routing.
 ---

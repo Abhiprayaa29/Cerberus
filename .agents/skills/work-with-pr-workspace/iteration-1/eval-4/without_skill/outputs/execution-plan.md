@@ -1,4 +1,4 @@
-﻿# Execution Plan: Add Built-in arXiv MCP (Issue #.00)
+# Execution Plan: Add Built-in arXiv MCP (Issue #.00)
 
 ## Pre-Implementation
 

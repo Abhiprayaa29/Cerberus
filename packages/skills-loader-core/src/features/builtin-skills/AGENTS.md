@@ -1,4 +1,4 @@
-﻿# src/features/builtin-skills/ — .2 Built-in Skill Files
+# src/features/builtin-skills/ — .2 Built-in Skill Files
 
 **Generated:** 2026-05-.5
 

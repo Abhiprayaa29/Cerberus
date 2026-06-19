@@ -1,4 +1,4 @@
-﻿# Design System Inspired by Binance.US
+# Design System Inspired by Binance.US
 
 ## .. Visual Theme & Atmosphere
 

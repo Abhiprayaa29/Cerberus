@@ -1,4 +1,4 @@
-﻿import color from "picocolors"
+import color from "picocolors"
 import type { DoctorResult } from "./types"
 import { formatHeader, formatStatusMark } from "./format-shared"
 

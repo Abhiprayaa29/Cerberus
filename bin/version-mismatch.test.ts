@@ -1,4 +1,4 @@
-﻿// bin/version-mismatch.test.ts
+// bin/version-mismatch.test.ts
 import { describe, expect, test } from "bun:test";
 import { detectPlatformBinaryMismatch } from "./version-mismatch.js";
 

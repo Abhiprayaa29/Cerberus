@@ -1,4 +1,4 @@
-﻿## Summary
+## Summary
 
 <!-- Brief description, .-3 bullets -->
 

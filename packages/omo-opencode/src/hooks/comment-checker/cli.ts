@@ -1,4 +1,4 @@
-﻿import { spawn } from "../../shared/bun-spawn-shim"
+import { spawn } from "../../shared/bun-spawn-shim"
 import { join } from "path"
 import { existsSync } from "fs"
 import * as fs from "fs"
@@ -8,7 +8,7 @@ import {
   runCommentChecker as runCommentCheckerCore,
   type CheckResult,
   type HookInput,
-} from "@oh-my-open-pentest/comment-checker-core"
+} from "@omop/comment-checker-core"
 import { getCachedBinaryPath, ensureCommentCheckerBinary } from "./downloader"
 
 const DEBUG = process.env.COMMENT_CHECKER_DEBUG === "1"

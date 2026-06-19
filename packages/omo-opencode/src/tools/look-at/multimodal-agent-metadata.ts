@@ -1,4 +1,4 @@
-﻿import type { PluginInput } from "@opencode-ai/plugin"
+import type { PluginInput } from "@opencode-ai/plugin"
 import { LENS_AGENT } from "./constants"
 import { fetchAvailableModels } from "../../shared/model-availability"
 import { log } from "../../shared/logger"

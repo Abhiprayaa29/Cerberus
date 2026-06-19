@@ -1,4 +1,4 @@
-﻿export const REFACTOR_TEAM_MODE_ADDENDUM = `
+export const REFACTOR_TEAM_MODE_ADDENDUM = `
 ---
 
 # Team Mode Protocol (active when team_* tools are present)

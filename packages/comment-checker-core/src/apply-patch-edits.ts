@@ -1,7 +1,7 @@
-﻿import { isRecord } from "@oh-my-open-pentest/utils/record-type-guard"
+import { isRecord } from "@omop/utils/record-type-guard"
 import type { ApplyPatchAccumulator, ApplyPatchFileMetadata, CheckerEdit } from "./types"
 
-export { isRecord } from "@oh-my-open-pentest/utils/record-type-guard"
+export { isRecord } from "@omop/utils/record-type-guard"
 
 export function extractApplyPatchEdits(
   details: unknown,

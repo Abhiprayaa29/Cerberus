@@ -1,4 +1,4 @@
-﻿import { describe, expect, it } from "bun:test"
+import { describe, expect, it } from "bun:test"
 import { hasCliSuffix } from "./cli-suffix"
 
 describe("hasCliSuffix", () => {

@@ -1,4 +1,4 @@
-﻿import type { KeywordType } from "../../config/schema/keyword-detector"
+import type { KeywordType } from "../../config/schema/keyword-detector"
 import { isRealUserTextPart } from "../../shared/internal-initiator-marker"
 import {
   CODE_BLOCK_PATTERN,

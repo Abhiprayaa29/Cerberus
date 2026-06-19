@@ -1,4 +1,4 @@
-﻿import { existsSync, readFileSync } from "node:fs"
+import { existsSync, readFileSync } from "node:fs"
 import { homedir } from "node:os"
 import { isAbsolute, join, resolve } from "node:path"
 import { isWithinProject } from "../../shared/contains-path"

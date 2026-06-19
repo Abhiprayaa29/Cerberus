@@ -1,4 +1,4 @@
-﻿# Async with Tokio
+# Async with Tokio
 
 Structured concurrency, cancellation, blocking-work isolation, channel selection. The patterns the agent should reach for by default.
 

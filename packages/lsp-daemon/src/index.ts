@@ -1,4 +1,4 @@
-﻿export { disposeDefaultLspManager } from "@oh-my-open-pentest/lsp-core/lsp/manager";
+export { disposeDefaultLspManager } from "@omop/lsp-core/lsp/manager";
 export {
 	type CallToolOptions,
 	callDiagnosticsViaDaemon,

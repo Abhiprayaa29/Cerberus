@@ -1,4 +1,4 @@
-﻿import { afterEach, describe, expect, test } from "bun:test"
+import { afterEach, describe, expect, test } from "bun:test"
 import { createUnstableAgentBabysitter } from "./unstable-agent-babysitter"
 import type { BackgroundTask } from "../features/background-agent"
 import { _resetForTesting, setMainSession } from "../features/claude-code-session-state"

@@ -1,4 +1,4 @@
-﻿# Code Changes
+# Code Changes
 
 ## .. NEW: `src/tools/delegate-task/default-categories.ts`
 

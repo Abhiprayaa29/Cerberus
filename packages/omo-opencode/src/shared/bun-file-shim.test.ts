@@ -1,4 +1,4 @@
-﻿import { readFile } from "node:fs/promises"
+import { readFile } from "node:fs/promises"
 import { mkdtemp, rm, writeFile } from "node:fs/promises"
 import { tmpdir } from "node:os"
 import { join } from "node:path"
@@ -6,7 +6,7 @@ import { afterAll, beforeAll, describe, expect, it } from "bun:test"
 import {
   bunFile as sharedBunFile,
   bunWrite as sharedBunWrite,
-} from "@oh-my-open-pentest/utils/runtime"
+} from "@omop/utils/runtime"
 
 import { bunFile, bunWrite } from "./bun-file-shim"
 

@@ -1,4 +1,4 @@
-﻿# Cargo Strict Configuration
+# Cargo Strict Configuration
 
 The exact knobs every new Rust project gets. Drop these in unmodified.
 

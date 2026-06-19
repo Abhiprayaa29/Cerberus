@@ -1,6 +1,6 @@
-﻿import type { LoadedSkill } from "../types"
+import type { LoadedSkill } from "../types"
 import type { SkillDefinition } from "../../../types"
-import { deepMerge } from "@oh-my-open-pentest/utils"
+import { deepMerge } from "@omop/utils"
 
 export function mergeSkillDefinitions(base: LoadedSkill, patch: SkillDefinition): LoadedSkill {
   const mergedMetadata = base.metadata || patch.metadata

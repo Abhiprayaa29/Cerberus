@@ -1,4 +1,4 @@
-﻿import type { GitMasterConfig } from "../../types"
+import type { GitMasterConfig } from "../../types"
 import { assertValidGitEnvPrefix } from "../../config/git-env-prefix"
 import { detectShellType, buildEnvPrefix, type ShellType } from "../../shared/shell-env"
 

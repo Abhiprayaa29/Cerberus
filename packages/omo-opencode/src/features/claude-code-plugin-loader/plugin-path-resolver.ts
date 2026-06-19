@@ -1,1 +1,1 @@
-﻿export * from "@oh-my-open-pentest/claude-code-compat-core/claude-code-plugin-loader/plugin-path-resolver"
+export * from "@omop/claude-code-compat-core/claude-code-plugin-loader/plugin-path-resolver"

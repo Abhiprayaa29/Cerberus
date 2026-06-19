@@ -1,4 +1,4 @@
-﻿# Design System Inspired by Webflow
+# Design System Inspired by Webflow
 
 ## .. Visual Theme & Atmosphere
 

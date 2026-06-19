@@ -1,4 +1,4 @@
-﻿import { createAgentsMdCache } from "@oh-my-open-pentest/rules-engine";
+import { createAgentsMdCache } from "@omop/rules-engine";
 import type { PluginInput } from "@opencode-ai/plugin";
 
 import { createDynamicTruncator } from "../../shared/dynamic-truncator";

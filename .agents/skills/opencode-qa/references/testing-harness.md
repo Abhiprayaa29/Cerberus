@@ -1,4 +1,4 @@
-﻿# opencode Test Harness (how opencode QAs itself)
+# opencode Test Harness (how opencode QAs itself)
 
 This is reference material for writing and running tests against the opencode source. The skill's own QA scripts (CLI, curl, sqlite) do not require this, but it is the authoritative pattern when you need a unit or integration test.
 

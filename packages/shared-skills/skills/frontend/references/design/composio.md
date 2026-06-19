@@ -1,4 +1,4 @@
-﻿# Design System Inspired by Composio
+# Design System Inspired by Composio
 
 ## .. Visual Theme & Atmosphere
 

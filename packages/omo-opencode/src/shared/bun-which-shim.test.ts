@@ -1,5 +1,5 @@
-﻿import { describe, expect, test } from "bun:test"
-import { bunWhich as sharedBunWhich } from "@oh-my-open-pentest/utils/runtime"
+import { describe, expect, test } from "bun:test"
+import { bunWhich as sharedBunWhich } from "@omop/utils/runtime"
 
 import { bunWhich } from "./bun-which-shim"
 

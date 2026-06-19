@@ -1,5 +1,5 @@
-﻿import { spawnTmuxPane as spawnTmuxPaneCore } from "@oh-my-open-pentest/tmux-core"
-import type { SpawnTmuxPaneDeps, TmuxConfig } from "@oh-my-open-pentest/tmux-core"
+import { spawnTmuxPane as spawnTmuxPaneCore } from "@omop/tmux-core"
+import type { SpawnTmuxPaneDeps, TmuxConfig } from "@omop/tmux-core"
 import type { SpawnPaneResult } from "../types"
 import type { SplitDirection } from "./environment"
 import { withPaneSpawnDeps } from "./adapter-deps"

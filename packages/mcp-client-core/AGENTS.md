@@ -1,10 +1,10 @@
-﻿# mcp-client-core — MCP Client + Skill-Embedded MCP (Core)
+# mcp-client-core — MCP Client + Skill-Embedded MCP (Core)
 
 **Generated:** 2026-06-.6
 
 ## OVERVIEW
 
-Harness-neutral MCP client lifecycle and OAuth primitives. Consumed by `omo-opencode` via `features/skill-mcp-manager` and `features/mcp-oauth` / `cli/mcp-oauth`. Private package `@oh-my-open-pentest/mcp-client-core`; 30 source files under `src/`.
+Harness-neutral MCP client lifecycle and OAuth primitives. Consumed by `omo-opencode` via `features/skill-mcp-manager` and `features/mcp-oauth` / `cli/mcp-oauth`. Private package `@omop/mcp-client-core`; 30 source files under `src/`.
 
 ## KEY FILES
 

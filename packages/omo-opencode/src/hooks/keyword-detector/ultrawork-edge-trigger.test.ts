@@ -1,4 +1,4 @@
-﻿import { afterEach, beforeEach, describe, expect, test } from "bun:test"
+import { afterEach, beforeEach, describe, expect, test } from "bun:test"
 import type { PluginInput } from "@opencode-ai/plugin"
 
 import { createKeywordDetectorHook } from "./index"

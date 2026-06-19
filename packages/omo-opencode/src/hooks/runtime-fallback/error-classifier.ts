@@ -1,4 +1,4 @@
-﻿import {
+import {
   classifyRuntimeFallbackError,
   extractRuntimeFallbackAutoRetrySignal,
   getRuntimeFallbackErrorMessage,
@@ -6,7 +6,7 @@
   getRuntimeFallbackRetryableSignal,
   getRuntimeFallbackStatusCode,
   isRuntimeFallbackRetryableError,
-} from "@oh-my-open-pentest/model-core"
+} from "@omop/model-core"
 import { HOOK_NAME } from "./constants"
 import { log } from "../../shared/logger"
 

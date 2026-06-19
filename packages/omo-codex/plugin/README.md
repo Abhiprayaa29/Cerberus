@@ -1,4 +1,4 @@
-﻿# omo
+# omo
 
 `omo` is the single local Codex plugin namespace for Yeongyu's Codex components.
 

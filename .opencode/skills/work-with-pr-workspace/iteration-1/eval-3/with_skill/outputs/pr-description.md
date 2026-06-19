@@ -1,4 +1,4 @@
-﻿# PR Title
+# PR Title
 
 ```
 refactor(delegate-task): split constants.ts into focused modules

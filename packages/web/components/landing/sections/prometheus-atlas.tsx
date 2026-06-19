@@ -1,4 +1,4 @@
-﻿import type { JSX } from "react"
+import type { JSX } from "react"
 import { getTranslations } from "next-intl/server"
 import { Brain, Layers, ArrowRight } from "lucide-react"
 import { Badge } from "@/components/ui/badge"

@@ -1,4 +1,4 @@
-﻿# .agents/ — Project-Scope Skills & Commands (Migration Target)
+# .agents/ — Project-Scope Skills & Commands (Migration Target)
 
 **Generated:** 2026-05-20
 

@@ -1,7 +1,7 @@
-﻿import type { TeamModeConfig } from "../../../config/schema/team-mode"
+import type { TeamModeConfig } from "../../../config/schema/team-mode"
 import { log } from "../../../shared/logger"
-import { transitionRuntimeState } from "@oh-my-open-pentest/team-core/team-state-store/store"
-import type { RuntimeState } from "@oh-my-open-pentest/team-core/types"
+import { transitionRuntimeState } from "@omop/team-core/team-state-store/store"
+import type { RuntimeState } from "@omop/team-core/types"
 import { releaseReservationsForRecipients } from "./messaging-live-delivery-reservation"
 import type { TeamSendMessageToolDeps } from "./messaging-runtime"
 

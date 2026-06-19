@@ -1,4 +1,4 @@
-﻿# Design System Inspired by Nike
+# Design System Inspired by Nike
 
 ## .. Visual Theme & Atmosphere
 

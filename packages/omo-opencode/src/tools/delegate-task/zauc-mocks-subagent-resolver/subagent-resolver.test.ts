@@ -1,4 +1,4 @@
-﻿/// <reference types="bun-types" />
+/// <reference types="bun-types" />
 
 import { afterEach, beforeEach, describe, expect, mock, test } from "bun:test"
 import type { DelegateTaskArgs } from "../types"

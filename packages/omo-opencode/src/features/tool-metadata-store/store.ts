@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Pending tool metadata store.
  *
  * OpenCode's `fromPlugin()` wrapper always replaces the metadata returned by

@@ -1,4 +1,4 @@
-﻿declare const require: (name: string) => any
+declare const require: (name: string) => any
 const { afterEach, describe, expect, mock, test, afterAll } = require("bun:test")
 import { mkdtempSync, mkdirSync, rmSync, writeFileSync } from "node:fs"
 import { join } from "node:path"

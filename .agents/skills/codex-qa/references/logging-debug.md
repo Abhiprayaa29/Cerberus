@@ -1,4 +1,4 @@
-﻿# Observing Codex at runtime (logs + debug surfaces)
+# Observing Codex at runtime (logs + debug surfaces)
 
 The intent "use `/debugging` to watch logs while QAing" maps to the surfaces
 below. Codex has **no `/debugging` command**; these are the real ways to observe

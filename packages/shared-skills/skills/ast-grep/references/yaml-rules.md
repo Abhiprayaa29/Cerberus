@@ -1,4 +1,4 @@
-﻿# YAML rule reference — atomic, relational, composite, transform, fix
+# YAML rule reference — atomic, relational, composite, transform, fix
 
 Use this when you outgrow inline `sg run -p ...` patterns and need a reusable, testable rule. A YAML rule is the unit of work for `sg scan`. Drop one or more files in `ruleDirs/` (configured via `sgconfig.yml`) and they get loaded automatically.
 

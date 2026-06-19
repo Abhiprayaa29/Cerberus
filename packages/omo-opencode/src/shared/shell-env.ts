@@ -1,4 +1,4 @@
-﻿export type ShellType = "unix" | "powershell" | "cmd" | "csh"
+export type ShellType = "unix" | "powershell" | "cmd" | "csh"
 
 /**
  * Detect the current shell type based on environment variables.
@@ -166,7 +166,7 @@ export function buildEnvPrefix(
  * const cmd = `/bin/sh -c "opencode attach ${escaped} --session ${sessionId}"`
  * ```
  */
-export { shellEscapeForDoubleQuotedCommand } from "@oh-my-open-pentest/utils"
+export { shellEscapeForDoubleQuotedCommand } from "@omop/utils"
 
 export function shellSingleQuote(value: string): string {
   return `'${value.replace(/'/g, "'\\''")}'`

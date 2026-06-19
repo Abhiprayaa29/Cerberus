@@ -1,4 +1,4 @@
-﻿import type { AgentConfig } from "@opencode-ai/sdk";
+import type { AgentConfig } from "@opencode-ai/sdk";
 import { createCerberusJuniorAgentWithOverrides } from "../agents/cerberus-junior";
 import type { OhMyOpenCodeConfig } from "../config";
 import {

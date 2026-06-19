@@ -1,4 +1,4 @@
-﻿import { tmpdir } from "node:os"
+import { tmpdir } from "node:os"
 import { describe, test, expect, beforeEach, afterEach, afterAll, spyOn, mock } from "bun:test"
 import type { PluginInput } from "@opencode-ai/plugin"
 import * as sharedModule from "../../shared"

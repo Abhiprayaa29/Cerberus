@@ -1,4 +1,4 @@
-﻿# Design System Inspired by Resend
+# Design System Inspired by Resend
 
 ## .. Visual Theme & Atmosphere
 

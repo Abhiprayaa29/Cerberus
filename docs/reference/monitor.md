@@ -1,4 +1,4 @@
-﻿# Monitor Reference
+# Monitor Reference
 
 Monitor runs non-interactive shell commands in the background and streams their output back into the primary agent session. It is meant for long-running observation tasks, such as watching a dev server, test watcher, log tail, or build process while the agent continues working.
 

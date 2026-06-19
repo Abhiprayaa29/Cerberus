@@ -1,4 +1,4 @@
-﻿import type {
+import type {
   ActivateTmuxPaneDeps,
   EnforceMainPaneWidthDeps,
   GetPaneDimensionsDeps,
@@ -7,7 +7,7 @@
   SpawnTmuxPaneDeps,
   SpawnTmuxSessionDeps,
   SpawnTmuxWindowDeps,
-} from "@oh-my-open-pentest/tmux-core"
+} from "@omop/tmux-core"
 
 import { getTmuxPath } from "../../../tools/interactive-bash/tmux-path-resolver"
 import { log } from "../../logger"

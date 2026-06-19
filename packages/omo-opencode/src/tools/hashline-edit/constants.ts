@@ -1,6 +1,6 @@
-﻿export {
+export {
   NIBBLE_STR,
   HASHLINE_DICT,
   HASHLINE_REF_PATTERN,
   HASHLINE_OUTPUT_PATTERN,
-} from "@oh-my-open-pentest/hashline-core"
+} from "@omop/hashline-core"

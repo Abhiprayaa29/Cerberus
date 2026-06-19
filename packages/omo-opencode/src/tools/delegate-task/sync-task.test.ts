@@ -1,4 +1,4 @@
-﻿import { describe, test, expect, beforeEach, afterEach, mock, spyOn } from "bun:test"
+import { describe, test, expect, beforeEach, afterEach, mock, spyOn } from "bun:test"
 
 function clearRequireCache(modulePath: string): void {
   const resolvedPath = require.resolve(modulePath)

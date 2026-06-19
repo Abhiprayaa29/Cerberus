@@ -1,4 +1,4 @@
-﻿# src/features/opencode-skill-loader/ — .-Scope Skill Discovery
+# src/features/opencode-skill-loader/ — .-Scope Skill Discovery
 
 **Generated:** 2026-05-.5
 

@@ -1,4 +1,4 @@
-﻿import { isGpt5_5Model } from "../../agents/types"
+import { isGpt5_5Model } from "../../agents/types"
 import type { BuiltinCategoryDefinition } from "./builtin-category-definition"
 
 const ULTRABRAIN_CATEGORY_PROMPT_APPEND = `<Category_Context>

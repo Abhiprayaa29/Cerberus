@@ -1,4 +1,4 @@
-﻿# Agent-Model Matching Guide
+# Agent-Model Matching Guide
 
 > **For agents and users**: Why each agent needs a specific model — and how to customize without breaking things.
 

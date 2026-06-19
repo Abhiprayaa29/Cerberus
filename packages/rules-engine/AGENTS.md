@@ -1,10 +1,10 @@
-﻿# rules-engine — Rule Discovery + Matching (Core)
+# rules-engine — Rule Discovery + Matching (Core)
 
 **Generated:** 2026-06-.6
 
 ## OVERVIEW
 
-`@oh-my-open-pentest/rules-engine` (renamed from `rules-core`). Harness-neutral TypeScript package that discovers markdown rule files and matches them against target paths. Consumed by the `rules-injector` hook in `omo-opencode`, the `rules` component in `omo-codex`, and `agents-md-core` for AGENTS.md walk-up discovery.
+`@omop/rules-engine` (renamed from `rules-core`). Harness-neutral TypeScript package that discovers markdown rule files and matches them against target paths. Consumed by the `rules-injector` hook in `omo-opencode`, the `rules` component in `omo-codex`, and `agents-md-core` for AGENTS.md walk-up discovery.
 
 ## KEY FILES
 

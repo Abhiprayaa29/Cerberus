@@ -1,4 +1,4 @@
-﻿# Recipes — copy-paste patterns by language
+# Recipes — copy-paste patterns by language
 
 Every pattern in this file has been verified against the canonical syntax. They are starting points; tweak metavariable names and constraints to fit your case.
 

@@ -1,4 +1,4 @@
-﻿export class MemberValidationError extends Error {
+export class MemberValidationError extends Error {
   constructor(
     message: string,
     public readonly memberName?: string,

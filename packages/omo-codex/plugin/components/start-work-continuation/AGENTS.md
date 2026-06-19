@@ -1,4 +1,4 @@
-﻿# Repository Conventions
+# Repository Conventions
 
 Conventions for human contributors and AI agents working on this repository.
 

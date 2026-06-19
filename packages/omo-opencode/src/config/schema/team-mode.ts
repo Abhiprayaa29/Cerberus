@@ -1,1 +1,1 @@
-﻿export * from "@oh-my-open-pentest/team-core/config"
+export * from "@omop/team-core/config"

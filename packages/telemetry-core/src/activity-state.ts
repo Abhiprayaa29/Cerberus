@@ -1,8 +1,8 @@
-﻿import { existsSync, mkdirSync, readFileSync } from "node:fs"
+import { existsSync, mkdirSync, readFileSync } from "node:fs"
 import { basename, join } from "node:path"
-import { writeFileAtomically } from "@oh-my-open-pentest/utils/atomic-write"
-import { resolveXdgDataDir } from "@oh-my-open-pentest/utils/xdg-data-dir"
-import type { XdgOsProvider } from "@oh-my-open-pentest/utils/xdg-data-dir"
+import { writeFileAtomically } from "@omop/utils/atomic-write"
+import { resolveXdgDataDir } from "@omop/utils/xdg-data-dir"
+import type { XdgOsProvider } from "@omop/utils/xdg-data-dir"
 
 import type { TelemetryDiagnosticInput, TelemetryProductConfig } from "./types"
 

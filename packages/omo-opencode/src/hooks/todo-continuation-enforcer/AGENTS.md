@@ -1,4 +1,4 @@
-﻿# src/hooks/todo-continuation-enforcer/ — Boulder Continuation Mechanism
+# src/hooks/todo-continuation-enforcer/ — Boulder Continuation Mechanism
 
 **Generated:** 2026-05-.5
 

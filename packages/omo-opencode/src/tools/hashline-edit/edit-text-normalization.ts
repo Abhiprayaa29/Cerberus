@@ -1,4 +1,4 @@
-﻿export {
+export {
   stripLinePrefixes,
   toNewLines,
   restoreLeadingIndent,
@@ -6,4 +6,4 @@
   stripInsertBeforeEcho,
   stripInsertBoundaryEcho,
   stripRangeBoundaryEcho,
-} from "@oh-my-open-pentest/hashline-core"
+} from "@omop/hashline-core"

@@ -1,4 +1,4 @@
-﻿import { describe, expect, it } from "bun:test"
+import { describe, expect, it } from "bun:test"
 import { OMOP_INTERNAL_INITIATOR_MARKER } from "../../shared/internal-initiator-marker"
 import {
   detectSlashCommand,

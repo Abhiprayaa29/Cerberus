@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Claude Code Plugin Types
  *
  * Type definitions for Claude Code plugin system compatibility.

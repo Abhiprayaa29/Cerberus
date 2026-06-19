@@ -1,4 +1,4 @@
-﻿import { parseModelSuggestion as parseModelSuggestionFromCore } from "@oh-my-open-pentest/model-core"
+import { parseModelSuggestion as parseModelSuggestionFromCore } from "@omop/model-core"
 import type {
   SessionPromptAsyncData,
   SessionPromptData,
@@ -16,7 +16,7 @@ import {
 } from "./prompt-async-gate"
 import { isAmbiguousPostDispatchPromptFailure } from "./prompt-failure-classifier"
 
-export type { ModelSuggestionInfo } from "@oh-my-open-pentest/model-core"
+export type { ModelSuggestionInfo } from "@omop/model-core"
 export { parseModelSuggestionFromCore as parseModelSuggestion }
 
 function extractMessage(error: unknown): string {

@@ -1,4 +1,4 @@
-﻿# Design System Inspired by Raycast
+# Design System Inspired by Raycast
 
 ## .. Visual Theme & Atmosphere
 

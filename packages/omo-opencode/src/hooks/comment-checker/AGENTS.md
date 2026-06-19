@@ -1,4 +1,4 @@
-﻿# src/hooks/comment-checker/ — AI Slop Comment Blocker
+# src/hooks/comment-checker/ — AI Slop Comment Blocker
 
 **Generated:** 2026-05-.5
 

@@ -1,4 +1,4 @@
-﻿const { afterEach, describe, expect, test } = require("bun:test")
+const { afterEach, describe, expect, test } = require("bun:test")
 const { createToolExecuteBeforeHandler } = require("./tool-execute-before")
 const { createToolRegistry } = require("./tool-registry")
 const { resetStorageClient } = require("../tools/session-manager/storage")

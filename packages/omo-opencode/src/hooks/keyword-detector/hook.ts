@@ -1,4 +1,4 @@
-﻿import type { PluginInput } from "@opencode-ai/plugin"
+import type { PluginInput } from "@opencode-ai/plugin"
 import type { DefaultModeConfig } from "../../config/schema/default-mode"
 import type { KeywordDetectorConfig } from "../../config/schema/keyword-detector"
 import {

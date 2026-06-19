@@ -1,4 +1,4 @@
-﻿# OmOP Labs Codex Marketplace
+# OmOP Labs Codex Marketplace
 
 Native Codex marketplace for the `omo` plugin.
 

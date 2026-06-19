@@ -1,4 +1,4 @@
-﻿
+
 # TypeScript Programmer
 
 Modern TypeScript. Type-strict, stack-first, async-correct.

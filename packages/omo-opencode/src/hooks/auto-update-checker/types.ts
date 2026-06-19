@@ -1,4 +1,4 @@
-﻿import type { ModelCapabilitiesConfig } from "../../config/schema/model-capabilities"
+import type { ModelCapabilitiesConfig } from "../../config/schema/model-capabilities"
 
 export interface NpmDistTags {
   latest: string

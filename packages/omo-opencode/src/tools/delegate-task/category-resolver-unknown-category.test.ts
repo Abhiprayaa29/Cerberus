@@ -1,4 +1,4 @@
-﻿declare const require: (name: string) => any
+declare const require: (name: string) => any
 const { afterEach, beforeEach, describe, expect, mock, spyOn, test } = require("bun:test")
 import { resolveCategoryExecution } from "./category-resolver"
 import type { ExecutorContext } from "./executor-types"

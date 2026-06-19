@@ -1,1 +1,1 @@
-﻿export * from "@oh-my-open-pentest/skills-loader-core/opencode-skill-loader/merger/config-skill-entry-loader"
+export * from "@omop/skills-loader-core/opencode-skill-loader/merger/config-skill-entry-loader"

@@ -1,4 +1,4 @@
-﻿# Oh-My-OpenAgent Features Reference
+# Oh-My-OpenAgent Features Reference
 
 ## Agents
 

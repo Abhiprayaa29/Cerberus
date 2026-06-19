@@ -1,1 +1,1 @@
-﻿export * from "@oh-my-open-pentest/lsp-core/missing-dependency-result";
+export * from "@omop/lsp-core/missing-dependency-result";

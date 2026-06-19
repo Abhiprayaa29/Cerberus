@@ -1,4 +1,4 @@
-﻿import { parseFrontmatter, type RuleFrontmatterData } from "@oh-my-open-pentest/utils";
+import { parseFrontmatter, type RuleFrontmatterData } from "@omop/utils";
 import type { RuleFrontmatterResult } from "./types";
 
 export function parseRuleFrontmatter(content: string): RuleFrontmatterResult {

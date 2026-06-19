@@ -1,4 +1,4 @@
-﻿# Execution Plan — Fix atlas hook crash on missing worktree_path
+# Execution Plan — Fix atlas hook crash on missing worktree_path
 
 ## Phase 0: Setup
 

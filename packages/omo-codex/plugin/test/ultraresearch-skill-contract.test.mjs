@@ -1,9 +1,9 @@
-﻿import assert from "node:assert/strict";
+import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
-import { sharedSkillsRootPath } from "@oh-my-open-pentest/shared-skills";
+import { sharedSkillsRootPath } from "@omop/shared-skills";
 
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
 

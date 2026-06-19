@@ -1,4 +1,4 @@
-﻿import { isRecord } from "@oh-my-open-pentest/utils"
+import { isRecord } from "@omop/utils"
 export type SessionMessagePart = {
   type?: string
   text?: string

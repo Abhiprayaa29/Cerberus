@@ -1,4 +1,4 @@
-﻿# Library Defaults — Full Decision Tree (Go 2026)
+# Library Defaults — Full Decision Tree (Go 2026)
 
 The opinionated, in-production stack for 2026 Go. Every entry has a one-line rationale and a canonical snippet so the agent does not relearn each library's idioms.
 

@@ -1,8 +1,8 @@
-﻿import { readFileSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "bun:test";
 
-import { parseFrontmatter } from "@oh-my-open-pentest/utils";
+import { parseFrontmatter } from "@omop/utils";
 
 import { parseRuleFrontmatter } from "./parser";
 const corpusPaths = [

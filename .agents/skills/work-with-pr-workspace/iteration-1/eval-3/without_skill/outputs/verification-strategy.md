@@ -1,4 +1,4 @@
-﻿# Verification Strategy
+# Verification Strategy
 
 ## .. Type Safety
 

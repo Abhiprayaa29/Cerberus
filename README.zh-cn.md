@@ -1,4 +1,4 @@
-﻿> [!NOTE]
+> [!NOTE]
 > **OmO for Codex 已发布。试试 LazyCodex**
 >
 > 因为太爱 Anthropic 模型而被封禁之后，我们决定站到 Codex 这一边。

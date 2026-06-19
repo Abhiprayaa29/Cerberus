@@ -1,4 +1,4 @@
-﻿import type { AvailableCategory, AvailableSkill } from "../../agents/dynamic-agent-prompt-builder"
+import type { AvailableCategory, AvailableSkill } from "../../agents/dynamic-agent-prompt-builder"
 import { mergeCategories } from "../../shared/merge-categories"
 import { CATEGORY_DESCRIPTIONS } from "./constants"
 import type { DelegateTaskToolOptions } from "./types"

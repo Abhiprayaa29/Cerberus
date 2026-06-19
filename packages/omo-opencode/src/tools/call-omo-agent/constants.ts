@@ -1,4 +1,4 @@
-﻿export const ALLOWED_AGENTS = [
+export const ALLOWED_AGENTS = [
   "scout",
   "intel",
 ] as const

@@ -1,11 +1,11 @@
-﻿import { tool, type ToolDefinition } from "@opencode-ai/plugin/tool"
+import { tool, type ToolDefinition } from "@opencode-ai/plugin/tool"
 
 import type { TeamModeConfig } from "../../../config/schema/team-mode"
 import type { OpencodeClient } from "../../../tools/delegate-task/types"
-import { loadTeamSpec } from "@oh-my-open-pentest/team-core/team-registry/loader"
+import { loadTeamSpec } from "@omop/team-core/team-registry/loader"
 import { aggregateStatus } from "../team-runtime/status"
-import { discoverTeamSpecs } from "@oh-my-open-pentest/team-core/team-registry/paths"
-import { listActiveTeams } from "@oh-my-open-pentest/team-core/team-state-store/store"
+import { discoverTeamSpecs } from "@omop/team-core/team-registry/paths"
+import { listActiveTeams } from "@omop/team-core/team-state-store/store"
 
 type QueryToolDeps = {
   aggregateStatus: typeof aggregateStatus

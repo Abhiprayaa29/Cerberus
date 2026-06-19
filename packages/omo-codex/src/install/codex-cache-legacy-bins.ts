@@ -1,4 +1,4 @@
-﻿import { lstat, readFile, readlink, rm } from "node:fs/promises"
+import { lstat, readFile, readlink, rm } from "node:fs/promises"
 import { join } from "node:path"
 import { COMMAND_SHIM_MARKER } from "./codex-cache-command-shim"
 

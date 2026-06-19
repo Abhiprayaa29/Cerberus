@@ -1,11 +1,11 @@
-﻿import {
+import {
   getDailyActiveCaptureState,
   getTelemetryActivityStateFilePath,
-} from "@oh-my-open-pentest/telemetry-core"
+} from "@omop/telemetry-core"
 import type {
   PostHogActivityCaptureState,
   PostHogActivityState,
-} from "@oh-my-open-pentest/telemetry-core"
+} from "@omop/telemetry-core"
 
 import { getActivityStateDir } from "./data-path"
 import { writeTelemetryDiagnostic } from "./diagnostics"

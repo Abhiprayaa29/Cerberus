@@ -1,4 +1,4 @@
-﻿import { describe, expect, mock, test } from "bun:test"
+import { describe, expect, mock, test } from "bun:test"
 import type { ToolContext } from "@opencode-ai/plugin/tool"
 
 import type { MonitorManager, MonitorRecord, MonitorStartOpts } from "../../features/monitor/types"

@@ -1,5 +1,5 @@
-﻿import path from "node:path"
-import { spawn as bunSpawn } from "@oh-my-open-pentest/utils/runtime"
+import path from "node:path"
+import { spawn as bunSpawn } from "@omop/utils/runtime"
 
 export type TeamModeConfig = {
   worktreeBaseDir?: string

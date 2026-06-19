@@ -1,1 +1,1 @@
-﻿export * from "@oh-my-open-pentest/team-core/team-state-store/deleting-resume"
+export * from "@omop/team-core/team-state-store/deleting-resume"

@@ -1,7 +1,7 @@
-﻿import { readFileSync } from "node:fs"
+import { readFileSync } from "node:fs"
 import { join } from "node:path"
-import { sharedSkillsRootPath } from "@oh-my-open-pentest/shared-skills"
-import { parseFrontmatter } from "@oh-my-open-pentest/utils"
+import { sharedSkillsRootPath } from "@omop/shared-skills"
+import { parseFrontmatter } from "@omop/utils"
 
 type SkillFileReader = (path: string, encoding: "utf8") => string
 

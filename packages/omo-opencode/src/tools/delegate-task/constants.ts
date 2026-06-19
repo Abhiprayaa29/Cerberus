@@ -1,4 +1,4 @@
-﻿import type {
+import type {
    AvailableCategory,
    AvailableSkill,
  } from "../../agents/dynamic-agent-prompt-builder"

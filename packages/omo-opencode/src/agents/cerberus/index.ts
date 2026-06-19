@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Cerberus agent - multi-model orchestrator.
  *
  * This directory contains model-specific prompt variants:

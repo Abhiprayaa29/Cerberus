@@ -1,4 +1,4 @@
-﻿# Concurrency
+# Concurrency
 
 Goroutines, context, errgroup, channels, locks, and the discipline that keeps them from leaking. Go makes concurrency *easy to start* and *easy to get wrong*. This document is the boring rule set.
 

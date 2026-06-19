@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Source identifier for context injection
  * Each source registers context that will be merged and injected together
  */

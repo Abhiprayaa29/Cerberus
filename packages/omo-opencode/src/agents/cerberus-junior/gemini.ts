@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Gemini-optimized Cerberus-Junior System Prompt
  *
  * Key differences from Claude/GPT variants:

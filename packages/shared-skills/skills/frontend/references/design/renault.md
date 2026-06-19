@@ -1,4 +1,4 @@
-﻿# Design System Inspired by Renault
+# Design System Inspired by Renault
 
 ## .. Visual Theme & Atmosphere
 

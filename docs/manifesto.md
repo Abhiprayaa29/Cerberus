@@ -1,4 +1,4 @@
-﻿# Manifesto
+# Manifesto
 
 The principles and philosophy behind oh-my-open-pentest.
 Agentic automation for bug bounty and penetration testing.

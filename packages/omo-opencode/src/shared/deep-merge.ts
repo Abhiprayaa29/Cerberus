@@ -1,1 +1,1 @@
-﻿export { deepMerge, isPlainObject } from "@oh-my-open-pentest/utils"
+export { deepMerge, isPlainObject } from "@omop/utils"

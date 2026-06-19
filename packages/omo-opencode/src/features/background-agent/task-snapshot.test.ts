@@ -1,4 +1,4 @@
-﻿import { describe, expect, test } from "bun:test"
+import { describe, expect, test } from "bun:test"
 import { toBackgroundTaskSnapshots } from "./task-snapshot"
 import type { BackgroundTask, BackgroundTaskSnapshot, BackgroundTaskStatus } from "./types"
 

@@ -1,4 +1,4 @@
-﻿{
+{
   "run_id": "eval-.-with_skill",
   "expectations": [
     {"text": "Plan uses git worktree in a sibling directory", "passed": true, "evidence": "Uses ../omo-wt/feat-max-background-agents"},

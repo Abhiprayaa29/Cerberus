@@ -1,4 +1,4 @@
-﻿# Miri, Sanitizers, Loom, and Fuzzing — The UB Detection Arsenal
+# Miri, Sanitizers, Loom, and Fuzzing — The UB Detection Arsenal
 
 Miri is the **primary weapon**. Everything else is supplementary for the gaps Miri cannot reach.
 

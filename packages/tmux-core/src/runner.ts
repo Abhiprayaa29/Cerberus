@@ -1,4 +1,4 @@
-﻿import { spawn } from "@oh-my-open-pentest/utils/runtime"
+import { spawn } from "@omop/utils/runtime"
 import { isCmuxCompatEnvironment } from "./cmux-detect"
 
 type RunTmuxOptions = {

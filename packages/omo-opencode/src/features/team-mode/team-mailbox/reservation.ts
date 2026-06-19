@@ -1,1 +1,1 @@
-﻿export * from "@oh-my-open-pentest/team-core/team-mailbox/reservation"
+export * from "@omop/team-core/team-mailbox/reservation"

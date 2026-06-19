@@ -1,1 +1,1 @@
-﻿export { writeFileAtomically } from "@oh-my-open-pentest/utils"
+export { writeFileAtomically } from "@omop/utils"

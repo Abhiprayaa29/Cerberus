@@ -1,4 +1,4 @@
-﻿import { isServerRunning, runTmuxCommand, type TmuxCommandResult } from "@oh-my-open-pentest/tmux-core"
+import { isServerRunning, runTmuxCommand, type TmuxCommandResult } from "@omop/tmux-core"
 import { log } from "../logger"
 import { shellSingleQuote } from "../shell-quote"
 import { resolveCallerTmuxSession } from "./resolve-caller-tmux-session"

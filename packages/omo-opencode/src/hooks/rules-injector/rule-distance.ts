@@ -1,1 +1,1 @@
-﻿export { calculateDistance } from "@oh-my-open-pentest/rules-engine";
+export { calculateDistance } from "@omop/rules-engine";

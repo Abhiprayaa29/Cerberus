@@ -1,4 +1,4 @@
-﻿import { afterEach, describe, expect, it, mock, spyOn } from "bun:test"
+import { afterEach, describe, expect, it, mock, spyOn } from "bun:test"
 import { OMOP_INTERNAL_INITIATOR_MARKER } from "../../shared/internal-initiator-marker"
 import * as dispatchHookModule from "./dispatch-hook"
 import {

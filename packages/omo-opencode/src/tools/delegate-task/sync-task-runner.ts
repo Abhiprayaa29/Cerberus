@@ -1,4 +1,4 @@
-﻿import type { TaskToastManager } from "../../features/task-toast-manager/manager"
+import type { TaskToastManager } from "../../features/task-toast-manager/manager"
 import type { ModelFallbackInfo } from "../../features/task-toast-manager/types"
 import type { ModelFallbackState } from "../../hooks/model-fallback/hook"
 import type { FallbackEntry } from "../../shared/model-requirements"

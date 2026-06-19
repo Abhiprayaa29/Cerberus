@@ -1,4 +1,4 @@
-﻿# ROADMAP
+# ROADMAP
 
 - [What This Is](#what-this-is)
 - [Current Priority: Package Layering Refactor](#current-priority-package-layering-refactor)

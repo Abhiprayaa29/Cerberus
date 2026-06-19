@@ -1,4 +1,4 @@
-﻿# Design System Inspired by Zapier
+# Design System Inspired by Zapier
 
 ## .. Visual Theme & Atmosphere
 

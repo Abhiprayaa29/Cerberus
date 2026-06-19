@@ -1,4 +1,4 @@
-﻿## Summary
+## Summary
 
 - Add `arxiv` as a .th built-in remote MCP for arXiv paper search
 - Follows the `grep-app.ts` pattern: static export, no auth required (arXiv API is public)

@@ -1,4 +1,4 @@
-﻿import { describe, expect, it } from "bun:test"
+import { describe, expect, it } from "bun:test"
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs"
 import { join } from "node:path"
 
@@ -6,7 +6,7 @@ const REPO_ROOT = join(import.meta.dir, "../../..", "..")
 const CODEX_ROOT = join(REPO_ROOT, "packages", "omo-codex")
 const COMPONENT_ROOT = join(CODEX_ROOT, "plugin", "components", "telemetry")
 const REMOVED_SYNC_SCRIPT_NAME = ["sync", "telemetry", "component"].join("-")
-const TELEMETRY_CORE_PACKAGE = "@oh-my-open-pentest/telemetry-core"
+const TELEMETRY_CORE_PACKAGE = "@omop/telemetry-core"
 const SYNCED_COMPONENT_SOURCE_PATTERN =
   /(atomic-write|data-path|diagnostics|env-flags|posthog-activity-state)\.ts$/
 

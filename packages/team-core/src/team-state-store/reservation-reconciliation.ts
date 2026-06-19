@@ -1,4 +1,4 @@
-﻿import { isRecord } from "@oh-my-open-pentest/utils"
+import { isRecord } from "@omop/utils"
 import type { TeamModeConfig } from "../config"
 import { log } from "../logger"
 import type { TeamSessionContext } from "../session-client"

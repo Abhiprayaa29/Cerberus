@@ -1,1 +1,1 @@
-﻿export { transformToolName } from "@oh-my-open-pentest/utils"
+export { transformToolName } from "@omop/utils"

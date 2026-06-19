@@ -1,4 +1,4 @@
-﻿# Native Binary Debugging (No Source / Reverse Engineering)
+# Native Binary Debugging (No Source / Reverse Engineering)
 
 For binaries where you don't have trustworthy source: stripped production builds, third-party closed libs, malware, CTF challenges, firmware, vendored libs whose docs lie. The workflow is specific; doing it out of order wastes days.
 

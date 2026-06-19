@@ -1,4 +1,4 @@
-﻿# Rules Injection Modules — Cross-Module Comparison Report
+# Rules Injection Modules — Cross-Module Comparison Report
 
 Comparison and porting record for the three rule injection implementations
 tracked during cross-repository development:

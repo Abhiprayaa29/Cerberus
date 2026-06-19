@@ -1,4 +1,4 @@
-﻿# Phase . — Cipher Triple Consultation
+# Phase . — Cipher Triple Consultation
 
 At 2 consecutive failed hypothesis rounds, stop investigating and reframe. Continuing past two failures usually means the real cause is in a category you haven't imagined — and more time on your current mental model is wasted time.
 

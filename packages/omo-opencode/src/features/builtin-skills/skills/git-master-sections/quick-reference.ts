@@ -1,1 +1,1 @@
-﻿export * from "@oh-my-open-pentest/skills-loader-core/builtin-skills/skills/git-master-sections/quick-reference"
+export * from "@omop/skills-loader-core/builtin-skills/skills/git-master-sections/quick-reference"

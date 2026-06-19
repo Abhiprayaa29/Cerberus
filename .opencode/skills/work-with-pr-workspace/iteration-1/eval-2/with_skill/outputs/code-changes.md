@@ -1,4 +1,4 @@
-﻿# Code Changes
+# Code Changes
 
 ## File .: `src/features/boulder-state/storage.ts`
 

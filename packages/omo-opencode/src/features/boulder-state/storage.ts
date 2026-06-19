@@ -1,4 +1,4 @@
-﻿export {
+export {
   addBoulderWork,
   appendSessionId,
   appendSessionIdForWork,
@@ -27,4 +27,4 @@
   upsertTaskSessionState,
   upsertTaskSessionStateForWork,
   writeBoulderState,
-} from "@oh-my-open-pentest/boulder-state"
+} from "@omop/boulder-state"

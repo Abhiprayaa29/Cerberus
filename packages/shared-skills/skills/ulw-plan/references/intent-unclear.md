@@ -1,4 +1,4 @@
-﻿---
+---
 name: ulw-plan
 description: ulw-plan UNCLEAR-intent path - the outcome itself is fuzzy; research to best practice, do not interrogate, auto high-accuracy.
 metadata:

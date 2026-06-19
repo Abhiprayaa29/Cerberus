@@ -1,6 +1,6 @@
-﻿{
-  "name": "@oh-my-open-pentest/comment-checker-core",
-  "version": "0...0",
+{
+  "name": "@omop/comment-checker-core",
+  "version": "0.1.0",
   "type": "module",
   "private": true,
   "description": "Pure TypeScript comment-checker parsing and runner core for oh-my-open-pentest.",
@@ -16,6 +16,6 @@
     "test": "bun test src/*.test.ts"
   },
   "dependencies": {
-    "@oh-my-open-pentest/utils": "workspace:*"
+    "@omop/utils": "*"
   }
 }

@@ -1,4 +1,4 @@
-﻿/// <reference types="bun-types" />
+/// <reference types="bun-types" />
 
 import { describe, test, expect, mock } from "bun:test"
 import { tmpdir } from "node:os"

@@ -1,4 +1,4 @@
-﻿---
+---
 name: refactor
 description: "Intelligent refactor command. Triggers: refactor, refactoring, cleanup, restructure, extract, simplify, modernize."
 ---

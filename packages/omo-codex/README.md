@@ -1,4 +1,4 @@
-﻿# @oh-my-open-pentest/omo-codex
+# @omop/omo-codex
 
 Codex harness adapter for **oh-my-open-pentest**. Brings the OMO experience (rules injection, comment checker, plugin-scoped MCPs, fullscan, pentest-loop, start-work continuation, telemetry) into [OpenAI Codex CLI](https://github.com/openai/codex) through Codex's native plugin system.
 

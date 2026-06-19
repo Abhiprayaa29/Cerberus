@@ -1,4 +1,4 @@
-﻿# Codex app-server — the first-party QA channel
+# Codex app-server — the first-party QA channel
 
 The app-server is how a host (IDE, our QA harness) drives Codex programmatically.
 We speak its protocol directly so we can read the **structured notification

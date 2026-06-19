@@ -1,4 +1,4 @@
-﻿---
+---
 name: rules
 description: Use when the user asks about Codex Rules behavior, injected project rules, supported rule file locations, matching, or environment configuration.
 ---

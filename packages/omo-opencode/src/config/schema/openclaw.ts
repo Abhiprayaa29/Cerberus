@@ -1,10 +1,10 @@
-﻿import { z } from "zod"
+import { z } from "zod"
 import type {
   OpenClawConfig as CoreOpenClawConfig,
   OpenClawGateway as CoreOpenClawGateway,
   OpenClawHook as CoreOpenClawHook,
   OpenClawReplyListenerConfig as CoreOpenClawReplyListenerConfig,
-} from "@oh-my-open-pentest/openclaw-core"
+} from "@omop/openclaw-core"
 
 export const OpenClawGatewaySchema = z.object({
   type: z.enum(["http", "command"]).default("http"),

@@ -1,4 +1,4 @@
-﻿# Python Debugging
+# Python Debugging
 
 Covers CPython 3.9+, pytest, asyncio, Django, FastAPI. Setup commands, attach mechanisms, state-query patterns, gotchas, silent-failure signatures.
 

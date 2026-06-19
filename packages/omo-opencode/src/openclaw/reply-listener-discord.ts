@@ -1,1 +1,1 @@
-﻿export * from "@oh-my-open-pentest/openclaw-core/reply-listener-discord"
+export * from "@omop/openclaw-core/reply-listener-discord"

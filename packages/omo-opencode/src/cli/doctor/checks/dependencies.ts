@@ -1,9 +1,9 @@
-﻿import { existsSync } from "node:fs"
+import { existsSync } from "node:fs"
 import { createRequire } from "node:module"
 import { homedir } from "node:os"
 import { dirname, join } from "node:path"
 
-import { astGrepRuntimeDir, findSgBinarySync } from "@oh-my-open-pentest/utils"
+import { astGrepRuntimeDir, findSgBinarySync } from "@omop/utils"
 
 import type { DependencyInfo } from "../framework/types"
 import { spawnWithTimeout } from "../framework/spawn-with-timeout"

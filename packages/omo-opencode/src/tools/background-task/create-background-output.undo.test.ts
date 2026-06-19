@@ -1,4 +1,4 @@
-﻿/// <reference types="bun-types" />
+/// <reference types="bun-types" />
 
 import { afterEach, describe, expect, test } from "bun:test"
 import type { ToolContext } from "@opencode-ai/plugin/tool"

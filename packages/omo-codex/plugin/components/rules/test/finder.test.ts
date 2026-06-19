@@ -1,10 +1,10 @@
-﻿import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
 
-import { findRuleCandidates } from "@oh-my-open-pentest/rules-engine/engine";
-import type { RuleCandidate } from "@oh-my-open-pentest/rules-engine/engine";
+import { findRuleCandidates } from "@omop/rules-engine/engine";
+import type { RuleCandidate } from "@omop/rules-engine/engine";
 
 const tempDirectories: string[] = [];
 

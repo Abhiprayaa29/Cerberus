@@ -1,1 +1,1 @@
-﻿export * from "@oh-my-open-pentest/utils/migration/config-migration"
+export * from "@omop/utils/migration/config-migration"

@@ -1,4 +1,4 @@
-﻿declare const require: NodeJS.Require
+declare const require: NodeJS.Require
 const { describe, test, expect, beforeEach, afterEach, spyOn, mock } = require("bun:test")
 import { DEFAULT_CATEGORIES, CATEGORY_DESCRIPTIONS, isPlanAgent, PLAN_AGENT_NAMES, isPlanFamily, PLAN_FAMILY_NAMES } from "./constants"
 import { getAgentDisplayName, getAgentListDisplayName } from "../../shared/agent-display-names"

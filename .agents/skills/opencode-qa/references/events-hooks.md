@@ -1,4 +1,4 @@
-﻿# QAing opencode hooks, actions, and events (Case B)
+# QAing opencode hooks, actions, and events (Case B)
 
 opencode publishes lifecycle events over Server-Sent Events. Plugins observe the SAME events via the `event` hook, so confirming an event on the wire proves a hook would fire. The bundled probe is `scripts/sse-hook-probe.sh`.
 

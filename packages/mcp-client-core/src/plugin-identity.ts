@@ -1,1 +1,1 @@
-﻿export const PLUGIN_NAME = "oh-my-open-pentest"
+export const PLUGIN_NAME = "oh-my-open-pentest"

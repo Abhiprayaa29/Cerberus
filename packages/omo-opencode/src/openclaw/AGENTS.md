@@ -1,4 +1,4 @@
-﻿# src/openclaw/ — Bidirectional External Integration
+# src/openclaw/ — Bidirectional External Integration
 
 **Generated:** 2026-05-.5
 

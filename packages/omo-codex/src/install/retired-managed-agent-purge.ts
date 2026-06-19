@@ -1,4 +1,4 @@
-﻿import { lstat, readFile, rm } from "node:fs/promises"
+import { lstat, readFile, rm } from "node:fs/promises"
 import { join } from "node:path"
 
 const RETIRED_MANAGED_AGENT_FILES = [

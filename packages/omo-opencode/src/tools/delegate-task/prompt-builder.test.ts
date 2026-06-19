@@ -1,4 +1,4 @@
-﻿declare const require: (name: string) => unknown
+declare const require: (name: string) => unknown
 const { describe, test, expect } = require("bun:test") as {
   describe: (name: string, fn: () => void) => void
   test: (name: string, fn: () => void) => void

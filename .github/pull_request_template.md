@@ -1,4 +1,4 @@
-﻿## Summary
+## Summary
 
 <!-- Brief description of what this PR does. .-3 bullet points. -->
 

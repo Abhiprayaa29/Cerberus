@@ -1,4 +1,4 @@
-﻿import { describe, expect, it, spyOn } from "bun:test"
+import { describe, expect, it, spyOn } from "bun:test"
 import type { EventPayload, RunContext } from "./types"
 import { createEventState } from "./events"
 import { processEvents } from "./event-stream-processor"

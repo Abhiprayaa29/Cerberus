@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Kimi K2.x-native Cerberus prompt — rewritten with 8-block architecture.
  *
  * Design principles (derived from kimi.com/blog/kimi-k2-6 + arxiv 2602.02276 §4.4.2):

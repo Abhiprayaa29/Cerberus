@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Regression test for issue #4027: coordinator agents must not be selectable as
  * subagent targets via task(). Symmetric guard to PR #4065 (team_create caller
  * eligibility) — this covers the TARGET side of delegation.

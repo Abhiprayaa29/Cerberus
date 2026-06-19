@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Claude Fable 5-native Cerberus prompt - tuned for Fable 5 behaviors.
  *
  * Design principles (Anthropic Fable 5 guidance: same request surface and

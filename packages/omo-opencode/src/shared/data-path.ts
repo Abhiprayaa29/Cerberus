@@ -1,7 +1,7 @@
-﻿import * as path from "node:path"
+import * as path from "node:path"
 import * as os from "node:os"
 import { accessSync, constants, mkdirSync } from "node:fs"
-import { resolveXdgDataDir } from "@oh-my-open-pentest/utils"
+import { resolveXdgDataDir } from "@omop/utils"
 
 import { CACHE_DIR_NAME } from "./plugin-identity"
 

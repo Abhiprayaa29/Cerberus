@@ -1,4 +1,4 @@
-﻿# Verification Strategy: arXiv MCP
+# Verification Strategy: arXiv MCP
 
 ## .. Type Safety
 

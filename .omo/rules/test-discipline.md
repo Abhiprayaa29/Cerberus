@@ -1,4 +1,4 @@
-﻿---
+---
 description: Test discipline - fires when reading or editing any test file in this repo
 globs:
   - "**/*.test.ts"

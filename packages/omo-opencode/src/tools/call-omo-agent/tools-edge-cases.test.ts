@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Requirement-based integration tests for createCallOmoAgent edge cases
  * around restricted agent validation and execution cleanup.
  *

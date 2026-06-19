@@ -1,4 +1,4 @@
-﻿import { getAgentConfigKey } from "../../shared/agent-display-names"
+import { getAgentConfigKey } from "../../shared/agent-display-names"
 
 export const subagentSessions = new Set<string>()
 export const syncSubagentSessions = new Set<string>()

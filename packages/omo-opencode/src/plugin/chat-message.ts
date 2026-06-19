@@ -1,4 +1,4 @@
-﻿import type { OhMyOpenCodeConfig } from "../config"
+import type { OhMyOpenCodeConfig } from "../config"
 
 import { updateSessionAgent } from "../features/claude-code-session-state"
 import { isSyntheticOrInternalOnlyTextParts, log } from "../shared"

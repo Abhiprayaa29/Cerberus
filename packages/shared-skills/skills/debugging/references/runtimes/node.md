@@ -1,4 +1,4 @@
-﻿# Node.js / tsx / ts-node / Bun / Deno Debugging
+# Node.js / tsx / ts-node / Bun / Deno Debugging
 
 Covers Node .8+, tsx, ts-node, Bun, Deno. Launch recipes, inspector protocol usage, the `node inspect` CLI, and the **tsx source-map silent-failure** that costs people days.
 

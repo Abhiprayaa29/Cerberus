@@ -1,4 +1,4 @@
-﻿# Error Handling
+# Error Handling
 
 Typed errors, exhaustive matching, Result pattern, and resource safety.
 

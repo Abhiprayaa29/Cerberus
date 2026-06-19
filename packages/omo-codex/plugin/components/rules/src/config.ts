@@ -1,6 +1,6 @@
-﻿import { SOURCE_PRIORITY } from "@oh-my-open-pentest/rules-engine/engine";
-import { defaultConfig } from "@oh-my-open-pentest/rules-engine/engine";
-import type { PiRulesConfig, RuleSource } from "@oh-my-open-pentest/rules-engine/engine";
+import { SOURCE_PRIORITY } from "@omop/rules-engine/engine";
+import { defaultConfig } from "@omop/rules-engine/engine";
+import type { PiRulesConfig, RuleSource } from "@omop/rules-engine/engine";
 
 export function configFromEnvironment(env: NodeJS.ProcessEnv = process.env): PiRulesConfig {
 	const config = defaultConfig();

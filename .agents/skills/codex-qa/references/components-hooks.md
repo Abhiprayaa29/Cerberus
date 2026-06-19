@@ -1,4 +1,4 @@
-﻿# omo-codex components → events → observable proof
+# omo-codex components → events → observable proof
 
 The plugin's hook wiring lives in
 `packages/omo-codex/plugin/hooks/hooks.json`. Each hook runs

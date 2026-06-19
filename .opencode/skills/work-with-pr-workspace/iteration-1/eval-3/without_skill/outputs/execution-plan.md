@@ -1,4 +1,4 @@
-﻿# Execution Plan: Refactor constants.ts
+# Execution Plan: Refactor constants.ts
 
 ## Context
 

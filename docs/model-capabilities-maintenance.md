@@ -1,4 +1,4 @@
-﻿# Model Capabilities Maintenance
+# Model Capabilities Maintenance
 
 This project treats model capability resolution as a layered system:
 

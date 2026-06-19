@@ -1,4 +1,4 @@
-﻿# src/cli/ — CLI: install, run, doctor, mcp-oauth, refresh-model-capabilities, get-local-version, version, boulder, cleanup, sparkshell, pentest-loop
+# src/cli/ — CLI: install, run, doctor, mcp-oauth, refresh-model-capabilities, get-local-version, version, boulder, cleanup, sparkshell, pentest-loop
 
 **Generated:** 2026-06-08
 

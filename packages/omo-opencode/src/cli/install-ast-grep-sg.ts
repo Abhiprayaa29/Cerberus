@@ -1,8 +1,8 @@
-﻿import { homedir } from "node:os"
+import { homedir } from "node:os"
 import { join } from "node:path"
 
-import { sharedSkillsRootPath } from "@oh-my-open-pentest/shared-skills"
-import { astGrepRuntimeDir, runAstGrepSkillInstall, type RunAstGrepSkillInstall } from "@oh-my-open-pentest/utils"
+import { sharedSkillsRootPath } from "@omop/shared-skills"
+import { astGrepRuntimeDir, runAstGrepSkillInstall, type RunAstGrepSkillInstall } from "@omop/utils"
 
 export interface OpenCodeAstGrepInstallOptions {
   readonly arch?: string

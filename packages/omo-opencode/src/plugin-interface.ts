@@ -1,4 +1,4 @@
-﻿import type { PluginContext, PluginInterface, ToolsRecord } from "./plugin/types"
+import type { PluginContext, PluginInterface, ToolsRecord } from "./plugin/types"
 import type { OhMyOpenCodeConfig } from "./config"
 
 import { applyAgentVariant } from "./shared/agent-variant"

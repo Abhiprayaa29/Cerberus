@@ -1,8 +1,8 @@
-﻿export {
+export {
   parseLineRef,
   validateLineRef,
   validateLineRefs,
   HashlineMismatchError,
   normalizeLineRef,
-} from "@oh-my-open-pentest/hashline-core"
-export type { LineRef } from "@oh-my-open-pentest/hashline-core"
+} from "@omop/hashline-core"
+export type { LineRef } from "@omop/hashline-core"

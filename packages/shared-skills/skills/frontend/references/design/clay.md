@@ -1,4 +1,4 @@
-﻿# Design System Inspired by Clay
+# Design System Inspired by Clay
 
 ## .. Visual Theme & Atmosphere
 

@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env bun
+#!/usr/bin/env bun
 // script/build-binaries.ts
 // Build platform-specific binaries for CLI distribution
 

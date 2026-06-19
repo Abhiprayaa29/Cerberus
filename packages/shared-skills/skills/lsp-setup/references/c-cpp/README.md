@@ -1,4 +1,4 @@
-﻿# C / C++ — LSP setup
+# C / C++ — LSP setup
 
 - **Builtin server:** `clangd` — `clangd --background-index --clang-tidy`
 - **Extensions:** `.c .cpp .cc .cxx .c++ .h .hpp .hh .hxx .h++`

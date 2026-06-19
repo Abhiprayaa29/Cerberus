@@ -1,1 +1,1 @@
-﻿export { normalizeModelFormat } from "@oh-my-open-pentest/model-core"
+export { normalizeModelFormat } from "@omop/model-core"

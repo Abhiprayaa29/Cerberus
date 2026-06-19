@@ -1,2 +1,2 @@
-﻿export { canonicalizeFileText, restoreFileText } from "@oh-my-open-pentest/hashline-core"
-export type { FileTextEnvelope } from "@oh-my-open-pentest/hashline-core"
+export { canonicalizeFileText, restoreFileText } from "@omop/hashline-core"
+export type { FileTextEnvelope } from "@omop/hashline-core"

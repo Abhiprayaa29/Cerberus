@@ -1,4 +1,4 @@
-﻿# Rust — LSP setup
+# Rust — LSP setup
 
 - **Builtin server:** `rust` — `rust-analyzer`
 - **Extensions:** `.rs`

@@ -1,4 +1,4 @@
-﻿# Data Modeling
+# Data Modeling
 
 Which construct to use, how to structure data, and why readonly is the default.
 

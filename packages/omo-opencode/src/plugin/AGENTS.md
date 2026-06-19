@@ -1,4 +1,4 @@
-﻿# src/plugin/ — .2 OpenCode Hook Handlers + Hook Composition
+# src/plugin/ — .2 OpenCode Hook Handlers + Hook Composition
 
 **Generated:** 2026-06-08
 

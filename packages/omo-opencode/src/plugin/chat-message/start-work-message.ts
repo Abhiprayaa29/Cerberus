@@ -1,4 +1,4 @@
-﻿import { log } from "../../shared"
+import { log } from "../../shared"
 import { extractPromptText } from "./prompt-text"
 import type {
   ChatMessageHooks,

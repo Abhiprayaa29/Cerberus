@@ -1,4 +1,4 @@
-﻿import { AGENT_ELIGIBILITY_REGISTRY } from "../types"
+import { AGENT_ELIGIBILITY_REGISTRY } from "../types"
 
 import type { Member, TeamSpec } from "../types"
 

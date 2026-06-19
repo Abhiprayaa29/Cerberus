@@ -1,4 +1,4 @@
-﻿# Go — LSP setup
+# Go — LSP setup
 
 - **Builtin server:** `gopls` — `gopls`
 - **Extensions:** `.go`

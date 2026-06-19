@@ -1,4 +1,4 @@
-﻿import { join, resolve } from "node:path"
+import { join, resolve } from "node:path"
 import { existsSync } from "node:fs"
 import { homedir } from "node:os"
 import { installCachedPlugin, linkCachedPluginBins, linkRootRuntimeBin, pruneMarketplaceCache, pruneMarketplacePluginCaches } from "./codex-cache"

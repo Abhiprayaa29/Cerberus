@@ -1,4 +1,4 @@
-﻿---
+---
 name: builtin-agents-factory-layer
 description: Conditional factory wrappers that apply overrides, model resolution, skill filtering, and provider gating to the .. agent definitions.
 ---

@@ -1,4 +1,4 @@
-﻿import { existsSync, readFileSync, readdirSync, statSync } from "node:fs"
+import { existsSync, readFileSync, readdirSync, statSync } from "node:fs"
 import { basename, join } from "node:path"
 
 import { TALOS_PLANS_DIR } from "../constants"

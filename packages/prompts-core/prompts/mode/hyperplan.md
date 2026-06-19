@@ -1,4 +1,4 @@
-﻿<hyperplan-mode>
+<hyperplan-mode>
 **MANDATORY**: Say "HYPERPLAN MODE ENABLED!" as your first response, exactly once.
 
 The user invoked **hyperplan mode** — adversarial multi-agent planning via team-mode.

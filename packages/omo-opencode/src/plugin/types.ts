@@ -1,5 +1,5 @@
-﻿import type { Plugin, ToolDefinition } from "@opencode-ai/plugin"
-import type { TmuxConfig } from "@oh-my-open-pentest/tmux-core"
+import type { Plugin, ToolDefinition } from "@opencode-ai/plugin"
+import type { TmuxConfig } from "@omop/tmux-core"
 
 export type PluginContext = Parameters<Plugin>[0]
 export type PluginInstance = Awaited<ReturnType<Plugin>>

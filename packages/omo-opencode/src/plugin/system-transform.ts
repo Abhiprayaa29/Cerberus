@@ -1,4 +1,4 @@
-﻿import type { DefaultModeConfig } from "../config/schema/default-mode"
+import type { DefaultModeConfig } from "../config/schema/default-mode"
 import {
   getSparkShellRuntimeAwareness,
   hasSparkShellRuntimeAwareness,

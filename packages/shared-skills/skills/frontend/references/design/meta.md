@@ -1,4 +1,4 @@
-﻿# Design System Inspired by Meta (Store)
+# Design System Inspired by Meta (Store)
 
 ## .. Visual Theme & Atmosphere
 

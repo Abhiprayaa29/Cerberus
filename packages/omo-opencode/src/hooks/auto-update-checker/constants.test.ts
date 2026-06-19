@@ -1,4 +1,4 @@
-﻿import { describe, expect, it } from "bun:test"
+import { describe, expect, it } from "bun:test"
 import { join } from "node:path"
 import { getOpenCodeCacheDir } from "../../shared/data-path"
 

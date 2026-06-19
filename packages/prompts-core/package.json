@@ -1,6 +1,6 @@
-﻿{
-  "name": "@oh-my-open-pentest/prompts-core",
-  "version": "0...0",
+{
+  "name": "@omop/prompts-core",
+  "version": "0.1.0",
   "type": "module",
   "private": true,
   "description": "Harness-agnostic markdown prompt loading and model-variant routing for oh-my-open-pentest.",
@@ -17,7 +17,7 @@
     "test": "bun test src/*.test.ts test/*.test.ts"
   },
   "peerDependencies": {
-    "@oh-my-open-pentest/model-core": "workspace:*",
-    "@oh-my-open-pentest/utils": "workspace:*"
+    "@omop/model-core": "*",
+    "@omop/utils": "*"
   }
 }

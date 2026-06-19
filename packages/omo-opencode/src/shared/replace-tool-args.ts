@@ -1,1 +1,1 @@
-﻿export { replaceToolArgs } from "@oh-my-open-pentest/utils"
+export { replaceToolArgs } from "@omop/utils"

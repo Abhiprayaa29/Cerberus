@@ -1,4 +1,4 @@
-﻿# src/config/ — Zod v. Schema System
+# src/config/ — Zod v. Schema System
 
 **Generated:** 2026-06-08
 

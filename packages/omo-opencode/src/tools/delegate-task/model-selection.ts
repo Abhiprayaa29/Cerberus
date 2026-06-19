@@ -1,8 +1,8 @@
-﻿import {
+import {
   resolveModelForDelegateTask as resolveModelForDelegateTaskCore,
   type DelegateModelResolutionInput,
   type DelegateModelResolutionResult,
-} from "@oh-my-open-pentest/delegate-core"
+} from "@omop/delegate-core"
 import * as connectedProvidersCache from "../../shared/connected-providers-cache"
 import { log } from "../../shared/logger"
 

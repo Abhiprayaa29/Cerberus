@@ -1,2 +1,2 @@
-﻿export type { ContextLimitModelCacheState } from "@oh-my-open-pentest/model-core"
-export { resolveActualContextLimit } from "@oh-my-open-pentest/model-core"
+export type { ContextLimitModelCacheState } from "@omop/model-core"
+export { resolveActualContextLimit } from "@omop/model-core"

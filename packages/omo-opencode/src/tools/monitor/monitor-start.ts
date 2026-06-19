@@ -1,4 +1,4 @@
-﻿import { tool, type ToolDefinition } from "@opencode-ai/plugin"
+import { tool, type ToolDefinition } from "@opencode-ai/plugin"
 
 import type { OhMyOpenCodeConfig } from "../../config/schema/oh-my-open-pentest-config"
 import { checkMonitorCommandPermission, type BashPermissionAskInput } from "../../features/monitor/permission"

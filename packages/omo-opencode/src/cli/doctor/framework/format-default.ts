@@ -1,4 +1,4 @@
-﻿import color from "picocolors"
+import color from "picocolors"
 import { PLUGIN_NAME } from "../../../shared"
 import type { DoctorResult } from "./types"
 import { SYMBOLS } from "./constants"

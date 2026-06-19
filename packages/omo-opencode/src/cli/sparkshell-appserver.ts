@@ -1,4 +1,4 @@
-﻿import { isRecord } from "@oh-my-open-pentest/utils"
+import { isRecord } from "@omop/utils"
 import { existsSync } from "node:fs"
 import type { Socket } from "node:net"
 import { homedir } from "node:os"

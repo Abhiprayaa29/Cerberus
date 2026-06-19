@@ -1,4 +1,4 @@
-﻿import { describe, it, expect, mock } from "bun:test"
+import { describe, it, expect, mock } from "bun:test"
 
 import { handleSessionIdleBackgroundEvent } from "./session-idle-event-handler"
 import type { BackgroundTask } from "./types"

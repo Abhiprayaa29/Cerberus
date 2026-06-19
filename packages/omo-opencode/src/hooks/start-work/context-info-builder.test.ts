@@ -1,4 +1,4 @@
-﻿/// <reference types="bun-types" />
+/// <reference types="bun-types" />
 
 import { afterEach, beforeEach, describe, expect, spyOn, test } from "bun:test"
 import { existsSync, mkdirSync, rmSync, writeFileSync } from "node:fs"

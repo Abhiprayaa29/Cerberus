@@ -1,4 +1,4 @@
-﻿/// <reference types="bun-types" />
+/// <reference types="bun-types" />
 
 import { afterEach, describe, expect, mock, spyOn, test } from "bun:test"
 import { randomUUID } from "node:crypto"

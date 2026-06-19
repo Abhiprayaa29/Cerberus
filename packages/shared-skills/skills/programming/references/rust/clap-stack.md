@@ -1,4 +1,4 @@
-﻿# CLI Stack — clap + color-eyre + tracing + indicatif + dialoguer
+# CLI Stack — clap + color-eyre + tracing + indicatif + dialoguer
 
 The default for any new CLI tool. Strict typing on arguments, beautiful errors, progress feedback, interactive prompts when needed.
 

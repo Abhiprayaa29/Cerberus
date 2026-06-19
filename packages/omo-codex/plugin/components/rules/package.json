@@ -1,9 +1,9 @@
-﻿{
+{
 	"name": "@code-yeongyu/codex-rules",
 	"version": "1.0.0",
 	"description": "Codex plugin that injects project rule files into model context through lifecycle hooks.",
 	"type": "module",
-	"packageManager": "npm@....2..",
+	"packageManager": "npm@11.12.1",
 	"license": "MIT",
 	"homepage": "https://github.com/code-yeongyu/codex-rules",
 	"repository": {
@@ -47,15 +47,15 @@
 		"check": "tsc --noEmit && biome check . && npm run build"
 	},
 	"dependencies": {
-		"picomatch": "^..0.3"
+		"picomatch": "^4.0.3"
 	},
 	"devDependencies": {
-		"@oh-my-open-pentest/rules-engine": "file:../../../../rules-engine",
-		"@biomejs/biome": "2....6",
+		"@omop/rules-engine": "file:../../../../rules-engine",
+		"@biomejs/biome": "2.4.16",
 		"@types/node": "^25.9.3",
-		"@types/picomatch": "^..0.0",
+		"@types/picomatch": "^4.0.0",
 		"typescript": "^6.0.3",
-		"vitest": "^....8"
+		"vitest": "^4.1.8"
 	},
 	"engines": {
 		"node": ">=20.0.0"

@@ -1,4 +1,4 @@
-﻿---
+---
 name: design-system-architecture
 description: "Mandatory reference for the Design System Gate. Defines DESIGN.md structure, creation workflow, validation rules, and memory management. Loaded automatically when the agent needs to create or update a project's design system."
 ---

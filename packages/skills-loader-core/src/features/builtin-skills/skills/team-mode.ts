@@ -1,4 +1,4 @@
-﻿import type { BuiltinSkill } from "../types"
+import type { BuiltinSkill } from "../types"
 
 export const teamModeSkill: BuiltinSkill = {
   name: "team-mode",

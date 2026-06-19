@@ -1,4 +1,4 @@
-﻿# Design System Inspired by Airbnb
+# Design System Inspired by Airbnb
 
 ## .. Visual Theme & Atmosphere
 

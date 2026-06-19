@@ -1,4 +1,4 @@
-﻿# Verification Strategy
+# Verification Strategy
 
 ## Pre-Push Local Validation
 

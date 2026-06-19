@@ -1,4 +1,4 @@
-﻿import { stat } from "node:fs/promises";
+import { stat } from "node:fs/promises";
 import { readFile } from "node:fs/promises";
 import { homedir } from "node:os";
 import { dirname, join, resolve } from "node:path";

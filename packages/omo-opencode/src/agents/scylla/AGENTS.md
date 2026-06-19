@@ -1,4 +1,4 @@
-﻿---
+---
 name: scylla-agent
 description: Developer reference for the Scylla autonomous deep worker agent — model variants, key behaviors, and delegation patterns.
 ---

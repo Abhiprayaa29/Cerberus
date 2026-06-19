@@ -1,4 +1,4 @@
-﻿> [!NOTE]
+> [!NOTE]
 > **OmO for Codex が登場しました。LazyCodex を試してください**
 >
 > Anthropic のモデルを愛しすぎてブロックまで経験した私たちは、今度は Codex に賭けることにしました。

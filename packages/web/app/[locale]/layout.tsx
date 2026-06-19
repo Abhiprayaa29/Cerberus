@@ -1,4 +1,4 @@
-﻿import type { Metadata } from "next"
+import type { Metadata } from "next"
 import type { JSX, ReactNode } from "react"
 import { notFound } from "next/navigation"
 import { hasLocale } from "next-intl"

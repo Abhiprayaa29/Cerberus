@@ -1,6 +1,6 @@
-﻿{
-  "name": "@oh-my-open-pentest/model-core",
-  "version": "0...0",
+{
+  "name": "@omop/model-core",
+  "version": "0.1.0",
   "type": "module",
   "private": true,
   "description": "Pure TypeScript model resolution core logic shared across harness adapters.",

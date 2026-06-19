@@ -1,4 +1,4 @@
-﻿import { statSync } from "node:fs"
+import { statSync } from "node:fs"
 import { getPlanName, getPlanProgress } from "../../features/boulder-state"
 
 function normalizePlanLookupValue(value: string): string {

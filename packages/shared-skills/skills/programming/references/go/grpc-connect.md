@@ -1,4 +1,4 @@
-﻿# RPC — Connect-Go (default) + grpc-go (fallback) + protovalidate
+# RPC — Connect-Go (default) + grpc-go (fallback) + protovalidate
 
 `connectrpc/connect-go` is the default. It is wire-compatible with gRPC, also speaks Connect protocol + gRPC-Web from browsers, and uses ordinary `net/http` so middleware (logging, auth, tracing) composes the same way as REST. Reach for raw `grpc-go` only when you need a gRPC-specific feature Connect lacks.
 

@@ -1,4 +1,4 @@
-﻿# Textual TUI
+# Textual TUI
 
 Textual builds rich, mouse-aware, scrollable, mobile-style TUIs on top of `rich`. Replaces curses, urwid, blessed.
 

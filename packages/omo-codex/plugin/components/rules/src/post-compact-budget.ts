@@ -1,5 +1,5 @@
-﻿import { hasContextPressureMarker } from "./context-pressure.js";
-import type { PiRulesConfig } from "@oh-my-open-pentest/rules-engine/engine";
+import { hasContextPressureMarker } from "./context-pressure.js";
+import type { PiRulesConfig } from "@omop/rules-engine/engine";
 import { readTranscriptSearchText } from "./transcript-search.js";
 
 export interface PostCompactBudgetContext {

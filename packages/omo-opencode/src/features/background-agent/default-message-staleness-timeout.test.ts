@@ -1,4 +1,4 @@
-﻿declare const require: (name: string) => any
+declare const require: (name: string) => any
 const { describe, expect, test, mock } = require("bun:test")
 
 import { DEFAULT_MESSAGE_STALENESS_TIMEOUT_MS } from "./constants"

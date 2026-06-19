@@ -1,4 +1,4 @@
-﻿{
+{
 	"$schema": "https://biomejs.dev/schemas/2....6/schema.json",
 	"linter": {
 		"enabled": true,

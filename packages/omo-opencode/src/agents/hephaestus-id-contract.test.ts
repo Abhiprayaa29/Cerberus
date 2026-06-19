@@ -1,4 +1,4 @@
-﻿/// <reference types="bun-types" />
+/// <reference types="bun-types" />
 
 import { describe, expect, test } from "bun:test"
 import { buildScyllaPrompt as buildGptScyllaPrompt } from "./scylla/gpt"

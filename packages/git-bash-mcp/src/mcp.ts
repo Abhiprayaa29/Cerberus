@@ -1,6 +1,6 @@
-﻿import type { Readable, Writable } from "node:stream";
-import { errorResponse, isPlainRecord, jsonRpcId, runJsonRpcStdioServer, successResponse } from "@oh-my-open-pentest/mcp-stdio-core";
-import type { JsonRpcResponse } from "@oh-my-open-pentest/mcp-stdio-core";
+import type { Readable, Writable } from "node:stream";
+import { errorResponse, isPlainRecord, jsonRpcId, runJsonRpcStdioServer, successResponse } from "@omop/mcp-stdio-core";
+import type { JsonRpcResponse } from "@omop/mcp-stdio-core";
 import { resolveGitBash, resolveGitBashForCurrentProcess, type GitBashResolution } from "./git-bash-resolver";
 import { runGitBashCommand, type GitBashRunResult, type RunGitBashCommand } from "./runner";
 

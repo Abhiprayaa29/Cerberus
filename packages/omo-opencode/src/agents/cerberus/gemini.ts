@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Gemini-specific overlay sections for Cerberus prompt.
  *
  * Gemini models are aggressively optimistic and tend to:

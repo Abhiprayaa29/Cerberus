@@ -1,1 +1,1 @@
-﻿export * from "@oh-my-open-pentest/openclaw-core/gateway-url-validation.test"
+export * from "@omop/openclaw-core/gateway-url-validation.test"

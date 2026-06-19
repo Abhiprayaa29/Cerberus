@@ -1,4 +1,4 @@
-﻿---
+---
 description: Publish oh-my-open-pentest to npm via GitHub Actions workflow
 argument-hint: <patch|minor|major>
 ---

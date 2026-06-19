@@ -1,4 +1,4 @@
-﻿# Lua — LSP setup
+# Lua — LSP setup
 
 - **Builtin server:** `lua-ls` — `lua-language-server`
 - **Extensions:** `.lua`

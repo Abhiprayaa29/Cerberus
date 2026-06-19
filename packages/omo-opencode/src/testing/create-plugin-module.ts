@@ -1,4 +1,4 @@
-﻿import type { Hooks, Plugin, PluginModule } from "@opencode-ai/plugin"
+import type { Hooks, Plugin, PluginModule } from "@opencode-ai/plugin"
 import type { HookName } from "../config"
 import { initConfigContext } from "../cli/config-manager/config-context"
 import { ensureTuiPluginEntry } from "../cli/config-manager/add-tui-plugin-to-tui-config"

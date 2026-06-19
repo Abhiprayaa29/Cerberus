@@ -1,4 +1,4 @@
-﻿import { isPlainRecord, parseConfigSections } from "@oh-my-open-pentest/utils"
+import { isPlainRecord, parseConfigSections } from "@omop/utils"
 import * as fs from "fs";
 import { OhMyOpenCodeConfigSchema, type OhMyOpenCodeConfig } from "../config";
 import {

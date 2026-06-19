@@ -1,4 +1,4 @@
-﻿import { isRecord } from "@oh-my-open-pentest/utils"
+import { isRecord } from "@omop/utils"
 import { execSync } from "child_process"
 import { existsSync, readFileSync, realpathSync } from "fs"
 import { dirname, join } from "path"

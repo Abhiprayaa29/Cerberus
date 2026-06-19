@@ -1,4 +1,4 @@
-﻿const { describe, test, expect, mock } = require("bun:test")
+const { describe, test, expect, mock } = require("bun:test")
 
 describe("executeBackgroundContinuation - subagent metadata", () => {
   test("includes subagent in task_metadata when task has agent", async () => {

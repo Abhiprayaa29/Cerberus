@@ -1,4 +1,4 @@
-﻿const EXCLUDED_DIR_NAMES = [
+const EXCLUDED_DIR_NAMES = [
   "node_modules",
   ".git",
   "dist",

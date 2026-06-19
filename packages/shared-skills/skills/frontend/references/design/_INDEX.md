@@ -1,4 +1,4 @@
-﻿# Frontend Design References — Index
+# Frontend Design References — Index
 
 All reference files live flat in this directory. Three layers:
 - **Layer 0 — design system architecture** (. file): the mandatory gate. Defines `DESIGN.md` structure, creation workflow, validation rules. Always loaded by Phase 0 when no design system exists.

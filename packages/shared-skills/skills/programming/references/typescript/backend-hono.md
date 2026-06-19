@@ -1,4 +1,4 @@
-﻿# Hono Backend Stack Reference (2026)
+# Hono Backend Stack Reference (2026)
 
 > **Canonical stack**: `hono` + `hono-openapi` + `@scalar/hono-api-reference` + `@hono/swagger-ui`
 > **Runtime**: Bun (TypeScript-first)

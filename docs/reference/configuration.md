@@ -1,4 +1,4 @@
-﻿# Configuration Reference
+# Configuration Reference
 
 Complete reference for Oh My Open Pentest plugin configuration. During the rename transition, the runtime recognizes both `oh-my-open-pentest.json[c]` and legacy `oh-my-open-pentest.json[c]` files.
 

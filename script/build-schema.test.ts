@@ -1,4 +1,4 @@
-﻿import { describe, expect, test } from "bun:test"
+import { describe, expect, test } from "bun:test"
 import { createOhMyOpenCodeJsonSchema } from "./build-schema-document"
 
 function isRecord(value: unknown): value is Readonly<Record<string, unknown>> {

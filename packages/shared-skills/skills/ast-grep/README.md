@@ -1,4 +1,4 @@
-﻿# ast-grep-skill
+# ast-grep-skill
 
 LLM-neutral skill for **AST-aware search and rewrite** across 25 languages. Wraps the [`ast-grep`](https://ast-grep.github.io/) (`sg`) CLI with offline pattern validation, the two-pass write trick, binary auto-resolution, and a per-OS installer.
 

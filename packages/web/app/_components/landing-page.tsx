@@ -1,4 +1,4 @@
-﻿import type { Metadata } from "next"
+import type { Metadata } from "next"
 import type { JSX } from "react"
 import { ArchitectureSection } from "@/components/landing/sections/architecture"
 import { CtaSection } from "@/components/landing/sections/cta"

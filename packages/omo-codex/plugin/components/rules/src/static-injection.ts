@@ -1,4 +1,4 @@
-﻿import { existsSync } from "node:fs";
+import { existsSync } from "node:fs";
 
 import type { CodexRulesHookOptions } from "./codex-hook-options.js";
 import { configFromEnvironment } from "./config.js";
@@ -7,9 +7,9 @@ import { formatAdditionalContextOutput } from "./hook-output.js";
 import { completePostCompactRecovery, hydrateEngineState, persistEngineState } from "./persistent-cache.js";
 import { withPostCompactBudget } from "./post-compact-budget.js";
 import { buildPostCompactReadDirective } from "./post-compact-directive.js";
-import type { Engine } from "@oh-my-open-pentest/rules-engine/engine";
-import { isNeverTruncatedRule } from "@oh-my-open-pentest/rules-engine/engine";
-import type { LoadedRule, PiRulesConfig } from "@oh-my-open-pentest/rules-engine/engine";
+import type { Engine } from "@omop/rules-engine/engine";
+import { isNeverTruncatedRule } from "@omop/rules-engine/engine";
+import type { LoadedRule, PiRulesConfig } from "@omop/rules-engine/engine";
 import { createRulesEngine } from "./rules-engine-factory.js";
 import { getSparkShellRuntimeAwareness, SPARKSHELL_AWARENESS_DEDUP_KEY } from "./sparkshell-awareness.js";
 import { filterRulesAlreadyInTranscript, filterRulesNotInTranscriptText } from "./transcript-rule-filter.js";

@@ -1,4 +1,4 @@
-﻿import type { ToolDefinition } from "@opencode-ai/plugin"
+import type { ToolDefinition } from "@opencode-ai/plugin"
 import type { OhMyOpenCodeConfig } from "../config"
 import type { Managers } from "../create-managers"
 import type { PluginContext } from "./types"

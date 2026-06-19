@@ -1,7 +1,7 @@
-﻿import { homedir } from "node:os"
+import { homedir } from "node:os"
 import { join } from "node:path"
 
-import { astGrepRuntimeDir, findSgBinarySync, provisionSgBinary, type SgProvisionOptions, type SgResolverOptions } from "@oh-my-open-pentest/utils"
+import { astGrepRuntimeDir, findSgBinarySync, provisionSgBinary, type SgProvisionOptions, type SgResolverOptions } from "@omop/utils"
 
 import { log } from "../../shared"
 

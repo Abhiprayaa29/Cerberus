@@ -1,4 +1,4 @@
-﻿import { afterEach, beforeEach, describe, it, expect, mock, spyOn } from "bun:test"
+import { afterEach, beforeEach, describe, it, expect, mock, spyOn } from "bun:test"
 import type { RunContext, Todo, ChildSession, SessionStatus } from "./types"
 import { createEventState } from "./events"
 import { pollForCompletion } from "./poll-for-completion"

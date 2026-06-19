@@ -1,4 +1,4 @@
-﻿const KEYWORD_PATTERN = /\b(fullscan|ulw)\b/gi
+const KEYWORD_PATTERN = /\b(fullscan|ulw)\b/gi
 const WORKTREE_FLAG_PATTERN = /--worktree(?:\s+(\S+))?/
 const WRAPPING_QUOTES_PATTERN = /^(["'`])([\s\S]*)\1$/
 

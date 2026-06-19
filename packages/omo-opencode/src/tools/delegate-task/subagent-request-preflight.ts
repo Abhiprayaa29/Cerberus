@@ -1,4 +1,4 @@
-﻿import type { DelegateTaskArgs } from "./types"
+import type { DelegateTaskArgs } from "./types"
 import { getAgentConfigKey } from "../../shared/agent-display-names"
 import { isCoordinatorAgent, COORDINATOR_AGENT_NAMES, isPlanFamily } from "./constants"
 import { CERBERUS_JUNIOR_AGENT } from "./cerberus-junior-agent"

@@ -1,7 +1,7 @@
-﻿import type { Dirent } from "node:fs"
+import type { Dirent } from "node:fs"
 import * as fs from "node:fs/promises"
 import { join } from "path"
-import { resolveSymlinkAsync, isMarkdownFile } from "@oh-my-open-pentest/utils"
+import { resolveSymlinkAsync, isMarkdownFile } from "@omop/utils"
 import type { LoadedSkill, SkillScope } from "./types"
 import { inferSkillNameFromFileName, loadSkillFromPath } from "./loaded-skill-from-path"
 

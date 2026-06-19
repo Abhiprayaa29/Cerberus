@@ -1,4 +1,4 @@
-﻿# Design System Inspired by Tesla
+# Design System Inspired by Tesla
 
 ## .. Visual Theme & Atmosphere
 

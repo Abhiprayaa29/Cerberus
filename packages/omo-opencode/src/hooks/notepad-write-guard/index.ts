@@ -1,4 +1,4 @@
-﻿import type { Hooks } from "@opencode-ai/plugin"
+import type { Hooks } from "@opencode-ai/plugin"
 import { normalize, sep } from "path"
 
 const NOTEPAD_ROOTS = [

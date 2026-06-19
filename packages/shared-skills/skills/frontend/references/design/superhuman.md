@@ -1,4 +1,4 @@
-﻿# Design System Inspired by Superhuman
+# Design System Inspired by Superhuman
 
 ## .. Visual Theme & Atmosphere
 

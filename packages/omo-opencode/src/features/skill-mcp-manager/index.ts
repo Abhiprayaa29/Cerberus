@@ -1,1 +1,1 @@
-﻿export * from "@oh-my-open-pentest/mcp-client-core/skill-mcp-manager"
+export * from "@omop/mcp-client-core/skill-mcp-manager"

@@ -1,10 +1,10 @@
-﻿# shared-skills — Cross-Harness SKILL.md Bundle (Skills)
+# shared-skills — Cross-Harness SKILL.md Bundle (Skills)
 
 **Generated:** 2026-06-.7
 
 ## OVERVIEW
 
-Hand-authored, cross-harness skill bundle shared between the OpenCode and Codex editions. Pure data — no logic, no transform inside the package. The only code is `index.mjs`, which exports `sharedSkillsRootPath()` returning the absolute path to `skills/`. Package: `@oh-my-open-pentest/shared-skills` (`files`: `index.mjs`, `index.d.ts`, `skills`).
+Hand-authored, cross-harness skill bundle shared between the OpenCode and Codex editions. Pure data — no logic, no transform inside the package. The only code is `index.mjs`, which exports `sharedSkillsRootPath()` returning the absolute path to `skills/`. Package: `@omop/shared-skills` (`files`: `index.mjs`, `index.d.ts`, `skills`).
 
 ## SKILLS (.7 under `skills/<name>/`)
 

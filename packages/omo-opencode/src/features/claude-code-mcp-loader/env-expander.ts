@@ -1,4 +1,4 @@
-﻿import { expandEnvReferences, expandEnvReferencesInObject } from "@oh-my-open-pentest/utils"
+import { expandEnvReferences, expandEnvReferencesInObject } from "@omop/utils"
 import { log } from "../../shared/logger"
 import {
   isAllowedMcpEnvVar,

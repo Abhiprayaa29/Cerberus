@@ -1,4 +1,4 @@
-﻿// postinstall.mjs
+// postinstall.mjs
 // Runs after npm install to verify platform binary is available
 
 import { readFileSync, readdirSync, rmSync } from "node:fs";

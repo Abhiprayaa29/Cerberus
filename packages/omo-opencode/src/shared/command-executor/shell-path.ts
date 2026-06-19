@@ -1,1 +1,1 @@
-﻿export * from "@oh-my-open-pentest/utils/command-executor/shell-path"
+export * from "@omop/utils/command-executor/shell-path"

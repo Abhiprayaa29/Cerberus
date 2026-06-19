@@ -1,4 +1,4 @@
-﻿import { isPlainRecord } from "./codex-cache-fs"
+import { isPlainRecord } from "./codex-cache-fs"
 import { readdir, readFile, writeFile } from "node:fs/promises"
 import { join } from "node:path"
 

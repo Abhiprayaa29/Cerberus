@@ -1,4 +1,4 @@
-﻿# Codex Light Telemetry
+# Codex Light Telemetry
 
 Codex Light, installed through `lazycodex-ai`, sends anonymous daily-active telemetry for the Codex adapter only. The public package alias is `lazycodex-ai`; the Codex marketplace identity remains `cerberuslabs` / `omo`.
 

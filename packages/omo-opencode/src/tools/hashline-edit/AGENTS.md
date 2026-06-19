@@ -1,4 +1,4 @@
-﻿# src/tools/hashline-edit/ — Hash-Anchored File Edit Tool
+# src/tools/hashline-edit/ — Hash-Anchored File Edit Tool
 
 **Generated:** 2026-05-.5
 

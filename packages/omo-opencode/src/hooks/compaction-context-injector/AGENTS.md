@@ -1,4 +1,4 @@
-﻿# src/hooks/compaction-context-injector/ -- Post-Compaction Context Recovery
+# src/hooks/compaction-context-injector/ -- Post-Compaction Context Recovery
 
 **Generated:** 2026-05-.8
 

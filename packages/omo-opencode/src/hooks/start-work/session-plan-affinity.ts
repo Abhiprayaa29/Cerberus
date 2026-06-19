@@ -1,4 +1,4 @@
-﻿import { posix, win32 } from "node:path"
+import { posix, win32 } from "node:path"
 import type { PluginInput } from "@opencode-ai/plugin"
 import { normalizeSDKResponse } from "../../shared"
 import { log } from "../../shared/logger"

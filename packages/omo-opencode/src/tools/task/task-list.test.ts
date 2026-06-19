@@ -1,4 +1,4 @@
-﻿import { describe, it, expect, beforeEach, afterEach } from "bun:test"
+import { describe, it, expect, beforeEach, afterEach } from "bun:test"
 import { createTaskList } from "./task-list"
 import { writeJsonAtomic } from "../../features/claude-tasks/storage"
 import type { TaskObject } from "./types"

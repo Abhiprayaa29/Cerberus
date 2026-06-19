@@ -1,4 +1,4 @@
-﻿import { beforeEach, describe, expect, it, mock, afterAll } from "bun:test"
+import { beforeEach, describe, expect, it, mock, afterAll } from "bun:test"
 import { restoreModuleMocksForTestFile } from "../../../testing/module-mock-lifecycle"
 
 type PostToolUseMockResult = {

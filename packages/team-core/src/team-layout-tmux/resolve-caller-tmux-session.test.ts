@@ -1,5 +1,5 @@
-﻿import { describe, expect, mock, test } from "bun:test"
-import type { TmuxCommandResult } from "@oh-my-open-pentest/tmux-core"
+import { describe, expect, mock, test } from "bun:test"
+import type { TmuxCommandResult } from "@omop/tmux-core"
 
 import { resolveCallerTmuxSession } from "./resolve-caller-tmux-session"
 

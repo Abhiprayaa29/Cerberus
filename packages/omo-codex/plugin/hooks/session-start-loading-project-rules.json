@@ -1,4 +1,4 @@
-﻿{
+{
 	"hooks": {
 		"SessionStart": [
 			{
@@ -6,7 +6,7 @@
 					{
 						"type": "command",
 						"command": "node \"${PLUGIN_ROOT}/components/rules/dist/cli.js\" hook session-start",
-						"timeout": .0,
+						"timeout": 1,
 						"statusMessage": "(OmO) Loading Project Rules"
 					}
 				]

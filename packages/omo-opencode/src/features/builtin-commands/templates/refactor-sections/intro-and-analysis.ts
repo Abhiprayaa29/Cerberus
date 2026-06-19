@@ -1,4 +1,4 @@
-﻿export const REFACTOR_INTRO_AND_ANALYSIS = `# Intelligent Refactor Command
+export const REFACTOR_INTRO_AND_ANALYSIS = `# Intelligent Refactor Command
 
 ## Codex Harness Tool Compatibility
 

@@ -1,4 +1,4 @@
-﻿# src/cli/doctor/ — Health Diagnostics (25 Check Files)
+# src/cli/doctor/ — Health Diagnostics (25 Check Files)
 
 **Generated:** 2026-05-.5
 

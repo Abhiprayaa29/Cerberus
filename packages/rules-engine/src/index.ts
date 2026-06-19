@@ -1,4 +1,4 @@
-﻿export { createAgentsMdCache, createRuleScanCache } from "./cache";
+export { createAgentsMdCache, createRuleScanCache } from "./cache";
 export { findAgentsMdUp, type FindAgentsMdUpInput } from "./agents-md";
 export { findRuleFiles, setCerberusRuleDeprecationLogger, type CerberusRuleDeprecationLogger } from "./finder";
 export { parseRuleFrontmatter } from "./parser";

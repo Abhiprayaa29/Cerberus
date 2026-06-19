@@ -1,4 +1,4 @@
-﻿import { createInterface } from "node:readline/promises"
+import { createInterface } from "node:readline/promises"
 import color from "picocolors"
 import { PLUGIN_NAME, PUBLISHED_PACKAGE_NAME } from "../shared"
 import type { InstallArgs, InstallPlatform } from "./types"

@@ -1,4 +1,4 @@
-﻿import { afterEach, describe, expect, test } from "bun:test"
+import { afterEach, describe, expect, test } from "bun:test"
 
 import { injectContinuation } from "./continuation-injection"
 import { OMOP_INTERNAL_INITIATOR_MARKER } from "../../shared/internal-initiator-marker"

@@ -1,4 +1,4 @@
-﻿const { describe, test, expect } = require("bun:test")
+const { describe, test, expect } = require("bun:test")
 
 import { executeBackgroundTask } from "./executor"
 import type { DelegateTaskArgs, ToolContextWithMetadata } from "./types"

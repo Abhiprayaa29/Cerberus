@@ -1,1 +1,1 @@
-﻿export * from "@oh-my-open-pentest/team-core/team-layout-tmux/close-team-member-pane"
+export * from "@omop/team-core/team-layout-tmux/close-team-member-pane"

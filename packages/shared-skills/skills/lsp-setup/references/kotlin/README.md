@@ -1,4 +1,4 @@
-﻿# Kotlin — LSP setup
+# Kotlin — LSP setup
 
 - **Builtin server:** `kotlin-ls` — `kotlin-lsp`
 - **Extensions:** `.kt .kts`

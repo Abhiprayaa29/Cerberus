@@ -1,4 +1,4 @@
-﻿declare const require: (name: string) => any
+declare const require: (name: string) => any
 const { describe, it, expect, beforeEach, afterEach, beforeAll, spyOn } = require("bun:test")
 import { mkdtempSync, writeFileSync, rmSync, existsSync, readFileSync } from "fs"
 import { tmpdir } from "os"

@@ -1,4 +1,4 @@
-﻿## Goal
+## Goal
 
 Patch stale Codex orchestration guidance blockers in the lazycodex-gate-reviewers worktree.
 

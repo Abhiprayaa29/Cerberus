@@ -1,4 +1,4 @@
-﻿import { HYPERPLAN_MODE_PROMPT } from "@oh-my-open-pentest/prompts-core"
+import { HYPERPLAN_MODE_PROMPT } from "@omop/prompts-core"
 
 /**
  * Hyperplan keyword detector.

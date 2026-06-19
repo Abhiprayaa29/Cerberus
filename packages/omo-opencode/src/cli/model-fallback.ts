@@ -1,10 +1,10 @@
-﻿import {
+import {
   CLI_AGENT_MODEL_REQUIREMENTS,
   CLI_CATEGORY_MODEL_REQUIREMENTS,
 } from "./model-fallback-requirements"
 import type { FallbackModelObject } from "../config/schema/fallback-models"
 import type { FallbackEntry } from "../shared/model-requirements"
-import { getModelCapabilities, resolveCompatibleModelSettings } from "@oh-my-open-pentest/model-core"
+import { getModelCapabilities, resolveCompatibleModelSettings } from "@omop/model-core"
 import type { InstallConfig } from "./types"
 
 import type { AgentConfig, CategoryConfig, GeneratedOmoConfig } from "./model-fallback-types"

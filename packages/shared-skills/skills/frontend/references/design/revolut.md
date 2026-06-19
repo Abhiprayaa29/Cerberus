@@ -1,4 +1,4 @@
-﻿# Design System Inspired by Revolut
+# Design System Inspired by Revolut
 
 ## .. Visual Theme & Atmosphere
 

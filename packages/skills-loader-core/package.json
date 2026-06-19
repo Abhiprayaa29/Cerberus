@@ -1,6 +1,6 @@
-﻿{
-  "name": "@oh-my-open-pentest/skills-loader-core",
-  "version": "0...0",
+{
+  "name": "@omop/skills-loader-core",
+  "version": "0.1.0",
   "type": "module",
   "private": true,
   "description": "Harness-neutral skill loading, builtin skill, runtime skill, and skill matching primitives for oh-my-open-pentest.",
@@ -64,12 +64,12 @@
     "test": "bun test src/*.test.ts src/**/*.test.ts"
   },
   "dependencies": {
-    "@oh-my-open-pentest/claude-code-compat-core": "workspace:*",
-    "@oh-my-open-pentest/model-core": "workspace:*",
-    "@oh-my-open-pentest/shared-skills": "workspace:*",
-    "@oh-my-open-pentest/utils": "workspace:*",
-    "js-yaml": "^.....",
-    "picomatch": "^..0..",
-    "zod": "^....3"
+    "@omop/claude-code-compat-core": "*",
+    "@omop/model-core": "*",
+    "@omop/shared-skills": "*",
+    "@omop/utils": "*",
+    "js-yaml": "^4.1.1",
+    "picomatch": "^4.0.4",
+    "zod": "^4.4.3"
   }
 }

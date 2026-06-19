@@ -1,4 +1,4 @@
-﻿import { beforeEach, describe, expect, it } from "bun:test"
+import { beforeEach, describe, expect, it } from "bun:test"
 
 import { clearPendingStore, storeToolMetadata } from "../features/tool-metadata-store"
 import { createToolExecuteAfterHandler } from "./tool-execute-after"

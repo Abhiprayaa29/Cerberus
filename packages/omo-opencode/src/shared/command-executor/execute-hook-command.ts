@@ -1,1 +1,1 @@
-﻿export * from "@oh-my-open-pentest/utils/command-executor/execute-hook-command"
+export * from "@omop/utils/command-executor/execute-hook-command"

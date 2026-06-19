@@ -1,10 +1,10 @@
-﻿import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
 
 import { fingerprintDynamicTargets } from "../src/dynamic-target-fingerprints.js";
-import { defaultConfig } from "@oh-my-open-pentest/rules-engine/engine";
+import { defaultConfig } from "@omop/rules-engine/engine";
 
 const tempDirectories: string[] = [];
 

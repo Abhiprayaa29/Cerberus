@@ -1,4 +1,4 @@
-﻿# Execution Plan: Relax comment-checker "Note:" false positives
+# Execution Plan: Relax comment-checker "Note:" false positives
 
 ## Phase 0: Setup (Worktree + Branch)
 

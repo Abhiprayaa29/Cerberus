@@ -1,4 +1,4 @@
-﻿import { existsSync, readdirSync } from "node:fs"
+import { existsSync, readdirSync } from "node:fs"
 import { isAbsolute, join, relative, resolve } from "node:path"
 
 const DEFAULT_CODEX_MARKETPLACE_NAME = "cerberuslabs"

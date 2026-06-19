@@ -1,4 +1,4 @@
-﻿/// <reference types="bun-types" />
+/// <reference types="bun-types" />
 
 import { unsafeTestValue } from "../../../../../test-support/unsafe-test-value"
 import { beforeEach, describe, expect, test } from "bun:test"

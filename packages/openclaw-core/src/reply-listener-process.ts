@@ -1,5 +1,5 @@
-﻿import { readFileSync } from "node:fs"
-import { spawn } from "@oh-my-open-pentest/utils/runtime"
+import { readFileSync } from "node:fs"
+import { spawn } from "@omop/utils/runtime"
 
 export const REPLY_LISTENER_DAEMON_IDENTITY_MARKER = "--openclaw-reply-listener-daemon"
 

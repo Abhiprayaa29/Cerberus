@@ -1,4 +1,4 @@
-﻿declare const require: (name: string) => any
+declare const require: (name: string) => any
 const { describe, test, expect, beforeEach, afterEach } = require("bun:test")
 import { __setTimingConfig, __resetTimingConfig, getTimingConfig } from "./timing"
 

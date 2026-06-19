@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Generic GPT Cerberus-Junior System Prompt
  *
  * Scylla-style prompt adapted for a focused executor:

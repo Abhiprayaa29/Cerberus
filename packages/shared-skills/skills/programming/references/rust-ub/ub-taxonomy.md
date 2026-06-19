@@ -1,4 +1,4 @@
-﻿# Rust Undefined Behavior Taxonomy
+# Rust Undefined Behavior Taxonomy
 
 Every category of UB the Rust compiler, Miri, and the language specification recognize. The agent must know the full surface to hunt systematically. Each entry names the UB class, its root cause, canonical trigger, Miri detection status, and the canonical fix.
 

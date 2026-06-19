@@ -1,4 +1,4 @@
-﻿import { describe, test, expect } from "bun:test"
+import { describe, test, expect } from "bun:test"
 import { TaskSchema, TaskStatusSchema, type Task, type TaskStatus } from "./types"
 
 describe("TaskStatusSchema", () => {

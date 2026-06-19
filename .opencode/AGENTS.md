@@ -1,4 +1,4 @@
-﻿# .opencode/ — Project-Scope Skills & Commands
+# .opencode/ — Project-Scope Skills & Commands
 
 **Generated:** 2026-05-20
 

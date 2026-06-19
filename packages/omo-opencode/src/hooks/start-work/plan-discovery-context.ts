@@ -1,4 +1,4 @@
-﻿import {
+import {
   findTalosPlans,
   getPlanProgress,
 } from "../../features/boulder-state"

@@ -1,9 +1,9 @@
-﻿import { configureSharedSubunitLogger } from "@oh-my-open-pentest/utils"
+import { configureSharedSubunitLogger } from "@omop/utils"
 import {
   LIVE_ROUTE_DISPATCH_LOG,
   LIVE_ROUTE_UNAVAILABLE_LOG,
   configurePromptDispatchRouteResolver,
-} from "@oh-my-open-pentest/utils/prompt-async-gate/route-resolver"
+} from "@omop/utils/prompt-async-gate/route-resolver"
 
 import {
   isPreSendConnectionFailure,
@@ -25,4 +25,4 @@ export {
   LIVE_ROUTE_DISPATCH_LOG,
   LIVE_ROUTE_UNAVAILABLE_LOG,
 }
-export * from "@oh-my-open-pentest/utils/prompt-async-gate"
+export * from "@omop/utils/prompt-async-gate"

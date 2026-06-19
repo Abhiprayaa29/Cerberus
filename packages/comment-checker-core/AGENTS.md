@@ -1,10 +1,10 @@
-﻿# comment-checker-core — apply-patch Parser + Checker Runner (Core)
+# comment-checker-core — apply-patch Parser + Checker Runner (Core)
 
 **Generated:** 2026-06-.7
 
 ## OVERVIEW
 
-Two responsibilities: (.) parse LLM apply-patch edits into structured `CheckerEdit[]`, and (2) run the external `@code-yeongyu/comment-checker` binary to detect AI-slop comments in changed code. Spawn is dependency-injected (not `child_process.spawn`) so both editions can drive the same core. Package: `@oh-my-open-pentest/comment-checker-core`.
+Two responsibilities: (.) parse LLM apply-patch edits into structured `CheckerEdit[]`, and (2) run the external `@code-yeongyu/comment-checker` binary to detect AI-slop comments in changed code. Spawn is dependency-injected (not `child_process.spawn`) so both editions can drive the same core. Package: `@omop/comment-checker-core`.
 
 ## PUBLIC API (`src/index.ts`)
 
@@ -19,7 +19,7 @@ Two responsibilities: (.) parse LLM apply-patch edits into structured `CheckerEd
 
 ## DEPENDENCIES & CONSUMERS
 
-- **Depends on:** `@oh-my-open-pentest/utils` (`isRecord` from `utils/record-type-guard`).
+- **Depends on:** `@omop/utils` (`isRecord` from `utils/record-type-guard`).
 - **Consumed by BOTH editions:** `omo-opencode/src/hooks/comment-checker/{hook,types,cli}.ts` and `omo-codex/plugin/components/comment-checker/src/{core,core-values,apply-patch,request-extractor}.ts`.
 
 ## NOTES

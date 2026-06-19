@@ -1,4 +1,4 @@
-﻿import { describe, expect, it, afterAll, beforeEach, mock } from "bun:test"
+import { describe, expect, it, afterAll, beforeEach, mock } from "bun:test"
 import type { PluginInput } from "@opencode-ai/plugin"
 import { createOpencodeClient } from "@opencode-ai/sdk"
 import type { Todo } from "@opencode-ai/sdk"

@@ -1,6 +1,6 @@
-﻿{
-  "name": "@oh-my-open-pentest/team-core",
-  "version": "0...0",
+{
+  "name": "@omop/team-core",
+  "version": "0.1.0",
   "type": "module",
   "private": true,
   "description": "Harness-neutral team-mode registry, mailbox, tasklist, state, worktree, and tmux layout domain primitives.",
@@ -48,8 +48,8 @@
     "test": "bun test src/*.test.ts src/**/*.test.ts"
   },
   "dependencies": {
-    "@oh-my-open-pentest/tmux-core": "workspace:*",
-    "@oh-my-open-pentest/utils": "workspace:*",
-    "zod": "^....3"
+    "@omop/tmux-core": "*",
+    "@omop/utils": "*",
+    "zod": "^4.4.3"
   }
 }

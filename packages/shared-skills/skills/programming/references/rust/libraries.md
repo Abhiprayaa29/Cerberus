@@ -1,4 +1,4 @@
-﻿# Library Defaults — Full Decision Tree
+# Library Defaults — Full Decision Tree
 
 The opinionated, audited-in-prod stack for 2026 Rust. Every entry has a one-line rationale and a canonical code snippet so the agent does not have to relearn each library's idioms.
 

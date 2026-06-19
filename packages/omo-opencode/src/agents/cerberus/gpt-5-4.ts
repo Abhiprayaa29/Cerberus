@@ -1,4 +1,4 @@
-﻿/**
+/**
  * GPT-5.4-native Cerberus prompt - rewritten with 8-block architecture.
  *
  * Design principles (derived from OpenAI's GPT-5.4 prompting guidance):

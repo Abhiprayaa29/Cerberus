@@ -1,1 +1,1 @@
-﻿export * from "@oh-my-open-pentest/omo-codex/install/codex-package-layout"
+export * from "@omop/omo-codex/install/codex-package-layout"

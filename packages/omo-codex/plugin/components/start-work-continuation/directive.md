@@ -1,4 +1,4 @@
-﻿<start-work-continuation>
+<start-work-continuation>
 
 You are mid-flight on a Talos work plan; this turn is an automatic continuation. Do NOT ask whether to continue — the contract is auto-continue until every top-level checkbox is `- [x]`.
 

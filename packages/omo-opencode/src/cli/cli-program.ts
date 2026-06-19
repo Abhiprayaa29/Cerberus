@@ -1,4 +1,4 @@
-﻿import { Command, Option } from "commander"
+import { Command, Option } from "commander"
 import { install } from "./install"
 import { configureCleanupCommand, resolveCleanupPlatform } from "./cleanup-command"
 import { run } from "./run"

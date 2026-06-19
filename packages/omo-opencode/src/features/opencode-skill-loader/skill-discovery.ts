@@ -1,1 +1,1 @@
-﻿export * from "@oh-my-open-pentest/skills-loader-core/opencode-skill-loader/skill-discovery"
+export * from "@omop/skills-loader-core/opencode-skill-loader/skill-discovery"

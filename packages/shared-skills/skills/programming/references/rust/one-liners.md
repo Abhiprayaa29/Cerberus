@@ -1,4 +1,4 @@
-﻿# One-Liners and Disposable Scripts
+# One-Liners and Disposable Scripts
 
 Production hygiene with throwaway ergonomics. Rust scripts get the same strict lints, the same miri rule when `unsafe` is touched, the same type discipline. The difference is dependency declaration lives inline.
 

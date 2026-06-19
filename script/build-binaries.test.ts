@@ -1,4 +1,4 @@
-﻿// script/build-binaries.test.ts
+// script/build-binaries.test.ts
 // Tests for platform binary build configuration
 
 import { describe, expect, it } from "bun:test";

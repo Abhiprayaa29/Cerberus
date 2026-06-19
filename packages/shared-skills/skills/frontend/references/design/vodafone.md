@@ -1,4 +1,4 @@
-﻿# Design System Inspired by Vodafone
+# Design System Inspired by Vodafone
 
 ## .. Visual Theme & Atmosphere
 

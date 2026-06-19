@@ -1,4 +1,4 @@
-﻿# CLI reference — `sg` / `ast-grep`
+# CLI reference — `sg` / `ast-grep`
 
 Compact reference for the underlying `sg` binary that the helper wraps. Use this when the helper isn't enough or when you want to invoke `sg` directly.
 

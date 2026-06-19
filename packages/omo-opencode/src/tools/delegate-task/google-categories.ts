@@ -1,4 +1,4 @@
-﻿import type { BuiltinCategoryDefinition } from "./builtin-category-definition"
+import type { BuiltinCategoryDefinition } from "./builtin-category-definition"
 
 const VISUAL_CATEGORY_PROMPT_APPEND = `<Category_Context>
 You are working on VISUAL/UI tasks.

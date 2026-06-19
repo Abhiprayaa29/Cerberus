@@ -1,1 +1,1 @@
-﻿export * from "@oh-my-open-pentest/claude-code-compat-core/claude-code-mcp-loader/transformer"
+export * from "@omop/claude-code-compat-core/claude-code-mcp-loader/transformer"

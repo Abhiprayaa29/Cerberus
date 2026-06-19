@@ -1,4 +1,4 @@
-﻿# Design System Inspired by BMW
+# Design System Inspired by BMW
 
 ## .. Visual Theme & Atmosphere
 

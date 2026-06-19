@@ -1,4 +1,4 @@
-﻿# Design System Inspired by Starbucks
+# Design System Inspired by Starbucks
 
 ## .. Visual Theme & Atmosphere
 

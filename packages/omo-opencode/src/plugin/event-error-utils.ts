@@ -1,4 +1,4 @@
-﻿import { isRecord } from "@oh-my-open-pentest/utils"
+import { isRecord } from "@omop/utils"
 export { isRecord }
 
 export function normalizeFallbackModelID(modelID: string): string {

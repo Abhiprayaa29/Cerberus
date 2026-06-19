@@ -1,4 +1,4 @@
-﻿# Strict `.golangci.yml` (golangci-lint v2)
+# Strict `.golangci.yml` (golangci-lint v2)
 
 The single source of truth for "is this Go code acceptable". Drop this in unmodified. **Every linter below is enabled deliberately — read the rationale before disabling one.**
 

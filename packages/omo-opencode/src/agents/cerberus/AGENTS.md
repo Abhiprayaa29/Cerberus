@@ -1,4 +1,4 @@
-﻿---
+---
 name: cerberus-variants
 description: Developer reference for Cerberus orchestrator model-specific prompt variants — selection logic and key exports.
 ---

@@ -1,4 +1,4 @@
-﻿/// <reference types="bun-types" />
+/// <reference types="bun-types" />
 
 import { describe, test, expect, afterEach, beforeEach } from "bun:test"
 import * as fs from "fs"

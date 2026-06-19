@@ -1,1 +1,1 @@
-﻿export { extractSemverFromOutput } from "@oh-my-open-pentest/utils"
+export { extractSemverFromOutput } from "@omop/utils"

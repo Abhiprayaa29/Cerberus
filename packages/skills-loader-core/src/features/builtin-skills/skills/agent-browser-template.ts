@@ -1,5 +1,5 @@
-﻿import agentBrowserSkillFile from "../agent-browser/SKILL.md" with { type: "text" }
-import { parseFrontmatter } from "@oh-my-open-pentest/utils"
+import agentBrowserSkillFile from "../agent-browser/SKILL.md" with { type: "text" }
+import { parseFrontmatter } from "@omop/utils"
 
 const EM_DASH = "\u2014"
 

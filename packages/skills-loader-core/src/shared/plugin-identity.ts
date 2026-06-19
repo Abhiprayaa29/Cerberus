@@ -1,4 +1,4 @@
-﻿import { createProductIdentity } from "@oh-my-open-pentest/utils"
+import { createProductIdentity } from "@omop/utils"
 
 const PRODUCT_IDENTITY = createProductIdentity({
   pluginName: "oh-my-open-pentest",

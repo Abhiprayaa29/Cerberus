@@ -1,4 +1,4 @@
-﻿# PR: fix(comment-checker): relax regex to stop flagging legitimate Note: comments
+# PR: fix(comment-checker): relax regex to stop flagging legitimate Note: comments
 
 **Title:** `fix(comment-checker): relax regex to stop flagging legitimate Note: comments`
 **Base:** `dev`

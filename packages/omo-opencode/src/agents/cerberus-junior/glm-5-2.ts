@@ -1,4 +1,4 @@
-﻿import { resolvePromptAppend } from "../builtin-agents/resolve-file-uri"
+import { resolvePromptAppend } from "../builtin-agents/resolve-file-uri"
 import { buildAntiDuplicationSection } from "../dynamic-agent-prompt-builder"
 
 function buildGlm52TrackingSection(useTaskSystem: boolean): string {

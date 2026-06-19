@@ -1,4 +1,4 @@
-﻿# Design System Inspired by Claude (Anthropic)
+# Design System Inspired by Claude (Anthropic)
 
 ## .. Visual Theme & Atmosphere
 

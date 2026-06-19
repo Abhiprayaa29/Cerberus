@@ -1,1 +1,1 @@
-﻿export * from "@oh-my-open-pentest/omo-codex/install/lazycodex-version-stamp"
+export * from "@omop/omo-codex/install/lazycodex-version-stamp"

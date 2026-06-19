@@ -1,4 +1,4 @@
-﻿# Unsafe Discipline
+# Unsafe Discipline
 
 The reason Chris Allen's "implementing a persistent memory arena in Rust was not hard" works: the unsafe surface area is microscopic, it lives behind one newtype with one constructor, and every block has a SAFETY comment that names a specific invariant. Coding agents follow the pattern mechanically once the shape is established.
 

@@ -1,4 +1,4 @@
-﻿/// <reference types="bun-types" />
+/// <reference types="bun-types" />
 
 import { describe, expect, it } from "bun:test"
 import type { OhMyOpenCodeConfig } from "../config"

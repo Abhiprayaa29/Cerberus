@@ -1,4 +1,4 @@
-﻿import type { CommandDefinition } from "../claude-code-command-loader"
+import type { CommandDefinition } from "../claude-code-command-loader"
 import { isAgentRegistered } from "../claude-code-session-state"
 import type { BuiltinCommandName, BuiltinCommands } from "./types"
 import { RALPH_LOOP_TEMPLATE, ULW_LOOP_TEMPLATE, CANCEL_RALPH_TEMPLATE } from "./templates/pentest-loop"
@@ -39,7 +39,7 @@ function createBuiltinCommandDefinitions(
 
   return {
      "pentest-loop": {
-       description: "(builtin) Start self-referential development loop until completion",
+       description: "(builtin) Start self-referential pentest loop until engagement completion",
        template: `<command-instruction>
 ${RALPH_LOOP_TEMPLATE}
 </command-instruction>
@@ -49,8 +49,8 @@ $ARGUMENTS
 </user-task>`,
        argumentHint: '"task description" [--completion-promise=TEXT] [--max-iterations=N] [--strategy=reset|continue]',
      },
-     "pentest-loop": {
-        description: "(builtin) Start fullscan loop - continues until completion with fullscan mode",
+     "ulw-loop": {
+        description: "(builtin) Start ultrawork loop - continues until completion with ultrawork mode",
         template: `<command-instruction>
 ${ULW_LOOP_TEMPLATE}
 </command-instruction>
@@ -60,8 +60,8 @@ $ARGUMENTS
 </user-task>`,
         argumentHint: '"task description" [--completion-promise=TEXT] [--strategy=reset|continue]',
       },
-    "cancel-ralph": {
-      description: "(builtin) Cancel active Ralph Loop",
+    "cancel-pentest-loop": {
+      description: "(builtin) Cancel active pentest loop",
       template: `<command-instruction>
 ${CANCEL_RALPH_TEMPLATE}
 </command-instruction>`,
@@ -92,7 +92,7 @@ $ARGUMENTS
       argumentHint: "[plan-name]",
     },
     "stop-continuation": {
-      description: "(builtin) Stop all continuation mechanisms (ralph loop, todo continuation, boulder) for this session",
+      description: "(builtin) Stop all continuation mechanisms (pentest loop, todo continuation, boulder) for this session",
       template: `<command-instruction>
 ${STOP_CONTINUATION_TEMPLATE}
 </command-instruction>`,

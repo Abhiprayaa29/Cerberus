@@ -1,4 +1,4 @@
-﻿---
+---
 description: Remove unused code from this project with fullscan mode, LSP-verified safety, atomic commits
 ---
 

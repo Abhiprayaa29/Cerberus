@@ -1,1 +1,1 @@
-﻿export { isRecord } from "@oh-my-open-pentest/utils"
+export { isRecord } from "@omop/utils"

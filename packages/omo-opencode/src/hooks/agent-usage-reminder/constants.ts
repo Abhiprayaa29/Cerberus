@@ -1,4 +1,4 @@
-﻿import { join } from "node:path";
+import { join } from "node:path";
 import { OPENCODE_STORAGE } from "../../shared";
 export const AGENT_USAGE_REMINDER_STORAGE = join(
   OPENCODE_STORAGE,

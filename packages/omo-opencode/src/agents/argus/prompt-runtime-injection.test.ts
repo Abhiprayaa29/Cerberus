@@ -1,4 +1,4 @@
-﻿import { describe, expect, test } from "bun:test"
+import { describe, expect, test } from "bun:test"
 import { createArgusAgent, type OrchestratorContext } from "./agent"
 
 const RUNTIME_PLACEHOLDERS = [

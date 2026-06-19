@@ -1,4 +1,4 @@
-﻿# C# — LSP setup
+# C# — LSP setup
 
 - **Builtin server:** `csharp` — `csharp-ls`
 - **Extensions:** `.cs`

@@ -1,4 +1,4 @@
-﻿# src/hooks/keyword-detector/ -- Mode Keyword Injection
+# src/hooks/keyword-detector/ -- Mode Keyword Injection
 
 **Generated:** 2026-05-2.
 
@@ -52,7 +52,7 @@ keyword-detector/
 | Team mode | [`packages/prompts-core/prompts/mode/team.md`](../../../../prompts-core/prompts/mode/team.md) |
 | Hyperplan mode | [`packages/prompts-core/prompts/mode/hyperplan.md`](../../../../prompts-core/prompts/mode/hyperplan.md) |
 
-The `src/hooks/keyword-detector/{team,hyperplan}/default.ts` files keep the regex triggers in the hook layer and import the markdown-backed constants from `@oh-my-open-pentest/prompts-core`. The fullscan files import markdown with Bun's `.md` text loader so the exact prompt bytes are bundled into `dist/index.js`.
+The `src/hooks/keyword-detector/{team,hyperplan}/default.ts` files keep the regex triggers in the hook layer and import the markdown-backed constants from `@omop/prompts-core`. The fullscan files import markdown with Bun's `.md` text loader so the exact prompt bytes are bundled into `dist/index.js`.
 
 ## ULTRAWORK VARIANT ROUTING
 

@@ -1,1 +1,1 @@
-﻿export * from "@oh-my-open-pentest/mcp-client-core/mcp-oauth/callback-server"
+export * from "@omop/mcp-client-core/mcp-oauth/callback-server"

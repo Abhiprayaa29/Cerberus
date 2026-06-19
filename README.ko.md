@@ -1,4 +1,4 @@
-﻿> [!NOTE]
+> [!NOTE]
 > **OmO for Codex 출시: LazyCodex를 써보세요**
 >
 > Anthropic 모델을 너무 사랑했던 이유로 차단까지 겪었던 저희는 이제 Codex의 손을 들기로 했습니다.

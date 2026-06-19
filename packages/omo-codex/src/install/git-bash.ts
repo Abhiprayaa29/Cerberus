@@ -1,18 +1,18 @@
-﻿import {
+import {
   GIT_BASH_ENV_KEY,
   WINGET_INSTALL_ARGS,
   resolveGitBash as resolveSharedGitBash,
   resolveGitBashForCurrentProcess as resolveSharedGitBashForCurrentProcess,
   type GitBashResolution as SharedGitBashResolution,
   type GitBashResolverInput,
-} from "@oh-my-open-pentest/utils/runtime"
+} from "@omop/utils/runtime"
 import type { RunCommand } from "./types"
 import type { GitBashResolution } from "./types"
 
 const SKIP_GIT_BASH_AUTO_INSTALL_ENV_KEY = "OMO_CODEX_SKIP_GIT_BASH_AUTO_INSTALL"
 
 export type { GitBashResolution } from "./types"
-export type { GitBashResolverInput, GitBashSource } from "@oh-my-open-pentest/utils/runtime"
+export type { GitBashResolverInput, GitBashSource } from "@omop/utils/runtime"
 
 export const resolveGitBash = (input: GitBashResolverInput): GitBashResolution =>
   toCodexResolution(resolveSharedGitBash(input))

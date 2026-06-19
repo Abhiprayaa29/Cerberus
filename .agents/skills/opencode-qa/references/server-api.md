@@ -1,4 +1,4 @@
-﻿# opencode HTTP server API for QA (Case B)
+# opencode HTTP server API for QA (Case B)
 
 ## Table of Contents
 

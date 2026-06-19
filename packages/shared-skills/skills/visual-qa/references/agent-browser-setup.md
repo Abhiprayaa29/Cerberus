@@ -1,4 +1,4 @@
-﻿# agent-browser setup (Web capture fallback)
+# agent-browser setup (Web capture fallback)
 
 Use this when the project has **no** browser tooling configured or available for the Web
 capture path in Step 2 (no playwright / dev-browser skill, no usable headless browser).

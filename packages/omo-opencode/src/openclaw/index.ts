@@ -1,1 +1,1 @@
-﻿export * from "@oh-my-open-pentest/openclaw-core/index"
+export * from "@omop/openclaw-core/index"

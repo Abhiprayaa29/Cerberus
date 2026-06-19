@@ -1,1 +1,1 @@
-﻿export * from "@oh-my-open-pentest/claude-code-compat-core/claude-code-plugin-loader/command-loader"
+export * from "@omop/claude-code-compat-core/claude-code-plugin-loader/command-loader"

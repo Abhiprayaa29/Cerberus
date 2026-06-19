@@ -1,1 +1,1 @@
-﻿export * from "@oh-my-open-pentest/team-core/team-worktree/cleanup"
+export * from "@omop/team-core/team-worktree/cleanup"

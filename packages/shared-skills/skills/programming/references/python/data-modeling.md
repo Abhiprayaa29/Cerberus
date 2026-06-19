@@ -1,4 +1,4 @@
-﻿# Data Modeling
+# Data Modeling
 
 Which container to use, how to structure data, and why frozen is the default.
 

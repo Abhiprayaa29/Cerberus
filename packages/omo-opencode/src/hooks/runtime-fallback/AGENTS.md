@@ -1,4 +1,4 @@
-﻿# src/hooks/runtime-fallback/ — Reactive Provider Error Recovery
+# src/hooks/runtime-fallback/ — Reactive Provider Error Recovery
 
 **Generated:** 2026-05-.5
 

@@ -1,4 +1,4 @@
-﻿{
+{
   "eval_id": .,
   "eval_name": "new-mcp-arxiv-casual",
   "prompt": "implement issue #.00 - we need to add a new built-in MCP for arxiv paper search. just the basic search endpoint, nothing fancy. pr it",

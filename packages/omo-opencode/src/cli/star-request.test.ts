@@ -1,4 +1,4 @@
-﻿import { describe, expect, test } from "bun:test"
+import { describe, expect, test } from "bun:test"
 import { STAR_REPOSITORIES, formatGitHubStarCommand, starGitHubRepositories } from "./star-request"
 
 describe("star-request", () => {

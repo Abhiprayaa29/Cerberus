@@ -1,4 +1,4 @@
-﻿# Design System Inspired by Cal.com
+# Design System Inspired by Cal.com
 
 ## .. Visual Theme & Atmosphere
 

@@ -1,4 +1,4 @@
-﻿---
+---
 description: Easter egg command - about oh-my-open-pentest
 ---
 

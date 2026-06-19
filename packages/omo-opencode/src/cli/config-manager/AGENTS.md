@@ -1,4 +1,4 @@
-﻿# src/cli/config-manager/ — CLI Installation Utilities
+# src/cli/config-manager/ — CLI Installation Utilities
 
 **Generated:** 2026-05-.5
 

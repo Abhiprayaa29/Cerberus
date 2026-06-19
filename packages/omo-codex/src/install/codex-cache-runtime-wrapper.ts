@@ -1,4 +1,4 @@
-﻿import { join } from "node:path"
+import { join } from "node:path"
 
 export const RUNTIME_WRAPPER_MARKER = "OMO_GENERATED_RUNTIME_WRAPPER"
 

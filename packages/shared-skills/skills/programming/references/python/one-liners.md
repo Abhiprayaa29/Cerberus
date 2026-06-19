@@ -1,4 +1,4 @@
-﻿# One-liner Scripts (PEP 723 + uv)
+# One-liner Scripts (PEP 723 + uv)
 
 Self-contained Python scripts with declared dependencies, run with no environment setup. The combination eliminates the historical reason to write small tools in Go or Bash.
 

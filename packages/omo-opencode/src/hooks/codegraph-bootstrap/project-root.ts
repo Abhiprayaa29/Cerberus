@@ -1,6 +1,6 @@
-﻿import { resolve } from "node:path"
+import { resolve } from "node:path"
 
-import { isRecord } from "@oh-my-open-pentest/utils"
+import { isRecord } from "@omop/utils"
 
 const PROJECT_ROOT_KEYS = ["directory", "worktree", "cwd", "projectRoot", "projectPath"] as const
 

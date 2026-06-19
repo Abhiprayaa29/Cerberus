@@ -1,1 +1,1 @@
-﻿export * from "@oh-my-open-pentest/openclaw-core/runtime-dispatch"
+export * from "@omop/openclaw-core/runtime-dispatch"

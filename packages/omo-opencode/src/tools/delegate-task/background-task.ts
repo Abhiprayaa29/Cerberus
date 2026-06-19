@@ -1,4 +1,4 @@
-﻿import type { DelegateTaskArgs, ToolContextWithMetadata, DelegatedModelConfig } from "./types"
+import type { DelegateTaskArgs, ToolContextWithMetadata, DelegatedModelConfig } from "./types"
 import type { ExecutorContext, ParentContext } from "./executor-types"
 import type { FallbackEntry } from "../../shared/model-requirements"
 import { getTimingConfig } from "./timing"

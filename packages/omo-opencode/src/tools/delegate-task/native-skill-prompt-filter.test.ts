@@ -1,4 +1,4 @@
-﻿declare const require: NodeJS.Require
+declare const require: NodeJS.Require
 
 const { afterEach, describe, expect, it, mock, spyOn } = require("bun:test")
 

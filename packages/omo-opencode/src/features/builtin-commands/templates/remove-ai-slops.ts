@@ -1,4 +1,4 @@
-﻿export const REMOVE_AI_SLOPS_TEMPLATE = `# Remove AI Slops Command
+export const REMOVE_AI_SLOPS_TEMPLATE = `# Remove AI Slops Command
 
 ## Codex Harness Tool Compatibility
 

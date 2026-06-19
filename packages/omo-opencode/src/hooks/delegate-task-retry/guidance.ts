@@ -1,1 +1,1 @@
-﻿export { buildRetryGuidance } from "@oh-my-open-pentest/delegate-core"
+export { buildRetryGuidance } from "@omop/delegate-core"

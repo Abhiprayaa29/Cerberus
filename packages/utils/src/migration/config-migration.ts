@@ -1,4 +1,4 @@
-﻿import * as fs from "node:fs"
+import * as fs from "node:fs"
 import { log } from "../logger"
 import { writeFileAtomically } from "../write-file-atomically"
 import { AGENT_NAME_MAP, migrateAgentNames } from "./agent-names"

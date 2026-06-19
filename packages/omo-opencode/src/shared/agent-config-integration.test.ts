@@ -1,4 +1,4 @@
-﻿import { describe, test, expect } from "bun:test"
+import { describe, test, expect } from "bun:test"
 import { migrateAgentNames } from "./migration"
 import { getAgentDisplayName } from "./agent-display-names"
 import { AGENT_MODEL_REQUIREMENTS } from "./model-requirements"

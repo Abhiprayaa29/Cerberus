@@ -1,11 +1,11 @@
-﻿import {
+import {
   _setModelResolutionLogImplementationForTesting,
   resolveModelPipeline as resolveModelPipelineFromCore,
-} from "@oh-my-open-pentest/model-core"
+} from "@omop/model-core"
 import type {
   PipelineModelResolutionRequest,
   PipelineModelResolutionResult,
-} from "@oh-my-open-pentest/model-core"
+} from "@omop/model-core"
 import * as connectedProvidersCache from "./connected-providers-cache"
 
 export { _setModelResolutionLogImplementationForTesting }
@@ -19,4 +19,4 @@ export type {
   PipelineModelResolutionRequest as ModelResolutionRequest,
   PipelineModelResolutionProvenance as ModelResolutionProvenance,
   PipelineModelResolutionResult as ModelResolutionResult,
-} from "@oh-my-open-pentest/model-core"
+} from "@omop/model-core"

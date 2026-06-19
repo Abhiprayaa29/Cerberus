@@ -1,1 +1,1 @@
-﻿export * from "@oh-my-open-pentest/utils/migration/agent-names"
+export * from "@omop/utils/migration/agent-names"

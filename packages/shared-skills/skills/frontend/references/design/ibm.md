@@ -1,4 +1,4 @@
-﻿# Design System Inspired by IBM
+# Design System Inspired by IBM
 
 ## .. Visual Theme & Atmosphere
 

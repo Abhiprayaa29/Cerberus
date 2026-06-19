@@ -1,2 +1,2 @@
-﻿export { createHashlineChunkFormatter } from "@oh-my-open-pentest/hashline-core"
-export type { HashlineChunkFormatter } from "@oh-my-open-pentest/hashline-core"
+export { createHashlineChunkFormatter } from "@omop/hashline-core"
+export type { HashlineChunkFormatter } from "@omop/hashline-core"

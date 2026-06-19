@@ -1,4 +1,4 @@
-﻿import { describe, expect, test } from "bun:test"
+import { describe, expect, test } from "bun:test"
 import { stat } from "node:fs/promises"
 
 describe("shared skills package manifest", () => {
@@ -9,7 +9,7 @@ describe("shared skills package manifest", () => {
     // when
     const workspaces = rootPackageJson.workspaces
     const files = rootPackageJson.files
-    const devDependency = rootPackageJson.devDependencies["@oh-my-open-pentest/shared-skills"]
+    const devDependency = rootPackageJson.devDependencies["@omop/shared-skills"]
     const sharedPackageJson = await Bun.file("packages/shared-skills/package.json").json()
 
     // then
@@ -17,7 +17,7 @@ describe("shared skills package manifest", () => {
     expect(files).toContain("packages/shared-skills/skills")
     expect(devDependency).toBe("workspace:*")
     expect(sharedPackageJson).toEqual({
-      name: "@oh-my-open-pentest/shared-skills",
+      name: "@omop/shared-skills",
       version: "0.1.0",
       type: "module",
       private: true,

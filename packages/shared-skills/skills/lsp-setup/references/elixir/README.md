@@ -1,4 +1,4 @@
-﻿# Elixir — LSP setup
+# Elixir — LSP setup
 
 - **Builtin server:** `elixir-ls` — `elixir-ls`
 - **Extensions:** `.ex .exs`

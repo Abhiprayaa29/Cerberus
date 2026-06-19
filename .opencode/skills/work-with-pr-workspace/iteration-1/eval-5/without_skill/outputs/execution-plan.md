@@ -1,4 +1,4 @@
-﻿# Execution Plan: Relax comment-checker hook false positives
+# Execution Plan: Relax comment-checker hook false positives
 
 ## Problem Analysis
 

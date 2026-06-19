@@ -1,4 +1,4 @@
-﻿# Design System Inspired by VoltAgent
+# Design System Inspired by VoltAgent
 
 ## .. Visual Theme & Atmosphere
 

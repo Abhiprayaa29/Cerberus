@@ -1,4 +1,4 @@
-﻿---
+---
 name: publish
 description: "Publish oh-my-open-pentest to npm via GitHub Actions workflow. Argument: <patch|minor|major>. Triggers: publish, release, deploy, finding submission."
 ---

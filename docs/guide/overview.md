@@ -1,4 +1,4 @@
-﻿# What Is Oh My Open Pentest?
+# What Is Oh My Open Pentest?
 
 Oh My Open Pentest is a multi-model agent orchestration harness for OpenCode. It transforms a single AI agent into a coordinated development team that actually ships code.
 

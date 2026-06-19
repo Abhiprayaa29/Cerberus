@@ -1,13 +1,13 @@
-﻿import {
+import {
 	resolveModel,
 	resolveModelWithFallback as resolveModelWithFallbackFromCore,
 	normalizeFallbackModels,
 	flattenToFallbackModelStrings,
-} from "@oh-my-open-pentest/model-core"
+} from "@omop/model-core"
 import type {
 	ModelResolutionInput,
 	ExtendedModelResolutionInput,
-} from "@oh-my-open-pentest/model-core"
+} from "@omop/model-core"
 import * as connectedProvidersCache from "./connected-providers-cache"
 
 export { resolveModel, normalizeFallbackModels, flattenToFallbackModelStrings }

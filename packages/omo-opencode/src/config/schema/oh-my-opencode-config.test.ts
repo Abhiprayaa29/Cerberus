@@ -1,4 +1,4 @@
-﻿import { describe, expect, it } from "bun:test"
+import { describe, expect, it } from "bun:test"
 import { OhMyOpenCodeConfigSchema } from "./oh-my-open-pentest-config"
 
 describe("OhMyOpenCodeConfigSchema team_mode", () => {

@@ -1,4 +1,4 @@
-﻿import { isPlainRecord } from "@oh-my-open-pentest/utils"
+import { isPlainRecord } from "@omop/utils"
 import { tool } from "@opencode-ai/plugin"
 import type { ToolDefinition } from "@opencode-ai/plugin"
 

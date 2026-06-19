@@ -1,4 +1,4 @@
-﻿# src/ — Plugin Source
+# src/ — Plugin Source
 
 **Generated:** 2026-06-08
 

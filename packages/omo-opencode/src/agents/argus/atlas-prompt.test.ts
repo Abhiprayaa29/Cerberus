@@ -1,4 +1,4 @@
-﻿import { describe, test, expect } from "bun:test"
+import { describe, test, expect } from "bun:test"
 import { getArgusPrompt } from "./agent"
 
 const ALL_VARIANTS: Array<[string, string]> = [

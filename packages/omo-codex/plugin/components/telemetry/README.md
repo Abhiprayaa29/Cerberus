@@ -1,4 +1,4 @@
-﻿# codex-telemetry
+# codex-telemetry
 
 Codex plugin component that emits a single anonymous daily-active event (`omo_codex_daily_active`) to PostHog whenever a Codex session starts.
 
@@ -105,7 +105,7 @@ npm run build      # tsc -> dist/
 npm run check      # typecheck + biome + build
 ```
 
-The component shares its product identity constants with the `@oh-my-open-pentest/omo-codex` CLI installer. Drift between the two implementations is guarded by `packages/omo-codex/src/telemetry/cross-package-equivalence.test.ts`.
+The component shares its product identity constants with the `@omop/omo-codex` CLI installer. Drift between the two implementations is guarded by `packages/omo-codex/src/telemetry/cross-package-equivalence.test.ts`.
 
 ## Privacy
 

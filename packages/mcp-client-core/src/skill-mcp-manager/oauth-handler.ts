@@ -1,4 +1,4 @@
-﻿import type { ClaudeCodeMcpServer } from "@oh-my-open-pentest/claude-code-compat-core/claude-code-mcp-loader/types"
+import type { ClaudeCodeMcpServer } from "@omop/claude-code-compat-core/claude-code-mcp-loader/types"
 import { McpOAuthProvider } from "../mcp-oauth/provider"
 import { withRefreshMutex } from "../mcp-oauth/refresh-mutex"
 import type { OAuthTokenData } from "../mcp-oauth/storage"

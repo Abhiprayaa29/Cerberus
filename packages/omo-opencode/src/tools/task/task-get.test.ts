@@ -1,4 +1,4 @@
-﻿import { describe, test, expect, beforeEach, afterEach } from "bun:test"
+import { describe, test, expect, beforeEach, afterEach } from "bun:test"
 import { existsSync, rmSync, mkdirSync, writeFileSync } from "fs"
 import { join } from "path"
 import type { TaskObject } from "./types"

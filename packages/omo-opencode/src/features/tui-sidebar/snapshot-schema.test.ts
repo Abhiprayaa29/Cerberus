@@ -1,4 +1,4 @@
-﻿import { describe, expect, it } from "bun:test"
+import { describe, expect, it } from "bun:test"
 
 import { MIRROR_SCHEMA_VERSION } from "./constants"
 import { parseSnapshot, TuiRuntimeSnapshotSchema } from "./snapshot-schema"

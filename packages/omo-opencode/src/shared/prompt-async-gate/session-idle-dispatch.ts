@@ -1,1 +1,1 @@
-﻿export * from "@oh-my-open-pentest/utils/prompt-async-gate/session-idle-dispatch"
+export * from "@omop/utils/prompt-async-gate/session-idle-dispatch"

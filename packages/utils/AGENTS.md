@@ -1,10 +1,10 @@
-﻿# utils — Shared Utilities (Core)
+# utils — Shared Utilities (Core)
 
 **Generated:** 2026-06-.6
 
 ## OVERVIEW
 
-Harness-neutral pure-TypeScript core package (`@oh-my-open-pentest/utils`). Consumed by both adapters (`packages/omo-opencode`, `packages/omo-codex`) and .5+ sibling Core packages. Barrel-exports 36 modules across runtime shims, config tooling, file utilities, prompt gating, git parsing, migration maps, and codegraph primitives.
+Harness-neutral pure-TypeScript core package (`@omop/utils`). Consumed by both adapters (`packages/omo-opencode`, `packages/omo-codex`) and .5+ sibling Core packages. Barrel-exports 36 modules across runtime shims, config tooling, file utilities, prompt gating, git parsing, migration maps, and codegraph primitives.
 
 ## CATEGORY MAP
 

@@ -1,4 +1,4 @@
-﻿import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
@@ -9,7 +9,7 @@ import {
 	parseRule,
 	scanRuleFiles,
 	SOURCE_PRIORITY,
-} from "@oh-my-open-pentest/rules-engine/engine";
+} from "@omop/rules-engine/engine";
 
 const tempDirectories: string[] = [];
 

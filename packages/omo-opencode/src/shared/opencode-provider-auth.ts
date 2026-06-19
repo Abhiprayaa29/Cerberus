@@ -1,4 +1,4 @@
-﻿import { isRecord } from "@oh-my-open-pentest/utils"
+import { isRecord } from "@omop/utils"
 import { readFileSync, statSync } from "node:fs"
 import * as path from "node:path"
 

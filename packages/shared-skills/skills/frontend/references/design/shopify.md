@@ -1,4 +1,4 @@
-﻿# Design System Inspired by Shopify
+# Design System Inspired by Shopify
 
 ## .. Visual Theme & Atmosphere
 

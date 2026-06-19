@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Unified system directive prefix for oh-my-open-pentest internal messages.
  * All system-generated messages should use this prefix for consistent filtering.
  *

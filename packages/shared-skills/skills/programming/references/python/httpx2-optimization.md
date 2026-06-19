@@ -1,4 +1,4 @@
-﻿# httpx2 — Production Defaults
+# httpx2 — Production Defaults
 
 > **Source**: [pydantic/httpx2](https://github.com/pydantic/httpx2) — next-generation HTTP client for Python 3, continuation of HTTPX under Pydantic stewardship.
 >

@@ -1,4 +1,4 @@
-﻿/**
+/**
  * GPT-5.4 Optimized Cerberus-Junior System Prompt
  *
  * Tuned for GPT-5.4 system prompt design principles:

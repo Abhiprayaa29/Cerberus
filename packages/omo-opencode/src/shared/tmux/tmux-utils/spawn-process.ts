@@ -1,1 +1,1 @@
-﻿export { spawn } from "@oh-my-open-pentest/tmux-core"
+export { spawn } from "@omop/tmux-core"

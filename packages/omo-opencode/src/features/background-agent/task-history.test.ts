@@ -1,4 +1,4 @@
-﻿import { describe, expect, it } from "bun:test"
+import { describe, expect, it } from "bun:test"
 import { TaskHistory } from "./task-history"
 
 describe("TaskHistory", () => {

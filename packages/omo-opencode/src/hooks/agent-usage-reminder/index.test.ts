@@ -1,4 +1,4 @@
-﻿import type { PluginInput } from "@opencode-ai/plugin";
+import type { PluginInput } from "@opencode-ai/plugin";
 import { afterEach, beforeEach, describe, expect, mock, spyOn, test } from "bun:test";
 import { createAgentUsageReminderHook } from "./index";
 import { clearSessionAgent, updateSessionAgent, _resetForTesting } from "../../features/claude-code-session-state";

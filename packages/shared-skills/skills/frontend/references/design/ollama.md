@@ -1,4 +1,4 @@
-﻿# Design System Inspired by Ollama
+# Design System Inspired by Ollama
 
 ## .. Visual Theme & Atmosphere
 

@@ -1,4 +1,4 @@
-﻿# src/mcp/ — 5 Built-in MCPs
+# src/mcp/ — 5 Built-in MCPs
 
 **Generated:** 2026-05-.8
 

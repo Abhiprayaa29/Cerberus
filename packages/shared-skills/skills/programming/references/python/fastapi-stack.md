@@ -1,4 +1,4 @@
-﻿# FastAPI + SQLAlchemy 2.x async + Postgres + Pydantic v2
+# FastAPI + SQLAlchemy 2.x async + Postgres + Pydantic v2
 
 The canonical web API stack. Async end-to-end, type-safe end-to-end, OpenAPI-generated end-to-end.
 

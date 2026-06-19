@@ -1,4 +1,4 @@
-﻿# Design System Inspired by WIRED
+# Design System Inspired by WIRED
 
 ## .. Visual Theme & Atmosphere
 

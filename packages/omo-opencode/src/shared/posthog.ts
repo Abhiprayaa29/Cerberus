@@ -1,17 +1,17 @@
-﻿import os from "os"
+import os from "os"
 import {
   DEFAULT_POSTHOG_API_KEY,
   DEFAULT_POSTHOG_HOST,
   createDefaultPostHogTransport,
   getTelemetryDistinctId,
   getTelemetryHost,
-} from "@oh-my-open-pentest/telemetry-core"
+} from "@omop/telemetry-core"
 import type {
   TelemetryCaptureMessage,
   TelemetryTransport,
   TelemetryTransportFactory,
   TelemetryTransportOptions,
-} from "@oh-my-open-pentest/telemetry-core"
+} from "@omop/telemetry-core"
 import packageJson from "../../../../package.json" with { type: "json" }
 import { PLUGIN_NAME, PUBLISHED_PACKAGE_NAME } from "./plugin-identity"
 import { getPostHogActivityCaptureState } from "./posthog-activity-state"

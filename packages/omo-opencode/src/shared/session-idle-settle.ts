@@ -1,1 +1,1 @@
-﻿export * from "@oh-my-open-pentest/utils/session-idle-settle"
+export * from "@omop/utils/session-idle-settle"

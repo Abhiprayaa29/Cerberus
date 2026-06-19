@@ -1,4 +1,4 @@
-﻿export {
+export {
   clearPluginConfigFileDetectionCache,
   detectConfigFile,
   detectPluginConfigFile,
@@ -7,4 +7,4 @@
   readJsoncFile,
   type DetectPluginConfigFileOptions,
   type JsoncParseResult,
-} from "@oh-my-open-pentest/utils"
+} from "@omop/utils"

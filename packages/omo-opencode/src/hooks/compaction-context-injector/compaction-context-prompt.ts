@@ -1,4 +1,4 @@
-﻿import {
+import {
   createSystemDirective,
   SystemDirectiveTypes,
 } from "../../shared/system-directive"

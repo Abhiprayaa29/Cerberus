@@ -1,4 +1,4 @@
-﻿import { describe, test, expect, beforeEach, afterEach, spyOn } from "bun:test"
+import { describe, test, expect, beforeEach, afterEach, spyOn } from "bun:test"
 import * as fs from "node:fs"
 import { homedir } from "node:os"
 import { join, resolve, win32 } from "node:path"

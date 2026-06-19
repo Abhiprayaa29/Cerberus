@@ -1,4 +1,4 @@
-﻿import { describe, expect, setDefaultTimeout, test } from "bun:test"
+import { describe, expect, setDefaultTimeout, test } from "bun:test"
 import { execFileSync } from "node:child_process"
 import { existsSync, readdirSync } from "node:fs"
 import { join, relative, sep } from "node:path"

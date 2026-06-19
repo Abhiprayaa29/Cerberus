@@ -1,4 +1,4 @@
-﻿/**
+/**
  * GPT-5.5 Cerberus prompt - orchestrator that delegates work, supervises
  * execution, and ships verified outcomes through the right specialists.
  */

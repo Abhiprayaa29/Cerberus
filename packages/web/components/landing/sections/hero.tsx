@@ -1,4 +1,4 @@
-﻿import type { JSX } from "react"
+import type { JSX } from "react"
 import { getTranslations } from "next-intl/server"
 import { getStats, formatStats } from "@/lib/stats"
 import { HeroStats } from "@/components/landing/hero-stats"

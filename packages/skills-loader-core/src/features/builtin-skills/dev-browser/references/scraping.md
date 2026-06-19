@@ -1,4 +1,4 @@
-﻿# Data Scraping Guide
+# Data Scraping Guide
 
 For large datasets (followers, posts, search results), **intercept and replay network requests** rather than scrolling and parsing the DOM. This is faster, more reliable, and handles pagination automatically.
 

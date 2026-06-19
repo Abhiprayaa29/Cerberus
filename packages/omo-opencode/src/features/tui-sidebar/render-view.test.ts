@@ -1,4 +1,4 @@
-﻿import { describe, expect, it } from "bun:test"
+import { describe, expect, it } from "bun:test"
 
 import { computeView } from "./compute-view"
 import { buildViewNodes, describeView } from "./render-view"

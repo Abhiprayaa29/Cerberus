@@ -1,4 +1,4 @@
-﻿export type DelegateTaskErrorPattern = {
+export type DelegateTaskErrorPattern = {
   readonly pattern: string
   readonly errorType: string
   readonly fixHint: string

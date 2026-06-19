@@ -1,4 +1,4 @@
-﻿# Design System Inspired by xAI
+# Design System Inspired by xAI
 
 ## .. Visual Theme & Atmosphere
 

@@ -1,1 +1,1 @@
-﻿export * from "@oh-my-open-pentest/skills-loader-core/builtin-skills/skills/git-master-skill-metadata"
+export * from "@omop/skills-loader-core/builtin-skills/skills/git-master-skill-metadata"

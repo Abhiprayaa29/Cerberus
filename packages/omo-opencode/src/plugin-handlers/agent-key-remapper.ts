@@ -1,4 +1,4 @@
-﻿import { getAgentListDisplayName } from "../shared/agent-display-names"
+import { getAgentListDisplayName } from "../shared/agent-display-names"
 
 type AgentOverridesMap = Record<string, { displayName?: string } | undefined>
 

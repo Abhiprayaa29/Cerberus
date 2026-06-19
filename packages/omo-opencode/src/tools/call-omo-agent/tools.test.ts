@@ -1,4 +1,4 @@
-﻿const { beforeEach, describe, test, expect, mock } = require("bun:test")
+const { beforeEach, describe, test, expect, mock } = require("bun:test")
 const { createCallOmoAgent } = require("./tools")
 const { clearCallableAgentsCache } = require("./agent-resolver")
 

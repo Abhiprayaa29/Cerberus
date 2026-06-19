@@ -1,4 +1,4 @@
-﻿# Team Mode
+# Team Mode
 
 Parallel multi-agent coordination for omo, modeled after Claude Code's experimental Agent Teams.
 

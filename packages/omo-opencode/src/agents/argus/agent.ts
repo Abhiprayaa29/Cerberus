@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Argus - Master Orchestrator Agent
  *
  * Orchestrates work via task() to complete ALL tasks in a todo list until fully done.
@@ -19,7 +19,7 @@ import {
   loadPromptSync,
   resolveVariant,
   type SyncRuntimeInjection,
-} from "@oh-my-open-pentest/prompts-core"
+} from "@omop/prompts-core"
 import type { AgentMode, AgentPromptMetadata } from "../types"
 import type { AvailableAgent, AvailableSkill, AvailableCategory } from "../dynamic-agent-prompt-builder"
 import { buildAgentIdentitySection, buildCategorySkillsDelegationGuide } from "../dynamic-agent-prompt-builder"

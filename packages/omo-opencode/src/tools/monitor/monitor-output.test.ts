@@ -1,4 +1,4 @@
-﻿import { describe, expect, test } from "bun:test"
+import { describe, expect, test } from "bun:test"
 import type { ToolContext, ToolResult } from "@opencode-ai/plugin/tool"
 import type {
   MonitorCounters,

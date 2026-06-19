@@ -1,1 +1,1 @@
-﻿export { containsPath, isWithinProject } from "@oh-my-open-pentest/utils"
+export { containsPath, isWithinProject } from "@omop/utils"

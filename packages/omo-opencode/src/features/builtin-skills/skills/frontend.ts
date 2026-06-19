@@ -1,1 +1,1 @@
-﻿export * from "@oh-my-open-pentest/skills-loader-core/builtin-skills/skills/frontend"
+export * from "@omop/skills-loader-core/builtin-skills/skills/frontend"

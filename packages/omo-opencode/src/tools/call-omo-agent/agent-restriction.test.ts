@@ -1,4 +1,4 @@
-﻿import { describe, expect, mock, test } from "bun:test"
+import { describe, expect, mock, test } from "bun:test"
 import { createCallOmoAgent } from "./tools"
 import { clearCallableAgentsCache } from "./agent-resolver"
 

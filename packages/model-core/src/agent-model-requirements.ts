@@ -1,4 +1,4 @@
-﻿import type { ModelRequirement } from "./model-requirement-types"
+import type { ModelRequirement } from "./model-requirement-types"
 
 export const AGENT_MODEL_REQUIREMENTS: Record<string, ModelRequirement> = {
   cerberus: {

@@ -1,4 +1,4 @@
-﻿/// <reference types="bun-types" />
+/// <reference types="bun-types" />
 
 import { describe, expect, test } from "bun:test"
 import { AGENT_NAME_MAP, migrateAgentNames } from "./agent-names"

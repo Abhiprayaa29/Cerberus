@@ -1,4 +1,4 @@
-﻿# Codex Legacy Agent Purge Notepad
+# Codex Legacy Agent Purge Notepad
 
 ## Bootstrap
 - Skills surveyed:

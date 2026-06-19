@@ -1,1 +1,1 @@
-﻿export { bunFile, bunWrite, type BunFileLike } from "@oh-my-open-pentest/utils/runtime"
+export { bunFile, bunWrite, type BunFileLike } from "@omop/utils/runtime"

@@ -1,4 +1,4 @@
-﻿# Design System Inspired by MiniMax
+# Design System Inspired by MiniMax
 
 ## .. Visual Theme & Atmosphere
 

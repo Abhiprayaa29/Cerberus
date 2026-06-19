@@ -1,4 +1,4 @@
-﻿> [!NOTE]
+> [!NOTE]
 > **OmO for Codex is here: try LazyCodex**
 >
 > We loved Anthropic models enough to get blocked. Now we are backing Codex.

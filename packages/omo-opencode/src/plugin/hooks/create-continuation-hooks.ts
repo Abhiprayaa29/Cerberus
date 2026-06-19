@@ -1,4 +1,4 @@
-﻿import type { HookName, OhMyOpenCodeConfig } from "../../config"
+import type { HookName, OhMyOpenCodeConfig } from "../../config"
 import type { BackgroundManager } from "../../features/background-agent"
 import type { PluginContext } from "../types"
 

@@ -1,4 +1,4 @@
-﻿# Investigating opencode sessions in the DB (Case D)
+# Investigating opencode sessions in the DB (Case D)
 
 ## Table of Contents
 

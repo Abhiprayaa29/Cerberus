@@ -1,4 +1,4 @@
-﻿# Rust Programmer
+# Rust Programmer
 
 Production Rust in 2026. **Explicit allocation, compile-time proof, zero hidden cost.** Type-state-first, unsafe-banished-by-default, agent-proof.
 

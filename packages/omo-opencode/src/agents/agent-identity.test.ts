@@ -1,4 +1,4 @@
-﻿/// <reference types="bun-types" />
+/// <reference types="bun-types" />
 
 import { describe, it, expect } from "bun:test"
 import { buildAgentIdentitySection } from "./dynamic-agent-core-sections"

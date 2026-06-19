@@ -1,4 +1,4 @@
-﻿// Migration map: old hook names → new hook names (for backward compatibility)
+// Migration map: old hook names → new hook names (for backward compatibility)
 // null means the hook was removed and should be filtered out from disabled_hooks
 export const HOOK_NAME_MAP: Record<string, string | null> = {
   // Legacy names (backward compatibility)

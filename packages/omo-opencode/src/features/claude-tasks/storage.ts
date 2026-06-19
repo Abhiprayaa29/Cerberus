@@ -1,4 +1,4 @@
-﻿import { join, dirname, basename, isAbsolute } from "path"
+import { join, dirname, basename, isAbsolute } from "path"
 import { existsSync, mkdirSync, readFileSync, writeFileSync, renameSync, unlinkSync, readdirSync } from "fs"
 import { randomUUID } from "crypto"
 import { getOpenCodeConfigDir } from "../../shared/opencode-config-dir"

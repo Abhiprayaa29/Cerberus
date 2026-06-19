@@ -1,6 +1,6 @@
-﻿{
-  "name": "@oh-my-open-pentest/hashline-core",
-  "version": "0...0",
+{
+  "name": "@omop/hashline-core",
+  "version": "0.1.0",
   "type": "module",
   "private": true,
   "description": "Pure TypeScript hashline core logic for hash-anchored edits.",

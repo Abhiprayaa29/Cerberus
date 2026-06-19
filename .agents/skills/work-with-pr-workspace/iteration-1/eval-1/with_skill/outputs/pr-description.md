@@ -1,4 +1,4 @@
-﻿# PR Description
+# PR Description
 
 **Title:** `feat: add max_background_agents config to limit concurrent background agents`
 

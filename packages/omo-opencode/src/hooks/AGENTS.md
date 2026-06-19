@@ -1,4 +1,4 @@
-﻿# src/hooks/ — ~5. Lifecycle Hooks Across 60 Dirs
+# src/hooks/ — ~5. Lifecycle Hooks Across 60 Dirs
 
 **Generated:** 2026-06-08
 

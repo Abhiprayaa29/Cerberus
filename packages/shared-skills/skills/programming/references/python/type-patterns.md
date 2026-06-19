@@ -1,4 +1,4 @@
-﻿# Type Patterns
+# Type Patterns
 
 How to use Python's type system to catch bugs at check time, not runtime.
 

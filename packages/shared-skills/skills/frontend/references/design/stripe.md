@@ -1,4 +1,4 @@
-﻿# Design System Inspired by Stripe
+# Design System Inspired by Stripe
 
 ## .. Visual Theme & Atmosphere
 

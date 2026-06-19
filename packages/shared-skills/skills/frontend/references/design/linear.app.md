@@ -1,4 +1,4 @@
-﻿# Design System Inspired by Linear
+# Design System Inspired by Linear
 
 ## .. Visual Theme & Atmosphere
 

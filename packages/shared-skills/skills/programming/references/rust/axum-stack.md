@@ -1,4 +1,4 @@
-﻿# axum + sqlx + tracing + tower — HTTP API Stack
+# axum + sqlx + tracing + tower — HTTP API Stack
 
 The canonical production HTTP service in Rust 2026.
 

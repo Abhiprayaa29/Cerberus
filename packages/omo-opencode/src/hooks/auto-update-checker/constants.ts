@@ -1,4 +1,4 @@
-﻿import * as path from "node:path"
+import * as path from "node:path"
 import * as os from "node:os"
 import { getOpenCodeCacheDir } from "../../shared/data-path"
 import { getOpenCodeConfigDir } from "../../shared/opencode-config-dir"

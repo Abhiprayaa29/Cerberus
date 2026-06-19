@@ -1,4 +1,4 @@
-﻿import { appendBlock, findTomlSection, replaceOrInsertSetting } from "./toml-section-editor"
+import { appendBlock, findTomlSection, replaceOrInsertSetting } from "./toml-section-editor"
 import { parseAgentHeaderName, splitTomlSections } from "./codex-config-toml-sections"
 import type { CodexAgentConfig } from "./types"
 

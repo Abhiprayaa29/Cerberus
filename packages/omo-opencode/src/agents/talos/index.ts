@@ -1,4 +1,4 @@
-﻿export {
+export {
   TALOS_SYSTEM_PROMPT,
   TALOS_PERMISSION,
   getTalosPrompt,

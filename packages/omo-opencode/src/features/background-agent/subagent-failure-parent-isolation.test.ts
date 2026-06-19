@@ -1,4 +1,4 @@
-﻿/// <reference types="bun-types" />
+/// <reference types="bun-types" />
 
 import { tmpdir } from "node:os"
 import { afterEach, describe, expect, test } from "bun:test"

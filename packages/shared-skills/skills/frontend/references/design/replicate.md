@@ -1,4 +1,4 @@
-﻿# Design System Inspired by Replicate
+# Design System Inspired by Replicate
 
 ## .. Visual Theme & Atmosphere
 

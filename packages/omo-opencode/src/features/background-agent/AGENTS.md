@@ -1,4 +1,4 @@
-﻿# src/features/background-agent/ — Core Orchestration Engine
+# src/features/background-agent/ — Core Orchestration Engine
 
 **Generated:** 2026-05-20
 

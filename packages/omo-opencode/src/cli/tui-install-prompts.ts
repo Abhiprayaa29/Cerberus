@@ -1,4 +1,4 @@
-﻿import * as p from "@clack/prompts"
+import * as p from "@clack/prompts"
 import type { Option } from "@clack/prompts"
 import type {
   ClaudeSubscription,

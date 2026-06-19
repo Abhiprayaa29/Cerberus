@@ -1,4 +1,4 @@
-﻿import { getLastAgentFromSession } from "../../hooks/argus/session-last-agent"
+import { getLastAgentFromSession } from "../../hooks/argus/session-last-agent"
 import { normalizeSDKResponse } from "../../shared/normalize-sdk-response"
 import { MIRROR_SCHEMA_VERSION } from "./constants"
 import { readActiveLoop } from "./loop-reader"

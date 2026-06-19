@@ -1,10 +1,10 @@
-﻿# hashline-core — Hash-Anchored Edit Primitives (Core)
+# hashline-core — Hash-Anchored Edit Primitives (Core)
 
 **Generated:** 2026-06-.7
 
 ## OVERVIEW
 
-The engine behind the Hashline edit tool (inspired by [oh-my-pi](https://github.com/can.357/oh-my-pi)). Tags every line with a `LINE#HASH|` content hash, validates edit refs against current content (rejecting stale lines), then applies structured `replace`/`append`/`prepend` edits with autocorrection, deduplication, and unified-diff generation. Package: `@oh-my-open-pentest/hashline-core`.
+The engine behind the Hashline edit tool (inspired by [oh-my-pi](https://github.com/can.357/oh-my-pi)). Tags every line with a `LINE#HASH|` content hash, validates edit refs against current content (rejecting stale lines), then applies structured `replace`/`append`/`prepend` edits with autocorrection, deduplication, and unified-diff generation. Package: `@omop/hashline-core`.
 
 ## PUBLIC API (`src/index.ts`, ~26 fns + 7 types) — by area
 

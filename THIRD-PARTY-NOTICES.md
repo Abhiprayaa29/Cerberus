@@ -1,4 +1,4 @@
-﻿# Third Party Notices
+# Third Party Notices
 
 This file enumerates third-party components redistributed by the root `oh-my-open-pentest` package surface from `package.json` `files[]`, root production dependencies, bundled MCP/runtime payloads, and the planned pinned CodeGraph provisioning payload for the CodeGraph OMO integration.
 

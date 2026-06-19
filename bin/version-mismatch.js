@@ -1,4 +1,4 @@
-﻿// bin/version-mismatch.js
+// bin/version-mismatch.js
 // Detects platform binary version mismatch against the main package.
 // Background: issue #3918 - `oh-my-open-pentest-windows-x64@3.9.0` could stay installed
 // alongside `oh-my-open-pentest@4.0.0`, leaving the startup banner pinned to 3.9.0.

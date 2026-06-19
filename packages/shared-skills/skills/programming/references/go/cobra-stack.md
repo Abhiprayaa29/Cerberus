@@ -1,4 +1,4 @@
-﻿# CLI Stack — cobra + slog + caarlos0/env + signal handling
+# CLI Stack — cobra + slog + caarlos0/env + signal handling
 
 The canonical Go CLI skeleton. `cobra` is the de facto framework — Kubernetes, Docker CLI, Helm, GitHub CLI, gh, Hugo all use it. Use it.
 

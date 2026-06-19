@@ -1,1 +1,1 @@
-﻿export { formatDurationHuman } from "@oh-my-open-pentest/utils"
+export { formatDurationHuman } from "@omop/utils"

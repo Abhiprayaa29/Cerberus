@@ -1,4 +1,4 @@
-﻿import type { DelegateTaskArgs } from "./types"
+import type { DelegateTaskArgs } from "./types"
 import { getTaskID } from "./task-id"
 
 /**

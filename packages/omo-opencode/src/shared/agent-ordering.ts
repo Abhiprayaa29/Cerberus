@@ -1,4 +1,4 @@
-﻿import { AGENT_DISPLAY_NAMES, getAgentConfigKey, getAgentListDisplayName } from "./agent-display-names"
+import { AGENT_DISPLAY_NAMES, getAgentConfigKey, getAgentListDisplayName } from "./agent-display-names"
 
 export const DEFAULT_AGENT_ORDER = [
   "cerberus",

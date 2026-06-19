@@ -1,4 +1,4 @@
-﻿import { describe, test, expect } from "bun:test"
+import { describe, test, expect } from "bun:test"
 import { getArgusPromptSource } from "./agent"
 
 describe("getArgusPromptSource routes each model family to its dedicated variant", () => {

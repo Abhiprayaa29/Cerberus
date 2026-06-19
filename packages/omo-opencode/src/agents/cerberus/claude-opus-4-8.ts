@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Claude Opus 4.8-native Cerberus prompt - tuned for Opus 4.8 behaviors.
  *
  * Design principles (Anthropic Opus 4.8 migration guidance + 4.7 distillation):

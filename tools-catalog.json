@@ -1,4 +1,4 @@
-﻿{
+{
   "$schema": "tools-catalog-v.",
   "version": "..0.0",
   "categories": ["recon", "enumeration", "exploitation", "reporting", "utility"],

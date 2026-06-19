@@ -1,1 +1,1 @@
-﻿export { generateHashlineDiff } from "@oh-my-open-pentest/hashline-core"
+export { generateHashlineDiff } from "@omop/hashline-core"

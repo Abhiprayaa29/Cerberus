@@ -1,4 +1,4 @@
-﻿# PHP — LSP setup
+# PHP — LSP setup
 
 - **Builtin server:** `php` — `intelephense --stdio`
 - **Extensions:** `.php`

@@ -1,4 +1,4 @@
-﻿{
+{
 	"hooks": {
 		"SubagentStop": [
 			{
@@ -6,7 +6,7 @@
 					{
 						"type": "command",
 						"command": "node \"${PLUGIN_ROOT}/components/start-work-continuation/dist/cli.js\" hook subagent-stop",
-						"timeout": .0,
+						"timeout": 1,
 						"statusMessage": "(OmO) Checking Start-Work Continuation"
 					}
 				]

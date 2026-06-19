@@ -1,4 +1,4 @@
-﻿
+
 # Go Programmer
 
 Production Go in 2026. **Boring on purpose, strict by tooling, illegal states unrepresentable by convention.**

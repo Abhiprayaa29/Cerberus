@@ -1,6 +1,6 @@
-﻿{
-  "name": "@oh-my-open-pentest/openclaw-core",
-  "version": "0...0",
+{
+  "name": "@omop/openclaw-core",
+  "version": "0.1.0",
   "type": "module",
   "private": true,
   "description": "Harness-neutral OpenClaw gateway, reply-listener daemon, session registry, and tmux injection primitives.",
@@ -20,7 +20,7 @@
     "test": "bun test src/*.test.ts src/**/*.test.ts"
   },
   "dependencies": {
-    "@oh-my-open-pentest/tmux-core": "workspace:*",
-    "@oh-my-open-pentest/utils": "workspace:*"
+    "@omop/tmux-core": "*",
+    "@omop/utils": "*"
   }
 }

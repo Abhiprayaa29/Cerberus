@@ -1,4 +1,4 @@
-﻿export * from "./schema/agent-names"
+export * from "./schema/agent-names"
 export * from "./schema/agent-overrides"
 export * from "./schema/babysitting"
 export * from "./schema/background-task"

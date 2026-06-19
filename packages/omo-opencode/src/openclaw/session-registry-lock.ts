@@ -1,1 +1,1 @@
-﻿export * from "@oh-my-open-pentest/openclaw-core/session-registry-lock"
+export * from "@omop/openclaw-core/session-registry-lock"

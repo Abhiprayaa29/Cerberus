@@ -1,4 +1,4 @@
-﻿import assert from "node:assert/strict";
+import assert from "node:assert/strict";
 import { mkdir, mkdtemp, readFile, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -22,7 +22,7 @@ async function readJson(path) {
 async function scaffoldPlugin(repoRoot, rootVersion) {
 	await writeJson(join(repoRoot, "package.json"), { name: "oh-my-open-pentest", version: rootVersion });
 	const pluginRoot = join(repoRoot, "packages", "omo-codex", "plugin");
-	await writeJson(join(repoRoot, "packages", "omo-codex", "package.json"), { name: "@oh-my-open-pentest/omo-codex", version: "0.1.0" });
+	await writeJson(join(repoRoot, "packages", "omo-codex", "package.json"), { name: "@omop/omo-codex", version: "0.1.0" });
 	await writeJson(join(pluginRoot, "package.json"), { name: "@cerberuslabs/omo-codex-plugin", version: "0.1.0" });
 	await writeJson(join(pluginRoot, ".codex-plugin", "plugin.json"), { name: "omo", version: "0.1.0" });
 	await writeJson(join(pluginRoot, "components", "rules", "package.json"), { name: "@code-yeongyu/codex-rules", version: "0.1.0" });

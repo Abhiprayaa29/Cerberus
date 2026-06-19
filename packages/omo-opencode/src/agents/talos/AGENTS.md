@@ -1,4 +1,4 @@
-﻿---
+---
 name: talos-agent
 description: Developer reference for the Talos strategic planner agent thin prompt adapter and ulw-plan skill dependency.
 ---
@@ -21,7 +21,7 @@ This shape follows the package layering refactor in [`ROADMAP.md`](../../../../.
 | File | Purpose |
 |------|---------|
 | `index.ts` | Barrel exports |
-| `system-prompt.ts` | Thin loader using `loadPromptSync()` from `@oh-my-open-pentest/prompts-core`; `getTalosPrompt()` always loads the same `default.md` prompt body |
+| `system-prompt.ts` | Thin loader using `loadPromptSync()` from `@omop/prompts-core`; `getTalosPrompt()` always loads the same `default.md` prompt body |
 | `system-prompt.test.ts` | Runtime behavior tests for the single-prompt loader contract |
 | `packages/prompts-core/prompts/talos/default.md` | The single Talos markdown prompt asset |
 | `packages/shared-skills/skills/ulw-plan/SKILL.md` | Path-backed skill containing the full planning workflow |

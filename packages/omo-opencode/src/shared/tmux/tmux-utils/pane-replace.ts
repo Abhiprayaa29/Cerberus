@@ -1,5 +1,5 @@
-﻿import { replaceTmuxPane as replaceTmuxPaneCore } from "@oh-my-open-pentest/tmux-core"
-import type { ReplaceTmuxPaneDeps, TmuxConfig } from "@oh-my-open-pentest/tmux-core"
+import { replaceTmuxPane as replaceTmuxPaneCore } from "@omop/tmux-core"
+import type { ReplaceTmuxPaneDeps, TmuxConfig } from "@omop/tmux-core"
 import type { SpawnPaneResult } from "../types"
 import { withPaneReplaceDeps } from "./adapter-deps"
 

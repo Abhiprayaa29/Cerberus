@@ -1,1 +1,1 @@
-﻿export { parseModelString, parseVariantFromModelID } from "@oh-my-open-pentest/model-core"
+export { parseModelString, parseVariantFromModelID } from "@omop/model-core"

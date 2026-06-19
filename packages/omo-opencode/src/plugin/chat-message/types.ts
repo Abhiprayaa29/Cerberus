@@ -1,4 +1,4 @@
-﻿export type FirstMessageVariantGate = {
+export type FirstMessageVariantGate = {
   readonly shouldOverride: (sessionID: string) => boolean
   readonly markApplied: (sessionID: string) => void
 }
@@ -26,7 +26,7 @@ export type StartWorkHookOutput = {
 
 export type SessionModelOverride = { readonly providerID: string; readonly modelID: string }
 
-export type WorkStartingCommand = "start-work" | "pentest-loop" | "pentest-loop"
+export type WorkStartingCommand = "start-work" | "pentest-loop" | "ulw-loop"
 
 type ChatMessageHook = {
   "chat.message"?: (

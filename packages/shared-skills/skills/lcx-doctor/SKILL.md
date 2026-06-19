@@ -1,4 +1,4 @@
-﻿---
+---
 name: lcx-doctor
 description: "Diagnose LazyCodex and Codex CLI installation health against the latest sources. Use whenever the user asks for a doctor or health check, says LazyCodex, lazycodex-ai, omo-codex, or Codex behaves oddly after an install, update, or config change, suspects a stale, drifted, or broken setup, or wants the local install audited and compared with the latest LazyCodex and Codex code."
 metadata:

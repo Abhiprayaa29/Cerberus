@@ -1,4 +1,4 @@
-﻿import { readFileSync } from "node:fs";
+import { readFileSync } from "node:fs";
 
 import {
 	DEFAULT_POSTHOG_API_KEY,
@@ -8,12 +8,12 @@ import {
 	writeTelemetryDiagnostic,
 	type TelemetryDiagnosticInput,
 	type TelemetryProductConfig,
-} from "@oh-my-open-pentest/telemetry-core";
+} from "@omop/telemetry-core";
 
 export { DEFAULT_POSTHOG_API_KEY, DEFAULT_POSTHOG_HOST };
 
 export const PRODUCT_NAME = "omo-codex";
-export const PACKAGE_NAME = "@oh-my-open-pentest/omo-codex";
+export const PACKAGE_NAME = "@omop/omo-codex";
 export const CACHE_DIR_NAME = "omo-codex";
 export const EVENT_NAME = "omo_codex_daily_active";
 export const LEGACY_PARENT_PACKAGE = "oh-my-open-pentest";

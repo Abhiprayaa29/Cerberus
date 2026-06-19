@@ -1,1 +1,1 @@
-﻿export * from "@oh-my-open-pentest/openclaw-core/daemon"
+export * from "@omop/openclaw-core/daemon"

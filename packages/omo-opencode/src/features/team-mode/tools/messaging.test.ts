@@ -1,4 +1,4 @@
-﻿/// <reference types="bun-types" />
+/// <reference types="bun-types" />
 
 import { afterEach, describe, expect, test } from "bun:test"
 import { mkdtemp, readdir, readFile, rm } from "node:fs/promises"
@@ -16,14 +16,14 @@ import {
   getSessionPromptParams,
 } from "../../../shared/session-prompt-params-state"
 import { releaseAllPromptAsyncReservationsForTesting } from "../../../hooks/shared/prompt-async-gate"
-import { listUnreadMessages } from "@oh-my-open-pentest/team-core/team-mailbox/inbox"
-import { pollAndBuildInjection } from "@oh-my-open-pentest/team-core/team-mailbox/poll"
-import { BroadcastNotPermittedError } from "@oh-my-open-pentest/team-core/team-mailbox/send"
-import { getInboxDir, resolveBaseDir } from "@oh-my-open-pentest/team-core/team-registry/paths"
-import { createRuntimeState, saveRuntimeState } from "@oh-my-open-pentest/team-core/team-state-store/store"
+import { listUnreadMessages } from "@omop/team-core/team-mailbox/inbox"
+import { pollAndBuildInjection } from "@omop/team-core/team-mailbox/poll"
+import { BroadcastNotPermittedError } from "@omop/team-core/team-mailbox/send"
+import { getInboxDir, resolveBaseDir } from "@omop/team-core/team-registry/paths"
+import { createRuntimeState, saveRuntimeState } from "@omop/team-core/team-state-store/store"
 import { clearTeamSessionRegistry, registerTeamSession } from "../team-session-registry"
-import type { Message } from "@oh-my-open-pentest/team-core/types"
-import { MessageSchema } from "@oh-my-open-pentest/team-core/types"
+import type { Message } from "@omop/team-core/types"
+import { MessageSchema } from "@omop/team-core/types"
 import { createTeamIdleWakeHint } from "../../../hooks/team-session-events/team-idle-wake-hint"
 import { createTeamSendMessageTool } from "./messaging"
 import { resolveTeamRuntimeDetails } from "./messaging-runtime"

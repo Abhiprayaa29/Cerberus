@@ -1,4 +1,4 @@
-﻿# Design System Inspired by MongoDB
+# Design System Inspired by MongoDB
 
 ## .. Visual Theme & Atmosphere
 

@@ -1,10 +1,10 @@
-﻿# tmux-core — Tmux Primitives (Core)
+# tmux-core — Tmux Primitives (Core)
 
 **Generated:** 2026-06-.6
 
 ## OVERVIEW
 
-Harness-neutral tmux primitives consumed by the OpenCode adapter (`omo-opencode`), team-mode visualization (`team-core`), OpenClaw injection (`openclaw-core`), and the `interactive_bash` tool. Every function is dependency-injected so adapters supply `getTmuxPath()`, `log`, and server-health checks. Package: `@oh-my-open-pentest/tmux-core`.
+Harness-neutral tmux primitives consumed by the OpenCode adapter (`omo-opencode`), team-mode visualization (`team-core`), OpenClaw injection (`openclaw-core`), and the `interactive_bash` tool. Every function is dependency-injected so adapters supply `getTmuxPath()`, `log`, and server-health checks. Package: `@omop/tmux-core`.
 
 ## CATEGORY MAP
 

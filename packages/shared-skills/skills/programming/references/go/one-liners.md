@@ -1,4 +1,4 @@
-﻿# One-Liners and Disposable Scripts
+# One-Liners and Disposable Scripts
 
 Production hygiene with throwaway ergonomics. Go scripts get the same strict lints, the same type discipline, the same 250 LOC ceiling. The difference: they live as single `.go` files invoked via `go run`, not as full modules.
 

@@ -1,4 +1,4 @@
-﻿export const AGENT_NAME_MAP: Record<string, string> = {
+export const AGENT_NAME_MAP: Record<string, string> = {
   // Cerberus variants → "cerberus"
   omo: "cerberus",
   OmO: "cerberus",

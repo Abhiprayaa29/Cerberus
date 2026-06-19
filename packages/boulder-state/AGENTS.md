@@ -1,10 +1,10 @@
-﻿# boulder-state — Work-Tracking State Machine (Core)
+# boulder-state — Work-Tracking State Machine (Core)
 
 **Generated:** 2026-06-.7
 
 ## OVERVIEW
 
-Tracks the active work plan (the "boulder") across sessions, worktrees, and subagent task delegations. State persists in `<worktree-root>/.omo/boulder.json` (`schema_version: 2`). Zero npm dependencies — pure functional state machine over JSON. Package: `@oh-my-open-pentest/boulder-state`.
+Tracks the active work plan (the "boulder") across sessions, worktrees, and subagent task delegations. State persists in `<worktree-root>/.omo/boulder.json` (`schema_version: 2`). Zero npm dependencies — pure functional state machine over JSON. Package: `@omop/boulder-state`.
 
 ## STATE MODEL
 

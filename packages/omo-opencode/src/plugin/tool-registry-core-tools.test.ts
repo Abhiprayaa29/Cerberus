@@ -1,4 +1,4 @@
-﻿import { describe, expect, mock, test } from "bun:test"
+import { describe, expect, mock, test } from "bun:test"
 import { tool } from "@opencode-ai/plugin"
 import type { SkillLoadOptions } from "../tools/skill/types"
 import type { ToolRegistryFactories } from "./tool-registry-factories"

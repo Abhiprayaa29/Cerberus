@@ -1,13 +1,13 @@
-﻿import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
 
 import { configFromEnvironment } from "../src/config.js";
-import { SOURCE_PRIORITY } from "@oh-my-open-pentest/rules-engine/engine";
-import { createEngine, defaultConfig, type EngineDeps } from "@oh-my-open-pentest/rules-engine/engine";
-import { resolvePluginRulesRoot } from "@oh-my-open-pentest/rules-engine/engine";
-import type { RuleCandidate } from "@oh-my-open-pentest/rules-engine/engine";
+import { SOURCE_PRIORITY } from "@omop/rules-engine/engine";
+import { createEngine, defaultConfig, type EngineDeps } from "@omop/rules-engine/engine";
+import { resolvePluginRulesRoot } from "@omop/rules-engine/engine";
+import type { RuleCandidate } from "@omop/rules-engine/engine";
 
 const projectRoot = "/tmp/codex-rules-bundled-priority";
 const bundledPath = join(projectRoot, "bundled-rules", "scylla.md");

@@ -1,4 +1,4 @@
-﻿# Design System Inspired by Apple
+# Design System Inspired by Apple
 
 ## .. Visual Theme & Atmosphere
 

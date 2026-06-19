@@ -1,4 +1,4 @@
-﻿---
+---
 name: init-deep
 description: "(builtin) Initialize hierarchical AGENTS.md knowledge base"
 ---

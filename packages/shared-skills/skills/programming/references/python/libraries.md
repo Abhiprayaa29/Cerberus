@@ -1,4 +1,4 @@
-﻿# Library Defaults — Decision Tree
+# Library Defaults — Decision Tree
 
 For each domain, the canonical 2026 choice, why, and the canonical usage snippet. The skill enforces these unless the project's `pyproject.toml` explicitly says otherwise.
 

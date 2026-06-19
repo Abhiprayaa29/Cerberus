@@ -1,1 +1,1 @@
-﻿export * from "@oh-my-open-pentest/skills-loader-core/auto-slash-command/detector"
+export * from "@omop/skills-loader-core/auto-slash-command/detector"

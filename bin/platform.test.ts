@@ -1,4 +1,4 @@
-﻿// bin/platform.test.ts
+// bin/platform.test.ts
 import { describe, expect, test } from "bun:test";
 import {
   getBinaryPath,

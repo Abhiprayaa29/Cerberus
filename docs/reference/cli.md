@@ -1,4 +1,4 @@
-﻿# CLI Reference
+# CLI Reference
 
 Complete reference for the published CLI package. During the rename transition, both package names work:
 

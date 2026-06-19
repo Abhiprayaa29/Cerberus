@@ -1,4 +1,4 @@
-﻿---
+---
 description: Compare HEAD with the latest published npm versions and list all unpublished changes by release layer
 ---
 

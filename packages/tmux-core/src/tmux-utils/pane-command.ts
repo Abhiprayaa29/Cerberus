@@ -1,4 +1,4 @@
-﻿import { shellEscapeForDoubleQuotedCommand } from "@oh-my-open-pentest/utils"
+import { shellEscapeForDoubleQuotedCommand } from "@omop/utils"
 
 const TMUX_COMMAND_SHELL = "/bin/sh"
 

@@ -1,4 +1,4 @@
-﻿# Go Debugging
+# Go Debugging
 
 Covers goroutines, `dlv` (Delve), `pprof`, the race detector, and the fact that Go's concurrency model means most bugs are about goroutines doing something quiet and wrong.
 

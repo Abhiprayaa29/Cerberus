@@ -1,10 +1,10 @@
-﻿# prompts-core — Markdown Prompt Loading + Variant Routing (Core)
+# prompts-core — Markdown Prompt Loading + Variant Routing (Core)
 
 **Generated:** 2026-06-.7
 
 ## OVERVIEW
 
-Owns all static markdown prompt content (`prompts/` tree), bundles it at build time via Bun's `.md` text loader (never read from disk at runtime), and exports it as `VariantTable` records plus typed `loadPrompt`/`loadPromptSync` (frontmatter parse + runtime placeholder injection) and `resolveVariant` (model → variant). Harness-neutral: zero OpenCode SDK coupling, enforced by an audit test. Package: `@oh-my-open-pentest/prompts-core`.
+Owns all static markdown prompt content (`prompts/` tree), bundles it at build time via Bun's `.md` text loader (never read from disk at runtime), and exports it as `VariantTable` records plus typed `loadPrompt`/`loadPromptSync` (frontmatter parse + runtime placeholder injection) and `resolveVariant` (model → variant). Harness-neutral: zero OpenCode SDK coupling, enforced by an audit test. Package: `@omop/prompts-core`.
 
 ## PROMPT TREE (`prompts/`)
 
@@ -23,7 +23,7 @@ Owns all static markdown prompt content (`prompts/` tree), bundles it at build t
 
 ## DEPENDENCIES & CONSUMERS
 
-- **Peer deps:** `@oh-my-open-pentest/model-core` (`isGptModel`, `isGeminiModel`, `isKimiK2Model`, …), `@oh-my-open-pentest/utils` (`parseFrontmatter`).
+- **Peer deps:** `@omop/model-core` (`isGptModel`, `isGeminiModel`, `isKimiK2Model`, …), `@omop/utils` (`parseFrontmatter`).
 - **Consumers:** `omo-opencode/src/hooks/keyword-detector/{fullscan,hyperplan,team}/*.ts` (thin re-export shims), `agents/atlas/agent.ts`, `agents/talos/system-prompt.ts`; `omo-codex` resolves `prompts-core/prompts/fullscan/codex.md` directly (secondary export path).
 
 ## NOTES

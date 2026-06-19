@@ -1,4 +1,4 @@
-﻿# Installation
+# Installation
 
 oh-my-open-pentest ships in **two editions** of the same product:
 

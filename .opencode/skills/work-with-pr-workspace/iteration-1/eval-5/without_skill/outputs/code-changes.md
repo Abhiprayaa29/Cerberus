@@ -1,4 +1,4 @@
-﻿# Code Changes: comment-checker false positive fix
+# Code Changes: comment-checker false positive fix
 
 ## Change .: Extend config schema
 

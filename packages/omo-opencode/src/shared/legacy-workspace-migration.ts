@@ -1,4 +1,4 @@
-﻿import { copyFileSync, existsSync, lstatSync, mkdirSync, readdirSync } from "node:fs"
+import { copyFileSync, existsSync, lstatSync, mkdirSync, readdirSync } from "node:fs"
 import { dirname, join, relative } from "node:path"
 
 import { log } from "./logger"

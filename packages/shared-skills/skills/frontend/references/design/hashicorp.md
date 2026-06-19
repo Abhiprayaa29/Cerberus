@@ -1,4 +1,4 @@
-﻿# Design System Inspired by HashiCorp
+# Design System Inspired by HashiCorp
 
 ## .. Visual Theme & Atmosphere
 

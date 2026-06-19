@@ -1,4 +1,4 @@
-﻿# Code Changes
+# Code Changes
 
 ## File .: `src/config/schema/comment-checker.ts`
 

@@ -1,4 +1,4 @@
-﻿# Type Patterns
+# Type Patterns
 
 How to use Go's *limited* type system to catch bugs at compile time. Go gives you fewer tools than Python/TS/Rust — this document covers the four patterns that buy back most of the safety.
 

@@ -1,4 +1,4 @@
-﻿import type { FallbackEntry } from "../../shared/model-requirements"
+import type { FallbackEntry } from "../../shared/model-requirements"
 import { AGENT_MODEL_REQUIREMENTS } from "../../shared/model-requirements"
 import type { VisionCapableModel } from "../../plugin-state"
 

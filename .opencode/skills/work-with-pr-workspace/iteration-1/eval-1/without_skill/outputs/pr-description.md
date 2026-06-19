@@ -1,4 +1,4 @@
-﻿# PR Description
+# PR Description
 
 **Title:** feat: add `maxBackgroundAgents` config to limit total simultaneous background agents
 

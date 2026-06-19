@@ -1,1 +1,1 @@
-﻿export { isCmuxCompatEnvironment } from "@oh-my-open-pentest/tmux-core"
+export { isCmuxCompatEnvironment } from "@omop/tmux-core"

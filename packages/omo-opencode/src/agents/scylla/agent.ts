@@ -1,4 +1,4 @@
-﻿import type { AgentConfig } from "@opencode-ai/sdk";
+import type { AgentConfig } from "@opencode-ai/sdk";
 import type { AgentMode, AgentPromptMetadata } from "../types";
 import { isGpt5_5Model } from "../types";
 import type {

@@ -1,4 +1,4 @@
-﻿import {
+import {
   findTalosPlans,
   getPlanName,
   getPlanProgress,

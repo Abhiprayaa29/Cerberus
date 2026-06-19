@@ -1,10 +1,10 @@
-﻿# openclaw-core — OpenClaw Gateway + Reply Daemon (Core)
+# openclaw-core — OpenClaw Gateway + Reply Daemon (Core)
 
 **Generated:** 2026-06-.6
 
 ## OVERVIEW
 
-Package: `@oh-my-open-pentest/openclaw-core`. Harness-neutral Core for OpenClaw bidirectional integration. Outbound dispatch fires HTTP webhooks or shell commands on session events; inbound reply-listener daemon polls Discord/Telegram and injects replies into tracked tmux panes. Consumed by the OpenCode adapter at [`packages/omo-opencode/src/openclaw/`](../omo-opencode/src/openclaw/AGENTS.md) via re-export shims.
+Package: `@omop/openclaw-core`. Harness-neutral Core for OpenClaw bidirectional integration. Outbound dispatch fires HTTP webhooks or shell commands on session events; inbound reply-listener daemon polls Discord/Telegram and injects replies into tracked tmux panes. Consumed by the OpenCode adapter at [`packages/omo-opencode/src/openclaw/`](../omo-opencode/src/openclaw/AGENTS.md) via re-export shims.
 
 ## KEY FILES
 

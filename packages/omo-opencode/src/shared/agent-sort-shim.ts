@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Agent sort shim.
  *
  * OpenCode 1.4.x ignores the agent `order` field (sst/opencode#19127) and

@@ -1,4 +1,4 @@
-﻿# Design System Inspired by PlayStation
+# Design System Inspired by PlayStation
 
 ## .. Visual Theme & Atmosphere
 

@@ -1,4 +1,4 @@
-﻿# Concurrency Primitives
+# Concurrency Primitives
 
 Locks, atomics, channels, and the loom model checker. The decision tree that keeps the agent out of soundness trouble.
 

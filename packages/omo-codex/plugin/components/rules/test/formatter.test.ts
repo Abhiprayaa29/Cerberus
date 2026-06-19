@@ -1,7 +1,7 @@
-﻿import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vitest";
 
-import { formatDynamicBlock, formatStaticBlock } from "@oh-my-open-pentest/rules-engine/engine";
-import type { LoadedRule, MatchReason, RuleSource } from "@oh-my-open-pentest/rules-engine/engine";
+import { formatDynamicBlock, formatStaticBlock } from "@omop/rules-engine/engine";
+import type { LoadedRule, MatchReason, RuleSource } from "@omop/rules-engine/engine";
 
 const FORMAT_OPTIONS = {
 	maxRuleChars: 10_000,

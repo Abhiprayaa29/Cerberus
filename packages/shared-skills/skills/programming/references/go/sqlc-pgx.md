@@ -1,4 +1,4 @@
-﻿# Database Stack — sqlc + pgx + goose + testcontainers
+# Database Stack — sqlc + pgx + goose + testcontainers
 
 The canonical 2026 PostgreSQL stack. **Type-safe SQL with zero runtime reflection**, hot-path-friendly connection pooling, sane migrations, real Postgres in tests.
 

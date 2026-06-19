@@ -1,4 +1,4 @@
-﻿export {
+export {
   OhMyOpenCodeConfigSchema,
 } from "./schema"
 

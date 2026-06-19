@@ -1,2 +1,2 @@
-﻿export { parseFrontmatter } from "@oh-my-open-pentest/utils"
-export type { FrontmatterResult, ParseFrontmatterOptions } from "@oh-my-open-pentest/utils"
+export { parseFrontmatter } from "@omop/utils"
+export type { FrontmatterResult, ParseFrontmatterOptions } from "@omop/utils"

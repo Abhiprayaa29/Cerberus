@@ -1,5 +1,5 @@
-﻿import { spawnTmuxWindow as spawnTmuxWindowCore } from "@oh-my-open-pentest/tmux-core"
-import type { SpawnTmuxWindowDeps, TmuxConfig } from "@oh-my-open-pentest/tmux-core"
+import { spawnTmuxWindow as spawnTmuxWindowCore } from "@omop/tmux-core"
+import type { SpawnTmuxWindowDeps, TmuxConfig } from "@omop/tmux-core"
 import type { SpawnPaneResult } from "../types"
 import { withWindowSpawnDeps } from "./adapter-deps"
 

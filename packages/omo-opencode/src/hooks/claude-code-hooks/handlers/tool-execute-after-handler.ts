@@ -1,4 +1,4 @@
-﻿import { isPlainRecord } from "@oh-my-open-pentest/utils"
+import { isPlainRecord } from "@omop/utils"
 import type { PluginInput } from "@opencode-ai/plugin"
 import { loadClaudeHooksConfig } from "../config"
 import { loadPluginExtendedConfig } from "../config-loader"

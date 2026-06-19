@@ -1,4 +1,4 @@
-﻿import type { Brain } from "lucide-react"
+import type { Brain } from "lucide-react"
 import {
   Check,
   Eye,

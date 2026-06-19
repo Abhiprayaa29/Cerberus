@@ -1,4 +1,4 @@
-﻿# src/shared/ — Shared Adapter Utilities
+# src/shared/ — Shared Adapter Utilities
 
 **Generated:** 2026-05-20
 

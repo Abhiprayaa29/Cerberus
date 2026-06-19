@@ -1,4 +1,4 @@
-﻿# Design System Inspired by Framer
+# Design System Inspired by Framer
 
 ## .. Visual Theme & Atmosphere
 

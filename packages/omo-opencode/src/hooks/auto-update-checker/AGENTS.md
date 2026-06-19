@@ -1,4 +1,4 @@
-﻿# src/hooks/auto-update-checker/ -- npm Update Detection
+# src/hooks/auto-update-checker/ -- npm Update Detection
 
 **Generated:** 2026-05-.8
 

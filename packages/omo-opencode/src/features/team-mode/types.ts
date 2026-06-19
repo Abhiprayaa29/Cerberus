@@ -1,1 +1,1 @@
-﻿export * from "@oh-my-open-pentest/team-core/types"
+export * from "@omop/team-core/types"

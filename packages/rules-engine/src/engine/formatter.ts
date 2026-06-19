@@ -1,4 +1,4 @@
-﻿import { isNeverTruncatedRule, truncateBudget, truncateRule } from "./truncator.js";
+import { isNeverTruncatedRule, truncateBudget, truncateRule } from "./truncator.js";
 import type { LoadedRule } from "./types.js";
 
 export interface FormatOptions {

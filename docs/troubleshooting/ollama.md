@@ -1,4 +1,4 @@
-﻿# Ollama Troubleshooting
+# Ollama Troubleshooting
 
 ## Streaming Issue: JSON Parse Error
 

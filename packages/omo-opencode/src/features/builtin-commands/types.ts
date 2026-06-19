@@ -1,6 +1,6 @@
-﻿import type { CommandDefinition } from "../claude-code-command-loader"
+import type { CommandDefinition } from "../claude-code-command-loader"
 
-export type BuiltinCommandName = "pentest-loop" | "cancel-ralph" | "pentest-loop" | "refactor" | "start-work" | "stop-continuation" | "handoff" | "remove-ai-slops" | "hyperplan"
+export type BuiltinCommandName = "pentest-loop" | "ulw-loop" | "cancel-pentest-loop" | "refactor" | "start-work" | "stop-continuation" | "handoff" | "remove-ai-slops" | "hyperplan"
 
 export interface BuiltinCommandConfig {
   disabled_commands?: BuiltinCommandName[]

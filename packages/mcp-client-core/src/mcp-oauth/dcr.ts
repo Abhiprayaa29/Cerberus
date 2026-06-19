@@ -1,4 +1,4 @@
-﻿import { isRecord } from "@oh-my-open-pentest/utils"
+import { isRecord } from "@omop/utils"
 export type ClientRegistrationRequest = {
   redirect_uris: string[]
   client_name: string

@@ -1,4 +1,4 @@
-﻿# Design System Inspired by Cursor
+# Design System Inspired by Cursor
 
 ## .. Visual Theme & Atmosphere
 

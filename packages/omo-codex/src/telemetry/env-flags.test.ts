@@ -1,4 +1,4 @@
-﻿import { afterEach, describe, expect, it } from "bun:test"
+import { afterEach, describe, expect, it } from "bun:test"
 
 import { shouldDisablePostHog } from "./env-flags"
 

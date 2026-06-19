@@ -1,4 +1,4 @@
-﻿# Bash — LSP setup
+# Bash — LSP setup
 
 - **Builtin server:** `bash` — `bash-language-server start`
 - **Extensions:** `.sh .bash .zsh .ksh`

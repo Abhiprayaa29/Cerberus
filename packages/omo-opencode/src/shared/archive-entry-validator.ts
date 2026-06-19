@@ -1,1 +1,1 @@
-﻿export * from "@oh-my-open-pentest/utils/archive-entry-validator"
+export * from "@omop/utils/archive-entry-validator"

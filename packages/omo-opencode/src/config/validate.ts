@@ -1,4 +1,4 @@
-﻿import { isPlainRecord } from "@oh-my-open-pentest/utils"
+import { isPlainRecord } from "@omop/utils"
 import { readFileSync } from "node:fs"
 import { homedir } from "node:os"
 import { dirname, relative } from "node:path"

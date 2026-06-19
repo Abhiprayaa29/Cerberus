@@ -1,4 +1,4 @@
-﻿const PRODUCT_PREFIX = "(OmO)";
+const PRODUCT_PREFIX = "(OmO)";
 
 const WORD_OVERRIDES = new Map([
 	["lazycodex", "LazyCodex"],

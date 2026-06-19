@@ -1,10 +1,10 @@
-﻿# lsp-core — Harness-Neutral LSP Engine (Core)
+# lsp-core — Harness-Neutral LSP Engine (Core)
 
 **Generated:** 2026-06-.6
 
 ## OVERVIEW
 
-Harness-neutral LSP engine (`@oh-my-open-pentest/lsp-core`). Manages language server lifecycle, JSON-RPC transport, configuration merging, and tool definitions. Consumed by the MCP-layer packages [`lsp-tools-mcp`](../lsp-tools-mcp) and [`lsp-daemon`](../lsp-daemon/AGENTS.md). See parent [packages/AGENTS.md](../AGENTS.md).
+Harness-neutral LSP engine (`@omop/lsp-core`). Manages language server lifecycle, JSON-RPC transport, configuration merging, and tool definitions. Consumed by the MCP-layer packages [`lsp-tools-mcp`](../lsp-tools-mcp) and [`lsp-daemon`](../lsp-daemon/AGENTS.md). See parent [packages/AGENTS.md](../AGENTS.md).
 
 ## KEY FILES
 

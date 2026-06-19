@@ -1,2 +1,2 @@
-﻿export { parseRuleFrontmatter } from "@oh-my-open-pentest/rules-engine";
-export type { RuleFrontmatterResult } from "@oh-my-open-pentest/rules-engine";
+export { parseRuleFrontmatter } from "@omop/rules-engine";
+export type { RuleFrontmatterResult } from "@omop/rules-engine";

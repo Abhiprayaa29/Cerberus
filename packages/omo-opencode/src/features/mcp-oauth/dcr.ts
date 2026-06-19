@@ -1,1 +1,1 @@
-﻿export * from "@oh-my-open-pentest/mcp-client-core/mcp-oauth/dcr"
+export * from "@omop/mcp-client-core/mcp-oauth/dcr"

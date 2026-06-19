@@ -1,4 +1,4 @@
-﻿# src/tools/ — .2–3. Native Tools Across .3 Tool Directories (+ shared utilities)
+# src/tools/ — .2–3. Native Tools Across .3 Tool Directories (+ shared utilities)
 
 **Generated:** 2026-05-.5
 

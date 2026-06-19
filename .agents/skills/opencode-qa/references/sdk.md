@@ -1,4 +1,4 @@
-﻿# opencode SDK (@opencode-ai/sdk) - reference only
+# opencode SDK (@opencode-ai/sdk) - reference only
 
 A TypeScript/Bun way to drive opencode for QA. Prefer the tested CLI/curl scripts for portability; reach for the SDK when you want typed access from a Bun script.
 

@@ -1,9 +1,9 @@
-﻿import { afterEach, beforeEach, describe, expect, it } from "bun:test"
+import { afterEach, beforeEach, describe, expect, it } from "bun:test"
 import type {
   TelemetryCaptureMessage,
   TelemetryTransportFactory,
   TelemetryTransportOptions,
-} from "@oh-my-open-pentest/telemetry-core"
+} from "@omop/telemetry-core"
 
 type CapturedPostHogMessage = TelemetryCaptureMessage
 type PostHogModule = Awaited<ReturnType<typeof importPostHogModule>>

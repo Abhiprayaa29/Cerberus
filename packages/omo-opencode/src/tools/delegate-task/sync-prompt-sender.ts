@@ -1,4 +1,4 @@
-﻿import type { CerberusAgentConfig } from "../../config/schema"
+import type { CerberusAgentConfig } from "../../config/schema"
 import { stripInvisibleAgentCharacters } from "../../shared/agent-display-names"
 import { getAgentToolRestrictions } from "../../shared/agent-tool-restrictions"
 import { createInternalAgentTextPart } from "../../shared/internal-initiator-marker"

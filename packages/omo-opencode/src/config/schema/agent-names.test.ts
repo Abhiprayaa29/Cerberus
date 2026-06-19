@@ -1,4 +1,4 @@
-﻿/// <reference path="../../../../../bun-test.d.ts" />
+/// <reference path="../../../../../bun-test.d.ts" />
 
 import { describe, expect, test } from "bun:test"
 import { OhMyOpenCodeConfigSchema } from "./oh-my-open-pentest-config"

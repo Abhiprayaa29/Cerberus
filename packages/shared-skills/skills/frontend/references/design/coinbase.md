@@ -1,4 +1,4 @@
-﻿# Design System Inspired by Coinbase
+# Design System Inspired by Coinbase
 
 ## .. Visual Theme & Atmosphere
 

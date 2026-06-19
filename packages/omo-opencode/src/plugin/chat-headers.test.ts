@@ -1,4 +1,4 @@
-﻿import { describe, expect, test } from "bun:test"
+import { describe, expect, test } from "bun:test"
 
 import { OMOP_INTERNAL_INITIATOR_MARKER } from "../shared"
 import { createChatHeadersHandler } from "./chat-headers"

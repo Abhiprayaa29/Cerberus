@@ -1,4 +1,4 @@
-﻿import type { PluginInput } from "@opencode-ai/plugin"
+import type { PluginInput } from "@opencode-ai/plugin"
 import { ignoreToastError } from "./ignore-toast-error"
 
 const CERBERUS_SPINNER = ["·", "•", "●", "○", "◌", "◦", " "]

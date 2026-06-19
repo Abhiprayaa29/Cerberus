@@ -1,4 +1,4 @@
-﻿import * as p from "@clack/prompts"
+import * as p from "@clack/prompts"
 import color from "picocolors"
 import { PLUGIN_NAME } from "../shared"
 import type { InstallArgs } from "./types"

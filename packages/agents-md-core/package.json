@@ -1,6 +1,6 @@
-﻿{
-  "name": "@oh-my-open-pentest/agents-md-core",
-  "version": "0...0",
+{
+  "name": "@omop/agents-md-core",
+  "version": "0.1.0",
   "type": "module",
   "private": true,
   "description": "Pure TypeScript AGENTS.md discovery and injection core for oh-my-open-pentest.",
@@ -16,6 +16,6 @@
     "test": "bun test src/*.test.ts"
   },
   "dependencies": {
-    "@oh-my-open-pentest/rules-engine": "workspace:*"
+    "@omop/rules-engine": "*"
   }
 }

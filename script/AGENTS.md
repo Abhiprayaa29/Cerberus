@@ -1,4 +1,4 @@
-﻿# script/ -- Build/Publish Automation
+# script/ -- Build/Publish Automation
 
 **Generated:** 2026-05-.8
 

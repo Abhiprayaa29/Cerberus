@@ -1,11 +1,11 @@
-﻿/// <reference types="bun-types" />
+/// <reference types="bun-types" />
 
 import { afterAll, beforeEach, describe, expect, mock, test } from "bun:test"
 
 import type { ToolResult } from "@opencode-ai/plugin/tool"
 
 import { clearTeamSessionRegistry, registerTeamSession } from "../team-session-registry"
-import type { RuntimeState } from "@oh-my-open-pentest/team-core/types"
+import type { RuntimeState } from "@omop/team-core/types"
 import {
   approveShutdownMock,
   backgroundManager,

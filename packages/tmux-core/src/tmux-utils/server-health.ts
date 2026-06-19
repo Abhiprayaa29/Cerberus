@@ -1,4 +1,4 @@
-﻿let serverAvailable: boolean | null = null
+let serverAvailable: boolean | null = null
 let serverCheckUrl: string | null = null
 
 const SERVER_RUNNING_KEY = Symbol.for("oh-my-open-pentest:server-running-in-process")

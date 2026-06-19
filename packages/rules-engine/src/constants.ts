@@ -1,4 +1,4 @@
-﻿import type { RuleSource } from "./types";
+import type { RuleSource } from "./types";
 
 export const PROJECT_MARKERS = [".git", "pyproject.toml", "package.json", "Cargo.toml", "go.mod", ".venv"] as const;
 

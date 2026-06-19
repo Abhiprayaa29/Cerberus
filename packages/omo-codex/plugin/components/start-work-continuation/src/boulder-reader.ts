@@ -1,12 +1,12 @@
-﻿import { join } from "node:path";
-import type { BoulderWorkStatus, PlanChecklist } from "@oh-my-open-pentest/boulder-state";
+import { join } from "node:path";
+import type { BoulderWorkStatus, PlanChecklist } from "@omop/boulder-state";
 import {
 	getBoulderFilePath,
 	getPlanChecklist,
 	getWorkForSession,
 	normalizeSessionId,
 	resolveBoulderPlanPathForWork,
-} from "@oh-my-open-pentest/boulder-state";
+} from "@omop/boulder-state";
 
 export type { PlanChecklist };
 

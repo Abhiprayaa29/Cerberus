@@ -1,4 +1,4 @@
-﻿# Zero-Cost Safety — Zig Ergonomics in Rust
+# Zero-Cost Safety — Zig Ergonomics in Rust
 
 Rust already owns memory safety. This reference adds the patterns that give you Zig's *ergonomic* safety — explicit allocation control, compile-time computation, zero-hidden-cost APIs, bit-level layout, and deterministic cleanup — without leaving the Rust toolchain.
 

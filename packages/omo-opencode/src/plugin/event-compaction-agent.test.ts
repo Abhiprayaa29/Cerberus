@@ -1,4 +1,4 @@
-﻿import { afterEach, describe, expect, it } from "bun:test"
+import { afterEach, describe, expect, it } from "bun:test"
 
 import { _resetForTesting, getSessionAgent, updateSessionAgent } from "../features/claude-code-session-state"
 import { clearSessionModel, getSessionModel, setSessionModel } from "../shared/session-model-state"

@@ -1,4 +1,4 @@
-﻿# opencode CLI for QA (Case A: terminal works)
+# opencode CLI for QA (Case A: terminal works)
 
 The installed binary is `opencode` (v...5..3). From the source repo you can also run `bun run --conditions=browser ./src/index.ts <cmd>` inside `packages/opencode`. The canonical non-interactive QA entry is `opencode run --format json`.
 

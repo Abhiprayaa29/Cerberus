@@ -1,4 +1,4 @@
-﻿import { describe, expect, spyOn, test } from "bun:test"
+import { describe, expect, spyOn, test } from "bun:test"
 import { createBuiltinAgents } from "./builtin-agents"
 import * as shared from "../shared"
 

@@ -1,4 +1,4 @@
-﻿# TypeScript / JavaScript — LSP setup
+# TypeScript / JavaScript — LSP setup
 
 - **Builtin server:** `typescript` — `typescript-language-server --stdio`
 - **Extensions:** `.ts .tsx .js .jsx .mjs .cjs .mts .cts`

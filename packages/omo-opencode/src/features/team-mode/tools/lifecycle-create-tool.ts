@@ -1,4 +1,4 @@
-﻿import { tool, type ToolDefinition } from "@opencode-ai/plugin/tool"
+import { tool, type ToolDefinition } from "@opencode-ai/plugin/tool"
 
 import type { TeamModeConfig } from "../../../config/schema/team-mode"
 import { getAgentConfigKey } from "../../../shared/agent-display-names"
@@ -6,10 +6,10 @@ import type { OpencodeClient } from "../../../tools/delegate-task/types"
 import type { BackgroundManager } from "../../background-agent/manager"
 import type { TmuxSessionManager } from "../../tmux-subagent/manager"
 import { resolveCallerTeamLead } from "../resolve-caller-team-lead"
-import { loadTeamSpec } from "@oh-my-open-pentest/team-core/team-registry/loader"
+import { loadTeamSpec } from "@omop/team-core/team-registry/loader"
 import { createTeamRun } from "../team-runtime/create"
-import { listActiveTeams, loadRuntimeState } from "@oh-my-open-pentest/team-core/team-state-store/store"
-import { AGENT_ELIGIBILITY_REGISTRY } from "@oh-my-open-pentest/team-core/types"
+import { listActiveTeams, loadRuntimeState } from "@omop/team-core/team-state-store/store"
+import { AGENT_ELIGIBILITY_REGISTRY } from "@omop/team-core/types"
 import { findParticipantRuntime, sanitizeRuntimeState, type TeamLifecycleToolContext } from "./lifecycle-participant"
 import {
   parseInlineTeamSpec,

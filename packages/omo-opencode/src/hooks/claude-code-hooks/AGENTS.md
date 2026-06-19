@@ -1,4 +1,4 @@
-﻿# src/hooks/claude-code-hooks/ — Claude Code Compatibility
+# src/hooks/claude-code-hooks/ — Claude Code Compatibility
 
 **Generated:** 2026-05-.5
 

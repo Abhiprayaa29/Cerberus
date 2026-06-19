@@ -1,4 +1,4 @@
-﻿# Python — LSP setup
+# Python — LSP setup
 
 - **Builtin server:** `basedpyright` — `basedpyright-langserver --stdio`
 - **Extensions:** `.py .pyi`

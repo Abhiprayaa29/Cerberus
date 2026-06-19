@@ -1,4 +1,4 @@
-﻿import { tool, type PluginInput, type ToolDefinition } from "@opencode-ai/plugin"
+import { tool, type PluginInput, type ToolDefinition } from "@opencode-ai/plugin"
 import type { BackgroundManager } from "../../features/background-agent"
 import type { BackgroundTaskArgs } from "./types"
 import { BACKGROUND_TASK_DESCRIPTION } from "./constants"

@@ -1,4 +1,4 @@
-﻿---
+---
 name: omomomo
 description: "Easter egg command - about oh-my-open-pentest. Triggers: omomomo, about, easter egg."
 ---

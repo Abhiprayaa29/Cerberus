@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Default Cerberus-Junior system prompt optimized for Claude series models.
  *
  * Key characteristics:

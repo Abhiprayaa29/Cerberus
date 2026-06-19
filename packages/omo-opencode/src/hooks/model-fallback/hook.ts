@@ -1,4 +1,4 @@
-﻿import type { FallbackEntry } from "../../shared/model-requirements"
+import type { FallbackEntry } from "../../shared/model-requirements"
 import type { ChatMessageInput, ChatMessageHandlerOutput } from "../../plugin/chat-message"
 import { applyFallbackToChatMessage } from "./chat-message-fallback-handler"
 import {

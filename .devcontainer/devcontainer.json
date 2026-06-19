@@ -1,4 +1,4 @@
-﻿{
+{
   "name": "oh-my-open-pentest",
   "build": { "dockerfile": "Dockerfile" },
   "postCreateCommand": "OMO_AGENT_FORCE_BUILD=. bash script/agent/setup.sh",

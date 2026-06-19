@@ -1,4 +1,4 @@
-﻿const {
+const {
   describe: bunDescribe,
   test: bunTest,
   expect: bunExpect,

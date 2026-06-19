@@ -1,1 +1,1 @@
-﻿export { getEditLineNumber, collectLineRefs, detectOverlappingRanges } from "@oh-my-open-pentest/hashline-core"
+export { getEditLineNumber, collectLineRefs, detectOverlappingRanges } from "@omop/hashline-core"

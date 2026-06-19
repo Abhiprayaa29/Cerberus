@@ -1,4 +1,4 @@
-﻿# Terraform — LSP setup
+# Terraform — LSP setup
 
 - **Builtin server:** `terraform` — `terraform-ls serve`
 - **Extensions:** `.tf .tfvars`

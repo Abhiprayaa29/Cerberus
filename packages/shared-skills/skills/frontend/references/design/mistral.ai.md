@@ -1,4 +1,4 @@
-﻿# Design System Inspired by Mistral AI
+# Design System Inspired by Mistral AI
 
 ## .. Visual Theme & Atmosphere
 

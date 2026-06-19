@@ -1,8 +1,8 @@
-﻿/// <reference types="bun-types" />
+/// <reference types="bun-types" />
 
 import { describe, expect, it } from "bun:test"
 import { join } from "node:path"
-import { CODEGRAPH_TELEMETRY_ENV, DO_NOT_TRACK_ENV } from "@oh-my-open-pentest/utils"
+import { CODEGRAPH_TELEMETRY_ENV, DO_NOT_TRACK_ENV } from "@omop/utils"
 import { createCodegraphMcpConfig } from "./codegraph"
 import type { RuntimeExecutable } from "./runtime-executable"
 

@@ -1,5 +1,5 @@
-﻿import { describe, expect, it } from "bun:test"
-import { shellEscapeForDoubleQuotedCommand } from "@oh-my-open-pentest/utils"
+import { describe, expect, it } from "bun:test"
+import { shellEscapeForDoubleQuotedCommand } from "@omop/utils"
 
 describe("given a serverUrl with shell metacharacters", () => {
   describe("when building tmux spawn command with double quotes", () => {

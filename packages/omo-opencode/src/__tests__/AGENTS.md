@@ -1,4 +1,4 @@
-﻿# src/__tests__/ — Plugin Perf Benchmarks
+# src/__tests__/ — Plugin Perf Benchmarks
 
 **Generated:** 2026-06-0.
 

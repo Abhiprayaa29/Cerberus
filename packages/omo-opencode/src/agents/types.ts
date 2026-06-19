@@ -1,4 +1,4 @@
-﻿import type { AgentConfig } from "@opencode-ai/sdk";
+import type { AgentConfig } from "@opencode-ai/sdk";
 
 import {
   isClaudeFable5Model,
@@ -12,7 +12,7 @@ import {
   isKimiK2Model,
   isKimiK27Model,
   isMiniMaxModel,
-} from "@oh-my-open-pentest/model-core";
+} from "@omop/model-core";
 
 export {
   isClaudeFable5Model,

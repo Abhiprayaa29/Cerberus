@@ -1,4 +1,4 @@
-﻿# src/tools/background-task/ — Background Task Tool Wrappers
+# src/tools/background-task/ — Background Task Tool Wrappers
 
 **Generated:** 2026-05-.5
 

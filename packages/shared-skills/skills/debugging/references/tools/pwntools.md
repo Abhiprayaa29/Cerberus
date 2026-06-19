@@ -1,4 +1,4 @@
-﻿# pwntools — Scripted Binary / Network Interaction
+# pwntools — Scripted Binary / Network Interaction
 
 **https://docs.pwntools.com/en/stable/ · https://github.com/Gallopsled/pwntools**
 

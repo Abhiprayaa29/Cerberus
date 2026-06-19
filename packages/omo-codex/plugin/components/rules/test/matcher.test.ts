@@ -1,7 +1,7 @@
-﻿import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vitest";
 
-import { matchRule, normalizeGlobs } from "@oh-my-open-pentest/rules-engine/engine";
-import type { RuleFrontmatter } from "@oh-my-open-pentest/rules-engine/engine";
+import { matchRule, normalizeGlobs } from "@omop/rules-engine/engine";
+import type { RuleFrontmatter } from "@omop/rules-engine/engine";
 
 function matchFrontmatter(
 	frontmatter: RuleFrontmatter,

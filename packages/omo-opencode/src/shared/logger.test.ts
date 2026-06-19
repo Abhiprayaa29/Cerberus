@@ -1,4 +1,4 @@
-﻿/// <reference types="bun-types" />
+/// <reference types="bun-types" />
 
 // This test file mutates the logger module's singleton state. It must run in an
 // isolated CI batch so that other test files mocking `./shared` (the barrel that

@@ -1,4 +1,4 @@
-﻿# AnyIO Reference: Replacing asyncio Idioms
+# AnyIO Reference: Replacing asyncio Idioms
 
 > **Skill mandate**: `import asyncio` is BANNED. Use `import anyio` exclusively.
 > This reference targets AnyIO ..x (2026 Python projects).

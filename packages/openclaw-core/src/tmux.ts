@@ -1,4 +1,4 @@
-﻿import { runTmuxCommand, type TmuxCommandResult } from "@oh-my-open-pentest/tmux-core"
+import { runTmuxCommand, type TmuxCommandResult } from "@omop/tmux-core"
 import { getTmuxPath } from "./tmux-path"
 
 type OpenClawTmuxDeps = {

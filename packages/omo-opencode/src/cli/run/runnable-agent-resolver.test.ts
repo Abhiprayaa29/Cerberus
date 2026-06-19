@@ -1,4 +1,4 @@
-﻿import { describe, expect, it, mock } from "bun:test"
+import { describe, expect, it, mock } from "bun:test"
 import { unsafeTestValue } from "../../../../../test-support/unsafe-test-value"
 import { resolveRunnableRunAgent, type RunAgentListClient } from "./runnable-agent-resolver"
 

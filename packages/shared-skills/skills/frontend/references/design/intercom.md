@@ -1,4 +1,4 @@
-﻿# Design System Inspired by Intercom
+# Design System Inspired by Intercom
 
 ## .. Visual Theme & Atmosphere
 

@@ -1,4 +1,4 @@
-﻿# Dart — LSP setup
+# Dart — LSP setup
 
 - **Builtin server:** `dart` — `dart language-server --lsp`
 - **Extensions:** `.dart`

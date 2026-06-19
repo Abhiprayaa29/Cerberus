@@ -1,4 +1,4 @@
-﻿import { TRUNCATION_NOTICE } from "./constants.js";
+import { TRUNCATION_NOTICE } from "./constants.js";
 import type { TruncationResult } from "./types.js";
 
 type BudgetRule = {

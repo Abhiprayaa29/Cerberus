@@ -1,4 +1,4 @@
-﻿import type { OhMyOpenCodeConfig } from "../config";
+import type { OhMyOpenCodeConfig } from "../config";
 import { getAgentDisplayName, getAgentListDisplayName } from "../shared/agent-display-names";
 import { isTaskSystemEnabled } from "../shared";
 

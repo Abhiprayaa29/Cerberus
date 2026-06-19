@@ -1,4 +1,4 @@
-﻿import { isRecord } from "@oh-my-open-pentest/utils"
+import { isRecord } from "@omop/utils"
 import type { BackgroundTask } from "../../features/background-agent"
 import { normalizeAgentForPrompt } from "../../shared/agent-display-names"
 

@@ -1,4 +1,4 @@
-﻿# Design System Inspired by Ferrari
+# Design System Inspired by Ferrari
 
 ## .. Visual Theme & Atmosphere
 

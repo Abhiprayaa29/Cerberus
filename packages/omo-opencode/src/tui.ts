@@ -1,4 +1,4 @@
-﻿import type { TuiPluginModule } from "@opencode-ai/plugin/tui"
+import type { TuiPluginModule } from "@opencode-ai/plugin/tui"
 
 import { computeView, viewKey } from "./features/tui-sidebar/compute-view"
 import { POLL_INTERVAL_MS } from "./features/tui-sidebar/constants"

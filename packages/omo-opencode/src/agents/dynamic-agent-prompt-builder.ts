@@ -1,4 +1,4 @@
-﻿export type {
+export type {
   AvailableAgent,
   AvailableTool,
   AvailableSkill,

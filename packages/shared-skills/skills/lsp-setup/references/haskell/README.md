@@ -1,4 +1,4 @@
-﻿# Haskell — LSP setup
+# Haskell — LSP setup
 
 - **Builtin server:** `haskell-language-server` — `haskell-language-server-wrapper --lsp`
 - **Extensions:** `.hs .lhs`

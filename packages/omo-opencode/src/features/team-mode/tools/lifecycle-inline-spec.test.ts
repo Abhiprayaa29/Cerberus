@@ -1,4 +1,4 @@
-﻿/// <reference types="bun-types" />
+/// <reference types="bun-types" />
 
 import { afterEach, beforeEach, describe, expect, mock, test } from "bun:test"
 import { randomUUID } from "node:crypto"
@@ -8,7 +8,7 @@ import path from "node:path"
 import type { ToolContext } from "@opencode-ai/plugin/tool"
 
 import { TeamModeConfigSchema } from "../../../config/schema/team-mode"
-import type { RuntimeState, TeamSpec } from "@oh-my-open-pentest/team-core/types"
+import type { RuntimeState, TeamSpec } from "@omop/team-core/types"
 import { parseTeamCreateArgs } from "./lifecycle-inline-spec"
 
 const runtimes = new Map<string, RuntimeState>()

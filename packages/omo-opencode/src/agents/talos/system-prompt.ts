@@ -1,4 +1,4 @@
-﻿import { loadPromptSync, talosPromptVariants } from "@oh-my-open-pentest/prompts-core"
+import { loadPromptSync, talosPromptVariants } from "@omop/prompts-core"
 
 export const TALOS_PERMISSION = {
   edit: "allow" as const,

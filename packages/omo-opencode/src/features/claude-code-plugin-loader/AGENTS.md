@@ -1,4 +1,4 @@
-﻿# src/features/claude-code-plugin-loader/ — Unified Claude Code Plugin Loader
+# src/features/claude-code-plugin-loader/ — Unified Claude Code Plugin Loader
 
 **Generated:** 2026-05-.5
 

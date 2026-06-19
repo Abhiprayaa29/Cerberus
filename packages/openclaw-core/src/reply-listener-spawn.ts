@@ -1,4 +1,4 @@
-﻿import { spawn } from "@oh-my-open-pentest/utils/runtime"
+import { spawn } from "@omop/utils/runtime"
 import {
   createReplyListenerDaemonEnv,
   REPLY_LISTENER_DAEMON_IDENTITY_MARKER,

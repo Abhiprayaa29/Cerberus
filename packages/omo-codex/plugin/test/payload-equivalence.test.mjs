@@ -1,4 +1,4 @@
-﻿import assert from "node:assert/strict";
+import assert from "node:assert/strict";
 import { mkdtempSync, rmSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
@@ -7,7 +7,7 @@ import test from "node:test";
 
 import { root } from "./aggregate-plugin-fixture.mjs";
 
-const TELEMETRY_CORE_PACKAGE = "@oh-my-open-pentest/telemetry-core";
+const TELEMETRY_CORE_PACKAGE = "@omop/telemetry-core";
 const telemetryCoreRoot = join(root, "..", "..", "telemetry-core");
 
 function createOsProvider() {
@@ -78,7 +78,7 @@ test("payload-equivalence: #given telemetry-core and component shim #when sessio
 					locale: Intl.DateTimeFormat().resolvedOptions().locale,
 					os_arch: "arm64",
 					os_type: "Darwin",
-					package_name: "@oh-my-open-pentest/omo-codex",
+					package_name: "@omop/omo-codex",
 					package_version: componentPostHog.getComponentVersion(),
 					platform: "omo-codex",
 					product_name: "omo-codex",

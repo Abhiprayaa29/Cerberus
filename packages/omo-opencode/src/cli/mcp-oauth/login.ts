@@ -1,4 +1,4 @@
-﻿import { McpOAuthProvider } from "@oh-my-open-pentest/mcp-client-core/mcp-oauth/provider"
+import { McpOAuthProvider } from "@omop/mcp-client-core/mcp-oauth/provider"
 
 export interface LoginOptions {
   serverUrl?: string

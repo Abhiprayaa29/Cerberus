@@ -1,4 +1,4 @@
-﻿import { describe, it, expect } from "bun:test"
+import { describe, it, expect } from "bun:test"
 
 function expectDefined<T>(value: T | null | undefined, label: string): T {
   expect(value, label).toBeDefined()

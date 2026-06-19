@@ -1,1 +1,1 @@
-﻿export * from "@oh-my-open-pentest/team-core/team-mailbox/pending-delivery-recovery"
+export * from "@omop/team-core/team-mailbox/pending-delivery-recovery"

@@ -1,4 +1,4 @@
-﻿# Benchmark: work-with-pr (Iteration .)
+# Benchmark: work-with-pr (Iteration .)
 
 ## Summary
 

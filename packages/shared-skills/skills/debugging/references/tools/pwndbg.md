@@ -1,4 +1,4 @@
-﻿# pwndbg — GDB With the Useful Views Always On
+# pwndbg — GDB With the Useful Views Always On
 
 **https://github.com/pwndbg/pwndbg**
 

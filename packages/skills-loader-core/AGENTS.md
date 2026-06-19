@@ -1,11 +1,11 @@
-﻿# skills-loader-core — Skill Loading + Matching (Core)
+# skills-loader-core — Skill Loading + Matching (Core)
 
 **Generated:** 2026-06-.6
 
 ## OVERVIEW
 
 Harness-neutral skill loading, builtin skill, runtime skill, and skill matching primitives.
-Package `@oh-my-open-pentest/skills-loader-core`.
+Package `@omop/skills-loader-core`.
 Confirmed by grep: consumed by `omo-opencode` skill features in ~70 files across `src/features/builtin-skills`, `src/features/opencode-skill-loader`, `src/features/opencode-runtime-skills`, `src/tools/skill`, and `src/hooks/auto-slash-command`.
 
 ## SUBSYSTEMS

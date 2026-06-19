@@ -1,1 +1,1 @@
-﻿export { parseFrontmatter, type FrontmatterResult } from "@oh-my-open-pentest/utils"
+export { parseFrontmatter, type FrontmatterResult } from "@omop/utils"

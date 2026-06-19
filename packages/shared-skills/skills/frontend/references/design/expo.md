@@ -1,4 +1,4 @@
-﻿# Design System Inspired by Expo
+# Design System Inspired by Expo
 
 ## .. Visual Theme & Atmosphere
 

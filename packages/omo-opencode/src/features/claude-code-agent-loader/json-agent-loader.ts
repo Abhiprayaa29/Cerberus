@@ -1,1 +1,1 @@
-﻿export * from "@oh-my-open-pentest/claude-code-compat-core/claude-code-agent-loader/json-agent-loader"
+export * from "@omop/claude-code-compat-core/claude-code-agent-loader/json-agent-loader"

@@ -1,1 +1,1 @@
-﻿export * from "@oh-my-open-pentest/lsp-core/request-context";
+export * from "@omop/lsp-core/request-context";

@@ -1,4 +1,4 @@
-﻿# docs/ — User-Facing Documentation
+# docs/ — User-Facing Documentation
 
 **Generated:** 2026-05-20
 

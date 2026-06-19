@@ -1,4 +1,4 @@
-﻿# orjson — When to Use, How to Integrate
+# orjson — When to Use, How to Integrate
 
 `orjson` is the fastest JSON library on PyPI — written in Rust, 6–..× faster than stdlib `json` on serialization, ..5–.× faster on deserialization. It also supports types the stdlib refuses to serialize: `datetime`, `date`, `UUID`, `numpy` arrays, `dataclass`, Pydantic models (via a small bridge).
 

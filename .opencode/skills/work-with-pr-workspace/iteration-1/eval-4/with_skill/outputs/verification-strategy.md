@@ -1,4 +1,4 @@
-﻿# Verification Strategy: Issue #.00 - arXiv MCP
+# Verification Strategy: Issue #.00 - arXiv MCP
 
 ## Gate A: CI (`ci.yml`)
 

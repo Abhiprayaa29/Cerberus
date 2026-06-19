@@ -1,4 +1,4 @@
-﻿# Design System Inspired by Airtable
+# Design System Inspired by Airtable
 
 ## .. Visual Theme & Atmosphere
 

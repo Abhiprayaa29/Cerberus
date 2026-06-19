@@ -1,1 +1,1 @@
-﻿export * from "@oh-my-open-pentest/lsp-core/lsp/startup-failure";
+export * from "@omop/lsp-core/lsp/startup-failure";

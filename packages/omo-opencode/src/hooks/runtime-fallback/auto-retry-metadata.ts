@@ -1,4 +1,4 @@
-﻿import { isRecord } from "@oh-my-open-pentest/utils"
+import { isRecord } from "@omop/utils"
 import { extractSessionMessages } from "./session-messages"
 
 export type RetryPromptPart = { type: "text"; text: string; id?: string }

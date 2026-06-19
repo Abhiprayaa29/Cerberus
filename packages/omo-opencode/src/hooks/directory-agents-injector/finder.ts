@@ -1,2 +1,2 @@
-﻿export { resolveFilePath } from "@oh-my-open-pentest/agents-md-core";
-export { findAgentsMdUp } from "@oh-my-open-pentest/rules-engine";
+export { resolveFilePath } from "@omop/agents-md-core";
+export { findAgentsMdUp } from "@omop/rules-engine";

@@ -1,6 +1,6 @@
-﻿export { parseApplyPatchRequests } from "@oh-my-open-pentest/comment-checker-core";
+export { parseApplyPatchRequests } from "@omop/comment-checker-core";
 export { toHookInput } from "./hook-input.js";
-export { isRecord } from "@oh-my-open-pentest/comment-checker-core";
+export { isRecord } from "@omop/comment-checker-core";
 export { extractCommentCheckRequests, isToolFailureOutput } from "./request-extractor.js";
 export type {
 	CheckerEdit,

@@ -1,4 +1,4 @@
-﻿import { killTmuxSessionIfExists as killTmuxSessionIfExistsCore } from "@oh-my-open-pentest/tmux-core"
+import { killTmuxSessionIfExists as killTmuxSessionIfExistsCore } from "@omop/tmux-core"
 
 export async function killTmuxSessionIfExists(sessionName: string): Promise<boolean> {
   const [{ log }, { isInsideTmux }, { getTmuxPath }, { runTmuxCommand }] = await Promise.all([

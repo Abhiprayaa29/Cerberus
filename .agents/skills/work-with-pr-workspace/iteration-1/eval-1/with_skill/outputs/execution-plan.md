@@ -1,4 +1,4 @@
-﻿# Execution Plan: `max_background_agents` Config Option
+# Execution Plan: `max_background_agents` Config Option
 
 ## Phase 0: Setup — Branch + Worktree
 

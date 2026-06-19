@@ -1,4 +1,4 @@
-﻿# Pitfalls — what breaks patterns and how to fix them
+# Pitfalls — what breaks patterns and how to fix them
 
 This is the failure-mode field guide. The `scripts/ast_grep_helper.py validate` subcommand mechanically checks for the items in §. before calling `sg`; the rest are lower-frequency but still common.
 

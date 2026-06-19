@@ -1,4 +1,4 @@
-﻿export declare const BOULDER_DIR: ".omo"
+export declare const BOULDER_DIR: ".omo"
 export declare const BOULDER_FILE: "boulder.json"
 export declare const BOULDER_STATE_PATH: ".omo/boulder.json"
 export declare const NOTEPAD_DIR: "notepads"

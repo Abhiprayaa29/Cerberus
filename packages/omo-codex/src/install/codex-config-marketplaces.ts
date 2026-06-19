@@ -1,4 +1,4 @@
-﻿import { appendBlock, findTomlSection } from "./toml-section-editor"
+import { appendBlock, findTomlSection } from "./toml-section-editor"
 import { parseJsonString, parsePluginHeaderKey, removeTomlSections } from "./codex-config-toml-sections"
 import type { CodexMarketplaceSource } from "./types"
 

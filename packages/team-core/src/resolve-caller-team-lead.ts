@@ -1,4 +1,4 @@
-﻿import { AGENT_ELIGIBILITY_REGISTRY, type TeamSpec } from "./types"
+import { AGENT_ELIGIBILITY_REGISTRY, type TeamSpec } from "./types"
 import type { CallerTeamLead } from "./team-registry/caller-team-lead"
 
 const DISPLAY_NAME_TO_AGENT_TYPE: Readonly<Record<string, string>> = {

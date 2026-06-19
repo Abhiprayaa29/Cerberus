@@ -1,4 +1,4 @@
-﻿import { describe, expect, mock, test } from "bun:test"
+import { describe, expect, mock, test } from "bun:test"
 
 import { createCommandExecuteBeforeHandler } from "./command-execute-before"
 

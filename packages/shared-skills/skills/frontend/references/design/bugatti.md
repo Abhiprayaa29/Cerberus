@@ -1,4 +1,4 @@
-﻿# Design System Inspired by Bugatti
+# Design System Inspired by Bugatti
 
 ## .. Visual Theme & Atmosphere
 

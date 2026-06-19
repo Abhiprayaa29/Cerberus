@@ -1,1 +1,1 @@
-﻿export * from "@oh-my-open-pentest/omo-codex/install/codex-cache-legacy-bins"
+export * from "@omop/omo-codex/install/codex-cache-legacy-bins"

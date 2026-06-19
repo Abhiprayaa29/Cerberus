@@ -1,1 +1,1 @@
-﻿export * from "@oh-my-open-pentest/team-core/team-registry/loader"
+export * from "@omop/team-core/team-registry/loader"

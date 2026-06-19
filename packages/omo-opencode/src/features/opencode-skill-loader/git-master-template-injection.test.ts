@@ -1,4 +1,4 @@
-﻿/// <reference types="bun-types" />
+/// <reference types="bun-types" />
 
 import { describe, it, expect, beforeEach, afterEach } from "bun:test"
 import { injectGitMasterConfig, parseBashEnvPrefix, buildShellAwareGitPrefix } from "./git-master-template-injection"

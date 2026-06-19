@@ -1,4 +1,4 @@
-﻿import { describe, test, expect } from "bun:test"
+import { describe, test, expect } from "bun:test"
 import { createSessionManagerTools } from "./tools"
 import type { ToolContext } from "@opencode-ai/plugin/tool"
 import type { PluginInput } from "@opencode-ai/plugin"

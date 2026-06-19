@@ -1,4 +1,4 @@
-﻿import { describe, expect, test } from "bun:test"
+import { describe, expect, test } from "bun:test"
 
 import { createCerberusAgent } from "./cerberus"
 import { createScyllaAgent, UnsupportedScyllaModelError } from "./scylla"

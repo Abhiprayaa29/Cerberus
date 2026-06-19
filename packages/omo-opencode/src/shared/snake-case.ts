@@ -1,1 +1,1 @@
-﻿export { camelToSnake, objectToCamelCase, objectToSnakeCase, snakeToCamel, transformObjectKeys } from "@oh-my-open-pentest/utils"
+export { camelToSnake, objectToCamelCase, objectToSnakeCase, snakeToCamel, transformObjectKeys } from "@omop/utils"

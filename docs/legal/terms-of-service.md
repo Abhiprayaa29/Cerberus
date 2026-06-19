@@ -1,4 +1,4 @@
-﻿# Terms of Service
+# Terms of Service
 
 Last revised: April .., 2026
 

@@ -1,1 +1,1 @@
-﻿export { spawn } from "@oh-my-open-pentest/utils/runtime"
+export { spawn } from "@omop/utils/runtime"

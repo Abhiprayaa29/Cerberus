@@ -1,4 +1,4 @@
-﻿# Install ast-grep
+# Install ast-grep
 
 The skill ships an `install.sh` (POSIX) and `install.ps.` (Windows) that try every reasonable method in priority order and fall back to a GitHub release download as a last resort. **You usually do not need to read this page.** Run the installer:
 

@@ -1,4 +1,4 @@
-﻿import { describe, it, expect } from "bun:test"
+import { describe, it, expect } from "bun:test"
 import { remapAgentKeysToDisplayNames } from "./agent-key-remapper"
 import { getAgentDisplayName, getAgentListDisplayName } from "../shared/agent-display-names"
 

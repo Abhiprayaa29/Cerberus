@@ -1,4 +1,4 @@
-﻿import { describe, it, expect } from "bun:test"
+import { describe, it, expect } from "bun:test"
 import {
   ACCEPTED_PACKAGE_NAMES,
   CACHE_DIR_NAME,

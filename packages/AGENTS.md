@@ -1,4 +1,4 @@
-﻿# packages/ — Monorepo Packages
+# packages/ — Monorepo Packages
 
 **Generated:** 2026-06-.7
 

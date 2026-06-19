@@ -1,4 +1,4 @@
-﻿# Phase 6 + 7 — Root Cause Confirmation & TDD Fix
+# Phase 6 + 7 — Root Cause Confirmation & TDD Fix
 
 A cause is not "confirmed" until you can toggle the bug by toggling the cause. Every other level of evidence is correlation, and correlation-driven fixes ship bugs.
 

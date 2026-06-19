@@ -1,4 +1,4 @@
-﻿import { join } from "node:path";
+import { join } from "node:path";
 import { OPENCODE_STORAGE } from "../../shared";
 export const RULES_INJECTOR_STORAGE = join(OPENCODE_STORAGE, "rules-injector");
 
@@ -10,4 +10,4 @@ export {
   PROJECT_RULE_SUBDIRS,
   RULE_EXTENSIONS,
   USER_RULE_DIR,
-} from "@oh-my-open-pentest/rules-engine";
+} from "@omop/rules-engine";

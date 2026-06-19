@@ -1,9 +1,9 @@
-﻿import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vitest";
 
-import { SOURCE_PRIORITY } from "@oh-my-open-pentest/rules-engine/engine";
-import { defaultConfig } from "@oh-my-open-pentest/rules-engine/engine";
-import { disabledSourcesFromConfig } from "@oh-my-open-pentest/rules-engine/engine";
-import type { PiRulesConfig } from "@oh-my-open-pentest/rules-engine/engine";
+import { SOURCE_PRIORITY } from "@omop/rules-engine/engine";
+import { defaultConfig } from "@omop/rules-engine/engine";
+import { disabledSourcesFromConfig } from "@omop/rules-engine/engine";
+import type { PiRulesConfig } from "@omop/rules-engine/engine";
 
 describe("rules source selection", () => {
 	it("#given default config #when disabled sources are derived #then opt-out sources stay disabled", () => {

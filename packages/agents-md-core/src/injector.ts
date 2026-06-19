@@ -1,8 +1,8 @@
-﻿import {
+import {
   findAgentsMdUp,
   type AgentsMdCache,
   type FindAgentsMdUpInput,
-} from "@oh-my-open-pentest/rules-engine";
+} from "@omop/rules-engine";
 import { promises as fsPromises } from "node:fs";
 import { dirname } from "node:path";
 

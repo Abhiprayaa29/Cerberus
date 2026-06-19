@@ -1,4 +1,4 @@
-﻿/// <reference types="bun-types" />
+/// <reference types="bun-types" />
 import { afterEach, beforeEach, describe, expect, test } from "bun:test"
 
 import { OMOP_INTERNAL_INITIATOR_MARKER } from "../../shared/internal-initiator-marker"

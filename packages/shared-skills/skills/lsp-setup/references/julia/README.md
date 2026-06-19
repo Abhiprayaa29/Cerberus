@@ -1,4 +1,4 @@
-﻿# Julia — LSP setup
+# Julia — LSP setup
 
 - **Builtin server:** `julials` — `julia --startup-file=no --history-file=no -e using LanguageServer; runserver()`
 - **Extensions:** `.jl`

@@ -1,8 +1,8 @@
-﻿{
+{
 	"compilerOptions": {
 		"target": "ES2022",
-		"module": "Node.6",
-		"moduleResolution": "Node.6",
+		"module": "NodeNext",
+		"moduleResolution": "NodeNext",
 		"lib": ["ES2022"],
 		"strict": true,
 		"exactOptionalPropertyTypes": true,

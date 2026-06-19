@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Detects external plugins that may conflict with oh-my-open-pentest features.
  * Used to prevent crashes from concurrent notification plugins.
  */

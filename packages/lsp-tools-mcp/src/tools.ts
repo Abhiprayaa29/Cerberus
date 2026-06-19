@@ -1,1 +1,1 @@
-﻿export * from "@oh-my-open-pentest/lsp-core/tools";
+export * from "@omop/lsp-core/tools";

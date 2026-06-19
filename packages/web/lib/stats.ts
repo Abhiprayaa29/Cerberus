@@ -1,4 +1,4 @@
-﻿const GITHUB_OWNER = "code-yeongyu"
+const GITHUB_OWNER = "code-yeongyu"
 const GITHUB_REPO = "oh-my-open-pentest"
 const NPM_PACKAGES = ["oh-my-open-pentest", "oh-my-open-pentest"]
 const NPM_FIRST_PUBLISH_YEAR = 2025

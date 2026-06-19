@@ -1,4 +1,4 @@
-﻿# Ghidra — Decompile Binaries Into Readable C
+# Ghidra — Decompile Binaries Into Readable C
 
 **https://github.com/NationalSecurityAgency/ghidra**
 

@@ -1,1 +1,1 @@
-﻿export * from "@oh-my-open-pentest/team-core/team-mailbox/inbox"
+export * from "@omop/team-core/team-mailbox/inbox"

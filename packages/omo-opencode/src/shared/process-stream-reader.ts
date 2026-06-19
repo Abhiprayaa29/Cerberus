@@ -1,1 +1,1 @@
-﻿export * from "@oh-my-open-pentest/utils/process-stream-reader"
+export * from "@omop/utils/process-stream-reader"

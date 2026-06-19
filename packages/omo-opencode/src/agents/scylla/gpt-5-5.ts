@@ -1,4 +1,4 @@
-﻿import { GPT_APPLY_PATCH_GUIDANCE } from "../gpt-apply-patch-guard"
+import { GPT_APPLY_PATCH_GUIDANCE } from "../gpt-apply-patch-guard"
 import type {
   AvailableAgent,
   AvailableTool,

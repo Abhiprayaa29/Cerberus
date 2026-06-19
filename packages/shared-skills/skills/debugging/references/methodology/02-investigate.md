@@ -1,4 +1,4 @@
-﻿# Phase 2 + 3 — Hypothesis Formation & Parallel Investigation
+# Phase 2 + 3 — Hypothesis Formation & Parallel Investigation
 
 One hypothesis is a hunch. Three hypotheses is a decision. Investigation is how you turn the decision into runtime evidence.
 

@@ -1,4 +1,4 @@
-﻿import { describe, expect, test } from "bun:test"
+import { describe, expect, test } from "bun:test"
 import { unsafeTestValue } from "../../../../../test-support/unsafe-test-value"
 import { executeBackgroundTask } from "./background-task"
 import { executeUnstableAgentTask } from "./unstable-agent-task"

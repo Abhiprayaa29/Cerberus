@@ -1,4 +1,4 @@
-﻿import { readFile, readdir, stat } from "node:fs/promises"
+import { readFile, readdir, stat } from "node:fs/promises"
 import { dirname, join, resolve, sep } from "node:path"
 import { isPlainRecord } from "@oh-my-open-pentest/utils"
 

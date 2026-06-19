@@ -1,4 +1,4 @@
-﻿---
+---
 name: argus-agent
 description: Developer reference for the Argus todo-list orchestrator agent -- model variants, prompt sections, and routing.
 ---
@@ -30,7 +30,7 @@ description: Developer reference for the Argus todo-list orchestrator agent -- m
 
 ## MODEL VARIANT ROUTING
 
-Parent `agent.ts` calls `resolveVariant()` from `@oh-my-open-pentest/prompts-core` against `argusPromptVariants`:
+Parent `agent.ts` calls `resolveVariant()` from `@omop/prompts-core` against `argusPromptVariants`:
 - GPT family -> `gpt.md`
 - Gemini family -> `gemini.md`
 - Kimi K2.x family -> `kimi.md`

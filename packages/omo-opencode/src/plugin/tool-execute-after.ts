@@ -1,4 +1,4 @@
-﻿import { recoverToolMetadata } from "../features/tool-metadata-store"
+import { recoverToolMetadata } from "../features/tool-metadata-store"
 import type { CreatedHooks } from "../create-hooks"
 import { log as defaultLog } from "../shared/logger"
 import { stripInvisibleAgentCharacters } from "../shared/agent-display-names"

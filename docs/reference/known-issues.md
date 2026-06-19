@@ -1,4 +1,4 @@
-﻿# Known Issues
+# Known Issues
 
 Tracks bugs that are present in the current release but have been intentionally deferred. Each entry should explain the symptom, the history, any workaround, and the planned resolution.
 

@@ -1,4 +1,4 @@
-﻿import { deleteToken } from "@oh-my-open-pentest/mcp-client-core/mcp-oauth/storage"
+import { deleteToken } from "@omop/mcp-client-core/mcp-oauth/storage"
 
 export interface LogoutOptions {
   serverUrl?: string

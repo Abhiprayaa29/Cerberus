@@ -1,4 +1,4 @@
-﻿import { describe, expect, test } from "bun:test"
+import { describe, expect, test } from "bun:test"
 import {
   createCerberusJuniorAgentWithOverrides,
   CERBERUS_JUNIOR_DEFAULTS,

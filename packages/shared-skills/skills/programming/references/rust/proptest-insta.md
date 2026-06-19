@@ -1,4 +1,4 @@
-﻿# Property Tests (proptest) + Snapshot Tests (insta)
+# Property Tests (proptest) + Snapshot Tests (insta)
 
 Two test types every Rust project should have alongside unit tests. Proptest hunts for inputs your unit tests forgot to try. Insta locks down output shapes you do not want to silently change.
 

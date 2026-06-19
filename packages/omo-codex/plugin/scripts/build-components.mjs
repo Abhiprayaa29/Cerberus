@@ -11,13 +11,17 @@ const workspaces = Array.isArray(packageJson.workspaces) ? packageJson.workspace
 const workspaceSet = new Set(workspaces);
 const builtinModuleNames = new Set(builtinModules.filter((moduleName) => !moduleName.startsWith("_")));
 
+const SKIP_BUNDLE = new Set(["components/codegraph"]);
+
 for (const workspace of workspaces) {
 	if (typeof workspace !== "string" || !workspace.startsWith("components/")) continue;
 	if (!(await hasBuildScript(workspace))) continue;
 
 	console.log(`Building ${workspace}`);
 	run("npm", ["run", "--workspace", workspace, "build"], root);
-	await bundleCli(workspace);
+	if (!SKIP_BUNDLE.has(workspace)) {
+		await bundleCli(workspace);
+	}
 }
 
 for (const componentName of await readStandaloneComponentNames()) {
@@ -26,7 +30,9 @@ for (const componentName of await readStandaloneComponentNames()) {
 
 	console.log(`Building ${componentPath} (standalone)`);
 	run("npm", ["run", "build"], join(root, componentPath));
-	await bundleCli(componentPath);
+	if (!SKIP_BUNDLE.has(componentPath)) {
+		await bundleCli(componentPath);
+	}
 }
 
 async function readStandaloneComponentNames() {
@@ -51,6 +57,16 @@ async function hasBuildScript(relativePath) {
 async function bundleCli(workspace) {
 	const entry = join(root, workspace, "src", "cli.ts");
 	const output = join(root, workspace, "dist", "cli.js");
+
+	// Skip if the component's own build already produced dist/cli.js
+	try {
+		const { statSync } = await import("node:fs");
+		statSync(output);
+		console.log(`Skipping re-bundle (${workspace}/dist/cli.js already exists)`);
+		await normalizeBuiltinImports(output);
+		return;
+	} catch {}
+
 	console.log(`Bundling ${workspace}/dist/cli.js`);
 	run("bun", ["build", entry, "--target", "node", "--format", "esm", "--outfile", output], root);
 	await normalizeBuiltinImports(output);

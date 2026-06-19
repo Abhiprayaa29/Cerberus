@@ -1,4 +1,4 @@
-﻿import { DEFAULT_AGENT_ORDER, resolveAgentOrderDisplayNames } from "../shared/agent-ordering"
+import { DEFAULT_AGENT_ORDER, resolveAgentOrderDisplayNames } from "../shared/agent-ordering"
 
 /**
  * Default source of truth for core agent ordering.

@@ -1,4 +1,4 @@
-﻿# codex-start-work-continuation
+# codex-start-work-continuation
 
 Codex Stop-hook continuation injector for the omo-codex `start-work` skill.
 

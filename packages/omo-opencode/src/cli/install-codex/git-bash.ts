@@ -1,1 +1,1 @@
-﻿export * from "@oh-my-open-pentest/omo-codex/install/git-bash"
+export * from "@omop/omo-codex/install/git-bash"

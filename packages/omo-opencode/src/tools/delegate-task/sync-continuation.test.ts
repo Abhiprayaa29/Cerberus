@@ -1,4 +1,4 @@
-﻿const { describe, test, expect, beforeEach, afterEach, mock, spyOn } = require("bun:test")
+const { describe, test, expect, beforeEach, afterEach, mock, spyOn } = require("bun:test")
 
 const TEAM_TOOL_DENIALS = {
   team_create: false,

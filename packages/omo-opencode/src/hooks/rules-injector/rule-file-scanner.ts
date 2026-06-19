@@ -1,5 +1,5 @@
-﻿import { findRuleFilesRecursive as findRuleFileEntriesRecursive, safeRealpathSync } from "@oh-my-open-pentest/rules-engine";
-import type { DirectoryScanEntry } from "@oh-my-open-pentest/rules-engine";
+import { findRuleFilesRecursive as findRuleFileEntriesRecursive, safeRealpathSync } from "@omop/rules-engine";
+import type { DirectoryScanEntry } from "@omop/rules-engine";
 
 export { safeRealpathSync };
 

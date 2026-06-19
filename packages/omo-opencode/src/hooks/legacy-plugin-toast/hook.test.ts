@@ -1,4 +1,4 @@
-﻿import { afterAll, beforeEach, describe, expect, it, mock } from "bun:test"
+import { afterAll, beforeEach, describe, expect, it, mock } from "bun:test"
 import type { MigrationResult } from "./auto-migrate-runner"
 import { createLegacyPluginToastHook } from "./hook"
 

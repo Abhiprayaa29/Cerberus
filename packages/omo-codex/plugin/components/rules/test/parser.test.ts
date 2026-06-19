@@ -1,6 +1,6 @@
-﻿import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vitest";
 
-import { parseRule } from "@oh-my-open-pentest/rules-engine/engine";
+import { parseRule } from "@omop/rules-engine/engine";
 
 describe("parseRule", () => {
 	it("#given content without frontmatter #when parsing #then body is preserved", () => {

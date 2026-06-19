@@ -1,4 +1,4 @@
-﻿# claude-code-compat-core — Claude Code Compatibility Loaders (Core)
+# claude-code-compat-core — Claude Code Compatibility Loaders (Core)
 
 **Generated:** 2026-06-.6
 
@@ -8,7 +8,7 @@
 
 Harness-neutral Core that discovers and translates Claude Code plugins, commands, agents, skills, and MCP configs into structures that harness adapters can consume.
 
-Npm package: `@oh-my-open-pentest/claude-code-compat-core`. Barrel-exported from `src/index.ts`. Consumed by `omo-opencode` via thin shim re-exports under [`packages/omo-opencode/src/features/claude-code-*/`](../omo-opencode/src/features/).
+Npm package: `@omop/claude-code-compat-core`. Barrel-exported from `src/index.ts`. Consumed by `omo-opencode` via thin shim re-exports under [`packages/omo-opencode/src/features/claude-code-*/`](../omo-opencode/src/features/).
 
 Type-check with `bun run typecheck` (tsgo). Tests are co-located as `*.test.ts` inside each feature dir.
 

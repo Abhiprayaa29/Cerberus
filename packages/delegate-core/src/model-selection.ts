@@ -1,10 +1,10 @@
-﻿import {
+import {
   fuzzyMatchModel,
   normalizeModel,
   parseModelString,
   parseVariantFromModelID,
   transformModelForProvider,
-} from "@oh-my-open-pentest/model-core"
+} from "@omop/model-core"
 
 export type DelegateFallbackEntry = {
   readonly providers: string[]

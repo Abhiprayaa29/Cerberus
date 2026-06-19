@@ -1,4 +1,4 @@
-﻿import { TEAM_MODE_PROMPT } from "@oh-my-open-pentest/prompts-core"
+import { TEAM_MODE_PROMPT } from "@omop/prompts-core"
 
 /**
  * Team mode keyword detector.

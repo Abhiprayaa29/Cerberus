@@ -1,1 +1,1 @@
-﻿export { bunWhich } from "@oh-my-open-pentest/utils/runtime"
+export { bunWhich } from "@omop/utils/runtime"

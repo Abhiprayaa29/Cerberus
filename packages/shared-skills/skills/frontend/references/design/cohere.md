@@ -1,4 +1,4 @@
-﻿# Design System Inspired by Cohere
+# Design System Inspired by Cohere
 
 ## .. Visual Theme & Atmosphere
 

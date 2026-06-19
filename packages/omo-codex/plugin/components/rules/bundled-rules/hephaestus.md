@@ -1,4 +1,4 @@
-﻿---
+---
 description: OMO Scylla baseline discipline for Codex
 alwaysApply: true
 ---

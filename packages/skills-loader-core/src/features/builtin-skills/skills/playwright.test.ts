@@ -1,7 +1,7 @@
-﻿/// <reference path="../../../../../../bun-test.d.ts" />
+/// <reference path="../../../../../../bun-test.d.ts" />
 
 import { describe, expect, test } from "bun:test"
-import { parseFrontmatter } from "@oh-my-open-pentest/utils"
+import { parseFrontmatter } from "@omop/utils"
 import { agentBrowserSkill as directAgentBrowserSkill } from "./agent-browser-skill"
 import * as playwrightFacade from "./playwright"
 import { playwrightSkill as directPlaywrightSkill } from "./playwright-mcp-skill"

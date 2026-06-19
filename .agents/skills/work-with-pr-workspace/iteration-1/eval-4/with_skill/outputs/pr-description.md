@@ -1,4 +1,4 @@
-﻿# PR: feat(mcp): add built-in arXiv paper search MCP
+# PR: feat(mcp): add built-in arXiv paper search MCP
 
 ## Title
 

@@ -1,4 +1,4 @@
-﻿{
+{
   "run_id": "eval-3-with_skill",
   "expectations": [
     {"text": "Plan uses git worktree in a sibling directory", "passed": true, "evidence": "../omo-wt/refactor-delegate-task-constants"},

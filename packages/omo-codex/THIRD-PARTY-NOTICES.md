@@ -1,4 +1,4 @@
-﻿# omo-codex Third Party Notices
+# omo-codex Third Party Notices
 
 This file enumerates third-party and ported components redistributed by the
 `packages/omo-codex` Codex Light edition surface: the vendored `plugin/`
@@ -63,42 +63,42 @@ listed as a shipped codex component here.
 - Notice: `packages/lsp-tools-mcp/NOTICE`.
 - Where-bundled: LSP MCP runtime built and copied by codex marketplace sync and root package layout.
 
-### @oh-my-open-pentest/boulder-state@0...0
+### @omop/boulder-state@0...0
 - License: project license.
 - Copyright: Yeongyu Kim and contributors.
 - Where-bundled: bundled into the start-work continuation component runtime.
 
-### @oh-my-open-pentest/comment-checker-core@0...0
+### @omop/comment-checker-core@0...0
 - License: project license.
 - Copyright: Yeongyu Kim and contributors.
 - Where-bundled: bundled into the codex comment-checker hook runtime.
 
-### @oh-my-open-pentest/git-bash-mcp@0.0.0
+### @omop/git-bash-mcp@0.0.0
 - License: project license.
 - Copyright: Yeongyu Kim and contributors.
 - Where-bundled: Codex plugin `git_bash` MCP server runtime.
 
-### @oh-my-open-pentest/prompts-core@0...0
+### @omop/prompts-core@0...0
 - License: project license.
 - Copyright: Yeongyu Kim and contributors.
 - Where-bundled: fullscan directive synchronization and bundled prompt material.
 
-### @oh-my-open-pentest/rules-engine@0...0
+### @omop/rules-engine@0...0
 - License: project license.
 - Copyright: Yeongyu Kim and contributors.
 - Where-bundled: bundled into the codex rules hook runtime.
 
-### @oh-my-open-pentest/shared-skills@0...0
+### @omop/shared-skills@0...0
 - License: project license.
 - Copyright: Yeongyu Kim and contributors.
 - Where-bundled: aggregate codex plugin skills directory.
 
-### @oh-my-open-pentest/telemetry-core@0...0
+### @omop/telemetry-core@0...0
 - License: project license.
 - Copyright: Yeongyu Kim and contributors.
 - Where-bundled: bundled into codex telemetry component and generated installer scripts.
 
-### @oh-my-open-pentest/utils@0...0
+### @omop/utils@0...0
 - License: project license.
 - Copyright: Yeongyu Kim and contributors.
 - Where-bundled: installer support, git-bash hook support, and shared parsing utilities.

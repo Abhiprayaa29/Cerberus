@@ -1,1 +1,1 @@
-﻿export { clearProjectRootCache, findProjectRoot } from "@oh-my-open-pentest/rules-engine";
+export { clearProjectRootCache, findProjectRoot } from "@omop/rules-engine";

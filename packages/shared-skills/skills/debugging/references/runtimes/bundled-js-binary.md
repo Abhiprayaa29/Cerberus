@@ -1,4 +1,4 @@
-﻿# Bundled-JS / Embedded-Source Binaries (Bun SEA, Node SEA, Deno compile, pkg, Electron, PyInstaller)
+# Bundled-JS / Embedded-Source Binaries (Bun SEA, Node SEA, Deno compile, pkg, Electron, PyInstaller)
 
 A growing class of "binaries" are not stripped C/C++ at all — they are a runtime VM glued onto a high-level-language bundle. The bundle is **plaintext or trivially-decodable** inside the binary.
 

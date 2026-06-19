@@ -1,4 +1,4 @@
-﻿# Verification Strategy
+# Verification Strategy
 
 ## .. Unit Tests (Direct Verification)
 

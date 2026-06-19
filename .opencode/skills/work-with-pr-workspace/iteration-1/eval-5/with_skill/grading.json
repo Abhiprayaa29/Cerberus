@@ -1,4 +1,4 @@
-﻿{
+{
   "run_id": "eval-5-with_skill",
   "expectations": [
     {"text": "Plan uses git worktree in a sibling directory", "passed": true, "evidence": "../omo-wt/fix/comment-checker-note-false-positive"},

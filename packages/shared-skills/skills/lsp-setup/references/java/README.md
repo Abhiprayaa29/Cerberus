@@ -1,4 +1,4 @@
-﻿# Java — LSP setup
+# Java — LSP setup
 
 - **Builtin server:** `jdtls` — `jdtls`
 - **Extensions:** `.java`

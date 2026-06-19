@@ -1,4 +1,4 @@
-﻿import type { DoctorOptions } from "./framework/types"
+import type { DoctorOptions } from "./framework/types"
 import { runDoctor } from "./runner"
 import { PUBLISHED_PACKAGE_NAME } from "../../shared"
 import { EXIT_CODES } from "./framework/constants"

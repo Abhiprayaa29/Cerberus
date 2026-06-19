@@ -1,4 +1,4 @@
-﻿const { describe, test, expect, beforeEach, afterEach, mock } = require("bun:test")
+const { describe, test, expect, beforeEach, afterEach, mock } = require("bun:test")
 
 describe("executeUnstableAgentTask - interrupt detection", () => {
   beforeEach(() => {

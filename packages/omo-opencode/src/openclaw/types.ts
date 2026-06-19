@@ -1,1 +1,1 @@
-﻿export * from "@oh-my-open-pentest/openclaw-core/types"
+export * from "@omop/openclaw-core/types"

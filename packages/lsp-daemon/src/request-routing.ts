@@ -1,5 +1,5 @@
-﻿import { handleLspMcpRequest, type JsonRpcResponse } from "@oh-my-open-pentest/lsp-core/mcp";
-import { type RequestContext, runWithRequestContext } from "@oh-my-open-pentest/lsp-core/request-context";
+import { handleLspMcpRequest, type JsonRpcResponse } from "@omop/lsp-core/mcp";
+import { type RequestContext, runWithRequestContext } from "@omop/lsp-core/request-context";
 
 export const CONTEXT_KEY = "_context";
 

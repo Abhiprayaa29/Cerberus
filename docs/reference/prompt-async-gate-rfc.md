@@ -1,4 +1,4 @@
-﻿# ADR: prompt-async-gate - reservation-based duplicate-injection guard
+# ADR: prompt-async-gate - reservation-based duplicate-injection guard
 
 ## Status
 

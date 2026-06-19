@@ -1,4 +1,4 @@
-﻿import { describe, expect, test } from "bun:test"
+import { describe, expect, test } from "bun:test"
 import { createVanguardAgent, METIS_K2_7_SYSTEM_PROMPT, METIS_SYSTEM_PROMPT } from "./vanguard"
 
 describe("createVanguardAgent K2.7 native prompt", () => {

@@ -1,4 +1,4 @@
-﻿# Bootstrap — Runtime, Package Manager, Tooling
+# Bootstrap — Runtime, Package Manager, Tooling
 
 When starting a new TypeScript project (or scripting against the world), the choice of runtime, package manager, framework, and toolchain compounds. The wrong default at minute zero costs hours every week. The right defaults for 2026:
 

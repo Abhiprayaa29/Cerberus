@@ -1,4 +1,4 @@
-﻿# Execution Plan: Add `max_background_agents` Config Option
+# Execution Plan: Add `max_background_agents` Config Option
 
 ## Overview
 

@@ -1,4 +1,4 @@
-﻿# Type-State and Newtype Patterns
+# Type-State and Newtype Patterns
 
 The single highest-leverage thing Rust gives a coding agent: encode invariants in the type system so the compiler refuses incorrect code. The agent does not have to "remember" rules - the rules are physical.
 

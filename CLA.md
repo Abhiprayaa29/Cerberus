@@ -1,4 +1,4 @@
-﻿# Contributor License Agreement
+# Contributor License Agreement
 
 Thank you for your interest in contributing to oh-my-open-pentest ("Project"), owned by YeonGyu Kim ("Owner").
 

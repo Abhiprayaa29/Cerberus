@@ -1,4 +1,4 @@
-﻿import type { OhMyOpenCodeConfig } from "../../config"
+import type { OhMyOpenCodeConfig } from "../../config"
 
 import { isRalphLoopResumeArgument, parseRalphLoopArguments } from "../../hooks/pentest-loop/command-arguments"
 import { log } from "../../shared"
@@ -8,8 +8,8 @@ import { clearStoppedContinuationBeforeWorkStart } from "./start-work-message"
 import type { ChatMessageHooks, ChatMessageHandlerOutput, ChatMessageInput } from "./types"
 
 type RawLoopCommand =
-  | { readonly command: "pentest-loop" | "pentest-loop"; readonly args: string }
-  | { readonly command: "cancel-ralph"; readonly args: "" }
+  | { readonly command: "pentest-loop" | "ulw-loop"; readonly args: string }
+  | { readonly command: "cancel-pentest-loop"; readonly args: "" }
 
 function parseRawLoopSlashCommand(promptText: string): RawLoopCommand | null {
   const trimmed = promptText.trim()
@@ -18,19 +18,19 @@ function parseRawLoopSlashCommand(promptText: string): RawLoopCommand | null {
     : trimmed
         .split("\n")
         .map((line) => line.trim())
-        .filter((line) => /^\/(?:pentest-loop|pentest-loop|cancel-ralph)\b/i.test(line))
+        .filter((line) => /^\/(?:pentest-loop|ulw-loop|cancel-pentest-loop)\b/i.test(line))
         .at(-1)
 
   if (!commandText) {
     return null
   }
 
-  const cancelMatch = commandText.match(/^\/cancel-ralph(?:\s+.*)?$/i)
+  const cancelMatch = commandText.match(/^\/cancel-pentest-loop(?:\s+.*)?$/i)
   if (cancelMatch) {
-    return { command: "cancel-ralph", args: "" }
+    return { command: "cancel-pentest-loop", args: "" }
   }
 
-  const loopMatch = commandText.match(/^\/(pentest-loop|pentest-loop)\s*([\s\S]*)$/i)
+  const loopMatch = commandText.match(/^\/(pentest-loop|ulw-loop)\s*([\s\S]*)$/i)
   if (!loopMatch) {
     return null
   }
@@ -38,7 +38,7 @@ function parseRawLoopSlashCommand(promptText: string): RawLoopCommand | null {
   const command = loopMatch[1]?.toLowerCase()
   const args = loopMatch[2]?.trim() ?? ""
 
-  if (command === "pentest-loop" || command === "pentest-loop") {
+  if (command === "pentest-loop" || command === "ulw-loop") {
     return { command, args }
   }
 
@@ -76,13 +76,13 @@ export function handleRalphLoopMessage(args: {
     isRalphLoopTemplate ||
     isUlwLoopTemplate ||
     rawLoopCommand?.command === "pentest-loop" ||
-    rawLoopCommand?.command === "pentest-loop"
+    rawLoopCommand?.command === "ulw-loop"
   ) {
     const taskMatch = promptText.match(/<user-task>\s*([\s\S]*?)\s*<\/user-task>/i)
     const rawTask = taskMatch?.[1]?.trim() || rawLoopCommand?.args || ""
     const parsedArguments = parseRalphLoopArguments(rawTask)
-    const fullscan = isUlwLoopTemplate || rawLoopCommand?.command === "pentest-loop"
-    const command = fullscan ? "pentest-loop" : "pentest-loop"
+    const fullscan = isUlwLoopTemplate || rawLoopCommand?.command === "ulw-loop"
+    const command = fullscan ? "ulw-loop" : "pentest-loop"
 
     clearStoppedContinuationBeforeWorkStart(hooks, input.sessionID, command)
     const resumed = isRalphLoopResumeArgument(rawTask)
@@ -95,7 +95,7 @@ export function handleRalphLoopMessage(args: {
         strategy: parsedArguments.strategy,
       })
     }
-  } else if (isCancelRalphTemplate || rawLoopCommand?.command === "cancel-ralph") {
+  } else if (isCancelRalphTemplate || rawLoopCommand?.command === "cancel-pentest-loop") {
     hooks.ralphLoop.cancelLoop(input.sessionID)
   }
 
@@ -111,7 +111,7 @@ export function handleRalphLoopMessage(args: {
     hooks.ralphLoop.startLoop(input.sessionID, promptText, {
       fullscan,
     })
-    log("[chat-message] Default ralph loop auto-started", {
+    log("[chat-message] Default pentest loop auto-started", {
       sessionID: input.sessionID,
       fullscan,
     })

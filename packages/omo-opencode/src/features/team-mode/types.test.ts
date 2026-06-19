@@ -1,4 +1,4 @@
-﻿import { describe, expect, test } from "bun:test"
+import { describe, expect, test } from "bun:test"
 import {
   AGENT_ELIGIBILITY_REGISTRY,
   CategoryMemberSchema,

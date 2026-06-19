@@ -1,4 +1,4 @@
-﻿# Code Changes: `max_background_agents` Config Option
+# Code Changes: `max_background_agents` Config Option
 
 ## .. `src/config/schema/background-task.ts` — Add schema field
 

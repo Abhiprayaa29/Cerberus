@@ -1,1 +1,1 @@
-﻿export * from "@oh-my-open-pentest/skills-loader-core/shared/skill-path-resolver"
+export * from "@omop/skills-loader-core/shared/skill-path-resolver"

@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Cerberus-Junior - Focused Task Executor
  *
  * Executes delegated tasks directly without spawning other agents.

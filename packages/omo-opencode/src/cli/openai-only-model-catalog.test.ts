@@ -1,4 +1,4 @@
-﻿import { describe, expect, test } from "bun:test"
+import { describe, expect, test } from "bun:test"
 
 import { generateModelConfig } from "./model-fallback"
 import { isOpenAiOnlyAvailability } from "./openai-only-model-catalog"

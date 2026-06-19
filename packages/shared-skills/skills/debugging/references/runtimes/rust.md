@@ -1,4 +1,4 @@
-﻿# Rust Debugging
+# Rust Debugging
 
 Covers `cargo`, `tokio`, panics, and the fact that you usually don't actually need a debugger — Rust's type system, `dbg!`, and logging cover 80% of sessions faster than gdb would.
 

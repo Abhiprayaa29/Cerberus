@@ -1,4 +1,4 @@
-﻿import { isPlainRecord } from "@oh-my-open-pentest/utils"
+import { isPlainRecord } from "@omop/utils"
 import { randomUUID } from "node:crypto"
 import { mkdir, readFile, readdir, rm, stat } from "node:fs/promises"
 import path from "node:path"

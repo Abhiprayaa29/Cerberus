@@ -1,6 +1,6 @@
-﻿export type {
+export type {
   ModelSettingsCompatibilityInput,
   ModelSettingsCompatibilityChange,
   ModelSettingsCompatibilityResult,
-} from "@oh-my-open-pentest/model-core"
-export { resolveCompatibleModelSettings } from "@oh-my-open-pentest/model-core"
+} from "@omop/model-core"
+export { resolveCompatibleModelSettings } from "@omop/model-core"

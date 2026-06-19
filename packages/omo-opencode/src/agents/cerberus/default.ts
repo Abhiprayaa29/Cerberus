@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Default/base Cerberus prompt builder.
  * Used for Claude and other non-specialized models.
  */

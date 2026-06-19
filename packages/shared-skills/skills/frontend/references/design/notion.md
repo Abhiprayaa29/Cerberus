@@ -1,4 +1,4 @@
-﻿# Design System Inspired by Notion
+# Design System Inspired by Notion
 
 ## .. Visual Theme & Atmosphere
 

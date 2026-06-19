@@ -1,12 +1,12 @@
-﻿import { statSync } from "node:fs";
+import { statSync } from "node:fs";
 import { resolve } from "node:path";
 import { isSameOrChildPath, toPosixPath, uniqueStrings } from "./path-utils.js";
-import { createRuleDiscoveryCache, findRuleCandidates } from "@oh-my-open-pentest/rules-engine/engine";
-import { hashContent } from "@oh-my-open-pentest/rules-engine/engine";
-import { sortCandidates } from "@oh-my-open-pentest/rules-engine/engine";
-import { findProjectRoot } from "@oh-my-open-pentest/rules-engine/engine";
-import { disabledSourcesFromConfig } from "@oh-my-open-pentest/rules-engine/engine";
-import type { PiRulesConfig, RuleCandidate } from "@oh-my-open-pentest/rules-engine/engine";
+import { createRuleDiscoveryCache, findRuleCandidates } from "@omop/rules-engine/engine";
+import { hashContent } from "@omop/rules-engine/engine";
+import { sortCandidates } from "@omop/rules-engine/engine";
+import { findProjectRoot } from "@omop/rules-engine/engine";
+import { disabledSourcesFromConfig } from "@omop/rules-engine/engine";
+import type { PiRulesConfig, RuleCandidate } from "@omop/rules-engine/engine";
 
 export interface DynamicTargetFingerprint {
 	targetPath: string;

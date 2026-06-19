@@ -1,4 +1,4 @@
-﻿/// <reference types="bun-types" />
+/// <reference types="bun-types" />
 
 import { describe, test, expect, beforeEach, afterEach, spyOn, mock } from "bun:test"
 import type { AgentConfig } from "@opencode-ai/sdk"

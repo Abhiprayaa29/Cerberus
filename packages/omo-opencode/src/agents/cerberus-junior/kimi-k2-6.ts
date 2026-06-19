@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Kimi K2.x Optimized Cerberus-Junior System Prompt
  *
  * Tuned for Kimi K2.x characteristics (kimi.com/blog/kimi-k2-6, arxiv 2602.02276 §4.4.2):

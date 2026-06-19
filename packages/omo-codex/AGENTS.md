@@ -1,4 +1,4 @@
-﻿# packages/omo-codex/ - Codex CLI Light Edition (lazycodex)
+# packages/omo-codex/ - Codex CLI Light Edition (lazycodex)
 
 **Generated:** 2026-05-3.
 
@@ -25,17 +25,17 @@
 
 ## OVERVIEW
 
-`@oh-my-open-pentest/omo-codex` (private, v0...0): the Codex harness adapter = the **Light Edition** (omo for the OpenAI Codex CLI). Vendors a Codex plugin namespace `omo` + a TypeScript installer + telemetry. Public distribution = the `lazycodex` bin/npm alias and the [`code-yeongyu/lazycodex`](https://github.com/code-yeongyu/lazycodex) marketplace repo. Codex marketplace identity = `cerberuslabs` / plugin `omo` (`omo@cerberuslabs`); `lazycodex` is the alias only. Full identity + the publish/deploy pipeline live in the root [`AGENTS.md`](../../AGENTS.md) "CODEX LIGHT EDITION" section.
+`@omop/omo-codex` (private, v0...0): the Codex harness adapter = the **Light Edition** (omo for the OpenAI Codex CLI). Vendors a Codex plugin namespace `omo` + a TypeScript installer + telemetry. Public distribution = the `lazycodex` bin/npm alias and the [`code-yeongyu/lazycodex`](https://github.com/code-yeongyu/lazycodex) marketplace repo. Codex marketplace identity = `cerberuslabs` / plugin `omo` (`omo@cerberuslabs`); `lazycodex` is the alias only. Full identity + the publish/deploy pipeline live in the root [`AGENTS.md`](../../AGENTS.md) "CODEX LIGHT EDITION" section.
 
 ## LAYOUT
 
 | Path | Purpose |
 |------|---------|
-| `package.json` | `@oh-my-open-pentest/omo-codex` (private). Deps: `@oh-my-open-pentest/utils`. Scripts: `typecheck`, `test`, `build:plugin`, `sync:skills`. |
+| `package.json` | `@omop/omo-codex` (private). Deps: `@omop/utils`. Scripts: `typecheck`, `test`, `build:plugin`, `sync:skills`. |
 | `marketplace.json` | Codex marketplace manifest. Declares marketplace `cerberuslabs`, single installable plugin `omo`. |
 | `MARKETPLACE.md` | Native Codex marketplace notes for `cerberuslabs` / `omo`. |
 | `index.d.ts` | Type barrel re-exporting `src/`. |
-| `plugin/` | Vendored Codex plugin namespace `omo`; pkg `@cerberuslabs/omo-codex-plugin` (dep `@oh-my-open-pentest/shared-skills`). Holds `.codex-plugin/plugin.json` (brandColor `#7C3AED`), `hooks/hooks.json` (aggregate event wiring), `components/` (8 workspaces), generated aggregate `skills/`, `.mcp.json`. |
+| `plugin/` | Vendored Codex plugin namespace `omo`; pkg `@cerberuslabs/omo-codex-plugin` (dep `@omop/shared-skills`). Holds `.codex-plugin/plugin.json` (brandColor `#7C3AED`), `hooks/hooks.json` (aggregate event wiring), `components/` (8 workspaces), generated aggregate `skills/`, `.mcp.json`. |
 | `scripts/` | Generated/bundled Node ESM install entrypoints and parity tests. Published paths such as `scripts/install-local.mjs` stay stable while source lives in `src/install/`. |
 | `src/` | TypeScript runtime consumed by the CLI: `install/` (Codex cache install, config mutation, agent links, local marketplace snapshot, cleanup, routing) + `telemetry/`. |
 | `tsconfig.json` | Bun-targeted strict config; included in root `typecheck:packages`. |
@@ -62,8 +62,8 @@ Event `omo_codex_daily_active`, at most once per UTC day per machine. Two source
 
 ## NOTES
 
-- `@cerberuslabs/omo-codex-plugin` (the shipped Codex plugin bundle) is distinct from `@oh-my-open-pentest/omo-codex` (this adapter package).
+- `@cerberuslabs/omo-codex-plugin` (the shipped Codex plugin bundle) is distinct from `@omop/omo-codex` (this adapter package).
 - Codex marketplace name is `cerberuslabs`, never `lazycodex`.
-- `@oh-my-open-pentest/omo-codex` is private (not published to npm on its own); its assets ship via the root `package.json` `files` array.
+- `@omop/omo-codex` is private (not published to npm on its own); its assets ship via the root `package.json` `files` array.
 - `bunfig.toml` excludes `packages/omo-codex/plugin/**` from the root `bun test`; the plugin carries its own `node --test` suite. Full Codex suite: `bun run test:codex`.
 - Per-component detail lives in `plugin/components/*/AGENTS.md`; do not duplicate it here.

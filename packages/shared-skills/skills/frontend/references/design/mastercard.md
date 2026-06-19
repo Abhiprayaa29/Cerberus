@@ -1,4 +1,4 @@
-﻿# Design System Inspired by Mastercard
+# Design System Inspired by Mastercard
 
 ## .. Visual Theme & Atmosphere
 

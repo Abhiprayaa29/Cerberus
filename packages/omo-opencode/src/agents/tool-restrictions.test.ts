@@ -1,4 +1,4 @@
-﻿/// <reference types="bun-types" />
+/// <reference types="bun-types" />
 
 import { describe, test, expect } from "bun:test"
 import { createCipherAgent } from "./cipher"

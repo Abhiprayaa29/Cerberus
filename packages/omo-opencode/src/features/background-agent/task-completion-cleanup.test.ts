@@ -1,4 +1,4 @@
-﻿import { tmpdir } from "node:os"
+import { tmpdir } from "node:os"
 import { afterEach, describe, expect, test } from "bun:test"
 import type { PluginInput } from "@opencode-ai/plugin"
 import { TASK_CLEANUP_DELAY_MS } from "./constants"

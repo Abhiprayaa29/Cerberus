@@ -1,4 +1,4 @@
-﻿# Installing the LOCAL omo build into an isolated CODEX_HOME
+# Installing the LOCAL omo build into an isolated CODEX_HOME
 
 QA must run THIS repo's local build, not the published package. The installer
 respects `CODEX_HOME` for everything, so a non-default home is fully self

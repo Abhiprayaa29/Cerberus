@@ -1,4 +1,4 @@
-﻿# Bubbletea v2 — TUI with First-Class CJK / IME Support
+# Bubbletea v2 — TUI with First-Class CJK / IME Support
 
 The TUI stack for 2026. Use **v2 RC**, not v.. If your users include Korean, Japanese, or Chinese speakers, v. is broken — IME composition lands in the wrong cells. v2 fixes this. This document is the canonical setup.
 

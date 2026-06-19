@@ -1,4 +1,4 @@
-﻿# Partial Runtime Evidence — When You Cannot Execute the Real Operation
+# Partial Runtime Evidence — When You Cannot Execute the Real Operation
 
 Read this when **runtime truth beats code reading** is in conflict with **you cannot run the actual operation**.
 

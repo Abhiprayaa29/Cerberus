@@ -1,7 +1,7 @@
-﻿import { describe, expect, test } from "bun:test"
+import { describe, expect, test } from "bun:test"
 
 import { ackMessages } from "./ack"
-import { ackMessages as coreAckMessages } from "@oh-my-open-pentest/team-core/team-mailbox/ack"
+import { ackMessages as coreAckMessages } from "@omop/team-core/team-mailbox/ack"
 
 describe("ackMessages adapter shim", () => {
   test("#given omo-opencode shim #when imported #then it re-exports team-core implementation", () => {

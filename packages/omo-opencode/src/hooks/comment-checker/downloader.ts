@@ -1,4 +1,4 @@
-﻿import { existsSync, appendFileSync } from "fs"
+import { existsSync, appendFileSync } from "fs"
 import { join } from "path"
 import { homedir, tmpdir } from "os"
 import { createRequire } from "module"

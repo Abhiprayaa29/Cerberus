@@ -1,4 +1,4 @@
-﻿# Design System Inspired by ClickHouse
+# Design System Inspired by ClickHouse
 
 ## .. Visual Theme & Atmosphere
 

@@ -1,4 +1,4 @@
-﻿import { loadSharedSkillTemplate } from "../skill-file-loader"
+import { loadSharedSkillTemplate } from "../skill-file-loader"
 import type { BuiltinSkill } from "../types"
 
 export const reviewWorkSkill: BuiltinSkill = {

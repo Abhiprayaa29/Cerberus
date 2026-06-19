@@ -1,4 +1,4 @@
-﻿# lsp-daemon — Shared Per-User LSP Daemon
+# lsp-daemon — Shared Per-User LSP Daemon
 
 **Generated:** 2026-06-..
 

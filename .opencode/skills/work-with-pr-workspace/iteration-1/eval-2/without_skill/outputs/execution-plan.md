@@ -1,4 +1,4 @@
-﻿# Execution Plan: Fix Atlas Hook Crash on Missing worktree_path
+# Execution Plan: Fix Atlas Hook Crash on Missing worktree_path
 
 ## Bug Analysis
 

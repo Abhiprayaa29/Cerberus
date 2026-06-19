@@ -1,4 +1,4 @@
-﻿import { appendBlock, findTomlSection, replaceOrInsertSetting } from "./toml-section-editor"
+import { appendBlock, findTomlSection, replaceOrInsertSetting } from "./toml-section-editor"
 import type { CodexInstallPlatform, TrustedHookState } from "./types"
 
 export function ensurePluginEnabled(config: string, pluginKey: string): string {

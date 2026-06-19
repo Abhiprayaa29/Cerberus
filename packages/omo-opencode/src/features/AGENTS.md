@@ -1,4 +1,4 @@
-﻿# src/features/ — 22 Feature Modules
+# src/features/ — 22 Feature Modules
 
 **Generated:** 2026-06-08
 

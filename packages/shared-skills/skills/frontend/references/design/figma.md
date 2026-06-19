@@ -1,4 +1,4 @@
-﻿# Design System Inspired by Figma
+# Design System Inspired by Figma
 
 ## .. Visual Theme & Atmosphere
 

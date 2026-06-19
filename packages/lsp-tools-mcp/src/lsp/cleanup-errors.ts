@@ -1,1 +1,1 @@
-﻿export * from "@oh-my-open-pentest/lsp-core/lsp/cleanup-errors";
+export * from "@omop/lsp-core/lsp/cleanup-errors";

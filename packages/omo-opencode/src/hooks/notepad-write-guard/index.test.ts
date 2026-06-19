@@ -1,4 +1,4 @@
-﻿import { describe, expect, test } from "bun:test"
+import { describe, expect, test } from "bun:test"
 import { createNotepadWriteGuardHook } from "./index"
 
 const REFUSED_PREFIX = "Refused: Write to"

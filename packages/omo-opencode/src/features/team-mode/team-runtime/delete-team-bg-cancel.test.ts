@@ -1,4 +1,4 @@
-﻿/// <reference types="bun-types" />
+/// <reference types="bun-types" />
 
 import { afterEach, describe, expect, mock, test } from "bun:test"
 import { rm } from "node:fs/promises"

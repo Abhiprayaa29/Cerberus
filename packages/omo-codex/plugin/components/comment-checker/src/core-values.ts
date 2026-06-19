@@ -1,1 +1,1 @@
-﻿export { getString, isRecord } from "@oh-my-open-pentest/comment-checker-core";
+export { getString, isRecord } from "@omop/comment-checker-core";

@@ -1,4 +1,4 @@
-﻿import type { DelegateTaskArgs, ToolContextWithMetadata } from "./types"
+import type { DelegateTaskArgs, ToolContextWithMetadata } from "./types"
 import { CERBERUS_JUNIOR_AGENT } from "./cerberus-junior-agent"
 import { log } from "../../shared/logger"
 

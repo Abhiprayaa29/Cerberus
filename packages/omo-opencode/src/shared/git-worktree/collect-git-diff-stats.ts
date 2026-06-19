@@ -1,1 +1,1 @@
-﻿export * from "@oh-my-open-pentest/utils/git-worktree/collect-git-diff-stats"
+export * from "@omop/utils/git-worktree/collect-git-diff-stats"

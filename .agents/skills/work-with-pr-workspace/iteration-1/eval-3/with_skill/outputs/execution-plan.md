@@ -1,4 +1,4 @@
-﻿# Execution Plan: Split delegate-task/constants.ts
+# Execution Plan: Split delegate-task/constants.ts
 
 ## Phase 0: Setup
 

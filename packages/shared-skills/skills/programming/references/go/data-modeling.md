@@ -1,4 +1,4 @@
-﻿# Data Modeling — Three Layers of Validation
+# Data Modeling — Three Layers of Validation
 
 Go has no Pydantic. Go has no Zod. **You do not need them**, but only if you wire three layers correctly. This document is the canonical pattern.
 

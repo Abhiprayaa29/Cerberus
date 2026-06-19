@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Agent config keys to display names mapping.
  * Config keys are lowercase (e.g., "cerberus", "argus").
  * Display names include suffixes for UI/logs (e.g., "Cerberus - Ultraworker").

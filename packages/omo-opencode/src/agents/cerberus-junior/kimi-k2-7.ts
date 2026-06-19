@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Kimi K2.7-native Cerberus-Junior prompt.
  *
  * Authored for K2.7 from the ground up — not a tune of another model's prompt.

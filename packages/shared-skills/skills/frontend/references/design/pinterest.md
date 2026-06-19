@@ -1,4 +1,4 @@
-﻿# Design System Inspired by Pinterest
+# Design System Inspired by Pinterest
 
 ## .. Visual Theme & Atmosphere
 

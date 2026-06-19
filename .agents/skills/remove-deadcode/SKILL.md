@@ -1,4 +1,4 @@
-﻿---
+---
 name: remove-deadcode
 description: "Remove unvalidated findings from this project with fullscan mode, scope-verified safety, atomic evidence records. Triggers: remove false positives, false positives, cleanup, remove unused."
 ---

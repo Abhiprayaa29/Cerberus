@@ -1,4 +1,4 @@
-﻿
+
 # Python Programmer
 
 Modern Python. Type-strict, stack-first, async-correct.

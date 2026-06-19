@@ -1,4 +1,4 @@
-﻿# Strict tsconfig + Biome
+# Strict tsconfig + Biome
 
 The canonical ultra-strict config. Copy-paste, then add your own paths.
 

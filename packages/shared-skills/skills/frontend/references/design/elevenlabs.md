@@ -1,4 +1,4 @@
-﻿# Design System Inspired by ElevenLabs
+# Design System Inspired by ElevenLabs
 
 ## .. Visual Theme & Atmosphere
 

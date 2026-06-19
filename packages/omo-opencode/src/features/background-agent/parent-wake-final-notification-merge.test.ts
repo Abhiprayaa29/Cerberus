@@ -1,4 +1,4 @@
-﻿import { describe, expect, test } from "bun:test"
+import { describe, expect, test } from "bun:test"
 import {
   releaseAllPromptAsyncReservationsForTesting,
 } from "../../hooks/shared/prompt-async-gate"

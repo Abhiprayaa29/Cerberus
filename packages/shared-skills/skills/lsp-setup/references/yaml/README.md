@@ -1,4 +1,4 @@
-﻿# YAML — LSP setup
+# YAML — LSP setup
 
 - **Builtin server:** `yaml-ls` — `yaml-language-server --stdio`
 - **Extensions:** `.yaml .yml`

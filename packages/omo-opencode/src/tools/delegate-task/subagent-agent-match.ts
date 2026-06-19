@@ -1,4 +1,4 @@
-﻿import type { ExecutorContext } from "./executor-types"
+import type { ExecutorContext } from "./executor-types"
 import { isPlanAgent } from "./constants"
 import type { AgentInfo } from "./subagent-discovery"
 import {

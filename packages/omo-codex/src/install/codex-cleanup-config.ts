@@ -1,4 +1,4 @@
-﻿import { lstat, mkdir, readFile, writeFile } from "node:fs/promises"
+import { lstat, mkdir, readFile, writeFile } from "node:fs/promises"
 import { dirname } from "node:path"
 
 const MANAGED_MARKETPLACES = ["cerberuslabs", "lazycodex", "code-yeongyu-codex-plugins"] as const

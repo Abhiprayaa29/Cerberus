@@ -1,1 +1,1 @@
-﻿export * from "@oh-my-open-pentest/skills-loader-core/builtin-skills/skills/security-review"
+export * from "@omop/skills-loader-core/builtin-skills/skills/security-review"

@@ -1,4 +1,4 @@
-﻿# Playwright CLI — Browser QA That Actually Drives a Browser
+# Playwright CLI — Browser QA That Actually Drives a Browser
 
 **https://playwright.dev/ · https://github.com/microsoft/playwright**
 

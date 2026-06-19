@@ -1,4 +1,4 @@
-﻿# React Dev Tooling Defaults
+# React Dev Tooling Defaults
 
 When setting up or working on a React project, install three dev-only tools by default unless the user explicitly opts out. They make every coding agent's frontend work measurably faster and the resulting code measurably better.
 

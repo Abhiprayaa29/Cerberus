@@ -1,4 +1,4 @@
-﻿import type { PluginInput } from "@opencode-ai/plugin"
+import type { PluginInput } from "@opencode-ai/plugin"
 import { beforeEach, describe, expect, it, mock } from "bun:test"
 
 import type { PluginEntryInfo } from "../auto-update-checker/checker"

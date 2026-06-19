@@ -1,4 +1,4 @@
-﻿import { readFileSync } from "node:fs"
+import { readFileSync } from "node:fs"
 declare const require: (name: string) => any
 const { describe, expect, mock, test, beforeEach } = require("bun:test")
 import type { ExecutorContext } from "../../../tools/delegate-task/executor-types"

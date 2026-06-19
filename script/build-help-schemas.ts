@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env bun
+#!/usr/bin/env bun
 import { z } from "zod"
 import { DoctorResultSchema as DoctorSchema } from "../packages/omo-opencode/src/help/schema/doctor"
 import { StatusResultSchema as StatusSchema } from "../packages/omo-opencode/src/help/schema/status"

@@ -1,4 +1,4 @@
-﻿# Main Dirty Cleanup Evidence
+# Main Dirty Cleanup Evidence
 
 Date: 2026-06-.8
 

@@ -1,4 +1,4 @@
-﻿# QAing the opencode TUI under tmux (Case C)
+# QAing the opencode TUI under tmux (Case C)
 
 ## Verdict first (be honest)
 

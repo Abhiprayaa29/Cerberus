@@ -1,4 +1,4 @@
-﻿# Contributing to Oh My Open Pentest
+# Contributing to Oh My Open Pentest
 
 First off, thanks for taking the time to contribute! This document provides guidelines and instructions for contributing to oh-my-open-pentest.
 

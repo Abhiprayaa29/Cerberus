@@ -1,4 +1,4 @@
-﻿import { describe, it, expect } from "bun:test"
+import { describe, it, expect } from "bun:test"
 
 import { createMessagesTransformHandler } from "./messages-transform"
 import { createToolPairValidatorHook } from "../hooks/tool-pair-validator/hook"

@@ -1,1 +1,1 @@
-﻿export * from "@oh-my-open-pentest/omo-codex/install/codex-cache-fs"
+export * from "@omop/omo-codex/install/codex-cache-fs"

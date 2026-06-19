@@ -1,4 +1,4 @@
-﻿# Security Research - Team Mode Vulnerability Audit
+# Security Research - Team Mode Vulnerability Audit
 
 Use this skill to run a parallel security audit that separates real exploitability from generic concern. The team has 3 vulnerability hunters and 2 PoC engineers.
 

@@ -1,4 +1,4 @@
-﻿# React Perf Tooling for Lighthouse .00
+# React Perf Tooling for Lighthouse .00
 
 You are auditing or optimizing a React app for Lighthouse .00. Two tools belong in this workflow alongside Playwright + lighthouse — they catch the React-specific perf issues that Lighthouse counts but doesn't diagnose by component:
 

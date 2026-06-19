@@ -1,4 +1,4 @@
-﻿# PR Title
+# PR Title
 
 ```
 fix(atlas): prevent crash when boulder.json missing worktree_path

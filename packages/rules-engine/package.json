@@ -1,6 +1,6 @@
-﻿{
-  "name": "@oh-my-open-pentest/rules-engine",
-  "version": "0...0",
+{
+  "name": "@omop/rules-engine",
+  "version": "0.1.0",
   "type": "module",
   "private": true,
   "description": "Pure TypeScript rule discovery, matching, and nested AGENTS.md context utilities for oh-my-open-pentest.",
@@ -20,7 +20,7 @@
     "test": "bun test src/*.test.ts src/**/*.test.ts"
   },
   "dependencies": {
-    "@oh-my-open-pentest/utils": "workspace:*",
-    "picomatch": "^..0.."
+    "@omop/utils": "*",
+    "picomatch": "^4.0.4"
   }
 }

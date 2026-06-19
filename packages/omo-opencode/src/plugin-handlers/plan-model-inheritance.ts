@@ -1,4 +1,4 @@
-﻿const MODEL_SETTINGS_KEYS = [
+const MODEL_SETTINGS_KEYS = [
   "model",
   "variant",
   "temperature",

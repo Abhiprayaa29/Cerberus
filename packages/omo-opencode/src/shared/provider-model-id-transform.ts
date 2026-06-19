@@ -1,1 +1,1 @@
-﻿export { transformModelForProvider } from "@oh-my-open-pentest/model-core"
+export { transformModelForProvider } from "@omop/model-core"

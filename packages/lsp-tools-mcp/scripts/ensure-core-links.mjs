@@ -1,4 +1,4 @@
-﻿import { lstatSync, mkdirSync, symlinkSync } from "node:fs";
+import { lstatSync, mkdirSync, symlinkSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 

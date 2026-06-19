@@ -1,4 +1,4 @@
-﻿# Phase 0 + . — Environment Assessment & Journal Setup
+# Phase 0 + . — Environment Assessment & Journal Setup
 
 Before a debugger touches anything, you need a map of what's running and a ledger of what you'll touch. Skipping either phase is how debug sessions turn into "why is my repo dirty a week later" sessions.
 

@@ -1,5 +1,5 @@
-﻿import type { TeamModeConfig } from "../config"
-import { isRecord } from "@oh-my-open-pentest/utils"
+import type { TeamModeConfig } from "../config"
+import { isRecord } from "@omop/utils"
 import { log } from "../logger"
 import { releaseDeliveryReservation, reserveMessageForDelivery } from "./reservation"
 

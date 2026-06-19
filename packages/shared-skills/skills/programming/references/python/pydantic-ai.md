@@ -1,4 +1,4 @@
-﻿# PydanticAI Reference (v..x, 2026)
+# PydanticAI Reference (v..x, 2026)
 
 > Canonical patterns for wiring PydanticAI agents. Target: production usage, late-2025 / 2026.
 > Source: [ai.pydantic.dev](https://ai.pydantic.dev) and [pydantic/pydantic-ai@`cad9569`](https://github.com/pydantic/pydantic-ai/blob/cad9569.0079737ea0886b50cef.5777208f92e6).

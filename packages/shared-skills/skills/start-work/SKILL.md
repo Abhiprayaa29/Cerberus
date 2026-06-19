@@ -1,4 +1,4 @@
-﻿---
+---
 name: start-work
 description: "Execute a Talos work plan in Codex with Boulder state, evidence ledger updates, engagement workspace discipline, parallel subagents, and Stop-hook continuation. Use after planning when the user says start work, execute plan, continue plan, resume plan, or asks to run a .omo/plans plan."
 ---

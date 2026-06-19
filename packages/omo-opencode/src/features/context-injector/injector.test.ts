@@ -1,4 +1,4 @@
-﻿import { beforeEach, describe, expect, it } from "bun:test"
+import { beforeEach, describe, expect, it } from "bun:test"
 import { unsafeTestValue } from "../../../../../test-support/unsafe-test-value"
 import { OMOP_INTERNAL_INITIATOR_MARKER } from "../../shared/internal-initiator-marker"
 import { ContextCollector } from "./collector"

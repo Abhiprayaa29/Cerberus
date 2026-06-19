@@ -1,4 +1,4 @@
-﻿# lsp-tools-mcp — LSP Tools stdio MCP (MCP layer)
+# lsp-tools-mcp — LSP Tools stdio MCP (MCP layer)
 
 **Generated:** 2026-06-.6
 
@@ -22,10 +22,10 @@ Vendored, Node-targeted MCP-layer package (`@code-yeongyu/lsp-tools-mcp`). Serve
 | File | Role |
 |------|------|
 | `cli.ts` | Bin `omo-lsp`. `mcp` subcommand → `runMcpStdioServer()` |
-| `mcp.ts` | Re-exports `@oh-my-open-pentest/lsp-core/mcp` (stdio MCP server + JSON-RPC handler) |
-| `tools.ts` | Re-exports `@oh-my-open-pentest/lsp-core/tools` (tool definitions + runtime dispatch) |
-| `request-context.ts` | Re-exports `@oh-my-open-pentest/lsp-core/request-context` |
-| `lsp/manager.ts` | Re-exports `@oh-my-open-pentest/lsp-core/lsp/manager` |
+| `mcp.ts` | Re-exports `@omop/lsp-core/mcp` (stdio MCP server + JSON-RPC handler) |
+| `tools.ts` | Re-exports `@omop/lsp-core/tools` (tool definitions + runtime dispatch) |
+| `request-context.ts` | Re-exports `@omop/lsp-core/request-context` |
+| `lsp/manager.ts` | Re-exports `@omop/lsp-core/lsp/manager` |
 
 ## NOTES
 

@@ -1,4 +1,4 @@
-﻿import { runTmuxCommand, type TmuxCommandResult } from "@oh-my-open-pentest/tmux-core"
+import { runTmuxCommand, type TmuxCommandResult } from "@omop/tmux-core"
 
 type ResolvedCallerTmuxSession = {
 	sessionId: string

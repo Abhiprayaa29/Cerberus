@@ -1,4 +1,4 @@
-﻿import { parseFrontmatter } from "@oh-my-open-pentest/utils"
+import { parseFrontmatter } from "@omop/utils"
 import { readFile } from "node:fs/promises"
 import { isAbsolute, relative, resolve } from "node:path"
 import type {

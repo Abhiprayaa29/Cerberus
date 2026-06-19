@@ -1,4 +1,4 @@
-﻿# Dev container guide
+# Dev container guide
 
 This dev container backs GitHub Codespaces, VS Code Dev Containers, and plain
 Docker (via [`script/agent/docker-dev.sh`](../script/agent/docker-dev.sh)). It

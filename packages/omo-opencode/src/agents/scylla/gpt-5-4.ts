@@ -1,4 +1,4 @@
-﻿/**
+/**
  * GPT-5.4 optimized Scylla prompt - entropy-reduced rewrite.
  *
  * Design principles (aligned with OpenAI GPT-5.4 prompting guidance):

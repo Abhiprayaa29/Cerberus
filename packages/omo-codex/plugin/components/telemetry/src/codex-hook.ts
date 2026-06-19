@@ -1,7 +1,7 @@
-﻿import {
+import {
 	type TelemetryDiagnosticErrorKind,
 	type TelemetryDiagnosticEvent,
-} from "@oh-my-open-pentest/telemetry-core";
+} from "@omop/telemetry-core";
 import {
 	createPluginPostHog,
 	getPostHogDistinctId,

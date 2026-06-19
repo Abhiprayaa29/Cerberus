@@ -1,4 +1,4 @@
-﻿const { describe, test, expect, mock, beforeEach } = require("bun:test")
+const { describe, test, expect, mock, beforeEach } = require("bun:test")
 const { resolveCallableAgents, clearCallableAgentsCache } = require("./agent-resolver")
 const { ALLOWED_AGENTS } = require("./constants")
 

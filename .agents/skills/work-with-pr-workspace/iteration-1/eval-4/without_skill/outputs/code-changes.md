@@ -1,4 +1,4 @@
-﻿# Code Changes: Built-in arXiv MCP
+# Code Changes: Built-in arXiv MCP
 
 ## .. NEW FILE: `src/mcp/arxiv.ts`
 

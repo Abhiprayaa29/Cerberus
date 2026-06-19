@@ -1,4 +1,4 @@
-﻿import { z } from "zod"
+import { z } from "zod"
 import { OhMyOpenCodeConfigSchema } from "../packages/omo-opencode/src/config/schema"
 
 export function createOhMyOpenCodeJsonSchema(): Record<string, unknown> {

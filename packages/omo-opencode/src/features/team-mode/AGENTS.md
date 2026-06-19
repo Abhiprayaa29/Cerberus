@@ -1,4 +1,4 @@
-﻿# team-mode — Parallel Multi-Agent Coordination
+# team-mode — Parallel Multi-Agent Coordination
 
 **Generated:** 2026-05-.5
 

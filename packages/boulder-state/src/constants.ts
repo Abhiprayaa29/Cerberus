@@ -1,4 +1,4 @@
-﻿export const BOULDER_DIR = ".omo"
+export const BOULDER_DIR = ".omo"
 export const BOULDER_FILE = "boulder.json"
 export const BOULDER_STATE_PATH = `${BOULDER_DIR}/${BOULDER_FILE}`
 

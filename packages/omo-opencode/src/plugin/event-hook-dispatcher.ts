@@ -1,4 +1,4 @@
-﻿import type { CreatedHooks } from "../create-hooks";
+import type { CreatedHooks } from "../create-hooks";
 import { log } from "../shared/logger";
 import { resolveMessageEventSessionID, resolveSessionEventID } from "../shared/event-session-id";
 import { isRecord } from "./event-error-utils";

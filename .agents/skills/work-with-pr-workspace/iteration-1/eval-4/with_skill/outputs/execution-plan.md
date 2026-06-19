@@ -1,4 +1,4 @@
-﻿# Execution Plan: Issue #.00 - Built-in arXiv MCP
+# Execution Plan: Issue #.00 - Built-in arXiv MCP
 
 ## Phase 0: Setup
 

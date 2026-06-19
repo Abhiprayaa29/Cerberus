@@ -1,4 +1,4 @@
-﻿import type { RunCommand } from "./types"
+import type { RunCommand } from "./types"
 import type { LazyCodexInstallCliArgs } from "./lazycodex-cli-args"
 
 export type LazyCodexDelegatedCommand = Extract<LazyCodexInstallCliArgs, { readonly kind: "command" }>

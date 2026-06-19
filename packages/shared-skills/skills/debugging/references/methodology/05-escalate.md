@@ -1,4 +1,4 @@
-﻿# Phase 5 — User Decision Escalation
+# Phase 5 — User Decision Escalation
 
 Escalation is for genuine ambiguity, not for skipping investigation. Most "should I ask the user" moments are really "I don't want to do one more query" moments, and those are wrong.
 

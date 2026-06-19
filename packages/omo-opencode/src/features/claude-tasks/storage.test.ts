@@ -1,4 +1,4 @@
-﻿import { describe, test, expect, beforeEach, afterEach } from "bun:test"
+import { describe, test, expect, beforeEach, afterEach } from "bun:test"
 import { existsSync, mkdirSync, rmSync, writeFileSync } from "fs"
 import { join, basename } from "path"
 import { z } from "zod"

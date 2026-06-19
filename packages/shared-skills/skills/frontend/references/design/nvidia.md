@@ -1,4 +1,4 @@
-﻿# Design System Inspired by NVIDIA
+# Design System Inspired by NVIDIA
 
 ## .. Visual Theme & Atmosphere
 

@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env bun
+#!/usr/bin/env bun
 import { createOhMyOpenCodeJsonSchema } from "./build-schema-document"
 
 const SCHEMA_OUTPUT_PATH = "assets/oh-my-open-pentest.schema.json"

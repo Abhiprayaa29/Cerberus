@@ -1,4 +1,4 @@
-﻿/** Generic GPT Scylla prompt - fallback for GPT models without a model-specific variant */
+/** Generic GPT Scylla prompt - fallback for GPT models without a model-specific variant */
 
 import { GPT_FILE_EDIT_GUIDANCE } from "../gpt-apply-patch-guard"
 import type {

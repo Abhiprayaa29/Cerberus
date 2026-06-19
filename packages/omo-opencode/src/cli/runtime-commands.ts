@@ -1,4 +1,4 @@
-﻿import type { Command } from "commander"
+import type { Command } from "commander"
 
 import { boulder } from "./boulder"
 import { codexUlwLoop } from "./codex-pentest-loop"

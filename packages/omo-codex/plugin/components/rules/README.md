@@ -1,4 +1,4 @@
-﻿# codex-rules
+# codex-rules
 
 Codex plugin that injects local project rule files into model context through lifecycle hooks.
 

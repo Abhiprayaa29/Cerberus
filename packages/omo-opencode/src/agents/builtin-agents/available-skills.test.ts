@@ -1,4 +1,4 @@
-﻿/// <reference types="bun-types" />
+/// <reference types="bun-types" />
 import { describe, expect, it, test } from "bun:test"
 import type { LoadedSkill, SkillScope } from "../../features/opencode-skill-loader/types"
 import { buildAvailableSkills } from "./available-skills"

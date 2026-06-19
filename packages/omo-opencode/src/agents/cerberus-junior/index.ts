@@ -1,4 +1,4 @@
-﻿export { buildDefaultCerberusJuniorPrompt } from "./default"
+export { buildDefaultCerberusJuniorPrompt } from "./default"
 export { buildKimiK26CerberusJuniorPrompt } from "./kimi-k2-6"
 export { buildGptCerberusJuniorPrompt } from "./gpt"
 export { buildGpt54CerberusJuniorPrompt } from "./gpt-5-4"

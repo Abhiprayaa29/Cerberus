@@ -1,4 +1,4 @@
-﻿import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
@@ -10,7 +10,7 @@ import {
 	runSessionStartHook,
 	runUserPromptSubmitHook,
 } from "../src/codex-hook.js";
-import { createRuleDiscoveryCache, findRuleCandidates } from "@oh-my-open-pentest/rules-engine/engine";
+import { createRuleDiscoveryCache, findRuleCandidates } from "@omop/rules-engine/engine";
 
 interface FixtureOptions {
 	readonly writeProjectDuplicate?: boolean;

@@ -1,4 +1,4 @@
-﻿# Release Process
+# Release Process
 
 This reference records release gates that are not covered by CI alone.
 

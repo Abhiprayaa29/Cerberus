@@ -1,4 +1,4 @@
-﻿import type { PiRulesConfig } from "@oh-my-open-pentest/rules-engine/engine";
+import type { PiRulesConfig } from "@omop/rules-engine/engine";
 
 export function withDynamicBudget(config: PiRulesConfig): PiRulesConfig {
 	return {

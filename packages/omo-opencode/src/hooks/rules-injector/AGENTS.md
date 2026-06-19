@@ -1,4 +1,4 @@
-﻿# src/hooks/rules-injector/ — Conditional Rules Injection
+# src/hooks/rules-injector/ — Conditional Rules Injection
 
 **Generated:** 2026-05-.5
 

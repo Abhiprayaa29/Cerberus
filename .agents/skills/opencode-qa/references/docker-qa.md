@@ -1,4 +1,4 @@
-﻿# Docker QA (default path)
+# Docker QA (default path)
 
 Run opencode QA inside a DISPOSABLE container so the host is never touched and
 you always test against the latest opencode. The container itself is the

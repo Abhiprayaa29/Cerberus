@@ -1,10 +1,10 @@
-﻿# git-bash-mcp — Windows Git Bash stdio MCP (MCP layer)
+# git-bash-mcp — Windows Git Bash stdio MCP (MCP layer)
 
 **Generated:** 2026-06-.7
 
 ## OVERVIEW
 
-Internal **Bun-targeted** MCP-layer package (`@oh-my-open-pentest/git-bash-mcp`, private). Serves the Windows-only `git_bash` tool family for the Codex edition: resolve Git Bash's `bash.exe` and run shell commands through it. Consumes [`mcp-stdio-core`](../mcp-stdio-core/AGENTS.md) for JSON-RPC framing and [`utils`](../utils/AGENTS.md) for the bash resolver. NOT registered by the OpenCode edition (it has tmux-based `interactive_bash`). Package server name `git_bash`.
+Internal **Bun-targeted** MCP-layer package (`@omop/git-bash-mcp`, private). Serves the Windows-only `git_bash` tool family for the Codex edition: resolve Git Bash's `bash.exe` and run shell commands through it. Consumes [`mcp-stdio-core`](../mcp-stdio-core/AGENTS.md) for JSON-RPC framing and [`utils`](../utils/AGENTS.md) for the bash resolver. NOT registered by the OpenCode edition (it has tmux-based `interactive_bash`). Package server name `git_bash`.
 
 ## TOOLS SERVED
 
@@ -19,7 +19,7 @@ Internal **Bun-targeted** MCP-layer package (`@oh-my-open-pentest/git-bash-mcp`,
 | `cli.ts` | Bin `omo-git-bash`. `mcp` subcommand → `runMcpStdioServer()` |
 | `mcp.ts` | `handleGitBashMcpRequest()` + tool registration over `runJsonRpcStdioServer` |
 | `runner.ts` | `runGitBashCommand()` — spawns `bash.exe -lc`, temp-fd output capture, timeout kill |
-| `git-bash-resolver.ts` | re-exports `resolveGitBash(ForCurrentProcess)` from `@oh-my-open-pentest/utils/runtime` |
+| `git-bash-resolver.ts` | re-exports `resolveGitBash(ForCurrentProcess)` from `@omop/utils/runtime` |
 
 ## NOTES
 

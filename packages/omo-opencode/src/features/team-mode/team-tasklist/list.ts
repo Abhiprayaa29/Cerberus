@@ -1,1 +1,1 @@
-﻿export * from "@oh-my-open-pentest/team-core/team-tasklist/list"
+export * from "@omop/team-core/team-tasklist/list"

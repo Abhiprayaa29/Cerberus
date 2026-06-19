@@ -1,4 +1,4 @@
-﻿# Phase 9 + .0 — Cleanup & Final Verification
+# Phase 9 + .0 — Cleanup & Final Verification
 
 The working tree after the session must differ from before only by the real fix and its test. Anything else is a process failure.
 

@@ -1,4 +1,4 @@
-﻿# Swift — LSP setup
+# Swift — LSP setup
 
 - **Builtin server:** `sourcekit-lsp` — `sourcekit-lsp`
 - **Extensions:** `.swift .objc .objcpp`

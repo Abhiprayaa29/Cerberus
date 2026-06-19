@@ -1,1 +1,1 @@
-﻿export * from "@oh-my-open-pentest/utils/command-executor/embedded-commands"
+export * from "@omop/utils/command-executor/embedded-commands"

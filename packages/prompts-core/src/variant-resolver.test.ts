@@ -1,4 +1,4 @@
-﻿import { describe, expect, test } from "bun:test"
+import { describe, expect, test } from "bun:test"
 import type { PromptSource, VariantTable } from "./types"
 import { resolveVariant } from "./variant-resolver"
 

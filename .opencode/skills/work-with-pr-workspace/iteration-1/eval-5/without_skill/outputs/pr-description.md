@@ -1,4 +1,4 @@
-﻿## Summary
+## Summary
 
 - Add `allowed_comment_prefixes` config to `CommentCheckerConfigSchema` with sensible defaults (Note:, TODO:, FIXME:, HACK:, WARNING:, etc.)
 - Add post-processing filter in `allowed-prefix-filter.ts` that suppresses false positives from the Go binary's output before appending to tool output

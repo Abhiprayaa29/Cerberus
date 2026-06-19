@@ -1,4 +1,4 @@
-﻿import { afterEach, beforeEach, describe, expect, it } from "bun:test"
+import { afterEach, beforeEach, describe, expect, it } from "bun:test"
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs"
 import { tmpdir } from "node:os"
 import { join } from "node:path"
@@ -63,11 +63,11 @@ describe("findPackageJsonUp", () => {
     expect(found).toBeNull()
   })
 
-  it("#given the interim @oh-my-open-pentest/omo-opencode manifest between the file and an accepted root #when walking up #then skips it and returns the accepted manifest", () => {
+  it("#given the interim @omop/omo-opencode manifest between the file and an accepted root #when walking up #then skips it and returns the accepted manifest", () => {
     const nested = join(workdir, "pkg", "nested")
     mkdirSync(nested, { recursive: true })
     writeFileSync(join(nested, "file.js"), "")
-    writeFileSync(join(workdir, "pkg", "package.json"), JSON.stringify({ name: "@oh-my-open-pentest/omo-opencode", version: "0.1.0" }))
+    writeFileSync(join(workdir, "pkg", "package.json"), JSON.stringify({ name: "@omop/omo-opencode", version: "0.1.0" }))
     writeFileSync(join(workdir, "package.json"), JSON.stringify({ name: "oh-my-open-pentest", version: "9.9.9" }))
 
     const found = findPackageJsonUp(join(nested, "file.js"))
@@ -78,7 +78,7 @@ describe("findPackageJsonUp", () => {
   it("#given no accepted-name manifest within the 10-level-capped walk #when walking up #then returns null", () => {
     const nested = join(workdir, "a", "b", "c")
     mkdirSync(nested, { recursive: true })
-    writeFileSync(join(workdir, "package.json"), JSON.stringify({ name: "@oh-my-open-pentest/omo-opencode", version: "0.1.0" }))
+    writeFileSync(join(workdir, "package.json"), JSON.stringify({ name: "@omop/omo-opencode", version: "0.1.0" }))
 
     const found = findPackageJsonUp(nested)
 

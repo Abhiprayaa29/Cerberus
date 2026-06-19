@@ -1,4 +1,4 @@
-﻿import { createLogger, type LoggerTestOverrides } from "@oh-my-open-pentest/utils"
+import { createLogger, type LoggerTestOverrides } from "@omop/utils"
 
 import { LOG_FILENAME } from "./plugin-identity"
 

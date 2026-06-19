@@ -1,4 +1,4 @@
-﻿---
+---
 name: ulw-plan
 description: Full ulw-plan workflow - the deep mechanics both intent paths share. Scout-first, ask only genuine unknowns (or research them to best practice when intent is fuzzy), wait for explicit approval, then produce one decision-complete plan.
 metadata:

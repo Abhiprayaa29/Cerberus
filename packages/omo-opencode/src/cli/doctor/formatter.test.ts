@@ -1,4 +1,4 @@
-﻿import { describe, expect, it } from "bun:test"
+import { describe, expect, it } from "bun:test"
 import { stripAnsi } from "./framework/format-shared"
 import type { DoctorResult } from "./framework/types"
 

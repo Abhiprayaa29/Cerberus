@@ -1,1 +1,1 @@
-﻿export * from "@oh-my-open-pentest/utils/migration/migrations-sidecar"
+export * from "@omop/utils/migration/migrations-sidecar"

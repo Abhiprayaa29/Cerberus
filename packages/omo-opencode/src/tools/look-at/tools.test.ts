@@ -1,4 +1,4 @@
-﻿import { afterEach, describe, expect, test, mock } from "bun:test"
+import { afterEach, describe, expect, test, mock } from "bun:test"
 import type { ToolContext } from "@opencode-ai/plugin/tool"
 import { mkdtempSync, rmSync, writeFileSync } from "node:fs"
 import { tmpdir } from "node:os"

@@ -1,4 +1,4 @@
-﻿# Pattern syntax — meta-variables and how patterns parse
+# Pattern syntax — meta-variables and how patterns parse
 
 ast-grep is **not regex**. Patterns are written in the **same syntax as the target language** (TypeScript, Python, Go, etc.), and ast-grep matches them against the AST of every file. The wildcards are called **meta-variables**.
 

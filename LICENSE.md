@@ -1,4 +1,4 @@
-﻿# License
+# License
 
 Portions of this software are licensed as follows:
 

@@ -1,4 +1,4 @@
-﻿/// <reference types="bun-types" />
+/// <reference types="bun-types" />
 import { afterEach, beforeEach, mock } from "bun:test"
 import { spawnSync } from "node:child_process"
 import { existsSync, rmSync } from "node:fs"

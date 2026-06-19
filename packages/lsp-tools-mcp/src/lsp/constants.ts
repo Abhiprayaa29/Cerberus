@@ -1,1 +1,1 @@
-﻿export * from "@oh-my-open-pentest/lsp-core/lsp/constants";
+export * from "@omop/lsp-core/lsp/constants";

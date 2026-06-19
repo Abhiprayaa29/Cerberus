@@ -1,6 +1,6 @@
-﻿import { afterEach, describe, expect, it, mock, spyOn } from "bun:test"
+import { afterEach, describe, expect, it, mock, spyOn } from "bun:test"
 
-import * as logger from "@oh-my-open-pentest/utils"
+import * as logger from "@omop/utils"
 
 type TarZipEntryListingModule = typeof import("./tar-zip-entry-listing")
 

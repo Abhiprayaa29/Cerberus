@@ -1,4 +1,4 @@
-﻿import { checkForLegacyPluginEntry } from "./legacy-plugin-warning"
+import { checkForLegacyPluginEntry } from "./legacy-plugin-warning"
 import { log } from "./logger"
 import { migrateLegacyPluginEntry } from "./migrate-legacy-plugin-entry"
 import { toCanonicalEntry } from "./plugin-entry-migrator"

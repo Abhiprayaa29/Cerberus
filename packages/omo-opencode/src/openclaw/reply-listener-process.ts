@@ -1,1 +1,1 @@
-﻿export * from "@oh-my-open-pentest/openclaw-core/reply-listener-process"
+export * from "@omop/openclaw-core/reply-listener-process"

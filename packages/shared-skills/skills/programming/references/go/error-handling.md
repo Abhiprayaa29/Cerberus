@@ -1,4 +1,4 @@
-﻿# Error Handling
+# Error Handling
 
 Typed errors, wrap chains, `errors.Is` / `errors.As`, no panic in libraries, resource cleanup. Go errors look simple and are full of footguns. This document is the canonical set of moves.
 

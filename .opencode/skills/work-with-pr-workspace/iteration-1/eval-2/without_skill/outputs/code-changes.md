@@ -1,4 +1,4 @@
-﻿# Code Changes: Fix Atlas Hook Crash on Missing worktree_path
+# Code Changes: Fix Atlas Hook Crash on Missing worktree_path
 
 ## Change .: Harden `readBoulderState()` validation
 

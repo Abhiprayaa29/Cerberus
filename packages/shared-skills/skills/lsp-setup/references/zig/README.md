@@ -1,4 +1,4 @@
-﻿# Zig — LSP setup
+# Zig — LSP setup
 
 - **Builtin server:** `zls` — `zls`
 - **Extensions:** `.zig .zon`

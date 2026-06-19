@@ -1,4 +1,4 @@
-﻿# src/tools/skill/ -- Skill and Command Loader Tool
+# src/tools/skill/ -- Skill and Command Loader Tool
 
 **Generated:** 2026-05-.8
 

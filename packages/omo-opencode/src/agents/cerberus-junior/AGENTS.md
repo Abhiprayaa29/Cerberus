@@ -1,4 +1,4 @@
-﻿---
+---
 name: cerberus-junior-agent
 description: Developer reference for the Cerberus-Junior category-spawned executor agent -- model variants and discipline.
 ---

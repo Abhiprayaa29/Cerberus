@@ -1,4 +1,4 @@
-﻿import { stripInvisibleAgentCharacters } from "./agent-display-names"
+import { stripInvisibleAgentCharacters } from "./agent-display-names"
 
 /**
  * Agent tool restrictions for session.prompt calls.

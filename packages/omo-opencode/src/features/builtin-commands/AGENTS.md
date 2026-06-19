@@ -1,4 +1,4 @@
-﻿# src/features/builtin-commands/ -- Built-in Slash Commands
+# src/features/builtin-commands/ -- Built-in Slash Commands
 
 **Generated:** 2026-05-.8
 

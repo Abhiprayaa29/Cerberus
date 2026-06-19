@@ -1,4 +1,4 @@
-﻿import { describe, expect, it } from "bun:test"
+import { describe, expect, it } from "bun:test"
 
 import { extractErrorMessage } from "./event"
 import { resolveFallbackAgentName } from "./event-error-utils"

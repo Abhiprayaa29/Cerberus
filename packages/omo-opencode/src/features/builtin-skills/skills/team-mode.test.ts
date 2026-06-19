@@ -1,4 +1,4 @@
-﻿import { describe, expect, test } from "bun:test"
+import { describe, expect, test } from "bun:test"
 
 import { createBuiltinSkills } from "../skills"
 import { teamModeSkill } from "./team-mode"

@@ -1,4 +1,4 @@
-﻿import {
+import {
   isClaudeOpus47Model,
   isGeminiModel,
   isGlmModel,
@@ -6,7 +6,7 @@
   isKimiK2Model,
   isKimiK27Model,
   isMiniMaxModel,
-} from "@oh-my-open-pentest/model-core"
+} from "@omop/model-core"
 import type { VariantTable } from "./types"
 
 type ModelMatcher = (modelID: string) => boolean

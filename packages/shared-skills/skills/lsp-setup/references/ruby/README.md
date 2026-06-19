@@ -1,4 +1,4 @@
-﻿# Ruby — LSP setup
+# Ruby — LSP setup
 
 - **Builtin server:** `ruby-lsp` — `rubocop --lsp`
 - **Extensions:** `.rb .rake .gemspec .ru`

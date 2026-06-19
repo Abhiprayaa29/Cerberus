@@ -1,4 +1,4 @@
-﻿import type { CreatedHooks } from "../create-hooks"
+import type { CreatedHooks } from "../create-hooks"
 import { isRalphLoopResumeArgument, parseRalphLoopArguments } from "../hooks/pentest-loop/command-arguments"
 import { log } from "../shared/logger"
 

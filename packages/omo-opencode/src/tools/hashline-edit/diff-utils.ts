@@ -1,5 +1,5 @@
-﻿export {
+export {
   toHashlineContent,
   generateUnifiedDiff,
   countLineDiffs,
-} from "@oh-my-open-pentest/hashline-core"
+} from "@omop/hashline-core"

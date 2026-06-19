@@ -1,4 +1,4 @@
-﻿import { afterEach, describe, expect, it, mock } from "bun:test"
+import { afterEach, describe, expect, it, mock } from "bun:test"
 
 async function* createEmptyEventStream(): AsyncIterable<unknown> {}
 

@@ -1,4 +1,4 @@
-﻿# Design System Inspired by The Verge
+# Design System Inspired by The Verge
 
 ## .. Visual Theme & Atmosphere
 

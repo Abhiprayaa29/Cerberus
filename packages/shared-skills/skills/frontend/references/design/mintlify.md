@@ -1,4 +1,4 @@
-﻿# Design System Inspired by Mintlify
+# Design System Inspired by Mintlify
 
 ## .. Visual Theme & Atmosphere
 

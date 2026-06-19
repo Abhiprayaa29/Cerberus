@@ -1,9 +1,9 @@
-﻿import assert from "node:assert/strict";
+import assert from "node:assert/strict";
 import { readdir, readFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
-import { sharedSkillsRootPath } from "@oh-my-open-pentest/shared-skills";
+import { sharedSkillsRootPath } from "@omop/shared-skills";
 import {
 	CONTEXT_PRESSURE_SKILL_BUDGET_BYTES,
 	assertPackagedContentMatches,
@@ -55,7 +55,7 @@ test("#given aggregate Codex skills #when source wiring is inspected #then share
 	const syncScript = await readFile(join(root, "scripts", "sync-skills.mjs"), "utf8");
 
 	// when
-	const sharedSkillDependency = pluginPackageJson.dependencies?.["@oh-my-open-pentest/shared-skills"];
+	const sharedSkillDependency = pluginPackageJson.dependencies?.["@omop/shared-skills"];
 	const rootPackageFiles = rootPackageJson.files ?? [];
 
 	// then

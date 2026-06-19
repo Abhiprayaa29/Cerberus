@@ -1,4 +1,4 @@
-﻿export interface RuleMetadata {
+export interface RuleMetadata {
   readonly description?: string;
   readonly globs?: string | readonly string[];
   readonly paths?: string | readonly string[];

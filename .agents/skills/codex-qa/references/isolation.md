@@ -1,4 +1,4 @@
-﻿# Isolation — QA ONLY our plugin, never the user's real Codex
+# Isolation — QA ONLY our plugin, never the user's real Codex
 
 The whole point of this skill: exercise the omo plugin in a real Codex without
 reading or writing the user's `~/.codex`, and without a real model API call. Two

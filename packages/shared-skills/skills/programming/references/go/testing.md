@@ -1,4 +1,4 @@
-﻿# Testing
+# Testing
 
 TDD shape, table-driven tests, `require` vs `assert`, snapshot tests, property-based tests, integration tests with testcontainers, goroutine-leak detection. The discipline in `programming/SKILL.md` (Given/When/Then, less mock the better, efficient AND accurate) — this document gives the Go-specific recipes.
 

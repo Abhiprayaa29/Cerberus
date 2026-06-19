@@ -1,4 +1,4 @@
-﻿# Dev Browser Installation Guide
+# Dev Browser Installation Guide
 
 This guide covers installation for all platforms: macOS, Linux, and Windows.
 

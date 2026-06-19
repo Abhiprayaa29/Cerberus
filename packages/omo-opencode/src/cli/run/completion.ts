@@ -1,4 +1,4 @@
-﻿import pc from "picocolors"
+import pc from "picocolors"
 import type { RunContext, Todo, ChildSession, SessionStatus } from "./types"
 import { normalizeSDKResponse } from "../../shared"
 import {

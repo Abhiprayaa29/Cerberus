@@ -1,4 +1,4 @@
-﻿# Design System Inspired by PostHog
+# Design System Inspired by PostHog
 
 ## .. Visual Theme & Atmosphere
 

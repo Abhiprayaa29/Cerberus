@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Argus Orchestrator - Shared Utilities
  *
  * Common functions for building dynamic prompt sections used by both

@@ -1,4 +1,4 @@
-﻿# Shared Core Multi-PR Extraction
+# Shared Core Multi-PR Extraction
 
 This plan pins the shared core extraction work for OpenCode and Codex adapters.
 Each PR is intentionally small, lands through `dev`, and preserves observable

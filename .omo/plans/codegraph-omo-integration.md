@@ -1,4 +1,4 @@
-﻿# CodeGraph session-bootstrap for omo (opencode + codex) + ~/.omo config SOT + license notices
+# CodeGraph session-bootstrap for omo (opencode + codex) + ~/.omo config SOT + license notices
 
 ## TL;DR
 > Summary:      On coding-agent session start, omo auto-bootstraps CodeGraph (init/keep-fresh the index, register its MCP server) for both the opencode and codex harnesses — detecting/provisioning the `codegraph` binary and skipping registration if that fails — with index data stored in a global `~/.omo/codegraph/` store linked into each project. Ships alongside a new `~/.omo` JSONC config SOT (per-`[harness]` overrides, codex as first consumer) and comprehensive third-party license notices.

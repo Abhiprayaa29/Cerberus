@@ -1,4 +1,4 @@
-﻿# Design System Inspired by Wise
+# Design System Inspired by Wise
 
 ## .. Visual Theme & Atmosphere
 
