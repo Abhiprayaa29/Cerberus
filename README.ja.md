@@ -83,7 +83,7 @@
 
 > 「Oh My Opencode を使って、たった 1 日で 8000 個の eslint 警告を叩き潰しました。」 <br/>- [Jacob Ferrari](https://x.com/jacobferrari_/status/2003258761952289061)
 
-> 「Ohmyopencode と ralph loop を使って、4 万 5 千行の tauri アプリを一晩で SaaS ウェブアプリに変換しました。インタビューモードから始めて、私のプロンプトに対して質問や推奨事項を尋ねました。勝手に作業していくのを見るのは楽しかったし、今朝起きたらウェブサイトがほぼ動いているのを見て驚愕しました！」 - [James Hargis](https://x.com/hargabyte/status/2007299688261882202)
+> 「Ohmyopencode と pentest loop を使って、4 万 5 千行の tauri アプリを一晩で SaaS ウェブアプリに変換しました。インタビューモードから始めて、私のプロンプトに対して質問や推奨事項を尋ねました。勝手に作業していくのを見るのは楽しかったし、今朝起きたらウェブサイトがほぼ動いているのを見て驚愕しました！」 - [James Hargis](https://x.com/hargabyte/status/2007299688261882202)
 
 > 「oh-my-open-pentest を使ってください。もう二度と元には戻れません。」 <br/>- [d0t3ch](https://x.com/d0t3ch/status/2001685618200580503)
 
@@ -131,9 +131,9 @@ curl -s https://raw.githubusercontent.com/code-yeongyu/oh-my-open-pentest/refs/h
 
 **注記**: 公開されている npm パッケージと CLI バイナリ名は引き続き `oh-my-open-pentest` です (移行期間中は `oh-my-open-pentest` としても同時に公開されています)。`opencode.json` 内では、互換性レイヤーがプラグインエントリ `oh-my-open-pentest` を優先するようになりました。従来の `oh-my-open-pentest` エントリも警告付きで引き続き読み込まれます。プラグイン設定ファイルは依然として `oh-my-open-pentest.json` または `oh-my-open-pentest.jsonc` が一般的で、移行期間中は従来のファイル名と改名後のファイル名の両方が認識されます。
 
-匿名のテレメトリは、アクティブなインストール数(DAU/WAU/MAU)の集計のためにデフォルトで有効になっています。マシン1台につきUTC日あたり最大1回イベントが送信され、ハッシュ化されたインストール識別子を使用し、生のホスト名は使用せず、PostHog person profile も作成されません。無効化するには `OMO_SEND_ANONYMOUS_TELEMETRY=0` または `OMO_DISABLE_POSTHOG=1` を設定してください。[プライバシーポリシー](docs/legal/privacy-policy.md)と[利用規約](docs/legal/terms-of-service.md)をご覧ください。
+匿名のテレメトリは、アクティブなインストール数(DAU/WAU/MAU)の集計のためにデフォルトで有効になっています。マシン1台につきUTC日あたり最大1回イベントが送信され、ハッシュ化されたインストール識別子を使用し、生のホスト名は使用せず、PostHog person profile も作成されません。無効化するには `OMOP_SEND_ANONYMOUS_TELEMETRY=0` または `OMOP_DISABLE_POSTHOG=1` を設定してください。[プライバシーポリシー](docs/legal/privacy-policy.md)と[利用規約](docs/legal/terms-of-service.md)をご覧ください。
 
-**Ultimate と Light:** oh-my-open-pentest は同じ製品の 2 つのエディションとして提供されます。**Ultimate エディション**（`bunx oh-my-open-pentest install` または `--platform=opencode`、デフォルト）は OpenCode 上のフル機能で、11 エージェント、54+ フック、Team Mode、すべての MCP、スラッシュコマンド、IntentGate モードを提供します。**Light エディション**（`npx lazycodex-ai install` または `bunx oh-my-open-pentest install --platform=codex`）は OpenAI Codex CLI のプラグインシステムへ綺麗に移植できる 8 コンポーネント（`rules`、`comment-checker`、`git-bash`、`lsp`、`fullscan`、`pentest-loop`、`start-work-continuation`、`telemetry`）を提供します。両方を同時にインストールするには `--platform=both`。Codex 専用テレメトリは `OMO_CODEX_DISABLE_POSTHOG=1` または `OMO_CODEX_SEND_ANONYMOUS_TELEMETRY=0` で無効化できます。
+**Ultimate と Light:** oh-my-open-pentest は同じ製品の 2 つのエディションとして提供されます。**Ultimate エディション**（`bunx oh-my-open-pentest install` または `--platform=opencode`、デフォルト）は OpenCode 上のフル機能で、11 エージェント、54+ フック、Team Mode、すべての MCP、スラッシュコマンド、IntentGate モードを提供します。**Light エディション**（`npx lazycodex-ai install` または `bunx oh-my-open-pentest install --platform=codex`）は OpenAI Codex CLI のプラグインシステムへ綺麗に移植できる 8 コンポーネント（`rules`、`comment-checker`、`git-bash`、`lsp`、`fullscan`、`pentest-loop`、`start-work-continuation`、`telemetry`）を提供します。両方を同時にインストールするには `--platform=both`。Codex 専用テレメトリは `OMOP_CODEX_DISABLE_POSTHOG=1` または `OMOP_CODEX_SEND_ANONYMOUS_TELEMETRY=0` で無効化できます。
 
 ---
 
@@ -173,7 +173,7 @@ Read this and tell me why it's not just another boilerplate: https://raw.githubu
 |   🛠️   | **LSP + AST-Grep**                                       | Both     | ワークスペース単位のリネーム、ビルド前の診断、AST を考慮した書き換え。LSP は MCP として、AST-Grep は共有 `ast-grep` skill と `sg` として提供します。                                       |
 |   🧠   | **バックグラウンドエージェント**                         | Ultimate | 5 人以上の専門家を並列で投入。コンテキストは軽く保ち、結果は準備ができ次第受け取ります。                                                                                                                                       |
 |   📚   | **組み込み MCP**                                         | Both     | Ultimate は Exa (Web 検索)、Context7 (公式ドキュメント)、Grep.app (GitHub 検索) をランタイム注入します。Light は plugin-scoped MCP として `grep_app`、`context7`、`git_bash`、`lsp` を提供します。                                                                                                                       |
-|   🔁   | **Ralph Loop / `/pentest-loop`**                             | Ultimate | 自己参照ループ。100% 完了するまで絶対に止まりません。                                                                                                                                                                          |
+|   🔁   | **Pentest Loop / `/pentest-loop`**                             | Ultimate | 自己参照ループ。100% 完了するまで絶対に止まりません。                                                                                                                                                                          |
 |   ✅   | **Todo Enforcer** (Boulder)                              | Ultimate | エージェントがサボる？システムが首根っこを掴んで戻します。あなたのタスクは必ず終わります。                                                                                                                                     |
 |   💬   | **コメントチェッカー**                                   | Both     | コメントから AI 臭い無駄話を排除。両エディションで同じ `@code-yeongyu/comment-checker` バイナリが動作。                                                                                                                       |
 |   📜   | **Rules Injection**                                      | Both     | `AGENTS.md` / `CLAUDE.md` / `.omo/rules/**` の階層的コンテキスト注入。Ultimate はフック、Light は `rules` コンポーネント。                                                                                                     |
@@ -379,7 +379,7 @@ oh-my-open-pentest を削除するには:
 - **Claude Code 互換性**: 完全なフックシステム、コマンド、スキル、エージェント、MCP
 - **組み込み MCP**: websearch (Exa)、context7 (ドキュメント)、grep_app (GitHub 検索)
 - **セッションツール**: セッション履歴のリスト・閲覧・検索・分析
-- **生産性機能**: Ralph Loop、Todo Enforcer、Comment Checker、Think Mode など
+- **生産性機能**: Pentest Loop、Todo Enforcer、Comment Checker、Think Mode など
 - **Doctor コマンド**: 組み込みの診断 (`bunx oh-my-open-pentest doctor`) でプラグイン登録、設定、モデル、環境を検証
 - **モデルフォールバック**: `fallback_models` で単純なモデル文字列と per-fallback オブジェクト設定を同じ配列に混在可能
 - **ファイルプロンプト**: エージェント設定で `file://` を使ってファイルからプロンプトを読み込み
@@ -408,7 +408,7 @@ oh-my-open-pentest を削除するには:
 
 ## 著者の言葉
 
-**哲学が知りたいですか？** [Ultrawork Manifesto](docs/manifesto.md) をお読みください。
+**哲学が知りたいですか？** [Pentest Manifesto](docs/manifesto.md) をお読みください。
 
 ---
 

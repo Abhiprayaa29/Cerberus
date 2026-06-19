@@ -6,12 +6,12 @@ import glmPrompt from "../prompts/fullscan/glm.md"
 import gptPrompt from "../prompts/fullscan/gpt.md"
 import plannerPrompt from "../prompts/fullscan/planner.md"
 
-export const ULTRAWORK_DEFAULT_PROMPT = defaultPrompt
-export const ULTRAWORK_GEMINI_PROMPT = geminiPrompt
-export const ULTRAWORK_GLM_PROMPT = glmPrompt
-export const ULTRAWORK_GPT_PROMPT = gptPrompt
-export const ULTRAWORK_PLANNER_PROMPT = plannerPrompt
-export const CODEX_ULTRAWORK_PROMPT = codexPrompt
+export const FULLSCAN_DEFAULT_PROMPT = defaultPrompt
+export const FULLSCAN_GEMINI_PROMPT = geminiPrompt
+export const FULLSCAN_GLM_PROMPT = glmPrompt
+export const FULLSCAN_GPT_PROMPT = gptPrompt
+export const FULLSCAN_PLANNER_PROMPT = plannerPrompt
+export const CODEX_FULLSCAN_PROMPT = codexPrompt
 
 export const fullscanPromptVariants = {
   planner: {
@@ -41,7 +41,7 @@ export const fullscanPromptVariants = {
   },
 } satisfies VariantTable
 
-export const codexUltraworkPromptVariants = {
+export const codexFullscanPromptVariants = {
   codex: {
     kind: "bundled",
     content: codexPrompt,

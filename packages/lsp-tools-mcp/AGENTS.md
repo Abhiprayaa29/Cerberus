@@ -4,7 +4,7 @@
 
 ## OVERVIEW
 
-Vendored, Node-targeted MCP-layer package (`@code-yeongyu/lsp-tools-mcp`). Serves LSP tools via stdio MCP, consuming [`lsp-core`](../lsp-core/AGENTS.md) for tool definitions + LSP runtime and [`mcp-stdio-core`](../mcp-stdio-core) for JSON-RPC framing. Registered as tier-. MCP `lsp` in [`packages/omo-opencode/src/mcp/`](../omo-opencode/src/mcp/AGENTS.md). Used directly by the OpenCode edition and consumed by [`lsp-daemon`](../lsp-daemon/AGENTS.md) for the Codex edition.
+Vendored, Node-targeted MCP-layer package (`@code-yeongyu/lsp-tools-mcp`). Serves LSP tools via stdio MCP, consuming [`lsp-core`](../lsp-core/AGENTS.md) for tool definitions + LSP runtime and [`mcp-stdio-core`](../mcp-stdio-core) for JSON-RPC framing. Registered as tier-. MCP `lsp` in [`packages/omop-opencode/src/mcp/`](../omo-opencode/src/mcp/AGENTS.md). Used directly by the OpenCode edition and consumed by [`lsp-daemon`](../lsp-daemon/AGENTS.md) for the Codex edition.
 
 ## TOOLS SERVED
 

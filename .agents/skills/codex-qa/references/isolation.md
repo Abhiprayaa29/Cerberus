@@ -15,7 +15,7 @@ Gotcha: when `CODEX_HOME` is set it **must already exist** or Codex hard-errors.
 
 `cqa_mk_isolated_home` also exports:
 
-- `OMO_CODEX_PROJECT` + `QA_CWD` → a sandbox project dir, so the installer's
+- `OMOP_CODEX_PROJECT` + `QA_CWD` → a sandbox project dir, so the installer's
   project-local cleanup and the TUI's cwd never touch your real tree.
 - `CODEX_LOCAL_BIN_DIR=$CODEX_HOME/bin` → component bins land in the sandbox.
   (Even without this, a non-default `CODEX_HOME` already routes bins to

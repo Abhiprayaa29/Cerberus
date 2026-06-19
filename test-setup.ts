@@ -3,15 +3,15 @@ import { afterEach, beforeEach, mock } from "bun:test"
 import { spawnSync } from "node:child_process"
 import { existsSync, rmSync } from "node:fs"
 import { join } from "node:path"
-import { _resetForTesting as resetClaudeSessionState } from "./packages/omo-opencode/src/features/claude-code-session-state/state"
-import { _resetTaskToastManagerForTesting as resetTaskToastManager } from "./packages/omo-opencode/src/features/task-toast-manager/manager"
-import { _resetForTesting as resetModelFallbackState } from "./packages/omo-opencode/src/hooks/model-fallback/hook"
-import { RULES_INJECTOR_STORAGE } from "./packages/omo-opencode/src/hooks/rules-injector/constants"
-import { _resetMemCacheForTesting as resetConnectedProvidersCache } from "./packages/omo-opencode/src/shared/connected-providers-cache"
-import { getOmoOpenCodeCacheDir } from "./packages/omo-opencode/src/shared/data-path"
-import { releaseAllPromptAsyncReservationsForTesting } from "./packages/omo-opencode/src/shared/prompt-async-gate"
-import { resetLiveServerRouteForTesting } from "./packages/omo-opencode/src/shared/live-server-route"
-import { installModuleMockLifecycle } from "./packages/omo-opencode/src/testing/module-mock-lifecycle"
+import { _resetForTesting as resetClaudeSessionState } from "./packages/omop-opencode/src/features/claude-code-session-state/state"
+import { _resetTaskToastManagerForTesting as resetTaskToastManager } from "./packages/omop-opencode/src/features/task-toast-manager/manager"
+import { _resetForTesting as resetModelFallbackState } from "./packages/omop-opencode/src/hooks/model-fallback/hook"
+import { RULES_INJECTOR_STORAGE } from "./packages/omop-opencode/src/hooks/rules-injector/constants"
+import { _resetMemCacheForTesting as resetConnectedProvidersCache } from "./packages/omop-opencode/src/shared/connected-providers-cache"
+import { getOmopOpenCodeCacheDir } from "./packages/omop-opencode/src/shared/data-path"
+import { releaseAllPromptAsyncReservationsForTesting } from "./packages/omop-opencode/src/shared/prompt-async-gate"
+import { resetLiveServerRouteForTesting } from "./packages/omop-opencode/src/shared/live-server-route"
+import { installModuleMockLifecycle } from "./packages/omop-opencode/src/testing/module-mock-lifecycle"
 
 // Installer/doctor integration tests need the vendored lsp-daemon dist that CI builds
 // out-of-band before `bun test`; mirror that here so fresh clones/worktrees pass too.
@@ -63,7 +63,7 @@ beforeEach(() => {
   environmentSnapshot = { ...process.env }
   workingDirectorySnapshot = process.cwd()
   process.env.OMOP_DISABLE_POSTHOG = "true"
-  cleanupOmoCacheDir(getOmoOpenCodeCacheDir())
+  cleanupOmoCacheDir(getOmopOpenCodeCacheDir())
   cleanupRulesInjectorStorage()
   resetClaudeSessionState()
   resetTaskToastManager()
@@ -74,7 +74,7 @@ beforeEach(() => {
 })
 
 afterEach(() => {
-  const currentCacheDir = getOmoOpenCodeCacheDir()
+  const currentCacheDir = getOmopOpenCodeCacheDir()
 
   for (const key of Object.keys(process.env)) {
     if (!(key in environmentSnapshot)) {
@@ -102,7 +102,7 @@ afterEach(() => {
   globalThis.clearInterval = clearIntervalSnapshot
 
   cleanupOmoCacheDir(currentCacheDir)
-  cleanupOmoCacheDir(getOmoOpenCodeCacheDir())
+  cleanupOmoCacheDir(getOmopOpenCodeCacheDir())
   cleanupRulesInjectorStorage()
   resetTaskToastManager()
   resetConnectedProvidersCache()

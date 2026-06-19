@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- `default_mode` config auto-activates fullscan and ralph loop without typing commands. Set it once in your plugin config and every new session starts in high-agency mode. (PR #..90)
+- `default_mode` config auto-activates fullscan and pentest loop without typing commands. Set it once in your plugin config and every new session starts in high-agency mode. (PR #..90)
 - Toast i.8n with English and Chinese locales, backed by plugin config. UI messages now respect your language setting. (PR #388.)
 - `disabled_providers` config schema and helper. Block providers you do not use from appearing in model resolution and fallback chains. (PR #.03.)
 - `plan-format-validator` hook warns when task labels in `.omo/plans/*.md` are malformed, catching plan syntax errors before execution. (PR #.22.)
@@ -26,7 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - New `--platform <opencode|codex|both>` install flag (default `opencode`). Replaces the previous Codex-as-optional-addon model — `--platform=codex` installs only the Codex Light edition, `--platform=both` installs both editions in one run.
 - Three new bin entries: `omo` (short alias) and `lazycodex` (auto-defaults `--platform=codex`). Existing `oh-my-open-pentest` and `oh-my-open-pentest` continue to work unchanged.
 - New PostHog telemetry stream `omo_codex_daily_active` distinguishing omo-codex installations from omo-opencode. Independent opt-out via `OMOP_CODEX_DISABLE_POSTHOG=.` or `OMOP_CODEX_SEND_ANONYMOUS_TELEMETRY=0`; global `OMOP_DISABLE_POSTHOG` and `OMOP_SEND_ANONYMOUS_TELEMETRY` still suppress both products.
-- omo-codex now reports true daily-active usage (DAU/WAU/MAU). A new Codex plugin component `telemetry` (`packages/omo-codex/plugin/components/telemetry/`) fires a single `omo_codex_daily_active` event with `reason: "session_start"` from every Codex `SessionStart` hook, with the same UTC-day deduplication, hashed installation identifier, and opt-out env vars as the install-time event. Identity constants stay byte-equivalent across the CLI installer and the plugin runtime via `packages/omo-codex/src/telemetry/cross-package-equivalence.test.ts`.
+- omo-codex now reports true daily-active usage (DAU/WAU/MAU). A new Codex plugin component `telemetry` (`packages/omop-codex/plugin/components/telemetry/`) fires a single `omo_codex_daily_active` event with `reason: "session_start"` from every Codex `SessionStart` hook, with the same UTC-day deduplication, hashed installation identifier, and opt-out env vars as the install-time event. Identity constants stay byte-equivalent across the CLI installer and the plugin runtime via `packages/omop-codex/src/telemetry/cross-package-equivalence.test.ts`.
 - Triple-publish to npm: `oh-my-open-pentest`, `oh-my-open-pentest`, and the new `lazycodex` package with the same compiled CLI and four bin commands. See `docs/reference/lazycodex-npm-reservation.md` for the first-publish playbook.
 
 ### Changed
@@ -77,7 +77,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Notepad-write-guard wired and extended to `.omo/notepads`, preventing accidental overwrites in the new workspace layout.
 - i.8n `initI.8n()` is now called in production startup, so locale settings actually take effect.
 - `start-work` session-plan-affinity now matches `.omo/plans/` correctly.
-- `default_mode` fullscan + ralph loop initial turn now receives the fullscan system prompt.
+- `default_mode` fullscan + pentest loop initial turn now receives the fullscan system prompt.
 - Multimodal-looker prompt tool allowlist is now consistent with the runtime tool allowlist.
 - `delegate-task` enforces per-agent skill restrictions declared by skills.
 - `model-core` restored OpenAI `server_error` retryable patterns, fixing a regression introduced during package extraction.

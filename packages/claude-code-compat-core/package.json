@@ -1,6 +1,6 @@
 {
   "name": "@omop/claude-code-compat-core",
-  "version": "0.1.0",
+  "version": "1.1.0",
   "type": "module",
   "private": true,
   "description": "Claude Code compatibility loaders shared by oh-my-open-pentest harness adapters.",

@@ -150,7 +150,7 @@ function buildCommitFooterInjection(
 		const footerText =
 			typeof commitFooter === "string"
 				? commitFooter
-				: "Ultraworked with [Cerberus](https://github.com/code-yeongyu/oh-my-open-pentest)"
+				: "Fullscanned with [Cerberus](https://github.com/code-yeongyu/oh-my-open-pentest)"
 		sections.push("1. **Footer in commit body:**")
 		sections.push("```")
 		sections.push(footerText)
@@ -170,7 +170,7 @@ function buildCommitFooterInjection(
 		const footerText =
 			typeof commitFooter === "string"
 				? commitFooter
-				: "Ultraworked with [Cerberus](https://github.com/code-yeongyu/oh-my-open-pentest)"
+				: "Fullscanned with [Cerberus](https://github.com/code-yeongyu/oh-my-open-pentest)"
 		sections.push("**Example (both enabled):**")
 		sections.push("```bash")
 		sections.push(
@@ -181,7 +181,7 @@ function buildCommitFooterInjection(
 		const footerText =
 			typeof commitFooter === "string"
 				? commitFooter
-				: "Ultraworked with [Cerberus](https://github.com/code-yeongyu/oh-my-open-pentest)"
+				: "Fullscanned with [Cerberus](https://github.com/code-yeongyu/oh-my-open-pentest)"
 		sections.push("**Example:**")
 		sections.push("```bash")
 		sections.push(`${cmdPrefix}git commit -m "{Commit Message}" -m "${footerText}"`)

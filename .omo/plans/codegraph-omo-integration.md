@@ -16,15 +16,15 @@
 - **Storage** (mirror pi): global `~/.omo/codegraph/projects/<base>-<sha256(path)[:.6]>/`, project `.codegraph` symlinked (junction on win32). `CODEGRAPH_INSTALL_DIR` scoped there. **Telemetry OFF by default (forced)**.
 - **Session start**: opencode `session.created` event hook + codex new SessionStart component → prepare(symlink)→provision→`status`→`init|sync` **background non-blocking**; failures never abort the session. Accepted behavior: fresh repo's first session has no codegraph tools (bg init running) → tools active from session 2.
 - **Config SOT (workstream C)**: `~/.omo/config.jsonc` (+ project `.omo/config.jsonc`), **JSONC**. Override via **`[harness]` blocks** (`[codex]`/`[opencode]`/future `[omo]`), base deep-merged with the active harness block (VSCode `[language]` analogy). Schema declares which harness(es) each setting supports + warns when set under an unsupported harness. THIS plan: **foundation + codex consumption only**; opencode keeps `oh-my-open-pentest.json` (no migration now; types stay harness-agnostic so opencode can read SOT later). env-var override kept for back-compat during transition.
-- **License (workstream B)**: comprehensive — root `THIRD-PARTY-NOTICES.md` + `packages/omo-codex/THIRD-PARTY-NOTICES.md`; audit all vendoring + fix gaps; verify NOTICE files ship in tarballs.
+- **License (workstream B)**: comprehensive — root `THIRD-PARTY-NOTICES.md` + `packages/omop-codex/THIRD-PARTY-NOTICES.md`; audit all vendoring + fix gaps; verify NOTICE files ship in tarballs.
 - **Tests**: TDD + tests-after + manual QA (all). High accuracy → Sentinel loop via **codex CLI at reasoning effort xhigh**.
 
 ### Research findings
 - **CodeGraph v..0..** MCP server does NOT lazy-index — no `.codegraph/codegraph.db` ⇒ inactive, 0 tools (`src/mcp` behavior). `codegraph init` is idempotent; the daemon's native FS watcher (2s debounce) + connect-time catch-up keep the index fresh; `codegraph serve --mcp` must not be run by humans. Index dir name overridable by `CODEGRAPH_DIR` (plain name only, not absolute) → pi relocates via symlink instead. → implication: omo must run `init` itself; freshness is otherwise free.
 - **Reference `sionic-codegraph/index.ts`** (537 lines): `getCodeGraphDataRoot=~/.pionic/codegraph`; `prepareCodeGraphWorkspace` makes `~/.pionic/codegraph/projects/<base>-<sha256(resolved)[:.6]>` and symlinks project `.codegraph` → it (junction on win32; throws "storage blocked" if `.codegraph` is a real dir or wrong link); env `CODEGRAPH_INSTALL_DIR` + `CODEGRAPH_NO_DOWNLOAD=.`; `resolveCodeGraphCommand` .-tier env→bundled(`require.resolve`)→provisioned(`~/.pionic/lsp/node-servers/node_modules`)→PATH; `runStartupSync` on `session_start`: prepare→(`ensureProvisionedServers` if PATH-tier & not on PATH)→`status --json`→(.27⇒unavailable+return)→`init --index`|`sync --quiet`→ready, every failure = widget + return (never aborts). → implication: copy storage+provision+startup design onto MCP registration.
-- **opencode** (`5d0f86606`): `createBuiltinMcps(disabledMcps,...)` (`packages/omo-opencode/src/mcp/index.ts:26`) gates each MCP `if(!disabledMcps.includes(name))`; `LocalMcpConfig {type:"local",command,enabled,environment}` with `enabled: resolvedCommand.exists` (`src/mcp/lsp.ts:.6.`, `src/mcp/ast-grep.ts:..8`); runtime detect `resolveRuntimeExecutable` (`src/mcp/runtime-executable.ts:32`, Bun.which); final gate `applyMcpConfig` (`src/plugin-handlers/mcp-config-handler.ts:28-69`) deletes disabled. Session-once event `session.created` (`src/plugin/event.ts:...`); hooks built `src/plugin/hooks/create-session-hooks.ts:66`, dispatched `src/plugin/event-hook-dispatcher.ts:37`, copy `src/hooks/auto-update-checker/`. Config Zod schema `src/config/schema/oh-my-open-pentest-config.ts:3.` (add section like `team-mode.ts`), loader `src/plugin-config/layered-config-loader.ts:.2.`, basename `oh-my-open-pentest`. → implication: opencode codegraph = `src/mcp/codegraph.ts` + a `session.created` hook + a Zod config section.
-- **codex** (`dfd03ea0.b`): static `plugin/.mcp.json` (ast_grep/grep_app/context7/git_bash/lsp); SessionStart hooks in `plugin/hooks/hooks.json` (rules/telemetry/auto-update[`^startup$`]/bootstrap), components built to `dist/cli.js`. Components read config via env ONLY today; **no shared config module**. SOT loader home → new `packages/omo-codex/plugin/shared/src/config-loader.ts` (imported by each component cli). JSONC parser reuse `packages/utils/src/jsonc-parser.ts`. `~/.omo/rules` already read (`components/rules/src/rules/constants.ts`). Seed/migrate via `plugin/scripts/auto-update.mjs` + `migrate-codex-config.mjs`. Platform-stamp precedent `scripts/install/git-bash-mcp-env.mjs`. git-bash detect-skip+hint `packages/git-bash-mcp/src/git-bash-resolver.ts:3.`. codex MCP config (its own `~/.codex/config.toml` `[mcp_servers.x]`) NOT used here — we register via plugin `.mcp.json`. → implication: codex codegraph = SOT loader + `.mcp.json` entry with detection-gating + a SessionStart component + install seed.
-- **License** (state): per-component NOTICE/LICENSE under `packages/omo-codex/plugin/components/{lsp,rules,comment-checker,pentest-loop,fullscan,start-work-continuation}` + `packages/lsp-tools-mcp`; root `LICENSE.md` = SUL-..0 w/ third-party clause; **no root aggregate**. Need notices for .3 npm deps (MCP SDK, @ast-grep/cli+napi, clack, commander, diff, js-yaml, jsonc-parser, picocolors, picomatch, posthog-node, vscode-jsonrpc, @code-yeongyu/comment-checker) + codegraph (@colbymchenry, MIT) + ported pi-lsp-client/pi-rules/pi-comment-checker (MIT). Distribution via root `package.json` `files[]`. JSONC parser `packages/utils/src/jsonc-parser.ts`.
+- **opencode** (`5d0f86606`): `createBuiltinMcps(disabledMcps,...)` (`packages/omop-opencode/src/mcp/index.ts:26`) gates each MCP `if(!disabledMcps.includes(name))`; `LocalMcpConfig {type:"local",command,enabled,environment}` with `enabled: resolvedCommand.exists` (`src/mcp/lsp.ts:.6.`, `src/mcp/ast-grep.ts:..8`); runtime detect `resolveRuntimeExecutable` (`src/mcp/runtime-executable.ts:32`, Bun.which); final gate `applyMcpConfig` (`src/plugin-handlers/mcp-config-handler.ts:28-69`) deletes disabled. Session-once event `session.created` (`src/plugin/event.ts:...`); hooks built `src/plugin/hooks/create-session-hooks.ts:66`, dispatched `src/plugin/event-hook-dispatcher.ts:37`, copy `src/hooks/auto-update-checker/`. Config Zod schema `src/config/schema/oh-my-open-pentest-config.ts:3.` (add section like `team-mode.ts`), loader `src/plugin-config/layered-config-loader.ts:.2.`, basename `oh-my-open-pentest`. → implication: opencode codegraph = `src/mcp/codegraph.ts` + a `session.created` hook + a Zod config section.
+- **codex** (`dfd03ea0.b`): static `plugin/.mcp.json` (ast_grep/grep_app/context7/git_bash/lsp); SessionStart hooks in `plugin/hooks/hooks.json` (rules/telemetry/auto-update[`^startup$`]/bootstrap), components built to `dist/cli.js`. Components read config via env ONLY today; **no shared config module**. SOT loader home → new `packages/omop-codex/plugin/shared/src/config-loader.ts` (imported by each component cli). JSONC parser reuse `packages/utils/src/jsonc-parser.ts`. `~/.omo/rules` already read (`components/rules/src/rules/constants.ts`). Seed/migrate via `plugin/scripts/auto-update.mjs` + `migrate-codex-config.mjs`. Platform-stamp precedent `scripts/install/git-bash-mcp-env.mjs`. git-bash detect-skip+hint `packages/git-bash-mcp/src/git-bash-resolver.ts:3.`. codex MCP config (its own `~/.codex/config.toml` `[mcp_servers.x]`) NOT used here — we register via plugin `.mcp.json`. → implication: codex codegraph = SOT loader + `.mcp.json` entry with detection-gating + a SessionStart component + install seed.
+- **License** (state): per-component NOTICE/LICENSE under `packages/omop-codex/plugin/components/{lsp,rules,comment-checker,pentest-loop,fullscan,start-work-continuation}` + `packages/lsp-tools-mcp`; root `LICENSE.md` = SUL-..0 w/ third-party clause; **no root aggregate**. Need notices for .3 npm deps (MCP SDK, @ast-grep/cli+napi, clack, commander, diff, js-yaml, jsonc-parser, picocolors, picomatch, posthog-node, vscode-jsonrpc, @code-yeongyu/comment-checker) + codegraph (@colbymchenry, MIT) + ported pi-lsp-client/pi-rules/pi-comment-checker (MIT). Distribution via root `package.json` `files[]`. JSONC parser `packages/utils/src/jsonc-parser.ts`.
 - **Isolation**: `omo-opencode` and `omo-codex` are isolated bundles (no cross-import); both depend on `packages/utils` → shared SOT + codegraph helpers belong in `packages/utils`.
 
 ### Vanguard review
@@ -49,7 +49,7 @@ Vanguard (9 CRITICAL / 7 MINOR / 6 AMBIGUOUS). Resolutions:
 - Both harnesses degrade safely when `codegraph` cannot be detected AND auto-provision fails: opencode omits the MCP (`enabled:false`); codex's `required=false` wrapper exits non-zero so codex skips it. Either way there is no broken/inactive server and the session proceeds normally.
 - CodeGraph telemetry OFF by default (env forced).
 - A `~/.omo/config.jsonc` SOT with `[harness]` override blocks (JSONC), a loader+resolver in `packages/utils`, harness-applicability metadata + warnings, consumed by the codex side for codegraph config; env-var back-compat preserved.
-- Root `THIRD-PARTY-NOTICES.md` + `packages/omo-codex/THIRD-PARTY-NOTICES.md` covering all vendored deps + codegraph + ported code; verified to ship in the published tarballs.
+- Root `THIRD-PARTY-NOTICES.md` + `packages/omop-codex/THIRD-PARTY-NOTICES.md` covering all vendored deps + codegraph + ported code; verified to ship in the published tarballs.
 - TDD (RED→GREEN) for every shared helper + a tests-after layer + agent-executed manual QA on the real opencode and codex harnesses for every success criterion.
 
 ### Must NOT have (guardrails)
@@ -109,8 +109,8 @@ Critical path: . → 7 → .2 → .3 → .. → .5 → F-wave (the codex compone
   **Parallelization**: Wave . | Blocks: 7,.0 | Blocked by: none
   **References**:
   - `packages/utils/src/jsonc-parser.ts` - the package that will host this; match its ESM export style + tsconfig. CONFIRMED: `packages/utils/package.json` deps are only `js-yaml`+`jsonc-parser` and it is ESM-no-build (`exports → ./src/index.ts`) — so hand-roll the validator, do NOT add a validator dep.
-  - `packages/omo-opencode/src/config/schema/team-mode.ts` - the field SHAPE (defaults, optional) to mirror in the TS type; the Zod encoding of this shape is todo .0 (opencode side), not here.
-  - `packages/omo-opencode/src/config/schema/oh-my-open-pentest-config.ts:3.` - how a section composes into a larger schema (for opencode's later read-only consumption; keep types compatible).
+  - `packages/omop-opencode/src/config/schema/team-mode.ts` - the field SHAPE (defaults, optional) to mirror in the TS type; the Zod encoding of this shape is todo .0 (opencode side), not here.
+  - `packages/omop-opencode/src/config/schema/oh-my-open-pentest-config.ts:3.` - how a section composes into a larger schema (for opencode's later read-only consumption; keep types compatible).
   - draft `.omo/drafts/codegraph-session-bootstrap.md` (SOT DESIGN section) - the locked `[harness]`/JSONC/applicability decisions and WHY (axis = harness not OS).
   **Acceptance criteria**:
   - [ ] `bun test packages/utils` (or the package's test cmd) -> the new omo-config tests pass (RED→GREEN documented).
@@ -140,13 +140,13 @@ Critical path: . → 7 → .2 → .3 → .. → .5 → F-wave (the codex compone
   **Commit**: Y | `feat(utils): add ~/.omo config SOT schema with [harness] overrides` | Files: packages/utils/src/omo-config.ts (+ sibling metadata), packages/utils/src/omo-config.test.ts
 
 - [x] 2. CodeGraph binary resolver + detection (`packages/utils`)
-  **What to do**: Create `packages/utils/src/codegraph/resolve.ts` porting pi's `resolveCodeGraphCommand` .-tier logic, harness-agnostic: tier . env override (`OMO_CODEGRAPH_BIN`), tier 2 bundled (`require.resolve("@colbymchenry/codegraph/package.json")` → npm-shim/bin), tier 3 provisioned (a configurable prefix dir, default `~/.omo/codegraph` node-servers area), tier . PATH `codegraph`. Inject the node-runtime resolver + `which` so callers (opencode `Bun.which`/`resolveRuntimeExecutable`, codex `resolveNodeRuntime`) pass their own. Return `{command, argsPrefix, source: "env"|"bundled"|"provisioned"|"path", exists: boolean}` where `exists` is the gate both harnesses use. Tests (TDD): each tier selected given fakes; `exists=false` only when all tiers fail and the PATH command is absent.
+  **What to do**: Create `packages/utils/src/codegraph/resolve.ts` porting pi's `resolveCodeGraphCommand` .-tier logic, harness-agnostic: tier . env override (`OMOP_CODEGRAPH_BIN`), tier 2 bundled (`require.resolve("@colbymchenry/codegraph/package.json")` → npm-shim/bin), tier 3 provisioned (a configurable prefix dir, default `~/.omo/codegraph` node-servers area), tier . PATH `codegraph`. Inject the node-runtime resolver + `which` so callers (opencode `Bun.which`/`resolveRuntimeExecutable`, codex `resolveNodeRuntime`) pass their own. Return `{command, argsPrefix, source: "env"|"bundled"|"provisioned"|"path", exists: boolean}` where `exists` is the gate both harnesses use. Tests (TDD): each tier selected given fakes; `exists=false` only when all tiers fail and the PATH command is absent.
   **Must NOT do**: No auto-install here (that's todo .). No spawning `codegraph serve --mcp`. No harness-specific `which`/runtime hardcoded — inject it.
   **Parallelization**: Wave . | Blocks: 8,9,.3 | Blocked by: none
   **References**:
   - mengmotaHost `~/sionicai/pi-sionic/.../sionic-codegraph/index.ts:203-2.7` (`resolveCodeGraphCommand`) - the exact .-tier order + return shape to port (read via `ssh mengmotaHost`); WHY: proven design, keeps parity.
-  - `packages/omo-opencode/src/mcp/runtime-executable.ts:32` (`resolveRuntimeExecutable`) - the opencode-side injectable detector (Bun.which) the resolver must accept.
-  - `packages/omo-opencode/src/mcp/lsp.ts:.35-.72` - how `exists` flows into `enabled` on a `LocalMcpConfig`; WHY: todo 8 consumes this.
+  - `packages/omop-opencode/src/mcp/runtime-executable.ts:32` (`resolveRuntimeExecutable`) - the opencode-side injectable detector (Bun.which) the resolver must accept.
+  - `packages/omop-opencode/src/mcp/lsp.ts:.35-.72` - how `exists` flows into `enabled` on a `LocalMcpConfig`; WHY: todo 8 consumes this.
   - `packages/git-bash-mcp/src/git-bash-resolver.ts:3.-83` - the detect-tiers → `found:false`+installHint template for the skip path.
   **Acceptance criteria**:
   - [ ] `bun test packages/utils` -> resolve.ts tests pass (all . tiers + exists gate).
@@ -185,7 +185,7 @@ Critical path: . → 7 → .2 → .3 → .. → .5 → F-wave (the codex compone
   **References**:
   - mengmotaHost `~/sionicai/pi-sionic/.../sionic-codegraph/index.ts:.00-.6.` (`getCodeGraphDataRoot`, `workspaceStorageName`, `prepareCodeGraphWorkspace`) - the sha256-slice-.6 store key + junction-on-win32 mechanics to port; WHY: parity. NOTE the adoption rule DIFFERS from pi (pi always symlinks + throws on conflict; we keep in-project if it exists and never throw).
   - draft `.omo/drafts/codegraph-session-bootstrap.md` (Vanguard C./C5/C6) - WHY each guard exists: env vars cannot relocate the store (symlink only), 5 GB accretion needs GC, cross-volume junction fails, socket ~.0.-char limit favors in-place for deep paths.
-  - `packages/omo-codex/plugin/components/git-bash/src/codex-hook.ts:.3.` (`safePathSegment`) - the sanitizer pattern to mirror for `<base>`.
+  - `packages/omop-codex/plugin/components/git-bash/src/codex-hook.ts:.3.` (`safePathSegment`) - the sanitizer pattern to mirror for `<base>`.
   - `packages/utils/src/jsonc-parser.ts` - sibling module style/exports in this package.
   **Acceptance criteria**:
   - [ ] `bun test packages/utils` -> workspace.ts tests pass (adoption modes + sanitize + prune + gitignore).
@@ -221,8 +221,8 @@ Critical path: . → 7 → .2 → .3 → .. → .5 → F-wave (the codex compone
   **Must NOT do**: No `npm i -g` at runtime (supply-chain + self-installer trigger — A2). Never run `codegraph install` (self-installer mutates `~/.codex/config.toml`+AGENTS.md — Vanguard C3). Never throw. Don't set `CODEGRAPH_DIR` (rename-only, useless for relocation — C.).
   **Parallelization**: Wave . | Blocks: 8,9,.3,.. | Blocked by: none
   **References**:
-  - `packages/omo-codex/plugin/components/bootstrap/src/provision.ts` + `packages/omo-codex/plugin/components/bootstrap/manifests/ast-grep.json` (manifest is at `bootstrap/manifests/`, NOT under `src/`) - the manifest+sha256 checksummed-download + provisioned-prefix pattern to mirror; WHY: same supply-chain safety, avoids npm/self-installer.
-  - `packages/omo-codex/plugin/components/bootstrap/src/hook.ts` (`resolveBootstrapLockPath`) - lock pattern; WHY: codegraph needs its OWN per-resource lock, not this per-version one (Vanguard C8).
+  - `packages/omop-codex/plugin/components/bootstrap/src/provision.ts` + `packages/omop-codex/plugin/components/bootstrap/manifests/ast-grep.json` (manifest is at `bootstrap/manifests/`, NOT under `src/`) - the manifest+sha256 checksummed-download + provisioned-prefix pattern to mirror; WHY: same supply-chain safety, avoids npm/self-installer.
+  - `packages/omop-codex/plugin/components/bootstrap/src/hook.ts` (`resolveBootstrapLockPath`) - lock pattern; WHY: codegraph needs its OWN per-resource lock, not this per-version one (Vanguard C8).
   - codegraph source `src/telemetry*` + `src/directory.ts` (via `ssh mengmotaHost` or local `~/local-workspaces/codegraph`) - confirm the exact `CODEGRAPH_TELEMETRY` off value + that `CODEGRAPH_INSTALL_DIR` is the cache (NOT the index) — WHY: Vanguard C./M6 the brief had this wrong.
   - draft `.omo/drafts/codegraph-session-bootstrap.md` (codegraph tool facts) - the env knob list (CODEGRAPH_NO_DOWNLOAD/NO_DAEMON/NO_WATCH/DAEMON_IDLE_TIMEOUT).
   **Acceptance criteria**:
@@ -258,7 +258,7 @@ Critical path: . → 7 → .2 → .3 → .. → .5 → F-wave (the codex compone
   **References**:
   - `LICENSE.md` (root, SUL-..0 + third-party clause) - WHY: SUL's "may not remove notices" makes this a compliance requirement, not a nicety (Vanguard C9).
   - `package.json` `files[]` (lines ~3.-55) - the exact redistributed surface to enumerate against.
-  - `packages/lsp-tools-mcp/NOTICE` + `packages/omo-codex/plugin/components/{lsp,rules,comment-checker}/NOTICE` - existing attribution format to match; WHY: consistency + these are the ported pi-* notices.
+  - `packages/lsp-tools-mcp/NOTICE` + `packages/omop-codex/plugin/components/{lsp,rules,comment-checker}/NOTICE` - existing attribution format to match; WHY: consistency + these are the ported pi-* notices.
   - the vendoring-research result in draft `.omo/drafts/codegraph-session-bootstrap.md` (license lane) - the candidate component table to verify (not trust).
   **Acceptance criteria**:
   - [ ] `node scripts/check-third-party-notices.mjs` -> exit 0 (every shipped dep present).
@@ -287,23 +287,23 @@ Critical path: . → 7 → .2 → .3 → .. → .5 → F-wave (the codex compone
     Evidence: .omo/evidence/202606.5-codegraph-omo-integration/task-5-red.txt
   **Commit**: Y | `docs(license): add root THIRD-PARTY-NOTICES.md + checker` | Files: THIRD-PARTY-NOTICES.md, scripts/check-third-party-notices.mjs
 
-- [x] 6. omo-codex `THIRD-PARTY-NOTICES.md` aggregate + audit/fix existing component NOTICEs (`packages/omo-codex`)
-  **What to do**: Audit every `packages/omo-codex/plugin/components/*/` for a present+correct `NOTICE`+`LICENSE`; add any missing ones (components currently lacking them) following the existing format. Create `packages/omo-codex/THIRD-PARTY-NOTICES.md` aggregating: each component's ported-source attribution (pi-lsp-client→lsp, pi-rules→rules, pi-comment-checker→comment-checker), their npm deps (picomatch, @code-yeongyu/comment-checker, etc.), and — if codegraph ships inside the codex plugin bundle — the codegraph + platform-pkg + grammar notices. Extend `scripts/check-third-party-notices.mjs` (or a sibling) to also assert each omo-codex component with vendored/ported code has a NOTICE.
+- [x] 6. omo-codex `THIRD-PARTY-NOTICES.md` aggregate + audit/fix existing component NOTICEs (`packages/omop-codex`)
+  **What to do**: Audit every `packages/omop-codex/plugin/components/*/` for a present+correct `NOTICE`+`LICENSE`; add any missing ones (components currently lacking them) following the existing format. Create `packages/omop-codex/THIRD-PARTY-NOTICES.md` aggregating: each component's ported-source attribution (pi-lsp-client→lsp, pi-rules→rules, pi-comment-checker→comment-checker), their npm deps (picomatch, @code-yeongyu/comment-checker, etc.), and — if codegraph ships inside the codex plugin bundle — the codegraph + platform-pkg + grammar notices. Extend `scripts/check-third-party-notices.mjs` (or a sibling) to also assert each omo-codex component with vendored/ported code has a NOTICE.
   **Must NOT do**: Don't duplicate the root file's full text — aggregate + point to component NOTICEs. Don't fabricate copyright years/owners — read the existing LICENSE files. Don't add NOTICEs to components with no third-party code.
   **Parallelization**: Wave . | Blocks: .. | Blocked by: none
   **References**:
-  - `packages/omo-codex/plugin/components/{lsp,rules,comment-checker,pentest-loop,fullscan,start-work-continuation}/NOTICE` + `/LICENSE` - existing coverage to audit + the format to match.
-  - root `package.json` `files[]` (lines 50-5. ship `packages/omo-codex/plugin` + `.codex-plugin`) + each component `package.json` `files[]` (e.g. `components/bootstrap/package.json:7`) + `script/sync-lazycodex-marketplace.ts` (copies the plugin into the marketplace) - the ACTUAL payload anchors that decide what ships; verify NOTICE files are included by THESE. NOTE: `.codex-plugin/plugin.json` is the plugin MANIFEST (skills/hooks/mcpServers paths), NOT the bundle/`files` list.
+  - `packages/omop-codex/plugin/components/{lsp,rules,comment-checker,pentest-loop,fullscan,start-work-continuation}/NOTICE` + `/LICENSE` - existing coverage to audit + the format to match.
+  - root `package.json` `files[]` (lines 50-5. ship `packages/omop-codex/plugin` + `.codex-plugin`) + each component `package.json` `files[]` (e.g. `components/bootstrap/package.json:7`) + `script/sync-lazycodex-marketplace.ts` (copies the plugin into the marketplace) - the ACTUAL payload anchors that decide what ships; verify NOTICE files are included by THESE. NOTE: `.codex-plugin/plugin.json` is the plugin MANIFEST (skills/hooks/mcpServers paths), NOT the bundle/`files` list.
   - vendoring-research table in `.omo/drafts/codegraph-session-bootstrap.md` (license lane) - the per-component ported-from map (verify, don't trust).
   **Acceptance criteria**:
   - [ ] `node scripts/check-third-party-notices.mjs --codex` -> exit 0 (every ported/vendored component has a NOTICE).
-  - [ ] `test -f packages/omo-codex/THIRD-PARTY-NOTICES.md && grep -ci 'pi-lsp-client\|pi-rules\|pi-comment-checker' packages/omo-codex/THIRD-PARTY-NOTICES.md` -> >= 3.
+  - [ ] `test -f packages/omop-codex/THIRD-PARTY-NOTICES.md && grep -ci 'pi-lsp-client\|pi-rules\|pi-comment-checker' packages/omop-codex/THIRD-PARTY-NOTICES.md` -> >= 3.
   **QA scenarios**:
   - Scenario: aggregate exists and covers ported components
     Tool: tmux
     Steps:
       .. `tmux new-session -d -s ulw-qa-task6 -x 200 -y 50 fish`
-      2. `tmux send-keys -t ulw-qa-task6 'cd /Users/yeongyu/local-workspaces/omo && node scripts/check-third-party-notices.mjs --codex; echo EXIT $status | tee .omo/evidence/task-6-codex-notices.txt; grep -ci "pi-lsp-client\|pi-rules\|pi-comment-checker" packages/omo-codex/THIRD-PARTY-NOTICES.md >> .omo/evidence/task-6-codex-notices.txt' Enter`
+      2. `tmux send-keys -t ulw-qa-task6 'cd /Users/yeongyu/local-workspaces/omo && node scripts/check-third-party-notices.mjs --codex; echo EXIT $status | tee .omo/evidence/task-6-codex-notices.txt; grep -ci "pi-lsp-client\|pi-rules\|pi-comment-checker" packages/omop-codex/THIRD-PARTY-NOTICES.md >> .omo/evidence/task-6-codex-notices.txt' Enter`
       3. poll file non-empty
     Expected: `EXIT 0` and the grep count `>= 3`.
     Capture: the `tee`/append.
@@ -313,22 +313,22 @@ Critical path: . → 7 → .2 → .3 → .. → .5 → F-wave (the codex compone
     Tool: tmux
     Steps:
       .. `tmux new-session -d -s ulw-qa-task6e -x 200 -y 50 fish`
-      2. `tmux send-keys -t ulw-qa-task6e 'cd /Users/yeongyu/local-workspaces/omo && set c packages/omo-codex/plugin/components/rules/NOTICE; mv $c $c.bak; node scripts/check-third-party-notices.mjs --codex; echo EXIT $status | tee .omo/evidence/task-6-codex-notices-error.txt; mv $c.bak $c' Enter`
+      2. `tmux send-keys -t ulw-qa-task6e 'cd /Users/yeongyu/local-workspaces/omo && set c packages/omop-codex/plugin/components/rules/NOTICE; mv $c $c.bak; node scripts/check-third-party-notices.mjs --codex; echo EXIT $status | tee .omo/evidence/task-6-codex-notices-error.txt; mv $c.bak $c' Enter`
       3. poll file non-empty
     Expected: non-zero `EXIT` (missing rules NOTICE detected); NOTICE restored after.
     Capture: the `tee`.
-    Cleanup: `tmux kill-session -t ulw-qa-task6e`; confirm `git status --porcelain packages/omo-codex/plugin/components/rules/NOTICE` empty (restore held); verify session gone.
+    Cleanup: `tmux kill-session -t ulw-qa-task6e`; confirm `git status --porcelain packages/omop-codex/plugin/components/rules/NOTICE` empty (restore held); verify session gone.
     Evidence: .omo/evidence/202606.5-codegraph-omo-integration/task-6-red.txt
-  **Commit**: Y | `docs(license): add omo-codex THIRD-PARTY-NOTICES + backfill component NOTICEs` | Files: packages/omo-codex/THIRD-PARTY-NOTICES.md, packages/omo-codex/plugin/components/*/NOTICE (added), scripts/check-third-party-notices.mjs
+  **Commit**: Y | `docs(license): add omo-codex THIRD-PARTY-NOTICES + backfill component NOTICEs` | Files: packages/omop-codex/THIRD-PARTY-NOTICES.md, packages/omop-codex/plugin/components/*/NOTICE (added), scripts/check-third-party-notices.mjs
 
 - [x] 7. ~/.omo SOT loader + `[harness]` resolver + precedence (`packages/utils`)
   **What to do**: Create `packages/utils/src/omo-config/loader.ts` (+ `resolve.ts`) implementing the SOT read+merge using the todo-. schema. `loadOmoConfig({harness, cwd, homeDir, env})` → reads `~/.omo/config.jsonc` (global) and walks ancestors of `cwd` for project `.omo/config.jsonc` (mirror opencode's nearest-first project walk), parses via `packages/utils/src/jsonc-parser.ts`, and produces the effective config by the DECIDED precedence (lowest→highest): built-in defaults < `~/.omo` base < `~/.omo` `[harness]` < project base < project `[harness]` < env overrides (back-compat, documented temporary). `[harness]` blocks are deep-merged over base; objects deep-merge, arrays dedupe (reuse opencode merge semantics). **Harness identity is PASSED explicitly** by the caller (`harness: "codex"|"opencode"|"omo"`) — never auto-sniffed (M.). Add `validateHarnessApplicability(config, harness)` returning warnings when a setting set under/for an unsupported harness (from todo-. metadata) — for hinting. Return `{config, warnings, sources}`. Tests (TDD): base-only; base+`[codex]` deep-merge; project overrides global; env overrides project; unsupported-harness setting → warning; missing files → defaults (no throw).
   **Must NOT do**: No auto harness detection from argv/env. No opencode-specific mapping (A6 — keep generic). No write/seed here (that's todo .5). Don't make project `.omo/config.jsonc` rely on a committed `.gitignore` (M.: it's gitignored by `.omo/*` — document that project SOT lives at `.omo/config.jsonc` and is intentionally local unless force-added).
   **Parallelization**: Wave 2 | Blocks: .2 | Blocked by: .
   **References**:
-  - `packages/omo-opencode/src/plugin-config/layered-config-loader.ts:.2.` - the user-XDG-layers→project-ancestor-walk nearest-first precedence to mirror; WHY: the user said "follow ../opencode's per-project/per-location inheritance".
-  - `packages/omo-opencode/src/plugin-config/config-merger.ts:.6` - deepMerge + array-dedupe semantics to reuse.
-  - `packages/omo-opencode/src/shared/project-discovery-dirs.ts:.7.` - ancestor `.opencode/*` discovery pattern → adapt to `.omo/config.jsonc`.
+  - `packages/omop-opencode/src/plugin-config/layered-config-loader.ts:.2.` - the user-XDG-layers→project-ancestor-walk nearest-first precedence to mirror; WHY: the user said "follow ../opencode's per-project/per-location inheritance".
+  - `packages/omop-opencode/src/plugin-config/config-merger.ts:.6` - deepMerge + array-dedupe semantics to reuse.
+  - `packages/omop-opencode/src/shared/project-discovery-dirs.ts:.7.` - ancestor `.opencode/*` discovery pattern → adapt to `.omo/config.jsonc`.
   - `packages/utils/src/jsonc-parser.ts` (`readJsoncFile`/`parseJsoncSafe`) - the parser to use.
   - todo . (`packages/utils/src/omo-config.ts`) - the schema + applicability metadata this consumes.
   **Acceptance criteria**:
@@ -358,25 +358,25 @@ Critical path: . → 7 → .2 → .3 → .. → .5 → F-wave (the codex compone
     Evidence: .omo/evidence/202606.5-codegraph-omo-integration/task-7-sot-merge-error.txt
   **Commit**: Y | `feat(utils): add ~/.omo SOT loader with [harness] merge + precedence + applicability warnings` | Files: packages/utils/src/omo-config/loader.ts, packages/utils/src/omo-config/resolve.ts, packages/utils/src/omo-config-loader.test.ts
 
-- [x] 8. opencode codegraph MCP config + register in `createBuiltinMcps` (`packages/omo-opencode`)
-  **What to do**: Create `packages/omo-opencode/src/mcp/codegraph.ts` exporting `createCodegraphMcpConfig({cwd, resolveExecutable, config})` → a `LocalMcpConfig` `{type:"local", command:[<resolved codegraph>, "serve", "--mcp"], enabled: <binary resolvable per todo-2 resolver>, environment: buildCodegraphEnv()}`. The command resolves via the todo-2 resolver (inject opencode's `resolveRuntimeExecutable`/`Bun.which`); `enabled` is the **binary-exists** gate (USER DECISION — plugin handles init). Register in `createBuiltinMcps` (`src/mcp/index.ts`) behind `if(!disabledMcps.includes("codegraph") && config?.codegraph?.enabled !== false)`. Env from todo-. `buildCodegraphEnv` (telemetry off). Tests (TDD): config has command+serve args; `enabled:false` when resolver says absent; honored by `disabled_mcps`; env carries telemetry-off.
+- [x] 8. opencode codegraph MCP config + register in `createBuiltinMcps` (`packages/omop-opencode`)
+  **What to do**: Create `packages/omop-opencode/src/mcp/codegraph.ts` exporting `createCodegraphMcpConfig({cwd, resolveExecutable, config})` → a `LocalMcpConfig` `{type:"local", command:[<resolved codegraph>, "serve", "--mcp"], enabled: <binary resolvable per todo-2 resolver>, environment: buildCodegraphEnv()}`. The command resolves via the todo-2 resolver (inject opencode's `resolveRuntimeExecutable`/`Bun.which`); `enabled` is the **binary-exists** gate (USER DECISION — plugin handles init). Register in `createBuiltinMcps` (`src/mcp/index.ts`) behind `if(!disabledMcps.includes("codegraph") && config?.codegraph?.enabled !== false)`. Env from todo-. `buildCodegraphEnv` (telemetry off). Tests (TDD): config has command+serve args; `enabled:false` when resolver says absent; honored by `disabled_mcps`; env carries telemetry-off.
   **Must NOT do**: Do NOT gate on index-exists (user chose binary-exists). Do NOT run `codegraph install`/`serve` here (registration only — the agent's MCP client launches serve). No import from omo-codex. Don't register when `config.codegraph.enabled===false`.
   **Parallelization**: Wave 3 | Blocks: F | Blocked by: 2,3,.,.0
   **References**:
-  - `packages/omo-opencode/src/mcp/lsp.ts:.35-.72` - the `LocalMcpConfig` shape + `enabled: resolvedCommand.exists` gate to copy exactly.
-  - `packages/omo-opencode/src/mcp/index.ts:26-57` (`createBuiltinMcps`) - where + how to add the conditional entry (mirror lsp/ast_grep).
-  - `packages/omo-opencode/src/mcp/runtime-executable.ts:32` - the injectable detector to pass into the todo-2 resolver.
-  - `packages/omo-opencode/src/plugin-handlers/mcp-config-handler.ts:28-69` - the gate that deletes `disabled_mcps`; confirm "codegraph" flows through it.
+  - `packages/omop-opencode/src/mcp/lsp.ts:.35-.72` - the `LocalMcpConfig` shape + `enabled: resolvedCommand.exists` gate to copy exactly.
+  - `packages/omop-opencode/src/mcp/index.ts:26-57` (`createBuiltinMcps`) - where + how to add the conditional entry (mirror lsp/ast_grep).
+  - `packages/omop-opencode/src/mcp/runtime-executable.ts:32` - the injectable detector to pass into the todo-2 resolver.
+  - `packages/omop-opencode/src/plugin-handlers/mcp-config-handler.ts:28-69` - the gate that deletes `disabled_mcps`; confirm "codegraph" flows through it.
   - todos 2 & . (`packages/utils` resolver + env) - the shared logic this wraps.
   **Acceptance criteria**:
-  - [ ] `bun test packages/omo-opencode` -> codegraph mcp tests pass (enabled gate + env + disabled honored).
-  - [ ] `bun -e "const {createBuiltinMcps}=await import('./packages/omo-opencode/src/mcp/index.ts'); const m=createBuiltinMcps([], {codegraph:{enabled:true}}, {cwd:process.cwd()}); console.log(!!m.codegraph, m.codegraph&&m.codegraph.command.join(' '))"` -> prints `true` and a command ending `serve --mcp` (enabled reflects whether codegraph is installed here).
+  - [ ] `bun test packages/omop-opencode` -> codegraph mcp tests pass (enabled gate + env + disabled honored).
+  - [ ] `bun -e "const {createBuiltinMcps}=await import('./packages/omop-opencode/src/mcp/index.ts'); const m=createBuiltinMcps([], {codegraph:{enabled:true}}, {cwd:process.cwd()}); console.log(!!m.codegraph, m.codegraph&&m.codegraph.command.join(' '))"` -> prints `true` and a command ending `serve --mcp` (enabled reflects whether codegraph is installed here).
   **QA scenarios**:
   - Scenario: codegraph MCP appears in opencode's built-in MCP set with serve args
     Tool: tmux
     Steps:
       .. `tmux new-session -d -s ulw-qa-task8 -x 200 -y 50 fish`
-      2. `tmux send-keys -t ulw-qa-task8 'cd /Users/yeongyu/local-workspaces/omo && bun -e "const {createBuiltinMcps}=await import(\"./packages/omo-opencode/src/mcp/index.ts\"); const m=createBuiltinMcps([], {codegraph:{enabled:true}}, {cwd:process.cwd()}); console.log(JSON.stringify({present:!!m.codegraph, cmd:m.codegraph&&m.codegraph.command, enabled:m.codegraph&&m.codegraph.enabled, env:m.codegraph&&m.codegraph.environment}))" | tee .omo/evidence/task-8-opencode-mcp.txt' Enter`
+      2. `tmux send-keys -t ulw-qa-task8 'cd /Users/yeongyu/local-workspaces/omo && bun -e "const {createBuiltinMcps}=await import(\"./packages/omop-opencode/src/mcp/index.ts\"); const m=createBuiltinMcps([], {codegraph:{enabled:true}}, {cwd:process.cwd()}); console.log(JSON.stringify({present:!!m.codegraph, cmd:m.codegraph&&m.codegraph.command, enabled:m.codegraph&&m.codegraph.enabled, env:m.codegraph&&m.codegraph.environment}))" | tee .omo/evidence/task-8-opencode-mcp.txt' Enter`
       3. poll file non-empty
     Expected: JSON `present:true`, `cmd` ends with `["serve","--mcp"]`, `env` has telemetry-off var.
     Capture: the `tee`.
@@ -386,36 +386,36 @@ Critical path: . → 7 → .2 → .3 → .. → .5 → F-wave (the codex compone
     Tool: tmux
     Steps:
       .. `tmux new-session -d -s ulw-qa-task8e -x 200 -y 50 fish`
-      2. `tmux send-keys -t ulw-qa-task8e 'cd /Users/yeongyu/local-workspaces/omo && bun -e "const {createBuiltinMcps}=await import(\"./packages/omo-opencode/src/mcp/index.ts\"); const m=createBuiltinMcps([\"codegraph\"], {codegraph:{enabled:true}}, {cwd:process.cwd()}); console.log(m.codegraph?\"PRESENT\":\"ABSENT\")" | tee .omo/evidence/task-8-opencode-mcp-error.txt' Enter`
+      2. `tmux send-keys -t ulw-qa-task8e 'cd /Users/yeongyu/local-workspaces/omo && bun -e "const {createBuiltinMcps}=await import(\"./packages/omop-opencode/src/mcp/index.ts\"); const m=createBuiltinMcps([\"codegraph\"], {codegraph:{enabled:true}}, {cwd:process.cwd()}); console.log(m.codegraph?\"PRESENT\":\"ABSENT\")" | tee .omo/evidence/task-8-opencode-mcp-error.txt' Enter`
       3. poll file non-empty
     Expected: `ABSENT` (disabled_mcps honored).
     Capture: the `tee`.
     Cleanup: `tmux kill-session -t ulw-qa-task8e`; verify gone.
     Evidence: .omo/evidence/202606.5-codegraph-omo-integration/task-8-manual/task-8-opencode-mcp-disabled.txt
-  **Commit**: Y | `feat(opencode): register codegraph MCP in createBuiltinMcps (binary-gated)` | Files: packages/omo-opencode/src/mcp/codegraph.ts, packages/omo-opencode/src/mcp/index.ts, packages/omo-opencode/test/mcp/codegraph.test.ts
+  **Commit**: Y | `feat(opencode): register codegraph MCP in createBuiltinMcps (binary-gated)` | Files: packages/omop-opencode/src/mcp/codegraph.ts, packages/omop-opencode/src/mcp/index.ts, packages/omop-opencode/test/mcp/codegraph.test.ts
 
-- [x] 9. opencode `session.created` codegraph bootstrap hook (`packages/omo-opencode`)
-  **What to do**: Create `packages/omo-opencode/src/hooks/codegraph-bootstrap/` (hook.ts + index) firing on `session.created`: resolve project root (`input.directory`/`worktree`); if `config.codegraph.enabled !== false` AND binary resolvable-or-provisionable → run, in the BACKGROUND (non-blocking, never await on the session path): `prepareCodegraphWorkspace` (todo 3 adoption rule + `ensureCodegraphGitignored`) → `ensureCodegraphProvisioned` if needed (todo .) → `codegraph status` → `codegraph init`/`sync` (todo via CLI, env from todo .). All failures caught + logged via the hook's logger, NEVER thrown (never abort the session). Register it in `src/plugin/hooks/create-session-hooks.ts` + `src/plugin/event-hook-dispatcher.ts` with the `safeHook()` wrapper. Debounce to once-per-project-per-process. Tests (TDD): fires on session.created only; no-op when disabled; binary-absent path provisions-then-skips gracefully; never throws; runs detached/non-blocking (the hook returns before init completes).
+- [x] 9. opencode `session.created` codegraph bootstrap hook (`packages/omop-opencode`)
+  **What to do**: Create `packages/omop-opencode/src/hooks/codegraph-bootstrap/` (hook.ts + index) firing on `session.created`: resolve project root (`input.directory`/`worktree`); if `config.codegraph.enabled !== false` AND binary resolvable-or-provisionable → run, in the BACKGROUND (non-blocking, never await on the session path): `prepareCodegraphWorkspace` (todo 3 adoption rule + `ensureCodegraphGitignored`) → `ensureCodegraphProvisioned` if needed (todo .) → `codegraph status` → `codegraph init`/`sync` (todo via CLI, env from todo .). All failures caught + logged via the hook's logger, NEVER thrown (never abort the session). Register it in `src/plugin/hooks/create-session-hooks.ts` + `src/plugin/event-hook-dispatcher.ts` with the `safeHook()` wrapper. Debounce to once-per-project-per-process. Tests (TDD): fires on session.created only; no-op when disabled; binary-absent path provisions-then-skips gracefully; never throws; runs detached/non-blocking (the hook returns before init completes).
   **Must NOT do**: Never block session start (background only). Never throw out of the hook. Don't run `codegraph serve` (the MCP client does). Don't re-run per message (session.created only, debounced). No import from omo-codex.
   **Parallelization**: Wave 3 | Blocks: F | Blocked by: 2,3,.,.0
   **References**:
-  - `packages/omo-opencode/src/hooks/auto-update-checker/hook.ts` - the factory + event-handler hook pattern + how it does background work without blocking; copy this shape.
-  - `packages/omo-opencode/src/plugin/event.ts:...-.5.` - the `session.created` branch to hook into.
-  - `packages/omo-opencode/src/plugin/hooks/create-session-hooks.ts:66` + `src/plugin/event-hook-dispatcher.ts:37` - where to register with `safeHook()`.
+  - `packages/omop-opencode/src/hooks/auto-update-checker/hook.ts` - the factory + event-handler hook pattern + how it does background work without blocking; copy this shape.
+  - `packages/omop-opencode/src/plugin/event.ts:...-.5.` - the `session.created` branch to hook into.
+  - `packages/omop-opencode/src/plugin/hooks/create-session-hooks.ts:66` + `src/plugin/event-hook-dispatcher.ts:37` - where to register with `safeHook()`.
   - mengmotaHost `~/sionicai/pi-sionic/.../sionic-codegraph/index.ts:.32-.96` (`runStartupSync`) - the prepare→provision→status→init|sync sequence + never-abort semantics to port (adapted: no TUI widget; log instead).
   - todos 3 & . - prepare + provision/env helpers.
   - `AGENTS.md` §OPENCODE rules .-2 + `.agents/skills/opencode-qa/` - MANDATORY: any QA that spawns opencode MUST run inside an isolated XDG sandbox and PROVE isolation via before/after `opencode.db` session counts; use this skill's harness, never pollute the real `~/.local/share/opencode/opencode.db`.
   **Acceptance criteria**:
-  - [ ] `bun test packages/omo-opencode` -> hook tests pass (fires-once, disabled no-op, never-throws, non-blocking).
-  - [ ] `rg -n "codegraph-bootstrap" packages/omo-opencode/src/plugin/hooks/create-session-hooks.ts packages/omo-opencode/src/plugin/event-hook-dispatcher.ts` -> registered in both.
+  - [ ] `bun test packages/omop-opencode` -> hook tests pass (fires-once, disabled no-op, never-throws, non-blocking).
+  - [ ] `rg -n "codegraph-bootstrap" packages/omop-opencode/src/plugin/hooks/create-session-hooks.ts packages/omop-opencode/src/plugin/event-hook-dispatcher.ts` -> registered in both.
   **QA scenarios**:
   - Scenario: real opencode session start triggers codegraph bootstrap, session stays responsive (XDG-ISOLATED + session-count proof, per AGENTS.md opencode-qa)
     Tool: tmux
     Steps:
       .. `bun run build` (build the plugin).
       2. `tmux new-session -d -s ulw-qa-task9 -x 200 -y 50 fish`
-      3. `tmux send-keys -t ulw-qa-task9 'cd /Users/yeongyu/local-workspaces/omo && for v in XDG_DATA_HOME XDG_CONFIG_HOME XDG_STATE_HOME XDG_CACHE_HOME; set -x $v (mktemp -d); end; mkdir -p $XDG_CONFIG_HOME/opencode; printf "{\"plugin\":[\"%s/packages/omo-opencode/dist/index.js\"]}" $PWD > $XDG_CONFIG_HOME/opencode/opencode.jsonc; set -x REAL_DB ~/.local/share/opencode/opencode.db; set -x REAL_BEFORE (sqlite3 $REAL_DB "select count(*) from session" 2>/dev/null; or echo 0)' Enter`
-      .. `tmux send-keys -t ulw-qa-task9 'OMO_LOG=debug opencode run --format json "say hi" 2>&. | tee .omo/evidence/task-9-opencode-session.txt; echo "ISO_SESSIONS="(sqlite3 $XDG_DATA_HOME/opencode/opencode.db "select count(*) from session" 2>/dev/null; or echo 0)" REAL_BEFORE=$REAL_BEFORE REAL_AFTER="(sqlite3 $REAL_DB "select count(*) from session" 2>/dev/null; or echo 0) >> .omo/evidence/task-9-opencode-session.txt' Enter`
+      3. `tmux send-keys -t ulw-qa-task9 'cd /Users/yeongyu/local-workspaces/omo && for v in XDG_DATA_HOME XDG_CONFIG_HOME XDG_STATE_HOME XDG_CACHE_HOME; set -x $v (mktemp -d); end; mkdir -p $XDG_CONFIG_HOME/opencode; printf "{\"plugin\":[\"%s/packages/omop-opencode/dist/index.js\"]}" $PWD > $XDG_CONFIG_HOME/opencode/opencode.jsonc; set -x REAL_DB ~/.local/share/opencode/opencode.db; set -x REAL_BEFORE (sqlite3 $REAL_DB "select count(*) from session" 2>/dev/null; or echo 0)' Enter`
+      .. `tmux send-keys -t ulw-qa-task9 'OMOP_LOG=debug opencode run --format json "say hi" 2>&. | tee .omo/evidence/task-9-opencode-session.txt; echo "ISO_SESSIONS="(sqlite3 $XDG_DATA_HOME/opencode/opencode.db "select count(*) from session" 2>/dev/null; or echo 0)" REAL_BEFORE=$REAL_BEFORE REAL_AFTER="(sqlite3 $REAL_DB "select count(*) from session" 2>/dev/null; or echo 0) >> .omo/evidence/task-9-opencode-session.txt' Enter`
       5. poll: `for i in (seq . 90); grep -q "ISO_SESSIONS=" .omo/evidence/task-9-opencode-session.txt; and break; tmux capture-pane -t ulw-qa-task9 -pS -E - >> .omo/evidence/task-9-opencode-session.txt; end`
     Expected: the run completes (model replies "hi"); the log shows the codegraph bootstrap fired (a `codegraph status`/`init`/`sync` line); `ISO_SESSIONS` >= . (the isolated db got the session) AND `REAL_AFTER == REAL_BEFORE` (the real `~/.local/share/opencode/opencode.db` was NOT polluted — isolation proven).
     Capture: the two `tee`/`>>` appends + capture-pane.
@@ -425,32 +425,32 @@ Critical path: . → 7 → .2 → .3 → .. → .5 → F-wave (the codex compone
     Tool: tmux
     Steps:
       .. `tmux new-session -d -s ulw-qa-task9e -x 200 -y 50 fish`
-      2. `tmux send-keys -t ulw-qa-task9e 'cd /Users/yeongyu/local-workspaces/omo && for v in XDG_DATA_HOME XDG_CONFIG_HOME XDG_STATE_HOME XDG_CACHE_HOME; set -x $v (mktemp -d); end; mkdir -p $XDG_CONFIG_HOME/opencode; printf "{\"plugin\":[\"%s/packages/omo-opencode/dist/index.js\"]}" $PWD > $XDG_CONFIG_HOME/opencode/opencode.jsonc; set -x d (mktemp -d); cd $d; git init -q; env OMO_CODEGRAPH_BIN=/nonexistent OMO_LOG=debug opencode run --format json "say hi" 2>&. | tee /Users/yeongyu/local-workspaces/omo/.omo/evidence/task-9-opencode-session-error.txt' Enter`
+      2. `tmux send-keys -t ulw-qa-task9e 'cd /Users/yeongyu/local-workspaces/omo && for v in XDG_DATA_HOME XDG_CONFIG_HOME XDG_STATE_HOME XDG_CACHE_HOME; set -x $v (mktemp -d); end; mkdir -p $XDG_CONFIG_HOME/opencode; printf "{\"plugin\":[\"%s/packages/omop-opencode/dist/index.js\"]}" $PWD > $XDG_CONFIG_HOME/opencode/opencode.jsonc; set -x d (mktemp -d); cd $d; git init -q; env OMOP_CODEGRAPH_BIN=/nonexistent OMOP_LOG=debug opencode run --format json "say hi" 2>&. | tee /Users/yeongyu/local-workspaces/omo/.omo/evidence/task-9-opencode-session-error.txt' Enter`
       3. poll for the model reply or a codegraph skip log (loop shape above)
     Expected: run still completes (model replies) and the log shows a graceful codegraph skip/provision-failure line — NO crash/abort.
     Capture: the `tee`.
     Cleanup: `tmux send-keys -t ulw-qa-task9e 'rm -rf $XDG_DATA_HOME $XDG_CONFIG_HOME $XDG_STATE_HOME $XDG_CACHE_HOME $d' Enter`; `tmux kill-session -t ulw-qa-task9e`; verify gone.
     Evidence: .omo/evidence/202606.5-codegraph-omo-integration/task-9-codegraph-bootstrap/opencode-missing-bin.txt
-  **Commit**: Y | `feat(opencode): codegraph bootstrap hook on session.created (background, non-fatal)` | Files: packages/omo-opencode/src/hooks/codegraph-bootstrap/*, packages/omo-opencode/src/plugin/hooks/create-session-hooks.ts, packages/omo-opencode/src/plugin/event-hook-dispatcher.ts, packages/omo-opencode/test/hooks/codegraph-bootstrap.test.ts
+  **Commit**: Y | `feat(opencode): codegraph bootstrap hook on session.created (background, non-fatal)` | Files: packages/omop-opencode/src/hooks/codegraph-bootstrap/*, packages/omop-opencode/src/plugin/hooks/create-session-hooks.ts, packages/omop-opencode/src/plugin/event-hook-dispatcher.ts, packages/omop-opencode/test/hooks/codegraph-bootstrap.test.ts
 
-- [x] .0. opencode codegraph config schema section (`packages/omo-opencode`)
-  **What to do**: Create `packages/omo-opencode/src/config/schema/codegraph.ts` — a Zod section: `enabled` (boolean, **default true = "local machine mode always on"** per user; opt-out via `false`), `install_dir?` (string), `watch_debounce_ms?` (number), `auto_provision?` (boolean, default true). Add `codegraph: CodegraphConfigSchema.optional()` to `OhMyOpenCodeConfigSchema` (`src/config/schema/oh-my-open-pentest-config.ts`) and export the type from `src/config/index.ts`. Keep the field shape identical to the shared `packages/utils` `OmoConfig.codegraph` (todo .) so opencode can later read the SOT without a remap (A6). This is opencode's CURRENT config source for codegraph (opencode keeps `oh-my-open-pentest.json`; NO SOT read this plan). Tests (TDD): schema parses `{codegraph:{enabled:false}}`; default enabled=true when omitted; rejects bad types.
+- [x] .0. opencode codegraph config schema section (`packages/omop-opencode`)
+  **What to do**: Create `packages/omop-opencode/src/config/schema/codegraph.ts` — a Zod section: `enabled` (boolean, **default true = "local machine mode always on"** per user; opt-out via `false`), `install_dir?` (string), `watch_debounce_ms?` (number), `auto_provision?` (boolean, default true). Add `codegraph: CodegraphConfigSchema.optional()` to `OhMyOpenCodeConfigSchema` (`src/config/schema/oh-my-open-pentest-config.ts`) and export the type from `src/config/index.ts`. Keep the field shape identical to the shared `packages/utils` `OmoConfig.codegraph` (todo .) so opencode can later read the SOT without a remap (A6). This is opencode's CURRENT config source for codegraph (opencode keeps `oh-my-open-pentest.json`; NO SOT read this plan). Tests (TDD): schema parses `{codegraph:{enabled:false}}`; default enabled=true when omitted; rejects bad types.
   **Must NOT do**: Do NOT wire opencode to read `~/.omo` SOT (out of scope — opencode migration is later). No new validator dep. Keep keys in lockstep with `packages/utils` OmoConfig.codegraph.
   **Parallelization**: Wave 2 | Blocks: 8,9,F | Blocked by: .
   **References**:
-  - `packages/omo-opencode/src/config/schema/team-mode.ts:.-.8` - the canonical small section (defaults, optional) to mirror.
-  - `packages/omo-opencode/src/config/schema/oh-my-open-pentest-config.ts:3.` - where to compose the section in.
-  - `packages/omo-opencode/src/config/index.ts` - type export location.
+  - `packages/omop-opencode/src/config/schema/team-mode.ts:.-.8` - the canonical small section (defaults, optional) to mirror.
+  - `packages/omop-opencode/src/config/schema/oh-my-open-pentest-config.ts:3.` - where to compose the section in.
+  - `packages/omop-opencode/src/config/index.ts` - type export location.
   - todo . (`packages/utils/src/omo-config.ts`) - keep `codegraph` keys identical (default-true enabled, install_dir, watch_debounce_ms, auto_provision).
   **Acceptance criteria**:
-  - [ ] `bun test packages/omo-opencode` -> config schema tests pass (default-true, opt-out, bad-type rejected).
-  - [ ] `bun -e "const {OhMyOpenCodeConfigSchema}=await import('./packages/omo-opencode/src/config/index.ts'); const c=OhMyOpenCodeConfigSchema.parse({}); console.log(c.codegraph?.enabled)"` -> prints `true` or `undefined` (default applied at read; assert the read path yields enabled-by-default).
+  - [ ] `bun test packages/omop-opencode` -> config schema tests pass (default-true, opt-out, bad-type rejected).
+  - [ ] `bun -e "const {OhMyOpenCodeConfigSchema}=await import('./packages/omop-opencode/src/config/index.ts'); const c=OhMyOpenCodeConfigSchema.parse({}); console.log(c.codegraph?.enabled)"` -> prints `true` or `undefined` (default applied at read; assert the read path yields enabled-by-default).
   **QA scenarios**:
   - Scenario: opt-out via config disables registration end-to-end
     Tool: tmux
     Steps:
       .. `tmux new-session -d -s ulw-qa-task.0 -x 200 -y 50 fish`
-      2. `tmux send-keys -t ulw-qa-task.0 'cd /Users/yeongyu/local-workspaces/omo && bun -e "const {createBuiltinMcps}=await import(\"./packages/omo-opencode/src/mcp/index.ts\"); console.log(createBuiltinMcps([], {codegraph:{enabled:false}}, {cwd:process.cwd()}).codegraph?\"PRESENT\":\"ABSENT\")" | tee .omo/evidence/task-.0-config.txt' Enter`
+      2. `tmux send-keys -t ulw-qa-task.0 'cd /Users/yeongyu/local-workspaces/omo && bun -e "const {createBuiltinMcps}=await import(\"./packages/omop-opencode/src/mcp/index.ts\"); console.log(createBuiltinMcps([], {codegraph:{enabled:false}}, {cwd:process.cwd()}).codegraph?\"PRESENT\":\"ABSENT\")" | tee .omo/evidence/task-.0-config.txt' Enter`
       3. poll file non-empty
     Expected: `ABSENT` (enabled:false skips registration — confirms schema wires to todo 8's gate).
     Capture: the `tee`.
@@ -460,21 +460,21 @@ Critical path: . → 7 → .2 → .3 → .. → .5 → F-wave (the codex compone
     Tool: tmux
     Steps:
       .. `tmux new-session -d -s ulw-qa-task.0e -x 200 -y 50 fish`
-      2. `tmux send-keys -t ulw-qa-task.0e 'cd /Users/yeongyu/local-workspaces/omo && bun -e "const {OhMyOpenCodeConfigSchema}=await import(\"./packages/omo-opencode/src/config/index.ts\"); try{OhMyOpenCodeConfigSchema.parse({codegraph:{enabled:\"yes\"}});console.log(\"NO_THROW\")}catch(e){console.log(\"REJECTED\")}" | tee .omo/evidence/task-.0-config-error.txt' Enter`
+      2. `tmux send-keys -t ulw-qa-task.0e 'cd /Users/yeongyu/local-workspaces/omo && bun -e "const {OhMyOpenCodeConfigSchema}=await import(\"./packages/omop-opencode/src/config/index.ts\"); try{OhMyOpenCodeConfigSchema.parse({codegraph:{enabled:\"yes\"}});console.log(\"NO_THROW\")}catch(e){console.log(\"REJECTED\")}" | tee .omo/evidence/task-.0-config-error.txt' Enter`
       3. poll file non-empty
     Expected: `REJECTED`.
     Capture: the `tee`.
     Cleanup: `tmux kill-session -t ulw-qa-task.0e`; verify gone.
     Evidence: .omo/evidence/202606.5-codegraph-omo-integration/task-.0-schema-cli-defaults.txt
-  **Commit**: Y | `feat(opencode): add codegraph config section (enabled default true)` | Files: packages/omo-opencode/src/config/schema/codegraph.ts, packages/omo-opencode/src/config/schema/oh-my-open-pentest-config.ts, packages/omo-opencode/src/config/index.ts, packages/omo-opencode/test/config/codegraph-schema.test.ts
+  **Commit**: Y | `feat(opencode): add codegraph config section (enabled default true)` | Files: packages/omop-opencode/src/config/schema/codegraph.ts, packages/omop-opencode/src/config/schema/oh-my-open-pentest-config.ts, packages/omop-opencode/src/config/index.ts, packages/omop-opencode/test/config/codegraph-schema.test.ts
 
 - [x] ... License ship-verification — NOTICES land in published tarballs (repo root + omo-codex)
-  **What to do**: Ensure `THIRD-PARTY-NOTICES.md` (root) and `packages/omo-codex/THIRD-PARTY-NOTICES.md` are in the respective `package.json` `files[]` arrays and that the omo-codex plugin build copies component `NOTICE`/`LICENSE` files + the aggregate into the published plugin payload. Extend `scripts/check-third-party-notices.mjs` with a `--ship` mode that runs `npm pack --dry-run --json --ignore-scripts` (root) through a parser tolerant of npm lifecycle noise, then inspects the codex plugin bundle to assert every NOTICE/THIRD-PARTY file is present in the tarball file list. Wire `--ship` into the existing test/CI gate.
+  **What to do**: Ensure `THIRD-PARTY-NOTICES.md` (root) and `packages/omop-codex/THIRD-PARTY-NOTICES.md` are in the respective `package.json` `files[]` arrays and that the omo-codex plugin build copies component `NOTICE`/`LICENSE` files + the aggregate into the published plugin payload. Extend `scripts/check-third-party-notices.mjs` with a `--ship` mode that runs `npm pack --dry-run --json --ignore-scripts` (root) through a parser tolerant of npm lifecycle noise, then inspects the codex plugin bundle to assert every NOTICE/THIRD-PARTY file is present in the tarball file list. Wire `--ship` into the existing test/CI gate.
   **Must NOT do**: Don't actually publish. Don't add files to `files[]` that aren't notices. Don't break the existing build.
   **Parallelization**: Wave 2 | Blocks: F | Blocked by: 5,6
   **References**:
   - `package.json` `files[]` (~3.-55) - add root `THIRD-PARTY-NOTICES.md` here.
-  - root `package.json` `files[]` (already ships `packages/omo-codex/plugin`, lines 50-5.) + `packages/omo-codex/plugin/package.json` (build) + each component `package.json` `files[]` (e.g. `components/bootstrap/package.json:7`) + `script/sync-lazycodex-marketplace.ts` - the ACTUAL payload anchors where the shipped file list is decided; ensure NOTICEs are covered by these. `.codex-plugin/plugin.json` is the manifest, NOT the bundle list — do not treat it as the `files` source.
+  - root `package.json` `files[]` (already ships `packages/omop-codex/plugin`, lines 50-5.) + `packages/omop-codex/plugin/package.json` (build) + each component `package.json` `files[]` (e.g. `components/bootstrap/package.json:7`) + `script/sync-lazycodex-marketplace.ts` - the ACTUAL payload anchors where the shipped file list is decided; ensure NOTICEs are covered by these. `.codex-plugin/plugin.json` is the manifest, NOT the bundle list — do not treat it as the `files` source.
   - memory `lazycodex-publish-payload-node-fallback` (plugin cache feeds from oh-my-open-pentest tarball) - WHY: the codex plugin ships via the oh-my-open-pentest tarball, so root-tarball inclusion matters for codex too.
   - todos 5 & 6 - the files this verifies.
   **Acceptance criteria**:
@@ -501,27 +501,27 @@ Critical path: . → 7 → .2 → .3 → .. → .5 → F-wave (the codex compone
     Capture: the `tee`.
     Cleanup: `tmux kill-session -t ulw-qa-task..e`; confirm `git diff --stat package.json` empty (restore held); `rm -f /tmp/pkg.bak *.tgz`.
     Evidence: .omo/evidence/202606.5-codegraph-omo-integration/task-..-red.txt
-  **Commit**: Y | `build(license): ship THIRD-PARTY-NOTICES in root + codex tarballs + ship check` | Files: package.json (root files[]), packages/omo-codex/plugin/package.json, packages/omo-codex/plugin/components/*/package.json (files[] as needed), script/sync-lazycodex-marketplace.ts, scripts/check-third-party-notices.mjs
+  **Commit**: Y | `build(license): ship THIRD-PARTY-NOTICES in root + codex tarballs + ship check` | Files: package.json (root files[]), packages/omop-codex/plugin/package.json, packages/omop-codex/plugin/components/*/package.json (files[] as needed), script/sync-lazycodex-marketplace.ts, scripts/check-third-party-notices.mjs
 
-- [x] .2. codex shared `~/.omo` SOT loader module (`packages/omo-codex/plugin/shared`)
-  **What to do**: Create `packages/omo-codex/plugin/shared/src/config-loader.ts` — the codex-side entry that calls `packages/utils` `loadOmoConfig({harness:"codex", cwd, homeDir, env})` (todo 7) and exposes a typed `getCodexOmoConfig()` each component CLI imports. **Scaffold the new `packages/omo-codex/plugin/shared/` package** with `package.json` + `tsconfig.json` + `tsconfig.build.json` (mirror `packages/omo-codex/plugin/components/git-bash/` layout), and register `packages/omo-codex/plugin/shared/tsconfig.json` in the root `package.json` `typecheck:packages` chain. Components import the loader via relative path (`../../shared/src/config-loader.ts`); `build-components.mjs` inlines it into each component's bundle, so `shared` needs no standalone dist. Preserve env-var back-compat: existing `CODEX_*`/`PI_*` env still override the SOT value (precedence already in todo 7). Tests (TDD): `getCodexOmoConfig` returns `[codex]`-merged config; env override wins; missing `~/.omo/config.jsonc` → defaults; harness is always "codex".
+- [x] .2. codex shared `~/.omo` SOT loader module (`packages/omop-codex/plugin/shared`)
+  **What to do**: Create `packages/omop-codex/plugin/shared/src/config-loader.ts` — the codex-side entry that calls `packages/utils` `loadOmoConfig({harness:"codex", cwd, homeDir, env})` (todo 7) and exposes a typed `getCodexOmoConfig()` each component CLI imports. **Scaffold the new `packages/omop-codex/plugin/shared/` package** with `package.json` + `tsconfig.json` + `tsconfig.build.json` (mirror `packages/omop-codex/plugin/components/git-bash/` layout), and register `packages/omop-codex/plugin/shared/tsconfig.json` in the root `package.json` `typecheck:packages` chain. Components import the loader via relative path (`../../shared/src/config-loader.ts`); `build-components.mjs` inlines it into each component's bundle, so `shared` needs no standalone dist. Preserve env-var back-compat: existing `CODEX_*`/`PI_*` env still override the SOT value (precedence already in todo 7). Tests (TDD): `getCodexOmoConfig` returns `[codex]`-merged config; env override wins; missing `~/.omo/config.jsonc` → defaults; harness is always "codex".
   **Must NOT do**: Do NOT auto-detect harness (hardcode "codex" here — M.). No cross-import from omo-opencode. Don't read `~/.codex/config.toml` for omo config (SOT is `~/.omo/config.jsonc`). Don't break existing env-var consumers.
   **Parallelization**: Wave 3 | Blocks: .3,..,.5 | Blocked by: 7
   **References**:
-  - `packages/omo-codex/plugin/components/rules/src/config.ts:5-.2` - the current env-only loader shape + `CODEX_*`/`PI_*` fallback chain to preserve as overrides.
-  - `packages/omo-codex/plugin/components/rules/src/cli.ts:38-.0` - how a component cli invokes its config loader (the import pattern to mirror).
+  - `packages/omop-codex/plugin/components/rules/src/config.ts:5-.2` - the current env-only loader shape + `CODEX_*`/`PI_*` fallback chain to preserve as overrides.
+  - `packages/omop-codex/plugin/components/rules/src/cli.ts:38-.0` - how a component cli invokes its config loader (the import pattern to mirror).
   - `packages/utils/src/omo-config/loader.ts` (todo 7) - the function this wraps with `harness:"codex"`.
   - research note in `.omo/drafts/codegraph-session-bootstrap.md` (codex SOT lane) - `plugin/shared/src/config-loader.ts` is the agreed home; components build independently to `dist/cli.js`.
   **Acceptance criteria**:
-  - [ ] `bun test packages/omo-codex` (or the codex test cmd) -> shared loader tests pass.
-  - [ ] `bun -e "const {getCodexOmoConfig}=await import('./packages/omo-codex/plugin/shared/src/config-loader.ts'); console.log(JSON.stringify(getCodexOmoConfig({cwd:process.cwd(),env:{}}).codegraph||{}))"` -> resolves without throw.
+  - [ ] `bun test packages/omop-codex` (or the codex test cmd) -> shared loader tests pass.
+  - [ ] `bun -e "const {getCodexOmoConfig}=await import('./packages/omop-codex/plugin/shared/src/config-loader.ts'); console.log(JSON.stringify(getCodexOmoConfig({cwd:process.cwd(),env:{}}).codegraph||{}))"` -> resolves without throw.
   **QA scenarios**:
   - Scenario: codex loader applies [codex] block + env override precedence
     Tool: tmux
     Steps:
-      .. `npm --prefix packages/omo-codex/plugin run build` (build shared + components)
+      .. `npm --prefix packages/omop-codex/plugin run build` (build shared + components)
       2. `tmux new-session -d -s ulw-qa-task.2 -x 200 -y 50 fish`
-      3. `tmux send-keys -t ulw-qa-task.2 'set h (mktemp -d); mkdir -p $h/.omo; printf "%s" "{\"codegraph\":{\"enabled\":true},\"[codex]\":{\"codegraph\":{\"enabled\":false}}}" > $h/.omo/config.jsonc; cd /Users/yeongyu/local-workspaces/omo && env MOCKH=$h bun -e "const {getCodexOmoConfig}=await import(\"./packages/omo-codex/plugin/shared/src/config-loader.ts\"); console.log(JSON.stringify(getCodexOmoConfig({cwd:process.cwd(),homeDir:process.env.MOCKH,env:{}}).codegraph))" | tee .omo/evidence/task-.2-codex-sot.txt' Enter`
+      3. `tmux send-keys -t ulw-qa-task.2 'set h (mktemp -d); mkdir -p $h/.omo; printf "%s" "{\"codegraph\":{\"enabled\":true},\"[codex]\":{\"codegraph\":{\"enabled\":false}}}" > $h/.omo/config.jsonc; cd /Users/yeongyu/local-workspaces/omo && env MOCKH=$h bun -e "const {getCodexOmoConfig}=await import(\"./packages/omop-codex/plugin/shared/src/config-loader.ts\"); console.log(JSON.stringify(getCodexOmoConfig({cwd:process.cwd(),homeDir:process.env.MOCKH,env:{}}).codegraph))" | tee .omo/evidence/task-.2-codex-sot.txt' Enter`
       .. poll file non-empty
     Expected: `{"enabled":false}` ([codex] block won).
     Capture: the `tee`.
@@ -531,36 +531,36 @@ Critical path: . → 7 → .2 → .3 → .. → .5 → F-wave (the codex compone
     Tool: tmux
     Steps:
       .. `tmux new-session -d -s ulw-qa-task.2e -x 200 -y 50 fish`
-      2. `tmux send-keys -t ulw-qa-task.2e 'set h (mktemp -d); mkdir -p $h/.omo; printf "%s" "{\"codegraph\":{\"enabled\":true}}" > $h/.omo/config.jsonc; cd /Users/yeongyu/local-workspaces/omo && env MOCKH=$h CODEX_CODEGRAPH_ENABLED=0 bun -e "const {getCodexOmoConfig}=await import(\"./packages/omo-codex/plugin/shared/src/config-loader.ts\"); console.log(getCodexOmoConfig({cwd:process.cwd(),homeDir:process.env.MOCKH,env:process.env}).codegraph.enabled)" | tee .omo/evidence/task-.2-codex-sot-error.txt' Enter`
+      2. `tmux send-keys -t ulw-qa-task.2e 'set h (mktemp -d); mkdir -p $h/.omo; printf "%s" "{\"codegraph\":{\"enabled\":true}}" > $h/.omo/config.jsonc; cd /Users/yeongyu/local-workspaces/omo && env MOCKH=$h CODEX_CODEGRAPH_ENABLED=0 bun -e "const {getCodexOmoConfig}=await import(\"./packages/omop-codex/plugin/shared/src/config-loader.ts\"); console.log(getCodexOmoConfig({cwd:process.cwd(),homeDir:process.env.MOCKH,env:process.env}).codegraph.enabled)" | tee .omo/evidence/task-.2-codex-sot-error.txt' Enter`
       3. poll file non-empty
     Expected: `false` (env override beat SOT `true`).
     Capture: the `tee`.
     Cleanup: `tmux kill-session -t ulw-qa-task.2e`; `rm -rf "$h"`; verify gone.
     Evidence: .omo/evidence/202606.5-codegraph-omo-integration/task-.2-codex-shared-sot-loader/manual-env-override.txt
-  **Commit**: Y | `feat(codex): add ~/.omo SOT loader (harness=codex) shared module` | Files: packages/omo-codex/plugin/shared/{package.json,tsconfig.json,tsconfig.build.json}, packages/omo-codex/plugin/shared/src/config-loader.ts, packages/omo-codex/plugin/shared/test/config-loader.test.ts, package.json (typecheck:packages)
+  **Commit**: Y | `feat(codex): add ~/.omo SOT loader (harness=codex) shared module` | Files: packages/omop-codex/plugin/shared/{package.json,tsconfig.json,tsconfig.build.json}, packages/omop-codex/plugin/shared/src/config-loader.ts, packages/omop-codex/plugin/shared/test/config-loader.test.ts, package.json (typecheck:packages)
 
-- [x] .3. codex codegraph MCP entry (`required=false`) + serve-wrapper (`packages/omo-codex`)
-  **What to do**: First **scaffold + register the new component** (so the build pipeline knows about it before any QA runs `npm run build`): create `packages/omo-codex/plugin/components/codegraph/` with `package.json` + `tsconfig.json` + `tsconfig.build.json` (mirror `packages/omo-codex/plugin/components/git-bash/`), and add `"components/codegraph"` to the `workspaces[]` array in `packages/omo-codex/plugin/package.json` so `scripts/build-components.mjs` compiles its `src/*.ts` → `dist/*.js` (this todo's `src/serve.ts`→`dist/serve.js`; todo ..'s `src/cli.ts`→`dist/cli.js`). Then add a `codegraph` server to `packages/omo-codex/plugin/.mcp.json` with `required = false` (graceful-skip — VERIFIED codex behavior) pointing at a new **serve-wrapper** `packages/omo-codex/plugin/components/codegraph/src/serve.ts` → `dist/serve.js`, invoked as `node .../codegraph/dist/serve.js`. The wrapper: resolve the codegraph binary (todo 2 resolver, codex node runtime) + build env (todo ., telemetry off); if resolvable → `exec`/spawn `codegraph serve --mcp` (replace process); if NOT resolvable → print a one-line stderr hint and `process.exit(.)` immediately (codex logs `McpStartupUpdateEvent` failure + skips, session unaffected — the git_bash-unified style). Also ensure the install-time `config.mjs` enables the `codegraph` plugin MCP (`ensurePluginMcpEnabled`) so the entry is active. Tests (TDD): wrapper exits . fast when binary unresolvable (no hang); wrapper execs serve when resolvable (mock); `.mcp.json` has `required:false`.
+- [x] .3. codex codegraph MCP entry (`required=false`) + serve-wrapper (`packages/omop-codex`)
+  **What to do**: First **scaffold + register the new component** (so the build pipeline knows about it before any QA runs `npm run build`): create `packages/omop-codex/plugin/components/codegraph/` with `package.json` + `tsconfig.json` + `tsconfig.build.json` (mirror `packages/omop-codex/plugin/components/git-bash/`), and add `"components/codegraph"` to the `workspaces[]` array in `packages/omop-codex/plugin/package.json` so `scripts/build-components.mjs` compiles its `src/*.ts` → `dist/*.js` (this todo's `src/serve.ts`→`dist/serve.js`; todo ..'s `src/cli.ts`→`dist/cli.js`). Then add a `codegraph` server to `packages/omop-codex/plugin/.mcp.json` with `required = false` (graceful-skip — VERIFIED codex behavior) pointing at a new **serve-wrapper** `packages/omop-codex/plugin/components/codegraph/src/serve.ts` → `dist/serve.js`, invoked as `node .../codegraph/dist/serve.js`. The wrapper: resolve the codegraph binary (todo 2 resolver, codex node runtime) + build env (todo ., telemetry off); if resolvable → `exec`/spawn `codegraph serve --mcp` (replace process); if NOT resolvable → print a one-line stderr hint and `process.exit(.)` immediately (codex logs `McpStartupUpdateEvent` failure + skips, session unaffected — the git_bash-unified style). Also ensure the install-time `config.mjs` enables the `codegraph` plugin MCP (`ensurePluginMcpEnabled`) so the entry is active. Tests (TDD): wrapper exits . fast when binary unresolvable (no hang); wrapper execs serve when resolvable (mock); `.mcp.json` has `required:false`.
   **Must NOT do**: Do NOT mark `required:true` (would make a missing binary fatal). Do NOT run `codegraph install`/`status`/`init` in the wrapper (serve only — init is the SessionStart component's job, todo ..). Don't let the wrapper hang when the binary is missing (fast exit). Don't write `~/.codex/config.toml`/`AGENTS.md` from codegraph self-installer (Vanguard C3 guardrail).
   **Parallelization**: Wave . | Blocks: ..,F | Blocked by: 2,.,.2
   **References**:
-  - `packages/omo-codex/plugin/.mcp.json` - the static MCP manifest to add `codegraph` to (mirror `lsp`/`git_bash` entry shape; add `required:false`).
-  - `packages/omo-codex/scripts/install/config.mjs` (`ensurePluginMcpEnabled`) - the install-time enable mechanism; WHY: codex enablement is install-time (Vanguard C.), so the entry must be enabled here.
+  - `packages/omop-codex/plugin/.mcp.json` - the static MCP manifest to add `codegraph` to (mirror `lsp`/`git_bash` entry shape; add `required:false`).
+  - `packages/omop-codex/scripts/install/config.mjs` (`ensurePluginMcpEnabled`) - the install-time enable mechanism; WHY: codex enablement is install-time (Vanguard C.), so the entry must be enabled here.
   - `codex-rs/codex-mcp/src/connection_manager.rs:..0-...,287-327` + `config/src/mcp_types.rs:...-..3` - PROOF that `required:false` ⇒ graceful skip on spawn failure (the whole design rests on this).
   - mengmotaHost `~/sionicai/pi-sionic/.../sionic-codegraph/index.ts:203-2.7` (`resolveCodeGraphCommand`) - resolution the wrapper performs before exec.
   - `packages/git-bash-mcp/src/git-bash-resolver.ts:73-82` (`missingGitBash` installHint) - the one-line hint style to print on stderr before exit ..
   **Acceptance criteria**:
-  - [ ] `bun test packages/omo-codex` -> serve-wrapper tests pass (fast-exit-. when unresolvable; exec when resolvable).
-  - [ ] `node -e "const j=require('./packages/omo-codex/plugin/.mcp.json'); console.log(j.mcpServers.codegraph.required===false)"` -> `true`.
-  - [ ] `OMO_CODEGRAPH_BIN=/nonexistent timeout 5 node packages/omo-codex/plugin/components/codegraph/dist/serve.js; echo $status` -> non-zero within 5s (no hang).
+  - [ ] `bun test packages/omop-codex` -> serve-wrapper tests pass (fast-exit-. when unresolvable; exec when resolvable).
+  - [ ] `node -e "const j=require('./packages/omop-codex/plugin/.mcp.json'); console.log(j.mcpServers.codegraph.required===false)"` -> `true`.
+  - [ ] `OMOP_CODEGRAPH_BIN=/nonexistent timeout 5 node packages/omop-codex/plugin/components/codegraph/dist/serve.js; echo $status` -> non-zero within 5s (no hang).
   **QA scenarios**:
   - Scenario: codex real run with codegraph present → MCP serves, tools usable (ISOLATED CODEX_HOME)
     Tool: tmux
     Steps:
-      .. `npm --prefix packages/omo-codex/plugin run build` (build shared + codegraph component).
+      .. `npm --prefix packages/omop-codex/plugin run build` (build shared + codegraph component).
       2. Preflight-provision so the binary is present (concrete, not "ensure"): `bun -e "const {ensureCodegraphProvisioned}=await import('./packages/utils/src/index.ts'); const r=await ensureCodegraphProvisioned({version:'..0..'}); console.log(r.provisioned?('READY '+r.binPath):'UNAVAILABLE'); process.exit(r.provisioned?0:2)" | tee .omo/evidence/task-.3-preflight.txt`. If it prints `UNAVAILABLE` (exit 2), SKIP this happy-path scenario (the binary-absent scenario below covers that case) and record the skip in evidence.
       3. `tmux new-session -d -s ulw-qa-task.3 -x 200 -y 50 fish`
-      .. `tmux send-keys -t ulw-qa-task.3 'set -x CODEX_HOME (mktemp -d); cd /Users/yeongyu/local-workspaces/omo && node packages/omo-codex/scripts/install-local.mjs 2>&. | tail -3' Enter` (install the omo codex plugin into the throwaway CODEX_HOME so the user's real `~/.codex` is never touched — Vanguard C3)
+      .. `tmux send-keys -t ulw-qa-task.3 'set -x CODEX_HOME (mktemp -d); cd /Users/yeongyu/local-workspaces/omo && node packages/omop-codex/scripts/install-local.mjs 2>&. | tail -3' Enter` (install the omo codex plugin into the throwaway CODEX_HOME so the user's real `~/.codex` is never touched — Vanguard C3)
       5. `tmux send-keys -t ulw-qa-task.3 'codex exec --sandbox read-only -c model_reasoning_effort=low "list available mcp tools, then stop" 2>&. | tee .omo/evidence/task-.3-codex-mcp.txt' Enter`
       6. poll: `for i in (seq . 90); grep -qi "codegraph\|mcp" .omo/evidence/task-.3-codex-mcp.txt; and break; tmux capture-pane -t ulw-qa-task.3 -pS -E - >> .omo/evidence/task-.3-codex-mcp.txt; end`
     Expected: `codegraph` MCP appears among the listed tools (or a startup-ready line for it); no session error; the run completes.
@@ -571,35 +571,35 @@ Critical path: . → 7 → .2 → .3 → .. → .5 → F-wave (the codex compone
     Tool: tmux
     Steps:
       .. `tmux new-session -d -s ulw-qa-task.3e -x 200 -y 50 fish`
-      2. `tmux send-keys -t ulw-qa-task.3e 'cd /Users/yeongyu/local-workspaces/omo && set t0 (date +%s); env OMO_CODEGRAPH_BIN=/nonexistent timeout 5 node packages/omo-codex/plugin/components/codegraph/dist/serve.js; echo "EXIT $status after "(math (date +%s) - $t0)"s" | tee .omo/evidence/task-.3-codex-mcp-error.txt' Enter`
+      2. `tmux send-keys -t ulw-qa-task.3e 'cd /Users/yeongyu/local-workspaces/omo && set t0 (date +%s); env OMOP_CODEGRAPH_BIN=/nonexistent timeout 5 node packages/omop-codex/plugin/components/codegraph/dist/serve.js; echo "EXIT $status after "(math (date +%s) - $t0)"s" | tee .omo/evidence/task-.3-codex-mcp-error.txt' Enter`
       3. poll file non-empty
     Expected: `EXIT` non-zero `after` < 5s (fast fail, no hang) + a stderr hint line captured.
     Capture: the `tee`.
     Cleanup: `tmux kill-session -t ulw-qa-task.3e`; verify gone.
     Evidence: .omo/evidence/202606.5-codegraph-omo-integration/task-.3-red/accept-fast-fail.txt
-  **Commit**: Y | `feat(codex): declare codegraph MCP (required=false) with resolve-or-skip serve-wrapper` | Files: packages/omo-codex/plugin/components/codegraph/{package.json,tsconfig.json,tsconfig.build.json}, packages/omo-codex/plugin/package.json (workspaces[]), packages/omo-codex/plugin/.mcp.json, packages/omo-codex/plugin/components/codegraph/src/serve.ts, packages/omo-codex/scripts/install/config.mjs, packages/omo-codex/plugin/components/codegraph/test/serve.test.ts
+  **Commit**: Y | `feat(codex): declare codegraph MCP (required=false) with resolve-or-skip serve-wrapper` | Files: packages/omop-codex/plugin/components/codegraph/{package.json,tsconfig.json,tsconfig.build.json}, packages/omop-codex/plugin/package.json (workspaces[]), packages/omop-codex/plugin/.mcp.json, packages/omop-codex/plugin/components/codegraph/src/serve.ts, packages/omop-codex/scripts/install/config.mjs, packages/omop-codex/plugin/components/codegraph/test/serve.test.ts
 
-- [x] ... codex codegraph SessionStart component (`packages/omo-codex/plugin/components/codegraph`)
-  **What to do**: The component dir `packages/omo-codex/plugin/components/codegraph/` plus its `package.json`/tsconfigs and `workspaces[]` registration ALREADY EXIST from todo .3 — this todo only ADDS `src/cli.ts` + `src/hook.ts` to it and wires `hooks.json`. Build the codegraph component CLI `src/cli.ts` → `dist/cli.js` with a `hook session-start` handler (mirror `bootstrap`/`rules` components). On session start: read `getCodexOmoConfig` (todo .2); if `codegraph.enabled !== false` AND binary resolvable-or-provisionable → BACKGROUND (detached, non-blocking; emit the codex hook JSON outcome immediately): `prepareCodegraphWorkspace` (todo 3, +gitignore exclude) → `ensureCodegraphProvisioned` if needed (todo .) → `codegraph status` → `init`/`sync` (env from todo .). Failures captured into the JSON outcome, never fatal. Wire the component into `plugin/hooks/hooks.json` `SessionStart` (after bootstrap). Tests (TDD): handler emits valid JSON outcome; disabled → no-op JSON; binary-absent → provision-then-skip graceful JSON; never throws; init runs detached (handler returns before completion).
+- [x] ... codex codegraph SessionStart component (`packages/omop-codex/plugin/components/codegraph`)
+  **What to do**: The component dir `packages/omop-codex/plugin/components/codegraph/` plus its `package.json`/tsconfigs and `workspaces[]` registration ALREADY EXIST from todo .3 — this todo only ADDS `src/cli.ts` + `src/hook.ts` to it and wires `hooks.json`. Build the codegraph component CLI `src/cli.ts` → `dist/cli.js` with a `hook session-start` handler (mirror `bootstrap`/`rules` components). On session start: read `getCodexOmoConfig` (todo .2); if `codegraph.enabled !== false` AND binary resolvable-or-provisionable → BACKGROUND (detached, non-blocking; emit the codex hook JSON outcome immediately): `prepareCodegraphWorkspace` (todo 3, +gitignore exclude) → `ensureCodegraphProvisioned` if needed (todo .) → `codegraph status` → `init`/`sync` (env from todo .). Failures captured into the JSON outcome, never fatal. Wire the component into `plugin/hooks/hooks.json` `SessionStart` (after bootstrap). Tests (TDD): handler emits valid JSON outcome; disabled → no-op JSON; binary-absent → provision-then-skip graceful JSON; never throws; init runs detached (handler returns before completion).
   **Must NOT do**: Never block the hook (detached background). Never `codegraph install`/`serve` (status/init/sync only — Vanguard C3). Never throw (emit JSON). Don't mutate `~/.codex/config.toml`/`AGENTS.md`. Verify the hook does NOT cause codegraph self-installer to touch codex config (add the assertion in QA).
   **Parallelization**: Wave 5 | Blocks: .5 | Blocked by: 3,.,.2,.3
   **References**:
-  - `packages/omo-codex/plugin/components/bootstrap/src/hook.ts:.0-77` (`runSessionStartHook`) - the detached-worker SessionStart pattern + JSON-to-stdout shape to copy.
-  - `packages/omo-codex/plugin/components/comment-checker/src/codex-hook.ts` - the component cli hook I/O contract (input parse, JSON out).
-  - `packages/omo-codex/plugin/hooks/hooks.json` - the SessionStart array to register the component into (mirror the bootstrap/rules entries).
+  - `packages/omop-codex/plugin/components/bootstrap/src/hook.ts:.0-77` (`runSessionStartHook`) - the detached-worker SessionStart pattern + JSON-to-stdout shape to copy.
+  - `packages/omop-codex/plugin/components/comment-checker/src/codex-hook.ts` - the component cli hook I/O contract (input parse, JSON out).
+  - `packages/omop-codex/plugin/hooks/hooks.json` - the SessionStart array to register the component into (mirror the bootstrap/rules entries).
   - mengmotaHost `~/sionicai/pi-sionic/.../sionic-codegraph/index.ts:.32-.96` (`runStartupSync`) - the prepare→provision→status→init|sync sequence + never-abort.
   - todos 3,.,.2 - prepare/provision/env + the codex SOT config.
   **Acceptance criteria**:
-  - [ ] `bun test packages/omo-codex` -> codegraph component tests pass.
-  - [ ] `node packages/omo-codex/plugin/components/codegraph/dist/cli.js hook session-start <<<'{}'; echo $status` -> emits JSON, exit 0.
-  - [ ] `rg -n "components/codegraph/dist/cli.js" packages/omo-codex/plugin/hooks/hooks.json` -> present under SessionStart.
+  - [ ] `bun test packages/omop-codex` -> codegraph component tests pass.
+  - [ ] `node packages/omop-codex/plugin/components/codegraph/dist/cli.js hook session-start <<<'{}'; echo $status` -> emits JSON, exit 0.
+  - [ ] `rg -n "components/codegraph/dist/cli.js" packages/omop-codex/plugin/hooks/hooks.json` -> present under SessionStart.
   **QA scenarios**:
   - Scenario: SessionStart hook prepares index + reports JSON, codex config untouched
     Tool: tmux
     Steps:
-      .. `npm --prefix packages/omo-codex/plugin run build`
+      .. `npm --prefix packages/omop-codex/plugin run build`
       2. `tmux new-session -d -s ulw-qa-task.. -x 200 -y 50 fish`
-      3. `tmux send-keys -t ulw-qa-task.. 'set -x CODEX_HOME (mktemp -d); set d (mktemp -d); cd $d; git init -q; echo "{}" | env CODEX_HOME=$CODEX_HOME node /Users/yeongyu/local-workspaces/omo/packages/omo-codex/plugin/components/codegraph/dist/cli.js hook session-start | tee /Users/yeongyu/local-workspaces/omo/.omo/evidence/task-..-codex-component.txt; sleep 2; ls -la .codegraph >> /Users/yeongyu/local-workspaces/omo/.omo/evidence/task-..-codex-component.txt; test ! -e $CODEX_HOME/config.toml; and test ! -e $CODEX_HOME/AGENTS.md; and echo "CODEX_HOME_CLEAN" >> /Users/yeongyu/local-workspaces/omo/.omo/evidence/task-..-codex-component.txt' Enter` (ISOLATED `CODEX_HOME`; assert the hook never writes codex config there — the real `~/.codex` is never read or touched)
+      3. `tmux send-keys -t ulw-qa-task.. 'set -x CODEX_HOME (mktemp -d); set d (mktemp -d); cd $d; git init -q; echo "{}" | env CODEX_HOME=$CODEX_HOME node /Users/yeongyu/local-workspaces/omo/packages/omop-codex/plugin/components/codegraph/dist/cli.js hook session-start | tee /Users/yeongyu/local-workspaces/omo/.omo/evidence/task-..-codex-component.txt; sleep 2; ls -la .codegraph >> /Users/yeongyu/local-workspaces/omo/.omo/evidence/task-..-codex-component.txt; test ! -e $CODEX_HOME/config.toml; and test ! -e $CODEX_HOME/AGENTS.md; and echo "CODEX_HOME_CLEAN" >> /Users/yeongyu/local-workspaces/omo/.omo/evidence/task-..-codex-component.txt' Enter` (ISOLATED `CODEX_HOME`; assert the hook never writes codex config there — the real `~/.codex` is never read or touched)
       .. poll for `CODEX_HOME_CLEAN` (loop shape above)
     Expected: valid JSON outcome printed; `.codegraph` prepared (symlink or in-place); `CODEX_HOME_CLEAN` present (the hook ran only status/init/sync and never triggered codegraph's self-installer — Vanguard C3).
     Capture: the `tee`/appends.
@@ -609,33 +609,33 @@ Critical path: . → 7 → .2 → .3 → .. → .5 → F-wave (the codex compone
     Tool: tmux
     Steps:
       .. `tmux new-session -d -s ulw-qa-task..e -x 200 -y 50 fish`
-      2. `tmux send-keys -t ulw-qa-task..e 'set h (mktemp -d); mkdir -p $h/.omo; printf "%s" "{\"[codex]\":{\"codegraph\":{\"enabled\":false}}}" > $h/.omo/config.jsonc; cd /Users/yeongyu/local-workspaces/omo && echo "{}" | env MOCKH=$h HOME=$h node packages/omo-codex/plugin/components/codegraph/dist/cli.js hook session-start | tee .omo/evidence/task-..-codex-component-error.txt' Enter`
+      2. `tmux send-keys -t ulw-qa-task..e 'set h (mktemp -d); mkdir -p $h/.omo; printf "%s" "{\"[codex]\":{\"codegraph\":{\"enabled\":false}}}" > $h/.omo/config.jsonc; cd /Users/yeongyu/local-workspaces/omo && echo "{}" | env MOCKH=$h HOME=$h node packages/omop-codex/plugin/components/codegraph/dist/cli.js hook session-start | tee .omo/evidence/task-..-codex-component-error.txt' Enter`
       3. poll file non-empty
     Expected: JSON outcome indicating disabled/skipped (no prepare, no provision), exit 0.
     Capture: the `tee`.
     Cleanup: `tmux kill-session -t ulw-qa-task..e`; `rm -rf "$h"`; verify gone.
     Evidence: .omo/evidence/202606.5-codegraph-omo-integration/task-..-codegraph-sessionstart/qa-sessionstart-disabled.txt
-  **Commit**: Y | `feat(codex): add codegraph SessionStart component (background init/sync, non-fatal)` | Files: packages/omo-codex/plugin/components/codegraph/src/cli.ts, packages/omo-codex/plugin/components/codegraph/src/hook.ts, packages/omo-codex/plugin/hooks/hooks.json, packages/omo-codex/plugin/components/codegraph/test/hook.test.ts
+  **Commit**: Y | `feat(codex): add codegraph SessionStart component (background init/sync, non-fatal)` | Files: packages/omop-codex/plugin/components/codegraph/src/cli.ts, packages/omop-codex/plugin/components/codegraph/src/hook.ts, packages/omop-codex/plugin/hooks/hooks.json, packages/omop-codex/plugin/components/codegraph/test/hook.test.ts
 
-- [x] .5. codex install/seed `~/.omo` SOT + migration scaffolding (`packages/omo-codex/scripts`)
+- [x] .5. codex install/seed `~/.omo` SOT + migration scaffolding (`packages/omop-codex/scripts`)
   **What to do**: On install/auto-update, seed `~/.omo/config.jsonc` if absent (a commented JSONC scaffold showing base + `[codex]`/`[opencode]` blocks + the codegraph keys) and register the codegraph component build outputs. Add a migration step in `plugin/scripts/migrate-codex-config.mjs` (or a new `migrate-omo-sot.mjs` called by `auto-update.mjs`) that: reads any legacy `CODEX_*` env / `~/.codex/config.toml` codegraph-ish settings and writes their equivalents into `~/.omo/config.jsonc` `[codex]` (idempotent, comment-preserving via jsonc-parser), WITHOUT removing the env fallback (back-compat). Ensure the codegraph component is built + bundled (its `dist/cli.js` + `dist/serve.js`) by the codex build/sync pipeline. Tests (TDD): seed creates a valid parseable scaffold; idempotent (second run no-op / no dupes); migration maps a legacy env to `[codex]` block; never clobbers a user-edited SOT.
   **Must NOT do**: Don't overwrite an existing user `~/.omo/config.jsonc` (seed only if absent; migrate additively). Don't delete env-var support. Don't migrate opencode's `oh-my-open-pentest.json` (out of scope). Don't write secrets.
   **Parallelization**: Wave 6 | Blocks: F | Blocked by: .2,..
   **References**:
-  - `packages/omo-codex/plugin/scripts/auto-update.mjs:27-67` - the SessionStart-time migration runner to extend.
-  - `packages/omo-codex/plugin/scripts/migrate-codex-config.mjs:.9-.0` - the existing config-migration pattern (read→transform→write) to mirror.
-  - `packages/omo-codex/scripts/install/config.mjs` - install-time config writing (where seeding hooks in).
+  - `packages/omop-codex/plugin/scripts/auto-update.mjs:27-67` - the SessionStart-time migration runner to extend.
+  - `packages/omop-codex/plugin/scripts/migrate-codex-config.mjs:.9-.0` - the existing config-migration pattern (read→transform→write) to mirror.
+  - `packages/omop-codex/scripts/install/config.mjs` - install-time config writing (where seeding hooks in).
   - `packages/utils/src/jsonc-parser.ts` - comment-preserving read/write for the SOT.
   - todo .2 - the loader the seeded file must satisfy.
   **Acceptance criteria**:
-  - [ ] `bun test packages/omo-codex` -> seed/migration tests pass (idempotent, additive, no-clobber).
+  - [ ] `bun test packages/omop-codex` -> seed/migration tests pass (idempotent, additive, no-clobber).
   - [ ] In a temp HOME: run the seed step -> `~/.omo/config.jsonc` exists and `bun -e "const m=await import('./packages/utils/src/index.ts'); m.loadOmoConfig({harness:'codex',cwd:process.cwd(),homeDir:'<tmpHome>',env:{}})"` parses it without error.
   **QA scenarios**:
   - Scenario: seed creates a valid SOT scaffold once; second run is a no-op
     Tool: tmux
     Steps:
       .. `tmux new-session -d -s ulw-qa-task.5 -x 200 -y 50 fish`
-      2. `tmux send-keys -t ulw-qa-task.5 'set h (mktemp -d); cd /Users/yeongyu/local-workspaces/omo && env HOME=$h node packages/omo-codex/plugin/scripts/migrate-omo-sot.mjs --seed; cp $h/.omo/config.jsonc /tmp/seed..jsonc; env HOME=$h node packages/omo-codex/plugin/scripts/migrate-omo-sot.mjs --seed; diff -q /tmp/seed..jsonc $h/.omo/config.jsonc && echo IDEMPOTENT | tee .omo/evidence/task-.5-seed.txt; env HOME=$h bun -e "const m=await import(\"./packages/utils/src/index.ts\"); console.log(m.loadOmoConfig({harness:\"codex\",cwd:process.cwd(),homeDir:process.env.HOME,env:{}})? \"PARSES\":\"NO\")" >> .omo/evidence/task-.5-seed.txt' Enter`
+      2. `tmux send-keys -t ulw-qa-task.5 'set h (mktemp -d); cd /Users/yeongyu/local-workspaces/omo && env HOME=$h node packages/omop-codex/plugin/scripts/migrate-omo-sot.mjs --seed; cp $h/.omo/config.jsonc /tmp/seed..jsonc; env HOME=$h node packages/omop-codex/plugin/scripts/migrate-omo-sot.mjs --seed; diff -q /tmp/seed..jsonc $h/.omo/config.jsonc && echo IDEMPOTENT | tee .omo/evidence/task-.5-seed.txt; env HOME=$h bun -e "const m=await import(\"./packages/utils/src/index.ts\"); console.log(m.loadOmoConfig({harness:\"codex\",cwd:process.cwd(),homeDir:process.env.HOME,env:{}})? \"PARSES\":\"NO\")" >> .omo/evidence/task-.5-seed.txt' Enter`
       3. poll for `IDEMPOTENT` (loop shape above)
     Expected: file shows `IDEMPOTENT` and `PARSES` (seed is stable + loader-valid).
     Capture: the `tee`/append.
@@ -645,13 +645,13 @@ Critical path: . → 7 → .2 → .3 → .. → .5 → F-wave (the codex compone
     Tool: tmux
     Steps:
       .. `tmux new-session -d -s ulw-qa-task.5e -x 200 -y 50 fish`
-      2. `tmux send-keys -t ulw-qa-task.5e 'set h (mktemp -d); mkdir -p $h/.omo; printf "%s" "{\"codegraph\":{\"watch_debounce_ms\":.2.2}}" > $h/.omo/config.jsonc; cd /Users/yeongyu/local-workspaces/omo && env HOME=$h CODEX_CODEGRAPH_ENABLED=0 node packages/omo-codex/plugin/scripts/migrate-omo-sot.mjs; grep -q .2.2 $h/.omo/config.jsonc && echo PRESERVED | tee .omo/evidence/task-.5-seed-error.txt' Enter`
+      2. `tmux send-keys -t ulw-qa-task.5e 'set h (mktemp -d); mkdir -p $h/.omo; printf "%s" "{\"codegraph\":{\"watch_debounce_ms\":.2.2}}" > $h/.omo/config.jsonc; cd /Users/yeongyu/local-workspaces/omo && env HOME=$h CODEX_CODEGRAPH_ENABLED=0 node packages/omop-codex/plugin/scripts/migrate-omo-sot.mjs; grep -q .2.2 $h/.omo/config.jsonc && echo PRESERVED | tee .omo/evidence/task-.5-seed-error.txt' Enter`
       3. poll file non-empty
     Expected: `PRESERVED` (user's `watch_debounce_ms:.2.2` survived; migration was additive, not a clobber).
     Capture: the `tee`.
     Cleanup: `tmux kill-session -t ulw-qa-task.5e`; `rm -rf "$h"`; verify gone.
     Evidence: .omo/evidence/202606.5-codegraph-omo-integration/task-.5-sot-seed-migrate/qa-existing-preserved.txt
-  **Commit**: Y | `feat(codex): seed + migrate ~/.omo SOT (additive, idempotent, env back-compat)` | Files: packages/omo-codex/plugin/scripts/migrate-omo-sot.mjs, packages/omo-codex/plugin/scripts/auto-update.mjs, packages/omo-codex/scripts/install/config.mjs, packages/omo-codex/plugin/scripts/test/migrate-omo-sot.test.mjs
+  **Commit**: Y | `feat(codex): seed + migrate ~/.omo SOT (additive, idempotent, env back-compat)` | Files: packages/omop-codex/plugin/scripts/migrate-omo-sot.mjs, packages/omop-codex/plugin/scripts/auto-update.mjs, packages/omop-codex/scripts/install/config.mjs, packages/omop-codex/plugin/scripts/test/migrate-omo-sot.test.mjs
 
 ## Final Verification Wave
 > Runs in parallel after ALL todos. Each reviewer returns APPROVE or REJECT.
@@ -663,7 +663,7 @@ Evidence hygiene note for final reviewers (2026-06-.5):
 - `.omo/evidence/final-review/` remains the tracked final-review and blocker-repair evidence bundle for post-review fixes: unavailable no-mutation, Windows install-dir shim, dist regeneration, final QA evidence consistency, and focused post-fix tests.
 - `.omo/evidence/202606.5-todo9-codegraph-bootstrap-disabled-hooks/` remains a targeted Todo 9 / F. gate-repair bundle for the disabled-hooks blocker. It is outside the main dated folder so reviewers can distinguish blocker repair evidence from the original todo evidence.
 - `.omo/evidence/202606.5-codegraph-resolution-platforms/` remains a targeted CodeGraph resolver/platform repair bundle for npm platform metadata, Windows shim, invalid env override, focused tests, and OpenCode QA evidence. It is outside the main dated folder so reviewers can distinguish cross-platform resolver repair evidence from the original todo evidence.
-- `.omo/evidence/202606.5-codegraph-omo-integration/final-loc-refactor/` remains the F2 LOC gate-repair evidence for splitting `packages/omo-codex/plugin/components/codegraph/src/hook.ts` into focused `hook.ts`, `hook-types.ts`, and `session-start-worker.ts` files, including component tests, typecheck, build, `test:codex`, and isolated Codex QA.
+- `.omo/evidence/202606.5-codegraph-omo-integration/final-loc-refactor/` remains the F2 LOC gate-repair evidence for splitting `packages/omop-codex/plugin/components/codegraph/src/hook.ts` into focused `hook.ts`, `hook-types.ts`, and `session-start-worker.ts` files, including component tests, typecheck, build, `test:codex`, and isolated Codex QA.
 - `.agents/skills/work-with-pr/SKILL.md` and `.opencode/skills/work-with-pr/SKILL.md` are included as an F2 gate repair only: the project-skill reference test expected `task` delegation to use a real category. Evidence: `.omo/evidence/202606.5-codegraph-omo-integration/final-f2-work-with-pr-skill-test.txt`.
 - Do not mark F.-F. complete from this hygiene pass alone; final reviewers must still rerun/approve those boxes.
 
@@ -680,10 +680,10 @@ Evidence hygiene note for final reviewers (2026-06-.5):
 ```bash
 # opencode: codegraph MCP present & enabled when binary resolvable
 # (run inside an isolated XDG sandbox per AGENTS.md opencode-qa — see todo 9; never touch the real opencode.db)
-for v in XDG_DATA_HOME XDG_CONFIG_HOME XDG_STATE_HOME XDG_CACHE_HOME; set -x $v (mktemp -d); end; mkdir -p $XDG_CONFIG_HOME/opencode; printf '{"plugin":["%s/packages/omo-opencode/dist/index.js"]}' $PWD > $XDG_CONFIG_HOME/opencode/opencode.jsonc
+for v in XDG_DATA_HOME XDG_CONFIG_HOME XDG_STATE_HOME XDG_CACHE_HOME; set -x $v (mktemp -d); end; mkdir -p $XDG_CONFIG_HOME/opencode; printf '{"plugin":["%s/packages/omop-opencode/dist/index.js"]}' $PWD > $XDG_CONFIG_HOME/opencode/opencode.jsonc
 opencode run --format json "list mcp tools" 2>/dev/null | grep -i codegraph   # Expected: codegraph_* tools listed (after index exists)
 # codex: SessionStart component runs and reports a JSON outcome
-node packages/omo-codex/plugin/components/codegraph/dist/cli.js hook session-start   # Expected: JSON with codegraph bootstrap status, exit 0
+node packages/omop-codex/plugin/components/codegraph/dist/cli.js hook session-start   # Expected: JSON with codegraph bootstrap status, exit 0
 # storage model (adoption rule: a pre-existing real dir stays in-place; only a FRESH repo gets a symlink)
 ls -ld "$PWD/.codegraph"   # Expected: a real directory if it pre-existed (e.g. THIS repo), OR a symlink → ~/.omo/codegraph/projects/<slug> for a fresh repo
 # SOT resolution

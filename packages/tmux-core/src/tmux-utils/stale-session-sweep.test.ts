@@ -179,7 +179,7 @@ describe("sweepTmuxSessionsWith", () => {
 
 		// when
 		const result = await sweepTmuxSessionsWith(fixture.deps, {
-			predicate: (sessionName) => sessionName.startsWith("omo-team-"),
+			predicate: (sessionName) => sessionName.startsWith("omop-team-"),
 		})
 
 		// then

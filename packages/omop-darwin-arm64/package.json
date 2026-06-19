@@ -1,1 +1,19 @@
-{  "name": "omop-darwin-arm64",  "version": "1.0.0",  "description": "Platform-specific binary for oh-my-open-pentest (darwin-arm64)",  "license": "MIT",  "repository": {    "type": "git",    "url": "https://github.com/code-yeongyu/oh-my-open-pentest"  },  "os": [    "darwin"  ],  "cpu": [    "arm64"  ],  "files": [    "bin"  ]}
+{
+  "name": "omop-darwin-arm64",
+  "version": "1.1.0",
+  "description": "Platform-specific binary for oh-my-open-pentest (darwin-arm64)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/code-yeongyu/oh-my-open-pentest"
+  },
+  "os": [
+    "darwin"
+  ],
+  "cpu": [
+    "arm64"
+  ],
+  "files": [
+    "bin"
+  ]
+}

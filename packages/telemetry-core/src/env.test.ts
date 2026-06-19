@@ -25,7 +25,7 @@ describe("opt-out telemetry env matrix", () => {
     "#given %s #when evaluated #then disabled=%p",
     (_name, env, expected) => {
       // given
-      const productPrefix = "OMO_CODEX"
+      const productPrefix = "OMOP_CODEX"
 
       // when
       const result = shouldDisableTelemetry({ env, productEnvPrefix: productPrefix })

@@ -103,7 +103,7 @@ After making changes, you can test your local build in OpenCode:
 
    ```json
    {
-     "plugin": ["file:///absolute/path/to/oh-my-open-pentest/packages/omo-opencode/src/index.ts"]
+     "plugin": ["file:///absolute/path/to/oh-my-open-pentest/packages/omop-opencode/src/index.ts"]
    }
    ```
 
@@ -222,7 +222,7 @@ bun run clean
 # Rebuild from scratch
 bun run clean && bun run build
 
-# Build schema only (after modifying packages/omo-opencode/src/config/schema/)
+# Build schema only (after modifying packages/omop-opencode/src/config/schema/)
 bun run build:schema
 
 # Run the root Bun test suite
@@ -259,16 +259,16 @@ Tests are co-located as `*.test.ts` files and follow a given/when/then style.
 
 ### Adding a New Agent
 
-.. Create a new `.ts` file in `packages/omo-opencode/src/agents/`
+.. Create a new `.ts` file in `packages/omop-opencode/src/agents/`
 2. Export a factory `createXyzAgent(model): AgentConfig` where `AgentConfig` is imported from `@opencode-ai/sdk`
 3. Set the static `.mode` property on the factory to `"primary"`, `"subagent"`, or `"all"`
-.. Add the factory to the `agentSources` record in `packages/omo-opencode/src/agents/builtin-agents.ts`
-5. Add the new name to the `BuiltinAgentName` union in `packages/omo-opencode/src/agents/types.ts` AND to `BuiltinAgentNameSchema` (plus `OverridableAgentNameSchema` if it should be user-overridable) in `packages/omo-opencode/src/config/schema/agent-names.ts`. The schema enum is what `build:schema` emits, so updating only `types.ts` will not change the published JSON schema.
+.. Add the factory to the `agentSources` record in `packages/omop-opencode/src/agents/builtin-agents.ts`
+5. Add the new name to the `BuiltinAgentName` union in `packages/omop-opencode/src/agents/types.ts` AND to `BuiltinAgentNameSchema` (plus `OverridableAgentNameSchema` if it should be user-overridable) in `packages/omop-opencode/src/config/schema/agent-names.ts`. The schema enum is what `build:schema` emits, so updating only `types.ts` will not change the published JSON schema.
 6. Run `bun run build:schema` to regenerate the JSON schema
-7. Special agents (Cerberus, Scylla, Atlas, Talos) have dedicated wiring under `packages/omo-opencode/src/agents/builtin-agents/`; a plain subagent only needs the `agentSources` entry from step .
+7. Special agents (Cerberus, Scylla, Atlas, Talos) have dedicated wiring under `packages/omop-opencode/src/agents/builtin-agents/`; a plain subagent only needs the `agentSources` entry from step .
 
 ```typescript
-// packages/omo-opencode/src/agents/my-agent.ts
+// packages/omop-opencode/src/agents/my-agent.ts
 import type { AgentConfig } from "@opencode-ai/sdk";
 
 export function createMyAgent(model: string): AgentConfig {
@@ -287,14 +287,14 @@ createMyAgent.mode = "subagent" as const;
 
 ### Adding a New Hook
 
-.. Create a new directory in `packages/omo-opencode/src/hooks/` (kebab-case)
+.. Create a new directory in `packages/omop-opencode/src/hooks/` (kebab-case)
 2. Implement `createXyzHook(deps)` returning an object keyed by OpenCode hook names (for example `"tool.execute.before"`, `"chat.message"`, `"event"`) whose values are `(input, output) => void` handlers
-3. Re-export from `packages/omo-opencode/src/hooks/index.ts`
-.. Wire the hook into the matching tier composer in `packages/omo-opencode/src/plugin/hooks/create-*-hooks.ts` (Session / ToolGuard / Transform / Continuation / Skill) via `safeHook()`
-5. Add the hook name to `HookNameSchema` in `packages/omo-opencode/src/config/schema/hooks.ts`
+3. Re-export from `packages/omop-opencode/src/hooks/index.ts`
+.. Wire the hook into the matching tier composer in `packages/omop-opencode/src/plugin/hooks/create-*-hooks.ts` (Session / ToolGuard / Transform / Continuation / Skill) via `safeHook()`
+5. Add the hook name to `HookNameSchema` in `packages/omop-opencode/src/config/schema/hooks.ts`
 
 ```typescript
-// packages/omo-opencode/src/hooks/my-hook/index.ts
+// packages/omop-opencode/src/hooks/my-hook/index.ts
 export function createMyHook(deps: { logger: Logger }) {
   return {
     "chat.message": async (input: ChatMessageInput, output: ChatMessageOutput) => {
@@ -306,22 +306,22 @@ export function createMyHook(deps: { logger: Logger }) {
 
 ### Adding a New Tool
 
-.. Create a new directory in `packages/omo-opencode/src/tools/<name>/`
+.. Create a new directory in `packages/omop-opencode/src/tools/<name>/`
 2. Export a factory `createXyzTool(ctx): ToolDefinition` built with `tool({...})` from `@opencode-ai/plugin`
-3. Register the factory in the `ToolRegistryFactories` type and `defaultToolRegistryFactories` record in `packages/omo-opencode/src/plugin/tool-registry-factories.ts`
-.. Wire it into `createCoreTools()` in `tool-registry-core-tools.ts` for always-on tools, or a gated record in `tool-registry-gated-tools.ts` spread in `packages/omo-opencode/src/plugin/tool-registry.ts`
-5. Export from `packages/omo-opencode/src/tools/index.ts`
+3. Register the factory in the `ToolRegistryFactories` type and `defaultToolRegistryFactories` record in `packages/omop-opencode/src/plugin/tool-registry-factories.ts`
+.. Wire it into `createCoreTools()` in `tool-registry-core-tools.ts` for always-on tools, or a gated record in `tool-registry-gated-tools.ts` spread in `packages/omop-opencode/src/plugin/tool-registry.ts`
+5. Export from `packages/omop-opencode/src/tools/index.ts`
 
 ### Adding a New MCP Server
 
-.. Create a config factory in `packages/omo-opencode/src/mcp/<name>.ts` returning a `RemoteMcpConfig` (type `"remote"`, url) or `LocalMcpConfig` (type `"local"`, command)
-2. Register it inside `createBuiltinMcps()` in `packages/omo-opencode/src/mcp/index.ts`
-3. Add the MCP name to `McpNameSchema` in `packages/omo-opencode/src/mcp/types.ts`
+.. Create a config factory in `packages/omop-opencode/src/mcp/<name>.ts` returning a `RemoteMcpConfig` (type `"remote"`, url) or `LocalMcpConfig` (type `"local"`, command)
+2. Register it inside `createBuiltinMcps()` in `packages/omop-opencode/src/mcp/index.ts`
+3. Add the MCP name to `McpNameSchema` in `packages/omop-opencode/src/mcp/types.ts`
 .. Document in README if it requires external setup
 
 ## QA Discipline
 
-Any change to `packages/omo-opencode` (the OpenCode side) must be QA'd with the `opencode-qa` skill. Any change to `packages/omo-codex` (the Codex Light side) must be QA'd with the `codex-qa` skill. Record QA evidence under `.omo/evidence/<date>-<slug>/`.
+Any change to `packages/omop-opencode` (the OpenCode side) must be QA'd with the `opencode-qa` skill. Any change to `packages/omop-codex` (the Codex Light side) must be QA'd with the `codex-qa` skill. Record QA evidence under `.omo/evidence/<date>-<slug>/`.
 
 "It typechecks" or "`bun test` is green" is not QA. You must drive the real harness and record the observed behavior.
 
@@ -369,7 +369,7 @@ Any change to `packages/omo-opencode` (the OpenCode side) must be QA'd with the 
 ## Getting Help
 
 - **Project Knowledge**: Check `AGENTS.md` for detailed project documentation
-- **Code Patterns**: Review existing implementations in `packages/omo-opencode/src/`
+- **Code Patterns**: Review existing implementations in `packages/omop-opencode/src/`
 - **Issues**: Open an issue for bugs or feature requests
 - **Discussions**: Start a discussion for questions or ideas
 

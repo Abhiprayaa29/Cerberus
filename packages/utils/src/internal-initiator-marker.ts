@@ -1,11 +1,11 @@
 export const OMOP_INTERNAL_INITIATOR_MARKER = "<!-- OMOP_INTERNAL_INITIATOR -->"
 
-export const OMO_INTERNAL_NOREPLY_MARKER = "<!-- OMO_INTERNAL_NOREPLY -->"
+export const OMOP_INTERNAL_NOREPLY_MARKER = "<!-- OMOP_INTERNAL_NOREPLY -->"
 
 const INTERNAL_INITIATOR_MARKER_DETECT_PATTERN = /<!--\s*OMOP_INTERNAL_INITIATOR\s*-->/
-const INTERNAL_NOREPLY_MARKER_DETECT_PATTERN = /<!--\s*OMO_INTERNAL_NOREPLY\s*-->/
+const INTERNAL_NOREPLY_MARKER_DETECT_PATTERN = /<!--\s*OMOP_INTERNAL_NOREPLY\s*-->/
 const INTERNAL_INITIATOR_MARKER_PATTERN = /\n*<!--\s*OMOP_INTERNAL_INITIATOR\s*-->\s*/g
-const INTERNAL_NOREPLY_MARKER_PATTERN = /\n*<!--\s*OMO_INTERNAL_NOREPLY\s*-->\s*/g
+const INTERNAL_NOREPLY_MARKER_PATTERN = /\n*<!--\s*OMOP_INTERNAL_NOREPLY\s*-->\s*/g
 
 export type InternalInitiatorTextPartLike = {
   type?: string
@@ -121,5 +121,5 @@ export function withInternalNoReplyMarker<T extends { type: "text"; text: string
   if (hasInternalNoReplyMarker(part.text)) {
     return part
   }
-  return { ...part, text: `${part.text}\n${OMO_INTERNAL_NOREPLY_MARKER}` }
+  return { ...part, text: `${part.text}\n${OMOP_INTERNAL_NOREPLY_MARKER}` }
 }

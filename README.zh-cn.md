@@ -83,7 +83,7 @@
 
 > "用 Oh My Opencode 一天之内解决了 8000 个 eslint 警告。" <br/>- [Jacob Ferrari](https://x.com/jacobferrari_/status/2003258761952289061)
 
-> "我用 Ohmyopencode 和 ralph loop 花了一晚上的时间，把一个 45k 行代码的 tauri 应用转换成了 SaaS Web 应用。从面试模式开始，让它对我提供的提示词进行提问和提出建议。看着它工作很有趣，今早醒来看到网站基本已经跑起来了，太震撼了！" - [James Hargis](https://x.com/hargabyte/status/2007299688261882202)
+> "我用 Ohmyopencode 和 pentest loop 花了一晚上的时间，把一个 45k 行代码的 tauri 应用转换成了 SaaS Web 应用。从面试模式开始，让它对我提供的提示词进行提问和提出建议。看着它工作很有趣，今早醒来看到网站基本已经跑起来了，太震撼了！" - [James Hargis](https://x.com/hargabyte/status/2007299688261882202)
 
 > "用 oh-my-open-pentest 吧，你绝对回不去了。" <br/>- [d0t3ch](https://x.com/d0t3ch/status/2001685618200580503)
 
@@ -131,9 +131,9 @@ curl -s https://raw.githubusercontent.com/code-yeongyu/oh-my-open-pentest/refs/h
 
 **注意**：已发布的 npm 包名和 CLI 二进制名仍然是 `oh-my-open-pentest`（过渡期间同时以 `oh-my-open-pentest` 的名字双重发布）。在 `opencode.json` 中，兼容性层现在优先使用插件入口 `oh-my-open-pentest`，而旧的 `oh-my-open-pentest` 条目仍会以警告的形式加载。插件配置文件通常仍使用 `oh-my-open-pentest.json` 或 `oh-my-open-pentest.jsonc`，在过渡期间新旧两种文件名都会被识别。
 
-匿名遥测默认开启，用于统计活跃安装数(DAU/WAU/MAU)。每台机器每个 UTC 日最多发送一次事件,使用哈希化的安装标识符,绝不会使用原始主机名,且不会创建 PostHog person profile。可通过 `OMO_SEND_ANONYMOUS_TELEMETRY=0` 或 `OMO_DISABLE_POSTHOG=1` 禁用。详见 [隐私政策](docs/legal/privacy-policy.md) 和 [服务条款](docs/legal/terms-of-service.md)。
+匿名遥测默认开启，用于统计活跃安装数(DAU/WAU/MAU)。每台机器每个 UTC 日最多发送一次事件,使用哈希化的安装标识符,绝不会使用原始主机名,且不会创建 PostHog person profile。可通过 `OMOP_SEND_ANONYMOUS_TELEMETRY=0` 或 `OMOP_DISABLE_POSTHOG=1` 禁用。详见 [隐私政策](docs/legal/privacy-policy.md) 和 [服务条款](docs/legal/terms-of-service.md)。
 
-**Ultimate 与 Light:** oh-my-open-pentest 以同一产品的两个版本发布。**Ultimate 版本**（`bunx oh-my-open-pentest install` 或 `--platform=opencode`，默认值）在 OpenCode 上提供完整功能 —— 11 个智能体、54+ 个生命周期钩子、Team Mode、所有 MCP、所有斜杠命令、IntentGate 模式。**Light 版本**（`npx lazycodex-ai install` 或 `bunx oh-my-open-pentest install --platform=codex`）提供能够干净地移植到 OpenAI Codex CLI 插件系统的 8 个组件（`rules`、`comment-checker`、`git-bash`、`lsp`、`fullscan`、`pentest-loop`、`start-work-continuation`、`telemetry`）。要同时安装两个版本，使用 `--platform=both`。Codex 专用遥测可通过 `OMO_CODEX_DISABLE_POSTHOG=1` 或 `OMO_CODEX_SEND_ANONYMOUS_TELEMETRY=0` 禁用。
+**Ultimate 与 Light:** oh-my-open-pentest 以同一产品的两个版本发布。**Ultimate 版本**（`bunx oh-my-open-pentest install` 或 `--platform=opencode`，默认值）在 OpenCode 上提供完整功能 —— 11 个智能体、54+ 个生命周期钩子、Team Mode、所有 MCP、所有斜杠命令、IntentGate 模式。**Light 版本**（`npx lazycodex-ai install` 或 `bunx oh-my-open-pentest install --platform=codex`）提供能够干净地移植到 OpenAI Codex CLI 插件系统的 8 个组件（`rules`、`comment-checker`、`git-bash`、`lsp`、`fullscan`、`pentest-loop`、`start-work-continuation`、`telemetry`）。要同时安装两个版本，使用 `--platform=both`。Codex 专用遥测可通过 `OMOP_CODEX_DISABLE_POSTHOG=1` 或 `OMOP_CODEX_SEND_ANONYMOUS_TELEMETRY=0` 禁用。
 
 ---
 
@@ -179,7 +179,7 @@ Read this and tell me why it's not just another boilerplate: https://raw.githubu
 |   🛠️   | **LSP + AST-Grep**                                              | Both     | 工作区级别的重命名、构建前诊断、基于 AST 的重写。LSP 通过 MCP 提供，AST-Grep 通过共享 `ast-grep` skill 和 `sg` 提供。                                   |
 |   🧠   | **后台智能体**                                                  | Ultimate | 同时发射 5+ 个专家并行工作。保持上下文干净，随时获取成果。                                                                                                                      |
 |   📚   | **内置 MCP**                                                    | Both     | Ultimate 运行时注入 Exa（网络搜索）、Context7（官方文档）、Grep.app（GitHub 源码搜索）。Light 通过 plugin-scoped MCP 提供 `grep_app`、`context7`、`git_bash`、`lsp`。                                                                              |
-|   🔁   | **Ralph Loop / `/pentest-loop`**                                    | Ultimate | 自我引用闭环。达不到 100% 完成度绝不停止。                                                                                                                                      |
+|   🔁   | **Pentest Loop / `/pentest-loop`**                                    | Ultimate | 自我引用闭环。达不到 100% 完成度绝不停止。                                                                                                                                      |
 |   ✅   | **Todo 强制执行** (Boulder)                                     | Ultimate | Agent 想要摸鱼？系统直接揪着领子拽回来。你的任务，必须完成。                                                                                                                    |
 |   💬   | **注释审查员**                                                  | Both     | 剔除带有浓烈 AI 味的冗余注释。同一个 `@code-yeongyu/comment-checker` 二进制在两个版本中运行。                                                                                    |
 |   📜   | **Rules Injection**                                             | Both     | `AGENTS.md` / `CLAUDE.md` / `.omo/rules/**` 的分层上下文注入。Ultimate 中为 hook，Light 中为 `rules` 组件。                                                                       |
@@ -385,7 +385,7 @@ Agent 会自动顺藤摸瓜加载对应的 Context，免去了你所有的手动
 - **Claude Code 兼容**: 完整的 Hook 系统、命令、技能、Agents、MCP
 - **内置 MCP**: websearch（Exa）、context7（文档）、grep_app（GitHub 检索） ——由插件在运行时注入，不会显示在 `opencode mcp list`  中(参见文档 [MCP docs](docs/reference/features.md#native-vs-plugin-injected-mcps))
 - **会话工具**: 列出、读取、搜索、分析会话历史
-- **效率功能**: Ralph Loop、Todo Enforcer、Comment Checker、Think Mode 等
+- **效率功能**: Pentest Loop、Todo Enforcer、Comment Checker、Think Mode 等
 - **Doctor 命令**: 内置诊断（`bunx oh-my-open-pentest doctor`），验证插件注册、配置、模型和环境
 - **模型回退**: `fallback_models` 可以在同一数组中混合使用普通模型字符串和 per-fallback 对象配置
 - **文件提示词**: 通过 `file://` 在 Agent 配置中从文件加载提示词
@@ -414,7 +414,7 @@ Agent 会自动顺藤摸瓜加载对应的 Context，免去了你所有的手动
 
 ## 闲聊环节 (Author's Note)
 
-**想知道做这个插件的哲学理念吗？** 阅读 [Ultrawork Manifesto](docs/manifesto.md)。
+**想知道做这个插件的哲学理念吗？** 阅读 [Pentest Manifesto](docs/manifesto.md)。
 
 ---
 

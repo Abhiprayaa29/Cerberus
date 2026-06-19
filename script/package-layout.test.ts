@@ -8,14 +8,14 @@ const repositoryRoot = fileURLToPath(new URL("..", import.meta.url))
 const commandRoots = [".opencode/command", ".agents/command"] as const
 const skillRoots = [".opencode/skills", ".agents/skills"] as const
 const codexHookComponentRuntimePaths = [
-  "packages/omo-codex/plugin/components/comment-checker/dist/cli.js",
-  "packages/omo-codex/plugin/components/git-bash/dist/cli.js",
-  "packages/omo-codex/plugin/components/lsp/dist/cli.js",
-  "packages/omo-codex/plugin/components/rules/dist/cli.js",
-  "packages/omo-codex/plugin/components/start-work-continuation/dist/cli.js",
-  "packages/omo-codex/plugin/components/telemetry/dist/cli.js",
-  "packages/omo-codex/plugin/components/fullscan/dist/cli.js",
-  "packages/omo-codex/plugin/components/pentest-loop/dist/cli.js",
+  "packages/omop-codex/plugin/components/comment-checker/dist/cli.js",
+  "packages/omop-codex/plugin/components/git-bash/dist/cli.js",
+  "packages/omop-codex/plugin/components/lsp/dist/cli.js",
+  "packages/omop-codex/plugin/components/rules/dist/cli.js",
+  "packages/omop-codex/plugin/components/start-work-continuation/dist/cli.js",
+  "packages/omop-codex/plugin/components/telemetry/dist/cli.js",
+  "packages/omop-codex/plugin/components/fullscan/dist/cli.js",
+  "packages/omop-codex/plugin/components/pentest-loop/dist/cli.js",
 ] as const
 const packageLayoutTestTimeoutMs = 60_000
 const packDryRunTimeoutMs = 15_000
@@ -166,8 +166,8 @@ describe("published package layout", () => {
 
   test("#given generated Codex installer bundle #when packing package #then generated output ships and stale forks do not", async () => {
     // given
-    const expectedGeneratedInstaller = "packages/omo-codex/scripts/install-dist/install-local.mjs"
-    const obsoleteForkPrefix = "packages/omo-codex/scripts/install/"
+    const expectedGeneratedInstaller = "packages/omop-codex/scripts/install-dist/install-local.mjs"
+    const obsoleteForkPrefix = "packages/omop-codex/scripts/install/"
 
     // when
     const packedPaths = await packDryRunPaths()
@@ -192,7 +192,7 @@ describe("published package layout", () => {
 
   test("#given Codex installer source tree #when checking obsolete forks #then hand-written install mjs files are absent", () => {
     // given
-    const obsoleteForkRoot = join(repositoryRoot, "packages/omo-codex/scripts/install")
+    const obsoleteForkRoot = join(repositoryRoot, "packages/omop-codex/scripts/install")
 
     // when
     const obsoleteForks = existsSync(obsoleteForkRoot)

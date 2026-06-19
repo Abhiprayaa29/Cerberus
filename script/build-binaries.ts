@@ -39,12 +39,12 @@ import { spawnSync } from "node:child_process";
 import { existsSync } from "node:fs";
 import { join } from "node:path";
 
-const wrapperPackageRoot = process.env.OMO_WRAPPER_PACKAGE_ROOT;
+const wrapperPackageRoot = process.env.OMOP_WRAPPER_PACKAGE_ROOT;
 const lazyCodexInvocationNames = new Set(["lazycodex", "lazycodex-ai"]);
 const lazyCodexInstallerCommands = new Set(["install", "setup", "update", "uninstall", "cleanup"]);
 
 if (!wrapperPackageRoot) {
-  console.error("oh-my-open-pentest: OMO_WRAPPER_PACKAGE_ROOT is required to launch the packaged CLI.");
+  console.error("oh-my-open-pentest: OMOP_WRAPPER_PACKAGE_ROOT is required to launch the packaged CLI.");
   process.exit(2);
 }
 
@@ -66,7 +66,7 @@ function shouldRunLazyCodexInstaller() {
   const args = process.argv.slice(2);
   const command = readInstallerCommand(args);
   const platformArg = readPlatformArg(args);
-  if (lazyCodexInvocationNames.has(process.env.OMO_INVOCATION_NAME ?? "")) {
+  if (lazyCodexInvocationNames.has(process.env.OMOP_INVOCATION_NAME ?? "")) {
     if ((command === "install" || command === "setup") && platformArg !== undefined && platformArg !== "codex") {
       return false;
     }
@@ -142,7 +142,7 @@ function runNodeCli(reason) {
   exitFromResult(result, "failed to execute the node CLI");
 }
 
-if (process.env.OMO_RUNTIME === "node") {
+if (process.env.OMOP_RUNTIME === "node") {
   runNodeCli();
 }
 

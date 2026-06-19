@@ -20,7 +20,7 @@ Analyze every change against these exact layers:
 |---|---|---|
 | `omo pure components` | `packages/*-core`, MCP packages, `packages/shared-skills`, reusable scripts | Do shared components need a patch/minor/major release note even if adapters only consume them internally? |
 | `omo opencode` | Root `oh-my-open-pentest` / `oh-my-open-pentest`, `src/`, `.opencode/`, `.agents/`, CLI, config, hooks, tools, docs | What semver bump should the OpenCode/OpenAgent npm packages use? |
-| `omo codex` | `packages/omo-codex`, `lazycodex-ai`, Codex plugin metadata/hooks, bundled MCP runtimes, `code-yeongyu/lazycodex` marketplace payload | Does LazyCodex need the same bump, a Codex-only note, or a marketplace release? |
+| `omo codex` | `packages/omop-codex`, `lazycodex-ai`, Codex plugin metadata/hooks, bundled MCP runtimes, `code-yeongyu/lazycodex` marketplace payload | Does LazyCodex need the same bump, a Codex-only note, or a marketplace release? |
 
 ## Steps:
 .. Detect latest published versions for `oh-my-open-pentest`, `oh-my-open-pentest`, and `lazycodex-ai`.

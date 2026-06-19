@@ -214,7 +214,7 @@ Each scenario MUST specify, upfront:
 Run once at start: `NOTE=$(mktemp -t ulw-$(date +%Y%m%d-%H%M%S).XXXXXX.md)`. Echo the path. Initialise with these sections and APPEND (never rewrite) as you work:
 
 ```
-# Ultrawork Notepad — <one-line goal>
+# Fullscan Notepad — <one-line goal>
 Started: <ISO timestamp>
 
 ## Plan (exhaustive, atomic)

@@ -54,7 +54,7 @@ const CODEX_AGGREGATE_COMPONENTS = [
   "@oh-my-open-pentest/utils",
   "@cerberuslabs/codex-bootstrap",
   "@cerberuslabs/codex-git-bash-hook",
-  "@cerberuslabs/omo-codex-plugin",
+  "@cerberuslabs/omop-codex-plugin",
   "Node.js runtime bootstrap payload",
   "pi-comment-checker",
   "pi-lsp-client",
@@ -65,38 +65,38 @@ const CODEX_AGGREGATE_COMPONENTS = [
 
 const CODEX_COMPONENT_NOTICE_REQUIREMENTS = [
   {
-    path: "packages/omo-codex/plugin/components/comment-checker",
+    path: "packages/omop-codex/plugin/components/comment-checker",
     requiredTerms: ["pi-comment-checker", "@code-yeongyu/comment-checker"],
   },
   {
-    path: "packages/omo-codex/plugin/components/lsp",
+    path: "packages/omop-codex/plugin/components/lsp",
     requiredTerms: ["pi-lsp-client"],
   },
   {
-    path: "packages/omo-codex/plugin/components/rules",
+    path: "packages/omop-codex/plugin/components/rules",
     requiredTerms: ["pi-rules", "picomatch"],
   },
   {
-    path: "packages/omo-codex/plugin/components/start-work-continuation",
+    path: "packages/omop-codex/plugin/components/start-work-continuation",
     requiredTerms: [],
   },
   {
-    path: "packages/omo-codex/plugin/components/telemetry",
+    path: "packages/omop-codex/plugin/components/telemetry",
     requiredTerms: ["posthog-node", "@oh-my-open-pentest/telemetry-core"],
   },
   {
-    path: "packages/omo-codex/plugin/components/fullscan",
+    path: "packages/omop-codex/plugin/components/fullscan",
     requiredTerms: [],
   },
   {
-    path: "packages/omo-codex/plugin/components/pentest-loop",
+    path: "packages/omop-codex/plugin/components/pentest-loop",
     requiredTerms: [],
   },
 ]
 
 const ROOT_SHIP_REQUIRED_PATHS = [
   "THIRD-PARTY-NOTICES.md",
-  "packages/omo-codex/THIRD-PARTY-NOTICES.md",
+  "packages/omop-codex/THIRD-PARTY-NOTICES.md",
 ]
 
 const scopes = {
@@ -108,9 +108,9 @@ const scopes = {
     },
   },
   codex: {
-    noticePath: "packages/omo-codex/THIRD-PARTY-NOTICES.md",
+    noticePath: "packages/omop-codex/THIRD-PARTY-NOTICES.md",
     requiredComponents() {
-      const componentsPath = join(repoRoot, "packages/omo-codex/plugin/components")
+      const componentsPath = join(repoRoot, "packages/omop-codex/plugin/components")
       const componentPackageNames = readdirSync(componentsPath, { withFileTypes: true })
         .filter((entry) => entry.isDirectory())
         .map((entry) => {

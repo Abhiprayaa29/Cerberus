@@ -150,7 +150,7 @@ function createWrapperTestEnv(
   fixture: { readonly captureDir: string; readonly fakeBinDir: string },
   overrides: NodeJS.ProcessEnv = {},
 ): NodeJS.ProcessEnv {
-  const { OMO_INVOCATION_NAME: _invocationName, OMO_WRAPPER_PACKAGE_ROOT: _wrapperPackageRoot, ...baseEnv } = process.env;
+  const { OMOP_INVOCATION_NAME: _invocationName, OMOP_WRAPPER_PACKAGE_ROOT: _wrapperPackageRoot, ...baseEnv } = process.env;
   return {
     ...baseEnv,
     CAPTURE_DIR: fixture.captureDir,
@@ -189,7 +189,7 @@ async function createLazyCodexFixture(options: { packageName?: string; wrapperFi
     fakeBun,
     [
       "#!/bin/sh",
-      "printf '%s\\n' \"$OMO_INVOCATION_NAME\" > \"$CAPTURE_DIR/env\"",
+      "printf '%s\\n' \"$OMOP_INVOCATION_NAME\" > \"$CAPTURE_DIR/env\"",
       "printf '%s\\n' \"$@\" > \"$CAPTURE_DIR/args\"",
       "exit 23",
       "",
@@ -242,8 +242,8 @@ async function writePlatformPackages(root: string): Promise<void> {
       [
         "#!/usr/bin/env node",
         'import { writeFileSync } from "node:fs";',
-        'writeFileSync(`${process.env.CAPTURE_DIR}/env`, `${process.env.OMO_INVOCATION_NAME}\\n`);',
-        'writeFileSync(`${process.env.CAPTURE_DIR}/wrapper-root`, `${process.env.OMO_WRAPPER_PACKAGE_ROOT}\\n`);',
+        'writeFileSync(`${process.env.CAPTURE_DIR}/env`, `${process.env.OMOP_INVOCATION_NAME}\\n`);',
+        'writeFileSync(`${process.env.CAPTURE_DIR}/wrapper-root`, `${process.env.OMOP_WRAPPER_PACKAGE_ROOT}\\n`);',
         'writeFileSync(`${process.env.CAPTURE_DIR}/exec-path`, `${process.execPath}\\n`);',
         'writeFileSync(`${process.env.CAPTURE_DIR}/args`, `${process.argv.slice(2).join("\\n")}\\n`);',
         "process.exit(23);",

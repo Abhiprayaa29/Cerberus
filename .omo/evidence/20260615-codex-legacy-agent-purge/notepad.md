@@ -17,7 +17,7 @@
 - Criterion 3: focused install tests and feasible Codex gate pass, with exact commands and outputs captured under this evidence directory.
 
 ## Real-Surface Scenario
-- Tool/invocation: `CODEX_HOME="$(mktemp -d)/codex" node packages/omo-codex/scripts/install-local.mjs install`, then inspect `$CODEX_HOME/config.toml` and `$CODEX_HOME/agents`.
+- Tool/invocation: `CODEX_HOME="$(mktemp -d)/codex" node packages/omop-codex/scripts/install-local.mjs install`, then inspect `$CODEX_HOME/config.toml` and `$CODEX_HOME/agents`.
 - PASS observable: legacy config block absent, managed legacy TOML absent, unrelated/custom TOML preserved.
 
 ## Findings
@@ -25,16 +25,16 @@
 - Missing behavior was durable file cleanup: the retired `CODEX_HOME/agents/codex-fullscan-reviewer.toml` remained after install.
 - Managed-proof guard uses retired reviewer content markers (`name`, strict reviewer description, and developer instructions opener) before deleting the filename.
 - Same-name custom TOML without those markers is preserved.
-- Inherited size smell: `packages/omo-codex/src/install/link-cached-plugin-agents.ts` is 262 pure LOC after the narrow edit. A proper split would be `agent-preservation.ts` for reasoning/service-tier capture and `retired-agent-purge.ts` for cleanup, but I did not broaden this deletion fix into a refactor.
+- Inherited size smell: `packages/omop-codex/src/install/link-cached-plugin-agents.ts` is 262 pure LOC after the narrow edit. A proper split would be `agent-preservation.ts` for reasoning/service-tier capture and `retired-agent-purge.ts` for cleanup, but I did not broaden this deletion fix into a refactor.
 
 ## Evidence Log
-- RED: `bun test packages/omo-codex/src/install/install-codex.test.ts --test-name-pattern 'retired managed reviewer'` captured in `red-focused-install-test.txt`; failed because the legacy TOML still existed.
-- GREEN focused: `bun test packages/omo-codex/src/install/install-codex-legacy-agent-purge.test.ts` captured in `green-focused-install-test.txt`; 2 pass.
+- RED: `bun test packages/omop-codex/src/install/install-codex.test.ts --test-name-pattern 'retired managed reviewer'` captured in `red-focused-install-test.txt`; failed because the legacy TOML still existed.
+- GREEN focused: `bun test packages/omop-codex/src/install/install-codex-legacy-agent-purge.test.ts` captured in `green-focused-install-test.txt`; 2 pass.
 - Generated installer: `bun run build:codex-install` captured in `build-codex-install.txt`; pass.
-- Real surface: isolated `CODEX_HOME` install through `node packages/omo-codex/scripts/install-local.mjs install --repo-root="$PWD"` captured in `real-surface-install-local.txt`; PASS, real `~/.codex/config.toml` hash unchanged.
-- Focused regression: `bun test packages/omo-codex/src/install/install-codex-legacy-agent-purge.test.ts packages/omo-codex/src/install/link-cached-plugin-agents.test.ts` captured in `focused-install-and-agent-tests.txt`; .5 pass.
+- Real surface: isolated `CODEX_HOME` install through `node packages/omop-codex/scripts/install-local.mjs install --repo-root="$PWD"` captured in `real-surface-install-local.txt`; PASS, real `~/.codex/config.toml` hash unchanged.
+- Focused regression: `bun test packages/omop-codex/src/install/install-codex-legacy-agent-purge.test.ts packages/omop-codex/src/install/link-cached-plugin-agents.test.ts` captured in `focused-install-and-agent-tests.txt`; .5 pass.
 - Codex gate: `bun run test:codex` captured in `test-codex.txt`; pass.
-- No-excuse: `bun run packages/shared-skills/skills/programming/scripts/typescript/check-no-excuse-rules.ts packages/omo-codex/src/install/link-cached-plugin-agents.ts packages/omo-codex/src/install/install-codex-legacy-agent-purge.test.ts` captured in `no-excuse-check.txt`; no violations.
+- No-excuse: `bun run packages/shared-skills/skills/programming/scripts/typescript/check-no-excuse-rules.ts packages/omop-codex/src/install/link-cached-plugin-agents.ts packages/omop-codex/src/install/install-codex-legacy-agent-purge.test.ts` captured in `no-excuse-check.txt`; no violations.
 - LSP diagnostics: no diagnostics for `link-cached-plugin-agents.ts` or `install-codex-legacy-agent-purge.test.ts`.
 - Cleanup: manual QA temp root removed; receipt in `cleanup-receipt.txt`.
 

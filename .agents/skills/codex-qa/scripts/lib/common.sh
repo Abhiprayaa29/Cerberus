@@ -70,7 +70,7 @@ cqa_assert_real_home_unchanged() {
 
 # Create an isolated CODEX_HOME and project dir, export the env that keeps the
 # run hermetic, and register the temp root for cleanup. Sets globals
-# CQA_HOME_ROOT / CODEX_HOME / OMO_CODEX_PROJECT / QA_CWD.
+# CQA_HOME_ROOT / CODEX_HOME / OMOP_CODEX_PROJECT / QA_CWD.
 #
 # IMPORTANT: call this DIRECTLY, never via $(...). A subshell would discard the
 # exports and the cleanup registration.
@@ -81,12 +81,12 @@ cqa_mk_isolated_home() {
   mkdir -p "$root/codex" "$root/proj"
   export CQA_HOME_ROOT="$root"
   export CODEX_HOME="$root/codex"
-  export OMO_CODEX_PROJECT="$root/proj"
+  export OMOP_CODEX_PROJECT="$root/proj"
   export QA_CWD="$root/proj"
   # never leak install bins or telemetry out of the sandbox
   export CODEX_LOCAL_BIN_DIR="$root/codex/bin"
-  export OMO_DISABLE_POSTHOG=1
-  export OMO_CODEX_DISABLE_POSTHOG=1
+  export OMOP_DISABLE_POSTHOG=1
+  export OMOP_CODEX_DISABLE_POSTHOG=1
 }
 
 # Start the local mock model server. Sets CQA_MOCK_PID + exports MOCK_PORT.
@@ -114,7 +114,7 @@ cqa_install_local_omo() {
   if [ -z "$repo" ]; then
     repo="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../../../.." && pwd)"
   fi
-  local installer="$repo/packages/omo-codex/scripts/install-local.mjs"
+  local installer="$repo/packages/omop-codex/scripts/install-local.mjs"
   [ -f "$installer" ] || { cqa_fail "installer not found: $installer"; return 1; }
   node "$installer" install >"$CQA_HOME_ROOT/install.log" 2>&1
 }

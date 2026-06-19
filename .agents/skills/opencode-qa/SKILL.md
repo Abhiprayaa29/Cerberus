@@ -5,7 +5,7 @@ description: "QA opencode itself, per case: verify the CLI/terminal (opencode ru
 
 # opencode QA
 
-QA the opencode coding agent itself. This skill maps each QA need to a tested
+QA the opencode pentest agent itself. This skill maps each QA need to a tested
 helper script and a deep reference. Every script ships a `--self-test` that
 asserts its scenario against the live machine, so the scripts are both the QA
 tools and their own regression checks.

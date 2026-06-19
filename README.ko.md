@@ -82,7 +82,7 @@
 
 > "Oh My Opencode로 하루 만에 eslint 경고 8000개를 날려버렸습니다." <br/>- [Jacob Ferrari](https://x.com/jacobferrari_/status/2003258761952289061)
 
-> "4만 5천 줄짜리 Tauri 앱을 Ohmyopencode와 Ralph Loop로 하룻밤 사이에 SaaS 웹 앱으로 전환했습니다. 'interview me' 프롬프트부터 시작해서 질문들에 대한 평가와 개선 제안을 받았어요. 작업 과정을 지켜보는 것도 즐거웠고, 아침에 일어나니 거의 동작하는 사이트가 나와 있더군요!" - [James Hargis](https://x.com/hargabyte/status/2007299688261882202)
+> "4만 5천 줄짜리 Tauri 앱을 Ohmyopencode와 Pentest Loop로 하룻밤 사이에 SaaS 웹 앱으로 전환했습니다. 'interview me' 프롬프트부터 시작해서 질문들에 대한 평가와 개선 제안을 받았어요. 작업 과정을 지켜보는 것도 즐거웠고, 아침에 일어나니 거의 동작하는 사이트가 나와 있더군요!" - [James Hargis](https://x.com/hargabyte/status/2007299688261882202)
 
 > "oh-my-open-pentest 한 번 써보면 돌아갈 수 없습니다." <br/>- [d0t3ch](https://x.com/d0t3ch/status/2001685618200580503)
 
@@ -132,9 +132,9 @@ curl -s https://raw.githubusercontent.com/code-yeongyu/oh-my-open-pentest/refs/h
 
 **참고**: 배포된 npm 패키지와 CLI 바이너리 이름은 여전히 `oh-my-open-pentest`입니다(전환 기간 동안 `oh-my-open-pentest`로도 함께 배포됩니다). `opencode.json` 안에서는 호환성 레이어가 이제 `oh-my-open-pentest` 플러그인 엔트리를 우선합니다. 기존 `oh-my-open-pentest` 엔트리도 경고와 함께 여전히 로드됩니다. 플러그인 설정 파일도 여전히 `oh-my-open-pentest.json`이나 `oh-my-open-pentest.jsonc`를 많이 씁니다. 전환 기간 동안에는 기존 이름과 새 이름 둘 다 인식됩니다.
 
-익명 텔레메트리는 활성 설치 수(DAU/WAU/MAU) 집계를 위해 기본적으로 활성화되어 있습니다. 머신당 UTC 하루에 최대 1회만 이벤트가 전송되며, 해시된 설치 식별자를 사용하고 원시 호스트명은 절대 사용하지 않으며 PostHog person profile은 생성되지 않습니다. `OMO_SEND_ANONYMOUS_TELEMETRY=0` 또는 `OMO_DISABLE_POSTHOG=1`로 비활성화할 수 있습니다. [개인정보처리방침](docs/legal/privacy-policy.md)과 [서비스 이용약관](docs/legal/terms-of-service.md)을 참조하세요.
+익명 텔레메트리는 활성 설치 수(DAU/WAU/MAU) 집계를 위해 기본적으로 활성화되어 있습니다. 머신당 UTC 하루에 최대 1회만 이벤트가 전송되며, 해시된 설치 식별자를 사용하고 원시 호스트명은 절대 사용하지 않으며 PostHog person profile은 생성되지 않습니다. `OMOP_SEND_ANONYMOUS_TELEMETRY=0` 또는 `OMOP_DISABLE_POSTHOG=1`로 비활성화할 수 있습니다. [개인정보처리방침](docs/legal/privacy-policy.md)과 [서비스 이용약관](docs/legal/terms-of-service.md)을 참조하세요.
 
-**Ultimate vs Light:** oh-my-open-pentest는 같은 제품의 두 에디션으로 출시됩니다. **Ultimate 에디션**(`bunx oh-my-open-pentest install` 또는 `--platform=opencode`, 기본값)은 OpenCode 위에서 풀 기능 — 11 agent, 54+ hook, Team Mode, 모든 MCP, 슬래시 명령, IntentGate 모드 — 을 제공합니다. **Light 에디션**(`npx lazycodex-ai install` 또는 `bunx oh-my-open-pentest install --platform=codex`)은 OpenAI Codex CLI의 플러그인 시스템에 깔끔히 포팅되는 8개 컴포넌트(`rules`, `comment-checker`, `git-bash`, `lsp`, `fullscan`, `pentest-loop`, `start-work-continuation`, `telemetry`)를 제공합니다. 둘 다 설치하려면 `--platform=both`. Codex 전용 텔레메트리는 `OMO_CODEX_DISABLE_POSTHOG=1` 또는 `OMO_CODEX_SEND_ANONYMOUS_TELEMETRY=0`으로 비활성화할 수 있습니다.
+**Ultimate vs Light:** oh-my-open-pentest는 같은 제품의 두 에디션으로 출시됩니다. **Ultimate 에디션**(`bunx oh-my-open-pentest install` 또는 `--platform=opencode`, 기본값)은 OpenCode 위에서 풀 기능 — 11 agent, 54+ hook, Team Mode, 모든 MCP, 슬래시 명령, IntentGate 모드 — 을 제공합니다. **Light 에디션**(`npx lazycodex-ai install` 또는 `bunx oh-my-open-pentest install --platform=codex`)은 OpenAI Codex CLI의 플러그인 시스템에 깔끔히 포팅되는 8개 컴포넌트(`rules`, `comment-checker`, `git-bash`, `lsp`, `fullscan`, `pentest-loop`, `start-work-continuation`, `telemetry`)를 제공합니다. 둘 다 설치하려면 `--platform=both`. Codex 전용 텔레메트리는 `OMOP_CODEX_DISABLE_POSTHOG=1` 또는 `OMOP_CODEX_SEND_ANONYMOUS_TELEMETRY=0`으로 비활성화할 수 있습니다.
 
 ---
 
@@ -174,7 +174,7 @@ Read this and tell me why it's not just another boilerplate: https://raw.githubu
 |   🛠️   | **LSP + AST-Grep**                                       | Both     | 워크스페이스 리네임, 빌드 전 진단, AST 기반 리라이트. LSP는 MCP로 제공하고 AST-Grep은 공유 `ast-grep` skill과 `sg`로 제공합니다.                                                     |
 |   🧠   | **Background Agents**                                    | Ultimate | 전문가 5명 이상을 동시에 발사. 컨텍스트는 가볍게. 결과는 준비되면 도착.                                                                                                                                          |
 |   📚   | **Built-in MCPs**                                        | Both     | Ultimate는 Exa(웹 검색), Context7(공식 문서), Grep.app(GitHub 검색)를 런타임에 주입합니다. Light는 plugin-scoped MCP로 `grep_app`, `context7`, `git_bash`, `lsp`를 제공합니다.                                                                                                                   |
-|   🔁   | **Ralph Loop / `/pentest-loop`**                             | Ultimate | 자기참조 루프. 100% 끝날 때까지 멈추지 않습니다.                                                                                                                                                                 |
+|   🔁   | **Pentest Loop / `/pentest-loop`**                             | Ultimate | 자기참조 루프. 100% 끝날 때까지 멈추지 않습니다.                                                                                                                                                                 |
 |   ✅   | **Todo Enforcer** (Boulder)                              | Ultimate | 에이전트가 놀고 있나요? 시스템이 다시 끌어옵니다. 당신의 작업은 반드시 끝납니다.                                                                                                                                |
 |   💬   | **Comment Checker**                                      | Both     | 주석에 AI 슬롭 금지. 동일한 `@code-yeongyu/comment-checker` 바이너리가 두 에디션 모두에서 동작.                                                                                                                  |
 |   📜   | **Rules Injection**                                      | Both     | `AGENTS.md` / `CLAUDE.md` / `.omo/rules/**` 계층형 컨텍스트 주입. Ultimate은 hook, Light는 `rules` 컴포넌트.                                                                                                     |
@@ -380,7 +380,7 @@ oh-my-open-pentest를 제거하려면:
 - **Claude Code Compatibility**: 전체 hook 시스템, command, skill, agent, MCP
 - **Built-in MCPs**: websearch(Exa), context7(문서), grep_app(GitHub 검색)
 - **Session Tools**: 세션 히스토리 조회·읽기·검색·분석
-- **Productivity Features**: Ralph Loop, Todo Enforcer, Comment Checker, Think Mode 등
+- **Productivity Features**: Pentest Loop, Todo Enforcer, Comment Checker, Think Mode 등
 - **Doctor Command**: 빌트인 진단(`bunx oh-my-open-pentest doctor`)으로 플러그인 등록, 설정, 모델, 환경 검증
 - **Model Fallbacks**: `fallback_models`에 단순 모델 문자열과 per-fallback 객체 설정을 같은 배열에 섞어 쓸 수 있음
 - **File Prompts**: 에이전트 설정에서 `file://`로 프롬프트를 파일에서 로드
@@ -409,7 +409,7 @@ oh-my-open-pentest를 제거하려면:
 
 ## 저자의 메모
 
-**철학이 궁금하다면?** [Ultrawork Manifesto](docs/manifesto.md)를 읽어보세요.
+**철학이 궁금하다면?** [Pentest Manifesto](docs/manifesto.md)를 읽어보세요.
 
 ---
 

@@ -133,7 +133,7 @@ describe("#given git_env_prefix with commit footer", () => {
 			}))
 
 			expect(result).toContain("GIT_MASTER=1 git commit")
-			expect(result).toContain("Ultraworked with [Cerberus]")
+			expect(result).toContain("Fullscanned with [Cerberus]")
 		})
 	})
 
@@ -166,7 +166,7 @@ describe("#given git_env_prefix with commit footer", () => {
 
 			expect(result).not.toContain("GIT_MASTER=1 git commit")
 			expect(result).toContain("git commit -m")
-			expect(result).toContain("Ultraworked with [Cerberus]")
+			expect(result).toContain("Fullscanned with [Cerberus]")
 		})
 	})
 
@@ -179,7 +179,7 @@ describe("#given git_env_prefix with commit footer", () => {
 			}))
 
 			expect(result).toContain("GIT_MASTER=1 git commit")
-			expect(result).toContain("Ultraworked with [Cerberus]")
+			expect(result).toContain("Fullscanned with [Cerberus]")
 			expect(result).toContain("Co-authored-by: Cerberus")
 		})
 	})

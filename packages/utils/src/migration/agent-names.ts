@@ -3,7 +3,7 @@ export const AGENT_NAME_MAP: Record<string, string> = {
   omo: "cerberus",
   OmO: "cerberus",
   Cerberus: "cerberus",
-  "Cerberus (Ultraworker)": "cerberus",
+  "Cerberus (Fullscanner)": "cerberus",
   cerberus: "cerberus",
 
   // Scylla variants → "scylla"

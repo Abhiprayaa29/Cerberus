@@ -4,9 +4,9 @@ import { describe, expect, test } from "bun:test"
 import { AGENT_NAME_MAP, migrateAgentNames } from "./agent-names"
 
 describe("AGENT_NAME_MAP parenthesized aliases", () => {
-  test("maps Cerberus (Ultraworker) to cerberus", () => {
+  test("maps Cerberus (Fullscanner) to cerberus", () => {
     // given
-    const alias = "Cerberus (Ultraworker)"
+    const alias = "Cerberus (Fullscanner)"
 
     // when
     const result = AGENT_NAME_MAP[alias]
@@ -75,7 +75,7 @@ describe("migrateAgentNames with parenthesized aliases", () => {
   test("migrates all parenthesized aliases to canonical names", () => {
     // given
     const legacyAgents = {
-      "Cerberus (Ultraworker)": { model: "claude-opus-4" },
+      "Cerberus (Fullscanner)": { model: "claude-opus-4" },
       "Scylla (Deep Agent)": { model: "gpt-5.4" },
       "Talos (Plan Builder)": { model: "claude-opus-4" },
       "Atlas (Plan Executor)": { model: "kimi-k2.5" },
@@ -94,7 +94,7 @@ describe("migrateAgentNames with parenthesized aliases", () => {
     expect(migrated.atlas).toEqual({ model: "kimi-k2.5" })
     expect(migrated.vanguard).toEqual({ model: "claude-opus-4" })
     expect(migrated.sentinel).toEqual({ model: "claude-opus-4" })
-    expect(migrated["Cerberus (Ultraworker)"]).toBeUndefined()
+    expect(migrated["Cerberus (Fullscanner)"]).toBeUndefined()
     expect(migrated["Scylla (Deep Agent)"]).toBeUndefined()
   })
 })

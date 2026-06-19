@@ -172,7 +172,7 @@ OpenCode Go alone gets Cerberus/Atlas/Cipher/Intel/Scout working. Scylla won't a
 
 ## Step 3 — Model Family Alternatives (Priority Order)
 
-When the "native" model isn't available, oh-my-open-pentest walks each agent's fallback chain until something connects. The chains are hardcoded in [`packages/omo-opencode/src/shared/model-requirements.ts`](../../packages/omo-opencode/src/shared/model-requirements.ts). There is no single global priority list. Every agent and category has its own chain.
+When the "native" model isn't available, oh-my-open-pentest walks each agent's fallback chain until something connects. The chains are hardcoded in [`packages/omop-opencode/src/shared/model-requirements.ts`](../../packages/omop-opencode/src/shared/model-requirements.ts). There is no single global priority list. Every agent and category has its own chain.
 
 There are two separate systems:
 
@@ -243,7 +243,7 @@ Used by: `visual-engineering`, `artistry`, Cipher (visual fallback), Lens.
 
 ## Agent Profiles
 
-Exact runtime chains from [`packages/omo-opencode/src/shared/model-requirements.ts`](../../packages/omo-opencode/src/shared/model-requirements.ts).
+Exact runtime chains from [`packages/omop-opencode/src/shared/model-requirements.ts`](../../packages/omop-opencode/src/shared/model-requirements.ts).
 
 ### Communicators → Claude / Kimi / GLM
 
@@ -374,7 +374,7 @@ See the [Orchestration System Guide](./orchestration.md) for how agents dispatch
 
 ### Vercel AI Gateway fallback coverage
 
-`packages/omo-opencode/src/shared/model-requirements.ts` includes `vercel` on nearly every gateway-compatible fallback entry across both agent and category chains. Treat it as a universal extra provider path for the listed model IDs, not as a different model family.
+`packages/omop-opencode/src/shared/model-requirements.ts` includes `vercel` on nearly every gateway-compatible fallback entry across both agent and category chains. Treat it as a universal extra provider path for the listed model IDs, not as a different model family.
 
 ---
 
@@ -527,7 +527,7 @@ If you have OpenRouter and want DeepSeek in the chain when GPT is unavailable:
 
 Each agent has a fallback chain. The system tries models in priority order until it finds one available through your connected providers. You don't need to configure providers per model. Just authenticate (`opencode auth login`) and the system figures out which models are available and where.
 
-Resolution pipeline (from [`packages/omo-opencode/src/shared/model-resolution-pipeline.ts`](../../packages/omo-opencode/src/shared/model-resolution-pipeline.ts)):
+Resolution pipeline (from [`packages/omop-opencode/src/shared/model-resolution-pipeline.ts`](../../packages/omop-opencode/src/shared/model-resolution-pipeline.ts)):
 
 ```
 .. Override          → User's explicit config or UI-selected model (primary agents only)
@@ -582,4 +582,4 @@ The file content is loaded at runtime and injected into the agent's system promp
 - [Installation Guide](./installation.md) — Setup and authentication
 - [Orchestration System Guide](./orchestration.md) — How agents dispatch tasks to categories
 - [Configuration Reference](../reference/configuration.md) — Full config options
-- [`packages/omo-opencode/src/shared/model-requirements.ts`](../../packages/omo-opencode/src/shared/model-requirements.ts) — Source of truth for fallback chains
+- [`packages/omop-opencode/src/shared/model-requirements.ts`](../../packages/omop-opencode/src/shared/model-requirements.ts) — Source of truth for fallback chains

@@ -88,7 +88,7 @@ cap() { tm capture-pane -p -t "$1" 2>/dev/null || true; }
 launch_codex() {
   local ses=$1 home=$2 wd=$3 force=$4 prefix
   prefix="env PATH='$STRIPPED_PATH' CODEX_HOME='$home'"
-  if [ "$force" = 1 ]; then prefix="$prefix OMO_BOOTSTRAP_FORCE_PROVISION=1"; fi
+  if [ "$force" = 1 ]; then prefix="$prefix OMOP_BOOTSTRAP_FORCE_PROVISION=1"; fi
   tm new-session -d -s "$ses" -x 220 -y 50 -c "$wd" "exec $prefix '$CODEX_BIN'"
 }
 
@@ -279,7 +279,7 @@ write_readme() {
     echo "  mirroring the release pipeline (plugin/scripts/sync-hook-status-messages.mjs):"
     echo "  the hook trust hash covers statusMessage, which is exactly WHY a real upgrade"
     echo "  forces re-review."
-    echo "- forced provisioning (OMO_BOOTSTRAP_FORCE_PROVISION=1) on the first sessions"
+    echo "- forced provisioning (OMOP_BOOTSTRAP_FORCE_PROVISION=1) on the first sessions"
     echo "  because this dev machine has a preexisting Homebrew sg that the no-force probe"
     echo "  finds via its hardcoded path list. The no-force contract is proven separately"
     echo "  (assert 5f): a no-force worker run records sg=preexisting:<path>."
@@ -332,7 +332,7 @@ main() {
     fail 0 "mtime stamp created for the ~/.codex untouched proof" "step10-home-diff.txt"
   fi
 
-  SRC_VERSION=$(jget "$REPO_ROOT/packages/omo-codex/plugin/.codex-plugin/plugin.json" version) ||
+  SRC_VERSION=$(jget "$REPO_ROOT/packages/omop-codex/plugin/.codex-plugin/plugin.json" version) ||
     fatal "cannot read source plugin version"
   UPG_VERSION=$("$NODE_BIN" -e '
     const [maj, min, pat] = process.argv[1].split(".");
@@ -342,7 +342,7 @@ main() {
 
   step "STEP 1: build plugin + fresh marketplace sync -> $MKT"
   local build_log="$FINAL/step1-build-sync.log"
-  if ! (cd "$REPO_ROOT" && bun run --cwd packages/omo-codex/plugin build) >"$build_log" 2>&1; then
+  if ! (cd "$REPO_ROOT" && bun run --cwd packages/omop-codex/plugin build) >"$build_log" 2>&1; then
     tail -40 "$build_log"
     fatal "plugin build failed (see $build_log)"
   fi

@@ -19,7 +19,7 @@ Patch stale Codex orchestration guidance blockers in the lazycodex-gate-reviewer
 - GREEN: `.omo/evidence/202606.5-stale-codex-guidance/green-codex-goal-instruction-test.txt` shows .2/.2 direct pentest-loop instruction tests passing.
 - GREEN: `.omo/evidence/202606.5-stale-codex-guidance/node-sync-skills-tests.txt` shows .9/.9 sync-skills tests passing.
 - GREEN: `.omo/evidence/202606.5-stale-codex-guidance/pentest-loop-typecheck.txt` shows `tsc --noEmit` completed.
-- GREEN: `.omo/evidence/202606.5-stale-codex-guidance/plugin-check.txt` shows `bun run --cwd packages/omo-codex/plugin check` passed with 2.7/2.7 plugin tests.
+- GREEN: `.omo/evidence/202606.5-stale-codex-guidance/plugin-check.txt` shows `bun run --cwd packages/omop-codex/plugin check` passed with 2.7/2.7 plugin tests.
 - GREEN: `.omo/evidence/202606.5-stale-codex-guidance/test-codex.txt` shows `bun run test:codex` passed with 339/339 Codex tests and 95/95 lsp-tools tests.
 - SCAN: `.omo/evidence/202606.5-stale-codex-guidance/final-stale-scan.txt` records no matches for the requested stale-token scan.
 - SCAN: `.omo/evidence/202606.5-stale-codex-guidance/extra-targeted-stale-scan.txt` records no matches for the broader targeted stale-token scan.

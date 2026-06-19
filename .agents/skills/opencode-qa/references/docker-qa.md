@@ -33,7 +33,7 @@ script/agent/qa-docker.sh --clean                               # remove the QA 
 
 `omo-qa` is `omo-dev` (`.devcontainer/Dockerfile`) plus the latest `opencode-ai`
 and `@openai/codex` npm packages and `sqlite3 jq curl rsync`. Pin with
-`--build-arg OMO_OPENCODE_VERSION=...` on the qa.Dockerfile for a specific release.
+`--build-arg OMOP_OPENCODE_VERSION=...` on the qa.Dockerfile for a specific release.
 
 ## Why the container is the sandbox
 

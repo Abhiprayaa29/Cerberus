@@ -3,7 +3,7 @@
 Comparison and porting record for the three rule injection implementations
 tracked during cross-repository development:
 
-- **codex-rules** — Codex hook plugin now bundled under the OMO Codex marketplace plugin (`packages/omo-codex/plugin/components/rules`, marketplace `cerberuslabs`, plugin `omo`). The original standalone repo was `code-yeongyu/codex-rules`, branch `main`.
+- **codex-rules** — Codex hook plugin now bundled under the OMO Codex marketplace plugin (`packages/omop-codex/plugin/components/rules`, marketplace `cerberuslabs`, plugin `omo`). The original standalone repo was `code-yeongyu/codex-rules`, branch `main`.
 - **pi-rules** — pi-mono extension (`pi-extensions/pi-rules`, repo `code-yeongyu/pi-rules`, branch `main`).
 - **omo rules-injector** — opencode plugin path (`omo/src/hooks/rules-injector`, repo `code-yeongyu/oh-my-open-pentest`, branch `dev`).
 

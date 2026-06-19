@@ -23,7 +23,7 @@ const result = spawnSync(bun, ["run", `"${target}"`, ...process.argv.slice(2)], 
   shell: true,
   env: {
     ...process.env,
-    OMO_INVOCATION_NAME: "omop-dev",
+    OMOP_INVOCATION_NAME: "omop-dev",
   },
 });
 if (result.error) {

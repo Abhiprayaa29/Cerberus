@@ -110,7 +110,7 @@ jobs:
           # Override plugin to use local file reference
           OPENCODE_JSON=~/.config/opencode/opencode.json
           REPO_PATH=$(pwd)
-          jq --arg path "file://$REPO_PATH/packages/omo-opencode/src/index.ts" '
+          jq --arg path "file://$REPO_PATH/packages/omop-opencode/src/index.ts" '
             .plugin = [.plugin[] | select(. != "oh-my-open-pentest")] + [$path]
           ' "$OPENCODE_JSON" > /tmp/oc.json && mv /tmp/oc.json "$OPENCODE_JSON"
 
@@ -192,7 +192,7 @@ jobs:
             }
           ' "$OPENCODE_JSON" > /tmp/oc.json && mv /tmp/oc.json "$OPENCODE_JSON"
 
-          OMO_JSON=~/.config/opencode/oh-my-open-pentest.json
+          OMOP_JSON=~/.config/opencode/oh-my-open-pentest.json
           PROMPT_APPEND=$(cat << 'PROMPT_EOF'
           <fullscan-mode>
           [CODE RED] Maximum precision required. Ultrathink before acting.
@@ -322,10 +322,10 @@ jobs:
           - user.email: cerberus-dev-ai@users.noreply.github.com
           PROMPT_EOF
           )
-          jq --arg append "$PROMPT_APPEND" '.agents.Cerberus.prompt_append = $append' "$OMO_JSON" > /tmp/omo.json && mv /tmp/omo.json "$OMO_JSON"
+          jq --arg append "$PROMPT_APPEND" '.agents.Cerberus.prompt_append = $append' "$OMOP_JSON" > /tmp/omo.json && mv /tmp/omo.json "$OMOP_JSON"
 
           # Add categories configuration for unspecified-low to use GLM 4.7
-          jq '.categories["unspecified-low"] = { "model": "zai-coding-plan/glm-4.7" }' "$OMO_JSON" > /tmp/omo.json && mv /tmp/omo.json "$OMO_JSON"
+          jq '.categories["unspecified-low"] = { "model": "zai-coding-plan/glm-4.7" }' "$OMOP_JSON" > /tmp/omo.json && mv /tmp/omo.json "$OMOP_JSON"
 
           mkdir -p ~/.local/share/opencode
           echo "$OPENCODE_AUTH_JSON" > ~/.local/share/opencode/auth.json

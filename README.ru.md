@@ -82,7 +82,7 @@
 
 > «За один день устранил 8000 предупреждений eslint с помощью Oh My Opencode.» <br/>— [Jacob Ferrari](https://x.com/jacobferrari_/status/2003258761952289061)
 
-> «За ночь конвертировал приложение на tauri в 45k строк в веб-SaaS с помощью Ohmyopencode и ralph loop. Начал с промпта «проинтервьюируй меня», попросил оценки и рекомендации по вопросам. Было удивительно наблюдать за работой и утром проснуться с почти рабочим сайтом!» — [James Hargis](https://x.com/hargabyte/status/2007299688261882202)
+> «За ночь конвертировал приложение на tauri в 45k строк в веб-SaaS с помощью Ohmyopencode и pentest loop. Начал с промпта «проинтервьюируй меня», попросил оценки и рекомендации по вопросам. Было удивительно наблюдать за работой и утром проснуться с почти рабочим сайтом!» — [James Hargis](https://x.com/hargabyte/status/2007299688261882202)
 
 > «Используйте oh-my-open-pentest — вы не захотите возвращаться назад.» <br/>— [d0t3ch](https://x.com/d0t3ch/status/2001685618200580503)
 
@@ -129,9 +129,9 @@ curl -s https://raw.githubusercontent.com/code-yeongyu/oh-my-open-pentest/refs/h
 
 **Примечание**: Опубликованное имя npm-пакета и CLI-бинарника по-прежнему `oh-my-open-pentest` (в переходный период пакет также дублируется под именем `oh-my-open-pentest`). Внутри `opencode.json` слой совместимости теперь предпочитает точку входа плагина `oh-my-open-pentest`, в то время как устаревшие записи `oh-my-open-pentest` всё ещё загружаются с предупреждением. Файлы конфигурации плагина по-прежнему часто называются `oh-my-open-pentest.json` или `oh-my-open-pentest.jsonc`; в переходный период распознаются как устаревшие, так и новые имена.
 
-Анонимная телеметрия включена по умолчанию для подсчёта активных установок (DAU/WAU/MAU). Не более одного события на машину за UTC-сутки, использует хешированный идентификатор установки, никогда не использует исходное имя хоста, и не создаёт PostHog person profile. Можно отключить через `OMO_SEND_ANONYMOUS_TELEMETRY=0` или `OMO_DISABLE_POSTHOG=1`. См. [Политику конфиденциальности](docs/legal/privacy-policy.md) и [Условия обслуживания](docs/legal/terms-of-service.md).
+Анонимная телеметрия включена по умолчанию для подсчёта активных установок (DAU/WAU/MAU). Не более одного события на машину за UTC-сутки, использует хешированный идентификатор установки, никогда не использует исходное имя хоста, и не создаёт PostHog person profile. Можно отключить через `OMOP_SEND_ANONYMOUS_TELEMETRY=0` или `OMOP_DISABLE_POSTHOG=1`. См. [Политику конфиденциальности](docs/legal/privacy-policy.md) и [Условия обслуживания](docs/legal/terms-of-service.md).
 
-**Ultimate и Light:** oh-my-open-pentest поставляется в двух редакциях одного продукта. **Ultimate** (`bunx oh-my-open-pentest install` или `--platform=opencode`, по умолчанию) — полнофункциональная редакция поверх OpenCode: 11 агентов, 54+ хука, Team Mode, все MCP, все слэш-команды, режимы IntentGate. **Light** (`npx lazycodex-ai install` или `bunx oh-my-open-pentest install --platform=codex`) — 8 компонентов omo, которые портируются в систему плагинов OpenAI Codex CLI: `rules`, `comment-checker`, `git-bash`, `lsp`, `fullscan`, `pentest-loop`, `start-work-continuation`, `telemetry`. Чтобы установить обе редакции одной командой, используйте `--platform=both`. Телеметрию только для Codex можно отключить через `OMO_CODEX_DISABLE_POSTHOG=1` или `OMO_CODEX_SEND_ANONYMOUS_TELEMETRY=0`.
+**Ultimate и Light:** oh-my-open-pentest поставляется в двух редакциях одного продукта. **Ultimate** (`bunx oh-my-open-pentest install` или `--platform=opencode`, по умолчанию) — полнофункциональная редакция поверх OpenCode: 11 агентов, 54+ хука, Team Mode, все MCP, все слэш-команды, режимы IntentGate. **Light** (`npx lazycodex-ai install` или `bunx oh-my-open-pentest install --platform=codex`) — 8 компонентов omo, которые портируются в систему плагинов OpenAI Codex CLI: `rules`, `comment-checker`, `git-bash`, `lsp`, `fullscan`, `pentest-loop`, `start-work-continuation`, `telemetry`. Чтобы установить обе редакции одной командой, используйте `--platform=both`. Телеметрию только для Codex можно отключить через `OMOP_CODEX_DISABLE_POSTHOG=1` или `OMOP_CODEX_SEND_ANONYMOUS_TELEMETRY=0`.
 
 ------
 
@@ -172,7 +172,7 @@ Read this and tell me why it's not just another boilerplate: https://raw.githubu
 | 🛠️   | **LSP + AST-Grep**                                       | Both     | Переименование в рабочем пространстве, диагностика перед сборкой, переписывание с учётом AST. LSP предоставляется через MCP, AST-Grep — через общий skill `ast-grep` и `sg`.                            |
 | 🧠   | **Фоновые агенты**                                       | Ultimate | Запускайте 5+ специалистов параллельно. Контекст остаётся компактным. Результаты — когда готовы.                                                                                                                                 |
 | 📚   | **Встроенные MCP**                                       | Both     | Ultimate внедряет Exa (веб-поиск), Context7 (официальная документация) и Grep.app (поиск по GitHub) во время выполнения. Light предоставляет plugin-scoped MCP: `grep_app`, `context7`, `git_bash`, `lsp`.                                                                                                     |
-| 🔁   | **Ralph Loop / `/pentest-loop`**                             | Ultimate | Самореферентный цикл. Не останавливается, пока задача не выполнена на 100%.                                                                                                                                                      |
+| 🔁   | **Pentest Loop / `/pentest-loop`**                             | Ultimate | Самореферентный цикл. Не останавливается, пока задача не выполнена на 100%.                                                                                                                                                      |
 | ✅   | **Todo Enforcer** (Boulder)                              | Ultimate | Агент завис? Система немедленно возвращает его в работу. Ваша задача будет выполнена, точка.                                                                                                                                     |
 | 💬   | **Comment Checker**                                      | Both     | Никакого AI-мусора в комментариях. Тот же бинарник `@code-yeongyu/comment-checker` работает в обеих редакциях.                                                                                                                   |
 | 📜   | **Rules Injection**                                      | Both     | Иерархическое внедрение контекста из `AGENTS.md` / `CLAUDE.md` / `.omo/rules/**`. В Ultimate это хук, в Light — компонент `rules`.                                                                                                |
@@ -379,7 +379,7 @@ project/
 - **Совместимость с Claude Code**: Полная система хуков, команды, навыки, агенты, MCP
 - **Встроенные MCP**: websearch (Exa), context7 (документация), grep_app (поиск по GitHub)
 - **Инструменты сессий**: Список, чтение, поиск и анализ истории сессий
-- **Инструменты продуктивности**: Ralph Loop, Todo Enforcer, Comment Checker, Think Mode и другое
+- **Инструменты продуктивности**: Pentest Loop, Todo Enforcer, Comment Checker, Think Mode и другое
 - **Команда Doctor**: Встроенная диагностика (`bunx oh-my-open-pentest doctor`) проверяет регистрацию плагина, конфиг, модели и окружение
 - **Фолбэки моделей**: `fallback_models` позволяет смешивать простые строки моделей и объектные настройки per-fallback в одном массиве
 - **Файловые промпты**: Загрузка промптов из файлов через `file://` в конфигурации агентов

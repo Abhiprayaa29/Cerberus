@@ -23,14 +23,14 @@ interface WritePluginFixtureOptions {
 async function writePluginFixture(sourceRoot: string, options: WritePluginFixtureOptions = {}): Promise<void> {
   await writeJson(join(sourceRoot, "packages", "omo-codex", "marketplace.json"), {
     name: "cerberuslabs",
-    plugins: [{ name: "omo", source: "./plugins/omo" }],
+    plugins: [{ name: "omop", source: "./plugins/omo" }],
   })
   await writeJson(join(sourceRoot, "packages", "omo-codex", "plugin", ".codex-plugin", "plugin.json"), {
-    name: "omo",
+    name: "omop",
     version: "1.2.3",
   })
   await writeJson(join(sourceRoot, "packages", "omo-codex", "plugin", "package.json"), {
-    name: "@cerberuslabs/omo-codex-plugin",
+    name: "@cerberuslabs/omop-codex-plugin",
     version: "1.2.3",
   })
   await writeJson(join(sourceRoot, "packages", "omo-codex", "plugin", "hooks", "hooks.json"), {
@@ -148,7 +148,7 @@ describe("sync-lazycodex-marketplace", () => {
     expect(marketplace.name).toBe("cerberuslabs")
     expect(marketplace.plugins[0].source).toBe("./plugins/omo")
     const manifest = JSON.parse(await readFile(join(lazycodexRoot, "plugins", "omo", ".codex-plugin", "plugin.json"), "utf8"))
-    expect(manifest).toMatchObject({ name: "omo", version: "1.2.3" })
+    expect(manifest).toMatchObject({ name: "omop", version: "1.2.3" })
     const workflow = await readFile(join(lazycodexRoot, ".github", "workflows", "pr-source-guidance.yml"), "utf8")
     expect(workflow).toContain("PR source guidance")
     const mcpManifest = JSON.parse(await readFile(join(lazycodexRoot, "plugins", "omo", ".mcp.json"), "utf8"))
@@ -171,7 +171,7 @@ describe("sync-lazycodex-marketplace", () => {
     const lazycodexRoot = await mkdtemp(join(tmpdir(), "omo-sync-bad-lazycodex-"))
     await writeJson(join(sourceRoot, "packages", "omo-codex", "marketplace.json"), {
       name: "cerberuslabs",
-      plugins: [{ name: "omo", source: "./plugins/omo" }],
+      plugins: [{ name: "omop", source: "./plugins/omo" }],
     })
 
     // when
@@ -197,7 +197,7 @@ describe("sync-lazycodex-marketplace", () => {
 
     // then
     const manifest = JSON.parse(await readFile(join(lazycodexRoot, "plugins", "omo", ".codex-plugin", "plugin.json"), "utf8"))
-    expect(manifest).toMatchObject({ name: "omo", version: "1.2.3" })
+    expect(manifest).toMatchObject({ name: "omop", version: "1.2.3" })
     let workflowMissing = false
     try {
       await stat(join(lazycodexRoot, ".github", "workflows", "pr-source-guidance.yml"))

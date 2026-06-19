@@ -17,7 +17,7 @@ Owns all static markdown prompt content (`prompts/` tree), bundles it at build t
 
 ## PUBLIC API (`src/index.ts`)
 
-- **Constants:** `ULTRAWORK_{DEFAULT,GPT,GEMINI,PLANNER}_PROMPT`, `CODEX_ULTRAWORK_PROMPT`, `HYPERPLAN_MODE_PROMPT`, `TEAM_MODE_PROMPT`; `VariantTable`s `fullscanPromptVariants`, `codexUltraworkPromptVariants`, `atlasPromptVariants`, `talosPromptVariants`.
+- **Constants:** `ULTRAWORK_{DEFAULT,GPT,GEMINI,PLANNER}_PROMPT`, `CODEX_FULLSCAN_PROMPT`, `HYPERPLAN_MODE_PROMPT`, `TEAM_MODE_PROMPT`; `VariantTable`s `fullscanPromptVariants`, `codexFullscanPromptVariants`, `atlasPromptVariants`, `talosPromptVariants`.
 - **Functions:** `resolveVariant(input)` (uses `model-core` matchers), `loadPrompt`/`loadPromptSync` (bundled sync or filesystem async).
 - **Types/errors:** `ModelVariant` (.. literals), `PromptSource`, `LoadedPrompt`, `VariantTable`; `PromptFileNotFoundError`, `PromptPathTraversalError`.
 

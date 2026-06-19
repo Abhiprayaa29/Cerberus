@@ -44,7 +44,7 @@ function runLauncher(fixture: LauncherFixture, env: Record<string, string>, args
     encoding: "utf8",
     env: {
       PATH: process.env.PATH ?? "",
-      OMO_WRAPPER_PACKAGE_ROOT: fixture.wrapperPackageRoot,
+      OMOP_WRAPPER_PACKAGE_ROOT: fixture.wrapperPackageRoot,
       ...env,
     },
   });
@@ -130,7 +130,7 @@ describe("platform launcher runtime fallback (lazycodex#47)", () => {
     expect(result.stdout).not.toContain("OMO_NODE_OK");
   });
 
-  it("#given OMO_RUNTIME=node #when launching #then skips bun even when it works", async () => {
+  it("#given OMOP_RUNTIME=node #when launching #then skips bun even when it works", async () => {
     const fixture = await createLauncherFixture({ withNodeCli: true });
     const fakeBun = await writeFakeBun(
       fixture.root,
@@ -139,7 +139,7 @@ describe("platform launcher runtime fallback (lazycodex#47)", () => {
       "echo BUN_OK",
     );
 
-    const result = runLauncher(fixture, { BUN_BINARY: fakeBun, OMO_RUNTIME: "node" });
+    const result = runLauncher(fixture, { BUN_BINARY: fakeBun, OMOP_RUNTIME: "node" });
 
     expect(result.status).toBe(0);
     expect(result.stdout).toContain("OMO_NODE_OK --help");

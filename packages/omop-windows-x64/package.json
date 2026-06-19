@@ -1,1 +1,19 @@
-{  "name": "omop-windows-x64",  "version": "1.0.0",  "description": "Platform-specific binary for oh-my-open-pentest (windows-x64)",  "license": "MIT",  "repository": {    "type": "git",    "url": "https://github.com/code-yeongyu/oh-my-open-pentest"  },  "os": [    "win32"  ],  "cpu": [    "x64"  ],  "files": [    "bin"  ]}
+{
+  "name": "omop-windows-x64",
+  "version": "1.1.0",
+  "description": "Platform-specific binary for oh-my-open-pentest (windows-x64)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/code-yeongyu/oh-my-open-pentest"
+  },
+  "os": [
+    "win32"
+  ],
+  "cpu": [
+    "x64"
+  ],
+  "files": [
+    "bin"
+  ]
+}

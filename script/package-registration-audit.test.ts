@@ -29,9 +29,9 @@ const mcpPackagePaths: readonly string[] = [
   "packages/lsp-daemon",
   "packages/lsp-tools-mcp",
 ] as const
-const adapterPackagePaths: readonly string[] = ["packages/omo-codex", "packages/omo-opencode"] as const
+const adapterPackagePaths: readonly string[] = ["packages/omop-codex", "packages/omop-opencode"] as const
 const skillPackagePaths: readonly string[] = ["packages/shared-skills"] as const
-const shimSourceRoots: readonly string[] = ["packages/omo-opencode/src", "packages/omo-codex/src"] as const
+const shimSourceRoots: readonly string[] = ["packages/omop-opencode/src", "packages/omop-codex/src"] as const
 const reExportShimFirstLinePattern = /^export (\*|\{).*from ["'](@oh-my-open-pentest\/[^/"']+)/
 
 const layerRanks = {
@@ -168,7 +168,7 @@ function isManagedWorkspacePackage(path: string): boolean {
 }
 
 function isNestedCodexPluginPackage(path: string): boolean {
-  return path.startsWith("packages/omo-codex/plugin/")
+  return path.startsWith("packages/omop-codex/plugin/")
 }
 
 function isRootManagedTypecheckPackage(path: string): boolean {
@@ -212,7 +212,7 @@ describe("package registration audit", () => {
     const expectedDevDependencyNames = (
       await Promise.all(
         managedWorkspacePaths
-          .filter((path) => path !== "packages/omo-opencode")
+          .filter((path) => path !== "packages/omop-opencode")
           .map((path) => readManifest(join(path, "package.json")).then((manifest) => manifest.name)),
       )
     ).toSorted()

@@ -40,8 +40,8 @@ describe("Codex compatibility test script", () => {
 
     // #when
     const lspDaemonBuildIndex = packageManifest.indexOf("bun run build:lsp-daemon")
-    const pluginBuildIndex = packageManifest.indexOf("bun run --cwd packages/omo-codex/plugin build")
-    const installerTestIndex = packageManifest.indexOf("packages/omo-codex/src/install/install-codex-packaged.test.ts")
+    const pluginBuildIndex = packageManifest.indexOf("bun run --cwd packages/omop-codex/plugin build")
+    const installerTestIndex = packageManifest.indexOf("packages/omop-codex/src/install/install-codex-packaged.test.ts")
     const buildsLspDaemonBeforePluginAndInstallerTests =
       lspDaemonBuildIndex >= 0 &&
       pluginBuildIndex > lspDaemonBuildIndex &&
@@ -60,7 +60,7 @@ describe("Codex compatibility test script", () => {
 
     // #when
     const gitBashBuildIndex = packageManifest.indexOf("bun run build:git-bash-mcp")
-    const installerTestIndex = packageManifest.indexOf("packages/omo-codex/src/install/install-codex-packaged.test.ts")
+    const installerTestIndex = packageManifest.indexOf("packages/omop-codex/src/install/install-codex-packaged.test.ts")
     const buildsGitBashBeforeInstallerTests = gitBashBuildIndex >= 0 && installerTestIndex > gitBashBuildIndex
 
     // #then

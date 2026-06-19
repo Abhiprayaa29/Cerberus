@@ -55,8 +55,8 @@ function buildReleaseFraming(files: string[]): string[] {
 
   if (
     touchesAnyPath(files, [
-      "packages/omo-opencode/src/index.ts",
-      "packages/omo-opencode/src/plugin-config.ts",
+      "packages/omop-opencode/src/index.ts",
+      "packages/omop-opencode/src/plugin-config.ts",
       "bin/platform.js",
       "postinstall.mjs",
       "docs",
@@ -65,16 +65,16 @@ function buildReleaseFraming(files: string[]): string[] {
     bullets.push("Rename transition updates across package detection, plugin/config compatibility, and install surfaces.")
   }
 
-  if (touchesAnyPath(files, ["packages/omo-opencode/src/tools/delegate-task", "packages/omo-opencode/src/plugin/tool-registry.ts"])) {
+  if (touchesAnyPath(files, ["packages/omop-opencode/src/tools/delegate-task", "packages/omop-opencode/src/plugin/tool-registry.ts"])) {
     bullets.push("Task and tool behavior updates, including delegate-task contract and runtime registration behavior.")
   }
 
   if (
     touchesAnyPath(files, [
-      "packages/omo-opencode/src/plugin/tool-registry.ts",
-      "packages/omo-opencode/src/plugin-handlers/agent-config-handler.ts",
-      "packages/omo-opencode/src/plugin-handlers/tool-config-handler.ts",
-      "packages/omo-opencode/src/hooks/tasks-todowrite-disabler",
+      "packages/omop-opencode/src/plugin/tool-registry.ts",
+      "packages/omop-opencode/src/plugin-handlers/agent-config-handler.ts",
+      "packages/omop-opencode/src/plugin-handlers/tool-config-handler.ts",
+      "packages/omop-opencode/src/hooks/tasks-todowrite-disabler",
     ])
   ) {
     bullets.push("Task-system default behavior alignment so omitted configuration behaves consistently across runtime paths.")

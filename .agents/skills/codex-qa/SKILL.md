@@ -1,11 +1,11 @@
 ---
 name: codex-qa
-description: "QA the omo Codex Light edition (lazycodex / packages/omo-codex) itself, in strict isolation so ONLY our plugin is exercised, never the user's real ~/.codex. The first-party method drives the real `codex app-server` against an isolated CODEX_HOME plus a LOCAL mock model (no real API call), and proves a plugin hook fired by asserting hook/started + hook/completed notifications. Also: isolated install verification, per-component hook probes, a tmux TUI smoke, and runtime log observation (RUST_LOG / logs SQLite / /debug-config). Ships tested helper scripts each with a --self-test. Use whenever someone changes anything under packages/omo-codex or wants to QA, smoke-test, verify, or debug the Codex plugin, its hooks/components, the installer/config.toml, the app-server flow, or the Codex TUI. Triggers: codex qa, qa codex, codex-qa, test codex plugin, verify codex hook, codex app-server, lazycodex qa, isolated CODEX_HOME, prove codex hook fired, codex tui test."
+description: "QA the omo Codex Light edition (lazycodex / packages/omop-codex) itself, in strict isolation so ONLY our plugin is exercised, never the user's real ~/.codex. The first-party method drives the real `codex app-server` against an isolated CODEX_HOME plus a LOCAL mock model (no real API call), and proves a plugin hook fired by asserting hook/started + hook/completed notifications. Also: isolated install verification, per-component hook probes, a tmux TUI smoke, and runtime log observation (RUST_LOG / logs SQLite / /debug-config). Ships tested helper scripts each with a --self-test. Use whenever someone changes anything under packages/omop-codex or wants to QA, smoke-test, verify, or debug the Codex plugin, its hooks/components, the installer/config.toml, the app-server flow, or the Codex TUI. Triggers: codex qa, qa codex, codex-qa, test codex plugin, verify codex hook, codex app-server, lazycodex qa, isolated CODEX_HOME, prove codex hook fired, codex tui test."
 ---
 
 # Codex QA
 
-QA the omo Codex Light edition (`packages/omo-codex/`, shipped as lazycodex). We
+QA the omo Codex Light edition (`packages/omop-codex/`, shipped as lazycodex). We
 exercise OUR plugin in a REAL Codex while touching nothing of the user's setup:
 an isolated `CODEX_HOME` + a local mock model means no real API call and the real
 `~/.codex` is never read or written. Each helper script ships a `--self-test`
@@ -71,10 +71,10 @@ Windows.
 
 ## Match QA to your change scope
 
-- **Component / hook logic** (`packages/omo-codex/plugin/components/*`):
+- **Component / hook logic** (`packages/omop-codex/plugin/components/*`):
   `hook-unit-probe.sh` for the exact stdout, THEN `app-server-drive.sh --plugin`
   to prove the live wiring. See [components-hooks.md](references/components-hooks.md).
-- **Installer / config.toml** (`packages/omo-codex/src/install/*`):
+- **Installer / config.toml** (`packages/omop-codex/src/install/*`):
   `install-verify.sh`.
 - **Anything that affects a live session** (hooks, agents, MCP wiring):
   `app-server-drive.sh --plugin`, and `tui-smoke.sh --plugin` if the TUI path

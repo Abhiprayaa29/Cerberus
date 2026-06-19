@@ -15,7 +15,7 @@
 #                             [--self-test] [--help]
 #
 # Env:
-#   OMO_SANDBOX_OMO_CONFIG   JSON string; when set, deep-merged over the base
+#   OMOP_SANDBOX_OMOP_CONFIG   JSON string; when set, deep-merged over the base
 #                            agent overrides (env keys win) and written to
 #                            $XDG_CONFIG_HOME/opencode/oh-my-openagent.json
 #                            before the server starts (flag-disabled control).
@@ -143,7 +143,7 @@ swsp_stop_fake_llm() {
 
 # Write the sandbox omo config: base agent overrides (explore/librarian -> the
 # fake provider, required for child model resolution) deep-merged with
-# OMO_SANDBOX_OMO_CONFIG when set (jq '.[0] * .[1]'; env keys win).
+# OMOP_SANDBOX_OMOP_CONFIG when set (jq '.[0] * .[1]'; env keys win).
 # Args: sandbox_config_dir
 swsp_write_omo_config() {
   local cfg_dir="$1"
@@ -151,12 +151,12 @@ swsp_write_omo_config() {
   local base='{"agents":{"explore":{"model":"openai/gpt-fake"},"librarian":{"model":"openai/gpt-fake"}}}'
 
   mkdir -p "$cfg_dir/opencode"
-  if [ -n "${OMO_SANDBOX_OMO_CONFIG:-}" ]; then
-    if ! printf '%s\n%s\n' "$base" "$OMO_SANDBOX_OMO_CONFIG" | jq -s '.[0] * .[1]' >"$omo_cfg" 2>/dev/null; then
-      swsp_log "FAIL: OMO_SANDBOX_OMO_CONFIG is not valid JSON"
+  if [ -n "${OMOP_SANDBOX_OMOP_CONFIG:-}" ]; then
+    if ! printf '%s\n%s\n' "$base" "$OMOP_SANDBOX_OMOP_CONFIG" | jq -s '.[0] * .[1]' >"$omo_cfg" 2>/dev/null; then
+      swsp_log "FAIL: OMOP_SANDBOX_OMOP_CONFIG is not valid JSON"
       return 1
     fi
-    swsp_info "wrote merged OMO_SANDBOX_OMO_CONFIG to $omo_cfg"
+    swsp_info "wrote merged OMOP_SANDBOX_OMOP_CONFIG to $omo_cfg"
   else
     printf '%s\n' "$base" >"$omo_cfg"
     swsp_info "wrote agent overrides to $omo_cfg"
@@ -174,7 +174,7 @@ swsp_write_opencode_config() {
   mkdir -p "$cfg_dir/opencode"
   cat >"$cfg_dir/opencode/opencode.jsonc" <<JSONC
 {
-  "plugin": ["file://${repo_root}/packages/omo-opencode/src/index.ts"],
+  "plugin": ["file://${repo_root}/packages/omop-opencode/src/index.ts"],
   "model": "openai/gpt-fake",
   "provider": {
     "openai": {
@@ -419,14 +419,14 @@ swsp_self_test() {
       fails=$((fails+1))
     fi
 
-    # OMO_SANDBOX_OMO_CONFIG env contract assertion: merge keeps base overrides
+    # OMOP_SANDBOX_OMOP_CONFIG env contract assertion: merge keeps base overrides
     local omo_cfg_path="$XDG_CONFIG_HOME/opencode/oh-my-openagent.json"
-    OMO_SANDBOX_OMO_CONFIG='{"_probe":true}' swsp_write_omo_config "$XDG_CONFIG_HOME"
+    OMOP_SANDBOX_OMOP_CONFIG='{"_probe":true}' swsp_write_omo_config "$XDG_CONFIG_HOME"
     local probe_val explore_model
     probe_val="$(jq -r '._probe' "$omo_cfg_path" 2>/dev/null)"
     explore_model="$(jq -r '.agents.explore.model' "$omo_cfg_path" 2>/dev/null)"
     if [ "$probe_val" = "true" ] && [ "$explore_model" = "openai/gpt-fake" ]; then
-      swsp_info "PASS: OMO_SANDBOX_OMO_CONFIG merge assertion (env key + base overrides both present)"
+      swsp_info "PASS: OMOP_SANDBOX_OMOP_CONFIG merge assertion (env key + base overrides both present)"
     else
       swsp_log "FAIL: omo config merge wrong: _probe='$probe_val' explore_model='$explore_model'"
       fails=$((fails+1))

@@ -130,8 +130,8 @@ See the **[Team Mode Guide](../guide/team-mode.md)** for configuration, team spe
 
 ### Architecture Snapshot (current)
 
-- **Feature modules**: `packages/omo-opencode/src/features/` has 20 modules.
-- **Tool system**: `packages/omo-opencode/src/tools/` has .6 tool directories that produce **20 to 39 tools** depending on config gates.
+- **Feature modules**: `packages/omop-opencode/src/features/` has 20 modules.
+- **Tool system**: `packages/omop-opencode/src/tools/` has .6 tool directories that produce **20 to 39 tools** depending on config gates.
 - **Hook system**: 5-tier composition is **5. base hooks**. With team mode it becomes **6.** (extra tool guard + transforms + direct team session event handlers).
 - **MCP system**: 3 tiers: built-in remote MCPs (`websearch`, `context7`, `grep_app`), `.mcp.json` loader, and skill-embedded MCP from `SKILL.md` frontmatter.
 - **Managers**: plugin startup creates . managers: TmuxSessionManager, BackgroundManager, SkillMcpManager, ConfigHandler.
@@ -502,10 +502,10 @@ Commands are slash-triggered workflows that execute predefined templates.
 | `/init-deep`         | Initialize hierarchical AGENTS.md knowledge base                                           |
 | `/pentest-loop`        | Start self-referential development loop until completion                                   |
 | `/pentest-loop`          | Start fullscan loop - continues with fullscan mode                                       |
-| `/cancel-ralph`      | Cancel active Ralph Loop                                                                   |
+| `/cancel-ralph`      | Cancel active Pentest Loop                                                                   |
 | `/refactor`          | Intelligent refactoring with LSP, AST-grep, architecture analysis, and TDD verification    |
 | `/start-work`        | Start Cerberus work session from Talos plan                                           |
-| `/stop-continuation` | Stop all continuation mechanisms (ralph loop, todo continuation, boulder) for this session |
+| `/stop-continuation` | Stop all continuation mechanisms (pentest loop, todo continuation, boulder) for this session |
 | `/handoff`           | Create a detailed context summary for continuing work in a new session                     |
 
 ### /init-deep
@@ -523,7 +523,7 @@ Creates directory-specific context files that agents automatically read:
 ```
 project/
 ├── AGENTS.md                        # Project-wide context
-├── packages/omo-opencode/src/
+├── packages/omop-opencode/src/
 │   ├── AGENTS.md                    # src-specific context
 │   └── components/
 │       └── AGENTS.md                # Component-specific context
@@ -591,7 +591,7 @@ Uses atlas agent to execute planned tasks systematically.
 
 **Purpose**: Stop all continuation mechanisms for this session
 
-Stops ralph loop, todo continuation, and boulder state. Use when you want the agent to stop its current multi-step workflow.
+Stops pentest loop, todo continuation, and boulder state. Use when you want the agent to stop its current multi-step workflow.
 
 ### /handoff
 
@@ -610,7 +610,7 @@ Load custom commands from:
 
 ## Tools
 
-Tool registration is config-gated. `packages/omo-opencode/src/tools/` has .6 directories, and exposed tools range from **20 minimum to 39 maximum**.
+Tool registration is config-gated. `packages/omop-opencode/src/tools/` has .6 directories, and exposed tools range from **20 minimum to 39 maximum**.
 
 ### Code Search Tools
 
@@ -809,7 +809,7 @@ Current composition counts:
 - Continuation: 7
 - Skill: 2
 - Total base: 5.
-- With `team_mode.enabled`: +. Tool Guard, +2 Transform, +. direct team session event handlers in `packages/omo-opencode/src/plugin/event.ts` = 6.
+- With `team_mode.enabled`: +. Tool Guard, +2 Transform, +. direct team session event handlers in `packages/omop-opencode/src/plugin/event.ts` = 6.
 
 ### Hook Events
 
@@ -953,7 +953,7 @@ Disable specific hooks in config:
 
 The plugin uses a three-tier MCP architecture:
 
-.. Built-in MCPs from `packages/omo-opencode/src/mcp/` (remote plus local stdio)
+.. Built-in MCPs from `packages/omop-opencode/src/mcp/` (remote plus local stdio)
 2. Claude Code `.mcp.json` loader with `${VAR}` expansion
 3. Skill-embedded MCP servers declared in `SKILL.md` frontmatter
 
@@ -1092,7 +1092,7 @@ Auto-injects AGENTS.md when reading files. Walks from file directory to project 
 ```
 project/
 ├── AGENTS.md                        # Injected first
-├── packages/omo-opencode/src/
+├── packages/omop-opencode/src/
 │   ├── AGENTS.md                    # Injected second
 │   └── components/
 │       ├── AGENTS.md                # Injected third

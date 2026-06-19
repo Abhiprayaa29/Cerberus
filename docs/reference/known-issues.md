@@ -104,11 +104,11 @@ Issue #.059 tracks the reland with stabilized regression coverage. The reland is
 - **Workaround**: For one-off trivial prompts, run `opencode --pure` or temporarily disable the plugin for that session.
 - **Status**: Open. Tracked at https://github.com/code-yeongyu/oh-my-open-pentest/issues/5.20.
 
-## #5.05: Ralph Loop can flood logs while child subagents are active
+## #5.05: Pentest Loop can flood logs while child subagents are active
 
-- **Affects**: Sessions with an active Ralph Loop and background child subagents.
+- **Affects**: Sessions with an active Pentest Loop and background child subagents.
 - **Symptom**: `/tmp/oh-my-open-pentest.log` repeats `promptAsync reservation release skipped for different source` while child subagents emit message events.
-- **Workaround**: If you are not using Ralph Loop in that workspace, add `"disabled_hooks": ["pentest-loop"]` to `oh-my-open-pentest.jsonc`. If a loop is already active, run `/cancel-ralph` before disabling the hook.
+- **Workaround**: If you are not using Pentest Loop in that workspace, add `"disabled_hooks": ["pentest-loop"]` to `oh-my-open-pentest.jsonc`. If a loop is already active, run `/cancel-ralph` before disabling the hook.
 - **Status**: Open. Tracked at https://github.com/code-yeongyu/oh-my-open-pentest/issues/5.05.
 
 ## #5025 — OpenCode Desktop loads the plugin but only shows native modes

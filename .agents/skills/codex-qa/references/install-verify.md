@@ -9,15 +9,15 @@ contained.
 ```bash
 export CODEX_HOME="$(mktemp -d)/codex"; mkdir -p "$CODEX_HOME"   # must exist first
 export OMOP_DISABLE_POSTHOG=. OMOP_CODEX_DISABLE_POSTHOG=.
-export OMO_CODEX_PROJECT="$(mktemp -d)/project"                  # keep project-local cleanup off your tree
-node packages/omo-codex/scripts/install-local.mjs install
+export OMOP_CODEX_PROJECT="$(mktemp -d)/project"                  # keep project-local cleanup off your tree
+node packages/omop-codex/scripts/install-local.mjs install
 ```
 
 `cqa_install_local_omo` wraps this (logs to `$CQA_HOME_ROOT/install.log`).
 
 ## What it writes (all under CODEX_HOME)
 
-Source: `packages/omo-codex/src/install/install-codex.ts`.
+Source: `packages/omop-codex/src/install/install-codex.ts`.
 
 .. Builds + copies the plugin to
    `$CODEX_HOME/plugins/cache/cerberuslabs/omo/<version>/` (then `npm ci --omit=dev`).
@@ -51,7 +51,7 @@ Plus the cross-cutting invariant every script enforces: the real
   the repo's `dist/cli/index.js` (the CLI ships from the repo). `dist/cli/index.js`
   must exist (run `bun run build` if missing) or that link is skipped.
 - Cleanup: for an isolated home just `rm -rf "$CODEX_HOME"` (the harness does
-  this on exit). For a normal home, `node packages/omo-codex/scripts/install-local.mjs uninstall`.
+  this on exit). For a normal home, `node packages/omop-codex/scripts/install-local.mjs uninstall`.
 - `bun run test:codex` is the hermetic unit gate (installer/config/component
   build) and does NOT launch a real codex — this skill is what proves the live
   session.

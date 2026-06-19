@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test"
 import { readFileSync } from "node:fs"
-import { codexUltraworkPromptVariants, fullscanPromptVariants } from "./index"
+import { codexFullscanPromptVariants, fullscanPromptVariants } from "./index"
 
 describe("fullscan prompt variants", () => {
   test("#given package surface #when inspected #then OpenCode and Codex fullscan variants are exported", () => {
@@ -9,7 +9,7 @@ describe("fullscan prompt variants", () => {
 
     // when
     const fullscanVariantNames = Object.keys(fullscanPromptVariants)
-    const codexVariant = codexUltraworkPromptVariants.codex
+    const codexVariant = codexFullscanPromptVariants.codex
 
     // then
     expect(fullscanVariantNames).toEqual(["planner", "gpt", "gemini", "glm", "default"])

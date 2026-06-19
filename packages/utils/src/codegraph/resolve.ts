@@ -35,7 +35,7 @@ export interface ResolveCodegraphNodeSupportOptions {
 }
 
 const CODEGRAPH_PACKAGE = "@colbymchenry/codegraph"
-const CODEGRAPH_ENV_BIN = "OMO_CODEGRAPH_BIN"
+const CODEGRAPH_ENV_BIN = "OMOP_CODEGRAPH_BIN"
 const CODEGRAPH_LEGACY_ENV_BIN = "CODEGRAPH_BIN"
 const CODEGRAPH_NODE_CANDIDATES = ["node24", "node22", "node20", "node"] as const
 const requireFromHere = createRequire(import.meta.url)

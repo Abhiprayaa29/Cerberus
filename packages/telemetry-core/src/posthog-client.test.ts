@@ -26,11 +26,11 @@ const PRODUCT = {
   defaultHost: DEFAULT_POSTHOG_HOST,
   eventName: "omo_codex_daily_active",
   machineIdPrefix: "omo-codex:",
-  packageName: "@omop/omo-codex",
+  packageName: "@omop/omop-codex",
   packageVersion: "4.9.2",
   platform: "omo-codex",
   productName: "omo-codex",
-  productEnvPrefix: "OMO_CODEX",
+  productEnvPrefix: "OMOP_CODEX",
 } satisfies TelemetryProductConfig
 
 const OS_PROVIDER = {
@@ -82,7 +82,7 @@ describe("posthog telemetry client", () => {
       properties: {
         platform: "omo-codex",
         product_name: "omo-codex",
-        package_name: "@omop/omo-codex",
+        package_name: "@omop/omop-codex",
         package_version: "4.9.2",
         runtime: "bun",
         runtime_version: process.versions.bun ?? process.version,

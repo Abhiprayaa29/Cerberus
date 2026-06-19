@@ -110,7 +110,7 @@ describe("build-binaries", () => {
       const source = createPlatformLauncherSource();
 
       // then
-      expect(source).toContain("OMO_WRAPPER_PACKAGE_ROOT");
+      expect(source).toContain("OMOP_WRAPPER_PACKAGE_ROOT");
       expect(source).toContain('join(wrapperPackageRoot, "packages", "omo-codex", "scripts", "install-local.mjs")');
       expect(source).toContain('spawnSync(process.execPath, [lazyCodexInstallerPath, ...process.argv.slice(2)]');
       expect(source).toContain('join(wrapperPackageRoot, "dist", "cli", "index.js")');
@@ -133,8 +133,8 @@ describe("build-binaries", () => {
         env: {
           ...process.env,
           BUN_BINARY: join(tempDir, "missing-bun"),
-          OMO_INVOCATION_NAME: "lazycodex-ai",
-          OMO_WRAPPER_PACKAGE_ROOT: root,
+          OMOP_INVOCATION_NAME: "lazycodex-ai",
+          OMOP_WRAPPER_PACKAGE_ROOT: root,
         },
       });
 
@@ -170,8 +170,8 @@ describe("build-binaries", () => {
         env: {
           ...process.env,
           BUN_BINARY: join(tempDir, "missing-bun"),
-          OMO_INVOCATION_NAME: "omo",
-          OMO_WRAPPER_PACKAGE_ROOT: tempDir,
+          OMOP_INVOCATION_NAME: "omo",
+          OMOP_WRAPPER_PACKAGE_ROOT: tempDir,
         },
       });
 
@@ -201,8 +201,8 @@ describe("build-binaries", () => {
         env: {
           ...process.env,
           BUN_BINARY: process.execPath,
-          OMO_INVOCATION_NAME: "lazycodex-ai",
-          OMO_WRAPPER_PACKAGE_ROOT: tempDir,
+          OMOP_INVOCATION_NAME: "lazycodex-ai",
+          OMOP_WRAPPER_PACKAGE_ROOT: tempDir,
         },
       });
 
@@ -229,8 +229,8 @@ describe("build-binaries", () => {
         env: {
           ...process.env,
           BUN_BINARY: process.execPath,
-          OMO_INVOCATION_NAME: "lazycodex-ai",
-          OMO_WRAPPER_PACKAGE_ROOT: tempDir,
+          OMOP_INVOCATION_NAME: "lazycodex-ai",
+          OMOP_WRAPPER_PACKAGE_ROOT: tempDir,
         },
       });
 

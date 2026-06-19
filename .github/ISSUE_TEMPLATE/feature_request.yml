@@ -20,7 +20,7 @@ body:
           required: true
         - label: This feature request is specific to oh-my-open-pentest (not OpenCode core)
           required: true
-        - label: I have read the [documentation](https://github.com/code-yeongyu/oh-my-open-pentest#readme) or asked an AI coding agent with this project's GitHub URL loaded and couldn't find the answer
+        - label: I have read the [documentation](https://github.com/code-yeongyu/oh-my-open-pentest#readme) or asked an AI pentest agent with this project's GitHub URL loaded and couldn't find the answer
           required: true
 
   - type: textarea

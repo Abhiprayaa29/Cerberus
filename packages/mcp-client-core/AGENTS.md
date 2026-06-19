@@ -32,6 +32,6 @@ Harness-neutral MCP client lifecycle and OAuth primitives. Consumed by `omo-open
 - **Transports:** stdio (local process via `StdioClientTransport`) and HTTP (remote via `StreamableHTTPClientTransport`). Connection type inferred from `url` vs `command`, or explicit `type` field.
 - **OAuth flow:** PKCE + optional DCR. Step-up authentication on .03 merges new scopes and re-authenticates. Refresh mutex prevents concurrent refresh storms.
 - **Cleanup:** idle clients evicted after 5 minutes. Process signal handlers close all transports on SIGINT/SIGTERM. `disconnectAll()` is safe across plugin reloads.
-- **Consumers:** `packages/omo-opencode/src/features/skill-mcp-manager/`, `packages/omo-opencode/src/features/mcp-oauth/`, and `packages/omo-opencode/src/cli/mcp-oauth/` import this Core package.
+- **Consumers:** `packages/omop-opencode/src/features/skill-mcp-manager/`, `packages/omop-opencode/src/features/mcp-oauth/`, and `packages/omop-opencode/src/cli/mcp-oauth/` import this Core package.
 
 Parent: [`packages/AGENTS.md`](../AGENTS.md)

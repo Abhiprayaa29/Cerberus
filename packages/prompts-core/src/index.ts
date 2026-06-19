@@ -14,13 +14,13 @@ export type {
 export { atlasPromptVariants as argusPromptVariants } from "./argus-prompts"
 export { talosPromptVariants } from "./talos-prompts"
 export {
-  CODEX_ULTRAWORK_PROMPT as CODEX_FULLSCAN_PROMPT,
-  ULTRAWORK_DEFAULT_PROMPT as FULLSCAN_DEFAULT_PROMPT,
-  ULTRAWORK_GEMINI_PROMPT as FULLSCAN_GEMINI_PROMPT,
-  ULTRAWORK_GLM_PROMPT as FULLSCAN_GLM_PROMPT,
-  ULTRAWORK_GPT_PROMPT as FULLSCAN_GPT_PROMPT,
-  ULTRAWORK_PLANNER_PROMPT as FULLSCAN_PLANNER_PROMPT,
-  codexUltraworkPromptVariants as codexFullscanPromptVariants,
+  CODEX_FULLSCAN_PROMPT as CODEX_FULLSCAN_PROMPT,
+  FULLSCAN_DEFAULT_PROMPT as FULLSCAN_DEFAULT_PROMPT,
+  FULLSCAN_GEMINI_PROMPT as FULLSCAN_GEMINI_PROMPT,
+  FULLSCAN_GLM_PROMPT as FULLSCAN_GLM_PROMPT,
+  FULLSCAN_GPT_PROMPT as FULLSCAN_GPT_PROMPT,
+  FULLSCAN_PLANNER_PROMPT as FULLSCAN_PLANNER_PROMPT,
+  codexFullscanPromptVariants as codexFullscanPromptVariants,
   fullscanPromptVariants,
 } from "./fullscan-prompts"
 export { resolveVariant } from "./variant-resolver"

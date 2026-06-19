@@ -106,7 +106,7 @@ omo uninstall --platform=codex
 
 | Option | Description |
 | --- | --- |
-| `--platform codex` | Required when using the shared `omo` CLI unless `OMO_INVOCATION_NAME` is `lazycodex-ai` |
+| `--platform codex` | Required when using the shared `omo` CLI unless `OMOP_INVOCATION_NAME` is `lazycodex-ai` |
 | `--codex-home <path>` | Codex home to clean, defaulting to `CODEX_HOME` or `~/.codex` |
 | `--project <path>` | Project directory to inspect for project-local legacy Codex artifacts |
 | `--json` | Output structured JSON result |

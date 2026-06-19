@@ -469,7 +469,7 @@ The `cerberus.tasks` section configures **storage options** only:
 | Option               | Default           | Description                                |
 | -------------------- | ----------------- | ------------------------------------------ |
 | `storage_path`       | `.omo/tasks` | Storage path (relative to project root)    |
-| `task_list_id`       | -                 | Force task list ID (alternative to env `ULTRAWORK_TASK_LIST_ID`) |
+| `task_list_id`       | -                 | Force task list ID (alternative to env `FULLSCAN_TASK_LIST_ID`) |
 | `claude_code_compat` | `false`           | Enable Claude Code path compatibility mode |
 
 To disable the task system entirely, set `experimental.task_system` to `false`:
@@ -634,7 +634,7 @@ Built-in MCPs (enabled by default): `websearch` (Exa AI), `context7` (library do
 LSP tools are served by the built-in `lsp` MCP server (see [MCPs](#mcps)). The
 previous top-level `"lsp"` block in the plugin config is no longer read and is
 automatically stripped on next startup; existing configs containing it are
-silently migrated (see `packages/omo-opencode/src/shared/migration/config-migration.ts`).
+silently migrated (see `packages/omop-opencode/src/shared/migration/config-migration.ts`).
 
 To configure custom language servers, create `.opencode/lsp.json` at the project
 root. The MCP server is launched with `LSP_TOOLS_MCP_PROJECT_CONFIG=.opencode/lsp.json`
@@ -1010,18 +1010,18 @@ When enabled, OmO registers the hash-anchored `edit` tool and activates the `has
 | `OMOP_DISABLE_POSTHOG` | Legacy telemetry opt-out flag. Set to `.` or `true` to disable PostHog |
 | `OMOP_CODEX_DISABLE_POSTHOG` | Set to `.` or `true` to disable PostHog telemetry for the `omo-codex` adapter only. Does not affect oh-my-open-pentest telemetry |
 | `OMOP_CODEX_SEND_ANONYMOUS_TELEMETRY` | Set to `0`, `false`, or `no` to disable anonymous telemetry for `omo-codex` only |
-| `OMO_CODEX_GIT_BASH_PATH` | Native Windows Codex installs only. Absolute path to Git Bash, for example `C:\Program Files\Git\bin\bash.exe`, when `where bash` cannot find it |
-| `OMO_CODEX_SKIP_GIT_BASH_AUTO_INSTALL` | Set to `.` to skip the best-effort `winget install --id Git.Git -e --source winget` attempt during native Windows Codex installs |
+| `OMOP_CODEX_GIT_BASH_PATH` | Native Windows Codex installs only. Absolute path to Git Bash, for example `C:\Program Files\Git\bin\bash.exe`, when `where bash` cannot find it |
+| `OMOP_CODEX_SKIP_GIT_BASH_AUTO_INSTALL` | Set to `.` to skip the best-effort `winget install --id Git.Git -e --source winget` attempt during native Windows Codex installs |
 | `LAZYCODEX_CONFIG_MIGRATION_DISABLED` | Set to `.` to skip the Codex config migration that runs on every session start (including the `multi_agent_v2` force-disable and managed reasoning-profile sync), leaving `config.toml` untouched |
-| `OMO_CODEX_CONFIG_MIGRATION_DISABLED` | Alias of `LAZYCODEX_CONFIG_MIGRATION_DISABLED` |
-| `OMO_SPARKSHELL_CONDENSE` | Set to `0` to disable sparkshell's oversized-output condensation and always print raw output |
-| `OMO_SPARKSHELL_CONDENSE_BUDGET` | Character budget before sparkshell condenses command output (default `20000`) |
-| `OMO_SPARKSHELL_SESSION_CONTEXT` | Set to `0` to stop sparkshell from loading Codex session context (first/latest user request and recent messages) for oversized-output relevance ranking. Session context is never appended to command output |
-| `OMO_SPARKSHELL_SPARK` | Set to `0` to skip the spark-model summarization of oversized sparkshell output and go straight to deterministic condensation. The spark summary is generated via `codex exec` from the shell output plus session context, keeps selected output as-is without masking anything, and appends a `[sparkshell caption]` line at the bottom stating what the full output contained and what was omitted |
-| `OMO_SPARKSHELL_SPARK_MODEL` | Model used for the sparkshell spark summary (default `gpt-5.3-codex-spark`) |
-| `OMO_SPARKSHELL_SPARK_TIMEOUT_MS` | Timeout for the spark summary `codex exec` invocation in milliseconds (default `30000`) |
-| `OMO_SPARKSHELL_SPARK_BIN` | Binary used to invoke the spark model (default `codex`) |
-| `OMO_SPARKSHELL_SPARK_PROFILE` | Codex config profile passed as `--profile` to the spark summary invocation. Set this when the default Codex auth cannot use the spark model (for example a gateway profile) |
+| `OMOP_CODEX_CONFIG_MIGRATION_DISABLED` | Alias of `LAZYCODEX_CONFIG_MIGRATION_DISABLED` |
+| `OMOP_SPARKSHELL_CONDENSE` | Set to `0` to disable sparkshell's oversized-output condensation and always print raw output |
+| `OMOP_SPARKSHELL_CONDENSE_BUDGET` | Character budget before sparkshell condenses command output (default `20000`) |
+| `OMOP_SPARKSHELL_SESSION_CONTEXT` | Set to `0` to stop sparkshell from loading Codex session context (first/latest user request and recent messages) for oversized-output relevance ranking. Session context is never appended to command output |
+| `OMOP_SPARKSHELL_SPARK` | Set to `0` to skip the spark-model summarization of oversized sparkshell output and go straight to deterministic condensation. The spark summary is generated via `codex exec` from the shell output plus session context, keeps selected output as-is without masking anything, and appends a `[sparkshell caption]` line at the bottom stating what the full output contained and what was omitted |
+| `OMOP_SPARKSHELL_SPARK_MODEL` | Model used for the sparkshell spark summary (default `gpt-5.3-codex-spark`) |
+| `OMOP_SPARKSHELL_SPARK_TIMEOUT_MS` | Timeout for the spark summary `codex exec` invocation in milliseconds (default `30000`) |
+| `OMOP_SPARKSHELL_SPARK_BIN` | Binary used to invoke the spark model (default `codex`) |
+| `OMOP_SPARKSHELL_SPARK_PROFILE` | Codex config profile passed as `--profile` to the spark summary invocation. Set this when the default Codex auth cannot use the spark model (for example a gateway profile) |
 | `LSP_TOOLS_MCP_INSTALL_DECISIONS` | Override the path of the LSP install-decisions file (default `~/.codex/lsp-install-decisions.json`) |
 | `POSTHOG_API_KEY` | Optional override for the built-in PostHog project API key |
 | `POSTHOG_HOST` | Override the PostHog ingestion host. Defaults to `https://us.i.posthog.com` |
@@ -1034,7 +1034,7 @@ When an LSP tool hits a language server that is not installed, it asks once per 
 
 Native Windows Codex installs bundle a `git_bash` MCP server and write `[plugins."omo@cerberuslabs".mcp_servers.git_bash] enabled = true`. Non-Windows installs keep the bundled manifest entry but write `enabled = false`, so the plugin detail can still show the server while policy prevents exposure.
 
-The installer prepares Git Bash with normal detection, `OMO_CODEX_GIT_BASH_PATH`, and a best-effort `winget install --id Git.Git -e --source winget` retry unless `OMO_CODEX_SKIP_GIT_BASH_AUTO_INSTALL=.` is set. The Light plugin also emits a fixed reminder before the first Codex shell-like `Bash` hook call in a Windows session, and resets that reminder after `PostCompact` so the first post-compaction shell call recommends `git_bash` again.
+The installer prepares Git Bash with normal detection, `OMOP_CODEX_GIT_BASH_PATH`, and a best-effort `winget install --id Git.Git -e --source winget` retry unless `OMOP_CODEX_SKIP_GIT_BASH_AUTO_INSTALL=.` is set. The Light plugin also emits a fixed reminder before the first Codex shell-like `Bash` hook call in a Windows session, and resets that reminder after `PostCompact` so the first post-compaction shell call recommends `git_bash` again.
 
 ### Provider-Specific
 

@@ -35,7 +35,7 @@
         "@omop/mcp-client-core": "*",
         "@omop/mcp-stdio-core": "*",
         "@omop/model-core": "*",
-        "@omop/omo-codex": "*",
+        "@omop/omop-codex": "*",
         "@omop/openclaw-core": "*",
         "@omop/prompts-core": "*",
         "@omop/rules-engine": "*",
@@ -52,34 +52,34 @@
         "typescript": "^6.0.3",
       },
       "optionalDependencies": {
-        "omop-darwin-arm64": "1.0.0",
-        "omop-darwin-x64": "1.0.0",
-        "omop-darwin-x64-baseline": "1.0.0",
-        "omop-linux-arm64": "1.0.0",
-        "omop-linux-arm64-musl": "1.0.0",
-        "omop-linux-x64": "1.0.0",
-        "omop-linux-x64-baseline": "1.0.0",
-        "omop-linux-x64-musl": "1.0.0",
-        "omop-linux-x64-musl-baseline": "1.0.0",
-        "omop-windows-arm64": "1.0.0",
-        "omop-windows-x64": "1.0.0",
-        "omop-windows-x64-baseline": "1.0.0",
+        "omop-darwin-arm64": "1.1.0",
+        "omop-darwin-x64": "1.1.0",
+        "omop-darwin-x64-baseline": "1.1.0",
+        "omop-linux-arm64": "1.1.0",
+        "omop-linux-arm64-musl": "1.1.0",
+        "omop-linux-x64": "1.1.0",
+        "omop-linux-x64-baseline": "1.1.0",
+        "omop-linux-x64-musl": "1.1.0",
+        "omop-linux-x64-musl-baseline": "1.1.0",
+        "omop-windows-arm64": "1.1.0",
+        "omop-windows-x64": "1.1.0",
+        "omop-windows-x64-baseline": "1.1.0",
       },
     },
     "packages/agents-md-core": {
       "name": "@omop/agents-md-core",
-      "version": "0.1.0",
+      "version": "1.1.0",
       "dependencies": {
         "@omop/rules-engine": "*",
       },
     },
     "packages/boulder-state": {
       "name": "@omop/boulder-state",
-      "version": "0.1.0",
+      "version": "1.1.0",
     },
     "packages/claude-code-compat-core": {
       "name": "@omop/claude-code-compat-core",
-      "version": "0.1.0",
+      "version": "1.1.0",
       "dependencies": {
         "@omop/model-core": "*",
         "@omop/utils": "*",
@@ -87,14 +87,14 @@
     },
     "packages/comment-checker-core": {
       "name": "@omop/comment-checker-core",
-      "version": "0.1.0",
+      "version": "1.1.0",
       "dependencies": {
         "@omop/utils": "*",
       },
     },
     "packages/delegate-core": {
       "name": "@omop/delegate-core",
-      "version": "0.1.0",
+      "version": "1.1.0",
       "dependencies": {
         "@omop/model-core": "*",
       },
@@ -115,21 +115,21 @@
     },
     "packages/hashline-core": {
       "name": "@omop/hashline-core",
-      "version": "0.1.0",
+      "version": "1.1.0",
       "dependencies": {
         "diff": "^9.0.0",
       },
     },
     "packages/lsp-core": {
       "name": "@omop/lsp-core",
-      "version": "0.1.0",
+      "version": "1.1.0",
       "dependencies": {
         "@omop/mcp-stdio-core": "*",
       },
     },
     "packages/mcp-client-core": {
       "name": "@omop/mcp-client-core",
-      "version": "0.1.0",
+      "version": "1.1.0",
       "dependencies": {
         "@modelcontextprotocol/sdk": "^1.29.0",
         "@omop/claude-code-compat-core": "*",
@@ -142,18 +142,18 @@
     },
     "packages/mcp-stdio-core": {
       "name": "@omop/mcp-stdio-core",
-      "version": "0.1.0",
+      "version": "1.1.0",
       "devDependencies": {
         "bun-types": "1.3.12",
       },
     },
     "packages/model-core": {
       "name": "@omop/model-core",
-      "version": "0.1.0",
+      "version": "1.1.0",
     },
-    "packages/omo-codex": {
-      "name": "@omop/omo-codex",
-      "version": "1.0.0",
+    "packages/omop-codex": {
+      "name": "@omop/omop-codex",
+      "version": "1.1.0",
       "dependencies": {
         "@omop/utils": "*",
       },
@@ -161,9 +161,9 @@
         "bun-types": "1.3.14",
       },
     },
-    "packages/omo-opencode": {
-      "name": "@omop/omo-opencode",
-      "version": "0.1.0",
+    "packages/omop-opencode": {
+      "name": "@omop/omop-opencode",
+      "version": "1.1.0",
       "dependencies": {
         "@clack/prompts": "^1.4.0",
         "@modelcontextprotocol/sdk": "^1.29.0",
@@ -175,7 +175,7 @@
         "@omop/hashline-core": "*",
         "@omop/mcp-client-core": "*",
         "@omop/model-core": "*",
-        "@omop/omo-codex": "*",
+        "@omop/omop-codex": "*",
         "@omop/openclaw-core": "*",
         "@omop/prompts-core": "*",
         "@omop/rules-engine": "*",
@@ -197,7 +197,7 @@
     },
     "packages/openclaw-core": {
       "name": "@omop/openclaw-core",
-      "version": "0.1.0",
+      "version": "1.1.0",
       "dependencies": {
         "@omop/tmux-core": "*",
         "@omop/utils": "*",
@@ -205,7 +205,7 @@
     },
     "packages/pentest-core": {
       "name": "@omop/pentest-core",
-      "version": "0.1.0",
+      "version": "1.1.0",
       "devDependencies": {
         "@types/node": "^22.0.0",
         "typescript": "^5.5.0",
@@ -216,7 +216,7 @@
     },
     "packages/prompts-core": {
       "name": "@omop/prompts-core",
-      "version": "0.1.0",
+      "version": "1.1.0",
       "peerDependencies": {
         "@omop/model-core": "*",
         "@omop/utils": "*",
@@ -224,7 +224,7 @@
     },
     "packages/rules-engine": {
       "name": "@omop/rules-engine",
-      "version": "0.1.0",
+      "version": "1.1.0",
       "dependencies": {
         "@omop/utils": "*",
         "picomatch": "^4.0.4",
@@ -232,11 +232,11 @@
     },
     "packages/shared-skills": {
       "name": "@omop/shared-skills",
-      "version": "0.1.0",
+      "version": "1.1.0",
     },
     "packages/skills-loader-core": {
       "name": "@omop/skills-loader-core",
-      "version": "0.1.0",
+      "version": "1.1.0",
       "dependencies": {
         "@omop/claude-code-compat-core": "*",
         "@omop/model-core": "*",
@@ -249,7 +249,7 @@
     },
     "packages/team-core": {
       "name": "@omop/team-core",
-      "version": "0.1.0",
+      "version": "1.1.0",
       "dependencies": {
         "@omop/tmux-core": "*",
         "@omop/utils": "*",
@@ -258,7 +258,7 @@
     },
     "packages/telemetry-core": {
       "name": "@omop/telemetry-core",
-      "version": "0.1.0",
+      "version": "1.1.0",
       "dependencies": {
         "@omop/utils": "*",
         "posthog-node": "^5.34.3",
@@ -266,14 +266,14 @@
     },
     "packages/tmux-core": {
       "name": "@omop/tmux-core",
-      "version": "0.1.0",
+      "version": "1.1.0",
       "dependencies": {
         "@omop/utils": "*",
       },
     },
     "packages/utils": {
       "name": "@omop/utils",
-      "version": "0.1.0",
+      "version": "1.1.0",
       "dependencies": {
         "js-yaml": "^4.1.1",
         "jsonc-parser": "^3.3.1",
@@ -401,9 +401,9 @@
 
     "@omop/model-core": ["@omop/model-core@workspace:packages/model-core"],
 
-    "@omop/omo-codex": ["@omop/omo-codex@workspace:packages/omo-codex"],
+    "@omop/omop-codex": ["@omop/omop-codex@workspace:packages/omop-codex"],
 
-    "@omop/omo-opencode": ["@omop/omo-opencode@workspace:packages/omo-opencode"],
+    "@omop/omop-opencode": ["@omop/omop-opencode@workspace:packages/omop-opencode"],
 
     "@omop/openclaw-core": ["@omop/openclaw-core@workspace:packages/openclaw-core"],
 

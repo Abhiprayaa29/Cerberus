@@ -19,7 +19,7 @@ const workflowChecks = [
     path: ciWorkflowPath,
     testRuns: [
       "run: bun test",
-      "run: bun test packages/omo-opencode/src/shared/dist-bundle-bun-globals.test.ts",
+      "run: bun test packages/omop-opencode/src/shared/dist-bundle-bun-globals.test.ts",
     ],
   },
   {
@@ -226,8 +226,8 @@ describe("test workflows", () => {
       ["lsp-tools MCP runtime", "bun run build:lsp-tools-mcp"],
       ["lsp daemon runtime", "bun run build:lsp-daemon"],
       ["vendored lsp-tools package tests", "npm --prefix packages/lsp-tools-mcp test"],
-      ["nested Codex plugin npm install", "npm --prefix packages/omo-codex/plugin ci"],
-      ["nested Codex plugin build", "bun run --cwd packages/omo-codex/plugin build"],
+      ["nested Codex plugin npm install", "npm --prefix packages/omop-codex/plugin ci"],
+      ["nested Codex plugin build", "bun run --cwd packages/omop-codex/plugin build"],
       ["third-party notices ship check", "node scripts/check-third-party-notices.mjs --ship"],
       ["Codex compatibility Bun tests", "bun test"],
     ] as const
@@ -247,8 +247,8 @@ describe("test workflows", () => {
 
     // #when
     const codexTestScriptRunsGitBashRegressions =
-      packageManifest.includes("packages/omo-codex/scripts/install-local-git-bash-preflight.test.mjs") &&
-      packageManifest.includes("packages/omo-codex/scripts/install-generated-bundle.test.mjs")
+      packageManifest.includes("packages/omop-codex/scripts/install-local-git-bash-preflight.test.mjs") &&
+      packageManifest.includes("packages/omop-codex/scripts/install-generated-bundle.test.mjs")
 
     // #then
     expect(codexTestScriptRunsGitBashRegressions, "test:codex must cover Windows Git Bash preflight and install guidance").toBe(true)
@@ -259,15 +259,15 @@ describe("test workflows", () => {
     const gitignore = readFileSync(new URL("../.gitignore", import.meta.url), "utf8")
 
     // #when
-    const lockfileIsUnignored = gitignore.includes("!packages/omo-codex/plugin/package-lock.json")
-    const trackedLockfile = execFileSync("git", ["ls-files", "packages/omo-codex/plugin/package-lock.json"], {
+    const lockfileIsUnignored = gitignore.includes("!packages/omop-codex/plugin/package-lock.json")
+    const trackedLockfile = execFileSync("git", ["ls-files", "packages/omop-codex/plugin/package-lock.json"], {
       cwd: new URL("..", import.meta.url),
       encoding: "utf8",
     }).trim()
 
     // #then
     expect(lockfileIsUnignored, "the aggregate Codex plugin lockfile must escape the root package-lock ignore").toBe(true)
-    expect(trackedLockfile, "npm ci in CI requires the nested Codex plugin package-lock.json to be tracked").toBe("packages/omo-codex/plugin/package-lock.json")
+    expect(trackedLockfile, "npm ci in CI requires the nested Codex plugin package-lock.json to be tracked").toBe("packages/omop-codex/plugin/package-lock.json")
   })
 
   test("pins every workflow Bun setup to the tested runtime", () => {
@@ -425,7 +425,7 @@ describe("test workflows", () => {
     // #then
     expect(buildStep).toContain("bun run build:binaries")
     expect(buildStep).toContain("bin/oh-my-open-pentest.js")
-    expect(buildStep).not.toContain("bun build packages/omo-opencode/src/cli/index.ts --compile")
+    expect(buildStep).not.toContain("bun build packages/omop-opencode/src/cli/index.ts --compile")
     expect(darwinVerifyStep).toContain("#!/usr/bin/env node")
     expect(darwinVerifyStep).not.toContain("codesign")
   })
@@ -440,7 +440,7 @@ describe("test workflows", () => {
 
     // #then
     expect(applyStep).toContain("bun install --lockfile-only")
-    expect(applyStep.indexOf("bun install --lockfile-only")).toBeGreaterThan(applyStep.indexOf("node packages/omo-codex/plugin/scripts/sync-version.mjs"))
+    expect(applyStep.indexOf("bun install --lockfile-only")).toBeGreaterThan(applyStep.indexOf("node packages/omop-codex/plugin/scripts/sync-version.mjs"))
     expect(commitStep).toContain(" bun.lock")
   })
 

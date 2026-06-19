@@ -145,22 +145,22 @@ Generator/checker note: update this file with the audited component list, then r
 - Where-bundled: root production dependency and CodeGraph platform bundle vendored dependency.
 
 ### pi-comment-checker
-- License: MIT, from `packages/omo-codex/plugin/components/comment-checker/LICENSE` and component NOTICE.
+- License: MIT, from `packages/omop-codex/plugin/components/comment-checker/LICENSE` and component NOTICE.
 - Copyright: Yeongyu Kim.
 - Upstream URL: https://github.com/code-yeongyu
-- Where-bundled: ported source in `packages/omo-codex/plugin/components/comment-checker`, shipped by the root package file surface.
+- Where-bundled: ported source in `packages/omop-codex/plugin/components/comment-checker`, shipped by the root package file surface.
 
 ### pi-lsp-client
-- License: MIT, from `packages/lsp-tools-mcp/LICENSE`, `packages/lsp-tools-mcp/NOTICE`, and `packages/omo-codex/plugin/components/lsp/LICENSE`.
+- License: MIT, from `packages/lsp-tools-mcp/LICENSE`, `packages/lsp-tools-mcp/NOTICE`, and `packages/omop-codex/plugin/components/lsp/LICENSE`.
 - Copyright: Yeongyu Kim.
 - Upstream URL: https://github.com/code-yeongyu
 - Where-bundled: adapted LSP runtime in `packages/lsp-tools-mcp`, `packages/lsp-core`, and the Codex plugin LSP component shipped by the root package file surface.
 
 ### pi-rules
-- License: MIT, from `packages/omo-codex/plugin/components/rules/LICENSE` and component NOTICE.
+- License: MIT, from `packages/omop-codex/plugin/components/rules/LICENSE` and component NOTICE.
 - Copyright: Yeongyu Kim.
 - Upstream URL: https://github.com/code-yeongyu
-- Where-bundled: ported rules/context loading behavior in `packages/omo-codex/plugin/components/rules`, shipped by the root package file surface.
+- Where-bundled: ported rules/context loading behavior in `packages/omop-codex/plugin/components/rules`, shipped by the root package file surface.
 
 ### picocolors@.....
 - License: ISC, from `node_modules/picocolors/LICENSE`.

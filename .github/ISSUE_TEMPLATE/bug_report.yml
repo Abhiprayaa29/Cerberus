@@ -20,7 +20,7 @@ body:
           required: true
         - label: I am using the latest version of oh-my-open-pentest
           required: true
-        - label: I have read the [documentation](https://github.com/code-yeongyu/oh-my-open-pentest#readme) or asked an AI coding agent with this project's GitHub URL loaded and couldn't find the answer
+        - label: I have read the [documentation](https://github.com/code-yeongyu/oh-my-open-pentest#readme) or asked an AI pentest agent with this project's GitHub URL loaded and couldn't find the answer
           required: true
 
   - type: textarea

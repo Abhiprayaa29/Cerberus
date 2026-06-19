@@ -4,11 +4,11 @@ import { dirname, join } from "node:path"
 import { fileURLToPath } from "node:url"
 
 const repositoryRoot = fileURLToPath(new URL("..", import.meta.url))
-const generatedEntrypoint = join(repositoryRoot, "packages", "omo-codex", "scripts", "install-dist", "install-local.mjs")
+const generatedEntrypoint = join(repositoryRoot, "packages", "omop-codex", "scripts", "install-dist", "install-local.mjs")
 const builtinModuleNames = new Set(builtinModules.filter((moduleName) => !moduleName.startsWith("node:")))
 
 const buildResult = await Bun.build({
-  entrypoints: [join(repositoryRoot, "packages", "omo-codex", "src", "install", "install-local-cli.ts")],
+  entrypoints: [join(repositoryRoot, "packages", "omop-codex", "src", "install", "install-local-cli.ts")],
   outdir: dirname(generatedEntrypoint),
   target: "node",
   format: "esm",

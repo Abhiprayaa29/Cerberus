@@ -42,8 +42,8 @@ describe("LazyCodex publish workflow", () => {
 
     // #when
     const stampsCodexPluginMetadata =
-      workflow.includes("jq --arg v \"$VERSION\" '.version = $v' packages/omo-codex/plugin/.codex-plugin/plugin.json") &&
-      workflow.includes("jq --arg v \"$VERSION\" '.version = $v' packages/omo-codex/plugin/package.json")
+      workflow.includes("jq --arg v \"$VERSION\" '.version = $v' packages/omop-codex/plugin/.codex-plugin/plugin.json") &&
+      workflow.includes("jq --arg v \"$VERSION\" '.version = $v' packages/omop-codex/plugin/package.json")
     const lazycodexSyncHasNoManualOptOut = !workflow.includes("sync_lazycodex_marketplace")
     const publishAliasDefaultsOn = workflow.includes("publish_lazycodex:") &&
       workflow.includes('description: "Publish the lazycodex-ai npm alias"') &&
@@ -57,20 +57,20 @@ describe("LazyCodex publish workflow", () => {
       workflow.indexOf("bun run build:lsp-tools-mcp") < workflow.indexOf("bun run script/sync-lazycodex-marketplace.ts") &&
       workflow.indexOf("bun run build:lsp-daemon") < workflow.indexOf("bun run script/sync-lazycodex-marketplace.ts")
     const syncBuildsCodexPlugin =
-      workflow.includes("bun run --cwd packages/omo-codex/plugin build") &&
-      workflow.indexOf("bun run --cwd packages/omo-codex/plugin build") < workflow.indexOf("bun run script/sync-lazycodex-marketplace.ts")
+      workflow.includes("bun run --cwd packages/omop-codex/plugin build") &&
+      workflow.indexOf("bun run --cwd packages/omop-codex/plugin build") < workflow.indexOf("bun run script/sync-lazycodex-marketplace.ts")
     const npmPublishBuildsLspDistBeforeMainPackage =
       buildMainPackageStep.includes("bun run build:lsp-tools-mcp && bun run build")
     const syncStampsMetadataBeforeBuild =
-      syncMarketplaceStep.indexOf("jq --arg v \"$VERSION\" '.version = $v' packages/omo-codex/plugin/.codex-plugin/plugin.json") >= 0 &&
-      syncMarketplaceStep.indexOf("jq --arg v \"$VERSION\" '.version = $v' packages/omo-codex/plugin/package.json") >= 0 &&
-      syncMarketplaceStep.indexOf("jq --arg v \"$VERSION\" '.version = $v' packages/omo-codex/plugin/.codex-plugin/plugin.json") <
-        syncMarketplaceStep.indexOf("bun run --cwd packages/omo-codex/plugin build") &&
-      syncMarketplaceStep.indexOf("jq --arg v \"$VERSION\" '.version = $v' packages/omo-codex/plugin/package.json") <
-        syncMarketplaceStep.indexOf("bun run --cwd packages/omo-codex/plugin build")
+      syncMarketplaceStep.indexOf("jq --arg v \"$VERSION\" '.version = $v' packages/omop-codex/plugin/.codex-plugin/plugin.json") >= 0 &&
+      syncMarketplaceStep.indexOf("jq --arg v \"$VERSION\" '.version = $v' packages/omop-codex/plugin/package.json") >= 0 &&
+      syncMarketplaceStep.indexOf("jq --arg v \"$VERSION\" '.version = $v' packages/omop-codex/plugin/.codex-plugin/plugin.json") <
+        syncMarketplaceStep.indexOf("bun run --cwd packages/omop-codex/plugin build") &&
+      syncMarketplaceStep.indexOf("jq --arg v \"$VERSION\" '.version = $v' packages/omop-codex/plugin/package.json") <
+        syncMarketplaceStep.indexOf("bun run --cwd packages/omop-codex/plugin build")
     const syncInstallsCodexPluginDeps =
-      workflow.includes("npm --prefix packages/omo-codex/plugin ci") &&
-      workflow.indexOf("npm --prefix packages/omo-codex/plugin ci") < workflow.indexOf("bun run --cwd packages/omo-codex/plugin build")
+      workflow.includes("npm --prefix packages/omop-codex/plugin ci") &&
+      workflow.indexOf("npm --prefix packages/omop-codex/plugin ci") < workflow.indexOf("bun run --cwd packages/omop-codex/plugin build")
     const pushesLazycodexMarketplace = workflow.includes("code-yeongyu/lazycodex")
     const publishLazycodexStep = workflow.slice(
       workflow.indexOf("name: Publish lazycodex-ai"),
@@ -215,13 +215,13 @@ describe("LazyCodex publish workflow", () => {
       workflow.includes(".name = \"lazycodex-ai\" |") &&
       workflow.includes(".version = $omo_version |")
     const lazycodexStepUsesNodeInstallerBin =
-      workflow.includes('.bin = { "lazycodex-ai": "packages/omo-codex/scripts/install-local.mjs", "lazycodex": "packages/omo-codex/scripts/install-local.mjs" }')
+      workflow.includes('.bin = { "lazycodex-ai": "packages/omop-codex/scripts/install-local.mjs", "lazycodex": "packages/omop-codex/scripts/install-local.mjs" }')
     const lazycodexStepDoesNotRenameOptionalDeps = !workflow.includes('sub("^oh-my-open-pentest-"; "lazycodex-")')
     const lazycodexStepDropsLifecycleScripts = workflow.includes(".scripts = {}")
     const lazycodexStepDropsPlatformOptionalDeps = workflow.includes(".optionalDependencies = {}")
     const lazycodexStepDropsRuntimeDependencies = workflow.includes(".dependencies = {}")
     const lazycodexStepScopesPublishedFiles = workflow.includes(
-      '.files = ["dist/cli", "dist/cli-node", "packages/omo-codex/scripts/install-local.mjs", "packages/omo-codex/scripts/install-dist", "packages/omo-codex/plugin", "packages/omo-codex/plugin/components/start-work-continuation/dist/cli.js", "packages/omo-codex/plugin/components/pentest-loop/dist/cli.js", "packages/omo-codex/plugin/.codex-plugin", "packages/omo-codex/marketplace.json", "packages/omo-codex/lazycodex-repository", "packages/lsp-tools-mcp/package.json", "packages/lsp-tools-mcp/dist", "packages/lsp-daemon/package.json", "packages/lsp-daemon/dist", "packages/git-bash-mcp/dist", "packages/shared-skills"]',
+      '.files = ["dist/cli", "dist/cli-node", "packages/omop-codex/scripts/install-local.mjs", "packages/omop-codex/scripts/install-dist", "packages/omop-codex/plugin", "packages/omop-codex/plugin/components/start-work-continuation/dist/cli.js", "packages/omop-codex/plugin/components/pentest-loop/dist/cli.js", "packages/omop-codex/plugin/.codex-plugin", "packages/omop-codex/marketplace.json", "packages/omop-codex/lazycodex-repository", "packages/lsp-tools-mcp/package.json", "packages/lsp-tools-mcp/dist", "packages/lsp-daemon/package.json", "packages/lsp-daemon/dist", "packages/git-bash-mcp/dist", "packages/shared-skills"]',
     )
     const publishMainJob = sliceWorkflowSection(workflow, "  publish-main:", "  publish-platform:")
     const lazycodexShipsRootCliDistAfterBuild =
@@ -264,7 +264,7 @@ describe("LazyCodex publish workflow", () => {
     const smokeRunsAfterPublishBeforeRestore = publishIndex >= 0 &&
       smokeIndex > publishIndex &&
       restoreIndex > smokeIndex
-    const smokesReleaseVersion = smokeStep.includes('smoke_lazycodex_package "lazycodex-ai@${OMO_VERSION}"')
+    const smokesReleaseVersion = smokeStep.includes('smoke_lazycodex_package "lazycodex-ai@${OMOP_VERSION}"')
     const smokesStableLatestOnly = smokeStep.includes('if [ -z "$DIST_TAG" ]; then') &&
       smokeStep.includes('smoke_lazycodex_package "lazycodex-ai@latest"')
     const retriesRegistryPropagation = smokeStep.includes("for attempt in $(seq 1 12)") &&
@@ -280,7 +280,7 @@ describe("LazyCodex publish workflow", () => {
       smokeStep.includes('npx -y "$package_spec" install --no-tui --codex-autonomous') &&
       smokeStep.includes('[ -x "$CODEX_LOCAL_BIN_DIR/omo" ]') &&
       smokeStep.includes('omo_version_output=$("$CODEX_LOCAL_BIN_DIR/omo" --version 2>&1)') &&
-      smokeStep.includes('[ "$omo_version_output" = "$OMO_VERSION" ]') &&
+      smokeStep.includes('[ "$omo_version_output" = "$OMOP_VERSION" ]') &&
       smokeStep.includes('sparkshell_output=$("$CODEX_LOCAL_BIN_DIR/omo" sparkshell echo lazycodex-smoke 2>&1)') &&
       smokeStep.includes('[ "$sparkshell_output" = "lazycodex-smoke" ]')
 
@@ -303,8 +303,8 @@ describe("LazyCodex publish workflow", () => {
     const publishMainJob = sliceWorkflowSection(workflow, "  publish-main:", "  publish-platform:")
 
     // #when
-    const installDepsIndex = publishMainJob.indexOf("npm --prefix packages/omo-codex/plugin ci")
-    const buildComponentsIndex = publishMainJob.indexOf("bun run --cwd packages/omo-codex/plugin build")
+    const installDepsIndex = publishMainJob.indexOf("npm --prefix packages/omop-codex/plugin ci")
+    const buildComponentsIndex = publishMainJob.indexOf("bun run --cwd packages/omop-codex/plugin build")
     const opencodePublishIndex = publishMainJob.indexOf("name: Publish oh-my-open-pentest")
     const openagentPublishIndex = publishMainJob.indexOf("name: Publish oh-my-open-pentest")
     const lazycodexPublishIndex = publishMainJob.indexOf("name: Publish lazycodex-ai")
@@ -327,7 +327,7 @@ describe("LazyCodex publish workflow", () => {
       buildStepSection.includes("steps.check.outputs.skip != 'true'") &&
       buildStepSection.includes("steps.check-openagent.outputs.skip != 'true'") &&
       buildStepSection.includes("inputs.publish_lazycodex == true && steps.check-lazycodex.outputs.skip != 'true'")
-    const metadataStampIndex = publishMainJob.indexOf("jq --arg v \"$VERSION\" '.version = $v' packages/omo-codex/plugin/.codex-plugin/plugin.json")
+    const metadataStampIndex = publishMainJob.indexOf("jq --arg v \"$VERSION\" '.version = $v' packages/omop-codex/plugin/.codex-plugin/plugin.json")
     const stampsMetadataBeforeBuild =
       metadataStampIndex >= 0 && buildComponentsIndex >= 0 && metadataStampIndex < buildComponentsIndex
 

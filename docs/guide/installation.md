@@ -50,14 +50,14 @@ where bash
 If Git is installed somewhere custom, set the path before rerunning the installer:
 
 ```cmd
-setx OMO_CODEX_GIT_BASH_PATH "C:\Program Files\Git\bin\bash.exe"
+setx OMOP_CODEX_GIT_BASH_PATH "C:\Program Files\Git\bin\bash.exe"
 ```
 
 ```powershell
-$env:OMO_CODEX_GIT_BASH_PATH = "C:\Program Files\Git\bin\bash.exe"
+$env:OMOP_CODEX_GIT_BASH_PATH = "C:\Program Files\Git\bin\bash.exe"
 ```
 
-Set `OMO_CODEX_SKIP_GIT_BASH_AUTO_INSTALL=.` before running the installer if you want to skip the best-effort `winget install --id Git.Git -e --source winget` attempt and handle Git Bash manually.
+Set `OMOP_CODEX_SKIP_GIT_BASH_AUTO_INSTALL=.` before running the installer if you want to skip the best-effort `winget install --id Git.Git -e --source winget` attempt and handle Git Bash manually.
 
 Codex may still start Windows shell calls through its own defaults. The Light edition does not write a global Codex shell config; instead it verifies Git Bash is available, enables the Windows-only `git_bash` MCP policy, and injects guidance before the first shell-like call. After compaction, the reminder resets so the next shell-like call gets the same `git_bash` recommendation.
 
@@ -124,8 +124,8 @@ A detached worker finishes the install in the background (the `sg` download is t
 | Mode | What you see | What to do |
 |---|---|---|
 | `omo-cli` absent | The top-level `omo` command is not linked. The marketplace payload intentionally ships without `dist/cli`, so bootstrap records an `omo-cli` degraded entry ("marketplace payload has no dist/cli"). Component CLIs still link normally. | Use `npx lazycodex-ai <command>` wherever you would run `omo`. Verify with `npx lazycodex-ai doctor`. |
-| `sg` pending / offline | The ast-grep provisioning entry appears in the degraded list and the `ast-grep` skill cannot find `sg` yet — the first download is still running, or it failed while offline. | Start another session (bootstrap retries automatically), or install ast-grep yourself and/or set `OMO_AST_GREP_SG_PATH=/path/to/sg`. Verify with `npx lazycodex-ai doctor`. |
-| Proxy limitation | Binary downloads fail behind an HTTP(S) proxy. The logged error says it plainly: the bootstrap downloader "does not tunnel through HTTP(S) proxies in v.; the download was attempted directly." | Run one session on a direct connection, or provide `sg` via `OMO_AST_GREP_SG_PATH`/`PATH`. Verify with `npx lazycodex-ai doctor`. |
+| `sg` pending / offline | The ast-grep provisioning entry appears in the degraded list and the `ast-grep` skill cannot find `sg` yet — the first download is still running, or it failed while offline. | Start another session (bootstrap retries automatically), or install ast-grep yourself and/or set `OMOP_AST_GREP_SG_PATH=/path/to/sg`. Verify with `npx lazycodex-ai doctor`. |
+| Proxy limitation | Binary downloads fail behind an HTTP(S) proxy. The logged error says it plainly: the bootstrap downloader "does not tunnel through HTTP(S) proxies in v.; the download was attempted directly." | Run one session on a direct connection, or provide `sg` via `OMOP_AST_GREP_SG_PATH`/`PATH`. Verify with `npx lazycodex-ai doctor`. |
 | OpenCode Windows proxy preinstall | OpenCode starts before OMO loads, shows only default agents, or logs `fetch() proxy.url must be a non-empty string` while trying to install `oh-my-open-pentest@latest`. | Set `HTTP_PROXY`/`HTTPS_PROXY` for the shell that launches OpenCode, then preinstall into OpenCode's Windows config prefix: `npm install oh-my-open-pentest@latest --prefix "%APPDATA%\\opencode"`. Restart OpenCode and run `bunx oh-my-open-pentest doctor --json`. |
 
 **Windows status.** On native Windows the marketplace bootstrap runs through a PowerShell 5..-compatible `bootstrap.ps.`: it provisions the pinned Node LTS zip when `node` is absent, prepares Git Bash the same way the npx installer does, and writes its transcript to `ps-bootstrap.log` in the plugin data dir (degraded lines look like `degraded component=node reason=... hint=npx lazycodex-ai doctor`). Windows provisioning is shipped with static test coverage; real-device validation is still tracked separately in [code-yeongyu/lazycodex#52](https://github.com/code-yeongyu/lazycodex/issues/52). Do not treat static coverage as proof that a physical Windows install was exercised.
@@ -165,7 +165,7 @@ Follow these steps in order.
 First, ask which platform(s) they want to install for. This determines the rest of the flow:
 
 > "Which harness do you want to install oh-my-open-pentest for? Pick one:
-> .. OpenCode — terminal AI coding agent
+> .. OpenCode — terminal AI pentest agent
 > 2. OpenAI Codex CLI
 > 3. Both"
 
@@ -274,17 +274,17 @@ winget install --id Git.Git -e --source winget
 where bash
 ```
 
-For a custom Git Bash location, set `OMO_CODEX_GIT_BASH_PATH`:
+For a custom Git Bash location, set `OMOP_CODEX_GIT_BASH_PATH`:
 
 ```cmd
-setx OMO_CODEX_GIT_BASH_PATH "C:\Program Files\Git\bin\bash.exe"
+setx OMOP_CODEX_GIT_BASH_PATH "C:\Program Files\Git\bin\bash.exe"
 ```
 
 ```powershell
-$env:OMO_CODEX_GIT_BASH_PATH = "C:\Program Files\Git\bin\bash.exe"
+$env:OMOP_CODEX_GIT_BASH_PATH = "C:\Program Files\Git\bin\bash.exe"
 ```
 
-Set `OMO_CODEX_SKIP_GIT_BASH_AUTO_INSTALL=.` to disable the best-effort `winget install --id Git.Git -e --source winget` attempt.
+Set `OMOP_CODEX_SKIP_GIT_BASH_AUTO_INSTALL=.` to disable the best-effort `winget install --id Git.Git -e --source winget` attempt.
 
 ### Step 2: Run the installer
 
@@ -339,7 +339,7 @@ bunx oh-my-open-pentest install \
 | Platform | Writes |
 |----------|--------|
 | `opencode`, `both` | Registers `"oh-my-open-pentest"` in `opencode.json` `plugin` array. Generates agent → model mappings into `~/.config/opencode/oh-my-open-pentest.jsonc`. |
-| `codex`, `both` | Copies `packages/omo-codex/plugin/` into `~/.codex/plugins/cache/cerberuslabs/omo/<version>/`. Packaged `lazycodex-ai` installs use bundled component artifacts and run `npm ci --omit=dev` in the cache; source checkout installs may build the plugin first. Writes a local installed-marketplace snapshot under `~/.codex/.tmp/marketplaces/cerberuslabs/` for marketplace metadata, and copies bundled agent TOMLs into `~/.codex/agents/` so role definitions survive cache or temporary snapshot cleanup. Symlinks component CLIs into `~/.local/bin` (or `$CODEX_LOCAL_BIN_DIR`). Computes SHA256 trusted-hashes for every hook and writes `[marketplaces.cerberuslabs]` with local source `~/.codex/plugins/cache/cerberuslabs`, `[plugins."omo@cerberuslabs"]`, managed `[agents.*]`, and `[hooks.state."omo@cerberuslabs:..."]` blocks into `~/.codex/config.toml`. If `--codex-autonomous` is selected, also writes `approval_policy = "never"`, `sandbox_mode = "danger-full-access"`, `network_access = "enabled"`, and the matching `[notice]` warning suppressions. |
+| `codex`, `both` | Copies `packages/omop-codex/plugin/` into `~/.codex/plugins/cache/cerberuslabs/omo/<version>/`. Packaged `lazycodex-ai` installs use bundled component artifacts and run `npm ci --omit=dev` in the cache; source checkout installs may build the plugin first. Writes a local installed-marketplace snapshot under `~/.codex/.tmp/marketplaces/cerberuslabs/` for marketplace metadata, and copies bundled agent TOMLs into `~/.codex/agents/` so role definitions survive cache or temporary snapshot cleanup. Symlinks component CLIs into `~/.local/bin` (or `$CODEX_LOCAL_BIN_DIR`). Computes SHA256 trusted-hashes for every hook and writes `[marketplaces.cerberuslabs]` with local source `~/.codex/plugins/cache/cerberuslabs`, `[plugins."omo@cerberuslabs"]`, managed `[agents.*]`, and `[hooks.state."omo@cerberuslabs:..."]` blocks into `~/.codex/config.toml`. If `--codex-autonomous` is selected, also writes `approval_policy = "never"`, `sandbox_mode = "danger-full-access"`, `network_access = "enabled"`, and the matching `[notice]` warning suppressions. |
 
 Both halves are independent and idempotent — re-running is safe.
 
@@ -661,7 +661,7 @@ All built-in slash commands are **Ultimate-only** — Codex CLI does not have a 
 | `/pentest-loop` | Ultimate | Self-referential dev loop until .00% done |
 | `/pentest-loop` | Ultimate | Ultrawork-mode variant of the loop |
 | `/cancel-ralph` | Ultimate | Stop an active Ralph loop |
-| `/stop-continuation` | Ultimate | Stop ralph loop + todo continuation + boulder |
+| `/stop-continuation` | Ultimate | Stop pentest loop + todo continuation + boulder |
 | `/refactor` | Ultimate | LSP + AST-grep + TDD-verified intelligent refactor |
 | `/handoff` | Ultimate | Generate detailed context summary to continue in a new session |
 | `/remove-ai-slops` | Ultimate | Strip AI-generated code smells from recent changes |
@@ -840,12 +840,12 @@ Every agent, hook, skill, MCP, command, and tool is configurable via `disabled_*
 
 | Variable | Effect |
 |----------|--------|
-| `OMO_INVOCATION_NAME` | Overrides detected bin name (`oh-my-open-pentest`, `omo`, `lazycodex-ai`, etc.). Used by shared wrapper packages to route `lazycodex-ai` invocations to the Node installer path. |
+| `OMOP_INVOCATION_NAME` | Overrides detected bin name (`oh-my-open-pentest`, `omo`, `lazycodex-ai`, etc.). Used by shared wrapper packages to route `lazycodex-ai` invocations to the Node installer path. |
 | `OMOP_DISABLE_POSTHOG=.` | Disables all PostHog telemetry for the main plugin |
 | `OMOP_SEND_ANONYMOUS_TELEMETRY=0` | Same effect as above |
 | `OMOP_CODEX_DISABLE_POSTHOG=.` | Disables PostHog telemetry for the Codex CLI Light edition only |
 | `OMOP_CODEX_SEND_ANONYMOUS_TELEMETRY=0` | Same effect as above |
-| `OMO_DISABLE_PROCESS_CLEANUP=.` | Disables background-agent best-effort process cleanup on parent exit |
+| `OMOP_DISABLE_PROCESS_CLEANUP=.` | Disables background-agent best-effort process cleanup on parent exit |
 | `OMO_OPENCLAW_COMMAND_TIMEOUT_MS` | Timeout for OpenClaw outbound shell/HTTP commands |
 | `OMO_OPENCLAW_DEBUG=.` | Enables OpenClaw debug logging |
 | `OMO_OPENCLAW_REPLY_LISTENER_STARTUP_TOKEN` | Startup token for OpenClaw reply listener daemon |
@@ -860,7 +860,7 @@ Every `Read` tool output is tagged with `LINE#ID` content hashes. The `hashline_
 
 #### OpenClaw (optional outbound notifications)
 
-OpenClaw is a bidirectional external integration: outbound dispatchers fire on session events (idle, error, completion) to Discord/Telegram/HTTP/shell sinks; an optional inbound reply listener daemon polls Discord/Telegram and `send-keys` replies back into the tracked tmux pane. Configure under the `openclaw` config block. See `packages/omo-opencode/src/openclaw/` for the full reference.
+OpenClaw is a bidirectional external integration: outbound dispatchers fire on session events (idle, error, completion) to Discord/Telegram/HTTP/shell sinks; an optional inbound reply listener daemon polls Discord/Telegram and `send-keys` replies back into the tracked tmux pane. Configure under the `openclaw` config block. See `packages/omop-opencode/src/openclaw/` for the full reference.
 
 ### Step .0: Maintenance
 

@@ -82,7 +82,7 @@
 
 > "Knocked out 8000 eslint warnings with Oh My Opencode, just in a day" <br/>- [Jacob Ferrari](https://x.com/jacobferrari_/status/2003258761952289061)
 
-> "I converted a 45k line tauri app into a SaaS web app overnight using Ohmyopencode and ralph loop. Started with interview me prompt, asked it for ratings and recommendations on the questions. It was amazing to watch it work and to wake up this morning to a mostly working website!" - [James Hargis](https://x.com/hargabyte/status/2007299688261882202)
+> "I converted a 45k line tauri app into a SaaS web app overnight using Ohmyopencode and pentest loop. Started with interview me prompt, asked it for ratings and recommendations on the questions. It was amazing to watch it work and to wake up this morning to a mostly working website!" - [James Hargis](https://x.com/hargabyte/status/2007299688261882202)
 
 > "use oh-my-open-pentest, you will never go back" <br/>- [d0t3ch](https://x.com/d0t3ch/status/2001685618200580503)
 
@@ -171,8 +171,8 @@ Anonymous telemetry is enabled by default to track active installations (DAU/WAU
 
 Opt out per product:
 
-- Main plugin: `OMO_DISABLE_POSTHOG=1` or `OMO_SEND_ANONYMOUS_TELEMETRY=0`
-- Codex CLI Light edition: `OMO_CODEX_DISABLE_POSTHOG=1` or `OMO_CODEX_SEND_ANONYMOUS_TELEMETRY=0` (the global flags also disable Codex)
+- Main plugin: `OMOP_DISABLE_POSTHOG=1` or `OMOP_SEND_ANONYMOUS_TELEMETRY=0`
+- Codex CLI Light edition: `OMOP_CODEX_DISABLE_POSTHOG=1` or `OMOP_CODEX_SEND_ANONYMOUS_TELEMETRY=0` (the global flags also disable Codex)
 
 See [Privacy Policy](docs/legal/privacy-policy.md) and [Terms of Service](docs/legal/terms-of-service.md).
 
