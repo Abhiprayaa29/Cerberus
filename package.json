@@ -35,7 +35,8 @@
     "omo": "bin/oh-my-open-pentest.js",
     "lazycodex": "bin/oh-my-open-pentest.js",
     "lazycodex-ai": "bin/oh-my-open-pentest.js",
-    "omop": "bin/oh-my-open-pentest.js"
+    "omop": "bin/oh-my-open-pentest.js",
+    "omop-dev": "bin/omop-dev.js"
   },
   "files": [
     "THIRD-PARTY-NOTICES.md",
