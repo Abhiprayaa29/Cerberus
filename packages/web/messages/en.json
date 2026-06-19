@@ -1,7 +1,7 @@
 {
   "metadata": {
     "title": "Oh My Open Pentest",
-    "description": "The Best Agent Harness. Meet Cerberus: The Batteries-Included Agent that codes like you."
+    "description": "The Best Pentest Platform. Meet Cerberus: The Autonomous Agent that tests like you."
   },
   "nav": {
     "brand": "Oh My Open Pentest",
@@ -22,7 +22,7 @@
   "landing": {
     "hero": {
       "title": "The Best ",
-      "titleHighlight": "Agent Harness",
+      "titleHighlight": "Pentest Platform",
       "subtitle": "{stars} stars. {downloads} downloads. Battle-tested and production-proven.",
       "githubStars": "{count} GitHub Stars",
       "specializedAgents": "{count} Specialized Agents",
@@ -33,9 +33,9 @@
       "getStarted": "Get Started",
       "viewOnGitHub": "View on GitHub"
     },
-    "ulw": {
+    "fullscan": {
       "badge": "The Magic Word",
-      "title": "ulw",
+      "title": "fullscan",
       "headline": "Type Three Letters. Walk Away.",
       "description": "Ultra Work mode triggers maximum precision: auto-planning, deep research, parallel agents, and self-correction loops. The system doesn't stop until it's done. You don't babysit.",
       "autoPlanning": "Auto-Planning",
@@ -43,7 +43,7 @@
       "selfCorrection": "Self-Correction",
       "parallelAgents": "Parallel Agents",
       "terminalTitle": "cerberus — -zsh — 80x2.",
-      "terminalInput": "ulw add authentication to the API",
+      "terminalInput": "fullscan example.com --depth 3",
       "steps": {
         "scanning": "Scanning codebase...",
         "context": "Launching 3 explore agents...",
@@ -276,7 +276,7 @@
     },
     "cta": {
       "title": "Stop Writing Boilerplate",
-      "subtitle": "Install Oh My Open Pentest and let the agents handle it. Your first ulw command is 30 seconds away.",
+      "subtitle": "Install Oh My Open Pentest and let the agents handle it. Your first fullscan command is 30 seconds away.",
       "installCommand": "bunx oh-my-open-pentest install",
       "installNow": "Install Now",
       "readTheDocs": "Read the Docs"

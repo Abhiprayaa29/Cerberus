@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Ultrawork Manifesto",
+  title: "Pentest Manifesto",
   description:
     "The philosophy of high-output engineering. Why human developers should be architects, not spell-checkers.",
 }

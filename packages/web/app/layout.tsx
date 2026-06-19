@@ -10,11 +10,11 @@ const primarySiteUrl = "https://omo.dev"
 export const metadata: Metadata = {
   metadataBase: new URL(primarySiteUrl),
   title: {
-    default: "Oh My Open Pentest — The Best Agent Harness",
+    default: "Oh My Open Pentest — The Best Pentest Platform",
     template: "%s | Oh My Open Pentest",
   },
   description:
-    "Meet Cerberus: The batteries-included agent that codes like you. Multi-model orchestration, Team Mode, background agents, 54+ lifecycle hooks.",
+    "Meet Cerberus: The autonomous agent that tests like you. Multi-model orchestration, Team Mode, background agents, 54+ lifecycle hooks.",
   keywords: [
     "opencode",
     "oh-my-open-pentest",
@@ -48,15 +48,15 @@ export const metadata: Metadata = {
     alternateLocale: ["ko_KR", "ja_JP", "zh_CN"],
     url: primarySiteUrl,
     siteName: "Oh My Open Pentest",
-    title: "Oh My Open Pentest — The Best Agent Harness",
+    title: "Oh My Open Pentest — The Best Pentest Platform",
     description:
-      "Meet Cerberus: The batteries-included agent that codes like you. Multi-model orchestration, Team Mode, background agents, 54+ lifecycle hooks.",
+      "Meet Cerberus: The autonomous agent that tests like you. Multi-model orchestration, Team Mode, background agents, 54+ lifecycle hooks.",
     // og:image is supplied by app/opengraph-image.tsx via Next.js file-based metadata convention.
   },
   twitter: {
     card: "summary_large_image",
-    title: "Oh My Open Pentest — The Best Agent Harness",
-    description: "Meet Cerberus: The batteries-included agent that codes like you.",
+    title: "Oh My Open Pentest — The Best Pentest Platform",
+    description: "Meet Cerberus: The autonomous agent that tests like you.",
     // twitter:image is supplied by app/twitter-image.tsx via the file-based convention.
   },
   robots: {
@@ -84,7 +84,7 @@ const jsonLd = {
     url: "https://github.com/code-yeongyu",
   },
   description:
-    "The batteries-included agent harness for OpenCode. Multi-model orchestration, Team Mode, background agents, 54+ lifecycle hooks.",
+    "The autonomous agent harness for OpenCode. Multi-model orchestration, Team Mode, background agents, 54+ lifecycle hooks.",
   offers: {
     "@type": "Offer",
     price: "0",

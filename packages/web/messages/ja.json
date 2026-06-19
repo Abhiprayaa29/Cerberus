@@ -22,7 +22,7 @@
   "landing": {
     "hero": {
       "title": "最高の ",
-      "titleHighlight": "Agent Harness",
+      "titleHighlight": "Pentest Platform",
       "subtitle": "{stars}スター。{downloads}ダウンロード。実戦で証明済み。",
       "githubStars": "{count} GitHub Stars",
       "specializedAgents": "{count}個の専門Agent",
@@ -33,9 +33,9 @@
       "getStarted": "始める",
       "viewOnGitHub": "GitHubで見る"
     },
-    "ulw": {
+    "fullscan": {
       "badge": "魔法の言葉",
-      "title": "ulw",
+      "title": "fullscan",
       "headline": "3文字タイプ。離れる。",
       "description": "Ultra Workモードは最大精度を発揮：自動計画、深い調査、並列エージェント、自己修正ループ。システムは完了するまで止まりません。あなたは監視しません。",
       "autoPlanning": "自動計画",
@@ -43,7 +43,7 @@
       "selfCorrection": "自己修正",
       "parallelAgents": "並列エージェント",
       "terminalTitle": "cerberus — -zsh — 80x2.",
-      "terminalInput": "ulw add authentication to the API",
+      "terminalInput": "fullscan example.com --depth 3",
       "steps": {
         "scanning": "コードベースをスキャン中...",
         "context": "3個のexploreエージェントを起動中...",
@@ -276,7 +276,7 @@
     },
     "cta": {
       "title": "ボイラープレートを書くのをやめろ",
-      "subtitle": "Oh My Open Pentestをインストールしてエージェントに任せよう。最初のulwコマンドまであと30秒。",
+      "subtitle": "Oh My Open Pentestをインストールしてエージェントに任せよう。最初のfullscanコマンドまであと30秒。",
       "installCommand": "bunx oh-my-open-pentest install",
       "installNow": "今すぐインストール",
       "readTheDocs": "ドキュメントを読む"
@@ -289,7 +289,7 @@
   "manifesto": {
     "badge": "マニフェスト",
     "hero": {
-      "title": "Ultraworkマニフェスト",
+      "title": "Pentestマニフェスト",
       "subtitle": "高生産性エンジニアリングの哲学"
     },
     "bottleneck": "> 人間がループに入る = ボトルネック",
@@ -335,8 +335,8 @@
       "subtitle": "人間は望みを伝えるだけで十分です。それ以外はすべてエージェントの仕事です。",
       "fullscan": {
         "badge": "アプローチ.",
-        "title": "Ultrawork",
-        "subtitle": "「ulw」と言って離れればよい。",
+        "title": "Fullscan",
+        "subtitle": "「fullscan」と言って離れればよい。",
         "steps": {
           "analyze": "コードベースのコンテキストを分析",
           "breakdown": "タスクをアトミックなステップに分解",
@@ -420,7 +420,7 @@
       "quote2": "「スイッチを入れる。電灯がつく。配電網のことなど考えない。」"
     },
     "finalCta": {
-      "title": "just ulw ulw",
+      "title": "fullscan fullscan",
       "button": "Oh My Open Pentestを入手"
     }
   }

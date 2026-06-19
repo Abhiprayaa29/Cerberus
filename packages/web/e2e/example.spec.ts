@@ -6,7 +6,7 @@ test.describe("Landing Page", () => {
     await page.goto("/")
 
     // when
-    const heading = page.getByRole("heading", { name: "The Best Agent Harness", level: 1 })
+    const heading = page.getByRole("heading", { name: "The Best Pentest Platform", level: 1 })
     const getStartedButton = page.getByRole("button", { name: "Get Started" })
 
     // then
@@ -91,7 +91,7 @@ test.describe("Landing Page", () => {
 
     // then
     await expect(page).toHaveURL(/\/manifesto/)
-    await expect(page.getByRole("heading", { name: "Ultrawork Manifesto" })).toBeVisible()
+    await expect(page.getByRole("heading", { name: "Pentest Manifesto" })).toBeVisible()
   })
 })
 
@@ -187,7 +187,7 @@ test.describe("Manifesto Page", () => {
     await page.goto("/manifesto", { waitUntil: "domcontentloaded", timeout: 45000 })
 
     // when
-    const heading = page.getByRole("heading", { name: "Ultrawork Manifesto" })
+    const heading = page.getByRole("heading", { name: "Pentest Manifesto" })
     const bottleneckText = page.getByText("HUMAN IN THE LOOP = BOTTLENECK").first()
 
     // then

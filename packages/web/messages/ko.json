@@ -1,7 +1,7 @@
 {
   "metadata": {
     "title": "Oh My Open Pentest",
-    "description": "최고의 Agent Harness. Cerberus를 만나보세요: 당신처럼 코딩하는 완벽한 Agent."
+    "description": "최고의 Pentest Platform. Cerberus를 만나보세요: 당신처럼 코딩하는 완벽한 Agent."
   },
   "nav": {
     "brand": "Oh My Open Pentest",
@@ -33,9 +33,9 @@
       "getStarted": "시작하기",
       "viewOnGitHub": "GitHub에서 보기"
     },
-    "ulw": {
+    "fullscan": {
       "badge": "마법의 주문",
-      "title": "ulw",
+      "title": "fullscan",
       "headline": "세 글자만 입력하세요. 그리고 떠나세요.",
       "description": "Ultra Work 모드는 극한의 정밀함을 발휘합니다. 자동 계획, 심층 리서치, 병렬 에이전트, 자기 수정 루프까지. 작업이 끝날 때까지 시스템은 멈추지 않습니다. 감시는 필요 없습니다.",
       "autoPlanning": "자동 계획 수립",
@@ -43,7 +43,7 @@
       "selfCorrection": "자기 수정 루프",
       "parallelAgents": "병렬 에이전트",
       "terminalTitle": "cerberus — -zsh — 80x2.",
-      "terminalInput": "ulw add authentication to the API",
+      "terminalInput": "fullscan example.com --depth 3",
       "steps": {
         "scanning": "코드베이스 스캔 중...",
         "context": "3개의 Scout 에이전트 가동...",
@@ -276,7 +276,7 @@
     },
     "cta": {
       "title": "보일러플레이트는 이제 그만",
-      "subtitle": "Oh My Open Pentest를 설치하고 에이전트에게 맡기세요. 첫 ulw 명령까지 30초면 충분합니다.",
+      "subtitle": "Oh My Open Pentest를 설치하고 에이전트에게 맡기세요. 첫 fullscan 명령까지 30초면 충분합니다.",
       "installCommand": "bunx oh-my-open-pentest install",
       "installNow": "지금 설치하기",
       "readTheDocs": "문서 보기"
@@ -289,7 +289,7 @@
   "manifesto": {
     "badge": "Manifesto",
     "hero": {
-      "title": "Ultrawork Manifesto",
+      "title": "Pentest Manifesto",
       "subtitle": "고성과 엔지니어링의 철학"
     },
     "bottleneck": "> HUMAN IN THE LOOP = BOTTLENECK",
@@ -335,7 +335,7 @@
       "subtitle": "인간은 원하는 것을 말하기만 하면 됩니다. 나머지는 Agent의 일입니다.",
       "fullscan": {
         "badge": "방식 .",
-        "title": "Ultrawork",
+        "title": "Fullscan",
         "subtitle": "그냥 'ulw'라고 하고 자리를 뜨세요.",
         "steps": {
           "analyze": "코드베이스 컨텍스트 분석",
@@ -420,7 +420,7 @@
       "quote2": "\"스위치를 누릅니다. 불이 켜집니다. 발전소는 생각하지 않습니다.\""
     },
     "finalCta": {
-      "title": "just ulw ulw",
+      "title": "fullscan fullscan",
       "button": "Oh My Open Pentest 받기"
     }
   }

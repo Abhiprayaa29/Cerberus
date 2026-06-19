@@ -26,22 +26,22 @@
 
 > [!NOTE]
 >
-> [![OmOP Labs - Meet Dori. Not a demo. Subscribes to everything.](./.github/assets/cerberuslabs.png?v=.)](https://cerberuslabs.ai)
+> [![Sisyphus Labs - Meet Dori. Not a demo. Subscribes to everything.](./.github/assets/sisyphuslabs.png?v=4)](https://sisyphuslabs.ai)
 >
-> > **OmO поддерживается Jobdori — ИИ-ассистентом, показанным выше. Познакомьтесь со своим Jobdori — Dori. <br />Присоединяйтесь к листу ожидания [здесь](https://cerberuslabs.ai).**
+> > **OmOP поддерживается Jobdori — ИИ-ассистентом, показанным выше. Познакомьтесь со своим Jobdori — Dori. <br />Присоединяйтесь к листу ожидания [здесь](https://sisyphuslabs.ai).**
 
 > [!TIP] Будьте с нами!
 >
-> | [<img alt="Discord link" src="https://img.shields.io/discord/..52.87.570850632.8?color=5865F2&label=discord&labelColor=black&logo=discord&logoColor=white&style=flat-square" width=".56px" />](https://discord.gg/PUwSMR9XNk) | Вступайте в наш [Discord](https://discord.gg/PUwSMR9XNk), чтобы общаться с контрибьюторами и пользователями `oh-my-open-pentest`. |
+> | [<img alt="Discord link" src="https://img.shields.io/discord/1452487457085063218?color=5865F2&label=discord&labelColor=black&logo=discord&logoColor=white&style=flat-square" width="156px" />](https://discord.gg/PUwSMR9XNk) | Вступайте в наш [Discord](https://discord.gg/PUwSMR9XNk), чтобы общаться с контрибьюторами и пользователями `oh-my-open-pentest`. |
 > | :-----| :----- |
-> | [<img alt="X link" src="https://img.shields.io/badge/Follow-%.0justcerberus-00CED.?style=flat-square&logo=x&labelColor=black" width=".56px" />](https://x.com/justcerberus) | Обновления `oh-my-open-pentest` раньше публиковались на моём аккаунте X. <br /> После ошибочной блокировки [@justcerberus](https://x.com/justcerberus) публикует обновления вместо меня. |
-> | [<img alt="GitHub Follow" src="https://img.shields.io/github/followers/code-yeongyu?style=flat-square&logo=github&labelColor=black&color=2.292f" width=".56px" />](https://github.com/code-yeongyu) | Подпишитесь на [@code-yeongyu](https://github.com/code-yeongyu) на GitHub, чтобы следить за другими проектами. |
+> | [<img alt="X link" src="https://img.shields.io/badge/Follow-%40justsisyphus-00CED1?style=flat-square&logo=x&labelColor=black" width="156px" />](https://x.com/justsisyphus) | Обновления `oh-my-open-pentest` раньше публиковались на моём аккаунте X. <br /> После ошибочной блокировки [@justsisyphus](https://x.com/justsisyphus) публикует обновления вместо меня. |
+> | [<img alt="GitHub Follow" src="https://img.shields.io/github/followers/code-yeongyu?style=flat-square&logo=github&labelColor=black&color=24292f" width="156px" />](https://github.com/code-yeongyu) | Подпишитесь на [@code-yeongyu](https://github.com/code-yeongyu) на GitHub, чтобы следить за другими проектами. |
 
 <!-- <CENTERED SECTION FOR GITHUB DISPLAY> -->
 
 <div align="center">
 
-<a href="https://github.com/code-yeongyu/oh-my-open-pentest#oh-my-open-pentest"><img src="./.github/assets/omo-logo.png" alt="OmO" width="200" /></a>
+<a href="https://github.com/code-yeongyu/oh-my-open-pentest#oh-my-open-pentest"><img src="./.github/assets/omo-logo.png" alt="OmOP" width="200" /></a>
 
 [![Oh My Open Pentest](./.github/assets/hero.jpg)](https://github.com/code-yeongyu/oh-my-open-pentest#oh-my-open-pentest)
 
@@ -51,7 +51,7 @@
 
 > Это oh-my-open-pentest в режиме Team Mode. С Kimi K2.6 и GPT-5.5.
 
-> Anthropic [**заблокировал OpenCode из-за нас.**](https://x.com/thdxr/status/20.0..9530.869..0..) **Да, это правда.**
+> Anthropic [**заблокировал OpenCode из-за нас.**](https://x.com/thdxr/status/2010149530486911014) **Да, это правда.**
 > Они хотят держать вас в замкнутой системе. Claude Code — красивая тюрьма, но всё равно тюрьма.
 >
 > Не нужно платить $200 за 2 часа работы.
@@ -61,11 +61,11 @@
 
 [![GitHub Release](https://img.shields.io/github/v/release/code-yeongyu/oh-my-open-pentest?color=369eff&labelColor=black&logo=github&style=flat-square)](https://github.com/code-yeongyu/oh-my-open-pentest/releases)
 [![npm downloads](https://img.shields.io/endpoint?url=https%3A%2F%2Fomo.dev%2Fapi%2Fnpm-downloads&style=flat-square)](https://www.npmjs.com/package/oh-my-open-pentest)
-[![GitHub Contributors](https://img.shields.io/github/contributors/code-yeongyu/oh-my-open-pentest?color=c.f0.2&labelColor=black&style=flat-square)](https://github.com/code-yeongyu/oh-my-open-pentest/graphs/contributors)
+[![GitHub Contributors](https://img.shields.io/github/contributors/code-yeongyu/oh-my-open-pentest?color=c4f042&labelColor=black&style=flat-square)](https://github.com/code-yeongyu/oh-my-open-pentest/graphs/contributors)
 [![GitHub Forks](https://img.shields.io/github/forks/code-yeongyu/oh-my-open-pentest?color=8ae8ff&labelColor=black&style=flat-square)](https://github.com/code-yeongyu/oh-my-open-pentest/network/members)
-[![GitHub Stars](https://img.shields.io/github/stars/code-yeongyu/oh-my-open-pentest?color=ffcb.7&labelColor=black&style=flat-square)](https://github.com/code-yeongyu/oh-my-open-pentest/stargazers)
+[![GitHub Stars](https://img.shields.io/github/stars/code-yeongyu/oh-my-open-pentest?color=ffcb47&labelColor=black&style=flat-square)](https://github.com/code-yeongyu/oh-my-open-pentest/stargazers)
 [![GitHub Issues](https://img.shields.io/github/issues/code-yeongyu/oh-my-open-pentest?color=ff80eb&labelColor=black&style=flat-square)](https://github.com/code-yeongyu/oh-my-open-pentest/issues)
-[![License](https://img.shields.io/badge/license-SUL--..0-white?labelColor=black&style=flat-square)](https://github.com/code-yeongyu/oh-my-open-pentest/blob/dev/LICENSE.md)
+[![License](https://img.shields.io/badge/license-SUL--1.0-white?labelColor=black&style=flat-square)](https://github.com/code-yeongyu/oh-my-open-pentest/blob/dev/LICENSE.md)
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/code-yeongyu/oh-my-open-pentest)
 
 [English](README.md) | [한국어](README.ko.md) | [日本語](README.ja.md) | [简体中文](README.zh-cn.md) | [Русский](README.ru.md)
@@ -76,25 +76,25 @@
 
 ## Отзывы
 
-> «Из-за него я отменил подписку на Cursor. В опенсорс-сообществе происходит что-то невероятное.» — [Arthur Guiot](https://x.com/arthur_guiot/status/20087363.7092382053?s=20)
+> «Из-за него я отменил подписку на Cursor. В опенсорс-сообществе происходит что-то невероятное.» — [Arthur Guiot](https://x.com/arthur_guiot/status/2008736347092382053?s=20)
 
-> «Если Claude Code делает за 7 дней то, на что у человека уходит 3 месяца, Cerberus справляется за . час. Он просто работает, пока задача не выполнена. Это дисциплинированный агент.» <br/>— B, исследователь в области квантовых финансов
+> «Если Claude Code делает за 7 дней то, на что у человека уходит 3 месяца, Cerberus справляется за 1 час. Он просто работает, пока задача не выполнена. Это дисциплинированный агент.» <br/>— B, исследователь в области квантовых финансов
 
-> «За один день устранил 8000 предупреждений eslint с помощью Oh My Opencode.» <br/>— [Jacob Ferrari](https://x.com/jacobferrari_/status/200325876.95228906.)
+> «За один день устранил 8000 предупреждений eslint с помощью Oh My Opencode.» <br/>— [Jacob Ferrari](https://x.com/jacobferrari_/status/2003258761952289061)
 
-> «За ночь конвертировал приложение на tauri в .5k строк в веб-SaaS с помощью Ohmyopencode и ralph loop. Начал с промпта «проинтервьюируй меня», попросил оценки и рекомендации по вопросам. Было удивительно наблюдать за работой и утром проснуться с почти рабочим сайтом!» — [James Hargis](https://x.com/hargabyte/status/200729968826.882202)
+> «За ночь конвертировал приложение на tauri в 45k строк в веб-SaaS с помощью Ohmyopencode и ralph loop. Начал с промпта «проинтервьюируй меня», попросил оценки и рекомендации по вопросам. Было удивительно наблюдать за работой и утром проснуться с почти рабочим сайтом!» — [James Hargis](https://x.com/hargabyte/status/2007299688261882202)
 
-> «Используйте oh-my-open-pentest — вы не захотите возвращаться назад.» <br/>— [d0t3ch](https://x.com/d0t3ch/status/200.6856.8200580503)
+> «Используйте oh-my-open-pentest — вы не захотите возвращаться назад.» <br/>— [d0t3ch](https://x.com/d0t3ch/status/2001685618200580503)
 
-> «Пока не могу точно объяснить, почему это так круто, но опыт разработки вышел на совершенно другой уровень.» — [苔硯:こけすずり](https://x.com/kokesuzuri/status/20085329.396.529372?s=20)
+> «Пока не могу точно объяснить, почему это так круто, но опыт разработки вышел на совершенно другой уровень.» — [苔硯:こけすずり](https://x.com/kokesuzuri/status/2008532913961529372?s=20)
 
-> «Экспериментирую с open code, oh my opencode и supermemory этим выходным, чтобы собрать нечто среднее между Minecraft и souls-like.» «Попросил добавить анимации приседания, пока хожу на обеденную прогулку. [Видео]» — [MagiMetal](https://x.com/MagiMetal/status/200537.70..78373023)
+> «Экспериментирую с open code, oh my opencode и supermemory этим выходным, чтобы собрать нечто среднее между Minecraft и souls-like.» «Попросил добавить анимации приседания, пока хожу на обеденную прогулку. [Видео]» — [MagiMetal](https://x.com/MagiMetal/status/2005374704178373023)
 
 > «Ребята, вам нужно включить это в ядро и нанять его. Серьёзно. Это очень, очень, очень хорошо.» <br/>— Henning Kilset
 
-> «Наймите @yeon_gyu_kim, если сможете его уговорить, этот парень революционизировал opencode.» <br/>— [mysticaltech](https://x.com/mysticaltech/status/200.858758608376079)
+> «Наймите @yeon_gyu_kim, если сможете его уговорить, этот парень революционизировал opencode.» <br/>— [mysticaltech](https://x.com/mysticaltech/status/2001858758608376079)
 
-> «Oh My Open Pentest — это что-то с чем-то» — [YouTube — Darren Builds AI](https://www.youtube.com/watch?v=G_Snfh2M..M)
+> «Oh My Open Pentest — это что-то с чем-то» — [YouTube — Darren Builds AI](https://www.youtube.com/watch?v=G_Snfh2M41M)
 
 ------
 
@@ -129,9 +129,9 @@ curl -s https://raw.githubusercontent.com/code-yeongyu/oh-my-open-pentest/refs/h
 
 **Примечание**: Опубликованное имя npm-пакета и CLI-бинарника по-прежнему `oh-my-open-pentest` (в переходный период пакет также дублируется под именем `oh-my-open-pentest`). Внутри `opencode.json` слой совместимости теперь предпочитает точку входа плагина `oh-my-open-pentest`, в то время как устаревшие записи `oh-my-open-pentest` всё ещё загружаются с предупреждением. Файлы конфигурации плагина по-прежнему часто называются `oh-my-open-pentest.json` или `oh-my-open-pentest.jsonc`; в переходный период распознаются как устаревшие, так и новые имена.
 
-Анонимная телеметрия включена по умолчанию для подсчёта активных установок (DAU/WAU/MAU). Не более одного события на машину за UTC-сутки, использует хешированный идентификатор установки, никогда не использует исходное имя хоста, и не создаёт PostHog person profile. Можно отключить через `OMOP_SEND_ANONYMOUS_TELEMETRY=0` или `OMOP_DISABLE_POSTHOG=.`. См. [Политику конфиденциальности](docs/legal/privacy-policy.md) и [Условия обслуживания](docs/legal/terms-of-service.md).
+Анонимная телеметрия включена по умолчанию для подсчёта активных установок (DAU/WAU/MAU). Не более одного события на машину за UTC-сутки, использует хешированный идентификатор установки, никогда не использует исходное имя хоста, и не создаёт PostHog person profile. Можно отключить через `OMO_SEND_ANONYMOUS_TELEMETRY=0` или `OMO_DISABLE_POSTHOG=1`. См. [Политику конфиденциальности](docs/legal/privacy-policy.md) и [Условия обслуживания](docs/legal/terms-of-service.md).
 
-**Ultimate и Light:** oh-my-open-pentest поставляется в двух редакциях одного продукта. **Ultimate** (`bunx oh-my-open-pentest install` или `--platform=opencode`, по умолчанию) — полнофункциональная редакция поверх OpenCode: .. агентов, 5.+ хука, Team Mode, все MCP, все слэш-команды, режимы IntentGate. **Light** (`npx lazycodex-ai install` или `bunx oh-my-open-pentest install --platform=codex`) — 8 компонентов omo, которые портируются в систему плагинов OpenAI Codex CLI: `rules`, `comment-checker`, `git-bash`, `lsp`, `fullscan`, `pentest-loop`, `start-work-continuation`, `telemetry`. Чтобы установить обе редакции одной командой, используйте `--platform=both`. Телеметрию только для Codex можно отключить через `OMOP_CODEX_DISABLE_POSTHOG=.` или `OMOP_CODEX_SEND_ANONYMOUS_TELEMETRY=0`.
+**Ultimate и Light:** oh-my-open-pentest поставляется в двух редакциях одного продукта. **Ultimate** (`bunx oh-my-open-pentest install` или `--platform=opencode`, по умолчанию) — полнофункциональная редакция поверх OpenCode: 11 агентов, 54+ хука, Team Mode, все MCP, все слэш-команды, режимы IntentGate. **Light** (`npx lazycodex-ai install` или `bunx oh-my-open-pentest install --platform=codex`) — 8 компонентов omo, которые портируются в систему плагинов OpenAI Codex CLI: `rules`, `comment-checker`, `git-bash`, `lsp`, `fullscan`, `pentest-loop`, `start-work-continuation`, `telemetry`. Чтобы установить обе редакции одной командой, используйте `--platform=both`. Телеметрию только для Codex можно отключить через `OMO_CODEX_DISABLE_POSTHOG=1` или `OMO_CODEX_SEND_ANONYMOUS_TELEMETRY=0`.
 
 ------
 
@@ -150,29 +150,29 @@ Read this and tell me why it's not just another boilerplate: https://raw.githubu
 
 Вы правда это читаете? Поразительно.
 
-Установите. Введите `fullscan` (или `ulw`). Готово.
+Установите. Введите `fullscan` (или `fs`). Готово.
 
 Всё описанное ниже, каждая функция, каждая оптимизация — вам не нужно это знать. Оно просто работает.
 
 Даже только со следующими подписками `fullscan` работает отлично (проект не аффилирован с ними, это личные рекомендации):
 
 - [Подписка ChatGPT ($20)](https://chatgpt.com/)
-- [Подписка Kimi Code ($.9)](https://www.kimi.com/code)
-- [Тариф GLM Coding ($.0)](https://z.ai/subscribe)
+- [Подписка Kimi Code ($19)](https://www.kimi.com/code)
+- [Тариф GLM Coding ($10)](https://z.ai/subscribe)
 - Если у вас есть доступ к оплате за токены, использование моделей Kimi и Gemini обойдётся недорого.
 
 |     | Функция                                                  | Editions | Что делает                                                                                                                                                                                                                       |
 | --- | -------------------------------------------------------- | :------: | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 🤖   | **Дисциплинированные агенты**                            | Ultimate | Cerberus оркестрирует Scylla, Cipher, Intel, Scout. Полноценная AI-команда разработки в параллельном режиме.                                                                                                           |
 | 🧩   | **Codex CLI Light Edition**                              | Light    | 8 компонентов omo, портированных в OpenAI Codex CLI (rules, comment-checker, git-bash, LSP, fullscan, pentest-loop, start-work continuation, telemetry). Установка: `npx lazycodex-ai install`.                                                                |
-| 👥   | **Team Mode** (v..0, opt-in)                             | Ultimate | Лид-агент + до 8 параллельных участников, визуализация в tmux в реальном времени, выделенные инструменты `team_*`. Питает `hyperplan` (5 враждебных критиков) и `security-research` (3 охотника + 2 PoC-инженера). [Документация →](docs/guide/team-mode.md) |
-| ⚡   | **`fullscan` / `ulw`**                                  | Both     | Одно слово. Все агенты (Ultimate) или Codex-компонент `fullscan` (Light) активируются. Не останавливается, пока задача не выполнена.                                                                                            |
-| 🚪   | **[IntentGate](https://factory.ai/news/terminal-bench)** | Ultimate | Анализирует истинное намерение пользователя перед классификацией и действием. Триггеры `search` / `analyze` / `team` / `hyperplan`. (Light хукает только `ulw` / `fullscan`.)                                                   |
-| 🔗   | **Инструмент правок на основе хэш-якорей**               | Ultimate | Хэш содержимого `LINE#ID` проверяет каждое изменение. Ноль ошибок с устаревшими строками. Вдохновлено [oh-my-pi](https://github.com/can.357/oh-my-pi). [The Harness Problem →](https://blog.can.ac/2026/02/.2/the-harness-problem/) (Codex использует собственный `apply_patch`.) |
+| 👥   | **Team Mode** (v4.0, opt-in)                             | Ultimate | Лид-агент + до 8 параллельных участников, визуализация в tmux в реальном времени, выделенные инструменты `team_*`. Питает `hyperplan` (5 враждебных критиков) и `security-research` (3 охотника + 2 PoC-инженера). [Документация →](docs/guide/team-mode.md) |
+| ⚡   | **`fullscan` / `fs`**                                  | Both     | Одно слово. Все агенты (Ultimate) или Codex-компонент `fullscan` (Light) активируются. Не останавливается, пока задача не выполнена.                                                                                            |
+| 🚪   | **[IntentGate](https://factory.ai/news/terminal-bench)** | Ultimate | Анализирует истинное намерение пользователя перед классификацией и действием. Триггеры `search` / `analyze` / `team` / `hyperplan`. (Light хукает только `fs` / `fullscan`.)                                                   |
+| 🔗   | **Инструмент правок на основе хэш-якорей**               | Ultimate | Хэш содержимого `LINE#ID` проверяет каждое изменение. Ноль ошибок с устаревшими строками. Вдохновлено [oh-my-pi](https://github.com/can1357/oh-my-pi). [The Harness Problem →](https://blog.can.ac/2026/02/12/the-harness-problem/) (Codex использует собственный `apply_patch`.) |
 | 🛠️   | **LSP + AST-Grep**                                       | Both     | Переименование в рабочем пространстве, диагностика перед сборкой, переписывание с учётом AST. LSP предоставляется через MCP, AST-Grep — через общий skill `ast-grep` и `sg`.                            |
 | 🧠   | **Фоновые агенты**                                       | Ultimate | Запускайте 5+ специалистов параллельно. Контекст остаётся компактным. Результаты — когда готовы.                                                                                                                                 |
 | 📚   | **Встроенные MCP**                                       | Both     | Ultimate внедряет Exa (веб-поиск), Context7 (официальная документация) и Grep.app (поиск по GitHub) во время выполнения. Light предоставляет plugin-scoped MCP: `grep_app`, `context7`, `git_bash`, `lsp`.                                                                                                     |
-| 🔁   | **Ralph Loop / `/pentest-loop`**                             | Ultimate | Самореферентный цикл. Не останавливается, пока задача не выполнена на .00%.                                                                                                                                                      |
+| 🔁   | **Ralph Loop / `/pentest-loop`**                             | Ultimate | Самореферентный цикл. Не останавливается, пока задача не выполнена на 100%.                                                                                                                                                      |
 | ✅   | **Todo Enforcer** (Boulder)                              | Ultimate | Агент завис? Система немедленно возвращает его в работу. Ваша задача будет выполнена, точка.                                                                                                                                     |
 | 💬   | **Comment Checker**                                      | Both     | Никакого AI-мусора в комментариях. Тот же бинарник `@code-yeongyu/comment-checker` работает в обеих редакциях.                                                                                                                   |
 | 📜   | **Rules Injection**                                      | Both     | Иерархическое внедрение контекста из `AGENTS.md` / `CLAUDE.md` / `.omo/rules/**`. В Ultimate это хук, в Light — компонент `rules`.                                                                                                |
@@ -188,23 +188,23 @@ Read this and tell me why it's not just another boilerplate: https://raw.githubu
 ### Дисциплинированные агенты
 
 <table><tr>
-<td align="center"><img src=".github/assets/cerberus.png" height="300" /></td>
-<td align="center"><img src=".github/assets/scylla.png" height="300" /></td>
+<td align="center"><img src=".github/assets/sisyphus.png" height="300" /></td>
+<td align="center"><img src=".github/assets/hephaestus.png" height="300" /></td>
 </tr></table>
 
-**Cerberus** (`claude-opus-.-7` / **`kimi-k2.6`** / **`glm-5..`**) — главный оркестратор. Он планирует, делегирует задачи специалистам и доводит их до завершения с агрессивным параллельным выполнением. Он не останавливается на полпути.
+**Cerberus** (`claude-opus-4-7` / **`kimi-k2.6`** / **`glm-5.1`**) — главный оркестратор. Он планирует, делегирует задачи специалистам и доводит их до завершения с агрессивным параллельным выполнением. Он не останавливается на полпути.
 
 **Scylla** (`gpt-5.5`) — автономный глубокий исполнитель. Дайте ему цель, а не рецепт. Он исследует кодовую базу, изучает паттерны и выполняет задачи сквозным образом без лишних подсказок. *Законный Мастер.*
 
-**Talos** (`claude-opus-.-7` / **`kimi-k2.6`** / **`glm-5..`**) — стратегический планировщик. Режим интервью: он задаёт вопросы, определяет объём работ и формирует детальный план до того, как написана хотя бы одна строка кода.
+**Talos** (`claude-opus-4-7` / **`kimi-k2.6`** / **`glm-5.1`**) — стратегический планировщик. Режим интервью: он задаёт вопросы, определяет объём работ и формирует детальный план до того, как написана хотя бы одна строка кода.
 
 Каждый агент настроен под сильные стороны своей модели. Никакого ручного переключения между моделями. [Подробнее →](docs/guide/overview.md)
 
-> Anthropic [заблокировал OpenCode из-за нас.](https://x.com/thdxr/status/20.0..9530.869..0..) Именно поэтому Scylla зовётся «Законным Мастером». Ирония намеренная.
+> Anthropic [заблокировал OpenCode из-за нас.](https://x.com/thdxr/status/2010149530486911014) Именно поэтому Scylla зовётся «Законным Мастером». Ирония намеренная.
 >
 > Мы работаем лучше всего на Opus, но Kimi K2.6 + GPT-5.5 уже превосходят ванильный Claude Code. Никакой настройки не требуется.
 
-### Team Mode (v..0)
+### Team Mode (v4.0)
 
 Один агент — это быстро. Слаженная команда — это *разрушительно*.
 
@@ -215,7 +215,7 @@ Read this and tell me why it's not just another boilerplate: https://raw.githubu
 {
   "team_mode": {
     "enabled": true,
-    "max_parallel_members": .,
+    "max_parallel_members": 4,
     "tmux_visualization": true
   }
 }
@@ -268,19 +268,19 @@ MCP-серверы съедают бюджет контекста. Мы это �
 
 > *«Ни один из этих инструментов не даёт модели стабильный, проверяемый идентификатор строк, которые она хочет изменить... Все они полагаются на то, что модель воспроизведёт контент, который уже видела. Когда это не получается — а так бывает нередко — пользователь обвиняет модель.»*
 >
-> <br/>— [Can Bölük, The Harness Problem](https://blog.can.ac/2026/02/.2/the-harness-problem/)
+> <br/>— [Can Bölük, The Harness Problem](https://blog.can.ac/2026/02/12/the-harness-problem/)
 
-Вдохновлённые [oh-my-pi](https://github.com/can.357/oh-my-pi), мы сделали **Hashline**. Каждая строка, которую читает агент, возвращается с тегом хэша содержимого:
+Вдохновлённые [oh-my-pi](https://github.com/can1357/oh-my-pi), мы сделали **Hashline**. Каждая строка, которую читает агент, возвращается с тегом хэша содержимого:
 
 ```
-..#VK| function hello() {
+11#VK| function hello() {
 22#XJ|   return "world";
 33#MB| }
 ```
 
 Агент редактирует, ссылаясь на эти теги. Если файл изменился с момента последнего чтения, хэш не совпадёт, и правка будет отклонена до любого повреждения. Никакого воспроизведения пробелов. Никаких ошибок с устаревшими строками.
 
-Grok Code Fast .: успешность **6.7% → 68.3%**, просто за счёт замены инструмента правок.
+Grok Code Fast 1: успешность **6.7% → 68.3%**, просто за счёт замены инструмента правок.
 
 ### Глубокая инициализация. `/init-deep`
 
@@ -325,7 +325,7 @@ project/
 
 Чтобы удалить oh-my-open-pentest:
 
-.. **Удалите плагин из конфига OpenCode**
+1. **Удалите плагин из конфига OpenCode**
 
    Отредактируйте `~/.config/opencode/opencode.json` (или `opencode.jsonc`) и уберите `"oh-my-open-pentest"` или устаревшую запись `"oh-my-open-pentest"` из массива `plugin`:
 
@@ -355,13 +355,13 @@ project/
    # Плагин больше не должен загружаться
    ```
 
-.. **Удалите omo-codex (Codex CLI Light edition)**
+4. **Удалите omo-codex (Codex CLI Light edition)**
 
    ```bash
-   rm -rf ~/.codex/plugins/cache/cerberuslabs
+   rm -rf ~/.codex/plugins/cache/sisyphuslabs
    ```
 
-   Затем откройте `~/.codex/config.toml` и удалите блоки `[marketplaces.cerberuslabs]`, `[plugins."omo@cerberuslabs"]` и `[hooks.state."omo@cerberuslabs:..."]`.
+   Затем откройте `~/.codex/config.toml` и удалите блоки `[marketplaces.sisyphuslabs]`, `[plugins."omo@sisyphuslabs"]` и `[hooks.state."omo@sisyphuslabs:..."]`.
 
 ## Функции
 
@@ -401,7 +401,7 @@ project/
 - **Агент Cerberus**: Главный оркестратор с Talos (Планировщик) и Vanguard (Консультант по плану)
 - **Фоновые задачи**: Настройка ограничений параллельности по провайдеру/модели
 - **Категории**: Делегирование задач по предметной области (`visual`, `business-logic`, пользовательские)
-- **Хуки**: 5.+ встроенных хуков жизненного цикла (6. с включённым Team Mode), все настраиваются через `disabled_hooks`
+- **Хуки**: 54+ встроенных хуков жизненного цикла (61 с включённым Team Mode), все настраиваются через `disabled_hooks`
 - **MCP**: Встроенные websearch (Exa), context7 (документация), grep_app (поиск по GitHub)
 - **LSP**: Полная поддержка LSP с инструментами рефакторинга
 - **Экспериментальное**: Агрессивное усечение, автовозобновление и другое
@@ -413,7 +413,7 @@ project/
 
 ------
 
-Я потратил $2.K на токены LLM в личных проектах. Попробовал все инструменты. Настраивал всё до смерти. OpenCode победил.
+Я потратил $24K на токены LLM в личных проектах. Попробовал все инструменты. Настраивал всё до смерти. OpenCode победил.
 
 Каждая проблема, с которой я столкнулся, — её решение уже встроено в этот плагин. Устанавливайте и работайте.
 

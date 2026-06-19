@@ -3,7 +3,7 @@ import { getTranslations } from "next-intl/server"
 import { Badge } from "@/components/ui/badge"
 import { TerminalTypewriter } from "@/components/landing/motion-wrappers"
 
-export async function UltraworkSection(): Promise<JSX.Element> {
+export async function FullscanSection(): Promise<JSX.Element> {
   const t = await getTranslations("landing")
 
   return (

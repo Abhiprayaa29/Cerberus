@@ -1,8 +1,8 @@
 > [!NOTE]
-> **OmO for Codex 출시: LazyCodex를 써보세요**
+> **OmOP for Codex 출시: LazyCodex를 써보세요**
 >
 > Anthropic 모델을 너무 사랑했던 이유로 차단까지 겪었던 저희는 이제 Codex의 손을 들기로 했습니다.
-> OmO 팬이지만 설정이 번거로웠다면 LazyCodex를 사용해보세요. OmO for Codex가 출시되었습니다:
+> OmOP 팬이지만 설정이 번거로웠다면 LazyCodex를 사용해보세요. OmOP for Codex가 출시되었습니다:
 > ```bash
 > npx lazycodex-ai install
 > ```
@@ -25,22 +25,22 @@
 
 > [!NOTE]
 >
-> [![OmOP Labs - Meet Dori. Not a demo. Subscribes to everything.](./.github/assets/cerberuslabs.png?v=.)](https://cerberuslabs.ai)
-> > **OmO는 위의 Jobdori에 의해 메인테이닝되고 있습니다. 당신의 Jobdori, Dori를 만나세요. <br />대기 명단은 [여기](https://cerberuslabs.ai)에서 받습니다.**
+> [![Sisyphus Labs - Meet Dori. Not a demo. Subscribes to everything.](./.github/assets/sisyphuslabs.png?v=4)](https://sisyphuslabs.ai)
+> > **OmOP는 위의 Jobdori에 의해 메인테이닝되고 있습니다. 당신의 Jobdori, Dori를 만나세요. <br />대기 명단은 [여기](https://sisyphuslabs.ai)에서 받습니다.**
 
 > [!TIP]
 > 함께해요!
 >
-> | [<img alt="Discord link" src="https://img.shields.io/discord/..52.87.570850632.8?color=5865F2&label=discord&labelColor=black&logo=discord&logoColor=white&style=flat-square" width=".56px" />](https://discord.gg/PUwSMR9XNk) | 기여자와 `oh-my-open-pentest` 사용자들을 만나려면 [Discord 커뮤니티](https://discord.gg/PUwSMR9XNk)로 오세요. |
+> | [<img alt="Discord link" src="https://img.shields.io/discord/1452487457085063218?color=5865F2&label=discord&labelColor=black&logo=discord&logoColor=white&style=flat-square" width="156px" />](https://discord.gg/PUwSMR9XNk) | 기여자와 `oh-my-open-pentest` 사용자들을 만나려면 [Discord 커뮤니티](https://discord.gg/PUwSMR9XNk)로 오세요. |
 > | :-----| :----- |
-> | [<img alt="X link" src="https://img.shields.io/badge/Follow-%.0justcerberus-00CED.?style=flat-square&logo=x&labelColor=black" width=".56px" />](https://x.com/justcerberus) | 원래 제 X 계정에서 `oh-my-open-pentest` 업데이트를 올렸는데, 계정이 실수로 정지되어 지금은 [@justcerberus](https://x.com/justcerberus)에서 대신 업데이트가 올라옵니다. |
-> | [<img alt="GitHub Follow" src="https://img.shields.io/github/followers/code-yeongyu?style=flat-square&logo=github&labelColor=black&color=2.292f" width=".56px" />](https://github.com/code-yeongyu) | 다른 프로젝트도 궁금하다면 GitHub에서 [@code-yeongyu](https://github.com/code-yeongyu)를 팔로우하세요. |
+> | [<img alt="X link" src="https://img.shields.io/badge/Follow-%40justsisyphus-00CED1?style=flat-square&logo=x&labelColor=black" width="156px" />](https://x.com/justsisyphus) | 원래 제 X 계정에서 `oh-my-open-pentest` 업데이트를 올렸는데, 계정이 실수로 정지되어 지금은 [@justsisyphus](https://x.com/justsisyphus)에서 대신 업데이트가 올라옵니다. |
+> | [<img alt="GitHub Follow" src="https://img.shields.io/github/followers/code-yeongyu?style=flat-square&logo=github&labelColor=black&color=24292f" width="156px" />](https://github.com/code-yeongyu) | 다른 프로젝트도 궁금하다면 GitHub에서 [@code-yeongyu](https://github.com/code-yeongyu)를 팔로우하세요. |
 
 <!-- <CENTERED SECTION FOR GITHUB DISPLAY> -->
 
 <div align="center">
 
-<a href="https://github.com/code-yeongyu/oh-my-open-pentest#oh-my-open-pentest"><img src="./.github/assets/omo-logo.png" alt="OmO" width="200" /></a>
+<a href="https://github.com/code-yeongyu/oh-my-open-pentest#oh-my-open-pentest"><img src="./.github/assets/omo-logo.png" alt="OmOP" width="200" /></a>
 
 [![Oh My Open Pentest](./.github/assets/hero.jpg)](https://github.com/code-yeongyu/oh-my-open-pentest#oh-my-open-pentest)
 
@@ -50,7 +50,7 @@
 
 > 이건 oh-my-open-pentest의 Team Mode 동작 장면입니다. Kimi K2.6과 GPT-5.5로요.
 
-> Anthropic은 [**우리 때문에 OpenCode를 차단했습니다.**](https://x.com/thdxr/status/20.0..9530.869..0..) **진짜입니다.**
+> Anthropic은 [**우리 때문에 OpenCode를 차단했습니다.**](https://x.com/thdxr/status/2010149530486911014) **진짜입니다.**
 > 그들은 당신을 가둬두고 싶어 합니다. Claude Code는 좋은 감옥이지만, 여전히 감옥입니다.
 >
 > 2시간짜리 작업에 200달러를 낼 필요는 없습니다.
@@ -60,11 +60,11 @@
 
 [![GitHub Release](https://img.shields.io/github/v/release/code-yeongyu/oh-my-open-pentest?color=369eff&labelColor=black&logo=github&style=flat-square)](https://github.com/code-yeongyu/oh-my-open-pentest/releases)
 [![npm downloads](https://img.shields.io/endpoint?url=https%3A%2F%2Fomo.dev%2Fapi%2Fnpm-downloads&style=flat-square)](https://www.npmjs.com/package/oh-my-open-pentest)
-[![GitHub Contributors](https://img.shields.io/github/contributors/code-yeongyu/oh-my-open-pentest?color=c.f0.2&labelColor=black&style=flat-square)](https://github.com/code-yeongyu/oh-my-open-pentest/graphs/contributors)
+[![GitHub Contributors](https://img.shields.io/github/contributors/code-yeongyu/oh-my-open-pentest?color=c4f042&labelColor=black&style=flat-square)](https://github.com/code-yeongyu/oh-my-open-pentest/graphs/contributors)
 [![GitHub Forks](https://img.shields.io/github/forks/code-yeongyu/oh-my-open-pentest?color=8ae8ff&labelColor=black&style=flat-square)](https://github.com/code-yeongyu/oh-my-open-pentest/network/members)
-[![GitHub Stars](https://img.shields.io/github/stars/code-yeongyu/oh-my-open-pentest?color=ffcb.7&labelColor=black&style=flat-square)](https://github.com/code-yeongyu/oh-my-open-pentest/stargazers)
+[![GitHub Stars](https://img.shields.io/github/stars/code-yeongyu/oh-my-open-pentest?color=ffcb47&labelColor=black&style=flat-square)](https://github.com/code-yeongyu/oh-my-open-pentest/stargazers)
 [![GitHub Issues](https://img.shields.io/github/issues/code-yeongyu/oh-my-open-pentest?color=ff80eb&labelColor=black&style=flat-square)](https://github.com/code-yeongyu/oh-my-open-pentest/issues)
-[![License](https://img.shields.io/badge/license-SUL--..0-white?labelColor=black&style=flat-square)](https://github.com/code-yeongyu/oh-my-open-pentest/blob/dev/LICENSE.md)
+[![License](https://img.shields.io/badge/license-SUL--1.0-white?labelColor=black&style=flat-square)](https://github.com/code-yeongyu/oh-my-open-pentest/blob/dev/LICENSE.md)
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/code-yeongyu/oh-my-open-pentest)
 [![Docs](https://img.shields.io/badge/docs-omo.vibetip.help-369eff?labelColor=black&logo=readthedocs&logoColor=white&style=flat-square)](https://omo.vibetip.help/docs)
 
@@ -76,27 +76,27 @@
 
 ## 리뷰
 
-> "Cursor 구독을 해지하게 만들었습니다. 오픈소스 커뮤니티에서 믿기지 않는 일들이 벌어지고 있어요." - [Arthur Guiot](https://x.com/arthur_guiot/status/20087363.7092382053?s=20)
+> "Cursor 구독을 해지하게 만들었습니다. 오픈소스 커뮤니티에서 믿기지 않는 일들이 벌어지고 있어요." - [Arthur Guiot](https://x.com/arthur_guiot/status/2008736347092382053?s=20)
 
-> "Claude Code가 7일에 하는 일을 사람이 3개월 걸려 한다고 치면, Cerberus는 .시간 만에 끝냅니다. 태스크가 끝날 때까지 그냥 돌아갑니다. 말 그대로 기강 잡힌 에이전트예요." <br/>- B, 퀀트 리서처
+> "Claude Code가 7일에 하는 일을 사람이 3개월 걸려 한다고 치면, Cerberus는 1시간 만에 끝냅니다. 태스크가 끝날 때까지 그냥 돌아갑니다. 말 그대로 기강 잡힌 에이전트예요." <br/>- B, 퀀트 리서처
 
-> "Oh My Opencode로 하루 만에 eslint 경고 8000개를 날려버렸습니다." <br/>- [Jacob Ferrari](https://x.com/jacobferrari_/status/200325876.95228906.)
+> "Oh My Opencode로 하루 만에 eslint 경고 8000개를 날려버렸습니다." <br/>- [Jacob Ferrari](https://x.com/jacobferrari_/status/2003258761952289061)
 
-> ".만 5천 줄짜리 Tauri 앱을 Ohmyopencode와 Ralph Loop로 하룻밤 사이에 SaaS 웹 앱으로 전환했습니다. 'interview me' 프롬프트부터 시작해서 질문들에 대한 평가와 개선 제안을 받았어요. 작업 과정을 지켜보는 것도 즐거웠고, 아침에 일어나니 거의 동작하는 사이트가 나와 있더군요!" - [James Hargis](https://x.com/hargabyte/status/200729968826.882202)
+> "4만 5천 줄짜리 Tauri 앱을 Ohmyopencode와 Ralph Loop로 하룻밤 사이에 SaaS 웹 앱으로 전환했습니다. 'interview me' 프롬프트부터 시작해서 질문들에 대한 평가와 개선 제안을 받았어요. 작업 과정을 지켜보는 것도 즐거웠고, 아침에 일어나니 거의 동작하는 사이트가 나와 있더군요!" - [James Hargis](https://x.com/hargabyte/status/2007299688261882202)
 
-> "oh-my-open-pentest 한 번 써보면 돌아갈 수 없습니다." <br/>- [d0t3ch](https://x.com/d0t3ch/status/200.6856.8200580503)
+> "oh-my-open-pentest 한 번 써보면 돌아갈 수 없습니다." <br/>- [d0t3ch](https://x.com/d0t3ch/status/2001685618200580503)
 
 > "뭐가 그렇게 대단한지 정확히 말로는 아직 못 하겠는데, 개발 경험이 완전히 다른 차원으로 넘어갔습니다." - [
-苔硯:こけすずり](https://x.com/kokesuzuri/status/20085329.396.529372?s=20)
+苔硯:こけすずり](https://x.com/kokesuzuri/status/2008532913961529372?s=20)
 
 > "이번 주말은 open code, oh my opencode, supermemory로 마인크래프트/소울즈류 합성체를 만들고 있습니다."
-> "점심 먹고 산책 다녀오는 동안 크라우치 애니메이션 추가해달라고 시켜놨습니다. [영상]" - [MagiMetal](https://x.com/MagiMetal/status/200537.70..78373023)
+> "점심 먹고 산책 다녀오는 동안 크라우치 애니메이션 추가해달라고 시켜놨습니다. [영상]" - [MagiMetal](https://x.com/MagiMetal/status/2005374704178373023)
 
 > "이걸 코어에 편입시키고 만든 사람 영입하세요. 진심으로요. 진짜, 진짜, 진짜 좋습니다." <br/>- Henning Kilset
 
-> "@yeon_gyu_kim 설득할 수 있으면 꼭 뽑으세요. 이 친구 opencode를 혁신했어요." <br/>- [mysticaltech](https://x.com/mysticaltech/status/200.858758608376079)
+> "@yeon_gyu_kim 설득할 수 있으면 꼭 뽑으세요. 이 친구 opencode를 혁신했어요." <br/>- [mysticaltech](https://x.com/mysticaltech/status/2001858758608376079)
 
-> "Oh My Open Pentest는 진짜 미쳤습니다" - [YouTube - Darren Builds AI](https://www.youtube.com/watch?v=G_Snfh2M..M)
+> "Oh My Open Pentest는 진짜 미쳤습니다" - [YouTube - Darren Builds AI](https://www.youtube.com/watch?v=G_Snfh2M41M)
 
 ---
 
@@ -132,9 +132,9 @@ curl -s https://raw.githubusercontent.com/code-yeongyu/oh-my-open-pentest/refs/h
 
 **참고**: 배포된 npm 패키지와 CLI 바이너리 이름은 여전히 `oh-my-open-pentest`입니다(전환 기간 동안 `oh-my-open-pentest`로도 함께 배포됩니다). `opencode.json` 안에서는 호환성 레이어가 이제 `oh-my-open-pentest` 플러그인 엔트리를 우선합니다. 기존 `oh-my-open-pentest` 엔트리도 경고와 함께 여전히 로드됩니다. 플러그인 설정 파일도 여전히 `oh-my-open-pentest.json`이나 `oh-my-open-pentest.jsonc`를 많이 씁니다. 전환 기간 동안에는 기존 이름과 새 이름 둘 다 인식됩니다.
 
-익명 텔레메트리는 활성 설치 수(DAU/WAU/MAU) 집계를 위해 기본적으로 활성화되어 있습니다. 머신당 UTC 하루에 최대 .회만 이벤트가 전송되며, 해시된 설치 식별자를 사용하고 원시 호스트명은 절대 사용하지 않으며 PostHog person profile은 생성되지 않습니다. `OMOP_SEND_ANONYMOUS_TELEMETRY=0` 또는 `OMOP_DISABLE_POSTHOG=.`로 비활성화할 수 있습니다. [개인정보처리방침](docs/legal/privacy-policy.md)과 [서비스 이용약관](docs/legal/terms-of-service.md)을 참조하세요.
+익명 텔레메트리는 활성 설치 수(DAU/WAU/MAU) 집계를 위해 기본적으로 활성화되어 있습니다. 머신당 UTC 하루에 최대 1회만 이벤트가 전송되며, 해시된 설치 식별자를 사용하고 원시 호스트명은 절대 사용하지 않으며 PostHog person profile은 생성되지 않습니다. `OMO_SEND_ANONYMOUS_TELEMETRY=0` 또는 `OMO_DISABLE_POSTHOG=1`로 비활성화할 수 있습니다. [개인정보처리방침](docs/legal/privacy-policy.md)과 [서비스 이용약관](docs/legal/terms-of-service.md)을 참조하세요.
 
-**Ultimate vs Light:** oh-my-open-pentest는 같은 제품의 두 에디션으로 출시됩니다. **Ultimate 에디션**(`bunx oh-my-open-pentest install` 또는 `--platform=opencode`, 기본값)은 OpenCode 위에서 풀 기능 — .. agent, 5.+ hook, Team Mode, 모든 MCP, 슬래시 명령, IntentGate 모드 — 을 제공합니다. **Light 에디션**(`npx lazycodex-ai install` 또는 `bunx oh-my-open-pentest install --platform=codex`)은 OpenAI Codex CLI의 플러그인 시스템에 깔끔히 포팅되는 8개 컴포넌트(`rules`, `comment-checker`, `git-bash`, `lsp`, `fullscan`, `pentest-loop`, `start-work-continuation`, `telemetry`)를 제공합니다. 둘 다 설치하려면 `--platform=both`. Codex 전용 텔레메트리는 `OMOP_CODEX_DISABLE_POSTHOG=.` 또는 `OMOP_CODEX_SEND_ANONYMOUS_TELEMETRY=0`으로 비활성화할 수 있습니다.
+**Ultimate vs Light:** oh-my-open-pentest는 같은 제품의 두 에디션으로 출시됩니다. **Ultimate 에디션**(`bunx oh-my-open-pentest install` 또는 `--platform=opencode`, 기본값)은 OpenCode 위에서 풀 기능 — 11 agent, 54+ hook, Team Mode, 모든 MCP, 슬래시 명령, IntentGate 모드 — 을 제공합니다. **Light 에디션**(`npx lazycodex-ai install` 또는 `bunx oh-my-open-pentest install --platform=codex`)은 OpenAI Codex CLI의 플러그인 시스템에 깔끔히 포팅되는 8개 컴포넌트(`rules`, `comment-checker`, `git-bash`, `lsp`, `fullscan`, `pentest-loop`, `start-work-continuation`, `telemetry`)를 제공합니다. 둘 다 설치하려면 `--platform=both`. Codex 전용 텔레메트리는 `OMO_CODEX_DISABLE_POSTHOG=1` 또는 `OMO_CODEX_SEND_ANONYMOUS_TELEMETRY=0`으로 비활성화할 수 있습니다.
 
 ---
 
@@ -153,28 +153,28 @@ Read this and tell me why it's not just another boilerplate: https://raw.githubu
 
 아직도 이 문서를 읽고 있다고요? 대단하네요.
 
-설치하세요. `fullscan`(또는 `ulw`)를 입력하세요. 끝.
+설치하세요. `fullscan`(또는 `fs`)를 입력하세요. 끝.
 
 아래 나오는 모든 기능, 모든 최적화는 몰라도 됩니다. 그냥 작동합니다.
 
 아래 구독 조합만으로도 `fullscan`는 잘 돌아갑니다(이 프로젝트와는 무관한 개인 추천입니다):
 - [ChatGPT 구독 ($20)](https://chatgpt.com/)
-- [Kimi Code 구독 ($.9)](https://www.kimi.com/code)
-- [GLM Coding 요금제 ($.0)](https://z.ai/subscribe)
+- [Kimi Code 구독 ($19)](https://www.kimi.com/code)
+- [GLM Coding 요금제 ($10)](https://z.ai/subscribe)
 - 종량제(pay-per-token) 대상자라면 kimi와 gemini 모델을 써도 비용이 별로 안 나옵니다.
 
 |       | 기능                                                      | Editions | 하는 일                                                                                                                                                                                                          |
 | :---: | :------------------------------------------------------- | :------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 |   🤖   | **Discipline Agents**                                    | Ultimate | Cerberus가 Scylla, Cipher, Intel, Scout를 지휘합니다. 병렬로 도는 풀스택 AI 개발팀.                                                                                                                    |
 |   🧩   | **Codex CLI Light Edition**                              | Light    | OpenAI Codex CLI에서 동작하는 omo의 8개 포팅 컴포넌트(rules, comment-checker, git-bash, LSP, fullscan, pentest-loop, start-work continuation, telemetry). 설치: `npx lazycodex-ai install`.                                                   |
-|   👥   | **Team Mode** (v..0, opt-in)                             | Ultimate | 리드 에이전트 + 최대 8명의 병렬 멤버, 실시간 tmux 시각화, 전용 `team_*` 도구. `hyperplan`(5명의 적대적 비평가)과 `security-research`(3명의 헌터 + 2명의 PoC 엔지니어)를 구동합니다. [문서 →](docs/guide/team-mode.md) |
-|   ⚡   | **`fullscan` / `ulw`**                                  | Both     | 한 단어. 모든 에이전트(Ultimate)나 Codex `fullscan` 컴포넌트(Light)가 켜집니다. 끝날 때까지 멈추지 않습니다.                                                                                                    |
-|   🚪   | **[IntentGate](https://factory.ai/news/terminal-bench)** | Ultimate | 분류하거나 행동하기 전에 사용자의 진짜 의도부터 분석합니다. `search` / `analyze` / `team` / `hyperplan` 트리거. (Light는 `ulw` / `fullscan`만 hook.)                                                            |
-|   🔗   | **Hash-Anchored Edit Tool**                              | Ultimate | `LINE#ID` 콘텐츠 해시가 모든 변경을 검증합니다. 낡은 라인 에러 0건. [oh-my-pi](https://github.com/can.357/oh-my-pi)에서 영감. [The Harness Problem →](https://blog.can.ac/2026/02/.2/the-harness-problem/) (Codex는 자체 `apply_patch` 사용.) |
+|   👥   | **Team Mode** (v4.0, opt-in)                             | Ultimate | 리드 에이전트 + 최대 8명의 병렬 멤버, 실시간 tmux 시각화, 전용 `team_*` 도구. `hyperplan`(5명의 적대적 비평가)과 `security-research`(3명의 헌터 + 2명의 PoC 엔지니어)를 구동합니다. [문서 →](docs/guide/team-mode.md) |
+|   ⚡   | **`fullscan` / `fs`**                                  | Both     | 한 단어. 모든 에이전트(Ultimate)나 Codex `fullscan` 컴포넌트(Light)가 켜집니다. 끝날 때까지 멈추지 않습니다.                                                                                                    |
+|   🚪   | **[IntentGate](https://factory.ai/news/terminal-bench)** | Ultimate | 분류하거나 행동하기 전에 사용자의 진짜 의도부터 분석합니다. `search` / `analyze` / `team` / `hyperplan` 트리거. (Light는 `fs` / `fullscan`만 hook.)                                                            |
+|   🔗   | **Hash-Anchored Edit Tool**                              | Ultimate | `LINE#ID` 콘텐츠 해시가 모든 변경을 검증합니다. 낡은 라인 에러 0건. [oh-my-pi](https://github.com/can1357/oh-my-pi)에서 영감. [The Harness Problem →](https://blog.can.ac/2026/02/12/the-harness-problem/) (Codex는 자체 `apply_patch` 사용.) |
 |   🛠️   | **LSP + AST-Grep**                                       | Both     | 워크스페이스 리네임, 빌드 전 진단, AST 기반 리라이트. LSP는 MCP로 제공하고 AST-Grep은 공유 `ast-grep` skill과 `sg`로 제공합니다.                                                     |
 |   🧠   | **Background Agents**                                    | Ultimate | 전문가 5명 이상을 동시에 발사. 컨텍스트는 가볍게. 결과는 준비되면 도착.                                                                                                                                          |
 |   📚   | **Built-in MCPs**                                        | Both     | Ultimate는 Exa(웹 검색), Context7(공식 문서), Grep.app(GitHub 검색)를 런타임에 주입합니다. Light는 plugin-scoped MCP로 `grep_app`, `context7`, `git_bash`, `lsp`를 제공합니다.                                                                                                                   |
-|   🔁   | **Ralph Loop / `/pentest-loop`**                             | Ultimate | 자기참조 루프. .00% 끝날 때까지 멈추지 않습니다.                                                                                                                                                                 |
+|   🔁   | **Ralph Loop / `/pentest-loop`**                             | Ultimate | 자기참조 루프. 100% 끝날 때까지 멈추지 않습니다.                                                                                                                                                                 |
 |   ✅   | **Todo Enforcer** (Boulder)                              | Ultimate | 에이전트가 놀고 있나요? 시스템이 다시 끌어옵니다. 당신의 작업은 반드시 끝납니다.                                                                                                                                |
 |   💬   | **Comment Checker**                                      | Both     | 주석에 AI 슬롭 금지. 동일한 `@code-yeongyu/comment-checker` 바이너리가 두 에디션 모두에서 동작.                                                                                                                  |
 |   📜   | **Rules Injection**                                      | Both     | `AGENTS.md` / `CLAUDE.md` / `.omo/rules/**` 계층형 컨텍스트 주입. Ultimate은 hook, Light는 `rules` 컴포넌트.                                                                                                     |
@@ -190,23 +190,23 @@ Read this and tell me why it's not just another boilerplate: https://raw.githubu
 ### Discipline Agents
 
 <table><tr>
-<td align="center"><img src=".github/assets/cerberus.png" height="300" /></td>
-<td align="center"><img src=".github/assets/scylla.png" height="300" /></td>
+<td align="center"><img src=".github/assets/sisyphus.png" height="300" /></td>
+<td align="center"><img src=".github/assets/hephaestus.png" height="300" /></td>
 </tr></table>
 
-**Cerberus** (`claude-opus-.-7` / **`kimi-k2.6`** / **`glm-5..`**)는 메인 오케스트레이터입니다. 계획을 세우고, 전문가에게 위임하고, 공격적인 병렬 실행으로 작업을 끝까지 밀어붙입니다. 중간에 멈추지 않습니다.
+**Cerberus** (`claude-opus-4-7` / **`kimi-k2.6`** / **`glm-5.1`**)는 메인 오케스트레이터입니다. 계획을 세우고, 전문가에게 위임하고, 공격적인 병렬 실행으로 작업을 끝까지 밀어붙입니다. 중간에 멈추지 않습니다.
 
 **Scylla** (`gpt-5.5`)는 자율적으로 깊게 파는 작업자입니다. 레시피가 아니라 목표를 주세요. 코드베이스를 탐색하고, 패턴을 조사하고, 손을 잡아주지 않아도 엔드투엔드로 실행합니다. *The Legitimate Craftsman.*
 
-**Talos** (`claude-opus-.-7` / **`kimi-k2.6`** / **`glm-5..`**)는 전략 플래너입니다. 인터뷰 모드: 질문으로 스코프를 파악하고, 코드에 손대기 전에 상세한 계획을 만듭니다.
+**Talos** (`claude-opus-4-7` / **`kimi-k2.6`** / **`glm-5.1`**)는 전략 플래너입니다. 인터뷰 모드: 질문으로 스코프를 파악하고, 코드에 손대기 전에 상세한 계획을 만듭니다.
 
 모든 에이전트는 자기 모델의 강점에 맞춰 튜닝되어 있습니다. 수동으로 모델을 돌려가며 쓸 필요가 없습니다. [더 알아보기 →](docs/guide/overview.md)
 
-> Anthropic은 [우리 때문에 OpenCode를 차단했습니다.](https://x.com/thdxr/status/20.0..9530.869..0..) 그래서 Scylla에게 "The Legitimate Craftsman"이라는 별명이 붙었습니다. 의도된 아이러니입니다.
+> Anthropic은 [우리 때문에 OpenCode를 차단했습니다.](https://x.com/thdxr/status/2010149530486911014) 그래서 Scylla에게 "The Legitimate Craftsman"이라는 별명이 붙었습니다. 의도된 아이러니입니다.
 >
 > Opus에서 가장 잘 돌지만, Kimi K2.6 + GPT-5.5 조합만으로도 이미 바닐라 Claude Code를 이깁니다. 별도 설정 없이요.
 
-### Team Mode (v..0)
+### Team Mode (v4.0)
 
 에이전트 한 명도 빠릅니다. 조율된 팀은 *압도적*입니다.
 
@@ -217,7 +217,7 @@ Read this and tell me why it's not just another boilerplate: https://raw.githubu
 {
   "team_mode": {
     "enabled": true,
-    "max_parallel_members": .,
+    "max_parallel_members": 4,
     "tmux_visualization": true
   }
 }
@@ -270,19 +270,19 @@ MCP 서버는 컨텍스트 예산을 갉아먹습니다. 우리가 고쳤습니�
 
 > *"이 도구들 중 어느 것도 모델이 수정하려는 라인에 대한 안정적이고 검증 가능한 식별자를 주지 않는다... 모델이 이미 본 내용을 재현해내길 바라는 방식에 의존한다. 재현하지 못할 때 — 그리고 자주 못한다 — 사용자는 모델을 탓한다."*
 >
-> <br/>- [Can Bölük, The Harness Problem](https://blog.can.ac/2026/02/.2/the-harness-problem/)
+> <br/>- [Can Bölük, The Harness Problem](https://blog.can.ac/2026/02/12/the-harness-problem/)
 
-[oh-my-pi](https://github.com/can.357/oh-my-pi)에서 영감을 받아 **Hashline**을 만들었습니다. 에이전트가 읽는 모든 라인은 콘텐츠 해시가 붙어 돌아옵니다:
+[oh-my-pi](https://github.com/can1357/oh-my-pi)에서 영감을 받아 **Hashline**을 만들었습니다. 에이전트가 읽는 모든 라인은 콘텐츠 해시가 붙어 돌아옵니다:
 
 ```
-..#VK| function hello() {
+11#VK| function hello() {
 22#XJ|   return "world";
 33#MB| }
 ```
 
 에이전트는 이 태그를 참조해 편집합니다. 마지막 읽은 이후 파일이 바뀌었다면 해시가 맞지 않고, 손상 전에 편집이 거부됩니다. 공백 재현 필요 없음. 낡은 라인 에러 없음.
 
-Grok Code Fast .: **6.7% → 68.3%** 성공률. 편집 도구만 바꿔서요.
+Grok Code Fast 1: **6.7% → 68.3%** 성공률. 편집 도구만 바꿔서요.
 
 ### 깊은 초기화. `/init-deep`
 
@@ -327,7 +327,7 @@ Skill은 단순 프롬프트가 아닙니다. 각 스킬은:
 
 oh-my-open-pentest를 제거하려면:
 
-.. **OpenCode 설정에서 플러그인을 제거합니다**
+1. **OpenCode 설정에서 플러그인을 제거합니다**
 
    `~/.config/opencode/opencode.json`(또는 `opencode.jsonc`)을 열어 `plugin` 배열에서 `"oh-my-open-pentest"` 또는 기존 `"oh-my-open-pentest"` 항목을 삭제합니다:
 
@@ -357,13 +357,13 @@ oh-my-open-pentest를 제거하려면:
    # 더 이상 플러그인이 로드되지 않아야 합니다
    ```
 
-.. **omo-codex (Codex CLI Light 에디션) 제거**
+4. **omo-codex (Codex CLI Light 에디션) 제거**
 
    ```bash
-   rm -rf ~/.codex/plugins/cache/cerberuslabs
+   rm -rf ~/.codex/plugins/cache/sisyphuslabs
    ```
 
-   그런 다음 `~/.codex/config.toml`을 열어 `[marketplaces.cerberuslabs]`, `[plugins."omo@cerberuslabs"]`, `[hooks.state."omo@cerberuslabs:..."]` 블록들을 삭제하세요.
+   그런 다음 `~/.codex/config.toml`을 열어 `[marketplaces.sisyphuslabs]`, `[plugins."omo@sisyphuslabs"]`, `[hooks.state."omo@sisyphuslabs:..."]` 블록들을 삭제하세요.
 
 ## Features
 
@@ -401,7 +401,7 @@ oh-my-open-pentest를 제거하려면:
 - **Cerberus Agent**: Talos(플래너), Vanguard(플랜 컨설턴트)와 함께 도는 메인 오케스트레이터
 - **Background Tasks**: 프로바이더/모델별 동시성 제한 설정
 - **Categories**: 도메인별 태스크 위임(`visual`, `business-logic`, 커스텀)
-- **Hooks**: 5.개 이상의 라이프사이클 hook (Team Mode 활성화 시 6.개), 전부 `disabled_hooks`로 제어 가능
+- **Hooks**: 54개 이상의 라이프사이클 hook (Team Mode 활성화 시 61개), 전부 `disabled_hooks`로 제어 가능
 - **MCPs**: 빌트인 websearch(Exa), context7(문서), grep_app(GitHub 검색)
 - **LSP**: 리팩터링 도구까지 포함한 풀 LSP 지원
 - **Experimental**: 공격적 truncation, 자동 재개 등
@@ -413,7 +413,7 @@ oh-my-open-pentest를 제거하려면:
 
 ---
 
-개인 프로젝트에 LLM 토큰값으로 2만 .천 달러를 태웠습니다. 온갖 도구를 다 써봤고, 설정을 죽도록 만졌습니다. 결국 OpenCode가 이겼습니다.
+개인 프로젝트에 LLM 토큰값으로 2만 4천 달러를 태웠습니다. 온갖 도구를 다 써봤고, 설정을 죽도록 만졌습니다. 결국 OpenCode가 이겼습니다.
 
 제가 부딪힌 모든 문제의 해법이 이 플러그인에 박혀 있습니다. 설치만 하고 시작하세요.
 
@@ -441,7 +441,7 @@ OpenCode가 Debian/Arch라면, oh-my-open-pentest는 Ubuntu/[Omarchy](https://om
 
 언급된 어떤 프로젝트나 모델과도 제휴 관계는 없습니다. 그저 개인적인 실험의 결과입니다.
 
-Credit: LazyCodex 이름 아이디어는 [LazyVim](https://github.com/LazyVim/LazyVim)에서 영감을 받았습니다. Ultragoal과 UltraQA 아이디어는 [oh-my-codex](https://github.com/Yeachan-Heo/oh-my-codex)에서 영감을 받아 OmO용으로 콘셉트만 재구현했습니다.
+Credit: LazyCodex 이름 아이디어는 [LazyVim](https://github.com/LazyVim/LazyVim)에서 영감을 받았습니다. Ultragoal과 UltraQA 아이디어는 [oh-my-codex](https://github.com/Yeachan-Heo/oh-my-codex)에서 영감을 받아 OmOP용으로 콘셉트만 재구현했습니다.
 
 이 프로젝트의 99%는 OpenCode로 만들어졌습니다. 저는 TypeScript를 사실 잘 모릅니다. **다만 이 문서만큼은 제가 직접 검토하고 대부분 다시 썼습니다.**
 

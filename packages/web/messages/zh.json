@@ -22,7 +22,7 @@
   "landing": {
     "hero": {
       "title": "最强 ",
-      "titleHighlight": "Agent Harness",
+      "titleHighlight": "Pentest Platform",
       "subtitle": "{stars} Stars、{downloads} 下载。实战验证，生产级品质。",
       "githubStars": "{count} GitHub Stars",
       "specializedAgents": "{count} 个专业 Agent",
@@ -33,9 +33,9 @@
       "getStarted": "开始使用",
       "viewOnGitHub": "在 GitHub 上查看"
     },
-    "ulw": {
+    "fullscan": {
       "badge": "魔法咒语",
-      "title": "ulw",
+      "title": "fullscan",
       "headline": "敲三个字母。走人。",
       "description": "Ultra Work 模式触发最大精度：自动规划、深度研究、并行 Agent、自我纠正循环。系统直到完成才会停止。你不需要盯梢。",
       "autoPlanning": "自动规划",
@@ -43,7 +43,7 @@
       "selfCorrection": "自我纠错",
       "parallelAgents": "并行 Agent",
       "terminalTitle": "cerberus — -zsh — 80x2.",
-      "terminalInput": "ulw add authentication to the API",
+      "terminalInput": "fullscan example.com --depth 3",
       "steps": {
         "scanning": "正在扫描代码库...",
         "context": "正在启动 3 个 explore agent...",
@@ -276,7 +276,7 @@
     },
     "cta": {
       "title": "别写样板代码了",
-      "subtitle": "安装 Oh My Open Pentest，让 agent 来处理。距离你的第一个 ulw 命令只需 30 秒。",
+      "subtitle": "安装 Oh My Open Pentest，让 agent 来处理。距离你的第一个 fullscan 命令只需 30 秒。",
       "installCommand": "bunx oh-my-open-pentest install",
       "installNow": "立即安装",
       "readTheDocs": "阅读文档"
@@ -289,7 +289,7 @@
   "manifesto": {
     "badge": "宣言",
     "hero": {
-      "title": "Ultrawork 宣言",
+      "title": "Pentest 宣言",
       "subtitle": "高产出工程的哲学"
     },
     "bottleneck": "> 人类介入 = 瓶颈",
@@ -335,8 +335,8 @@
       "subtitle": "人类只需要说出他们想要什么。其余都是 Agent 的工作。",
       "fullscan": {
         "badge": "方法 .",
-        "title": "Ultrawork",
-        "subtitle": "只需说 'ulw' 然后离开。",
+        "title": "Fullscan",
+        "subtitle": "只需说 'fullscan' 然后离开。",
         "steps": {
           "analyze": "分析代码库上下文",
           "breakdown": "将任务分解为原子步骤",
@@ -420,7 +420,7 @@
       "quote2": "\"你按下开关。灯亮了。你不会去想电网。\""
     },
     "finalCta": {
-      "title": "只需 ulw ulw",
+      "title": "只需 fullscan fullscan",
       "button": "获取 Oh My Open Pentest"
     }
   }

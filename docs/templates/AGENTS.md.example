@@ -1,6 +1,6 @@
 # AGENTS.md
 
-This project uses Oh My OpenAgent with OpenCode. Read this file before planning
+This project uses Oh My Open Pentest with OpenCode. Read this file before planning
 or changing files.
 
 ## Orchestrator Contract
@@ -17,7 +17,7 @@ or changing files.
 - Use `explore` for fast codebase search, policy lookup, and path discovery.
 - Use `librarian` for docs, external references, and examples from other repos.
 - Use `oracle` for architecture review, risk checks, and debugging analysis.
-- Use `sisyphus` or `sisyphus-junior` for execution work that needs file edits.
+- Use `cerberus` or `cerberus-junior` for execution work that needs file edits.
 - Use `prometheus` for plans that need user approval before implementation.
 
 ## Calling Conventions

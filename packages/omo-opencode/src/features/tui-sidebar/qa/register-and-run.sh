@@ -44,14 +44,14 @@ cat >"$OPENCODE_CONFIG_DIR/opencode.json" <<JSON
 }
 JSON
 
-cat >"$OPENCODE_CONFIG_DIR/plugins/oh-my-openagent.js" <<JS
+cat >"$OPENCODE_CONFIG_DIR/plugins/oh-my-open-pentest.js" <<JS
 export { default } from "file://$PLUGIN_FILE"
 JS
 
 PROJECT="$OQA_PROJ"
 if [ "$DISABLED" -eq 1 ]; then
   mkdir -p "$PROJECT/.opencode"
-  cat >"$PROJECT/.opencode/oh-my-openagent.json" <<'JSON'
+  cat >"$PROJECT/.opencode/oh-my-open-pentest.json" <<'JSON'
 {
   "tui": {
     "sidebar": {
@@ -62,7 +62,7 @@ if [ "$DISABLED" -eq 1 ]; then
 JSON
 fi
 
-MIRROR_DIR="$XDG_DATA_HOME/opencode/storage/oh-my-openagent/tui-state"
+MIRROR_DIR="$XDG_DATA_HOME/opencode/storage/oh-my-open-pentest/tui-state"
 RUN_OUT="$PROJECT/opencode-run.jsonl"
 RUN_ERR="$PROJECT/opencode-run.err"
 

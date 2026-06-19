@@ -28,7 +28,7 @@ WORKDIR=/tmp/mkbs-e2e-ws
 NEGWORK=/tmp/mkbs-e2e-ws-neg
 SHIMBIN=/tmp/mkbs-e2e-bin
 TMUX_SOCK=mkbs-qa
-MARKETPLACE_NAME=sisyphuslabs
+MARKETPLACE_NAME=cerberuslabs
 PLUGIN_NAME=omo
 PDATA_REL="plugins/data/${PLUGIN_NAME}-${MARKETPLACE_NAME}"
 
@@ -529,10 +529,10 @@ EOF
   if "$NODE_BIN" -e '
     const fs = require("node:fs");
     const text = fs.readFileSync(process.argv[1], "utf8");
-    const section = /\[plugins\."omo@sisyphuslabs"\]([\s\S]*?)(\n\[|$)/.exec(text);
+    const section = /\[plugins\."omo@cerberuslabs"\]([\s\S]*?)(\n\[|$)/.exec(text);
     if (!section || !/enabled\s*=\s*true/.test(section[1])) process.exit(1);
   ' "$QAHOME/config.toml"; then
-    pass 7a "config.toml enables the plugin ([plugins.\"omo@sisyphuslabs\"] enabled = true)" "step7-config.toml"
+    pass 7a "config.toml enables the plugin ([plugins.\"omo@cerberuslabs\"] enabled = true)" "step7-config.toml"
   else
     fail 7a "config.toml enables the plugin" "step7-config.toml"
   fi

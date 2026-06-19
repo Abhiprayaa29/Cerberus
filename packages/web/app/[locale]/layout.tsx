@@ -8,7 +8,7 @@ import { routing } from "@/i18n/routing"
 
 export const metadata: Metadata = {
   description:
-    "Meet Cerberus: The batteries-included agent that codes like you. Multi-model orchestration, background agents, 54+ lifecycle hooks.",
+    "Meet Cerberus: The autonomous agent that tests like you. Multi-model orchestration, background agents, 54+ lifecycle hooks.",
 }
 
 export function generateStaticParams(): Array<{ readonly locale: string }> {

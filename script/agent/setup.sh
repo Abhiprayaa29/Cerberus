@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Cross-harness dev-environment bootstrap for oh-my-openagent.
+# Cross-harness dev-environment bootstrap for oh-my-open-pentest.
 #
 # Single source of truth for setting up a working tree so an agent (or human)
 # can build and QA the plugin. Wired into Codex App (.codex/setup.sh), Cursor
