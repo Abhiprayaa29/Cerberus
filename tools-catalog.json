@@ -1138,6 +1138,348 @@
       "output_format": ["html", "xml", "json", "markdown"],
       "homepage": "https://www.zaproxy.org",
       "alternatives": ["burpsuite", "nuclei"]
+    },
+
+    {
+      "tools_name": "pwntools",
+      "description": "CTF exploitation framework. Python library for exploit development, binary exploitation, and crypto challenges.",
+      "category": "exploitation",
+      "command": {
+        "base": "python3",
+        "flags": [
+          { "name": "-c", "type": "string", "description": "Python code to execute", "required": false }
+        ],
+        "positional": [
+          { "name": "script", "type": "path", "description": "Python exploit script", "required": false }
+        ],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "pip3 install pwntools", "manager": "pip" },
+        "darwin": { "command": "pip3 install pwntools", "manager": "pip" },
+        "win32": { "command": "pip3 install pwntools", "manager": "pip" }
+      },
+      "check_installed": {
+        "command": "python3 -c \"import pwn; print(pwn.__version__)\"",
+        "exit_code": 0,
+        "parse_version": "([\\d.]+)"
+      },
+      "skills_loader": "ctf-exploit",
+      "phase": ["exploitation"],
+      "tags": ["ctf", "exploit", "binary", "crypto", "python"],
+      "requires_root": false,
+      "output_format": ["text", "binary"],
+      "homepage": "https://docs.pwntools.com",
+      "alternatives": ["metasploit"]
+    },
+
+    {
+      "tools_name": "metasploit",
+      "description": "Penetration testing framework. Exploit development, payload generation, post-exploitation, and pivoting.",
+      "category": "exploitation",
+      "command": {
+        "base": "msfconsole",
+        "flags": [
+          { "name": "-q", "type": "boolean", "description": "Quiet mode", "default": false },
+          { "name": "-x", "type": "string", "description": "Execute commands", "required": false },
+          { "name": "-r", "type": "path", "description": "Resource file", "required": false }
+        ],
+        "positional": [],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "sudo apt-get install -y metasploit-framework", "manager": "apt" },
+        "darwin": { "command": "brew install metasploit", "manager": "brew" },
+        "win32": { "command": "Download from https://www.metasploit.com/download", "manager": "manual" }
+      },
+      "check_installed": {
+        "command": "msfconsole --version",
+        "exit_code": 0,
+        "parse_version": "([\\d.]+)"
+      },
+      "skills_loader": "red-exploit",
+      "phase": ["exploitation"],
+      "tags": ["exploit", "payload", "post-exploitation", "pivot", "red-team"],
+      "requires_root": true,
+      "output_format": ["text", "json"],
+      "homepage": "https://www.metasploit.com",
+      "alternatives": ["pwntools", "sqlmap"]
+    },
+
+    {
+      "tools_name": "bloodhound",
+      "description": "Active Directory attack path mapping. Identifies privilege escalation paths and trust relationships.",
+      "category": "exploitation",
+      "command": {
+        "base": "bloodhound",
+        "flags": [
+          { "name": "-c", "type": "string", "description": "Collection methods", "required": false },
+          { "name": "-d", "type": "string", "description": "Domain", "required": false },
+          { "name": "-u", "type": "string", "description": "Username", "required": false },
+          { "name": "-p", "type": "string", "description": "Password", "required": false },
+          { "name": "-ns", "type": "string", "description": "Nameserver", "required": false }
+        ],
+        "positional": [],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "pip3 install bloodhound && sudo apt-get install -y bloodhound", "manager": "pip+apt" },
+        "darwin": { "command": "pip3 install bloodhound && brew install bloodhound", "manager": "pip+brew" },
+        "win32": { "command": "pip3 install bloodhound", "manager": "pip" }
+      },
+      "check_installed": {
+        "command": "bloodhound --version",
+        "exit_code": 0
+      },
+      "skills_loader": "red-lateral",
+      "phase": ["exploitation"],
+      "tags": ["ad", "active-directory", "kerberos", "lateral-movement", "red-team"],
+      "requires_root": false,
+      "output_format": ["json", "graph"],
+      "homepage": "https://github.com/BloodHoundAD/BloodHound",
+      "alternatives": ["crackmapexec"]
+    },
+
+    {
+      "tools_name": "crackmapexec",
+      "description": "Post-exploitation lateral movement tool. SMB, WinRM, MSSQL, and Active Directory enumeration.",
+      "category": "exploitation",
+      "command": {
+        "base": "cme",
+        "flags": [
+          { "name": "smb", "type": "boolean", "description": "SMB protocol", "default": true },
+          { "name": "winrm", "type": "boolean", "description": "WinRM protocol", "default": false },
+          { "name": "mssql", "type": "boolean", "description": "MSSQL protocol", "default": false },
+          { "name": "-u", "type": "string", "description": "Username", "required": false },
+          { "name": "-p", "type": "string", "description": "Password", "required": false },
+          { "name": "-H", "type": "string", "description": "NTLM hash", "required": false },
+          { "name": "-d", "type": "string", "description": "Domain", "required": false }
+        ],
+        "positional": [
+          { "name": "target", "type": "string", "description": "Target IP/range", "required": true }
+        ],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "pipx install crackmapexec", "manager": "pipx" },
+        "darwin": { "command": "pipx install crackmapexec", "manager": "pipx" },
+        "win32": { "command": "pipx install crackmapexec", "manager": "pipx" }
+      },
+      "check_installed": {
+        "command": "cme --version",
+        "exit_code": 0,
+        "parse_version": "([\\d.]+)"
+      },
+      "skills_loader": "red-lateral",
+      "phase": ["exploitation"],
+      "tags": ["lateral-movement", "smb", "winrm", "ad", "red-team"],
+      "requires_root": false,
+      "output_format": ["text", "json"],
+      "homepage": "https://github.com/byt3bl33d3r/CrackMapExec",
+      "alternatives": ["bloodhound", "impacket"]
+    },
+
+    {
+      "tools_name": "responder",
+      "description": "LLMNR/NBT-NS/mDNS poisoner. Captures NTLM hashes from network traffic.",
+      "category": "exploitation",
+      "command": {
+        "base": "responder",
+        "flags": [
+          { "name": "-I", "type": "string", "description": "Interface", "required": true },
+          { "name": "-w", "type": "boolean", "description": "WPAD rogue proxy", "default": false },
+          { "name": "-f", "type": "boolean", "description": "Fingerprint hosts", "default": false },
+          { "name": "-v", "type": "boolean", "description": "Verbose", "default": false }
+        ],
+        "positional": [],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "sudo apt-get install -y responder", "manager": "apt" },
+        "darwin": { "command": "git clone https://github.com/lgandx/Responder.git", "manager": "git" },
+        "win32": { "command": "Not supported on Windows", "manager": "manual" }
+      },
+      "check_installed": {
+        "command": "responder --version",
+        "exit_code": 0
+      },
+      "skills_loader": "red-exploit",
+      "phase": ["exploitation"],
+      "tags": ["llmnr", "nbt-ns", "ntlm", "hash-capture", "red-team"],
+      "requires_root": true,
+      "output_format": ["text", "log"],
+      "homepage": "https://github.com/lgandx/Responder",
+      "alternatives": ["crackmapexec"]
+    },
+
+    {
+      "tools_name": "impacket",
+      "description": "Network protocols implementation. SMB, Kerberos, MSRPC, WMI, DCE/RPC for lateral movement.",
+      "category": "exploitation",
+      "command": {
+        "base": "python3",
+        "flags": [
+          { "name": "-c", "type": "string", "description": "Python code to execute", "required": false }
+        ],
+        "positional": [
+          { "name": "script", "type": "path", "description": "Impacket script (secretsdump, psexec, etc.)", "required": false }
+        ],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "pip3 install impacket", "manager": "pip" },
+        "darwin": { "command": "pip3 install impacket", "manager": "pip" },
+        "win32": { "command": "pip3 install impacket", "manager": "pip" }
+      },
+      "check_installed": {
+        "command": "python3 -c \"import impacket; print(impacket.__version__)\"",
+        "exit_code": 0,
+        "parse_version": "([\\d.]+)"
+      },
+      "skills_loader": "red-lateral",
+      "phase": ["exploitation"],
+      "tags": ["smb", "kerberos", "wmi", "dce-rpc", "lateral-movement", "red-team"],
+      "requires_root": false,
+      "output_format": ["text"],
+      "homepage": "https://github.com/SecureAuthCorp/impacket",
+      "alternatives": ["crackmapexec", "bloodhound"]
+    },
+
+    {
+      "tools_name": "volatility",
+      "description": "Memory forensics framework. Analyzes RAM dumps for malware, artifacts, and incident response.",
+      "category": "utility",
+      "command": {
+        "base": "vol",
+        "flags": [
+          { "name": "-f", "type": "path", "description": "Memory dump file", "required": true },
+          { "name": "--profile", "type": "string", "description": "OS profile", "required": false },
+          { "name": "-o", "type": "path", "description": "Output file", "required": false }
+        ],
+        "positional": [
+          { "name": "plugin", "type": "string", "description": "Volatility plugin (pslist, netscan, etc.)", "required": true }
+        ],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "pip3 install volatility3", "manager": "pip" },
+        "darwin": { "command": "pip3 install volatility3", "manager": "pip" },
+        "win32": { "command": "pip3 install volatility3", "manager": "pip" }
+      },
+      "check_installed": {
+        "command": "vol --version",
+        "exit_code": 0,
+        "parse_version": "([\\d.]+)"
+      },
+      "skills_loader": "blue-forensics",
+      "phase": ["reporting"],
+      "tags": ["forensics", "memory", "malware", "ir", "blue-team"],
+      "requires_root": false,
+      "output_format": ["text", "json", "csv"],
+      "homepage": "https://github.com/volatilityfoundation/volatility3",
+      "alternatives": ["autopsy"]
+    },
+
+    {
+      "tools_name": "wireshark",
+      "description": "Network protocol analyzer. Deep packet inspection, traffic analysis, and protocol decoding.",
+      "category": "utility",
+      "command": {
+        "base": "tshark",
+        "flags": [
+          { "name": "-i", "type": "string", "description": "Interface", "required": false },
+          { "name": "-r", "type": "path", "description": "Read from pcap file", "required": false },
+          { "name": "-w", "type": "path", "description": "Write to pcap file", "required": false },
+          { "name": "-Y", "type": "string", "description": "Display filter", "required": false },
+          { "name": "-T", "type": "choice", "description": "Output format", "choices": ["text", "json", "jsonraw", "ek"], "default": "text" }
+        ],
+        "positional": [],
+        "pipes": ["jq", "grep"]
+      },
+      "installation": {
+        "linux": { "command": "sudo apt-get install -y tshark", "manager": "apt" },
+        "darwin": { "command": "brew install wireshark", "manager": "brew" },
+        "win32": { "command": "winget install Wireshark", "manager": "winget" }
+      },
+      "check_installed": {
+        "command": "tshark --version",
+        "exit_code": 0,
+        "parse_version": "TShark \\(Wireshark\\) ([\\d.]+)"
+      },
+      "skills_loader": "blue-detect",
+      "phase": ["enumeration", "reporting"],
+      "tags": ["network", "packet", "protocol", "traffic", "blue-team"],
+      "requires_root": true,
+      "output_format": ["text", "json", "pcap"],
+      "homepage": "https://www.wireshark.org",
+      "alternatives": ["tcpdump"]
+    },
+
+    {
+      "tools_name": "yara",
+      "description": "Pattern matching for malware detection. Signature-based malware identification.",
+      "category": "utility",
+      "command": {
+        "base": "yara",
+        "flags": [
+          { "name": "-r", "type": "boolean", "description": "Recursive scan", "default": false },
+          { "name": "-s", "type": "boolean", "description": "Show matching strings", "default": false },
+          { "name": "-m", "type": "boolean", "description": "Print metadata", "default": false },
+          { "name": "-o", "type": "path", "description": "Output file", "required": false }
+        ],
+        "positional": [
+          { "name": "rules", "type": "path", "description": "YARA rules file", "required": true },
+          { "name": "target", "type": "path", "description": "File or directory to scan", "required": true }
+        ],
+        "pipes": ["jq", "grep"]
+      },
+      "installation": {
+        "linux": { "command": "sudo apt-get install -y yara", "manager": "apt" },
+        "darwin": { "command": "brew install yara", "manager": "brew" },
+        "win32": { "command": "Download from https://github.com/VirusTotal/yara/releases", "manager": "manual" }
+      },
+      "check_installed": {
+        "command": "yara --version",
+        "exit_code": 0,
+        "parse_version": "yara ([\\d.]+)"
+      },
+      "skills_loader": "blue-detect",
+      "phase": ["enumeration", "reporting"],
+      "tags": ["malware", "signature", "detection", "blue-team"],
+      "requires_root": false,
+      "output_format": ["text", "json"],
+      "homepage": "https://github.com/VirusTotal/yara",
+      "alternatives": ["volatility", "clamav"]
+    },
+
+    {
+      "tools_name": "autopsy",
+      "description": "Digital forensics platform. Disk image analysis, file recovery, timeline generation.",
+      "category": "utility",
+      "command": {
+        "base": "autopsy",
+        "flags": [],
+        "positional": [
+          { "name": "case", "type": "path", "description": "Case directory", "required": false }
+        ],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "sudo apt-get install -y autopsy", "manager": "apt" },
+        "darwin": { "command": "brew install autopsy", "manager": "brew" },
+        "win32": { "command": "Download from https://www.autopsy.com/download/", "manager": "manual" }
+      },
+      "check_installed": {
+        "command": "autopsy --version",
+        "exit_code": 0
+      },
+      "skills_loader": "blue-forensics",
+      "phase": ["reporting"],
+      "tags": ["forensics", "disk", "recovery", "timeline", "blue-team"],
+      "requires_root": false,
+      "output_format": ["html", "json", "csv"],
+      "homepage": "https://www.autopsy.com",
+      "alternatives": ["volatility", "sleuthkit"]
     }
   ]
 }
