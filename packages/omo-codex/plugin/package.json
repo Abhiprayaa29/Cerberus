@@ -14,8 +14,8 @@
 		"components/lsp",
 		"components/telemetry",
 		"components/start-work-continuation",
-		"components/ulw-loop",
-		"components/ultrawork"
+		"components/pentest-loop",
+		"components/fullscan"
 	],
 	"dependencies": {
 		"@omop/shared-skills": "file:../../shared-skills",

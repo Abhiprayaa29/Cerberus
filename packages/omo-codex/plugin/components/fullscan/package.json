@@ -1,17 +1,17 @@
 {
-	"name": "@code-yeongyu/codex-ultrawork",
+	"name": "@code-yeongyu/codex-fullscan",
 	"version": "1.0.0",
-	"description": "Codex plugin that injects the ultrawork orchestration directive and ships LazyCodex planning, review, QA, and gate agent roles.",
+	"description": "Codex plugin that injects the fullscan orchestration directive and ships LazyCodex planning, review, QA, and gate agent roles.",
 	"type": "module",
 	"packageManager": "npm@11.12.1",
 	"license": "MIT",
-	"homepage": "https://github.com/code-yeongyu/codex-ultrawork",
+	"homepage": "https://github.com/code-yeongyu/codex-fullscan",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/code-yeongyu/codex-ultrawork.git"
+		"url": "git+https://github.com/code-yeongyu/codex-fullscan.git"
 	},
 	"bugs": {
-		"url": "https://github.com/code-yeongyu/codex-ultrawork/issues"
+		"url": "https://github.com/code-yeongyu/codex-fullscan/issues"
 	},
 	"keywords": [
 		"codex",
@@ -22,7 +22,7 @@
 		"orchestration"
 	],
 	"bin": {
-		"omo-ultrawork": "./dist/cli.js"
+		"omo-fullscan": "./dist/cli.js"
 	},
 	"scripts": {
 		"build": "node scripts/sync-directive.mjs && node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\" && bun build src/cli.ts --target node --format esm --outfile dist/cli.js",

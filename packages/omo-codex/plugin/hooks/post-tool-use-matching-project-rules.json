@@ -6,8 +6,8 @@
 					{
 						"type": "command",
 						"command": "node \"${PLUGIN_ROOT}/components/rules/dist/cli.js\" hook post-tool-use",
-						"timeout": 1,
-						"statusMessage": "(OmO) Matching Project Rules"
+						"timeout": 5,
+						"statusMessage": "(OmOP) Matching Project Rules"
 					}
 				],
 				"matcher": "^apply_patch$"

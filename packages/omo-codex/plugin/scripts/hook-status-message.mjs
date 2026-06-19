@@ -1,10 +1,10 @@
-const PRODUCT_PREFIX = "(OmO)";
+const PRODUCT_PREFIX = "(OmOP)";
 
 const WORD_OVERRIDES = new Map([
 	["lazycodex", "LazyCodex"],
 	["lsp", "LSP"],
 	["mcp", "MCP"],
-	["pentest-loop", "Ulw-Loop"],
+	["pentest-loop", "Pentest-Loop"],
 ]);
 
 export function formatLazyCodexHookStatusMessage(version, label) {
@@ -16,8 +16,8 @@ export function normalizeLazyCodexHookStatusLabel(label) {
 	const parsed = parseLazyCodexHookStatusMessage(label);
 	const rawLabel = parsed === null ? label : parsed.label;
 	const normalized = rawLabel
-		.replace(/^\(OmO\)\s*/i, " ")
-		.replace(/\bOMO\b/gi, " ")
+		.replace(/^\(OmO[P]?\)\s*/i, " ")
+		.replace(/\bOMO[P]?\b/gi, " ")
 		.replace(/\s+/g, " ")
 		.trim();
 	if (normalized.length === 0) return "";
@@ -29,7 +29,7 @@ export function normalizeLazyCodexHookStatusLabel(label) {
 
 export function parseLazyCodexHookStatusMessage(message) {
 	const trimmed = message.trim();
-	const current = /^\(OmO\)\s+(.+)$/.exec(trimmed);
+	const current = /^\(OmO[P]?\)\s+(.+)$/.exec(trimmed);
 	if (current !== null) return { version: undefined, label: current[1] };
 	const legacy = /^LazyCodex\(([^)]+)\):\s+(.+)$/.exec(trimmed);
 	if (legacy === null) return null;

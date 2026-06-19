@@ -6,8 +6,8 @@
 					{
 						"type": "command",
 						"command": "node \"${PLUGIN_ROOT}/components/start-work-continuation/dist/cli.js\" hook subagent-stop",
-						"timeout": 1,
-						"statusMessage": "(OmO) Checking Start-Work Continuation"
+						"timeout": 5,
+						"statusMessage": "(OmOP) Checking Start-Work Continuation"
 					}
 				]
 			}

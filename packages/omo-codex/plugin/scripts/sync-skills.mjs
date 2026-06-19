@@ -16,7 +16,7 @@ const skillSources = [
 	["ulw-plan", "components/fullscan/skills/ulw-plan"],
 ];
 const componentSkillNames = new Set(skillSources.map(([name]) => name));
-const skillDisplayPrefix = "(OmO) ";
+const skillDisplayPrefix = "(OmOP) ";
 
 const opencodeOnlyOrchestrationPattern = /\b(?:call_omo_agent|background_output|team_[a-z_]+|task)\s*\(/;
 
