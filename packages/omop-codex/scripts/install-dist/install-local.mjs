@@ -8020,6 +8020,24 @@ var RETIRED_MANAGED_AGENT_FILES = [
       'description = "Strict fullscan verification reviewer.',
       'developer_instructions = """You are the fullscan verification reviewer.'
     ]
+  },
+  {
+    fileName: "librarian.toml",
+    requiredMarkers: [
+      'name = "intel"'
+    ]
+  },
+  {
+    fileName: "metis.toml",
+    requiredMarkers: [
+      'name = "vanguard"'
+    ]
+  },
+  {
+    fileName: "momus.toml",
+    requiredMarkers: [
+      'name = "sentinel"'
+    ]
   }
 ];
 async function purgeRetiredManagedAgentFiles(input) {

@@ -10,6 +10,24 @@ const RETIRED_MANAGED_AGENT_FILES = [
       'developer_instructions = """You are the fullscan verification reviewer.',
     ],
   },
+  {
+    fileName: "librarian.toml",
+    requiredMarkers: [
+      'name = "intel"',
+    ],
+  },
+  {
+    fileName: "metis.toml",
+    requiredMarkers: [
+      'name = "vanguard"',
+    ],
+  },
+  {
+    fileName: "momus.toml",
+    requiredMarkers: [
+      'name = "sentinel"',
+    ],
+  },
 ] as const
 
 export async function purgeRetiredManagedAgentFiles(input: { readonly codexHome: string }): Promise<void> {
