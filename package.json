@@ -117,12 +117,12 @@
   "license": "SUL-1.0",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/code-yeongyu/oh-my-open-pentest.git"
+    "url": "git+https://github.com/zakirkun/oh-my-open-pentest.git"
   },
   "bugs": {
-    "url": "https://github.com/code-yeongyu/oh-my-open-pentest/issues"
+    "url": "https://github.com/zakirkun/oh-my-open-pentest/issues"
   },
-  "homepage": "https://github.com/code-yeongyu/oh-my-open-pentest#readme",
+  "homepage": "https://github.com/zakirkun/oh-my-open-pentest#readme",
   "dependencies": {
     "@clack/prompts": "^1.4.0",
     "@code-yeongyu/comment-checker": "^0.8.0",

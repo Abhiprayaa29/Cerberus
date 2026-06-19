@@ -6,7 +6,7 @@
 				"hooks": [
 					{
 						"type": "command",
-						"command": "node \"${PLUGIN_ROOT}/components/lazycodex-executor-verify/dist/cli.js\" hook subagent-stop",
+						"command": "node \"${PLUGIN_ROOT}/components/lazycodex-executor-verify/dist/cli.js\" hook subagent-stop || true",
 						"timeout": 1,
 						"statusMessage": "(OmOP) Verifying LazyCodex Executor Evidence"
 					}

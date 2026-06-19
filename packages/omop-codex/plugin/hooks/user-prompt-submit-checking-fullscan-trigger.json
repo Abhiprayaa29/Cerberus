@@ -5,7 +5,7 @@
 				"hooks": [
 					{
 						"type": "command",
-						"command": "node \"${PLUGIN_ROOT}/components/fullscan/dist/cli.js\" hook user-prompt-submit",
+						"command": "node \"${PLUGIN_ROOT}/components/fullscan/dist/cli.js\" hook user-prompt-submit || true",
 						"timeout": 5,
 						"statusMessage": "(OmOP) Checking Fullscan Trigger"
 					}

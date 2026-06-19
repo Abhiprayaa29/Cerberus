@@ -5,7 +5,7 @@
 				"hooks": [
 					{
 						"type": "command",
-						"command": "node \"${PLUGIN_ROOT}/components/lsp/dist/cli.js\" hook post-compact",
+						"command": "node \"${PLUGIN_ROOT}/components/lsp/dist/cli.js\" hook post-compact || true",
 						"timeout": 5,
 						"statusMessage": "(OmOP) Resetting LSP Diagnostics Cache"
 					}

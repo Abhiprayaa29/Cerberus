@@ -5,13 +5,13 @@
   "type": "module",
   "packageManager": "npm@11.12.1",
   "license": "MIT",
-  "homepage": "https://github.com/code-yeongyu/oh-my-open-pentest",
+  "homepage": "https://github.com/zakirkun/oh-my-open-pentest",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/code-yeongyu/oh-my-open-pentest.git"
+    "url": "git+https://github.com/zakirkun/oh-my-open-pentest.git"
   },
   "bugs": {
-    "url": "https://github.com/code-yeongyu/oh-my-open-pentest/issues"
+    "url": "https://github.com/zakirkun/oh-my-open-pentest/issues"
   },
   "keywords": [
     "codex",
