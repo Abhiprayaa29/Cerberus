@@ -1,13 +1,13 @@
-import { lstat, readFile, rm } from "node:fs/promises"
+﻿import { lstat, readFile, rm } from "node:fs/promises"
 import { join } from "node:path"
 
 const RETIRED_MANAGED_AGENT_FILES = [
   {
-    fileName: "codex-ultrawork-reviewer.toml",
+    fileName: "codex-fullscan-reviewer.toml",
     requiredMarkers: [
-      'name = "codex-ultrawork-reviewer"',
-      'description = "Strict ultrawork verification reviewer.',
-      'developer_instructions = """You are the ultrawork verification reviewer.',
+      'name = "codex-fullscan-reviewer"',
+      'description = "Strict fullscan verification reviewer.',
+      'developer_instructions = """You are the fullscan verification reviewer.',
     ],
   },
 ] as const

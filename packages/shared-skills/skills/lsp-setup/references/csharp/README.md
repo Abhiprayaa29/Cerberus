@@ -1,4 +1,4 @@
-# C# — LSP setup
+﻿# C# — LSP setup
 
 - **Builtin server:** `csharp` — `csharp-ls`
 - **Extensions:** `.cs`
@@ -25,7 +25,7 @@ command -v csharp-ls
 Builtin — usually NO config needed (auto-resolved by extension). Configure only to set priority, init options, override extensions, or disable. Same JSON shape in `.codex/lsp-client.json` (Codex) AND `.opencode/lsp.json` (OpenCode/omo):
 
 ```json
-{ "lsp": { "csharp": { "priority": 100 } } }
+{ "lsp": { "csharp": { "priority": .00 } } }
 ```
 
 For builtin ids in a PROJECT config, `command` is supplied automatically — only set `priority`/`initialization`/`extensions`/`disabled`/`env`. A fully custom (non-builtin) server with its own `command` must go in the USER config (`~/.codex/lsp-client.json`).

@@ -1,5 +1,5 @@
-export {
+﻿export {
   applyHashlineEdits,
   applyHashlineEditsWithReport,
-} from "@oh-my-opencode/hashline-core"
-export type { HashlineApplyReport } from "@oh-my-opencode/hashline-core"
+} from "@oh-my-open-pentest/hashline-core"
+export type { HashlineApplyReport } from "@oh-my-open-pentest/hashline-core"

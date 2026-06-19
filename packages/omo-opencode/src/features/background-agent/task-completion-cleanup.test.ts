@@ -1,11 +1,11 @@
-import { tmpdir } from "node:os"
+﻿import { tmpdir } from "node:os"
 import { afterEach, describe, expect, test } from "bun:test"
 import type { PluginInput } from "@opencode-ai/plugin"
 import { TASK_CLEANUP_DELAY_MS } from "./constants"
 import { BackgroundManager } from "./manager"
 import type { BackgroundTask } from "./types"
 import { releaseAllPromptAsyncReservationsForTesting } from "../../hooks/shared/prompt-async-gate"
-import { OMO_INTERNAL_INITIATOR_MARKER } from "../../shared/internal-initiator-marker"
+import { OMOP_INTERNAL_INITIATOR_MARKER } from "../../shared/internal-initiator-marker"
 
 type PromptAsyncCall = {
   path: { id: string }
@@ -368,7 +368,7 @@ describe("BackgroundManager.notifyParentSession cleanup scheduling", () => {
       expect(batchedCall.body.noReply).toBe(false)
       const batchedPayload = JSON.stringify(batchedCall.body.parts)
       expect(batchedPayload).toContain("ALL BACKGROUND TASKS COMPLETE")
-      expect(batchedPayload).toContain(OMO_INTERNAL_INITIATOR_MARKER)
+      expect(batchedPayload).toContain(OMOP_INTERNAL_INITIATOR_MARKER)
       expect(batchedPayload).toContain(taskA.id)
       expect(batchedPayload).toContain(taskB.id)
       expect(batchedPayload).toContain(taskA.description)

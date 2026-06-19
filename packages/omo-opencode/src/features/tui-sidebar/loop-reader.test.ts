@@ -1,4 +1,4 @@
-import { describe, expect, it } from "bun:test"
+﻿import { describe, expect, it } from "bun:test"
 import { mkdtempSync, mkdirSync, rmSync, utimesSync, writeFileSync } from "node:fs"
 import { tmpdir } from "node:os"
 import { join } from "node:path"
@@ -31,7 +31,7 @@ describe("readActiveLoop", () => {
   it("#given a live current-schema loop #when read #then it computes goal and criterion counts", () => {
     withProject((projectDir) => {
       // given
-      writeGoalFile(projectDir, ".omo/ulw-loop/current/goals.json", {
+      writeGoalFile(projectDir, ".omo/pentest-loop/current/goals.json", {
         version: 1,
         activeGoalId: "ship",
         goals: [
@@ -100,7 +100,7 @@ describe("readActiveLoop", () => {
   it("#given only stale loops #when read #then it returns none", () => {
     withProject((projectDir) => {
       // given
-      const filePath = writeGoalFile(projectDir, ".omo/ulw-loop/stale/goals.json", {
+      const filePath = writeGoalFile(projectDir, ".omo/pentest-loop/stale/goals.json", {
         version: 1,
         goals: [
           {
@@ -123,7 +123,7 @@ describe("readActiveLoop", () => {
   it("#given two live current loop dirs #when read #then it chooses the freshest mtime", () => {
     withProject((projectDir) => {
       // given
-      writeGoalFile(projectDir, ".omo/ulw-loop/older/goals.json", {
+      writeGoalFile(projectDir, ".omo/pentest-loop/older/goals.json", {
         version: 1,
         goals: [
           {
@@ -134,7 +134,7 @@ describe("readActiveLoop", () => {
           },
         ],
       })
-      const fresherPath = writeGoalFile(projectDir, ".omo/ulw-loop/newer/goals.json", {
+      const fresherPath = writeGoalFile(projectDir, ".omo/pentest-loop/newer/goals.json", {
         version: 1,
         goals: [
           {
@@ -163,10 +163,10 @@ describe("readActiveLoop", () => {
   it("#given malformed JSON beside a valid live loop #when read #then it skips malformed input", () => {
     withProject((projectDir) => {
       // given
-      const malformedPath = join(projectDir, ".omo/ulw-loop/bad/goals.json")
+      const malformedPath = join(projectDir, ".omo/pentest-loop/bad/goals.json")
       mkdirSync(join(malformedPath, ".."), { recursive: true })
       writeFileSync(malformedPath, "{")
-      writeGoalFile(projectDir, ".omo/ulw-loop/good/goals.json", {
+      writeGoalFile(projectDir, ".omo/pentest-loop/good/goals.json", {
         version: 1,
         goals: [
           {
@@ -188,7 +188,7 @@ describe("readActiveLoop", () => {
   it("#given active goal variants #when read #then activeGoal follows id, in-progress, null fallback order", () => {
     withProject((projectDir) => {
       // given
-      writeGoalFile(projectDir, ".omo/ulw-loop/by-id/goals.json", {
+      writeGoalFile(projectDir, ".omo/pentest-loop/by-id/goals.json", {
         version: 1,
         activeGoalId: "chosen",
         goals: [
@@ -206,7 +206,7 @@ describe("readActiveLoop", () => {
 
     withProject((projectDir) => {
       // given
-      writeGoalFile(projectDir, ".omo/ulw-loop/by-progress/goals.json", {
+      writeGoalFile(projectDir, ".omo/pentest-loop/by-progress/goals.json", {
         version: 1,
         goals: [
           { id: "done", title: "Done", status: "complete", successCriteria: [] },
@@ -223,7 +223,7 @@ describe("readActiveLoop", () => {
 
     withProject((projectDir) => {
       // given
-      writeGoalFile(projectDir, ".omo/ulw-loop/not-live/goals.json", {
+      writeGoalFile(projectDir, ".omo/pentest-loop/not-live/goals.json", {
         version: 1,
         activeGoalId: "missing",
         goals: [

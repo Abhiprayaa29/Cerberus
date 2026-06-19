@@ -1,4 +1,4 @@
-# codex-ulw-loop
+﻿# codex-pentest-loop
 
 [![ci](https://img.shields.io/badge/ci-pending-lightgrey.svg)](#) [![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
@@ -8,15 +8,15 @@ Codex plugin scaffold for durable repo-native multi-goal orchestration with embe
 
 | Subcommand | Purpose |
 |------------|---------|
-| `omo ulw-loop create-goals` | Create repo-native goals from a brief and seed criteria. |
-| `omo ulw-loop record-evidence` | Record observable evidence for the active criterion. |
-| `omo ulw-loop criteria` | Inspect or revise goal success criteria. |
-| `omo ulw-loop complete-goals` | Complete eligible goals after criteria pass. |
-| `omo ulw-loop checkpoint` | Refuse completion until criteria and evidence gates pass. |
-| `omo ulw-loop steer` | Apply steering updates to the plan. |
-| `omo ulw-loop status` | Report active goal, criteria, and evidence state. |
+| `omo pentest-loop create-goals` | Create repo-native goals from a brief and seed criteria. |
+| `omo pentest-loop record-evidence` | Record observable evidence for the active criterion. |
+| `omo pentest-loop criteria` | Inspect or revise goal success criteria. |
+| `omo pentest-loop complete-goals` | Complete eligible goals after criteria pass. |
+| `omo pentest-loop checkpoint` | Refuse completion until criteria and evidence gates pass. |
+| `omo pentest-loop steer` | Apply steering updates to the plan. |
+| `omo pentest-loop status` | Report active goal, criteria, and evidence state. |
 
-Wave 1 is scaffold only. Command behavior lands in later waves.
+Wave . is scaffold only. Command behavior lands in later waves.
 
 ## Codex Plugin
 
@@ -24,7 +24,7 @@ The plugin ships:
 
 - `.codex-plugin/plugin.json` for Codex plugin discovery.
 - `hooks/hooks.json` for the `UserPromptSubmit` hook.
-- `skills/ulw-loop/` as the future skill directory.
+- `skills/pentest-loop/` as the future skill directory.
 
 The hook command is:
 
@@ -50,14 +50,14 @@ npm pack --dry-run
 npx lazycodex-ai install
 ```
 
-The installer builds and copies the plugin into `~/.codex/plugins/cache/sisyphuslabs/omo/0.1.0`, registers the `sisyphuslabs` marketplace from the `lazycodex` Git repository, installs runtime dependencies there, and enables:
+The installer builds and copies the plugin into `~/.codex/plugins/cache/cerberuslabs/omo/0...0`, registers the `cerberuslabs` marketplace from the `lazycodex` Git repository, installs runtime dependencies there, and enables:
 
 ```toml
 [features]
 plugins = true
 plugin_hooks = true
 
-[plugins."omo@sisyphuslabs"]
+[plugins."omo@cerberuslabs"]
 enabled = true
 ```
 
@@ -71,4 +71,4 @@ This plugin runs locally. The scaffold does not call a network service by itself
 
 ## Related
 
-- [lazycodex](https://github.com/code-yeongyu/lazycodex) - Sisyphus Labs Codex marketplace repository.
+- [lazycodex](https://github.com/code-yeongyu/lazycodex) - OmOP Labs Codex marketplace repository.

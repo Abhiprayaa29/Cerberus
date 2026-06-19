@@ -1,14 +1,14 @@
-import {
+﻿import {
   createTelemetryClient,
   getDefaultTelemetryOsProvider,
   getDailyActiveCaptureState,
   getTelemetryDistinctId,
-} from "@oh-my-opencode/telemetry-core"
+} from "@oh-my-open-pentest/telemetry-core"
 import type {
   PostHogActivityCaptureState,
   TelemetryOsProvider,
   TelemetryTransportFactory,
-} from "@oh-my-opencode/telemetry-core"
+} from "@oh-my-open-pentest/telemetry-core"
 
 import { writeTelemetryDiagnostic } from "./diagnostics"
 import { getPostHogActivityCaptureState } from "./posthog-activity-state"

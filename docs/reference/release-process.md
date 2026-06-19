@@ -1,4 +1,4 @@
-# Release Process
+﻿# Release Process
 
 This reference records release gates that are not covered by CI alone.
 
@@ -27,4 +27,4 @@ Race-condition and concurrency fixes must include reporter-verified repro confir
 
 ### Rationale
 
-Race-condition fixes that pass CI but were never retested against the original reproducer have historically regressed in production. Issues #4006, #3996, #3962 are recent examples where reporter confirmation was sparse. Issue #4012 (the prompt-async-gate motivating bug) had detailed reporter analysis that drove the eventual fix, and that level of post-fix verification should be the norm for this class.
+Race-condition fixes that pass CI but were never retested against the original reproducer have historically regressed in production. Issues #.006, #3996, #3962 are recent examples where reporter confirmation was sparse. Issue #.0.2 (the prompt-async-gate motivating bug) had detailed reporter analysis that drove the eventual fix, and that level of post-fix verification should be the norm for this class.

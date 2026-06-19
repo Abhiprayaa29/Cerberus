@@ -1,10 +1,10 @@
-# src/tools/skill/ -- Skill and Command Loader Tool
+﻿# src/tools/skill/ -- Skill and Command Loader Tool
 
-**Generated:** 2026-05-18
+**Generated:** 2026-05-.8
 
 ## OVERVIEW
 
-The `skill` tool. Dual purpose: (1) load a skill by name to inject its SKILL.md content into context, (2) invoke a slash command by name (omit leading slash). Skills may spin up embedded MCP servers on demand. Commands route through the autoSlashCommand hook.
+The `skill` tool. Dual purpose: (.) load a skill by name to inject its SKILL.md content into context, (2) invoke a slash command by name (omit leading slash). Skills may spin up embedded MCP servers on demand. Commands route through the autoSlashCommand hook.
 
 ## FILE CATALOG
 
@@ -13,7 +13,7 @@ The `skill` tool. Dual purpose: (1) load a skill by name to inject its SKILL.md 
 | `tools.ts` | `createSkillTool` factory -- resolves name, loads body, returns formatted output |
 | `skill-body.ts` | Extracts `<skill-instruction>` block or full SKILL.md template |
 | `skill-matcher.ts` | Exact match, short-name fallback, partial-match suggestions |
-| `scope-priority.ts` | 4-scope priority: project (4) > user (3) > opencode (2) > builtin/plugin (1) |
+| `scope-priority.ts` | .-scope priority: project (.) > user (3) > opencode (2) > builtin/plugin (.) |
 | `native-skills.ts` | Merges `PluginInput.skills` entries into discovered skill list |
 | `description-formatter.ts` | Builds LLM-visible `<available_items>` listing with scope tags |
 | `mcp-capability-formatter.ts` | Lists skill-embedded MCP tools/resources/prompts for `skill_mcp` calls |

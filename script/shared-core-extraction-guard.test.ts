@@ -1,4 +1,4 @@
-import { readdir, readFile } from "node:fs/promises"
+﻿import { readdir, readFile } from "node:fs/promises"
 import { join, relative } from "node:path"
 import { describe, expect, test } from "bun:test"
 
@@ -102,7 +102,7 @@ describe("shared core extraction guardrails", () => {
     const offenders: string[] = []
     for (const file of packageJsonFiles) {
       const manifest = await readFile(file, "utf8")
-      if (manifest.includes("@opencode-ai/") || manifest.includes("@oh-my-opencode/omo-codex")) {
+      if (manifest.includes("@opencode-ai/") || manifest.includes("@oh-my-open-pentest/omo-codex")) {
         offenders.push(toPosixPath(relative(process.cwd(), file)))
       }
     }

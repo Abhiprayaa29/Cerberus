@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { describe, expect, test } from "bun:test"
 import type { ToolContext } from "@opencode-ai/plugin/tool"
@@ -6,7 +6,7 @@ import type { BackgroundTask } from "../../features/background-agent"
 import type { BackgroundOutputClient, BackgroundOutputManager } from "./clients"
 import { createBackgroundOutput } from "./create-background-output"
 
-const projectDir = "/Users/yeongyu/local-workspaces/oh-my-opencode"
+const projectDir = "/Users/yeongyu/local-workspaces/oh-my-open-pentest"
 
 const mockContext = {
   sessionID: "test-session",

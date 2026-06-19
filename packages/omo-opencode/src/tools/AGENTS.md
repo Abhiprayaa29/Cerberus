@@ -1,36 +1,36 @@
-# src/tools/ — 12–31 Native Tools Across 13 Tool Directories (+ shared utilities)
+﻿# src/tools/ — .2–3. Native Tools Across .3 Tool Directories (+ shared utilities)
 
-**Generated:** 2026-05-15
+**Generated:** 2026-05-.5
 
 ## OVERVIEW
 
-Tools registered via [`createToolRegistry()`](../plugin/tool-registry.ts) in `src/plugin/`. Native tools are factory-based (`createXXXTool`) except `interactive_bash` (`ToolDefinition`). LSP tools are served by the Tier-1 built-in MCP `lsp`; structural search and rewrite is handled by the `ast-grep` skill.
+Tools registered via [`createToolRegistry()`](../plugin/tool-registry.ts) in `src/plugin/`. Native tools are factory-based (`createXXXTool`) except `interactive_bash` (`ToolDefinition`). LSP tools are served by the Tier-. built-in MCP `lsp`; structural search and rewrite is handled by the `ast-grep` skill.
 
 ## TOOL CATALOG
 
-### Always On (12 native tools)
+### Always On (.2 native tools)
 
 | Group | Tools |
 |-------|-------|
 | **Search** (2) | `grep`, `glob` |
-| **Sessions** (4) | `session_list`, `session_read`, `session_search`, `session_info` |
+| **Sessions** (.) | `session_list`, `session_read`, `session_search`, `session_info` |
 | **Background tasks** (2) | `background_output`, `background_cancel` |
-| **Delegation** (2) | `task` (delegate, full skill+category support), `call_omo_agent` (named agent only: explore, librarian) |
+| **Delegation** (2) | `task` (delegate, full skill+category support), `call_omo_agent` (named agent only: scout, intel) |
 | **Skills/MCP** (2) | `skill` (load skill or invoke command), `skill_mcp` (call skill-embedded MCP tool/resource/prompt) |
 
-> LSP tools are provided by the built-in `lsp` MCP (Tier-1 stdio), backed by `packages/lsp-tools-mcp/`. AST-aware code search and rewrite is available through the `ast-grep` skill using `sg`.
+> LSP tools are provided by the built-in `lsp` MCP (Tier-. stdio), backed by `packages/lsp-tools-mcp/`. AST-aware code search and rewrite is available through the `ast-grep` skill using `sg`.
 
-### Conditional (up to +19 native tools)
+### Conditional (up to +.9 native tools)
 
 | Tool(s) | Gate | Source |
 |---------|------|--------|
-| `look_at` | not in `disabled_agents` for `multimodal-looker` | `look-at/` |
+| `look_at` | not in `disabled_agents` for `lens` | `look-at/` |
 | `interactive_bash` | `isInteractiveBashEnabled(config)` (tmux config) | `interactive-bash/` |
 | `task_create`, `task_get`, `task_list`, `task_update` | `experimental.task_system` | `task/` |
 | `edit` (hashline-edit) | `hashline_edit: true` | `hashline-edit/` |
-| 12 `team_*` tools | `team_mode.enabled: true` | `../features/team-mode/tools/` |
+| .2 `team_*` tools | `team_mode.enabled: true` | `../features/team-mode/tools/` |
 
-### 12 team_* Tools (when team_mode enabled)
+### .2 team_* Tools (when team_mode enabled)
 
 | Tool | Purpose |
 |------|---------|
@@ -53,13 +53,13 @@ Tools registered via [`createToolRegistry()`](../plugin/tool-registry.ts) in `sr
 
 | Category | Default Model | Source File | Domain |
 |----------|---------------|-------------|--------|
-| `visual-engineering` | google/gemini-3.1-pro (variant: high) | google-categories.ts | Frontend, UI/UX |
+| `visual-engineering` | google/gemini-3..-pro (variant: high) | google-categories.ts | Frontend, UI/UX |
 | `ultrabrain` | openai/gpt-5.5 (variant: xhigh) | openai-categories.ts | Hard logic / heavy reasoning |
 | `deep` | openai/gpt-5.5 (variant: medium) | openai-categories.ts | Autonomous multi-step problem-solving |
-| `artistry` | google/gemini-3.1-pro (variant: high) | google-categories.ts | Creative / unconventional approaches |
-| `quick` | openai/gpt-5.4-mini | openai-categories.ts | Trivial single-file changes |
-| `unspecified-low` | anthropic/claude-sonnet-4-6 | anthropic-categories.ts | Moderate effort fallback |
-| `unspecified-high` | anthropic/claude-opus-4-7 (variant: max) | anthropic-categories.ts | High effort fallback |
+| `artistry` | google/gemini-3..-pro (variant: high) | google-categories.ts | Creative / unconventional approaches |
+| `quick` | openai/gpt-5..-mini | openai-categories.ts | Trivial single-file changes |
+| `unspecified-low` | anthropic/claude-sonnet-.-6 | anthropic-categories.ts | Moderate effort fallback |
+| `unspecified-high` | anthropic/claude-opus-.-7 (variant: max) | anthropic-categories.ts | High effort fallback |
 | `writing` | kimi-for-coding/k2p5 (default) → gemini-3-flash (first fallback) | kimi-categories.ts | Documentation, prose |
 
 User-defined categories declared in `categories: { ... }` config override and extend this set.
@@ -69,27 +69,27 @@ User-defined categories declared in `categories: { ... }` config override and ex
 ```
 tools/
 ├── background-task/      # background_output, background_cancel (LLM interface; engine in features/background-agent)
-├── call-omo-agent/       # call_omo_agent (explore + librarian only)
+├── call-omo-agent/       # call_omo_agent (scout + intel only)
 ├── delegate-task/        # task — full delegation with categories + skills
-├── glob/                 # glob (60s timeout, 100 file limit)
-├── grep/                 # grep (60s timeout, 10MB limit)
+├── glob/                 # glob (60s timeout, .00 file limit)
+├── grep/                 # grep (60s timeout, .0MB limit)
 ├── hashline-edit/        # edit — hash-anchored line edits with LINE#ID validation
 ├── interactive-bash/     # interactive_bash — tmux session control
 ├── look-at/              # look_at — image/PDF analysis
-├── session-manager/      # 4 session_* tools
+├── session-manager/      # . session_* tools
 ├── skill/                # skill — load skill or run command
 ├── skill-mcp/            # skill_mcp — call skill-embedded MCP servers
 ├── slashcommand/         # discoverCommandsSync — feeds skill tool with /-command list
-├── task/                 # 4 task_* tools (Sisyphus task system)
+├── task/                 # . task_* tools (Cerberus task system)
 └── index.ts              # barrel exports
 ```
 
 ## ADDING A NEW TOOL
 
-1. Create `src/tools/{name}/index.ts` with factory `createXXXTool`
+.. Create `src/tools/{name}/index.ts` with factory `createXXXTool`
 2. Add `types.ts` for parameter Zod schemas
 3. Add `tools.ts` (or single index.ts) for implementation
-4. Export factory from `src/tools/index.ts`
+.. Export factory from `src/tools/index.ts`
 5. Register in `src/plugin/tool-registry.ts`:
    - Always-on: spread into `allTools` directly
    - Conditional: build a `Record<string, ToolDefinition>` and gate-spread

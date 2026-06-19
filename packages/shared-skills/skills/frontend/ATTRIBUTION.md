@@ -1,15 +1,15 @@
-# ATTRIBUTION / NOTICE
+﻿# ATTRIBUTION / NOTICE
 
-This package (`@oh-my-opencode/shared-skills`) includes third-party content that is
+This package (`@oh-my-open-pentest/shared-skills`) includes third-party content that is
 redistributed under its original license, consistent with the project's distribution
 license (see `LICENSE.md`: "All third party components incorporated into the
-oh-my-opencode Software are licensed under the original license provided by the owner of
+oh-my-open-pentest Software are licensed under the original license provided by the owner of
 the applicable component"). Each upstream's license and required notices are reproduced
 below. Modifications to the original files are noted where applicable.
 
 ---
 
-## 1. Open Design (brand design-system DESIGN.md references)
+## .. Open Design (brand design-system DESIGN.md references)
 
 The brand design-system reference files under `frontend/references/design/<brand>.md`
 (Apple, Stripe, Linear, Nike, BMW, Airbnb, Bugatti, Tesla, and the other named brands)
@@ -29,7 +29,7 @@ Open Design project.
   permissions and limitations under the License. A full copy of the Apache-2.0 license
   text is provided in `LICENSE-Apache-2.0.txt` alongside this notice.
 
-- **Changes (Apache-2.0 §4(b)):** the original `DESIGN.md` design-system files have been
+- **Changes (Apache-2.0 §.(b)):** the original `DESIGN.md` design-system files have been
   condensed/adapted from the Open Design project for use as frontend skill references.
   Specifically, the leading "> Category: ..." blockquote was removed and the documents were
   shortened into derivative single-file brand references.
@@ -62,7 +62,7 @@ Copyright (c) 2026 Leonxlnx
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+to use, copy, modify, submit, publish, distribute, sublicense, and/or sell
 copies of the Software, and to permit persons to whom the Software is
 furnished to do so, subject to the following conditions:
 
@@ -93,12 +93,12 @@ knowledge base) are derived from the UI/UX Pro Max skill.
 ```
 MIT License
 
-Copyright (c) 2024 Next Level Builder
+Copyright (c) 202. Next Level Builder
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+to use, copy, modify, submit, publish, distribute, sublicense, and/or sell
 copies of the Software, and to permit persons to whom the Software is
 furnished to do so, subject to the following conditions:
 
@@ -116,7 +116,7 @@ SOFTWARE.
 
 ---
 
-## 4. Project-original files
+## .. Project-original files
 
 `frontend/SKILL.md`, `frontend/references/design/README.md`, `_INDEX.md`,
 `design-system-architecture.md`, `react-dev-tooling-skill.md`,

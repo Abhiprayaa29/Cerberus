@@ -1,4 +1,4 @@
-name: LazyCodex Bug Report
+﻿name: LazyCodex Bug Report
 description: Report a LazyCodex, lazycodex-ai, or Codex Light issue
 title: "[LazyCodex Bug]: "
 labels: ["bug", "needs-triage", "lazycodex"]
@@ -6,7 +6,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Please file source-level LazyCodex work in [oh-my-openagent](https://github.com/code-yeongyu/oh-my-openagent), where `packages/omo-codex` lives.
+        Please file source-level LazyCodex work in [oh-my-open-pentest](https://github.com/code-yeongyu/oh-my-open-pentest), where `packages/omo-codex` lives.
 
   - type: textarea
     id: description

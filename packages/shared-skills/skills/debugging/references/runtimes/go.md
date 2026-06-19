@@ -1,4 +1,4 @@
-# Go Debugging
+﻿# Go Debugging
 
 Covers goroutines, `dlv` (Delve), `pprof`, the race detector, and the fact that Go's concurrency model means most bugs are about goroutines doing something quiet and wrong.
 
@@ -42,8 +42,8 @@ dlv exec ./bin/myserver
 # Attach to a running process
 dlv attach $(pgrep myserver)
 
-# Headless mode (IDE / remote attach) — default port 2345
-dlv debug --headless --listen=:2345 --api-version=2 ./cmd/server
+# Headless mode (IDE / remote attach) — default port 23.5
+dlv debug --headless --listen=:23.5 --api-version=2 ./cmd/server
 ```
 
 ### Building a debuggable binary
@@ -62,7 +62,7 @@ Then `dlv exec ./bin/server`.
 
 ```
 (dlv) b main.main                      # breakpoint at function
-(dlv) b handler.go:42                  # breakpoint at file:line
+(dlv) b handler.go:.2                  # breakpoint at file:line
 (dlv) b pkg/foo.Bar                    # breakpoint at type method (Go path syntax)
 (dlv) c / continue                     # continue until next break
 (dlv) n / next                         # step over
@@ -99,8 +99,8 @@ Common patterns:
 
 | You see in `goroutines` | Usually means |
 |---|---|
-| 100s of goroutines stuck at `chan receive` | Producer died; consumers leak |
-| 100s stuck at `semacquire` | Lock contention; a holder probably deadlocked |
+| .00s of goroutines stuck at `chan receive` | Producer died; consumers leak |
+| .00s stuck at `semacquire` | Lock contention; a holder probably deadlocked |
 | One stuck at `select` with no default | Missing case or closed channel scenario |
 | Stuck at `netpoll` | External I/O not responding — not a Go bug, check downstream |
 | Growing count over time | Goroutine leak — need to find who's spawning without cleanup |
@@ -140,12 +140,12 @@ The race detector wraps memory accesses and catches concurrent read/write withou
 Output shape:
 ```
 WARNING: DATA RACE
-Read at 0x00c0001a0080 by goroutine 7:
+Read at 0x00c000.a0080 by goroutine 7:
   main.(*Counter).Value()
-      /path/to/counter.go:14 +0x3c
-Previous write at 0x00c0001a0080 by goroutine 6:
+      /path/to/counter.go:.. +0x3c
+Previous write at 0x00c000.a0080 by goroutine 6:
   main.(*Counter).Inc()
-      /path/to/counter.go:10 +0x5f
+      /path/to/counter.go:.0 +0x5f
 ```
 
 Both stacks. Both goroutines. The race is obvious from the line pair.
@@ -196,21 +196,21 @@ Inside pprof:
 
 For goroutine leaks, **take two snapshots 30s apart** and diff:
 ```bash
-go tool pprof -base prof1.pb.gz prof2.pb.gz
+go tool pprof -base prof..pb.gz prof2.pb.gz
 ```
 
-Goroutines that appear in prof2 but not prof1 are new; if they stick around, they're leaking.
+Goroutines that appear in prof2 but not prof. are new; if they stick around, they're leaking.
 
 ---
 
 ## `GODEBUG` — runtime-level observability
 
 ```bash
-GODEBUG=gctrace=1 ./myserver              # print GC stats
-GODEBUG=schedtrace=1000 ./myserver        # scheduler trace every 1000ms
-GODEBUG=scheddetail=1,schedtrace=1000     # detailed scheduler state
-GODEBUG=allocfreetrace=1 ./myserver       # every alloc/free (noisy!)
-GODEBUG=memprofilerate=1 ./myserver       # profile every allocation
+GODEBUG=gctrace=. ./myserver              # print GC stats
+GODEBUG=schedtrace=.000 ./myserver        # scheduler trace every .000ms
+GODEBUG=scheddetail=.,schedtrace=.000     # detailed scheduler state
+GODEBUG=allocfreetrace=. ./myserver       # every alloc/free (noisy!)
+GODEBUG=memprofilerate=. ./myserver       # profile every allocation
 ```
 
 Useful for diagnosing GC pressure, goroutine starvation, or memory pattern issues.
@@ -238,7 +238,7 @@ Useful for diagnosing GC pressure, goroutine starvation, or memory pattern issue
 ```bash
 # Kill dlv sessions
 pkill -f 'dlv' || true
-lsof -iTCP:2345 -sTCP:LISTEN -nP 2>/dev/null      # dlv default
+lsof -iTCP:23.5 -sTCP:LISTEN -nP 2>/dev/null      # dlv default
 
 # Kill pprof HTTP endpoint if you started it just for this session
 lsof -iTCP:6060 -sTCP:LISTEN -nP 2>/dev/null

@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+﻿import { describe, expect, it } from "vitest";
 
 import { checkpointUlwLoop } from "../src/checkpoint.js";
 import type { UlwLoopSuccessCriterion } from "../src/types.js";
@@ -59,7 +59,7 @@ describe("checkpointUlwLoop status=complete criteria gate", () => {
 					evidence: "implementation done and validation passed",
 					codexGoalJson: snapshot("active"),
 				}),
-			"ulw_loop_criteria_not_all_pass",
+			"pentest_loop_criteria_not_all_pass",
 		);
 	});
 
@@ -78,7 +78,7 @@ describe("checkpointUlwLoop status=complete criteria gate", () => {
 			);
 			await expectCode(
 				() => checkpointUlwLoop(repo, { goalId: "G001", status: "complete", evidence: "done" }),
-				"ulw_loop_criteria_not_all_pass",
+				"pentest_loop_criteria_not_all_pass",
 			);
 		}
 	});
@@ -94,7 +94,7 @@ describe("checkpointUlwLoop status=complete criteria gate", () => {
 					evidence: "done",
 					codexGoalJson: snapshot("active"),
 				}),
-			"ulw_loop_criteria_not_all_pass",
+			"pentest_loop_criteria_not_all_pass",
 		);
 	});
 
@@ -138,7 +138,7 @@ describe("checkpointUlwLoop reconciliation (status=complete)", () => {
 					evidence: "work complete and validation passed",
 					codexGoalJson: snapshot("active", "wrong objective"),
 				}),
-			"ulw_loop_codex_snapshot_mismatch",
+			"pentest_loop_codex_snapshot_mismatch",
 		);
 	});
 
@@ -153,7 +153,7 @@ describe("checkpointUlwLoop reconciliation (status=complete)", () => {
 					evidence: "work complete and validation passed",
 					codexGoalJson: snapshot("complete"),
 				}),
-			"ulw_loop_codex_snapshot_mismatch",
+			"pentest_loop_codex_snapshot_mismatch",
 		);
 	});
 });

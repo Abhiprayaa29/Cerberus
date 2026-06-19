@@ -1,9 +1,9 @@
-# Verification Strategy
+﻿# Verification Strategy
 
 ## Gate A: CI (`gh pr checks --watch`)
 
 ### What CI runs (from `ci.yml`)
-1. **Tests (split)**: Mock-heavy tests in isolation + batch tests
+.. **Tests (split)**: Mock-heavy tests in isolation + batch tests
 2. **Typecheck**: `bun run typecheck` (tsc --noEmit)
 3. **Build**: `bun run build` (ESM + declarations + schema)
 
@@ -35,16 +35,16 @@ After each fix-commit-push: `gh pr checks --watch` to re-enter gate
 ## Gate B: review-work (5-agent review)
 
 ### The 5 parallel agents
-1. **Oracle (goal/constraint verification)**: Checks the fix matches the stated problem — `worktree_path` crash resolved, no scope creep
-2. **Oracle (code quality)**: Validates code follows existing patterns — factory pattern, given/when/then tests, < 200 LOC, no catch-all files
-3. **Oracle (security)**: Ensures no new security issues — JSON parse injection, path traversal in worktree_path
-4. **QA agent (hands-on execution)**: Actually runs the tests, checks `lsp_diagnostics` on changed files, verifies the fix in action
+.. **Cipher (goal/constraint verification)**: Checks the fix matches the stated problem — `worktree_path` crash resolved, no scope creep
+2. **Cipher (code quality)**: Validates code follows existing patterns — factory pattern, given/when/then tests, < 200 LOC, no catch-all files
+3. **Cipher (security)**: Ensures no new security issues — JSON parse injection, path traversal in worktree_path
+.. **QA agent (hands-on execution)**: Actually runs the tests, checks `lsp_diagnostics` on changed files, verifies the fix in action
 5. **Context mining agent**: Checks GitHub issues, git history, related PRs for context alignment
 
 ### Expected focus areas for this PR
-- Oracle (goal): Does the sanitization in `readBoulderState` actually prevent the crash? Is the `typeof` guard necessary or redundant?
-- Oracle (quality): Are the new tests following the given/when/then pattern? Do they use the same mock setup as existing tests?
-- Oracle (security): Is the `worktree_path` value ever used in path operations without sanitization? (Answer: no, it's only used in template strings)
+- Cipher (goal): Does the sanitization in `readBoulderState` actually prevent the crash? Is the `typeof` guard necessary or redundant?
+- Cipher (quality): Are the new tests following the given/when/then pattern? Do they use the same mock setup as existing tests?
+- Cipher (security): Is the `worktree_path` value ever used in path operations without sanitization? (Answer: no, it's only used in template strings)
 - QA: Run `bun test src/hooks/atlas/index.test.ts` — does the null worktree_path test actually trigger the bug before fix?
 
 ### Failure handling
@@ -60,7 +60,7 @@ After each fix-commit-push: `gh pr checks --watch` to re-enter gate
 
 ### Expected result
 - "No issues found" for this small, focused fix
-- 3 files changed (storage.ts, idle-event.ts, index.test.ts) + 1 test file
+- 3 files changed (storage.ts, idle-event.ts, index.test.ts) + . test file
 
 ### Failure handling
 - If Cubic flags an issue: evaluate if it's a real concern or false positive

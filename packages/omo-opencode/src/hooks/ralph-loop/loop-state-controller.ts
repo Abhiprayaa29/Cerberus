@@ -1,4 +1,4 @@
-import type { IterationCommitExpectation, RalphLoopOptions, RalphLoopState } from "./types"
+﻿import type { IterationCommitExpectation, RalphLoopOptions, RalphLoopState } from "./types"
 import {
 	DEFAULT_COMPLETION_PROMISE,
 	DEFAULT_MAX_ITERATIONS,
@@ -26,7 +26,7 @@ export function createLoopStateController(options: {
 				maxIterations?: number
 				completionPromise?: string
 				messageCountAtStart?: number
-				ultrawork?: boolean
+				fullscan?: boolean
 				strategy?: "reset" | "continue"
 			},
 		): boolean {
@@ -36,7 +36,7 @@ export function createLoopStateController(options: {
 			const state: RalphLoopState = {
 				active: true,
 				iteration: 1,
-				max_iterations: loopOptions?.ultrawork
+				max_iterations: loopOptions?.fullscan
 					? ULTRAWORK_MAX_ITERATIONS
 					: loopOptions?.maxIterations ??
 						config?.default_max_iterations ??
@@ -47,7 +47,7 @@ export function createLoopStateController(options: {
 				verification_attempt_id: undefined,
 				verification_attempt_started_at: undefined,
 				verification_session_id: undefined,
-				ultrawork: loopOptions?.ultrawork,
+				fullscan: loopOptions?.fullscan,
 				verification_pending: undefined,
 				strategy: loopOptions?.strategy ?? config?.default_strategy ?? "continue",
 				started_at: new Date().toISOString(),
@@ -149,7 +149,7 @@ export function createLoopStateController(options: {
 
 		markVerificationPending(sessionID: string): RalphLoopState | null {
 			const state = readState(directory, stateDir)
-			if (!state || state.session_id !== sessionID || !state.ultrawork) {
+			if (!state || state.session_id !== sessionID || !state.fullscan) {
 				return null
 			}
 
@@ -169,7 +169,7 @@ export function createLoopStateController(options: {
 
 		setVerificationSessionID(sessionID: string, verificationSessionID: string): RalphLoopState | null {
 			const state = readState(directory, stateDir)
-			if (!state || state.session_id !== sessionID || !state.ultrawork || !state.verification_pending) {
+			if (!state || state.session_id !== sessionID || !state.fullscan || !state.verification_pending) {
 				return null
 			}
 
@@ -185,7 +185,7 @@ export function createLoopStateController(options: {
 
 		restartAfterFailedVerification(sessionID: string, messageCountAtStart?: number): RalphLoopState | null {
 			const state = readState(directory, stateDir)
-			if (!state || state.session_id !== sessionID || !state.ultrawork || !state.verification_pending) {
+			if (!state || state.session_id !== sessionID || !state.fullscan || !state.verification_pending) {
 				return null
 			}
 
@@ -209,7 +209,7 @@ export function createLoopStateController(options: {
 
 		clearVerificationState(sessionID: string, messageCountAtStart?: number): RalphLoopState | null {
 			const state = readState(directory, stateDir)
-			if (!state || state.session_id !== sessionID || !state.ultrawork || !state.verification_pending) {
+			if (!state || state.session_id !== sessionID || !state.fullscan || !state.verification_pending) {
 				return null
 			}
 

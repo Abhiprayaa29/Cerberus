@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+﻿import { describe, expect, it } from "vitest";
 
 import {
 	normalizeUlwLoopSessionId,
@@ -10,30 +10,30 @@ import {
 } from "../src/paths.ts";
 
 describe("ulwLoopDir(repo)", () => {
-	it("returns repo + '/.omo/ulw-loop'", () => {
+	it("returns repo + '/.omo/pentest-loop'", () => {
 		// when/then
-		expect(ulwLoopDir("/repo")).toBe("/repo/.omo/ulw-loop");
+		expect(ulwLoopDir("/repo")).toBe("/repo/.omo/pentest-loop");
 	});
 
 	it("#given a session id #when resolving the loop dir #then scopes artifacts under that session", () => {
 		// when/then
-		expect(ulwLoopDir("/repo", { sessionId: "sess_abc" })).toBe("/repo/.omo/ulw-loop/sess_abc");
+		expect(ulwLoopDir("/repo", { sessionId: "sess_abc" })).toBe("/repo/.omo/pentest-loop/sess_abc");
 	});
 });
 
-describe("ulw-loop*Path helpers", () => {
+describe("pentest-loop*Path helpers", () => {
 	it("compose artifact filenames under ulwLoopDir", () => {
 		// when/then
-		expect(ulwLoopBriefPath("/r")).toBe("/r/.omo/ulw-loop/brief.md");
-		expect(ulwLoopGoalsPath("/r")).toBe("/r/.omo/ulw-loop/goals.json");
-		expect(ulwLoopLedgerPath("/r")).toBe("/r/.omo/ulw-loop/ledger.jsonl");
+		expect(ulwLoopBriefPath("/r")).toBe("/r/.omo/pentest-loop/brief.md");
+		expect(ulwLoopGoalsPath("/r")).toBe("/r/.omo/pentest-loop/goals.json");
+		expect(ulwLoopLedgerPath("/r")).toBe("/r/.omo/pentest-loop/ledger.jsonl");
 	});
 
 	it("#given a session id #when composing artifact filenames #then returns session-scoped paths", () => {
 		// when/then
-		expect(ulwLoopBriefPath("/r", { sessionId: "session-A" })).toBe("/r/.omo/ulw-loop/session-A/brief.md");
-		expect(ulwLoopGoalsPath("/r", { sessionId: "session-A" })).toBe("/r/.omo/ulw-loop/session-A/goals.json");
-		expect(ulwLoopLedgerPath("/r", { sessionId: "session-A" })).toBe("/r/.omo/ulw-loop/session-A/ledger.jsonl");
+		expect(ulwLoopBriefPath("/r", { sessionId: "session-A" })).toBe("/r/.omo/pentest-loop/session-A/brief.md");
+		expect(ulwLoopGoalsPath("/r", { sessionId: "session-A" })).toBe("/r/.omo/pentest-loop/session-A/goals.json");
+		expect(ulwLoopLedgerPath("/r", { sessionId: "session-A" })).toBe("/r/.omo/pentest-loop/session-A/ledger.jsonl");
 	});
 });
 
@@ -52,7 +52,7 @@ describe("normalizeUlwLoopSessionId", () => {
 describe("repoRelative", () => {
 	it("strips repo prefix when path is inside repo", () => {
 		// when/then
-		expect(repoRelative("/repo/.omo/ulw-loop/goals.json", "/repo")).toBe(".omo/ulw-loop/goals.json");
+		expect(repoRelative("/repo/.omo/pentest-loop/goals.json", "/repo")).toBe(".omo/pentest-loop/goals.json");
 	});
 
 	it("returns absolute when path is outside repo", () => {

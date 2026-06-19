@@ -1,4 +1,4 @@
-# .opencode/ — Project-Scope Skills & Commands
+﻿# .opencode/ — Project-Scope Skills & Commands
 
 **Generated:** 2026-05-20
 
@@ -6,7 +6,7 @@
 
 Project-scope OpenCode configuration: 5 skills and 5 slash commands committed alongside the source. Picked up by [`packages/omo-opencode/src/features/opencode-skill-loader/`](../packages/omo-opencode/src/features/opencode-skill-loader/) and the slash-command discovery pipeline.
 
-**Relationship to `.agents/`:** `.agents/` is the migration target during the `oh-my-opencode` → `oh-my-openagent` rename. It is a SUPERSET of `.opencode/` (mirrors all 5 skills + adds 5 more, mirrors the 5 commands). Both directories load during the transition; consumers should prefer `.agents/`.
+**Relationship to `.agents/`:** `.agents/` is the migration target during the `oh-my-open-pentest` → `oh-my-open-pentest` rename. It is a SUPERSET of `.opencode/` (mirrors all 5 skills + adds 5 more, mirrors the 5 commands). Both directories load during the transition; consumers should prefer `.agents/`.
 
 ## SKILLS (5)
 
@@ -14,9 +14,9 @@ Project-scope OpenCode configuration: 5 skills and 5 slash commands committed al
 |-------|---------|
 | `work-with-pr/` | Full PR lifecycle skill: worktree → implement → atomic commits → PR → verification loop → merge. |
 | `work-with-pr-workspace/` | Iteration workspace for `work-with-pr` — captures benchmark inputs for the iteration-* subdirs. |
-| `github-triage/` | Read-only triage of issues + PRs. 1 item = 1 background task. Writes evidence-backed reports. Never takes GitHub actions. |
+| `github-triage/` | Read-only triage of issues + PRs. . item = . background task. Writes evidence-backed reports. Never takes GitHub actions. |
 | `hyperplan/` | Adversarial multi-agent planning. 5 hostile category members cross-critique, lead synthesizes. |
-| `pre-publish-review/` | Nuclear-grade 16-agent pre-publish release gate. Runs `/get-unpublished-changes`, spawns ultrabrain agents per change, oracle for synthesis. |
+| `pre-publish-review/` | Nuclear-grade .6-agent pre-publish release gate. Runs `/get-unpublished-changes`, spawns ultrabrain agents per change, oracle for synthesis. |
 
 Each skill follows the standard layout (`SKILL.md` + optional `scripts/`, `references/`, `assets/`).
 
@@ -25,7 +25,7 @@ Each skill follows the standard layout (`SKILL.md` + optional `scripts/`, `refer
 | Command | Purpose |
 |---------|---------|
 | `/get-unpublished-changes` | Compare HEAD with the latest published npm version and list unpublished changes. |
-| `/omomomo` | Easter-egg command — about oh-my-opencode. |
+| `/omomomo` | Easter-egg command — about oh-my-open-pentest. |
 | `/publish` | Publish via GitHub Actions workflow. Argument: `<patch|minor|major>`. |
 | `/remove-deadcode` | Remove unused code with LSP-verified safety + atomic commits. |
 | `/security-research` | Run the Team Mode security-research audit with 3 vulnerability hunters and 2 PoC engineers. |

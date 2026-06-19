@@ -1,6 +1,6 @@
-import type { OhMyOpenCodeConfig } from "../../config"
+﻿import type { OhMyOpenCodeConfig } from "../../config"
 
-import { isRalphLoopResumeArgument, parseRalphLoopArguments } from "../../hooks/ralph-loop/command-arguments"
+import { isRalphLoopResumeArgument, parseRalphLoopArguments } from "../../hooks/pentest-loop/command-arguments"
 import { log } from "../../shared"
 import { NATIVE_LOOP_TRIGGERED_FLAG } from "../command-execute-before"
 import { extractPromptText } from "./prompt-text"
@@ -8,7 +8,7 @@ import { clearStoppedContinuationBeforeWorkStart } from "./start-work-message"
 import type { ChatMessageHooks, ChatMessageHandlerOutput, ChatMessageInput } from "./types"
 
 type RawLoopCommand =
-  | { readonly command: "ralph-loop" | "ulw-loop"; readonly args: string }
+  | { readonly command: "pentest-loop" | "pentest-loop"; readonly args: string }
   | { readonly command: "cancel-ralph"; readonly args: "" }
 
 function parseRawLoopSlashCommand(promptText: string): RawLoopCommand | null {
@@ -18,7 +18,7 @@ function parseRawLoopSlashCommand(promptText: string): RawLoopCommand | null {
     : trimmed
         .split("\n")
         .map((line) => line.trim())
-        .filter((line) => /^\/(?:ralph-loop|ulw-loop|cancel-ralph)\b/i.test(line))
+        .filter((line) => /^\/(?:pentest-loop|pentest-loop|cancel-ralph)\b/i.test(line))
         .at(-1)
 
   if (!commandText) {
@@ -30,7 +30,7 @@ function parseRawLoopSlashCommand(promptText: string): RawLoopCommand | null {
     return { command: "cancel-ralph", args: "" }
   }
 
-  const loopMatch = commandText.match(/^\/(ralph-loop|ulw-loop)\s*([\s\S]*)$/i)
+  const loopMatch = commandText.match(/^\/(pentest-loop|pentest-loop)\s*([\s\S]*)$/i)
   if (!loopMatch) {
     return null
   }
@@ -38,7 +38,7 @@ function parseRawLoopSlashCommand(promptText: string): RawLoopCommand | null {
   const command = loopMatch[1]?.toLowerCase()
   const args = loopMatch[2]?.trim() ?? ""
 
-  if (command === "ralph-loop" || command === "ulw-loop") {
+  if (command === "pentest-loop" || command === "pentest-loop") {
     return { command, args }
   }
 
@@ -75,21 +75,21 @@ export function handleRalphLoopMessage(args: {
   if (
     isRalphLoopTemplate ||
     isUlwLoopTemplate ||
-    rawLoopCommand?.command === "ralph-loop" ||
-    rawLoopCommand?.command === "ulw-loop"
+    rawLoopCommand?.command === "pentest-loop" ||
+    rawLoopCommand?.command === "pentest-loop"
   ) {
     const taskMatch = promptText.match(/<user-task>\s*([\s\S]*?)\s*<\/user-task>/i)
     const rawTask = taskMatch?.[1]?.trim() || rawLoopCommand?.args || ""
     const parsedArguments = parseRalphLoopArguments(rawTask)
-    const ultrawork = isUlwLoopTemplate || rawLoopCommand?.command === "ulw-loop"
-    const command = ultrawork ? "ulw-loop" : "ralph-loop"
+    const fullscan = isUlwLoopTemplate || rawLoopCommand?.command === "pentest-loop"
+    const command = fullscan ? "pentest-loop" : "pentest-loop"
 
     clearStoppedContinuationBeforeWorkStart(hooks, input.sessionID, command)
     const resumed = isRalphLoopResumeArgument(rawTask)
       && hooks.ralphLoop.resumeLoop?.(input.sessionID) === true
     if (!resumed) {
       hooks.ralphLoop.startLoop(input.sessionID, parsedArguments.prompt, {
-        ultrawork,
+        fullscan,
         maxIterations: parsedArguments.maxIterations,
         completionPromise: parsedArguments.completionPromise,
         strategy: parsedArguments.strategy,
@@ -105,15 +105,15 @@ export function handleRalphLoopMessage(args: {
     && !isCancelRalphTemplate
     && !rawLoopCommand
     && isFirstMessage
-    && pluginConfig.default_mode?.ralph_loop
+    && pluginConfig.default_mode?.pentest_loop
   ) {
-    const ultrawork = pluginConfig.default_mode?.ultrawork ?? false
+    const fullscan = pluginConfig.default_mode?.fullscan ?? false
     hooks.ralphLoop.startLoop(input.sessionID, promptText, {
-      ultrawork,
+      fullscan,
     })
     log("[chat-message] Default ralph loop auto-started", {
       sessionID: input.sessionID,
-      ultrawork,
+      fullscan,
     })
   }
 }

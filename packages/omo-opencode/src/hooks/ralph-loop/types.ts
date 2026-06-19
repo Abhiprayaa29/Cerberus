@@ -1,4 +1,4 @@
-import type { RalphLoopConfig } from "../../config"
+﻿import type { RalphLoopConfig } from "../../config"
 
 export interface RalphLoopState {
   active: boolean
@@ -13,7 +13,7 @@ export interface RalphLoopState {
   started_at: string
   prompt: string
   session_id?: string
-  ultrawork?: boolean
+  fullscan?: boolean
   verification_pending?: boolean
   strategy?: "reset" | "continue"
 }

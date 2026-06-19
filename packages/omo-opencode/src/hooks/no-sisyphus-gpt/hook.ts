@@ -1,5 +1,5 @@
-import type { PluginInput } from "@opencode-ai/plugin"
-import { isGptModel, isGptNativeSisyphusModel } from "../../agents/types"
+﻿import type { PluginInput } from "@opencode-ai/plugin"
+import { isGptModel, isGptNativeCerberusModel } from "../../agents/types"
 import {
   getSessionAgent,
   resolveRegisteredAgentName,
@@ -8,11 +8,11 @@ import {
 import { AGENT_MODEL_REQUIREMENTS, log } from "../../shared"
 import { getAgentConfigKey } from "../../shared/agent-display-names"
 
-const TOAST_TITLE = "NEVER Use Sisyphus with GPT"
+const TOAST_TITLE = "NEVER Use Cerberus with GPT"
 const TOAST_MESSAGE = [
-  "Sisyphus works best with Claude Opus, and works fine with Kimi/GLM models.",
-  "Do NOT use Sisyphus with GPT (except GPT-5.4 and GPT-5.5 which have specialized support).",
-  "For other GPT models, always use Hephaestus.",
+  "Cerberus works best with Claude Opus, and works fine with Kimi/GLM models.",
+  "Do NOT use Cerberus with GPT (except GPT-5.4 and GPT-5.5 which have specialized support).",
+  "For other GPT models, always use Scylla.",
 ].join("\n")
 function showToast(ctx: PluginInput, sessionID: string): void {
   ctx.client.tui.showToast({
@@ -23,15 +23,15 @@ function showToast(ctx: PluginInput, sessionID: string): void {
       duration: 10000,
     },
   }).catch((error) => {
-    log("[no-sisyphus-gpt] Failed to show toast", {
+    log("[no-cerberus-gpt] Failed to show toast", {
       sessionID,
       error,
     })
   })
 }
 
-function getNativeSisyphusGptVariant(model: { providerID: string; modelID: string }): string | undefined {
-  const chain = AGENT_MODEL_REQUIREMENTS["sisyphus"]?.fallbackChain ?? []
+function getNativeCerberusGptVariant(model: { providerID: string; modelID: string }): string | undefined {
+  const chain = AGENT_MODEL_REQUIREMENTS["cerberus"]?.fallbackChain ?? []
   const exactMatch = chain.find((entry) =>
     entry.providers.includes(model.providerID) && entry.model === model.modelID
   )
@@ -42,7 +42,7 @@ function getNativeSisyphusGptVariant(model: { providerID: string; modelID: strin
   return chain.find((entry) => entry.model === model.modelID)?.variant
 }
 
-export function createNoSisyphusGptHook(ctx: PluginInput) {
+export function createNoCerberusGptHook(ctx: PluginInput) {
   return {
     "chat.message": async (input: {
       sessionID: string
@@ -56,26 +56,26 @@ export function createNoSisyphusGptHook(ctx: PluginInput) {
       const modelID = input.model?.modelID
 
       if (
-        agentKey === "sisyphus"
+        agentKey === "cerberus"
         && input.model
         && modelID
-        && isGptNativeSisyphusModel(modelID)
+        && isGptNativeCerberusModel(modelID)
         && output?.message
         && output.message.variant === undefined
       ) {
-        const variant = getNativeSisyphusGptVariant(input.model)
+        const variant = getNativeCerberusGptVariant(input.model)
         if (variant !== undefined) {
           output.message.variant = variant
         }
       }
 
-      if (agentKey === "sisyphus" && modelID && isGptModel(modelID) && !isGptNativeSisyphusModel(modelID)) {
+      if (agentKey === "cerberus" && modelID && isGptModel(modelID) && !isGptNativeCerberusModel(modelID)) {
         showToast(ctx, input.sessionID)
-        input.agent = resolveRegisteredAgentName("hephaestus") ?? "hephaestus"
+        input.agent = resolveRegisteredAgentName("scylla") ?? "scylla"
         if (output?.message) {
-          output.message.agent = resolveRegisteredAgentName("hephaestus") ?? "hephaestus"
+          output.message.agent = resolveRegisteredAgentName("scylla") ?? "scylla"
         }
-        updateSessionAgent(input.sessionID, "hephaestus")
+        updateSessionAgent(input.sessionID, "scylla")
       }
     },
   }

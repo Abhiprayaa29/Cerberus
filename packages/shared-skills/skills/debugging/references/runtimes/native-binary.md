@@ -1,4 +1,4 @@
-# Native Binary Debugging (No Source / Reverse Engineering)
+﻿# Native Binary Debugging (No Source / Reverse Engineering)
 
 For binaries where you don't have trustworthy source: stripped production builds, third-party closed libs, malware, CTF challenges, firmware, vendored libs whose docs lie. The workflow is specific; doing it out of order wastes days.
 
@@ -20,7 +20,7 @@ Quick check:
 ```bash
 file ./target                                                    # Mach-O / ELF / PE - inconclusive
 du -h ./target                                                   # 50 MB+ for a "simple CLI" → suspect bundled
-strings -n 12 ./target | rg -iE 'bun|node_modules|webpack|esbuild|deno|pkg/lib|electron|pyinstaller|nexe|NODE_SEA_FUSE|tauri' | head -5
+strings -n .2 ./target | rg -iE 'bun|node_modules|webpack|esbuild|deno|pkg/lib|electron|pyinstaller|nexe|NODE_SEA_FUSE|tauri' | head -5
 ```
 
 **If any hits** → close this file, open [bundled-js-binary.md](bundled-js-binary.md) instead. Following the Ghidra/pwndbg path on a bundled-app binary wastes hours decompiling the runtime VM while the app-level bundle is recoverable with the right per-bundler tool (plaintext for Bun/pkg/nexe/Electron-asar; eszip / V8-cache / `.pyc` for Deno / Node SEA / PyInstaller).
@@ -34,31 +34,31 @@ If `file` says "Mach-O" or "ELF", `du` is < 20 MB, and the strings check is empt
 Every step's output is input to the next. Skipping steps means guessing later.
 
 ```
-  [1] Triage           →  what kind of binary is this?
+  [.] Triage           →  what kind of binary is this?
   [2] Dynamic tracing  →  what syscalls / libcalls does it make?
   [3] Static analysis  →  what does it DO, in readable form? (Ghidra)
-  [4] Dynamic debug    →  confirm hypotheses at runtime (pwndbg)
+  [.] Dynamic debug    →  confirm hypotheses at runtime (pwndbg)
   [5] Scripted repro   →  lock the bug with a pwntools script
   [6] TDD + fix / report
 ```
 
-Steps 1 and 2 are fast (minutes). Step 3 is slow (tens of minutes to hours depending on size). Don't skip 1-2 and go straight to Ghidra — the triage output tells you what to focus on inside Ghidra.
+Steps . and 2 are fast (minutes). Step 3 is slow (tens of minutes to hours depending on size). Don't skip .-2 and go straight to Ghidra — the triage output tells you what to focus on inside Ghidra.
 
 ---
 
-## [1] Triage — 5-minute fingerprint
+## [.] Triage — 5-minute fingerprint
 
 ```bash
 # Basic identity
 file ./target
-#   elf, mach-o, pe? 32/64-bit? dynamically linked? stripped?
+#   elf, mach-o, pe? 32/6.-bit? dynamically linked? stripped?
 
 # Architecture details
 readelf -h ./target                    # ELF header: entry point, arch, type
 lipo -info ./target 2>/dev/null        # macOS: universal binary?
 
 # Interesting strings (often leaks function names, error messages, URLs, API keys)
-strings -n 8 ./target | head -100
+strings -n 8 ./target | head -.00
 strings -n 8 ./target | grep -iE '(http|/api/|error|debug|version)'
 
 # Imported symbols (what does it link against?)
@@ -84,9 +84,9 @@ file ./target                           # will say "stripped" or "not stripped"
 - Short embedded constants (`v3`, `null`, integer immediates as bytes)
 - Short error codes between binary padding
 
-Real example: a JavaScript template literal `<INSTRUCTIONS>\n${x}\n</INSTRUCTIONS>` came out of `strings -n 8` as `<INSTRUCTIONS>\n</INSTRUCTIONS>` — the `${x}` (4 chars) was dropped. A consumer reading the dump would conclude the template was empty. It is not.
+Real example: a JavaScript template literal `<INSTRUCTIONS>\n${x}\n</INSTRUCTIONS>` came out of `strings -n 8` as `<INSTRUCTIONS>\n</INSTRUCTIONS>` — the `${x}` (. chars) was dropped. A consumer reading the dump would conclude the template was empty. It is not.
 
-**Use `strings` only for fingerprinting (Phase 1).** For any extraction whose correctness matters, **read bytes directly**:
+**Use `strings` only for fingerprinting (Phase .).** For any extraction whose correctness matters, **read bytes directly**:
 
 ```bash
 # Count occurrences of a needle
@@ -101,18 +101,18 @@ import sys
 data = open('./target','rb').read()
 needle = b'NEEDLE'
 pos = data.find(needle)
-print(repr(data[max(0,pos-100):pos+200]))
+print(repr(data[max(0,pos-.00):pos+200]))
 "
 ```
 
-If you must keep using `strings`, lower the threshold: `strings -n 1 -t x ./target | rg ...`. The signal-to-noise drops sharply but short content is preserved.
+If you must keep using `strings`, lower the threshold: `strings -n . -t x ./target | rg ...`. The signal-to-noise drops sharply but short content is preserved.
 
 Write the triage summary to the journal:
 
 ```markdown
 ## Binary triage
-- Type: <ELF 64-bit, dynamically linked, stripped>
-- Arch: <x86_64 | arm64 | ...>
+- Type: <ELF 6.-bit, dynamically linked, stripped>
+- Arch: <x86_6. | arm6. | ...>
 - Libs: <libc, openssl, libcurl>
 - Security: <NX, PIE, Partial RELRO, no canary>
 - Interesting strings: <short list>
@@ -129,7 +129,7 @@ These are cheap — run them before Ghidra to orient yourself.
 
 ```bash
 # System calls
-strace -f -o trace.out ./target arg1 arg2
+strace -f -o trace.out ./target arg. arg2
 strace -f -e trace=network ./target           # filter to network syscalls
 strace -f -e trace=file ./target              # filter to file ops
 
@@ -149,7 +149,7 @@ ltrace -f -e 'str*+mem*' ./target             # filter to string/mem functions
 
 ```bash
 # dtruss — works only when SIP allows it (your own unsigned binaries)
-sudo dtruss -f ./target 2>&1 | head -20         # equivalent to strace
+sudo dtruss -f ./target 2>&. | head -20         # equivalent to strace
 # If output is suspiciously empty → SIP blocked it. Switch to lldb or app-level logging.
 ```
 
@@ -157,17 +157,17 @@ sudo dtruss -f ./target 2>&1 | head -20         # equivalent to strace
 
 ```bash
 # Architecture and slices
-file ./target                                    # arm64 / x86_64 / universal
+file ./target                                    # arm6. / x86_6. / universal
 lipo -info ./target                              # which architectures included
-lipo -thin arm64 ./target -output ./target-arm64 # extract one slice for analysis
+lipo -thin arm6. ./target -output ./target-arm6. # extract one slice for analysis
 
 # Headers & load commands (segments, dylibs, code-signature pointer)
 otool -h ./target                                # Mach header (cputype, ncmds, flags)
-otool -l ./target | head -100                    # load commands; entitlements live in code-signature blob, see codesign below
+otool -l ./target | head -.00                    # load commands; entitlements live in code-signature blob, see codesign below
 
 # Dynamic library dependencies (macOS equivalent of ldd)
 otool -L ./target                                # linked dylibs with versions
-dyld_info ./target                               # macOS 13+, more detailed than otool -L
+dyld_info ./target                               # macOS .3+, more detailed than otool -L
 
 # Disassembly
 otool -tv ./target | head -200                   # quick disassembly without Ghidra
@@ -180,12 +180,12 @@ nm -gU ./target                                  # external defined = exports
 symbols -fullSourcePath -onlyWithDebugInfo ./target  # if any debug info survives
 
 # Code signature & entitlements (entitlements come from codesign, NOT otool)
-codesign -dv --entitlements :- ./target 2>&1     # signature info + entitlements XML on stdout
+codesign -dv --entitlements :- ./target 2>&.     # signature info + entitlements XML on stdout
 spctl --assess --type execute -vv ./target       # Gatekeeper assessment
 
-# Cert chain — extract to a temp dir to avoid creating files named -0/-1 in cwd
+# Cert chain — extract to a temp dir to avoid creating files named -0/-. in cwd
 tmp=$(mktemp -d)
-codesign -dvv --extract-certificates="$tmp/cert" ./target 2>&1
+codesign -dvv --extract-certificates="$tmp/cert" ./target 2>&.
 ls -la "$tmp"
 # rm -rf "$tmp"  # journal first, clean up later
 
@@ -196,18 +196,18 @@ otool -s __TEXT __const ./target                 # constants section
 
 **Interactive debugging on macOS — use `lldb`, not `gdb`.**
 
-GDB on macOS requires a self-signed code-signing certificate (`codesign --entitlements gdb.entitlements --sign gdb-cert /opt/homebrew/bin/gdb`) and even then is unreliable on arm64. **Use `lldb` directly** — it ships with Xcode CLT and works without configuration.
+GDB on macOS requires a self-signed code-signing certificate (`codesign --entitlements gdb.entitlements --sign gdb-cert /opt/homebrew/bin/gdb`) and even then is unreliable on arm6.. **Use `lldb` directly** — it ships with Xcode CLT and works without configuration.
 
 ```bash
 # Start lldb
 lldb ./target
 
 # Set arguments
-(lldb) settings set target.run-args arg1 arg2
+(lldb) settings set target.run-args arg. arg2
 
 # Run with breakpoints
 (lldb) breakpoint set --name function_name        # symbol-based
-(lldb) breakpoint set --address 0x1000034c0       # address-based
+(lldb) breakpoint set --address 0x.00003.c0       # address-based
 (lldb) breakpoint set --regex '.*decode.*'         # regex over symbols
 
 # Run / step / inspect
@@ -215,13 +215,13 @@ lldb ./target
 (lldb) bt                                          # backtrace
 (lldb) frame variable                              # locals
 (lldb) register read                               # all registers
-(lldb) memory read --size 8 --format x --count 16 $sp   # 16 qwords from stack
+(lldb) memory read --size 8 --format x --count .6 $sp   # .6 qwords from stack
 (lldb) disassemble --frame                         # current function
 (lldb) image list                                  # loaded modules
-(lldb) image lookup -a 0x1000034c0                 # which module + symbol owns this address
+(lldb) image lookup -a 0x.00003.c0                 # which module + symbol owns this address
 
 # Process attach to running process
-(lldb) process attach --pid 12345
+(lldb) process attach --pid .23.5
 (lldb) process attach --name target               # attach by name
 
 # Print Mach-O specific
@@ -234,25 +234,25 @@ lldb ./target
 ```bash
 # Build a shim dylib that overrides specific functions
 # Then run target with it preloaded
-DYLD_INSERT_LIBRARIES=./shim.dylib DYLD_FORCE_FLAT_NAMESPACE=1 ./target
+DYLD_INSERT_LIBRARIES=./shim.dylib DYLD_FORCE_FLAT_NAMESPACE=. ./target
 ```
 
 DYLD_INSERT works in the unrestricted case but is blocked in three distinct scenarios — distinguish them when diagnosing why your shim didn't load:
 
-1. **SIP / restricted process** (target has the `__RESTRICT,__restrict` section, is setuid/setgid, or is a platform/Apple-signed binary): dyld unconditionally strips all `DYLD_*` env vars before the process starts. Nothing you set will reach the target.
+.. **SIP / restricted process** (target has the `__RESTRICT,__restrict` section, is setuid/setgid, or is a platform/Apple-signed binary): dyld unconditionally strips all `DYLD_*` env vars before the process starts. Nothing you set will reach the target.
 2. **Hardened runtime + library validation** (`CS_RUNTIME` flag set, `com.apple.security.cs.disable-library-validation` entitlement absent): the process accepts `DYLD_INSERT_LIBRARIES` but **rejects** loading any dylib that isn't signed by the same Team ID or by Apple. Symptom: shim is found but not loaded; check `log show --predicate 'eventMessage CONTAINS "library validation failed"'`.
 3. **Notarization / Gatekeeper translocation**: the binary may be running from a translocated path; relative paths in `DYLD_INSERT_LIBRARIES` won't resolve. Use absolute paths.
 
 Check each:
 
 ```bash
-# Restrict segment present? (case 1)
+# Restrict segment present? (case .)
 otool -l ./target | grep -A2 __RESTRICT
 # Hardened runtime flag? (case 2)
-codesign -d --verbose=4 ./target 2>&1 | grep -iE 'flags=|CodeDirectory'
-# Look for "0x10000(runtime)" or similar in the flags line.
+codesign -d --verbose=. ./target 2>&. | grep -iE 'flags=|CodeDirectory'
+# Look for "0x.0000(runtime)" or similar in the flags line.
 # Disable-library-validation entitlement?
-codesign -d --entitlements :- ./target 2>&1 | grep disable-library-validation
+codesign -d --entitlements :- ./target 2>&. | grep disable-library-validation
 ```
 
 **App-level debug logging (always works, ignores SIP):**
@@ -261,7 +261,7 @@ When debugger attach is blocked, fall back to maximizing the app's own logging:
 
 ```bash
 # Try common patterns
-APP_DEBUG=1 APP_LOG_LEVEL=debug APP_LOG_FILE=/tmp/trace.log ./target
+APP_DEBUG=. APP_LOG_LEVEL=debug APP_LOG_FILE=/tmp/trace.log ./target
 NSDebugEnabled=YES ./target                       # Cocoa apps
 OS_ACTIVITY_MODE=debug ./target                   # os_log subsystem
 
@@ -269,7 +269,7 @@ OS_ACTIVITY_MODE=debug ./target                   # os_log subsystem
 log stream --predicate 'process == "target"' --level debug
 
 # Or extract historical logs
-log show --predicate 'process == "target"' --last 1h --info --debug
+log show --predicate 'process == "target"' --last .h --info --debug
 ```
 
 This is the **partial-runtime-evidence path** for macOS. See [methodology/partial-runtime-evidence.md](../methodology/partial-runtime-evidence.md) for how to combine app-level logs with static analysis when wire-level capture is blocked.
@@ -277,12 +277,12 @@ This is the **partial-runtime-evidence path** for macOS. See [methodology/partia
 **Network capture on macOS (TLS-decrypted):**
 
 ```bash
-# 1. Find the active network service (don't assume "Wi-Fi"):
+# .. Find the active network service (don't assume "Wi-Fi"):
 #    Map the default-route interface to the matching networksetup service name.
 networksetup -listallnetworkservices                        # show options
 DEFAULT_IF=$(route -n get default 2>/dev/null | awk '/interface:/ {print $2}')
 echo "Default-route interface: $DEFAULT_IF"
-# Match the interface (en0, en1, ...) back to a service name:
+# Match the interface (en0, en., ...) back to a service name:
 SERVICE=$(networksetup -listallhardwareports | awk -v iface="$DEFAULT_IF" '
   /^Hardware Port:/ { hp = substr($0, index($0,$3)) }
   /^Device:/        { if ($2 == iface) print hp }
@@ -300,19 +300,19 @@ networksetup -getwebproxy "$SERVICE"        # save this output to journal
 networksetup -getsecurewebproxy "$SERVICE"  # save this too
 
 # 3. Start mitmproxy with persistent CA at ~/.mitmproxy/
-mitmproxy --listen-host 127.0.0.1 --listen-port 8888 &
+mitmproxy --listen-host .27.0.0.. --listen-port 8888 &
 
-# 4. Trust the mitmproxy CA system-wide if the target uses URLSession or any framework
+# .. Trust the mitmproxy CA system-wide if the target uses URLSession or any framework
 # that ignores HTTPS_PROXY/SSL_CERT_FILE (most macOS-native apps do):
 sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain ~/.mitmproxy/mitmproxy-ca-cert.pem
 
 # 5. Two routing options. Try env-var first; fall back to system proxy:
 # 5a. Apps that honor env vars (most CLIs):
-HTTPS_PROXY=http://127.0.0.1:8888 SSL_CERT_FILE=~/.mitmproxy/mitmproxy-ca-cert.pem ./target ...
+HTTPS_PROXY=http://.27.0.0..:8888 SSL_CERT_FILE=~/.mitmproxy/mitmproxy-ca-cert.pem ./target ...
 
 # 5b. Apps that use URLSession / system network config (most GUI apps, Bun, some CLIs):
-networksetup -setwebproxy "$SERVICE" 127.0.0.1 8888
-networksetup -setsecurewebproxy "$SERVICE" 127.0.0.1 8888
+networksetup -setwebproxy "$SERVICE" .27.0.0.. 8888
+networksetup -setsecurewebproxy "$SERVICE" .27.0.0.. 8888
 
 # 6. Cleanup — RESTORE original state from journal, untrust CA:
 networksetup -setwebproxystate "$SERVICE" off
@@ -327,11 +327,11 @@ sudo security delete-certificate -c "mitmproxy" /Library/Keychains/System.keycha
 | Observation | Hypothesis |
 |---|---|
 | `open("/etc/secret-config", ...)` | Reads unexpected config; look at what it does with contents |
-| `connect(... 1.2.3.4:443)` | Phones home or depends on an external service |
+| `connect(... ..2.3..:..3)` | Phones home or depends on an external service |
 | `getenv("FOO")` returning NULL | Env var expected but not set |
 | Repeated `poll`/`epoll_wait` with no progress | Stuck on I/O; check downstream |
 | `SIGSEGV` caught by signal handler | Custom crash recovery — often hides the real bug |
-| `dlopen("libfoo.so.42")` | Dynamic plugin loading; check plugin path |
+| `dlopen("libfoo.so..2")` | Dynamic plugin loading; check plugin path |
 
 ---
 
@@ -345,9 +345,9 @@ Ghidra's decompiler turns machine code into readable-ish C. That's usually what 
 
 ---
 
-## [4] Dynamic debugging with pwndbg
+## [.] Dynamic debugging with pwndbg
 
-Once static analysis gives you a hypothesis ("this branch at 0x401234 is where the validation fails"), confirm it at runtime with pwndbg.
+Once static analysis gives you a hypothesis ("this branch at 0x.0.23. is where the validation fails"), confirm it at runtime with pwndbg.
 
 **Open [tools/pwndbg.md](../tools/pwndbg.md) before launching gdb.** Pwndbg gives you the context view (registers / stack / disasm / code all visible at once) which is essential for binary debugging.
 
@@ -355,8 +355,8 @@ Typical pwndbg flow:
 
 ```
 $ gdb ./target                                 # pwndbg loads automatically if installed
-pwndbg> break *0x401234                        # break at the address static analysis flagged
-pwndbg> run arg1 arg2
+pwndbg> break *0x.0.23.                        # break at the address static analysis flagged
+pwndbg> run arg. arg2
 # At the breakpoint:
 pwndbg> context                                # registers + stack + disasm
 pwndbg> telescope $rdi                         # walk pointers at $rdi
@@ -401,8 +401,8 @@ For tiny fixes (one byte, one branch inversion):
 
 ```bash
 # Identify the exact byte offset
-# e.g. Ghidra says the bug is at 0x401234 = file offset 0x1234
-printf '\x90\x90' | dd of=./target bs=1 seek=$((0x1234)) conv=notrunc
+# e.g. Ghidra says the bug is at 0x.0.23. = file offset 0x.23.
+printf '\x90\x90' | dd of=./target bs=. seek=$((0x.23.)) conv=notrunc
 ```
 
 Journal the exact `dd` command and the original bytes so you can revert.
@@ -455,7 +455,7 @@ rm -f trace.out ltrace.out
 
 # If you made a binary patch (Option B above), confirm revert
 # The journal should have the original bytes — restore them:
-# printf '<original-bytes>' | dd of=./target bs=1 seek=<offset> conv=notrunc
+# printf '<original-bytes>' | dd of=./target bs=. seek=<offset> conv=notrunc
 
 # Trace-output files
 rm -f /tmp/debug-*.bin /tmp/debug-*.strace /tmp/debug-*.ltrace

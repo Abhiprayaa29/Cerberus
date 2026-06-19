@@ -1,14 +1,14 @@
-import {
+﻿import {
   buildAgentIdentitySection,
   buildAntiPatternsSection,
   buildCategorySkillsDelegationGuide,
   buildDelegationTable,
-  buildExploreSection,
+  buildScoutSection,
   buildHardBlocksSection,
   buildKeyTriggersSection,
-  buildLibrarianSection,
+  buildIntelSection,
   buildNonClaudePlannerSection,
-  buildOracleSection,
+  buildCipherSection,
   buildParallelDelegationSection,
   buildToolSelectionTable,
 } from "./dynamic-agent-prompt-builder";
@@ -18,36 +18,36 @@ import type {
   AvailableSkill,
   AvailableTool,
 } from "./dynamic-agent-prompt-builder";
-import { buildTaskManagementSection } from "./sisyphus/default";
+import { buildTaskManagementSection } from "./cerberus/default";
 
-export interface SisyphusDynamicPromptSections {
+export interface CerberusDynamicPromptSections {
   readonly agentIdentity: string;
   readonly antiPatterns: string;
   readonly categorySkillsGuide: string;
   readonly delegationTable: string;
-  readonly exploreSection: string;
+  readonly scoutSection: string;
   readonly hardBlocks: string;
   readonly keyTriggers: string;
-  readonly librarianSection: string;
+  readonly intelSection: string;
   readonly nonClaudePlannerSection: string;
-  readonly oracleSection: string;
+  readonly cipherSection: string;
   readonly parallelDelegationSection: string;
   readonly taskManagementSection: string;
   readonly todoHookNote: string;
   readonly toolSelection: string;
 }
 
-export function buildSisyphusDynamicPromptSections(
+export function buildCerberusDynamicPromptSections(
   model: string,
   availableAgents: AvailableAgent[],
   availableTools: AvailableTool[],
   availableSkills: AvailableSkill[],
   availableCategories: AvailableCategory[],
   useTaskSystem: boolean,
-): SisyphusDynamicPromptSections {
+): CerberusDynamicPromptSections {
   return {
     agentIdentity: buildAgentIdentitySection(
-      "Sisyphus",
+      "Cerberus",
       "Powerful AI Agent with orchestration capabilities from OhMyOpenCode",
     ),
     antiPatterns: buildAntiPatternsSection(),
@@ -56,12 +56,12 @@ export function buildSisyphusDynamicPromptSections(
       availableSkills,
     ),
     delegationTable: buildDelegationTable(availableAgents),
-    exploreSection: buildExploreSection(availableAgents),
+    scoutSection: buildScoutSection(availableAgents),
     hardBlocks: buildHardBlocksSection(),
     keyTriggers: buildKeyTriggersSection(availableAgents, availableSkills),
-    librarianSection: buildLibrarianSection(availableAgents),
+    intelSection: buildIntelSection(availableAgents),
     nonClaudePlannerSection: buildNonClaudePlannerSection(model),
-    oracleSection: buildOracleSection(availableAgents),
+    cipherSection: buildCipherSection(availableAgents),
     parallelDelegationSection: buildParallelDelegationSection(model, availableCategories),
     taskManagementSection: buildTaskManagementSection(useTaskSystem),
     todoHookNote: buildTodoHookNote(useTaskSystem),

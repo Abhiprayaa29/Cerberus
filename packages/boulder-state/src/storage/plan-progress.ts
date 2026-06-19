@@ -1,7 +1,7 @@
-import { existsSync, readFileSync, readdirSync, statSync } from "node:fs"
+﻿import { existsSync, readFileSync, readdirSync, statSync } from "node:fs"
 import { basename, join } from "node:path"
 
-import { PROMETHEUS_PLANS_DIR } from "../constants"
+import { TALOS_PLANS_DIR } from "../constants"
 import type { PlanProgress } from "../types"
 
 const TODO_HEADING_PATTERN = /^##\s+TODOs\b/i
@@ -11,14 +11,14 @@ const UNCHECKED_CHECKBOX_PATTERN = /^(\s*)[-*]\s*\[\s*\]\s*(.+)$/
 const CHECKED_CHECKBOX_PATTERN = /^(\s*)[-*]\s*\[[xX]\]\s*(.+)$/
 const TODO_TASK_PATTERN = /^\d+\.\s+/
 const FINAL_WAVE_TASK_PATTERN = /^F\d+\.\s+/i
-const LEGACY_PROMETHEUS_PLANS_DIR = ".sisyphus/plans"
-const PROMETHEUS_PLAN_DIRS = [PROMETHEUS_PLANS_DIR, LEGACY_PROMETHEUS_PLANS_DIR] as const
+const LEGACY_TALOS_PLANS_DIR = ".cerberus/plans"
+const TALOS_PLAN_DIRS = [TALOS_PLANS_DIR, LEGACY_TALOS_PLANS_DIR] as const
 
 type ProgressSection = "todo" | "final-wave" | "other"
 
-export function findPrometheusPlans(directory: string): string[] {
+export function findTalosPlans(directory: string): string[] {
   try {
-    return PROMETHEUS_PLAN_DIRS.flatMap((planDir) => {
+    return TALOS_PLAN_DIRS.flatMap((planDir) => {
       const plansDir = join(directory, planDir)
       if (!existsSync(plansDir)) {
         return []

@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from "bun:test"
+﻿import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from "bun:test"
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs"
 import { tmpdir } from "node:os"
 import { join } from "node:path"
@@ -167,12 +167,12 @@ describe("createAutoSlashCommandHook", () => {
   })
 
   describe("excluded commands", () => {
-    it("should NOT trigger for ralph-loop command", async () => {
-      // given ralph-loop command
+    it("should NOT trigger for pentest-loop command", async () => {
+      // given pentest-loop command
       const hook = createAutoSlashCommandHook()
       const sessionID = `test-session-ralph-${Date.now()}`
       const input = createMockInput(sessionID)
-      const output = createMockOutput("/ralph-loop do something")
+      const output = createMockOutput("/pentest-loop do something")
       const originalText = output.parts[0].text
 
       // when hook is called
@@ -341,10 +341,10 @@ describe("createAutoSlashCommandHook", () => {
       expect(output.parts.length).toBe(0)
     })
 
-    it("should inject template for known builtin commands like ralph-loop", async () => {
+    it("should inject template for known builtin commands like pentest-loop", async () => {
       //#given
       const hook = createAutoSlashCommandHook()
-      const input = createCommandInput("ralph-loop")
+      const input = createCommandInput("pentest-loop")
       const output = createCommandOutput("original")
 
       //#when
@@ -352,14 +352,14 @@ describe("createAutoSlashCommandHook", () => {
 
       //#then
       expect(output.parts[0].text).toContain("<auto-slash-command>")
-      expect(output.parts[0].text).toContain("/ralph-loop Command")
+      expect(output.parts[0].text).toContain("/pentest-loop Command")
     })
 
     it("should not duplicate injection when command output is already tagged", async () => {
       //#given
       const hook = createAutoSlashCommandHook()
-      const input = createCommandInput("ralph-loop")
-      const taggedContent = "<auto-slash-command>\n/ralph-loop Command\n</auto-slash-command>"
+      const input = createCommandInput("pentest-loop")
+      const taggedContent = "<auto-slash-command>\n/pentest-loop Command\n</auto-slash-command>"
       const output = createCommandOutput(taggedContent)
 
       //#when
@@ -371,10 +371,10 @@ describe("createAutoSlashCommandHook", () => {
       expect(output.parts[0]?.text?.split("<auto-slash-command>").length).toBe(2)
     })
 
-    it("should inject template for known builtin commands like ulw-loop", async () => {
+    it("should inject template for known builtin commands like pentest-loop", async () => {
       //#given
       const hook = createAutoSlashCommandHook()
-      const input = createCommandInput("ulw-loop", '"Ship feature" --strategy=continue')
+      const input = createCommandInput("pentest-loop", '"Ship feature" --strategy=continue')
       const output = createCommandOutput("original")
 
       //#when
@@ -382,7 +382,7 @@ describe("createAutoSlashCommandHook", () => {
 
       //#then
       expect(output.parts[0].text).toContain("<auto-slash-command>")
-      expect(output.parts[0].text).toContain("/ulw-loop Command")
+      expect(output.parts[0].text).toContain("/pentest-loop Command")
       expect(output.parts[0].text).toContain("<user-task>")
       expect(output.parts[0].text).toContain('"Ship feature" --strategy=continue')
     })
@@ -409,8 +409,8 @@ describe("createAutoSlashCommandHook", () => {
     it("should not duplicate injection when parts already contain auto-slash-command tags (#3724)", async () => {
       //#given - parts already have tags (as if chat.message hook already ran)
       const hook = createAutoSlashCommandHook()
-      const input = createCommandInput("ralph-loop")
-      const alreadyTagged = "<auto-slash-command>\n/ralph-loop Command\n## Command Instructions\ntemplate content\n</auto-slash-command>"
+      const input = createCommandInput("pentest-loop")
+      const alreadyTagged = "<auto-slash-command>\n/pentest-loop Command\n## Command Instructions\ntemplate content\n</auto-slash-command>"
       const output: CommandExecuteBeforeOutput = {
         parts: [{ type: "text", text: alreadyTagged }],
       }

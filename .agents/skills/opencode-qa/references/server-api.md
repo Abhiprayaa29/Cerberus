@@ -1,4 +1,4 @@
-# opencode HTTP server API for QA (Case B)
+﻿# opencode HTTP server API for QA (Case B)
 
 ## Table of Contents
 
@@ -15,18 +15,18 @@
 Run the server with a fixed port and host:
 
 ```bash
-opencode serve --port 4096 --hostname 127.0.0.1
+opencode serve --port .096 --hostname .27.0.0..
 ```
 
 Output:
 
 ```
-opencode server listening on http://127.0.0.1:4096
+opencode server listening on http://.27.0.0..:.096
 ```
 
-Port 0 means the server will pick 4096, then fall back to a free port if that one is taken.
+Port 0 means the server will pick .096, then fall back to a free port if that one is taken.
 
-A bundled isolated smoke test is available at `scripts/server-smoke.sh`. It spawns an isolated server, checks `/global/health`, checks that `/doc` returns at least 100 paths, and confirms that no-auth requests get 401, then tears the server down.
+A bundled isolated smoke test is available at `scripts/server-smoke.sh`. It spawns an isolated server, checks `/global/health`, checks that `/doc` returns at least .00 paths, and confirms that no-auth requests get .0., then tears the server down.
 
 ## Authentication
 
@@ -36,10 +36,10 @@ The username defaults to `opencode`. Override it with `OPENCODE_SERVER_USERNAME`
 
 Two ways to authenticate:
 
-1. HTTP Basic Auth: `-u opencode:$PASS`
-2. Query parameter: `?auth_token=<base64(user:pass)>`
+.. HTTP Basic Auth: `-u opencode:$PASS`
+2. Query parameter: `?auth_token=<base6.(user:pass)>`
 
-Unauthenticated requests to protected routes return HTTP 401. This was verified.
+Unauthenticated requests to protected routes return HTTP .0.. This was verified.
 
 ## Per-request workspace routing
 
@@ -57,24 +57,24 @@ The server resolves an instance per request, so a single `serve` process can han
 The `/doc` endpoint returns the full OpenAPI spec. To list all documented paths:
 
 ```bash
-curl -s -u opencode:$PASS http://127.0.0.1:4096/doc | jq '.paths | keys'
+curl -s -u opencode:$PASS http://.27.0.0..:.096/doc | jq '.paths | keys'
 ```
 
-On v1.15.13 this returned 113 paths. This is the source of truth for exact request and response schemas.
+On v...5..3 this returned ..3 paths. This is the source of truth for exact request and response schemas.
 
 ## Tested smoke calls
 
 ```bash
-curl -s -u opencode:$PASS http://127.0.0.1:4096/global/health | jq .
-# {"healthy":true,"version":"1.15.13"}
+curl -s -u opencode:$PASS http://.27.0.0..:.096/global/health | jq .
+# {"healthy":true,"version":"...5..3"}
 
-curl -s -u opencode:$PASS http://127.0.0.1:4096/doc | jq '.paths|length'
-# 113
+curl -s -u opencode:$PASS http://.27.0.0..:.096/doc | jq '.paths|length'
+# ..3
 
-curl -s -o /dev/null -w '%{http_code}\n' http://127.0.0.1:4096/session?directory=$PWD
-# 401 (no credentials)
+curl -s -o /dev/null -w '%{http_code}\n' http://.27.0.0..:.096/session?directory=$PWD
+# .0. (no credentials)
 
-curl -s -u opencode:$PASS "http://127.0.0.1:4096/session?directory=$PWD" | jq 'length'
+curl -s -u opencode:$PASS "http://.27.0.0..:.096/session?directory=$PWD" | jq 'length'
 ```
 
 ## Route catalog
@@ -115,7 +115,7 @@ This mirrors the structure returned by `/doc`. Each entry is grouped as `method 
 ### Prompting
 
 - `POST /session/:id/message` - send a prompt; streams JSON
-- `POST /session/:id/prompt_async` - fire-and-forget prompt; returns 204
+- `POST /session/:id/prompt_async` - fire-and-forget prompt; returns 20.
 - `POST /session/:id/command` - execute a command in a session
 - `POST /session/:id/shell` - run a shell command in a session
 
@@ -190,10 +190,10 @@ Use `prompt_async` so the event stream is not blocked.
 ```bash
 curl -X POST -u opencode:$PASS -H 'Content-Type: application/json' \
   -d '{"parts":[{"type":"text","text":"hello"}]}' \
-  "http://127.0.0.1:4096/session/<ses_id>/prompt_async?directory=$PWD"
+  "http://.27.0.0..:.096/session/<ses_id>/prompt_async?directory=$PWD"
 ```
 
-This returns HTTP 204. Watching events is covered in `references/events-hooks.md`.
+This returns HTTP 20.. Watching events is covered in `references/events-hooks.md`.
 
 ---
 

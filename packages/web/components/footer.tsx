@@ -1,4 +1,4 @@
-import type { JSX } from "react"
+﻿import type { JSX } from "react"
 import { getTranslations } from "next-intl/server"
 import { Link } from "@/i18n/routing"
 
@@ -20,7 +20,7 @@ export async function Footer({ locale }: { readonly locale?: string } = {}): Pro
           </div>
           <div className="flex items-center gap-8 text-sm text-zinc-400">
             <a
-              href="https://github.com/code-yeongyu/oh-my-openagent"
+              href="https://github.com/code-yeongyu/oh-my-open-pentest"
               target="_blank"
               rel="noopener noreferrer"
               className="transition-colors hover:text-cyan-400"

@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it } from "bun:test"
+﻿import { beforeEach, describe, expect, it } from "bun:test"
 
 import { clearPendingStore, storeToolMetadata } from "../features/tool-metadata-store"
 import { createToolExecuteAfterHandler } from "./tool-execute-after"
@@ -43,7 +43,7 @@ describe("createToolExecuteAfterHandler", () => {
     // given
     storeToolMetadata("ses_parent", "call_legacy", {
       title: "stored title",
-      metadata: { sessionId: "ses_child", agent: "oracle" },
+      metadata: { sessionId: "ses_child", agent: "cipher" },
     })
 
     const handler = createToolExecuteAfterHandler({
@@ -61,14 +61,14 @@ describe("createToolExecuteAfterHandler", () => {
 
     // then
     expect(output.title).toBe("stored title")
-    expect(output.metadata).toEqual({ truncated: true, sessionId: "ses_child", agent: "oracle" })
+    expect(output.metadata).toEqual({ truncated: true, sessionId: "ses_child", agent: "cipher" })
   })
 
   it("#given native session metadata #when stored metadata exists #then stored metadata does not overwrite native session linkage", async () => {
     // given
     storeToolMetadata("ses_parent", "call_native", {
       title: "stored title",
-      metadata: { sessionId: "ses_stored", agent: "oracle" },
+      metadata: { sessionId: "ses_stored", agent: "cipher" },
     })
 
     const handler = createToolExecuteAfterHandler({
@@ -79,7 +79,7 @@ describe("createToolExecuteAfterHandler", () => {
     const output = {
       title: "result",
       output: "original output",
-      metadata: { sessionId: "ses_native", agent: "hephaestus" },
+      metadata: { sessionId: "ses_native", agent: "scylla" },
     }
 
     // when
@@ -90,14 +90,14 @@ describe("createToolExecuteAfterHandler", () => {
 
     // then
     expect(output.title).toBe("stored title")
-    expect(output.metadata).toEqual({ sessionId: "ses_native", agent: "hephaestus" })
+    expect(output.metadata).toEqual({ sessionId: "ses_native", agent: "scylla" })
   })
   it("#given native session linkage without model #when stored metadata exists #then required task metadata is preserved", async () => {
     // given
     const model = { providerID: "openai", modelID: "gpt-5.5" }
     storeToolMetadata("ses_parent", "call_model", {
       title: "stored title",
-      metadata: { sessionId: "ses_stored", agent: "oracle", model },
+      metadata: { sessionId: "ses_stored", agent: "cipher", model },
     })
 
     const handler = createToolExecuteAfterHandler({
@@ -108,7 +108,7 @@ describe("createToolExecuteAfterHandler", () => {
     const output = {
       title: "result",
       output: "original output",
-      metadata: { sessionId: "ses_native", agent: "hephaestus" },
+      metadata: { sessionId: "ses_native", agent: "scylla" },
     }
 
     // when
@@ -119,7 +119,7 @@ describe("createToolExecuteAfterHandler", () => {
 
     // then
     expect(output.title).toBe("stored title")
-    expect(output.metadata).toEqual({ sessionId: "ses_native", agent: "hephaestus", model })
+    expect(output.metadata).toEqual({ sessionId: "ses_native", agent: "scylla", model })
   })
 
   it("#given a non-extract hook throws #when tool.execute.after runs #then the handler absorbs the failure", async () => {

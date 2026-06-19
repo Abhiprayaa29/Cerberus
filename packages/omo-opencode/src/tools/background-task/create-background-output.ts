@@ -1,4 +1,4 @@
-import { tool, type ToolDefinition } from "@opencode-ai/plugin"
+﻿import { tool, type ToolDefinition } from "@opencode-ai/plugin"
 import type { BackgroundTask } from "../../features/background-agent"
 import { publishToolMetadata } from "../../features/tool-metadata-store"
 import { log } from "../../shared/logger"
@@ -13,7 +13,7 @@ import { formatTaskStatus } from "./task-status-format"
 import { getAgentDisplayName } from "../../shared/agent-display-names"
 import { recordBackgroundOutputConsumption } from "../../shared/background-output-consumption"
 
-const SISYPHUS_JUNIOR_AGENT = getAgentDisplayName("sisyphus-junior")
+const CERBERUS_JUNIOR_AGENT = getAgentDisplayName("cerberus-junior")
 const MISSING_BACKGROUND_TASK_RETRY_DELAY_MS = 100
 const BACKGROUND_OUTPUT_POLL_INTERVAL_MS = 100
 
@@ -27,7 +27,7 @@ type ToolContextWithMetadata = {
 }
 
 function formatResolvedTitle(task: BackgroundTask): string {
-  const label = task.agent === SISYPHUS_JUNIOR_AGENT && task.category ? task.category : task.agent
+  const label = task.agent === CERBERUS_JUNIOR_AGENT && task.category ? task.category : task.agent
   return `${label} - ${task.description}`
 }
 

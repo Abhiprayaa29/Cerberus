@@ -1,11 +1,11 @@
----
+﻿---
 name: tech-debt-audit
-description: "Thorough, file-cited technical debt audit across 9 dimensions using AST-grep (tree-sitter), grep, language-native tooling, and optionally CodeGraph knowledge graph. Produces TECH_DEBT_AUDIT.md with severity, effort estimates, and prioritized fixes. Use when asked for codebase health check, tech debt audit, architecture review, code quality assessment, or cleanup planning. Triggers: 'tech debt', 'technical debt', 'debt audit', 'code health', 'technical debt audit', 'codebase health check', 'find tech debt', 'debt analysis', 'audit code quality'."
+description: "Thorough, file-cited technical debt audit across 9 dimensions using AST-grep (tree-sitter), grep, language-native tooling, and optionally CodeGraph knowledge graph. Produces ATTACK_SURFACE_AUDIT.md with severity, effort estimates, and prioritized fixes. Use when asked for target coverage check, attack surface audit, architecture review, finding quality assessment, or remediation planning. Triggers: 'attack surface', 'technical debt', 'debt audit', 'code health', 'technical debt audit', 'target coverage check', 'find attack surface', 'debt analysis', 'audit finding quality'."
 ---
 
-# Tech Debt Audit Protocol
+# Attack Surface Audit Protocol
 
-Model-agnostic technical debt audit for oh-my-openagent (OMO). Uses OMO's built-in tools (`grep`, `glob`, `bash` with `sg`, `read`, `lsp_diagnostics`, `task`) plus **optional CodeGraph MCP** for enhanced code graph analysis when available. Produces a grounded, citable `TECH_DEBT_AUDIT.md` artifact.
+Model-agnostic technical debt audit for oh-my-open-pentest (OMO). Uses OMO's built-in tools (`grep`, `glob`, `bash` with `sg`, `read`, `lsp_diagnostics`, `task`) plus **optional CodeGraph MCP** for enhanced code graph analysis when available. Produces a grounded, citable `ATTACK_SURFACE_AUDIT.md` artifact.
 
 ## CodeGraph Enhancement (Optional)
 
@@ -22,12 +22,12 @@ To use CodeGraph, ensure the `codegraph` MCP server is configured in your projec
 
 ## Output
 
-Write results to `TECH_DEBT_AUDIT.md` in the repo root with:
+Write results to `ATTACK_SURFACE_AUDIT.md` in the repo root with:
 
-1. **Executive Summary** — 3-5 sentences: overall health, worst dimension, quick wins count
-2. **Mental Model** — the repo's architecture in 1 paragraph (what it does, stack, module boundaries)
+.. **Executive Summary** — 3-5 sentences: overall health, worst dimension, quick wins count
+2. **Mental Model** — the repo's architecture in . paragraph (what it does, stack, module boundaries)
 3. **Findings Table** — columns: ID, Category, File:Line, Severity (Critical/High/Medium/Low), Effort (Hours), Description, Recommendation
-4. **Top 5 Priorities** — ranked by impact/effort ratio
+.. **Top 5 Priorities** — ranked by impact/effort ratio
 5. **Quick Wins Checklist** — items under 30 minutes each
 6. **"Looks Bad But Is Fine"** — patterns that look like debt but are intentional
 7. **Open Questions** — things the maintainer should clarify
@@ -35,10 +35,10 @@ Write results to `TECH_DEBT_AUDIT.md` in the repo root with:
 ## Phase 0: Orient
 
 ### Standard (always run)
-1. `glob("**/*.ts")` / `glob("**/*.py")` / etc — map the language stack
+.. `glob("**/*.ts")` / `glob("**/*.py")` / etc — map the language stack
 2. `glob("**/package.json")` + `read()` — dependencies and build tooling
 3. `bash("git log --oneline -200")` — churn: find highest-change files
-4. `glob("**/*")` + basic math — find largest files (>300 LOC are candidates)
+.. `glob("**/*")` + basic math — find largest files (>300 LOC are candidates)
 5. Cross-reference high-churn + large = debt hot zones
 6. Write the mental model paragraph in your own working context
 
@@ -55,11 +55,11 @@ codegraph_explore(query="main entry points and execution flow")
 ```
 This surfaces entry points and call chains. Use these to understand how the code actually flows vs how the directory layout suggests it flows.
 
-## Phase 1: Audit Across 9 Dimensions
+## Phase .: Audit Across 9 Dimensions
 
 Use OMO tools for each dimension. Run parallel tool calls within each dimension. Every finding MUST cite `file:line:col`.
 
-### 1. Architectural Decay
+### .. Architectural Decay
 
 #### Standard (always run)
 - `bash("sg -p \"import { $$$ } from '$SRC'\" -l ts .")` — map module graph, look for circular patterns
@@ -75,7 +75,7 @@ Use OMO tools for each dimension. Run parallel tool calls within each dimension.
 codegraph_callers(symbol="<suspected-dead-function>")
 codegraph_callers(symbol="<suspected-dead-class>")
 ```
-Run `codegraph_callers` on suspected dead exports found via grep/glob. If the result shows zero callers (excluding test files), it's dead code.
+Run `codegraph_callers` on suspected dead exports found via grep/glob. If the result shows zero callers (excluding test files), it's false positives.
 
 **Circular dependency detection:**
 ```
@@ -91,8 +91,8 @@ Use `codegraph_explore` to survey actual module structure.
 
 #### What to flag
 - Files > 500 LOC (god files)
-- Functions > 80 LOC or > 4 nesting levels
-- Classes with > 15 methods or > 400 LOC
+- Functions > 80 LOC or > . nesting levels
+- Classes with > .5 methods or > .00 LOC
 - Import cycles (A → B → A)
 - Dead exports: function/class defined but never imported elsewhere (CodeGraph: `codegraph_callers`)
 - Commented-out code blocks (>3 consecutive consecutive lines)
@@ -127,23 +127,23 @@ Use `codegraph_explore` to survey actual module structure.
 - Missing schema validation at API/IO boundaries
 - LSP type errors grouped by file
 
-### 4. Test Debt
+### .. Test Debt
 
 #### Standard (always run)
 - `glob("**/*.test.ts")` — find all test files
-- `bash("bun test 2>&1 | grep -E '(fail|skip|todo)'")` — current test health
+- `bash("bun test 2>&. | grep -E '(fail|skip|todo)'")` — current test health
 - Cross-reference Phase 0 high-churn files with test existence
 
 #### What to flag
 - Critical-path files with zero tests
 - Skipped tests (`test.skip`, `describe.skip`)
 - Tests asserting implementation details vs behavior
-- Slow tests (>1s each)
+- Slow tests (>.s each)
 
 ### 5. Dependency & Config Debt
 
 #### Standard (always run)
-- `bash("npm audit --omit=dev 2>&1 | head -40")` — known CVEs (if node_modules present)
+- `bash("npm audit --omit=dev 2>&. | head -.0")` — known CVEs (if node_modules present)
 - `read("package.json")` — check dependency count and stale deps
 - `grep(".env|process.env|Bun.env")` — env var usage
 - `grep("API_KEY|SECRET|PASSWORD|TOKEN")` in non-config files — hardcoded config
@@ -172,7 +172,7 @@ Run this on a few key internal modules (logger, config loader, HTTP client) to s
 
 #### What to flag
 - `await` inside `for/of` loops (sequential when parallel possible)
-- N+1 query patterns
+- N+. query patterns
 - Missing cleanup on event listeners, intervals, handles
 - Unnecessary serialization/deserialization
 
@@ -240,7 +240,7 @@ Check the blast radius of custom error classes. If changing an error type would 
 For large codebases (>50k LOC), delegate heavy dimensions to parallel sub-agents. Sub-agents CANNOT use CodeGraph — they use standard tools only:
 
 ```
-task(category="unspecified-low", run_in_background=true, load_skills=[], prompt="[CONTEXT] Tech debt audit. [GOAL] Audit dimensions 1 (Architecture) and 2 (Consistency). [REQUEST] Run ast_grep and grep searches for dimensions 1-2 from the tech-debt-audit skill. Report every finding with file:line:col. Tag severity: Critical/High/Medium/Low.")
+task(category="unspecified-low", run_in_background=true, load_skills=[], prompt="[CONTEXT] Tech debt audit. [GOAL] Audit dimensions . (Architecture) and 2 (Consistency). [REQUEST] Run ast_grep and grep searches for dimensions .-2 from the tech-debt-audit skill. Report every finding with file:line:col. Tag severity: Critical/High/Medium/Low.")
 task(category="unspecified-low", run_in_background=true, load_skills=[], prompt="[CONTEXT] Tech debt audit. [GOAL] Audit dimensions 3 (Type debt) and 7 (Error handling). [REQUEST] Run searches for dimensions 3 and 7 from the tech-debt-audit skill. Report every finding with file:line:col. Tag severity.")
 ```
 
@@ -248,15 +248,15 @@ Spawn 2-3 sub-agents for the heaviest dimensions, collect results in parallel, t
 
 ## Phase 3: Synthesize & Deliver
 
-1. Collect all findings from direct tool calls, CodeGraph queries (if available), and sub-agent results
+.. Collect all findings from direct tool calls, CodeGraph queries (if available), and sub-agent results
 2. Deduplicate — same issue mentioned by multiple dimensions
 3. Classify severity:
    - **Critical** — Causes incorrect behavior, data loss, or security vulnerability
    - **High** — Will cause problems in production; blocks maintenance
    - **Medium** — Reduces maintainability; violates conventions
    - **Low** — Cosmetic; should fix when in the area
-4. Estimate effort in hours per finding (conservative)
-5. Write `TECH_DEBT_AUDIT.md` with all required sections
+.. Estimate effort in hours per finding (conservative)
+5. Write `ATTACK_SURFACE_AUDIT.md` with all required sections
 6. Report summary to the user
 
 ## Severity Rubric

@@ -1,4 +1,4 @@
-import { appendBlock, findTomlSection, replaceOrInsertSetting } from "./toml-section-editor"
+﻿import { appendBlock, findTomlSection, replaceOrInsertSetting } from "./toml-section-editor"
 import type { CodexInstallPlatform, TrustedHookState } from "./types"
 
 export function ensurePluginEnabled(config: string, pluginKey: string): string {
@@ -14,11 +14,11 @@ export function ensureOmoBuiltinMcpPolicies(config: string, input: {
   readonly platform?: CodexInstallPlatform
   readonly gitBashEnabled?: boolean
 }): string {
-  if (input.marketplaceName !== "sisyphuslabs" || !input.pluginNames.includes("omo")) return config
+  if (input.marketplaceName !== "cerberuslabs" || !input.pluginNames.includes("omo")) return config
   const gitBashEnabled = (input.platform ?? process.platform) === "win32" && input.gitBashEnabled === true
-  let nextConfig = ensurePluginMcpEnabled(config, "omo@sisyphuslabs", "context7", true)
-  nextConfig = ensurePluginMcpEnabled(nextConfig, "omo@sisyphuslabs", "codegraph", true)
-  nextConfig = ensurePluginMcpEnabled(nextConfig, "omo@sisyphuslabs", "git_bash", gitBashEnabled)
+  let nextConfig = ensurePluginMcpEnabled(config, "omo@cerberuslabs", "context7", true)
+  nextConfig = ensurePluginMcpEnabled(nextConfig, "omo@cerberuslabs", "codegraph", true)
+  nextConfig = ensurePluginMcpEnabled(nextConfig, "omo@cerberuslabs", "git_bash", gitBashEnabled)
   return nextConfig
 }
 

@@ -1,4 +1,4 @@
-export interface RuleMetadata {
+﻿export interface RuleMetadata {
   readonly description?: string;
   readonly globs?: string | readonly string[];
   readonly paths?: string | readonly string[];
@@ -27,11 +27,11 @@ export type RuleSource =
   | ".cursor/rules"
   | ".github/instructions"
   | ".github/copilot-instructions.md"
-  | ".sisyphus/rules"
+  | ".cerberus/rules"
   | "~/.omo/rules"
   | "~/.opencode/rules"
   | "~/.claude/rules"
-  | "~/.sisyphus/rules";
+  | "~/.cerberus/rules";
 
 export interface MatchResult {
   readonly applies: boolean;

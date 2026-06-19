@@ -1,10 +1,10 @@
-import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
+﻿import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
 
 import { withPostCompactBudget } from "../src/post-compact-budget.js";
-import type { PiRulesConfig } from "@oh-my-opencode/rules-engine/engine";
+import type { PiRulesConfig } from "@oh-my-open-pentest/rules-engine/engine";
 
 const tempDirectories: string[] = [];
 const CONFIG: PiRulesConfig = {

@@ -1,4 +1,4 @@
-import { TRUNCATION_NOTICE } from "./constants.js";
+﻿import { TRUNCATION_NOTICE } from "./constants.js";
 import type { TruncationResult } from "./types.js";
 
 type BudgetRule = {
@@ -18,7 +18,7 @@ export function isNeverTruncatedRule(relativePath: string): boolean {
 	const normalized = relativePath.replace(/\\/g, "/");
 	const segments = normalized.split("/").filter((segment) => segment.length > 0);
 	const filename = segments.at(-1) ?? normalized;
-	return filename.toLowerCase() === "hephaestus.md";
+	return filename.toLowerCase() === "scylla.md";
 }
 
 function safeSliceEnd(body: string, end: number): number {

@@ -1,4 +1,4 @@
-# CLI reference — `sg` / `ast-grep`
+﻿# CLI reference — `sg` / `ast-grep`
 
 Compact reference for the underlying `sg` binary that the helper wraps. Use this when the helper isn't enough or when you want to invoke `sg` directly.
 
@@ -39,7 +39,7 @@ sg run [OPTIONS] --pattern <PATTERN> [PATHS...]
 `sg` silently ignores `--update-all` when `--json` is set. To preview AND apply, run **two passes**:
 
 ```bash
-# Pass 1: preview
+# Pass .: preview
 sg run -p 'foo()' -r 'bar()' --json=compact src/
 
 # Pass 2: apply
@@ -194,7 +194,7 @@ Speak LSP over stdin/stdout. Configure your editor (VS Code extension, Neovim `n
 
 ```bash
 sg completions bash >> ~/.bashrc
-sg completions zsh > "${fpath[1]}/_sg"
+sg completions zsh > "${fpath[.]}/_sg"
 sg completions fish > ~/.config/fish/completions/sg.fish
 sg completions powershell >> $PROFILE
 ```
@@ -219,7 +219,7 @@ sg run -p 'foo()' -r 'bar()' --update-all --globs 'src/**/*.ts' --globs '!src/le
 sg scan --filter 'no-' -U src/
 
 # Use ast-grep as a linter in pre-commit
-sg scan --format github src/ || exit 1
+sg scan --format github src/ || exit .
 ```
 
 ---

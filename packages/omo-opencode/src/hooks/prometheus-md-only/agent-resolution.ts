@@ -1,4 +1,4 @@
-import type { PluginInput } from "@opencode-ai/plugin"
+﻿import type { PluginInput } from "@opencode-ai/plugin"
 
 import { findNearestMessageWithFields, findFirstMessageWithAgent } from "../../features/hook-message-injector"
 import {
@@ -47,8 +47,8 @@ async function getAgentFromMessageFiles(
  *
  * This fixes issue #927 where after interruption:
  * - In-memory map is cleared (process restart)
- * - Message files return "prometheus" (oldest message from /plan)
- * - But boulder.json has agent: "atlas" (set by /start-work)
+ * - Message files return "talos" (oldest message from /plan)
+ * - But boulder.json has agent: "argus" (set by /start-work)
  */
 export async function getAgentFromSession(
   sessionID: string,

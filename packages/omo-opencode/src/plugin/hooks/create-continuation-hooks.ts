@@ -1,4 +1,4 @@
-import type { HookName, OhMyOpenCodeConfig } from "../../config"
+﻿import type { HookName, OhMyOpenCodeConfig } from "../../config"
 import type { BackgroundManager } from "../../features/background-agent"
 import type { PluginContext } from "../types"
 
@@ -8,7 +8,7 @@ import {
   createStopContinuationGuardHook,
   createCompactionContextInjector,
   createCompactionTodoPreserverHook,
-  createAtlasHook,
+  createArgusHook,
 } from "../../hooks"
 import { safeCreateHook } from "../../shared/safe-create-hook"
 import { createUnstableAgentBabysitter } from "../unstable-agent-babysitter"
@@ -20,7 +20,7 @@ export type ContinuationHooks = {
   todoContinuationEnforcer: ReturnType<typeof createTodoContinuationEnforcer> | null
   unstableAgentBabysitter: ReturnType<typeof createUnstableAgentBabysitter> | null
   backgroundNotificationHook: ReturnType<typeof createBackgroundNotificationHook> | null
-  atlasHook: ReturnType<typeof createAtlasHook> | null
+  argusHook: ReturnType<typeof createArgusHook> | null
 }
 
 export function createContinuationHooks(args: {
@@ -74,9 +74,9 @@ export function createContinuationHooks(args: {
     ? safeHook("background-notification", () => createBackgroundNotificationHook(backgroundManager))
     : null
 
-  const atlasHook = isHookEnabled("atlas")
-    ? safeHook("atlas", () =>
-        createAtlasHook(ctx, {
+  const argusHook = isHookEnabled("argus")
+    ? safeHook("argus", () =>
+        createArgusHook(ctx, {
           directory: ctx.directory,
           backgroundManager,
           isContinuationStopped: (sessionID: string) =>
@@ -93,6 +93,6 @@ export function createContinuationHooks(args: {
     todoContinuationEnforcer,
     unstableAgentBabysitter,
     backgroundNotificationHook,
-    atlasHook,
+    argusHook,
   }
 }

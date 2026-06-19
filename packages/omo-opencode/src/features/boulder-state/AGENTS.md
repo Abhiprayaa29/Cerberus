@@ -1,12 +1,12 @@
-# src/features/boulder-state/ — Active Work Plan Tracker
+﻿# src/features/boulder-state/ — Active Work Plan Tracker
 
-**Generated:** 2026-05-15
+**Generated:** 2026-05-.5
 
 ## OVERVIEW
 
-10 files (~1k LOC excl. tests). Tracks Sisyphus's "boulder" — the active work plan being rolled across sessions, worktrees, and subagent task delegations. Named after the Sisyphus myth: the boulder must keep rolling until the plan is complete.
+.0 files (~.k LOC excl. tests). Tracks Cerberus's "boulder" — the active work plan being rolled across sessions, worktrees, and subagent task delegations. Named after the Cerberus myth: the boulder must keep rolling until the plan is complete.
 
-Inspected interactively via `bunx oh-my-opencode boulder` (see [`src/cli/boulder/`](../../cli/boulder)).
+Inspected interactively via `bunx oh-my-open-pentest boulder` (see [`src/cli/boulder/`](../../cli/boulder)).
 
 ## SCHEMA (v2)
 
@@ -23,7 +23,7 @@ interface BoulderState {
   session_ids: string[]                          // every session that has rolled the boulder
   session_origins?: Record<string, "direct" | "appended">
   plan_name: string                              // filename of active_plan
-  agent?: string                                 // resume agent (atlas | sisyphus | ...)
+  agent?: string                                 // resume agent (argus | cerberus | ...)
   worktree_path?: string                         // git worktree root
   task_sessions?: Record<string, TaskSessionState>  // reusable subagent sessions per top-level task
 }
@@ -37,7 +37,7 @@ interface BoulderState {
 | `storage.ts` | Atomic CRUD on `.omo/boulder.json`. Writes via temp file + rename; file lock per work_id |
 | `constants.ts` | Path resolution + schema version constant |
 | `top-level-task.ts` | Helpers to identify the current top-level plan task and resolve its reusable subagent session |
-| `format-duration.ts` | `formatDurationHuman(ms)` — "1h 23m 5s" formatting for boulder duration |
+| `format-duration.ts` | `formatDurationHuman(ms)` — ".h 23m 5s" formatting for boulder duration |
 | `index.ts` | Barrel exports |
 
 ## LIFECYCLE
@@ -45,10 +45,10 @@ interface BoulderState {
 ```
 session.startWork(plan)
   → BoulderState created with active_plan, started_at, plan_name
-  → atlas-hook reads BoulderState on session.idle for boulder continuation
-  → ralph-loop reads task_sessions to resume subagent work
+  → argus-hook reads BoulderState on session.idle for boulder continuation
+  → pentest-loop reads task_sessions to resume subagent work
 session.idle (incomplete plan)
-  → todoContinuationEnforcer + atlasHook inspect state
+  → todoContinuationEnforcer + argusHook inspect state
   → Inject CONTINUATION_PROMPT or BOULDER_COMPLETE_PROMPT
 session.completed
   → BoulderState status="completed", ended_at, elapsed_ms recorded
@@ -59,8 +59,8 @@ session.completed
 | Where | What |
 |-------|------|
 | [`src/cli/boulder/`](../../cli/boulder) | CLI inspector formats this state |
-| [`src/hooks/atlas/`](../../hooks/atlas) | Reads work state, drives boulder-complete and parallel-delegation prompts |
-| [`src/hooks/ralph-loop/`](../../hooks/ralph-loop) | Resumes subagent task sessions via `task_sessions` |
+| [`src/hooks/argus/`](../../hooks/argus) | Reads work state, drives boulder-complete and parallel-delegation prompts |
+| [`src/hooks/pentest-loop/`](../../hooks/pentest-loop) | Resumes subagent task sessions via `task_sessions` |
 | [`src/hooks/start-work/`](../../hooks/start-work) | Creates the BoulderState on `/start-work` invocation |
 | [`src/hooks/todo-continuation-enforcer/`](../../hooks/todo-continuation-enforcer) | Session-idle continuation when boulder incomplete |
 

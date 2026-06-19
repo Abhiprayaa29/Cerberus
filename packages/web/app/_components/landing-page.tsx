@@ -1,20 +1,20 @@
-import type { Metadata } from "next"
+﻿import type { Metadata } from "next"
 import type { JSX } from "react"
 import { ArchitectureSection } from "@/components/landing/sections/architecture"
 import { CtaSection } from "@/components/landing/sections/cta"
-import { HephaestusSection } from "@/components/landing/sections/hephaestus"
+import { ScyllaSection } from "@/components/landing/sections/scylla"
 import { HeroSection } from "@/components/landing/sections/hero"
-import { PrometheusAtlasSection } from "@/components/landing/sections/prometheus-atlas"
+import { TalosAtlasSection } from "@/components/landing/sections/talos-atlas"
 import { ReviewsSection } from "@/components/landing/sections/reviews"
-import { SisyphusSection } from "@/components/landing/sections/sisyphus"
+import { CerberusSection } from "@/components/landing/sections/cerberus"
 import { SubAgentsSection } from "@/components/landing/sections/sub-agents"
 import { TeamModeSection } from "@/components/landing/sections/team-mode"
-import { UltraworkSection } from "@/components/landing/sections/ultrawork"
+import { UltraworkSection } from "@/components/landing/sections/fullscan"
 
 export const landingMetadata: Metadata = {
-  title: "Oh My OpenAgent — The Best Agent Harness",
+  title: "Oh My Open Pentest — The Best Agent Harness",
   description:
-    "Meet Sisyphus: The batteries-included agent that codes like you. Multi-model orchestration, Team Mode, background agents, 54+ lifecycle hooks.",
+    "Meet Cerberus: The batteries-included agent that codes like you. Multi-model orchestration, Team Mode, background agents, 54+ lifecycle hooks.",
 }
 
 export async function LandingPage(): Promise<JSX.Element> {
@@ -23,9 +23,9 @@ export async function LandingPage(): Promise<JSX.Element> {
       <link rel="preload" as="image" href="/images/hero.webp" fetchPriority="low" />
       <HeroSection />
       <UltraworkSection />
-      <SisyphusSection />
-      <PrometheusAtlasSection />
-      <HephaestusSection />
+      <CerberusSection />
+      <TalosAtlasSection />
+      <ScyllaSection />
       <TeamModeSection />
       <SubAgentsSection />
       <ArchitectureSection />

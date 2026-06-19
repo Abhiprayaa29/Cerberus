@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { describe, it, expect, beforeEach, afterEach } from "bun:test"
 import { join } from "node:path"
@@ -195,11 +195,11 @@ describe("resolveSkillContentAsync", () => {
 	})
 
 	it("resolves nested skill by unique short name async", async () => {
-		// given: a discovered nested skill toolkit/systematic-debugging
-		createNestedSkill(testConfigDir, "toolkit", "systematic-debugging", "Short name test content")
+		// given: a discovered nested skill toolkit/systematic-vulnerability analysis
+		createNestedSkill(testConfigDir, "toolkit", "systematic-vulnerability analysis", "Short name test content")
 
 		// when: resolving by short name
-		const result = await resolveSkillContentAsync("systematic-debugging")
+		const result = await resolveSkillContentAsync("systematic-vulnerability analysis")
 
 		// then: finds the nested skill
 		expect(result).not.toBeNull()
@@ -219,15 +219,15 @@ describe("resolveSkillContentAsync", () => {
 	})
 
 	it("prefers exact match over short name match async", async () => {
-		// given: an exact skill name "debugging" and a nested "toolkit/debugging"
-		createNestedSkill(testConfigDir, "toolkit", "debugging", "nested debugging")
+		// given: an exact skill name "vulnerability analysis" and a nested "toolkit/vulnerability analysis"
+		createNestedSkill(testConfigDir, "toolkit", "vulnerability analysis", "nested vulnerability analysis")
 		// Exact match as a non-namespaced dir with SKILL.md
-		const exactDir = join(testConfigDir, "skills", "debugging")
+		const exactDir = join(testConfigDir, "skills", "vulnerability analysis")
 		mkdirSync(exactDir, { recursive: true })
-		writeFileSync(join(exactDir, "SKILL.md"), "---\nname: debugging\ndescription: exact debugging\n---\nexact match content")
+		writeFileSync(join(exactDir, "SKILL.md"), "---\nname: vulnerability analysis\ndescription: exact vulnerability analysis\n---\nexact match content")
 
-		// when: resolving by name "debugging"
-		const result = await resolveSkillContentAsync("debugging")
+		// when: resolving by name "vulnerability analysis"
+		const result = await resolveSkillContentAsync("vulnerability analysis")
 
 		// then: prefers exact match over the nested one
 		expect(result).not.toBeNull()
@@ -236,7 +236,7 @@ describe("resolveSkillContentAsync", () => {
 
 	it("is case-insensitive for short name matching async", async () => {
 		// given: a nested skill with lowercase name
-		createNestedSkill(testConfigDir, "toolkit", "systematic-debugging", "case insensitive match")
+		createNestedSkill(testConfigDir, "toolkit", "systematic-vulnerability analysis", "case insensitive match")
 
 		// when: resolving by uppercase short name
 		const result = await resolveSkillContentAsync("Systematic-Debugging")
@@ -308,7 +308,7 @@ describe("resolveMultipleSkillsAsync", () => {
 		expect(result.notFound).toEqual([])
 		const gitMasterContent = result.resolved.get("git-master")
 		expect(gitMasterContent).not.toContain("Ultraworked with")
-		expect(gitMasterContent).not.toContain("Co-authored-by: Sisyphus")
+		expect(gitMasterContent).not.toContain("Co-authored-by: Cerberus")
 	})
 
 	it("should inject watermark when enabled (default)", async () => {
@@ -328,8 +328,8 @@ describe("resolveMultipleSkillsAsync", () => {
 		// then: watermark section is injected
 		expect(result.resolved.size).toBe(1)
 		const gitMasterContent = result.resolved.get("git-master")
-		expect(gitMasterContent).toContain("Ultraworked with [Sisyphus]")
-		expect(gitMasterContent).toContain("Co-authored-by: Sisyphus")
+		expect(gitMasterContent).toContain("Ultraworked with [Cerberus]")
+		expect(gitMasterContent).toContain("Co-authored-by: Cerberus")
 	})
 
 	it("should inject only footer when co-author is disabled", async () => {
@@ -348,8 +348,8 @@ describe("resolveMultipleSkillsAsync", () => {
 
 		// then: only footer is injected
 		const gitMasterContent = result.resolved.get("git-master")
-		expect(gitMasterContent).toContain("Ultraworked with [Sisyphus]")
-		expect(gitMasterContent).not.toContain("Co-authored-by: Sisyphus")
+		expect(gitMasterContent).toContain("Ultraworked with [Cerberus]")
+		expect(gitMasterContent).not.toContain("Co-authored-by: Cerberus")
 	})
 
 	it("should inject watermark by default when no config provided", async () => {
@@ -362,8 +362,8 @@ describe("resolveMultipleSkillsAsync", () => {
 		// then: watermark is injected (default is ON)
 		expect(result.resolved.size).toBe(1)
 		const gitMasterContent = result.resolved.get("git-master")
-		expect(gitMasterContent).toContain("Ultraworked with [Sisyphus]")
-		expect(gitMasterContent).toContain("Co-authored-by: Sisyphus")
+		expect(gitMasterContent).toContain("Ultraworked with [Cerberus]")
+		expect(gitMasterContent).toContain("Co-authored-by: Cerberus")
 	})
 
 	it("should inject only co-author when footer is disabled", async () => {
@@ -382,8 +382,8 @@ describe("resolveMultipleSkillsAsync", () => {
 
 		// then: only co-author is injected
 		const gitMasterContent = result.resolved.get("git-master")
-		expect(gitMasterContent).not.toContain("Ultraworked with [Sisyphus]")
-		expect(gitMasterContent).toContain("Co-authored-by: Sisyphus")
+		expect(gitMasterContent).not.toContain("Ultraworked with [Cerberus]")
+		expect(gitMasterContent).toContain("Co-authored-by: Cerberus")
 	})
 
 	it("should inject custom string footer when commit_footer is a string", async () => {
@@ -404,10 +404,10 @@ describe("resolveMultipleSkillsAsync", () => {
 		// then: custom footer is injected instead of default
 		const gitMasterContent = result.resolved.get("git-master")
 		expect(gitMasterContent).toContain(customFooter)
-		expect(gitMasterContent).not.toContain("Ultraworked with [Sisyphus]")
+		expect(gitMasterContent).not.toContain("Ultraworked with [Cerberus]")
 	})
 
-	it("should use default Sisyphus footer when commit_footer is boolean true", async () => {
+	it("should use default Cerberus footer when commit_footer is boolean true", async () => {
 		// given: git-master skill with boolean true footer
 		const skillNames = ["git-master"]
 		const options = {
@@ -421,9 +421,9 @@ describe("resolveMultipleSkillsAsync", () => {
 		// when: resolving with boolean true footer config
 		const result = await resolveMultipleSkillsAsync(skillNames, options)
 
-		// then: default Sisyphus footer is injected
+		// then: default Cerberus footer is injected
 		const gitMasterContent = result.resolved.get("git-master")
-		expect(gitMasterContent).toContain("Ultraworked with [Sisyphus]")
+		expect(gitMasterContent).toContain("Ultraworked with [Cerberus]")
 	})
 
 	it("should handle empty array", async () => {
@@ -440,15 +440,15 @@ describe("resolveMultipleSkillsAsync", () => {
 
 	it("resolves nested skill by unique short name in mixed batch", async () => {
 		// given: nested skill and builtin skill
-		createNestedSkill(testConfigDir, "toolkit", "systematic-debugging", "short name resolved")
+		createNestedSkill(testConfigDir, "toolkit", "systematic-vulnerability analysis", "short name resolved")
 
 		// when: mixing short name with full builtin name
-		const result = await resolveMultipleSkillsAsync(["systematic-debugging", "playwright"])
+		const result = await resolveMultipleSkillsAsync(["systematic-vulnerability analysis", "playwright"])
 
 		// then: both resolved
 		expect(result.resolved.size).toBe(2)
 		expect(result.notFound).toEqual([])
-		expect(result.resolved.get("systematic-debugging")).toContain("short name resolved")
+		expect(result.resolved.get("systematic-vulnerability analysis")).toContain("short name resolved")
 		expect(result.resolved.get("playwright")).toContain("Playwright Browser Automation")
 	})
 
@@ -468,18 +468,18 @@ describe("resolveMultipleSkillsAsync", () => {
 
 	it("prefers exact match over short name in batch", async () => {
 		// given: an exact skill and a nested skill with same base name
-		const exactDir = join(testConfigDir, "skills", "debugging")
+		const exactDir = join(testConfigDir, "skills", "vulnerability analysis")
 		mkdirSync(exactDir, { recursive: true })
-		writeFileSync(join(exactDir, "SKILL.md"), "---\nname: debugging\ndescription: exact debugging\n---\nexact match content")
-		createNestedSkill(testConfigDir, "toolkit", "debugging", "nested content")
+		writeFileSync(join(exactDir, "SKILL.md"), "---\nname: vulnerability analysis\ndescription: exact vulnerability analysis\n---\nexact match content")
+		createNestedSkill(testConfigDir, "toolkit", "vulnerability analysis", "nested content")
 
-		// when: resolving "debugging" in batch
-		const result = await resolveMultipleSkillsAsync(["debugging", "playwright"])
+		// when: resolving "vulnerability analysis" in batch
+		const result = await resolveMultipleSkillsAsync(["vulnerability analysis", "playwright"])
 
 		// then: exact match wins
 		expect(result.resolved.size).toBe(2)
 		expect(result.notFound).toEqual([])
-		expect(result.resolved.get("debugging")).toContain("exact match content")
+		expect(result.resolved.get("vulnerability analysis")).toContain("exact match content")
 	})
 })
 

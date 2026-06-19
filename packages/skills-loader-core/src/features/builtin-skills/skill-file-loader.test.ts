@@ -1,8 +1,8 @@
-/// <reference path="../../../../../bun-test.d.ts" />
+﻿/// <reference path="../../../../../bun-test.d.ts" />
 
 import { describe, expect, test } from "bun:test"
 import { normalize } from "node:path"
-import { parseFrontmatter } from "@oh-my-opencode/utils"
+import { parseFrontmatter } from "@oh-my-open-pentest/utils"
 import { createBuiltinSkills } from "./skills"
 import { createSharedSkillTemplateLoader, loadSharedSkillTemplate } from "./skill-file-loader"
 

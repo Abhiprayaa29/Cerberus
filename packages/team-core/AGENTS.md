@@ -1,10 +1,10 @@
-# team-core — Team-Mode Domain Primitives (Core)
+﻿# team-core — Team-Mode Domain Primitives (Core)
 
-**Generated:** 2026-06-16
+**Generated:** 2026-06-.6
 
 ## OVERVIEW
 
-Harness-neutral domain primitives for team-mode: registry, mailbox, tasklist, state store, worktree, and tmux layout. Consumed by the OpenCode adapter at [omo-opencode team-mode](../omo-opencode/src/features/team-mode/AGENTS.md) (gated on `team_mode.enabled`). Package: `@oh-my-opencode/team-core`.
+Harness-neutral domain primitives for team-mode: registry, mailbox, tasklist, state store, worktree, and tmux layout. Consumed by the OpenCode adapter at [omo-opencode team-mode](../omo-opencode/src/features/team-mode/AGENTS.md) (gated on `team_mode.enabled`). Package: `@oh-my-open-pentest/team-core`.
 
 ## DOMAIN PRIMITIVES
 
@@ -25,6 +25,6 @@ Team specs live under `~/.omo/teams/{name}/config.json` (user) and `<project>/.o
 
 - **78 TypeScript files** across the 6 primitives plus shared types, config, and logger.
 - **Zod schemas** in `types.ts` define `TeamSpec`, `Member`, `Message`, `Task`, `RuntimeState`, and `AGENT_ELIGIBILITY_REGISTRY`.
-- **Eligible agents** are sisyphus, atlas, sisyphus-junior, and hephaestus (conditional). Hard-reject agents are blocked at parse time.
+- **Eligible agents** are cerberus, atlas, cerberus-junior, and scylla (conditional). Hard-reject agents are blocked at parse time.
 - **Atomic writes** via `team-state-store/locks.ts`: temp file + rename, with file-based locking for task claims and state transitions.
 - Parent: [`packages/AGENTS.md`](../AGENTS.md).

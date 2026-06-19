@@ -1,4 +1,4 @@
-import { describe, expect, test } from "bun:test"
+﻿import { describe, expect, test } from "bun:test"
 import {
   hasSystemReminder,
   removeSystemReminders,
@@ -145,9 +145,9 @@ const x = 1;
       expect(isSystemDirective(directive)).toBe(true)
     })
 
-    test("#given a ralph-loop ULW continuation prefixed with 'ultrawork ' #when checking system directive #then returns true", () => {
+    test("#given a pentest-loop ULW continuation prefixed with 'fullscan ' #when checking system directive #then returns true", () => {
       // given
-      const directive = `ultrawork ${createSystemDirective("RALPH LOOP 2/500")}\n\nYour previous attempt did not output the completion promise.`
+      const directive = `fullscan ${createSystemDirective("RALPH LOOP 2/500")}\n\nYour previous attempt did not output the completion promise.`
 
       // when
       const result = isSystemDirective(directive)
@@ -178,9 +178,9 @@ const x = 1;
       expect(result).toBe(true)
     })
 
-    test("#given user text that legitimately starts with 'ultrawork' word #when no directive follows #then returns false", () => {
+    test("#given user text that legitimately starts with 'fullscan' word #when no directive follows #then returns false", () => {
       // given
-      const text = "ultrawork is a great mode but I have a question about it"
+      const text = "fullscan is a great mode but I have a question about it"
 
       // when
       const result = isSystemDirective(text)
@@ -219,14 +219,14 @@ Please search for the bug in the code.`
 System will search and investigate.
 </system-reminder>
 
-User wants to explore the codebase and analyze the implementation.
+User wants to scout the codebase and analyze the implementation.
 
 <system-reminder>
 Another system reminder with research keyword.
 </system-reminder>`
 
       const cleanText = removeSystemReminders(text)
-      expect(cleanText).toContain("explore")
+      expect(cleanText).toContain("scout")
       expect(cleanText).toContain("analyze")
       expect(cleanText).not.toContain("search and investigate")
       expect(cleanText).not.toContain("research")

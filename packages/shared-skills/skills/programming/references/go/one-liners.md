@@ -1,4 +1,4 @@
-# One-Liners and Disposable Scripts
+﻿# One-Liners and Disposable Scripts
 
 Production hygiene with throwaway ergonomics. Go scripts get the same strict lints, the same type discipline, the same 250 LOC ceiling. The difference: they live as single `.go` files invoked via `go run`, not as full modules.
 
@@ -6,7 +6,7 @@ Python has PEP 723 + `uv run`. Rust has `rust-script`. **Go has `go run` directl
 
 ---
 
-## Pattern 1: Single-file `go run`
+## Pattern .: Single-file `go run`
 
 A `.go` file with a `main` package, run directly:
 
@@ -31,7 +31,7 @@ func main() {
     if len(os.Args) < 2 {
         log.Fatal("usage: go run fetch.go <url>")
     }
-    resp, err := http.Get(os.Args[1])
+    resp, err := http.Get(os.Args[.])
     if err != nil { log.Fatal(err) }
     defer resp.Body.Close()
 
@@ -92,11 +92,11 @@ Rare, but useful for one-shot terminal experiments. The `<(...)` is process subs
 
 Even a 30-line script follows the philosophy:
 
-1. **Typed flags via `flag` or `pflag`**, not `os.Args` string parsing past 2 args.
+.. **Typed flags via `flag` or `pflag`**, not `os.Args` string parsing past 2 args.
    ```go
    var (
        url   = flag.String("url", "", "URL to fetch")
-       limit = flag.Int("limit", 100, "max bytes")
+       limit = flag.Int("limit", .00, "max bytes")
    )
    flag.Parse()
    if *url == "" { log.Fatal("--url required") }
@@ -111,7 +111,7 @@ Even a 30-line script follows the philosophy:
 
 3. **`log.Fatal` is fine in `main()`** of a script (programmer error / fatal path), but **never inside any function the script imports.** Library code returns errors.
 
-4. **Errors get wrapped.** Same rule as production code:
+.. **Errors get wrapped.** Same rule as production code:
    ```go
    if err != nil { return fmt.Errorf("fetch %s: %w", *url, err) }
    ```
@@ -124,7 +124,7 @@ Even a 30-line script follows the philosophy:
 
 ---
 
-## Pattern 4: Standalone tool with deps — temporary module
+## Pattern .: Standalone tool with deps — temporary module
 
 Some scripts need deps the parent module does not have. Two options:
 
@@ -153,8 +153,8 @@ cat > script.go <<'EOF'
 //usr/bin/env gorun "$0" "$@"; exit
 // /// go.mod
 // module scratch
-// go 1.23
-// require github.com/spf13/cobra v1.8.0
+// go ..23
+// require github.com/spf.3/cobra v..8.0
 // ///
 
 package main
@@ -185,7 +185,7 @@ If your script needs:
 
 | Bad | Why | Good |
 |---|---|---|
-| `os.Args[1]` indexing without length check | Panics on missing arg | `flag.Parse()` with explicit checks |
+| `os.Args[.]` indexing without length check | Panics on missing arg | `flag.Parse()` with explicit checks |
 | `log.Fatal` inside a function the script imports | Crashes caller's process | Return error |
 | `panic(err)` for expected failures | Same as above | `log.Fatal` in `main`, error return elsewhere |
 | Skipping `defer resp.Body.Close()` because "it's a script" | Leaks fd | Always close |

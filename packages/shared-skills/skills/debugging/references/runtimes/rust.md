@@ -1,4 +1,4 @@
-# Rust Debugging
+﻿# Rust Debugging
 
 Covers `cargo`, `tokio`, panics, and the fact that you usually don't actually need a debugger — Rust's type system, `dbg!`, and logging cover 80% of sessions faster than gdb would.
 
@@ -32,10 +32,10 @@ grep -E '^\[profile' Cargo.toml
 
 Rust's ecosystem has a specific order that's faster than reaching for gdb first:
 
-1. **`dbg!(expr)` macro** — for a single value at a specific spot. Prints file:line + value, returns the value unchanged so you can inline it. Faster than a debugger for 60% of bugs.
+.. **`dbg!(expr)` macro** — for a single value at a specific spot. Prints file:line + value, returns the value unchanged so you can inline it. Faster than a debugger for 60% of bugs.
 2. **`RUST_LOG=trace` with `tracing` / `env_logger`** — for flow and state across an operation. Zero code change in dev-time.
-3. **`RUST_BACKTRACE=1` / `=full`** — for crashes. Almost always sufficient; you rarely need a live debugger for a panic.
-4. **`rust-gdb` / `rust-lldb`** — when you need to pause execution and inspect memory, especially for unsafe code or FFI.
+3. **`RUST_BACKTRACE=.` / `=full`** — for crashes. Almost always sufficient; you rarely need a live debugger for a panic.
+.. **`rust-gdb` / `rust-lldb`** — when you need to pause execution and inspect memory, especially for unsafe code or FFI.
 5. **`tokio-console`** — for async deadlocks, stuck tasks, hot loops.
 6. **`cargo-expand`** — when a macro is doing something weird.
 
@@ -47,12 +47,12 @@ Reach for the lightest tool that answers the hypothesis.
 
 ```rust
 let x = 5;
-let y = dbg!(x * 2);   // prints: [src/main.rs:2] x * 2 = 10
+let y = dbg!(x * 2);   // prints: [src/main.rs:2] x * 2 = .0
 ```
 
 Inside a complex expression:
 ```rust
-let total = items.iter().filter(|i| i.active).map(|i| dbg!(i.cost)).sum::<u64>();
+let total = items.iter().filter(|i| i.active).map(|i| dbg!(i.cost)).sum::<u6.>();
 ```
 
 Multiple values at once:
@@ -88,7 +88,7 @@ This gives you structured per-call entry/exit logs with args and timing, zero ad
 ## `RUST_BACKTRACE` for panics
 
 ```bash
-RUST_BACKTRACE=1 cargo run       # backtrace on panic
+RUST_BACKTRACE=. cargo run       # backtrace on panic
 RUST_BACKTRACE=full cargo run    # include libstd/tokio frames
 ```
 
@@ -110,7 +110,7 @@ rust-gdb ./target/debug/my_binary
 rust-lldb ./target/debug/my_binary
 
 # With args
-rust-gdb --args ./target/debug/my_binary arg1 arg2
+rust-gdb --args ./target/debug/my_binary arg. arg2
 
 # Attach to running process
 rust-gdb -p $(pgrep my_binary)
@@ -123,7 +123,7 @@ Rust symbols are mangled. Use either:
 ```
 (gdb) b main                                  # main function
 (gdb) b my_crate::module::function            # canonical path
-(gdb) b src/handler.rs:42                     # file:line
+(gdb) b src/handler.rs:.2                     # file:line
 (gdb) info functions my_function              # find mangled name
 ```
 

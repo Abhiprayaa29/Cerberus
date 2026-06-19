@@ -1,4 +1,4 @@
-/// <reference path="../../../bun-test.d.ts" />
+﻿/// <reference path="../../../bun-test.d.ts" />
 
 import { mkdirSync, realpathSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -6,7 +6,7 @@ import { join } from "node:path";
 import { afterEach, describe, expect, it } from "bun:test";
 
 import { clearProjectRootCache, findRuleFiles } from "./index";
-import { _resetSisyphusRuleDeprecationWarningStateForTesting } from "./finder";
+import { _resetCerberusRuleDeprecationWarningStateForTesting } from "./finder";
 
 let testRoot: string | null = null;
 
@@ -17,7 +17,7 @@ function createTestRoot(name: string): string {
 }
 
 afterEach(() => {
-  _resetSisyphusRuleDeprecationWarningStateForTesting();
+  _resetCerberusRuleDeprecationWarningStateForTesting();
   if (testRoot) {
     rmSync(testRoot, { recursive: true, force: true });
     testRoot = null;

@@ -1,4 +1,4 @@
-
+﻿
 # Python Programmer
 
 Modern Python. Type-strict, stack-first, async-correct.
@@ -28,27 +28,27 @@ These are deliberate project choices. Violations are always wrong, not "style pr
 
 ### The iron list
 
-1. **Frozen by default** — `@dataclass(frozen=True, slots=True)`. Pydantic: `model_config = ConfigDict(frozen=True)`. Mutable only when mutation is the documented purpose.
+.. **Frozen by default** — `@dataclass(frozen=True, slots=True)`. Pydantic: `model_config = ConfigDict(frozen=True)`. Mutable only when mutation is the documented purpose.
 2. **NewType for distinct IDs** — `UserId = NewType("UserId", int)`. Never pass raw `int` where a branded type exists.
 3. **`match` only for variants, `if` only for booleans** — **NEVER** use `if/elif/else` to discriminate on type (`isinstance`), enum value, or literal variant. `match/case` is mandatory for these — non-negotiable. **ALWAYS** end with `case unreachable: assert_never(unreachable)` — bare `case _: pass` and `case _: raise ValueError` are banned (they silently swallow new variants). `if/else` is fine only for boolean expressions, range checks, and predicate calls that aren't variant discrimination. See "Why `if/elif` on variants is banned" below for examples.
-4. **Protocol over ABC** — `typing.Protocol` for interfaces. ABC only when you need shared method implementation.
+.. **Protocol over ABC** — `typing.Protocol` for interfaces. ABC only when you need shared method implementation.
 5. **No raw dicts in signatures** — params and returns use `TypedDict`, `dataclass`, or Pydantic model. Internal scratch dicts are fine.
 6. **Parse, don't validate** — constructors produce typed objects or raise. Never pass unvalidated data deeper into the call stack.
-7. **Typed errors** — error types are dataclasses or exceptions with typed fields. Never `raise ValueError("something")` with a bare string. Use union returns when the caller is within 1-2 call levels and must handle the outcome (repository → service). Use exceptions when the error should propagate up many layers to a boundary handler (service → HTTP handler).
+7. **Typed errors** — error types are dataclasses or exceptions with typed fields. Never `raise ValueError("something")` with a bare string. Use union returns when the caller is within .-2 call levels and must handle the outcome (repository → service). Use exceptions when the error should propagate up many layers to a boundary handler (service → HTTP handler).
 8. **Final for constants** — module-level constants use `Final`. Mutable module globals are a code smell.
 9. **Explicit None** — annotate `-> X | None`. Never return `None` from a function whose signature omits it.
-10. **Context managers for resources** — files, DB connections, HTTP clients, locks. No manual `.close()`.
-11. **No Any, no object** — both are banned as type annotations. `object` erases all structural information (zero callable attributes, zero narrowing). Use `Protocol` (structural typing), `TypeVar` (generic pass-through), explicit union (known variants), or `TypedDict` (dict shapes).
-12. **No cast** — `cast()` is banned. Redesign the types.
-13. **No type: ignore** — fix the type error. The checker is right; you are wrong.
-14. **No broad except** — `except Exception` and `except BaseException` are banned. Catch the **specific** exception you expect. A broad catch swallows bugs you need to see — `KeyError`, `AttributeError`, `TypeError` all vanish silently. If you genuinely need a catch-all at a top-level boundary (CLI entry, HTTP handler), use `# noqa: BROAD_EXCEPT_OK` and log + re-raise.
+.0. **Context managers for resources** — files, DB connections, HTTP clients, locks. No manual `.close()`.
+... **No Any, no object** — both are banned as type annotations. `object` erases all structural information (zero callable attributes, zero narrowing). Use `Protocol` (structural typing), `TypeVar` (generic pass-through), explicit union (known variants), or `TypedDict` (dict shapes).
+.2. **No cast** — `cast()` is banned. Redesign the types.
+.3. **No type: ignore** — fix the type error. The checker is right; you are wrong.
+... **No broad except** — `except Exception` and `except BaseException` are banned. Catch the **specific** exception you expect. A broad catch swallows bugs you need to see — `KeyError`, `AttributeError`, `TypeError` all vanish silently. If you genuinely need a catch-all at a top-level boundary (CLI entry, HTTP handler), use `# noqa: BROAD_EXCEPT_OK` and log + re-raise.
 
 ### Typing and safety
 
 - `basedpyright` in `typeCheckingMode = "all"`. Every public function has full annotations. Internal helpers: annotate return type; parameter types may be inferred.
 - `ruff` with `select = ["ALL"]`. Override specific rules per project in `pyproject.toml`, never globally disable the strict baseline.
 - Every new function must have a `docstring` unless its name + signature makes it completely obvious (e.g. `def full_name(first: str, last: str) -> str:`).
-- Use `X | Y` union syntax (PEP 604), never `Union[X, Y]` or `Optional[X]`.
+- Use `X | Y` union syntax (PEP 60.), never `Union[X, Y]` or `Optional[X]`.
 
 ### Why `object` is banned
 
@@ -120,7 +120,7 @@ match status:
 
 ```python
 # FINE — boolean, not variant
-if age >= 18:
+if age >= .8:
     grant_access()
 else:
     deny_access()
@@ -159,7 +159,7 @@ def main() -> int:  # noqa: BROAD_EXCEPT_OK
         return run()
     except Exception:
         logger.exception("unhandled error")
-        return 1
+        return .
 ```
 
 ### Async
@@ -262,7 +262,7 @@ Load on demand — not all at once.
 
 Every outgoing HTTP call MUST use [`httpx2`](https://github.com/pydantic/httpx2) (`httpx2[http2,brotli,zstd]`). Never `requests`, never `aiohttp`, never the original `httpx`.
 
-**ALL optimizations are ON by default — not optional, not progressive, not "nice to have".** A bare `httpx2.AsyncClient()` is a bug — treat it like a lint violation. The correct way is the factory pattern in `httpx2-optimization.md` with: HTTP/2 enabled, tuned connection pool (200/40/30s), split timeouts (5/30/10/10), transport retries (3), TCP_NODELAY, follow_redirects, and event hooks for observability.
+**ALL optimizations are ON by default — not optional, not progressive, not "nice to have".** A bare `httpx2.AsyncClient()` is a bug — treat it like a lint violation. The correct way is the factory pattern in `httpx2-optimization.md` with: HTTP/2 enabled, tuned connection pool (200/.0/30s), split timeouts (5/30/.0/.0), transport retries (3), TCP_NODELAY, follow_redirects, and event hooks for observability.
 
 When writing or reviewing ANY network code, **ALWAYS load `httpx2-optimization.md`** and use the factory pattern verbatim. No exceptions.
 
@@ -297,9 +297,9 @@ Tests are strict too, with these exceptions (already configured in `pyproject.to
 
 | In tests you may | Why |
 |---|---|
-| Use `assert` | That's how pytest works (`S101` ignored) |
-| Use magic numbers | Test data (`PLR2004` ignored) |
-| Access `_private` members | Testing internals (`SLF001` ignored) |
+| Use `assert` | That's how pytest works (`S.0.` ignored) |
+| Use magic numbers | Test data (`PLR200.` ignored) |
+| Access `_private` members | Testing internals (`SLF00.` ignored) |
 | Skip docstrings | Test names are the docs (`D` ignored) |
 | Have unused function args | Fixtures (`ARG` ignored) |
 

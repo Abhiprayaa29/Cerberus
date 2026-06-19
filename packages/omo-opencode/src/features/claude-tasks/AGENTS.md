@@ -1,6 +1,6 @@
-# src/features/claude-tasks/ — Task Schema + Storage
+﻿# src/features/claude-tasks/ — Task Schema + Storage
 
-**Generated:** 2026-05-15
+**Generated:** 2026-05-.5
 
 ## OVERVIEW
 

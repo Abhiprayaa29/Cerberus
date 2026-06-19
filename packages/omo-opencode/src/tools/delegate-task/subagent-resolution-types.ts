@@ -1,9 +1,9 @@
-import type { FallbackEntry } from "../../shared/model-requirements"
+﻿import type { FallbackEntry } from "../../shared/model-requirements"
 import type { AgentInfo } from "./subagent-discovery"
 import type { DelegatedModelConfig } from "./types"
 
 export interface ResolveSubagentExecutionOptions {
-  allowSisyphusJuniorDirect?: boolean
+  allowCerberusJuniorDirect?: boolean
   allowPrimaryAgentDelegation?: boolean
 }
 

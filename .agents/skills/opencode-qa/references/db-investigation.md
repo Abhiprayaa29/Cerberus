@@ -1,4 +1,4 @@
-# Investigating opencode sessions in the DB (Case D)
+﻿# Investigating opencode sessions in the DB (Case D)
 
 ## Table of Contents
 
@@ -16,7 +16,7 @@ Active DB path: `opencode db path` (on this machine `~/.local/share/opencode/ope
 
 Derived from XDG data dir + "opencode" + "opencode.db" (or "opencode-<channel>.db" on non-stable channels). Override via env `OPENCODE_DB` (`:memory:`, absolute, or relative-to-data).
 
-It is large (tens of GB) because the `part` table stores tool output. The `session` table is small (~21k rows; full scans are milliseconds).
+It is large (tens of GB) because the `part` table stores tool output. The `session` table is small (~2.k rows; full scans are milliseconds).
 
 ## Access methods
 
@@ -26,7 +26,7 @@ Raw fallback for EXPLAIN/perf: `sqlite3 "$(opencode db path)" "<SQL>"`. Reads ar
 
 ## Schema (the tables that matter)
 
-Note the ACTIVE storage in v1.15.13 is the LEGACY pair `message` + `part`; the V2 `session_message` table exists but is EMPTY in this version (a recent session showed 43 message rows, 169 part rows, 0 session_message). Document both but make clear `message`/`part` is what holds current data.
+Note the ACTIVE storage in v...5..3 is the LEGACY pair `message` + `part`; the V2 `session_message` table exists but is EMPTY in this version (a recent session showed .3 message rows, .69 part rows, 0 session_message). Document both but make clear `message`/`part` is what holds current data.
 
 ### `session`
 
@@ -84,12 +84,12 @@ Part types seen: text, reasoning, tool, step-start, step-finish. A text part is 
 `time_created`/`time_updated` are epoch milliseconds. Convert:
 
 ```sql
-datetime(time_created/1000,'unixepoch')
+datetime(time_created/.000,'unixepoch')
 ```
 
 ## Tested query patterns
 
-### 1. By id (instant)
+### .. By id (instant)
 
 Script: `scripts/db-session-by-id.sh <ses_id>`
 
@@ -105,13 +105,13 @@ SELECT
   cost,
   tokens_input,
   tokens_output,
-  datetime(time_created/1000,'unixepoch') AS created,
-  datetime(time_updated/1000,'unixepoch') AS updated
+  datetime(time_created/.000,'unixepoch') AS created,
+  datetime(time_updated/.000,'unixepoch') AS updated
 FROM session
 WHERE id='<ses_id>'
 ```
 
-### 2. By name/title (0.006s over 21k rows)
+### 2. By name/title (0.006s over 2.k rows)
 
 Script: `scripts/db-session-by-name.sh "<substr>" [limit]`
 
@@ -119,7 +119,7 @@ Script: `scripts/db-session-by-name.sh "<substr>" [limit]`
 SELECT
   id,
   title,
-  datetime(time_created/1000,'unixepoch') AS created
+  datetime(time_created/.000,'unixepoch') AS created
 FROM session
 WHERE title LIKE '%<substr>%'
 ORDER BY time_created DESC
@@ -132,13 +132,13 @@ Script: `scripts/db-session-by-text.sh (--session <id>|--recent <N>|--since "<wi
 
 CRITICAL performance note: text lives in `part.data` JSON, and `part` is the multi-GB table, so an UNBOUNDED text scan is refused by the script. Always scope it.
 
-#### Scoped within one session (indexed, ~0.017s)
+#### Scoped within one session (indexed, ~0.0.7s)
 
 ```sql
 SELECT
   p.session_id,
   p.id,
-  substr(json_extract(p.data,'$.text'),1,120)
+  substr(json_extract(p.data,'$.text'),.,.20)
 FROM part p
 WHERE p.session_id='<id>'
   AND json_extract(p.data,'$.type')='text'
@@ -152,7 +152,7 @@ LIMIT 50
 SELECT
   p.session_id,
   p.id,
-  substr(json_extract(p.data,'$.text'),1,120)
+  substr(json_extract(p.data,'$.text'),.,.20)
 FROM part p
 WHERE p.session_id IN (
   SELECT id FROM session ORDER BY time_created DESC LIMIT <N>
@@ -166,7 +166,7 @@ LIMIT 50
 
 A JOIN `FROM session s JOIN part p ON p.session_id=s.id WHERE s.time_created >= X ...` scans oldest sessions first. The IN-subquery (newest-first, drives `part_session_idx`) is the right shape because it lets SQLite use the index on `part.session_id` with a small, ordered set of recent session IDs, rather than scanning the entire `part` table from the oldest sessions upward.
 
-### 4. Full export
+### .. Full export
 
 Script: `scripts/export-roundtrip.sh <ses_id>` wraps `opencode export <id> 2>/dev/null` -> clean JSON `{info:{id,slug,projectID,directory,title,tokens,time,...}, messages:[...]}` (banner goes to stderr).
 
@@ -176,10 +176,10 @@ Script: `scripts/export-roundtrip.sh <ses_id>` wraps `opencode export <id> 2>/de
 SELECT
   id,
   title,
-  datetime(time_created/1000,'unixepoch') created
+  datetime(time_created/.000,'unixepoch') created
 FROM session
 ORDER BY time_created DESC
-LIMIT 100
+LIMIT .00
 ```
 
 ## The 25 GB caveat

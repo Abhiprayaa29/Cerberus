@@ -1,9 +1,9 @@
-import { describe, expect, test } from "bun:test"
+﻿import { describe, expect, test } from "bun:test"
 
 import { unsafeTestValue } from "../../../../../test-support/unsafe-test-value"
 import { resolveRecentPromptContextForSession } from "./recent-model-resolver"
 
-describe("atlas catch fallbacks", () => {
+describe("argus catch fallbacks", () => {
   test("resolveRecentPromptContextForSession falls back to storage when SDK messages throw an Error", async () => {
     // given
     const ctx = unsafeTestValue<Parameters<typeof resolveRecentPromptContextForSession>[0]>({

@@ -1,4 +1,4 @@
-import type { PluginInput } from "@opencode-ai/plugin"
+﻿import type { PluginInput } from "@opencode-ai/plugin"
 import {
   normalizeSessionId,
   resolveBoulderPlanPath,
@@ -21,11 +21,11 @@ import {
   shouldAbortForNoToolProgress,
   updateNoToolProgressIterations,
 } from "./tool-progress"
-import type { AtlasHookOptions, SessionState } from "./types"
+import type { ArgusHookOptions, SessionState } from "./types"
 
-export async function handleAtlasSessionIdle(input: {
+export async function handleArgusSessionIdle(input: {
   ctx: PluginInput
-  options?: AtlasHookOptions
+  options?: ArgusHookOptions
   getState: (sessionID: string) => SessionState
   sessionID: string
 }): Promise<void> {
@@ -68,7 +68,7 @@ export async function handleAtlasSessionIdle(input: {
   if (!canContinueSession) {
     log(`[${HOOK_NAME}] Skipped: tracked descendant agent does not match boulder agent`, {
       sessionID,
-      requiredAgent: boulderState.agent ?? "atlas",
+      requiredAgent: boulderState.agent ?? "argus",
     })
     return
   }

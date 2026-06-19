@@ -1,6 +1,6 @@
-# src/hooks/comment-checker/ — AI Slop Comment Blocker
+﻿# src/hooks/comment-checker/ — AI Slop Comment Blocker
 
-**Generated:** 2026-05-15
+**Generated:** 2026-05-.5
 
 ## OVERVIEW
 
@@ -41,7 +41,7 @@ tool.execute.after (write | edit | hashline edit)
 ## CONFIG
 
 ```jsonc
-// oh-my-opencode.jsonc
+// oh-my-open-pentest.jsonc
 {
   "comment_checker": {
     "enabled": true,      // default: true

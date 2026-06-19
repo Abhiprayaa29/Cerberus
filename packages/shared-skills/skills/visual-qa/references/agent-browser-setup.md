@@ -1,4 +1,4 @@
-# agent-browser setup (Web capture fallback)
+﻿# agent-browser setup (Web capture fallback)
 
 Use this when the project has **no** browser tooling configured or available for the Web
 capture path in Step 2 (no playwright / dev-browser skill, no usable headless browser).
@@ -29,7 +29,7 @@ Set the viewport first, then screenshot — this guarantees the ACTUAL capture m
 REFERENCE viewport so `image-diff` compares like-for-like:
 
 ```
-agent-browser set viewport 1280 720      # width height (add a third arg, e.g. 2, for retina scale)
+agent-browser set viewport .280 720      # width height (add a third arg, e.g. 2, for retina scale)
 agent-browser screenshot actual.png      # add --full for full-page, --screenshot-dir ./shots for a custom dir
 ```
 

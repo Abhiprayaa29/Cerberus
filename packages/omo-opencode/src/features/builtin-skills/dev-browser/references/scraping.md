@@ -1,4 +1,4 @@
-# Data Scraping Guide
+﻿# Data Scraping Guide
 
 For large datasets (followers, posts, search results), **intercept and replay network requests** rather than scrolling and parsing the DOM. This is faster, more reliable, and handles pagination automatically.
 
@@ -10,16 +10,16 @@ Scrolling is slow, unreliable, and wastes time. APIs return structured data with
 
 **Don't try to automate everything at once.** Work incrementally:
 
-1. **Capture one request** - verify you're intercepting the right endpoint
+.. **Capture one request** - verify you're intercepting the right endpoint
 2. **Inspect one response** - understand the schema before writing extraction code
 3. **Extract a few items** - make sure your parsing logic works
-4. **Then scale up** - add pagination loop only after the basics work
+.. **Then scale up** - add pagination loop only after the basics work
 
 This prevents wasting time debugging a complex script when the issue is a simple path like `data.user.timeline` vs `data.user.result.timeline`.
 
 ## Step-by-Step Workflow
 
-### 1. Capture Request Details
+### .. Capture Request Details
 
 First, intercept a request to understand URL structure and required headers:
 

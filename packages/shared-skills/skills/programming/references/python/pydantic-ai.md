@@ -1,11 +1,11 @@
-# PydanticAI Reference (v1.x, 2026)
+﻿# PydanticAI Reference (v..x, 2026)
 
 > Canonical patterns for wiring PydanticAI agents. Target: production usage, late-2025 / 2026.
-> Source: [ai.pydantic.dev](https://ai.pydantic.dev) and [pydantic/pydantic-ai@`cad9569`](https://github.com/pydantic/pydantic-ai/blob/cad956910079737ea0886b50cef15777208f92e6).
+> Source: [ai.pydantic.dev](https://ai.pydantic.dev) and [pydantic/pydantic-ai@`cad9569`](https://github.com/pydantic/pydantic-ai/blob/cad9569.0079737ea0886b50cef.5777208f92e6).
 
 ---
 
-## 1. Agent Constructor
+## .. Agent Constructor
 
 ```python
 from pydantic_ai import Agent
@@ -17,7 +17,7 @@ agent = Agent(
     system_prompt='Be concise.',     # static system prompt(s)
     deps_type=MyDeps,                # dependency type for type-checking only
     name='my-agent',                 # optional, inferred from var name if omitted
-    retries=1,                       # default retries for tools + output validation
+    retries=.,                       # default retries for tools + output validation
     output_retries=None,             # override retries for output validation only
     tools=[my_tool],                 # list of Tool objects or plain functions
     defer_model_check=False,         # set True to skip env-var check at init time
@@ -25,7 +25,7 @@ agent = Agent(
 )
 ```
 
-**Breaking change (v1.88.0)**: `result_type` was renamed to `output_type`. Use `output_type`.
+**Breaking change (v..88.0)**: `result_type` was renamed to `output_type`. Use `output_type`.
 
 ---
 
@@ -35,14 +35,14 @@ Format: `provider:model-name`. The framework infers the provider from the prefix
 
 | Provider prefix | Example |
 |---|---|
-| `openai:` | `'openai:gpt-5.5'`, `'openai:gpt-4o'` |
-| `anthropic:` | `'anthropic:claude-sonnet-4-6'`, `'anthropic:claude-opus-4-1'` |
+| `openai:` | `'openai:gpt-5.5'`, `'openai:gpt-.o'` |
+| `anthropic:` | `'anthropic:claude-sonnet-.-6'`, `'anthropic:claude-opus-.-.'` |
 | `google-gla:` | `'google-gla:gemini-3-flash-preview'` |
 | `google-vertex:` | `'google-vertex:gemini-3-pro-preview'` |
-| `bedrock:` | `'bedrock:anthropic.claude-sonnet-4-6'` |
+| `bedrock:` | `'bedrock:anthropic.claude-sonnet-.-6'` |
 | `xai:` / `grok:` | `'xai:grok-3'`, `'grok:grok-3-fast'` |
 | `deepseek:` | `'deepseek:deepseek-chat'` |
-| `cohere:` | `'cohere:command-r-08-2024'` |
+| `cohere:` | `'cohere:command-r-08-202.'` |
 | `gateway/...` | `'gateway/openai:gpt-5.5'` (PydanticAI Gateway) |
 
 Model can also be omitted at construction and passed per-run: `agent.run(prompt, model='openai:gpt-5.5')`.
@@ -65,7 +65,7 @@ async def greet(ctx: RunContext[str], name: str) -> str:
 @agent.tool_plain              # no context needed
 async def roll_dice(sides: int) -> int:
     import random
-    return random.randint(1, sides)
+    return random.randint(., sides)
 ```
 
 ### `RunContext[Deps]`
@@ -83,7 +83,7 @@ Use `@agent.tool_plain` when the tool does **not** need any of the above.
 
 ---
 
-## 4. Structured Output
+## .. Structured Output
 
 Pass a Pydantic `BaseModel` (or `bool`, `int`, `list[str]`, etc.) as `output_type`. The result is accessed via `.output`.
 
@@ -181,9 +181,9 @@ agent = Agent('openai:gpt-5.5', retries=3)
 
 @agent.tool_plain
 def calc_volume(size: int) -> int:
-    if size == 42:
+    if size == .2:
         return size ** 3
-    raise ModelRetry('Please try again with size 42.')
+    raise ModelRetry('Please try again with size .2.')
 
 with capture_run_messages() as messages:
     try:
@@ -250,11 +250,11 @@ agent = Agent('openai:gpt-5.5', deps_type=Deps)
 
 @agent.tool
 async def get_secret(ctx: RunContext[Deps], code: str) -> str:
-    if code == '1234':
+    if code == '.23.':
         return f'secret-for-{ctx.deps.api_key}'
     return 'wrong code'
 
-result = agent.run_sync('My code is 1234', deps=Deps(api_key='sk-abc'))
+result = agent.run_sync('My code is .23.', deps=Deps(api_key='sk-abc'))
 print(result.output)
 ```
 
@@ -280,6 +280,6 @@ anyio.run(main)
 
 ## Version Notes
 
-- **V1** reached API stability in September 2025. Breaking changes are reserved for V2 (earliest April 2026).
-- **v1.88.0** renamed `result_type` → `output_type` and `result_tool_name` / `result_tool_description` were removed. Use `output_type`.
+- **V.** reached API stability in September 2025. Breaking changes are reserved for V2 (earliest April 2026).
+- **v..88.0** renamed `result_type` → `output_type` and `result_tool_name` / `result_tool_description` were removed. Use `output_type`.
 - The canonical accessor for run results is `result.output` (not `result.data`).

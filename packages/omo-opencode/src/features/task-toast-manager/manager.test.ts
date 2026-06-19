@@ -1,4 +1,4 @@
-declare const require: (name: string) => any
+﻿declare const require: (name: string) => any
 const { describe, test, expect, beforeEach, afterEach, mock } = require("bun:test")
 import type { ConcurrencyManager } from "../background-agent/concurrency"
 import { initI18n } from "../../shared/i18n"
@@ -30,7 +30,7 @@ describe("TaskToastManager", () => {
     TaskToastManager = mod.TaskToastManager
 
     initI18n({ locale: "en" })
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // nuclei-disable-next-line @typescript-nuclei/no-explicit-any
     toastManager = new TaskToastManager(unsafeTestValue(mockClient), mockConcurrencyManager)
   })
 
@@ -44,7 +44,7 @@ describe("TaskToastManager", () => {
       const task = {
         id: "task_1",
         description: "Test task",
-        agent: "sisyphus-junior",
+        agent: "cerberus-junior",
         isBackground: true,
         skills: ["playwright", "git-master"],
       }
@@ -64,7 +64,7 @@ describe("TaskToastManager", () => {
       const task = {
         id: "task_2",
         description: "Test task without skills",
-        agent: "explore",
+        agent: "scout",
         isBackground: true,
       }
 
@@ -84,13 +84,13 @@ describe("TaskToastManager", () => {
       toastManager.addTask({
         id: "task_1",
         description: "First task",
-        agent: "explore",
+        agent: "scout",
         isBackground: true,
       })
       toastManager.addTask({
         id: "task_2",
         description: "Second task",
-        agent: "librarian",
+        agent: "intel",
         isBackground: true,
       })
 
@@ -98,7 +98,7 @@ describe("TaskToastManager", () => {
       toastManager.addTask({
         id: "task_3",
         description: "Third task",
-        agent: "explore",
+        agent: "scout",
         isBackground: true,
       })
 
@@ -117,14 +117,14 @@ describe("TaskToastManager", () => {
         getQueuedCount: mock(() => 1),
       })
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // nuclei-disable-next-line @typescript-nuclei/no-explicit-any
       const managerWithConcurrency = new TaskToastManager(unsafeTestValue(mockClient), mockConcurrencyWithCounts)
 
       // when - a task is added
       managerWithConcurrency.addTask({
         id: "task_1",
         description: "Test task",
-        agent: "explore",
+        agent: "scout",
         isBackground: true,
       })
 
@@ -141,7 +141,7 @@ describe("TaskToastManager", () => {
       const task = {
         id: "task_1",
         description: "Full info task",
-        agent: "sisyphus-junior",
+        agent: "cerberus-junior",
         isBackground: true,
         skills: ["frontend"],
       }
@@ -163,7 +163,7 @@ describe("TaskToastManager", () => {
       const task = {
         id: "task_1",
         description: "Task with category default model",
-        agent: "sisyphus-junior",
+        agent: "cerberus-junior",
         isBackground: false,
         modelInfo: { model: "google/gemini-3.1-pro", type: "category-default" as const },
       }
@@ -183,7 +183,7 @@ describe("TaskToastManager", () => {
       const task = {
         id: "task_1b",
         description: "Task with system default model",
-        agent: "sisyphus-junior",
+        agent: "cerberus-junior",
         isBackground: false,
         modelInfo: { model: "anthropic/claude-sonnet-4-6", type: "system-default" as const },
       }
@@ -204,7 +204,7 @@ describe("TaskToastManager", () => {
       const task = {
         id: "task_2",
         description: "Task with inherited model",
-        agent: "sisyphus-junior",
+        agent: "cerberus-junior",
         isBackground: false,
         modelInfo: { model: "cliproxy/claude-opus-4-7", type: "inherited" as const },
       }
@@ -225,7 +225,7 @@ describe("TaskToastManager", () => {
       const task = {
         id: "task_runtime",
         description: "Task with runtime fallback model",
-        agent: "explore",
+        agent: "scout",
         isBackground: false,
         modelInfo: { model: "anthropic/oswe-vscode-prime", type: "runtime-fallback" as const },
       }
@@ -246,7 +246,7 @@ describe("TaskToastManager", () => {
       const task = {
         id: "task_3",
         description: "Task with user model",
-        agent: "sisyphus-junior",
+        agent: "cerberus-junior",
         isBackground: false,
         modelInfo: { model: "my-provider/my-model", type: "user-defined" as const },
       }
@@ -268,7 +268,7 @@ describe("TaskToastManager", () => {
       const task = {
         id: "task_4",
         description: "Task without model info",
-        agent: "explore",
+        agent: "scout",
         isBackground: true,
       }
 
@@ -288,7 +288,7 @@ describe("TaskToastManager", () => {
       const task = {
         id: "task_model_display",
         description: "Build UI component",
-        agent: "sisyphus-junior",
+        agent: "cerberus-junior",
         isBackground: true,
         category: "deep",
         modelInfo: { model: "openai/gpt-5.4", type: "category-default" as const },
@@ -300,7 +300,7 @@ describe("TaskToastManager", () => {
       // then - toast should show model name before category like "gpt-5.4: deep"
       const call = mockClient.tui.showToast.mock.calls[0][0]
       expect(call.body.message).toContain("gpt-5.4: deep")
-      expect(call.body.message).not.toContain("sisyphus-junior/deep")
+      expect(call.body.message).not.toContain("cerberus-junior/deep")
     })
 
     test("should strip provider prefix from model name", () => {
@@ -308,7 +308,7 @@ describe("TaskToastManager", () => {
       const task = {
         id: "task_strip_provider",
         description: "Fix styles",
-        agent: "sisyphus-junior",
+        agent: "cerberus-junior",
         isBackground: false,
         category: "visual-engineering",
         modelInfo: { model: "google/gemini-3.1-pro", type: "category-default" as const },
@@ -327,7 +327,7 @@ describe("TaskToastManager", () => {
       const task = {
         id: "task_no_model",
         description: "Quick fix",
-        agent: "sisyphus-junior",
+        agent: "cerberus-junior",
         isBackground: true,
         category: "quick",
       }
@@ -337,15 +337,15 @@ describe("TaskToastManager", () => {
 
       // then - should use old format with agent name
       const call = mockClient.tui.showToast.mock.calls[0][0]
-      expect(call.body.message).toContain("sisyphus-junior/quick")
+      expect(call.body.message).toContain("cerberus-junior/quick")
     })
 
     test("should show model name without category when category is absent", () => {
       // given - a task with modelInfo but no category
       const task = {
         id: "task_model_no_cat",
-        description: "Explore codebase",
-        agent: "explore",
+        description: "Scout codebase",
+        agent: "scout",
         isBackground: true,
         modelInfo: { model: "anthropic/claude-sonnet-4-6", type: "category-default" as const },
       }
@@ -363,13 +363,13 @@ describe("TaskToastManager", () => {
       const limitedConcurrency = unsafeTestValue<ConcurrencyManager>({
         getConcurrencyLimit: mock(() => 1),
       })
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // nuclei-disable-next-line @typescript-nuclei/no-explicit-any
       const limitedManager = new TaskToastManager(unsafeTestValue(mockClient), limitedConcurrency)
 
       limitedManager.addTask({
         id: "task_running",
         description: "Running task",
-        agent: "sisyphus-junior",
+        agent: "cerberus-junior",
         isBackground: true,
         category: "deep",
         modelInfo: { model: "openai/gpt-5.5", type: "category-default" as const },
@@ -377,7 +377,7 @@ describe("TaskToastManager", () => {
       limitedManager.addTask({
         id: "task_queued",
         description: "Queued task",
-        agent: "sisyphus-junior",
+        agent: "cerberus-junior",
         isBackground: true,
         category: "quick",
         status: "queued",
@@ -399,7 +399,7 @@ describe("TaskToastManager", () => {
         id: "task_update",
         sessionID: "ses_update_1",
         description: "Task that will fallback",
-        agent: "explore",
+        agent: "scout",
         isBackground: false,
       }
       toastManager.addTask(task)

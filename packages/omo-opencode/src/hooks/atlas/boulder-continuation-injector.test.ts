@@ -1,4 +1,4 @@
-import { describe, test, expect, beforeEach, afterEach, mock } from "bun:test"
+﻿import { describe, test, expect, beforeEach, afterEach, mock } from "bun:test"
 import type { PluginInput } from "@opencode-ai/plugin"
 import { registerAgentName, _resetForTesting } from "../../features/claude-code-session-state"
 import { injectBoulderContinuation } from "./boulder-continuation-injector"
@@ -17,7 +17,7 @@ describe("injectBoulderContinuation", () => {
 
   test("uses raw agent key for promptAsync to avoid HTTP header issues", async () => {
     // given
-    registerAgentName("atlas")
+    registerAgentName("argus")
     const promptAsyncMock = mock(async (_request: unknown) => undefined)
     const messagesMock = mock(async () => ({ data: [] }))
 
@@ -38,7 +38,7 @@ describe("injectBoulderContinuation", () => {
       planName: "test-plan",
       remaining: 1,
       total: 2,
-      agent: "atlas",
+      agent: "argus",
       sessionState: { promptFailureCount: 0 },
     })
 
@@ -48,7 +48,7 @@ describe("injectBoulderContinuation", () => {
     expect(promptAsyncMock).toHaveBeenCalledWith(
       expect.objectContaining({
         body: expect.objectContaining({
-          agent: "atlas",
+          agent: "argus",
         }),
       }),
     )
@@ -56,7 +56,7 @@ describe("injectBoulderContinuation", () => {
 
   test("#given background tasks are running #when injector checks again #then it reports skipped background tasks without mutating failure count", async () => {
     // given
-    registerAgentName("atlas")
+    registerAgentName("argus")
     const promptAsyncMock = mock(async (_request: unknown) => undefined)
     const messagesMock = mock(async () => ({ data: [] }))
     const sessionState = { promptFailureCount: 2, lastContinuationInjectedAt: 123 }
@@ -78,7 +78,7 @@ describe("injectBoulderContinuation", () => {
       planName: "test-plan",
       remaining: 1,
       total: 2,
-      agent: "atlas",
+      agent: "argus",
       backgroundManager: unsafeTestValue<Parameters<typeof injectBoulderContinuation>[0]["backgroundManager"]>({
         getTasksByParentSession: () => [{ status: "running" }],
       }),
@@ -94,7 +94,7 @@ describe("injectBoulderContinuation", () => {
 
   test("#given a background task is still pending session creation #when injector checks again #then it still skips continuation", async () => {
     // given
-    registerAgentName("atlas")
+    registerAgentName("argus")
     const promptAsyncMock = mock(async (_request: unknown) => undefined)
     const messagesMock = mock(async () => ({ data: [] }))
     const sessionState = { promptFailureCount: 1, lastContinuationInjectedAt: 456 }
@@ -116,7 +116,7 @@ describe("injectBoulderContinuation", () => {
       planName: "test-plan",
       remaining: 1,
       total: 2,
-      agent: "atlas",
+      agent: "argus",
       backgroundManager: unsafeTestValue<Parameters<typeof injectBoulderContinuation>[0]["backgroundManager"]>({
         getTasksByParentSession: () => [{ status: "pending" }],
       }),
@@ -163,7 +163,7 @@ describe("injectBoulderContinuation", () => {
 
   test("#given promptAsync may have accepted boulder continuation before EOF #when injector observes the failure #then it records the continuation as injected", async () => {
     // given
-    registerAgentName("atlas")
+    registerAgentName("argus")
     const promptAsyncMock = mock(async (_request: unknown) => {
       throw new Error("JSON Parse error: Unexpected EOF")
     })
@@ -187,7 +187,7 @@ describe("injectBoulderContinuation", () => {
       planName: "test-plan",
       remaining: 1,
       total: 2,
-      agent: "atlas",
+      agent: "argus",
       sessionState,
     })
 
@@ -199,7 +199,7 @@ describe("injectBoulderContinuation", () => {
 
   test("#given prompt context lookup throws a non-Error #when injector catches it #then it preserves failed fallback behavior", async () => {
     // given
-    registerAgentName("atlas")
+    registerAgentName("argus")
     const nonErrorFailure = { reason: "sdk unavailable" }
     const promptAsyncMock = mock(async (_request: unknown) => undefined)
     const messagesMock = mock(async () => {
@@ -224,7 +224,7 @@ describe("injectBoulderContinuation", () => {
       planName: "test-plan",
       remaining: 1,
       total: 2,
-      agent: "atlas",
+      agent: "argus",
       sessionState,
     })
 
@@ -236,7 +236,7 @@ describe("injectBoulderContinuation", () => {
 
   test("#given recent prompt context includes variant #when injecting boulder continuation #then promptAsync receives variant as a top-level field", async () => {
     // given
-    registerAgentName("atlas")
+    registerAgentName("argus")
     const capturedRequests: Array<{
       body?: {
         model?: { providerID: string; modelID: string }
@@ -261,7 +261,7 @@ describe("injectBoulderContinuation", () => {
       data: [{
         id: "msg_1",
         info: {
-          agent: "atlas",
+          agent: "argus",
           model: recentModel,
           time: { created: Date.now() },
         },
@@ -285,7 +285,7 @@ describe("injectBoulderContinuation", () => {
       planName: "test-plan",
       remaining: 1,
       total: 2,
-      agent: "atlas",
+      agent: "argus",
       sessionState: { promptFailureCount: 0 },
     })
 

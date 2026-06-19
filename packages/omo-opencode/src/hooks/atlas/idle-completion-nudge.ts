@@ -1,4 +1,4 @@
-import type { PluginInput } from "@opencode-ai/plugin"
+﻿import type { PluginInput } from "@opencode-ai/plugin"
 import type { BoulderState } from "../../features/boulder-state"
 import {
   completeBoulder,
@@ -17,7 +17,7 @@ import { dispatchInternalPrompt, isInternalPromptDispatchAccepted } from "../sha
 import { shouldPromptAfterSessionIdle } from "../shared/session-idle-settle"
 import { HOOK_NAME } from "./hook-name"
 import { BOULDER_COMPLETE_PROMPT } from "./system-reminder-templates"
-import type { AtlasHookOptions, SessionState } from "./types"
+import type { ArgusHookOptions, SessionState } from "./types"
 
 function getTaskLabelSortValue(taskLabel: string): number {
   const parsed = Number.parseInt(taskLabel.replace(/[^0-9]/g, ""), 10)
@@ -26,7 +26,7 @@ function getTaskLabelSortValue(taskLabel: string): number {
 
 export async function handleCompletedBoulderIdle(input: {
   ctx: PluginInput
-  options?: AtlasHookOptions
+  options?: ArgusHookOptions
   sessionID: string
   sessionState: SessionState
   boulderState: BoulderState
@@ -98,10 +98,10 @@ export async function handleCompletedBoulderIdle(input: {
     .replace(/{ELAPSED_HUMAN}/g, elapsedHuman)
     .replace(/{TASK_BREAKDOWN}/g, taskBreakdown.length > 0 ? taskBreakdown : "- (no task timings)")
 
-  const atlasAgent = resolveRegisteredAgentName(
-    boulderState.agent ?? (isAgentRegistered("atlas") ? "atlas" : undefined),
+  const argusAgent = resolveRegisteredAgentName(
+    boulderState.agent ?? (isAgentRegistered("argus") ? "argus" : undefined),
   )
-  if (atlasAgent && isAgentRegistered(atlasAgent)) {
+  if (argusAgent && isAgentRegistered(argusAgent)) {
     if (!(await shouldPromptAfterSessionIdle(ctx.client, sessionID, options?.idleSettleMs))) {
       log(`[${HOOK_NAME}] Boulder completion nudge skipped because session is active`, { sessionID })
       return
@@ -117,7 +117,7 @@ export async function handleCompletedBoulderIdle(input: {
       input: {
         path: { id: sessionID },
         body: {
-          agent: atlasAgent,
+          agent: argusAgent,
           parts: [createInternalAgentContinuationTextPart(prompt)],
         },
         query: { directory: ctx.directory },

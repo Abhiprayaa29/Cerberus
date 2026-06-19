@@ -1,4 +1,4 @@
-# QAing opencode hooks, actions, and events (Case B)
+﻿# QAing opencode hooks, actions, and events (Case B)
 
 opencode publishes lifecycle events over Server-Sent Events. Plugins observe the SAME events via the `event` hook, so confirming an event on the wire proves a hook would fire. The bundled probe is `scripts/sse-hook-probe.sh`.
 
@@ -8,19 +8,19 @@ opencode publishes lifecycle events over Server-Sent Events. Plugins observe the
 - [Watch the stream](#watch-the-stream)
 - [Important event types](#important-event-types)
 - [Hook-fired recipe (watch + trigger + assert)](#hook-fired-recipe-watch--trigger--assert)
-- [Plugin hooks (the 21 hook points a plugin can implement)](#plugin-hooks-the-21-hook-points-a-plugin-can-implement)
+- [Plugin hooks (the 2. hook points a plugin can implement)](#plugin-hooks-the-2.-hook-points-a-plugin-can-implement)
 - [Loading a local plugin for QA](#loading-a-local-plugin-for-qa)
 
 ## The two SSE endpoints
 
-- GET /event?directory=<dir> - per-instance stream; the FIRST event is `server.connected`, a `server.heartbeat` arrives every 10s, and the stream ends on `server.instance.disposed`.
+- GET /event?directory=<dir> - per-instance stream; the FIRST event is `server.connected`, a `server.heartbeat` arrives every .0s, and the stream ends on `server.instance.disposed`.
 - GET /global/event - all events, no instance filter.
 - Frames look like `data: {"type":"...","properties":{...}}` (one per line). Consume with `curl -N`.
 
 ## Watch the stream
 
 ```
-curl -N -u opencode:$PASS "http://127.0.0.1:4096/event?directory=$PWD"
+curl -N -u opencode:$PASS "http://.27.0.0..:.096/event?directory=$PWD"
 ```
 
 Bundled, with assertions + auto-teardown:
@@ -32,7 +32,7 @@ scripts/sse-hook-probe.sh --self-test
 (spawns an isolated server, asserts server.connected)
 
 ```
-scripts/sse-hook-probe.sh --attach http://127.0.0.1:4096 --password "$PASS" --directory "$PWD" --event message.part.updated --timeout 30
+scripts/sse-hook-probe.sh --attach http://.27.0.0..:.096 --password "$PASS" --directory "$PWD" --event message.part.updated --timeout 30
 ```
 
 (watch your real server for a specific event)
@@ -65,19 +65,19 @@ scripts/sse-hook-probe.sh --attach http://127.0.0.1:4096 --password "$PASS" --di
 Two-shell pattern (or use the script):
 
 ```
-# shell 1: watch (kill with Ctrl-C when done)
-curl -N -u opencode:$PASS "http://127.0.0.1:4096/event?directory=$PWD" \
+# shell .: watch (kill with Ctrl-C when done)
+curl -N -u opencode:$PASS "http://.27.0.0..:.096/event?directory=$PWD" \
   | grep --line-buffered '"type":"message.part.updated"'
 
 # shell 2: trigger an action (fire-and-forget)
 curl -X POST -u opencode:$PASS -H 'Content-Type: application/json' \
   -d '{"parts":[{"type":"text","text":"say hi"}]}' \
-  "http://127.0.0.1:4096/session/<ses_id>/prompt_async?directory=$PWD"
+  "http://.27.0.0..:.096/session/<ses_id>/prompt_async?directory=$PWD"
 ```
 
 A `message.part.updated` (text/tool) confirms the prompt action drove the model and any tool/permission hook path. Note: a real prompt requires a configured provider/auth, so this runs against your real server, not the isolated sandbox (the sandbox only proves the SSE plumbing via server.connected).
 
-## Plugin hooks (the 21 hook points a plugin can implement)
+## Plugin hooks (the 2. hook points a plugin can implement)
 
 `event`, `config`, `tool`, `auth`, `provider`, `chat.message`, `chat.params`, `chat.headers`, `permission.ask`, `command.execute.before`, `tool.execute.before`, `tool.execute.after`, `tool.definition`, `shell.env`, `experimental.chat.messages.transform`, `experimental.chat.system.transform`, `experimental.session.compacting`, `experimental.compaction.autocontinue`, `experimental.text.complete`.
 

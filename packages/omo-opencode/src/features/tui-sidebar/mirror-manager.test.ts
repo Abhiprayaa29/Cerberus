@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it, jest } from "bun:test"
+﻿import { afterEach, beforeEach, describe, expect, it, jest } from "bun:test"
 import { mkdtempSync, rmSync, writeFileSync } from "node:fs"
 import { tmpdir } from "node:os"
 import { join } from "node:path"
@@ -75,9 +75,9 @@ function createMirror(input?: {
 const resolveTestSessionAgent: SessionAgentResolver = async (sessionID) => {
   switch (sessionID) {
     case "ses-main":
-      return "sisyphus"
+      return "cerberus"
     case "ses-sub":
-      return "atlas"
+      return "argus"
     default:
       return null
   }
@@ -108,7 +108,7 @@ describe("TuiStateMirror", () => {
     await mirror.flush()
 
     // then
-    expect(readMirror(projectDir)?.activeAgents).toEqual([{ name: "sisyphus", status: "running" }])
+    expect(readMirror(projectDir)?.activeAgents).toEqual([{ name: "cerberus", status: "running" }])
   })
 
   it("#given a started mirror #when heartbeat fires without events #then it writes the mirror", async () => {
@@ -128,7 +128,7 @@ describe("TuiStateMirror", () => {
     await heartbeatWrite
 
     // then
-    expect(readMirror(projectDir)?.activeAgents).toEqual([{ name: "sisyphus", status: "busy" }])
+    expect(readMirror(projectDir)?.activeAgents).toEqual([{ name: "cerberus", status: "busy" }])
     mirror.stop()
   })
 

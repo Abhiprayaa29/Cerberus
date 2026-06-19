@@ -1,4 +1,4 @@
-import assert from "node:assert/strict";
+﻿import assert from "node:assert/strict";
 import { mkdir, mkdtemp, readFile, utimes, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -312,7 +312,7 @@ test("#given marketplace plugin root without install snapshot #when running chec
 	assert.equal(result.started, false);
 	assert.equal(result.reason, "marketplace-flow");
 	assert.equal(result.notices.length, 1);
-	assert.match(result.notices[0], /codex plugin marketplace upgrade sisyphuslabs/);
+	assert.match(result.notices[0], /codex plugin marketplace upgrade cerberuslabs/);
 	assert.match(result.notices[0], /hook re-approval/);
 	await assert.rejects(readFile(spawnLogPath, "utf8"), { code: "ENOENT" });
 	const state = JSON.parse(await readFile(env.LAZYCODEX_AUTO_UPDATE_STATE_PATH, "utf8"));
@@ -397,7 +397,7 @@ test("#given workspace tree without install snapshot #when detecting install flo
 	const root = await mkdtemp(join(tmpdir(), "lazycodex-install-flow-workspace-"));
 	const pluginRoot = join(root, "packages", "omo-codex", "plugin");
 	await mkdir(pluginRoot, { recursive: true });
-	await writeFile(join(root, "package.json"), JSON.stringify({ name: "oh-my-opencode", version: "4.9.2" }));
+	await writeFile(join(root, "package.json"), JSON.stringify({ name: "oh-my-open-pentest", version: "4.9.2" }));
 
 	assert.deepEqual(detectInstallFlow({ pluginRoot }), {
 		flow: "npx-local",

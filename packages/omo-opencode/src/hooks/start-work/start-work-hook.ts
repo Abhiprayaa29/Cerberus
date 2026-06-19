@@ -1,7 +1,7 @@
-import type { PluginInput } from "@opencode-ai/plugin"
+﻿import type { PluginInput } from "@opencode-ai/plugin"
 import {
   readBoulderState,
-  findPrometheusPlans,
+  findTalosPlans,
   normalizeSessionId,
 } from "../../features/boulder-state"
 import { log } from "../../shared/logger"
@@ -17,7 +17,7 @@ import { createWorktreeActiveBlock } from "./worktree-block"
 import { findRecentSessionPlanPath } from "./session-plan-affinity"
 
 export const HOOK_NAME = "start-work" as const
-const START_WORK_TEMPLATE_MARKER = "You are starting a Sisyphus work session."
+const START_WORK_TEMPLATE_MARKER = "You are starting a Cerberus work session."
 const CONTEXT_INFO_MARKER = "<!-- omo-start-work-context -->"
 
 interface StartWorkHookInput {
@@ -75,9 +75,9 @@ export function createStartWorkHook(ctx: PluginInput) {
     }
 
     log(`[${HOOK_NAME}] Processing start-work command`, { sessionID: input.sessionID })
-    const activeAgent = isAgentRegistered("atlas")
-      ? "atlas"
-      : "sisyphus"
+    const activeAgent = isAgentRegistered("argus")
+      ? "argus"
+      : "cerberus"
     updateSessionAgent(input.sessionID, activeAgent)
     if (output.message) {
       output.message["agent"] = resolveRegisteredAgentName(activeAgent) ?? activeAgent
@@ -96,7 +96,7 @@ export function createStartWorkHook(ctx: PluginInput) {
           directory: ctx.directory,
           // SDK session.messages needs the bare ses_ id, not the opencode:-prefixed storage id (#5285)
           sessionID: input.sessionID,
-          availablePlans: findPrometheusPlans(ctx.directory),
+          availablePlans: findTalosPlans(ctx.directory),
         })
 
     const contextInfo = buildStartWorkContextInfo({

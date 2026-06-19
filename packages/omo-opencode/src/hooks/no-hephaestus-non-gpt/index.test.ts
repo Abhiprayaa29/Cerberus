@@ -1,13 +1,13 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { describe, expect, spyOn, test } from "bun:test"
 import { _resetForTesting, updateSessionAgent } from "../../features/claude-code-session-state"
 import { getAgentDisplayName } from "../../shared/agent-display-names"
-import { createNoHephaestusNonGptHook } from "./index"
+import { createNoScyllaNonGptHook } from "./index"
 import { unsafeTestValue } from "../../../../../test-support/unsafe-test-value"
 
-const HEPHAESTUS_DISPLAY = getAgentDisplayName("hephaestus")
-const SISYPHUS_DISPLAY = getAgentDisplayName("sisyphus")
+const SCYLLA_DISPLAY = getAgentDisplayName("scylla")
+const CERBERUS_DISPLAY = getAgentDisplayName("cerberus")
 
 function createOutput() {
   return {
@@ -16,11 +16,11 @@ function createOutput() {
   }
 }
 
-describe("no-hephaestus-non-gpt hook", () => {
-  test("shows toast on every chat.message when hephaestus uses non-gpt model", async () => {
-    // given - hephaestus with claude model
+describe("no-scylla-non-gpt hook", () => {
+  test("shows toast on every chat.message when scylla uses non-gpt model", async () => {
+    // given - scylla with claude model
     const showToast = spyOn({ fn: async (_input: unknown) => ({}) }, "fn")
-    const hook = createNoHephaestusNonGptHook(unsafeTestValue({
+    const hook = createNoScyllaNonGptHook(unsafeTestValue({
       client: { tui: { showToast } },
     }))
 
@@ -30,32 +30,32 @@ describe("no-hephaestus-non-gpt hook", () => {
     // when - chat.message is called repeatedly
     await hook["chat.message"]?.({
       sessionID: "ses_1",
-      agent: HEPHAESTUS_DISPLAY,
+      agent: SCYLLA_DISPLAY,
       model: { providerID: "anthropic", modelID: "claude-opus-4-7" },
     }, output1)
     await hook["chat.message"]?.({
       sessionID: "ses_1",
-      agent: HEPHAESTUS_DISPLAY,
+      agent: SCYLLA_DISPLAY,
       model: { providerID: "anthropic", modelID: "claude-opus-4-7" },
     }, output2)
 
-    // then - toast is shown and agent is switched to sisyphus
+    // then - toast is shown and agent is switched to cerberus
     expect(showToast).toHaveBeenCalledTimes(2)
-    expect(output1.message.agent).toBe("sisyphus")
-    expect(output2.message.agent).toBe("sisyphus")
+    expect(output1.message.agent).toBe("cerberus")
+    expect(output2.message.agent).toBe("cerberus")
     expect(showToast.mock.calls[0]?.[0]).toMatchObject({
       body: {
-        title: "NEVER Use Hephaestus with Non-GPT",
-        message: expect.stringContaining("Hephaestus is trash without GPT."),
+        title: "NEVER Use Scylla with Non-GPT",
+        message: expect.stringContaining("Scylla is trash without GPT."),
         variant: "error",
       },
     })
   })
 
   test("shows warning and does not switch agent when allow_non_gpt_model is enabled", async () => {
-    // given - hephaestus with claude model and opt-out enabled
+    // given - scylla with claude model and opt-out enabled
     const showToast = spyOn({ fn: async (_input: unknown) => ({}) }, "fn")
-    const hook = createNoHephaestusNonGptHook(unsafeTestValue({
+    const hook = createNoScyllaNonGptHook(unsafeTestValue({
       client: { tui: { showToast } },
     }), {
       allowNonGptModel: true,
@@ -66,7 +66,7 @@ describe("no-hephaestus-non-gpt hook", () => {
     // when - chat.message runs
     await hook["chat.message"]?.({
       sessionID: "ses_opt_out",
-      agent: HEPHAESTUS_DISPLAY,
+      agent: SCYLLA_DISPLAY,
       model: { providerID: "anthropic", modelID: "claude-opus-4-7" },
     }, output)
 
@@ -75,16 +75,16 @@ describe("no-hephaestus-non-gpt hook", () => {
     expect(output.message.agent).toBeUndefined()
     expect(showToast.mock.calls[0]?.[0]).toMatchObject({
       body: {
-        title: "NEVER Use Hephaestus with Non-GPT",
+        title: "NEVER Use Scylla with Non-GPT",
         variant: "warning",
       },
     })
   })
 
-  test("does not show toast when hephaestus uses gpt model", async () => {
-    // given - hephaestus with gpt model
+  test("does not show toast when scylla uses gpt model", async () => {
+    // given - scylla with gpt model
     const showToast = spyOn({ fn: async (_input: unknown) => ({}) }, "fn")
-    const hook = createNoHephaestusNonGptHook(unsafeTestValue({
+    const hook = createNoScyllaNonGptHook(unsafeTestValue({
       client: { tui: { showToast } },
     }))
 
@@ -93,7 +93,7 @@ describe("no-hephaestus-non-gpt hook", () => {
     // when - chat.message runs
     await hook["chat.message"]?.({
       sessionID: "ses_2",
-      agent: HEPHAESTUS_DISPLAY,
+      agent: SCYLLA_DISPLAY,
       model: { providerID: "openai", modelID: "gpt-5.5" },
     }, output)
 
@@ -102,10 +102,10 @@ describe("no-hephaestus-non-gpt hook", () => {
     expect(output.message.agent).toBeUndefined()
   })
 
-  test("does not show toast for non-hephaestus agent", async () => {
-    // given - sisyphus with claude model (non-gpt)
+  test("does not show toast for non-scylla agent", async () => {
+    // given - cerberus with claude model (non-gpt)
     const showToast = spyOn({ fn: async (_input: unknown) => ({}) }, "fn")
-    const hook = createNoHephaestusNonGptHook(unsafeTestValue({
+    const hook = createNoScyllaNonGptHook(unsafeTestValue({
       client: { tui: { showToast } },
     }))
 
@@ -114,7 +114,7 @@ describe("no-hephaestus-non-gpt hook", () => {
     // when - chat.message runs
     await hook["chat.message"]?.({
       sessionID: "ses_3",
-      agent: SISYPHUS_DISPLAY,
+      agent: CERBERUS_DISPLAY,
       model: { providerID: "anthropic", modelID: "claude-opus-4-7" },
     }, output)
 
@@ -124,11 +124,11 @@ describe("no-hephaestus-non-gpt hook", () => {
   })
 
   test("uses session agent fallback when input agent is missing", async () => {
-    // given - session agent saved as hephaestus
+    // given - session agent saved as scylla
     _resetForTesting()
-    updateSessionAgent("ses_4", HEPHAESTUS_DISPLAY)
+    updateSessionAgent("ses_4", SCYLLA_DISPLAY)
     const showToast = spyOn({ fn: async (_input: unknown) => ({}) }, "fn")
-    const hook = createNoHephaestusNonGptHook(unsafeTestValue({
+    const hook = createNoScyllaNonGptHook(unsafeTestValue({
       client: { tui: { showToast } },
     }))
 
@@ -140,8 +140,8 @@ describe("no-hephaestus-non-gpt hook", () => {
       model: { providerID: "anthropic", modelID: "claude-opus-4-7" },
     }, output)
 
-    // then - toast shown via session-agent fallback, switched to sisyphus
+    // then - toast shown via session-agent fallback, switched to cerberus
     expect(showToast).toHaveBeenCalledTimes(1)
-    expect(output.message.agent).toBe("sisyphus")
+    expect(output.message.agent).toBe("cerberus")
   })
 })

@@ -1,4 +1,4 @@
-declare const require: (name: string) => any
+﻿declare const require: (name: string) => any
 const { afterEach, beforeEach, describe, expect, mock, test, afterAll } = require("bun:test")
 import { existsSync, mkdirSync, rmSync, writeFileSync } from "node:fs"
 import { tmpdir } from "node:os"
@@ -9,7 +9,7 @@ import { clearBoulderState, writeBoulderState } from "../../features/boulder-sta
 import { _resetForTesting, registerAgentName } from "../../features/claude-code-session-state"
 import type { BoulderState } from "../../features/boulder-state"
 
-const TEST_STORAGE_ROOT = join(tmpdir(), `atlas-compaction-storage-${randomUUID()}`)
+const TEST_STORAGE_ROOT = join(tmpdir(), `argus-compaction-storage-${randomUUID()}`)
 const TEST_MESSAGE_STORAGE = join(TEST_STORAGE_ROOT, "message")
 const TEST_PART_STORAGE = join(TEST_STORAGE_ROOT, "part")
 
@@ -32,9 +32,9 @@ mock.module("../../shared/opencode-storage-detection", () => ({
 
 afterAll(() => { mock.restore() })
 
-const { createAtlasHook } = await import("./index")
+const { createArgusHook } = await import("./index")
 
-describe("atlas hook compaction agent filtering", () => {
+describe("argus hook compaction agent filtering", () => {
   let testDirectory: string
 
   function createMockPluginInput() {
@@ -48,7 +48,7 @@ describe("atlas hook compaction agent filtering", () => {
         },
       },
       _promptMock: promptMock,
-    } as Parameters<typeof createAtlasHook>[0] & { _promptMock: ReturnType<typeof mock> }
+    } as Parameters<typeof createArgusHook>[0] & { _promptMock: ReturnType<typeof mock> }
   }
 
   function writeMessage(sessionID: string, fileName: string, agent: string): void {
@@ -64,12 +64,12 @@ describe("atlas hook compaction agent filtering", () => {
   }
 
   beforeEach(() => {
-    testDirectory = join(tmpdir(), `atlas-compaction-test-${randomUUID()}`)
+    testDirectory = join(tmpdir(), `argus-compaction-test-${randomUUID()}`)
     mkdirSync(testDirectory, { recursive: true })
     clearBoulderState(testDirectory)
     _resetForTesting()
-    registerAgentName("atlas")
-    registerAgentName("sisyphus")
+    registerAgentName("argus")
+    registerAgentName("cerberus")
   })
 
   afterEach(() => {
@@ -78,7 +78,7 @@ describe("atlas hook compaction agent filtering", () => {
     _resetForTesting()
   })
 
-  test("should inject continuation when the latest message is compaction but the previous agent matches atlas", async () => {
+  test("should inject continuation when the latest message is compaction but the previous agent matches argus", async () => {
     // given
     const sessionID = "main-session-after-compaction"
     const planPath = join(testDirectory, "test-plan.md")
@@ -89,14 +89,14 @@ describe("atlas hook compaction agent filtering", () => {
       started_at: "2026-01-02T10:00:00Z",
       session_ids: [sessionID],
       plan_name: "test-plan",
-      agent: "atlas",
+      agent: "argus",
     }
     writeBoulderState(testDirectory, state)
-    writeMessage(sessionID, "msg_001.json", "atlas")
+    writeMessage(sessionID, "msg_001.json", "argus")
     writeMessage(sessionID, "msg_002.json", "compaction")
 
     const mockInput = createMockPluginInput()
-    const hook = createAtlasHook(mockInput)
+    const hook = createArgusHook(mockInput)
 
     // when
     await hook.handler({

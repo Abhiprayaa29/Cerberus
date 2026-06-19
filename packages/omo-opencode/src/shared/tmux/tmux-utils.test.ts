@@ -1,4 +1,4 @@
-import { describe, test, expect, beforeEach, afterEach } from "bun:test"
+﻿import { describe, test, expect, beforeEach, afterEach } from "bun:test"
 import {
   isInsideTmux,
   isServerRunning,
@@ -177,7 +177,7 @@ describe("resetServerCheck", () => {
 })
 
 describe("markServerRunningInProcess", () => {
-  const SERVER_RUNNING_KEY = Symbol.for("oh-my-opencode:server-running-in-process")
+  const SERVER_RUNNING_KEY = Symbol.for("oh-my-open-pentest:server-running-in-process")
 
   beforeEach(() => {
     resetServerCheck()

@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+﻿import { describe, expect, it } from "vitest";
 
 import { validateQualityGate } from "../src/quality-gate.js";
 import { UlwLoopError } from "../src/types.js";
@@ -21,7 +21,7 @@ const BASE_GATE = {
 				id: "surface-cli-pass",
 				criterionRef: "C1",
 				surface: "cli",
-				invocation: "omo ulw-loop checkpoint --status complete",
+				invocation: "omo pentest-loop checkpoint --status complete",
 				verdict: "passed",
 				artifactRefs: ["artifact-cli-pass"],
 			},

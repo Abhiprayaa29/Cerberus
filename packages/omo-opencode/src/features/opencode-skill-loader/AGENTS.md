@@ -1,18 +1,18 @@
-# src/features/opencode-skill-loader/ — 4-Scope Skill Discovery
+﻿# src/features/opencode-skill-loader/ — .-Scope Skill Discovery
 
-**Generated:** 2026-05-15
+**Generated:** 2026-05-.5
 
 ## OVERVIEW
 
-This module discovers, parses, merges, and resolves SKILL.md files from 4 scopes with priority deduplication. Harness-neutral loader, builtin skill, runtime skill, and skill matching primitives are extracted to [`packages/skills-loader-core/`](../../../../../packages/skills-loader-core); this directory is the OpenCode adapter shim.
+This module discovers, parses, merges, and resolves SKILL.md files from . scopes with priority deduplication. Harness-neutral loader, builtin skill, runtime skill, and skill matching primitives are extracted to [`packages/skills-loader-core/`](../../../../../packages/skills-loader-core); this directory is the OpenCode adapter shim.
 
-## 4-SCOPE PRIORITY (highest → lowest)
+## .-SCOPE PRIORITY (highest → lowest)
 
 ```
-1. Project (.opencode/skills/)
+.. Project (.opencode/skills/)
 2. OpenCode config (~/.config/opencode/skills/)
-3. User (~/.config/opencode/oh-my-opencode/skills/)
-4. Global (built-in skills)
+3. User (~/.config/opencode/oh-my-open-pentest/skills/)
+.. Global (built-in skills)
 ```
 
 Same-named skill at higher scope overrides lower.

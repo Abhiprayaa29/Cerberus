@@ -1,4 +1,4 @@
-export {
+﻿export {
   createNodeSpawnOptions,
   createNodeSpawnSyncOptions,
   spawn,
@@ -6,4 +6,4 @@ export {
   type SpawnedProcess,
   type SpawnOptions,
   type SpawnSyncResult,
-} from "@oh-my-opencode/utils/runtime"
+} from "@oh-my-open-pentest/utils/runtime"

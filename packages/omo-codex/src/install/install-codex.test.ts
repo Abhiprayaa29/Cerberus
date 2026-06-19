@@ -1,4 +1,4 @@
-/// <reference path="../../../../bun-test.d.ts" />
+﻿/// <reference path="../../../../bun-test.d.ts" />
 /// <reference types="bun-types" />
 
 import { describe, expect, test } from "bun:test"
@@ -20,8 +20,8 @@ describe("install-codex", () => {
   test("#given npm platform binary package #when resolving vendored repo root #then finds sibling wrapper package", async () => {
     // given
     const nodeModules = await mkdtemp(join(tmpdir(), "omo-codex-node-modules-"))
-    const importerDir = join(nodeModules, "oh-my-openagent-darwin-arm64", "bin")
-    const wrapperRoot = join(nodeModules, "oh-my-openagent")
+    const importerDir = join(nodeModules, "oh-my-open-pentest-darwin-arm64", "bin")
+    const wrapperRoot = join(nodeModules, "oh-my-open-pentest")
     await mkdir(join(importerDir), { recursive: true })
     await mkdir(join(wrapperRoot, "packages", "omo-codex", "plugin", ".codex-plugin"), { recursive: true })
     await writeFile(join(wrapperRoot, "packages", "omo-codex", "plugin", ".codex-plugin", "plugin.json"), "{}")
@@ -121,23 +121,23 @@ describe("install-codex", () => {
     const first = await runCodexInstaller({ codexHome, binDir, repoRoot, astGrepInstaller: skipAstGrepInstall, runCommand: async () => undefined })
 
     // then
-    expect(first.marketplaceName).toBe("sisyphuslabs")
+    expect(first.marketplaceName).toBe("cerberuslabs")
     expect(first.installed.length).toBe(1)
     const configContent = await readFile(join(codexHome, "config.toml"), "utf8")
     expect(configContent).toContain("[features]")
-    expect(configContent).toContain("[marketplaces.sisyphuslabs]")
+    expect(configContent).toContain("[marketplaces.cerberuslabs]")
     expect(configContent).toContain('source_type = "local"')
-    expect(configContent).toContain(`source = ${formatTomlString(join(codexHome, "plugins", "cache", "sisyphuslabs"))}`)
+    expect(configContent).toContain(`source = ${formatTomlString(join(codexHome, "plugins", "cache", "cerberuslabs"))}`)
     expect(configContent).not.toContain('source = "https://github.com/code-yeongyu/lazycodex.git"')
     expect(configContent).not.toContain('ref = "main"')
-    expect(configContent).toContain("[plugins.\"omo@sisyphuslabs\"]")
+    expect(configContent).toContain("[plugins.\"omo@cerberuslabs\"]")
     expect(configContent).toContain("[hooks.state.")
     expect(configContent).not.toContain("code-yeongyu-codex-plugins")
     expect(configContent).not.toContain("[marketplaces.lazycodex]")
 
     const pluginPath = first.installed[0]?.path
     expect(pluginPath).toBeDefined()
-    expect(pluginPath).toContain(join("plugins", "cache", "sisyphuslabs", "omo"))
+    expect(pluginPath).toContain(join("plugins", "cache", "cerberuslabs", "omo"))
     const stats = await stat(pluginPath ?? "")
     expect(stats.isDirectory()).toBe(true)
     const rootPackage = JSON.parse(await readFile(join(repoRoot, "package.json"), "utf8")) as { readonly name: string; readonly version: string }
@@ -157,11 +157,11 @@ describe("install-codex", () => {
     }
     if (rootSkillNames.length > 0) {
       expect(rootSkillNames).toContain("ulw-plan")
-      expect(rootSkillNames).toContain("ulw-loop")
-      expect(rootSkillNames).not.toContain("planing-prometheustic")
+      expect(rootSkillNames).toContain("pentest-loop")
+      expect(rootSkillNames).not.toContain("planing-talostic")
     }
-    expect((await stat(join(pluginPath ?? "", "components", "ultrawork", "skills", "ulw-plan"))).isDirectory()).toBe(true)
-    expect((await stat(join(pluginPath ?? "", "components", "ulw-loop", "skills", "ulw-loop"))).isDirectory()).toBe(true)
+    expect((await stat(join(pluginPath ?? "", "components", "fullscan", "skills", "ulw-plan"))).isDirectory()).toBe(true)
+    expect((await stat(join(pluginPath ?? "", "components", "pentest-loop", "skills", "pentest-loop"))).isDirectory()).toBe(true)
     const mcpManifest = JSON.parse(await readFile(join(pluginPath ?? "", ".mcp.json"), "utf8")) as {
       mcpServers: { git_bash: { args: string[] }; lsp: { args: string[] } }
     }
@@ -173,7 +173,7 @@ describe("install-codex", () => {
     expect(mcpManifest.mcpServers.lsp.args[0]?.startsWith(pluginPath ?? "")).toBe(true)
     expect((await stat(mcpManifest.mcpServers.lsp.args[0] ?? "")).isFile()).toBe(true)
     const marketplace = JSON.parse(
-      await readFile(join(codexHome, "plugins", "cache", "sisyphuslabs", ".agents", "plugins", "marketplace.json"), "utf8"),
+      await readFile(join(codexHome, "plugins", "cache", "cerberuslabs", ".agents", "plugins", "marketplace.json"), "utf8"),
     ) as { plugins: Array<{ name: string; source: { source: string; path: string } }> }
     expect(marketplace.plugins).toEqual([{ name: "omo", source: { source: "local", path: `./omo/${rootPackage.version}` } }])
     let legacyCacheMissing = false
@@ -231,7 +231,7 @@ describe("install-codex", () => {
 
     // then
     const configContent = await readFile(join(codexHome, "config.toml"), "utf8")
-    expect(configContent).toContain('[plugins."omo@sisyphuslabs".mcp_servers.git_bash]')
+    expect(configContent).toContain('[plugins."omo@cerberuslabs".mcp_servers.git_bash]')
     expect(configContent).toContain("enabled = true")
     expect(configContent).toContain("pre_tool_use")
     expect(configContent).toContain("post_compact")
@@ -262,7 +262,7 @@ describe("install-codex", () => {
 
     // then
     const configContent = await readFile(join(codexHome, "config.toml"), "utf8")
-    expect(configContent).toContain('[plugins."omo@sisyphuslabs".mcp_servers.git_bash]')
+    expect(configContent).toContain('[plugins."omo@cerberuslabs".mcp_servers.git_bash]')
     expect(configContent).toContain("enabled = false")
     const pluginPath = result.installed[0]?.path ?? ""
     const mcpManifest = JSON.parse(await readFile(join(pluginPath, ".mcp.json"), "utf8")) as {

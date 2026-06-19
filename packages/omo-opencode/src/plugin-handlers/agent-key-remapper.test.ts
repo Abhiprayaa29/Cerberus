@@ -1,4 +1,4 @@
-import { describe, it, expect } from "bun:test"
+﻿import { describe, it, expect } from "bun:test"
 import { remapAgentKeysToDisplayNames } from "./agent-key-remapper"
 import { getAgentDisplayName, getAgentListDisplayName } from "../shared/agent-display-names"
 
@@ -6,17 +6,17 @@ describe("remapAgentKeysToDisplayNames", () => {
   it("remaps known agent keys to display names", () => {
     // given agents with lowercase keys
     const agents = {
-      sisyphus: { prompt: "test", mode: "primary" },
-      oracle: { prompt: "test", mode: "subagent" },
+      cerberus: { prompt: "test", mode: "primary" },
+      cipher: { prompt: "test", mode: "subagent" },
     }
 
     // when remapping
     const result = remapAgentKeysToDisplayNames(agents)
 
     // then known agents get display name keys only
-    expect(result[getAgentListDisplayName("sisyphus")]).toBeDefined()
-    expect(result["oracle"]).toBeDefined()
-    expect(result["sisyphus"]).toBeUndefined()
+    expect(result[getAgentListDisplayName("cerberus")]).toBeDefined()
+    expect(result["cipher"]).toBeDefined()
+    expect(result["cerberus"]).toBeUndefined()
   })
 
   it("preserves unknown agent keys unchanged", () => {
@@ -35,60 +35,60 @@ describe("remapAgentKeysToDisplayNames", () => {
   it("remaps all core agents to display names", () => {
     // given all core agents
     const agents = {
-      sisyphus: {},
-      hephaestus: {},
-      prometheus: {},
-      atlas: {},
+      cerberus: {},
+      scylla: {},
+      talos: {},
+      argus: {},
       athena: {},
-      metis: {},
-      momus: {},
-      "sisyphus-junior": {},
+      vanguard: {},
+      sentinel: {},
+      "cerberus-junior": {},
     }
 
     // when remapping
     const result = remapAgentKeysToDisplayNames(agents)
 
     // then all get display name keys
-    expect(result[getAgentListDisplayName("sisyphus")]).toBeDefined()
-    expect(result["sisyphus"]).toBeUndefined()
-    expect(result[getAgentListDisplayName("hephaestus")]).toBeDefined()
-    expect(result["hephaestus"]).toBeUndefined()
-    expect(result[getAgentListDisplayName("prometheus")]).toBeDefined()
-    expect(result["prometheus"]).toBeUndefined()
-    expect(result[getAgentListDisplayName("atlas")]).toBeDefined()
-    expect(result["atlas"]).toBeUndefined()
+    expect(result[getAgentListDisplayName("cerberus")]).toBeDefined()
+    expect(result["cerberus"]).toBeUndefined()
+    expect(result[getAgentListDisplayName("scylla")]).toBeDefined()
+    expect(result["scylla"]).toBeUndefined()
+    expect(result[getAgentListDisplayName("talos")]).toBeDefined()
+    expect(result["talos"]).toBeUndefined()
+    expect(result[getAgentListDisplayName("argus")]).toBeDefined()
+    expect(result["argus"]).toBeUndefined()
     expect(result[getAgentDisplayName("athena")]).toBeDefined()
     expect(result["athena"]).toBeUndefined()
-    expect(result[getAgentDisplayName("metis")]).toBeDefined()
-    expect(result["metis"]).toBeUndefined()
-    expect(result[getAgentDisplayName("momus")]).toBeDefined()
-    expect(result["momus"]).toBeUndefined()
-    expect(result[getAgentDisplayName("sisyphus-junior")]).toBeDefined()
-    expect(result["sisyphus-junior"]).toBeUndefined()
+    expect(result[getAgentDisplayName("vanguard")]).toBeDefined()
+    expect(result["vanguard"]).toBeUndefined()
+    expect(result[getAgentDisplayName("sentinel")]).toBeDefined()
+    expect(result["sentinel"]).toBeUndefined()
+    expect(result[getAgentDisplayName("cerberus-junior")]).toBeDefined()
+    expect(result["cerberus-junior"]).toBeUndefined()
   })
 
   it("does not emit both config and display keys for remapped agents", () => {
     // given one remapped agent
     const agents = {
-      sisyphus: { prompt: "test", mode: "primary" },
+      cerberus: { prompt: "test", mode: "primary" },
     }
 
     // when remapping
     const result = remapAgentKeysToDisplayNames(agents)
 
     // then only display key is emitted
-    expect(Object.keys(result)).toEqual([getAgentListDisplayName("sisyphus")])
-    expect(result[getAgentListDisplayName("sisyphus")]).toBeDefined()
-    expect(result["sisyphus"]).toBeUndefined()
+    expect(Object.keys(result)).toEqual([getAgentListDisplayName("cerberus")])
+    expect(result[getAgentListDisplayName("cerberus")]).toBeDefined()
+    expect(result["cerberus"]).toBeUndefined()
   })
 
   it("returns runtime core agent list names in canonical order", () => {
     // given
     const result = remapAgentKeysToDisplayNames({
-      atlas: {},
-      prometheus: {},
-      hephaestus: {},
-      sisyphus: {},
+      argus: {},
+      talos: {},
+      scylla: {},
+      cerberus: {},
     })
 
     // when
@@ -96,21 +96,21 @@ describe("remapAgentKeysToDisplayNames", () => {
 
     // then
     expect(remappedNames).toEqual([
-      getAgentListDisplayName("atlas"),
-      getAgentListDisplayName("prometheus"),
-      getAgentListDisplayName("hephaestus"),
-      getAgentListDisplayName("sisyphus"),
+      getAgentListDisplayName("argus"),
+      getAgentListDisplayName("talos"),
+      getAgentListDisplayName("scylla"),
+      getAgentListDisplayName("cerberus"),
     ])
   })
 
   it("keeps remapped core agent name fields aligned with OpenCode list ordering", () => {
     // given agents with raw config-key names
     const agents = {
-      sisyphus: { name: "sisyphus", prompt: "test", mode: "primary" },
-      hephaestus: { name: "hephaestus", prompt: "test", mode: "primary" },
-      prometheus: { name: "prometheus", prompt: "test", mode: "primary" },
-      atlas: { name: "atlas", prompt: "test", mode: "primary" },
-      oracle: { name: "oracle", prompt: "test", mode: "subagent" },
+      cerberus: { name: "cerberus", prompt: "test", mode: "primary" },
+      scylla: { name: "scylla", prompt: "test", mode: "primary" },
+      talos: { name: "talos", prompt: "test", mode: "primary" },
+      argus: { name: "argus", prompt: "test", mode: "primary" },
+      cipher: { name: "cipher", prompt: "test", mode: "subagent" },
     }
 
     // when remapping
@@ -118,64 +118,64 @@ describe("remapAgentKeysToDisplayNames", () => {
 
     // then keys and names both use the same runtime-facing list names
     expect(Object.keys(result).slice(0, 4)).toEqual([
-      getAgentListDisplayName("sisyphus"),
-      getAgentListDisplayName("hephaestus"),
-      getAgentListDisplayName("prometheus"),
-      getAgentListDisplayName("atlas"),
+      getAgentListDisplayName("cerberus"),
+      getAgentListDisplayName("scylla"),
+      getAgentListDisplayName("talos"),
+      getAgentListDisplayName("argus"),
     ])
-    expect(result[getAgentListDisplayName("sisyphus")]).toEqual({
-      name: getAgentListDisplayName("sisyphus"),
+    expect(result[getAgentListDisplayName("cerberus")]).toEqual({
+      name: getAgentListDisplayName("cerberus"),
       prompt: "test",
       mode: "primary",
     })
-    expect(result[getAgentListDisplayName("hephaestus")]).toEqual({
-      name: getAgentListDisplayName("hephaestus"),
+    expect(result[getAgentListDisplayName("scylla")]).toEqual({
+      name: getAgentListDisplayName("scylla"),
       prompt: "test",
       mode: "primary",
     })
-    expect(result[getAgentListDisplayName("prometheus")]).toEqual({
-      name: getAgentListDisplayName("prometheus"),
+    expect(result[getAgentListDisplayName("talos")]).toEqual({
+      name: getAgentListDisplayName("talos"),
       prompt: "test",
       mode: "primary",
     })
-    expect(result[getAgentListDisplayName("atlas")]).toEqual({
-      name: getAgentListDisplayName("atlas"),
+    expect(result[getAgentListDisplayName("argus")]).toEqual({
+      name: getAgentListDisplayName("argus"),
       prompt: "test",
       mode: "primary",
     })
-    expect(result.oracle).toEqual({ name: "oracle", prompt: "test", mode: "subagent" })
+    expect(result.cipher).toEqual({ name: "cipher", prompt: "test", mode: "subagent" })
   })
 
   it("backfills runtime names for core agents when builtin configs omit name", () => {
     // given builtin-style configs without name fields
     const agents = {
-      sisyphus: { prompt: "test", mode: "primary" },
-      hephaestus: { prompt: "test", mode: "primary" },
-      prometheus: { prompt: "test", mode: "primary" },
-      atlas: { prompt: "test", mode: "primary" },
+      cerberus: { prompt: "test", mode: "primary" },
+      scylla: { prompt: "test", mode: "primary" },
+      talos: { prompt: "test", mode: "primary" },
+      argus: { prompt: "test", mode: "primary" },
     }
 
     // when remapping
     const result = remapAgentKeysToDisplayNames(agents)
 
     // then runtime-facing names stay aligned even when builtin configs omit name
-    expect(result[getAgentListDisplayName("sisyphus")]).toEqual({
-      name: getAgentListDisplayName("sisyphus"),
+    expect(result[getAgentListDisplayName("cerberus")]).toEqual({
+      name: getAgentListDisplayName("cerberus"),
       prompt: "test",
       mode: "primary",
     })
-    expect(result[getAgentListDisplayName("hephaestus")]).toEqual({
-      name: getAgentListDisplayName("hephaestus"),
+    expect(result[getAgentListDisplayName("scylla")]).toEqual({
+      name: getAgentListDisplayName("scylla"),
       prompt: "test",
       mode: "primary",
     })
-    expect(result[getAgentListDisplayName("prometheus")]).toEqual({
-      name: getAgentListDisplayName("prometheus"),
+    expect(result[getAgentListDisplayName("talos")]).toEqual({
+      name: getAgentListDisplayName("talos"),
       prompt: "test",
       mode: "primary",
     })
-    expect(result[getAgentListDisplayName("atlas")]).toEqual({
-      name: getAgentListDisplayName("atlas"),
+    expect(result[getAgentListDisplayName("argus")]).toEqual({
+      name: getAgentListDisplayName("argus"),
       prompt: "test",
       mode: "primary",
     })
@@ -184,14 +184,14 @@ describe("remapAgentKeysToDisplayNames", () => {
   it("emits a single literal display-name row with no ZWSP for a single core agent", () => {
     // given a single core agent input
     const agents = {
-      sisyphus: { foo: "bar" },
+      cerberus: { foo: "bar" },
     }
 
     // when remapping
     const result = remapAgentKeysToDisplayNames(agents)
 
     // then exactly one row is emitted under the clean literal display name
-    const displayName = getAgentListDisplayName("sisyphus")
+    const displayName = getAgentListDisplayName("cerberus")
     expect(Object.keys(result)).toEqual([displayName])
     expect(result[displayName]).toEqual({
       name: displayName,
@@ -201,51 +201,51 @@ describe("remapAgentKeysToDisplayNames", () => {
 
   describe("displayName i18n override (#4004)", () => {
     it("uses per-agent displayName override when set", () => {
-      // given sisyphus config with a Chinese displayName override
+      // given cerberus config with a Chinese displayName override
       const agents = {
-        sisyphus: { prompt: "test", mode: "primary" },
+        cerberus: { prompt: "test", mode: "primary" },
       }
       const overrides = {
-        sisyphus: { displayName: "总指挥" },
+        cerberus: { displayName: "总指挥" },
       }
 
       // when remapping with overrides
       const result = remapAgentKeysToDisplayNames(agents, overrides)
 
-      // then the localized name is used instead of "Sisyphus - Ultraworker"
+      // then the localized name is used instead of "Cerberus - Ultraworker"
       expect(result["总指挥"]).toBeDefined()
       expect((result["总指挥"] as Record<string, unknown>).name).toBe("总指挥")
-      expect(result["Sisyphus - Ultraworker"]).toBeUndefined()
+      expect(result["Cerberus - Ultraworker"]).toBeUndefined()
     })
 
     it("falls back to hardcoded English name when displayName is not set", () => {
-      // given sisyphus config without displayName override
+      // given cerberus config without displayName override
       const agents = {
-        sisyphus: { prompt: "test", mode: "primary" },
+        cerberus: { prompt: "test", mode: "primary" },
       }
       const overrides = {
-        sisyphus: { model: "claude-opus-4-7" },
+        cerberus: { model: "claude-opus-4-7" },
       }
 
       // when remapping with overrides that have no displayName
       const result = remapAgentKeysToDisplayNames(agents, overrides)
 
       // then the legacy AGENT_DISPLAY_NAMES value is used
-      expect(result[getAgentListDisplayName("sisyphus")]).toBeDefined()
+      expect(result[getAgentListDisplayName("cerberus")]).toBeDefined()
       expect(result["总指挥"]).toBeUndefined()
     })
 
     it("falls back to hardcoded English name when no overrides are passed", () => {
-      // given sisyphus config with no overrides at all
+      // given cerberus config with no overrides at all
       const agents = {
-        sisyphus: { prompt: "test", mode: "primary" },
+        cerberus: { prompt: "test", mode: "primary" },
       }
 
       // when remapping without overrides
       const result = remapAgentKeysToDisplayNames(agents)
 
       // then the legacy AGENT_DISPLAY_NAMES value is used
-      expect(result[getAgentListDisplayName("sisyphus")]).toBeDefined()
+      expect(result[getAgentListDisplayName("cerberus")]).toBeDefined()
     })
   })
 })

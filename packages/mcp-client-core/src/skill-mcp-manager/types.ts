@@ -1,6 +1,6 @@
-import type { Client } from "@modelcontextprotocol/sdk/client/index.js"
+﻿import type { Client } from "@modelcontextprotocol/sdk/client/index.js"
 import type { Transport } from "@modelcontextprotocol/sdk/shared/transport.js"
-import type { ClaudeCodeMcpServer } from "@oh-my-opencode/claude-code-compat-core/claude-code-mcp-loader/types"
+import type { ClaudeCodeMcpServer } from "@oh-my-open-pentest/claude-code-compat-core/claude-code-mcp-loader/types"
 import type { McpOAuthProvider } from "../mcp-oauth/provider"
 
 export type SkillMcpConfig = Record<string, ClaudeCodeMcpServer>

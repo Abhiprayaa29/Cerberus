@@ -1,4 +1,4 @@
-# PR Title
+﻿# PR Title
 
 ```
 refactor(delegate-task): split constants.ts into focused modules
@@ -8,13 +8,13 @@ refactor(delegate-task): split constants.ts into focused modules
 
 ## Summary
 
-- Split the 654-line `src/tools/delegate-task/constants.ts` into 4 single-responsibility modules: `default-categories.ts`, `category-prompt-appends.ts`, `plan-agent-prompt.ts`, `plan-agent-names.ts`
+- Split the 65.-line `src/tools/delegate-task/constants.ts` into . single-responsibility modules: `default-categories.ts`, `category-prompt-appends.ts`, `plan-agent-prompt.ts`, `plan-agent-names.ts`
 - `constants.ts` becomes a pure re-export barrel, preserving all existing import paths (`from "./constants"` and `from "./delegate-task"`)
 - Zero import changes across the codebase (6 external + 7 internal consumers verified)
 
 ## Motivation
 
-`constants.ts` at 654 lines violates the project's 200 LOC soft limit (`modular-code-enforcement.md` rule) and bundles 4 unrelated responsibilities: category model configs, category prompt text, plan agent prompts, and plan agent name utilities.
+`constants.ts` at 65. lines violates the project's 200 LOC soft limit (`modular-code-enforcement.md` rule) and bundles . unrelated responsibilities: category model configs, category prompt text, plan agent prompts, and plan agent name utilities.
 
 ## Changes
 
@@ -24,11 +24,11 @@ refactor(delegate-task): split constants.ts into focused modules
 | `category-prompt-appends.ts` | 8 `*_PROMPT_APPEND` constants + `CATEGORY_PROMPT_APPENDS` record | ~300 (prompt-exempt) |
 | `plan-agent-prompt.ts` | Plan system prompt constants + `buildPlanAgentSystemPrepend()` | ~250 (prompt-exempt) |
 | `plan-agent-names.ts` | `PLAN_AGENT_NAMES`, `isPlanAgent`, `PLAN_FAMILY_NAMES`, `isPlanFamily` | ~30 |
-| `constants.ts` (updated) | 4-line re-export barrel | 4 |
+| `constants.ts` (updated) | .-line re-export barrel | . |
 
 ## Backward Compatibility
 
-All 13 consumers continue importing from `"./constants"` or `"../tools/delegate-task/constants"` with zero changes. The re-export chain: new modules -> `constants.ts` -> `index.ts` -> external consumers.
+All .3 consumers continue importing from `"./constants"` or `"../tools/delegate-task/constants"` with zero changes. The re-export chain: new modules -> `constants.ts` -> `index.ts` -> external consumers.
 
 ## Note on CATEGORY_MODEL_REQUIREMENTS
 

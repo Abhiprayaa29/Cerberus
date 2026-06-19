@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it } from "bun:test"
+﻿import { afterEach, beforeEach, describe, expect, it } from "bun:test"
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs"
 import { tmpdir } from "node:os"
 import { join } from "node:path"
@@ -15,22 +15,22 @@ describe("findPackageJsonUp", () => {
     rmSync(workdir, { recursive: true, force: true })
   })
 
-  it("finds a package.json whose name is the canonical oh-my-opencode", () => {
+  it("finds a package.json whose name is the canonical oh-my-open-pentest", () => {
     const pkgPath = join(workdir, "package.json")
-    writeFileSync(pkgPath, JSON.stringify({ name: "oh-my-opencode", version: "3.16.0" }))
+    writeFileSync(pkgPath, JSON.stringify({ name: "oh-my-open-pentest", version: "3.16.0" }))
 
     const found = findPackageJsonUp(workdir)
 
     expect(found).toBe(pkgPath)
   })
 
-  it("finds a package.json whose name is the aliased oh-my-openagent (GH-3257)", () => {
-    // A user who installed `oh-my-openagent` from npm gets a node_modules entry
-    // whose package.json has `name: "oh-my-openagent"`. The auto-update-checker
+  it("finds a package.json whose name is the aliased oh-my-open-pentest (GH-3257)", () => {
+    // A user who installed `oh-my-open-pentest` from npm gets a node_modules entry
+    // whose package.json has `name: "oh-my-open-pentest"`. The auto-update-checker
     // must still resolve it so the startup toast shows a real version instead
     // of "unknown".
     const pkgPath = join(workdir, "package.json")
-    writeFileSync(pkgPath, JSON.stringify({ name: "oh-my-openagent", version: "3.16.0" }))
+    writeFileSync(pkgPath, JSON.stringify({ name: "oh-my-open-pentest", version: "3.16.0" }))
 
     const found = findPackageJsonUp(workdir)
 
@@ -41,7 +41,7 @@ describe("findPackageJsonUp", () => {
     const nested = join(workdir, "dist", "checker")
     mkdirSync(nested, { recursive: true })
     const pkgPath = join(workdir, "package.json")
-    writeFileSync(pkgPath, JSON.stringify({ name: "oh-my-openagent", version: "3.16.0" }))
+    writeFileSync(pkgPath, JSON.stringify({ name: "oh-my-open-pentest", version: "3.16.0" }))
 
     const found = findPackageJsonUp(nested)
 
@@ -63,12 +63,12 @@ describe("findPackageJsonUp", () => {
     expect(found).toBeNull()
   })
 
-  it("#given the interim @oh-my-opencode/omo-opencode manifest between the file and an accepted root #when walking up #then skips it and returns the accepted manifest", () => {
+  it("#given the interim @oh-my-open-pentest/omo-opencode manifest between the file and an accepted root #when walking up #then skips it and returns the accepted manifest", () => {
     const nested = join(workdir, "pkg", "nested")
     mkdirSync(nested, { recursive: true })
     writeFileSync(join(nested, "file.js"), "")
-    writeFileSync(join(workdir, "pkg", "package.json"), JSON.stringify({ name: "@oh-my-opencode/omo-opencode", version: "0.1.0" }))
-    writeFileSync(join(workdir, "package.json"), JSON.stringify({ name: "oh-my-openagent", version: "9.9.9" }))
+    writeFileSync(join(workdir, "pkg", "package.json"), JSON.stringify({ name: "@oh-my-open-pentest/omo-opencode", version: "0.1.0" }))
+    writeFileSync(join(workdir, "package.json"), JSON.stringify({ name: "oh-my-open-pentest", version: "9.9.9" }))
 
     const found = findPackageJsonUp(join(nested, "file.js"))
 
@@ -78,7 +78,7 @@ describe("findPackageJsonUp", () => {
   it("#given no accepted-name manifest within the 10-level-capped walk #when walking up #then returns null", () => {
     const nested = join(workdir, "a", "b", "c")
     mkdirSync(nested, { recursive: true })
-    writeFileSync(join(workdir, "package.json"), JSON.stringify({ name: "@oh-my-opencode/omo-opencode", version: "0.1.0" }))
+    writeFileSync(join(workdir, "package.json"), JSON.stringify({ name: "@oh-my-open-pentest/omo-opencode", version: "0.1.0" }))
 
     const found = findPackageJsonUp(nested)
 

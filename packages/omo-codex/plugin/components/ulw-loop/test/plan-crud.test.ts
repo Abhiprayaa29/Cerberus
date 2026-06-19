@@ -1,4 +1,4 @@
-import { mkdir, mkdtemp, readFile } from "node:fs/promises";
+﻿import { mkdir, mkdtemp, readFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
@@ -59,9 +59,9 @@ function makePlan(goals: UlwLoopItem[]): UlwLoopPlan {
 		version: 1,
 		createdAt: NOW,
 		updatedAt: NOW,
-		briefPath: ".omo/ulw-loop/brief.md",
-		goalsPath: ".omo/ulw-loop/goals.json",
-		ledgerPath: ".omo/ulw-loop/ledger.jsonl",
+		briefPath: ".omo/pentest-loop/brief.md",
+		goalsPath: ".omo/pentest-loop/goals.json",
+		ledgerPath: ".omo/pentest-loop/ledger.jsonl",
 		codexGoalMode: "aggregate",
 		goals,
 	};
@@ -104,7 +104,7 @@ describe("seedDefaultSuccessCriteria", () => {
 });
 
 describe("createUlwLoopPlan", () => {
-	it("creates .omo/ulw-loop/{brief.md, goals.json, ledger.jsonl} in repoRoot", async () => {
+	it("creates .omo/pentest-loop/{brief.md, goals.json, ledger.jsonl} in repoRoot", async () => {
 		const repoRoot = await makeRepo();
 		const brief = await readBriefFixture();
 
@@ -134,7 +134,7 @@ describe("createUlwLoopPlan", () => {
 		const plan = await createUlwLoopPlan(await makeRepo(), { brief: "Ship the feature" });
 
 		expect(plan.codexGoalMode).toBe("aggregate");
-		expect(plan.codexObjective).toContain(".omo/ulw-loop/goals.json");
+		expect(plan.codexObjective).toContain(".omo/pentest-loop/goals.json");
 	});
 });
 
@@ -209,7 +209,7 @@ describe("startNextUlwLoop", () => {
 	it("with retryFailed picks first failed (non-blocked) goal", async () => {
 		const repoRoot = await makeRepo();
 		const failed = makeGoal({ status: "failed", failureReason: "flake" });
-		await mkdir(join(repoRoot, ".omo", "ulw-loop"), { recursive: true });
+		await mkdir(join(repoRoot, ".omo", "pentest-loop"), { recursive: true });
 		await writePlan(repoRoot, makePlan([failed]));
 
 		const result = scheduled(await startNextUlwLoop(repoRoot, { retryFailed: true }));
@@ -221,7 +221,7 @@ describe("startNextUlwLoop", () => {
 
 	it("returns { done: true } when no eligible goals remain", async () => {
 		const repoRoot = await makeRepo();
-		await mkdir(join(repoRoot, ".omo", "ulw-loop"), { recursive: true });
+		await mkdir(join(repoRoot, ".omo", "pentest-loop"), { recursive: true });
 		await writePlan(repoRoot, makePlan([makeGoal({ status: "complete" })]));
 
 		const result = await startNextUlwLoop(repoRoot, {});

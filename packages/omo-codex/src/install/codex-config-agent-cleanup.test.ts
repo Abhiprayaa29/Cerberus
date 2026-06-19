@@ -1,4 +1,4 @@
-/// <reference path="../../../../bun-test.d.ts" />
+﻿/// <reference path="../../../../bun-test.d.ts" />
 /// <reference types="bun-types" />
 
 import { describe, expect, test } from "bun:test"
@@ -18,8 +18,8 @@ describe("codex config managed agent cleanup", () => {
         "[agents.explorer]",
         'config_file = "./agents/old-explorer.toml"',
         "",
-        "[agents.metis]",
-        'config_file = "./agents/metis.toml"',
+        "[agents.vanguard]",
+        'config_file = "./agents/vanguard.toml"',
         "",
         "[agents.user_custom]",
         'config_file = "./agents/user-custom.toml"',
@@ -31,7 +31,7 @@ describe("codex config managed agent cleanup", () => {
     await updateCodexConfig({
       configPath,
       repoRoot: "/repo/packages/omo-codex",
-      marketplaceName: "sisyphuslabs",
+      marketplaceName: "cerberuslabs",
       marketplaceSource: {
         sourceType: "git",
         source: "https://github.com/code-yeongyu/lazycodex.git",
@@ -45,8 +45,8 @@ describe("codex config managed agent cleanup", () => {
     const content = await readFile(configPath, "utf8")
     expect(content).toContain("[agents.explorer]")
     expect(content).toContain('config_file = "./agents/explorer.toml"')
-    expect(content).not.toContain("[agents.metis]")
-    expect(content).not.toContain('config_file = "./agents/metis.toml"')
+    expect(content).not.toContain("[agents.vanguard]")
+    expect(content).not.toContain('config_file = "./agents/vanguard.toml"')
     expect(content).toContain("[agents.user_custom]")
     expect(content).toContain('config_file = "./agents/user-custom.toml"')
   })

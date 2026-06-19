@@ -1,4 +1,4 @@
-/// <reference path="../../../../bun-test.d.ts" />
+﻿/// <reference path="../../../../bun-test.d.ts" />
 /// <reference types="bun-types" />
 
 import { afterEach, beforeEach, describe, expect, test } from "bun:test"
@@ -27,7 +27,7 @@ function createToolContext(directory: string): ToolContext {
   return {
     sessionID: "ses_plugin_shared_skill_test",
     messageID: "msg_plugin_shared_skill_test",
-    agent: "sisyphus",
+    agent: "cerberus",
     directory,
     worktree: directory,
     abort: new AbortController().signal,

@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 import { afterEach, beforeEach, mock } from "bun:test"
 import { spawnSync } from "node:child_process"
 import { existsSync, rmSync } from "node:fs"
@@ -62,7 +62,7 @@ function cleanupRulesInjectorStorage(): void {
 beforeEach(() => {
   environmentSnapshot = { ...process.env }
   workingDirectorySnapshot = process.cwd()
-  process.env.OMO_DISABLE_POSTHOG = "true"
+  process.env.OMOP_DISABLE_POSTHOG = "true"
   cleanupOmoCacheDir(getOmoOpenCodeCacheDir())
   cleanupRulesInjectorStorage()
   resetClaudeSessionState()

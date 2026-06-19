@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { describe, it, expect } from "bun:test"
 import {
@@ -150,7 +150,7 @@ describe("buildUltraworkSection", () => {
       { name: "react-19", description: "React 19 patterns", location: "user" },
     ]
 
-    //#when: building ultrawork section
+    //#when: building fullscan section
     const result = buildUltraworkSection(agents, [], skills)
 
     //#then: should have separate sections
@@ -165,7 +165,7 @@ describe("buildUltraworkSection", () => {
       { name: "playwright", description: "Browser automation", location: "plugin" },
     ]
 
-    //#when: building ultrawork section
+    //#when: building fullscan section
     const result = buildUltraworkSection(agents, [], skills)
 
     //#then: should have single section

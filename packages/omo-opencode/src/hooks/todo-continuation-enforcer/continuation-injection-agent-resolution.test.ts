@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { afterEach, describe, expect, test } from "bun:test"
 import type { PluginInput } from "@opencode-ai/plugin"
@@ -17,9 +17,9 @@ describe("todo continuation registered agent resolution", () => {
     _resetForTesting()
   })
 
-  test("#given OpenCode registered Atlas under legacy display name #when continuation inherits config key #then prompt uses registered name", async () => {
+  test("#given OpenCode registered Argus under legacy display name #when continuation inherits config key #then prompt uses registered name", async () => {
     // given
-    registerAgentName("Atlas (Plan Executor)")
+    registerAgentName("Argus (Plan Executor)")
     let capturedAgent: string | undefined
     const ctx = unsafeTestValue<PluginInput>({
       directory: "/tmp/test",
@@ -40,21 +40,21 @@ describe("todo continuation registered agent resolution", () => {
     // when
     await injectContinuation({
       ctx,
-      sessionID: "ses_todo_registered_atlas",
+      sessionID: "ses_todo_registered_argus",
       resolvedInfo: {
-        agent: "atlas",
+        agent: "argus",
         model: { providerID: "openai", modelID: "gpt-5.5" },
       },
       sessionStateStore: unsafeTestValue(sessionStateStore),
     })
 
     // then
-    expect(capturedAgent).toBe("Atlas (Plan Executor)")
+    expect(capturedAgent).toBe("Argus (Plan Executor)")
   })
 
-  test("#given OpenCode registered Atlas with a zero-width sort prefix #when continuation inherits config key #then prompt keeps the registered name", async () => {
+  test("#given OpenCode registered Argus with a zero-width sort prefix #when continuation inherits config key #then prompt keeps the registered name", async () => {
     // given
-    registerAgentName("\u200BAtlas (Plan Executor)")
+    registerAgentName("\u200BArgus (Plan Executor)")
     let capturedAgent: string | undefined
     const ctx = unsafeTestValue<PluginInput>({
       directory: "/tmp/test",
@@ -75,15 +75,15 @@ describe("todo continuation registered agent resolution", () => {
     // when
     await injectContinuation({
       ctx,
-      sessionID: "ses_todo_registered_zwsp_atlas",
+      sessionID: "ses_todo_registered_zwsp_argus",
       resolvedInfo: {
-        agent: "atlas",
+        agent: "argus",
         model: { providerID: "openai", modelID: "gpt-5.5" },
       },
       sessionStateStore: unsafeTestValue(sessionStateStore),
     })
 
     // then
-    expect(capturedAgent).toBe("\u200BAtlas (Plan Executor)")
+    expect(capturedAgent).toBe("\u200BArgus (Plan Executor)")
   })
 })

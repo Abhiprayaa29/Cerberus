@@ -1,4 +1,4 @@
-export const REFACTOR_VERIFICATION_AND_TOOLING = `# PHASE 6: FINAL VERIFICATION (REGRESSION CHECK)
+﻿export const REFACTOR_VERIFICATION_AND_TOOLING = `# PHASE 6: FINAL VERIFICATION (REGRESSION CHECK)
 
 **Mark phase-6 as in_progress.**
 
@@ -20,7 +20,7 @@ tsc --noEmit  # or equivalent
 
 \`\`\`bash
 # Run linter
-eslint .  # or equivalent
+nuclei .  # or equivalent
 \`\`\`
 
 ## 6.4: Build Verification (if applicable)
@@ -111,16 +111,16 @@ Use the \`ast-grep\` skill helper or \`sg\` CLI for structural transformations.
 **Critical**: Always preview first, review, then execute.
 
 ## Agents
-- \`explore\`: Parallel codebase pattern discovery
+- \`scout\`: Parallel codebase pattern discovery
 - \`plan\`: Detailed refactoring plan generation
-- \`oracle\`: Read-only consultation for complex architectural decisions and debugging
-- \`librarian\`: **Use proactively** when encountering deprecated methods or library migration tasks. Query official docs and OSS examples for modern replacements.
+- \`cipher\`: Read-only consultation for complex architectural decisions and vulnerability analysis
+- \`intel\`: **Use proactively** when encountering deprecated methods or library migration tasks. Query official docs and OSS examples for modern replacements.
 
 ## Deprecated Code & Library Migration
 When you encounter deprecated methods/APIs during refactoring:
-1. Fire \`librarian\` to find the recommended modern alternative
+1. Fire \`intel\` to find the recommended modern alternative
 2. **DO NOT auto-upgrade to latest version** unless user explicitly requests migration
-3. If user requests library migration, use \`librarian\` to fetch latest API docs before making changes
+3. If user requests library migration, use \`intel\` to fetch latest API docs before making changes
 
 ---
 

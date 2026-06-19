@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { afterEach, beforeEach, describe, expect, test } from "bun:test"
 
@@ -15,7 +15,7 @@ let testCacheDir = ""
 describe("model-capabilities-cache", () => {
   beforeEach(() => {
     fakeUserCacheRoot = mkdtempSync(join(tmpdir(), "model-capabilities-cache-"))
-    testCacheDir = join(fakeUserCacheRoot, "oh-my-opencode")
+    testCacheDir = join(fakeUserCacheRoot, "oh-my-open-pentest")
   })
 
   afterEach(() => {

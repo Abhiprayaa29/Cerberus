@@ -1,4 +1,4 @@
-/// <reference path="../../../../bun-test.d.ts" />
+﻿/// <reference path="../../../../bun-test.d.ts" />
 /// <reference types="bun-types" />
 
 import { describe, expect, test } from "bun:test"
@@ -13,7 +13,7 @@ const STALE_CODEX_COMPONENT_BINS = [
   "codex-rules",
   "codex-start-work-continuation",
   "codex-telemetry",
-  "codex-ultrawork",
+  "codex-fullscan",
 ] as const
 
 const LAZYCODEX_AGENT_ROLE_NAMES = [
@@ -71,7 +71,7 @@ describe("lazycodex install surface", () => {
         expect(wrapper).toContain(expectedTarget)
         expect(wrapper).toContain("CODEX_HOME")
         expect(wrapper).toContain("OMO_SPARKSHELL_APP_SERVER_SOCKET")
-        expect(wrapper).toContain("omo-ulw-loop")
+        expect(wrapper).toContain("omo-pentest-loop")
         expect(wrapper).toContain("bun runtime not found")
         expect(wrapper).toContain("https://bun.sh")
       } else if (process.platform === "win32") {
@@ -116,7 +116,7 @@ describe("lazycodex install surface", () => {
     // given
     const codexHome = await mkdtemp(join(tmpdir(), "omo-codex-home-autoupdate-"))
     const binDir = await mkdtemp(join(tmpdir(), "omo-codex-bin-autoupdate-"))
-    const marketplaceRoot = join(codexHome, ".tmp", "marketplaces", "sisyphuslabs")
+    const marketplaceRoot = join(codexHome, ".tmp", "marketplaces", "cerberuslabs")
     await mkdir(join(marketplaceRoot, ".git"), { recursive: true })
     await writeFile(join(marketplaceRoot, ".git", "config"), "[remote \"origin\"]\n")
     await writeFile(join(marketplaceRoot, ".codex-marketplace-install.json"), '{"source_type":"git"}\n')
@@ -132,7 +132,7 @@ describe("lazycodex install surface", () => {
     // then
     const agentName = "lazycodex-gate-reviewer"
     const agentPath = join(codexHome, "agents", `${agentName}.toml`)
-    const snapshotAgentPath = join(marketplaceRoot, "plugins", "omo", "components", "ultrawork", "agents", `${agentName}.toml`)
+    const snapshotAgentPath = join(marketplaceRoot, "plugins", "omo", "components", "fullscan", "agents", `${agentName}.toml`)
     expect((await stat(agentPath)).isFile()).toBe(true)
     expect(await readFile(agentPath, "utf8")).toBe(await readFile(snapshotAgentPath, "utf8"))
     expect(await readFile(agentPath, "utf8")).toContain(`name = "${agentName}"`)
@@ -149,8 +149,8 @@ describe("lazycodex install surface", () => {
 
     // when
     await runCodexInstaller({ codexHome, binDir, repoRoot: process.cwd(), astGrepInstaller: skipAstGrepInstall, runCommand: async () => undefined })
-    await rm(join(codexHome, ".tmp", "marketplaces", "sisyphuslabs"), { recursive: true, force: true })
-    await rm(join(codexHome, "plugins", "cache", "sisyphuslabs"), { recursive: true, force: true })
+    await rm(join(codexHome, ".tmp", "marketplaces", "cerberuslabs"), { recursive: true, force: true })
+    await rm(join(codexHome, "plugins", "cache", "cerberuslabs"), { recursive: true, force: true })
 
     // then
     const agentName = "lazycodex-code-reviewer"

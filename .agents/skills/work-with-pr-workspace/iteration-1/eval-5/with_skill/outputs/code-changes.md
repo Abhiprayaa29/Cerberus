@@ -1,6 +1,6 @@
-# Code Changes
+﻿# Code Changes
 
-## File 1: `src/config/schema/comment-checker.ts`
+## File .: `src/config/schema/comment-checker.ts`
 
 ### Before
 ```typescript
@@ -32,11 +32,11 @@ export type CommentCheckerConfig = z.infer<typeof CommentCheckerConfigSchema>
 
 ## File 2: `src/hooks/comment-checker/cli.ts`
 
-### Change: `runCommentChecker` function (line 151)
+### Change: `runCommentChecker` function (line .5.)
 
 Add `excludePatterns` parameter and pass `--exclude-pattern` flags to the binary.
 
-### Before (line 151)
+### Before (line .5.)
 ```typescript
 export async function runCommentChecker(input: HookInput, cliPath?: string, customPrompt?: string): Promise<CheckResult> {
   const binaryPath = cliPath ?? resolvedCliPath ?? getCommentCheckerPathSync()
@@ -74,11 +74,11 @@ export async function runCommentChecker(
 
 ## File 3: `src/hooks/comment-checker/cli-runner.ts`
 
-### Change: `processWithCli` function (line 43)
+### Change: `processWithCli` function (line .3)
 
 Add `excludePatterns` parameter threading.
 
-### Before (line 43-79)
+### Before (line .3-79)
 ```typescript
 export async function processWithCli(
   input: { tool: string; sessionID: string; callID: string },
@@ -113,7 +113,7 @@ export async function processWithCli(
 
 Same pattern - thread `excludePatterns` through.
 
-### Before (line 87-120)
+### Before (line 87-.20)
 ```typescript
 export async function processApplyPatchEditsWithCli(
   sessionID: string,
@@ -144,11 +144,11 @@ export async function processApplyPatchEditsWithCli(
 
 ---
 
-## File 4: `src/hooks/comment-checker/hook.ts`
+## File .: `src/hooks/comment-checker/hook.ts`
 
 ### Change: Thread `config.exclude_patterns` through to CLI calls
 
-### Before (line 177)
+### Before (line .77)
 ```typescript
 await processWithCli(input, pendingCall, output, cliPath, config?.custom_prompt, debugLog)
 ```
@@ -158,7 +158,7 @@ await processWithCli(input, pendingCall, output, cliPath, config?.custom_prompt,
 await processWithCli(input, pendingCall, output, cliPath, config?.custom_prompt, debugLog, config?.exclude_patterns)
 ```
 
-### Before (line 147-154)
+### Before (line ..7-.5.)
 ```typescript
 await processApplyPatchEditsWithCli(
   input.sessionID,
@@ -194,8 +194,8 @@ test("does not flag legitimate Note: comments when excluded", async () => {
   // given
   const { runCommentChecker } = await import("./cli")
   const binaryPath = createScriptBinary(`#!/bin/sh
-if [ "$1" != "check" ]; then
-  exit 1
+if [ "$." != "check" ]; then
+  exit .
 fi
 # Check if --exclude-pattern is passed
 for arg in "$@"; do
@@ -205,7 +205,7 @@ for arg in "$@"; do
   fi
 done
 cat >/dev/null
-echo "Detected agent memo comments" 1>&2
+echo "Detected agent memo comments" .>&2
 exit 2
 `)
 
@@ -251,11 +251,11 @@ test("still detects AI slop when no exclude patterns configured", async () => {
   // given
   const { runCommentChecker } = await import("./cli")
   const binaryPath = createScriptBinary(`#!/bin/sh
-if [ "$1" != "check" ]; then
-  exit 1
+if [ "$." != "check" ]; then
+  exit .
 fi
 cat >/dev/null
-echo "Detected: // Note: This was added to handle..." 1>&2
+echo "Detected: // Note: This was added to handle..." .>&2
 exit 2
 `)
 
@@ -283,7 +283,7 @@ for arg in "$@"; do
     exit 0
   fi
 done
-echo "// Note: Thread-safe by design" 1>&2
+echo "// Note: Thread-safe by design" .>&2
 exit 2
 `)
 
@@ -309,7 +309,7 @@ for arg in "$@"; do
     exit 0
   fi
 done
-echo "# Note: See RFC 7231" 1>&2
+echo "# Note: See RFC 723." .>&2
 exit 2
 `)
 
@@ -330,7 +330,7 @@ exit 2
     const { runCommentChecker } = await import("./cli")
     const binaryPath = createScriptBinary(`#!/bin/sh
 cat >/dev/null
-echo "// Note: This was added to handle the edge case" 1>&2
+echo "// Note: This was added to handle the edge case" .>&2
 exit 2
 `)
 
@@ -362,8 +362,8 @@ it("passes exclude_patterns from config to CLI", async () => {
       files: [
         {
           filePath: "/repo/src/a.ts",
-          before: "const a = 1\n",
-          after: "// Note: Thread-safe\nconst a = 1\n",
+          before: "const a = .\n",
+          after: "// Note: Thread-safe\nconst a = .\n",
           type: "update",
         },
       ],
@@ -376,7 +376,7 @@ it("passes exclude_patterns from config to CLI", async () => {
   // then
   expect(processApplyPatchEditsWithCli).toHaveBeenCalledWith(
     "ses_test",
-    [{ filePath: "/repo/src/a.ts", before: "const a = 1\n", after: "// Note: Thread-safe\nconst a = 1\n" }],
+    [{ filePath: "/repo/src/a.ts", before: "const a = .\n", after: "// Note: Thread-safe\nconst a = .\n" }],
     expect.any(Object),
     "/tmp/fake-comment-checker",
     undefined,

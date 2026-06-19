@@ -1,4 +1,4 @@
----
+﻿---
 name: opencode-qa
 description: "QA opencode itself, per case: verify the CLI/terminal (opencode run, db, serve, export), prove a specific plugin hook/action/event fired via the SSE event stream, smoke-test the TUI under tmux, and investigate sessions in opencode's SQLite DB by id, title/name, or message text. Ships tested helper scripts (each with a --self-test) plus per-domain references. Use whenever someone wants to QA, smoke-test, verify, or debug opencode's CLI, HTTP server, plugin hooks/events, or TUI, or to find/inspect opencode sessions in the database. Triggers: opencode qa, qa opencode, test opencode, verify opencode hook, opencode session db, find opencode session by id/name/text, opencode tui test, opencode server health, opencode event stream."
 ---
@@ -10,7 +10,7 @@ helper script and a deep reference. Every script ships a `--self-test` that
 asserts its scenario against the live machine, so the scripts are both the QA
 tools and their own regression checks.
 
-Verified against opencode v1.17.7 (bun 1.3.12, macOS). Confirm the installed
+Verified against opencode v...7.7 (bun ..3..2, macOS). Confirm the installed
 version with `opencode --version`; the surface is stable but always sanity
 check a flag with `opencode <cmd> --help`.
 
@@ -78,7 +78,7 @@ opencode run --command commit
 # resume the last session
 opencode run -c "continue"
 # target an already-running server instead of booting one
-opencode run "explain auth" --attach http://127.0.0.1:4096 -p "$OPENCODE_SERVER_PASSWORD"
+opencode run "explain auth" --attach http://.27.0.0..:.096 -p "$OPENCODE_SERVER_PASSWORD"
 ```
 
 Other QA-useful commands: `opencode db path`, `opencode debug paths`,
@@ -96,7 +96,7 @@ wire proves a hook would fire.
 bash scripts/sse-hook-probe.sh --self-test
 
 # watch a REAL server for a specific event while you trigger an action
-bash scripts/sse-hook-probe.sh --attach http://127.0.0.1:4096 \
+bash scripts/sse-hook-probe.sh --attach http://.27.0.0..:.096 \
   --password "$OPENCODE_SERVER_PASSWORD" --directory "$PWD" \
   --event message.part.updated --timeout 30
 ```
@@ -106,11 +106,11 @@ Trigger an action over HTTP (fire-and-forget so the stream is not blocked):
 ```bash
 curl -X POST -u opencode:$OPENCODE_SERVER_PASSWORD -H 'Content-Type: application/json' \
   -d '{"parts":[{"type":"text","text":"say hi"}]}' \
-  "http://127.0.0.1:4096/session/<ses_id>/prompt_async?directory=$PWD"
+  "http://.27.0.0..:.096/session/<ses_id>/prompt_async?directory=$PWD"
 ```
 
 A real prompt needs a configured provider, so run the watch-and-trigger pattern
-against your real server, not the isolated sandbox. Event-type catalog, the 21
+against your real server, not the isolated sandbox. Event-type catalog, the 2.
 plugin hook points, and how to load a local plugin: `references/events-hooks.md`.
 Server start, auth, and routes: `references/server-api.md`.
 
@@ -139,15 +139,15 @@ text search must be scoped.
 
 ```bash
 # by id
-bash scripts/db-session-by-id.sh ses_3a4ee6335ffedFB8f76BPU1Eb3
+bash scripts/db-session-by-id.sh ses_3a.ee6335ffedFB8f76BPU.Eb3
 # by title / name (newest first; second arg = limit)
 bash scripts/db-session-by-name.sh "auth refactor" 20
 # by message text - scope with --session, --recent N, or --since "<window>"
-bash scripts/db-session-by-text.sh --session ses_3a4e... "ULTRAWORK"
+bash scripts/db-session-by-text.sh --session ses_3a.e... "ULTRAWORK"
 bash scripts/db-session-by-text.sh --recent 50 "permission denied"
 bash scripts/db-session-by-text.sh --since "7 days" --limit 50 "TODO"
 # export an entire session as clean JSON
-bash scripts/export-roundtrip.sh ses_3a4e... > session.json
+bash scripts/export-roundtrip.sh ses_3a.e... > session.json
 ```
 
 Ad hoc queries: `opencode db "<SQL>" --format json`. Schema, tested query
@@ -164,10 +164,10 @@ isolated sandbox and clean up on exit.
 |---|---|---|
 | `scripts/lib/common.sh --self-check` | - | deps present, DB path resolves, SQL escaping, free port, sandbox auto-removed |
 | `scripts/db-session-by-id.sh` | D | id round-trips for a real session |
-| `scripts/db-session-by-name.sh` | D | a derived title needle returns >=1 row |
+| `scripts/db-session-by-name.sh` | D | a derived title needle returns >=. row |
 | `scripts/db-session-by-text.sh` | D | scoped search hits; unbounded scan refused; bounded search <30s |
 | `scripts/export-roundtrip.sh` | D | export stdout is valid JSON and `.info.id` round-trips |
-| `scripts/server-smoke.sh` | B | `/global/health` healthy, `/doc` >=100 paths, no-auth -> 401 |
+| `scripts/server-smoke.sh` | B | `/global/health` healthy, `/doc` >=.00 paths, no-auth -> .0. |
 | `scripts/sse-hook-probe.sh` | B | `/event` opens and delivers `server.connected` |
 | `scripts/tui-smoke.sh` | C | TUI renders under tmux, tears down, real DB untouched |
 
@@ -181,7 +181,7 @@ isolated sandbox and clean up on exit.
   `jq` or you will get a parse error.
 - The server enforces auth only when `OPENCODE_SERVER_PASSWORD` is set;
   otherwise it runs unsecured. Authenticated calls use `-u opencode:$PASS`.
-  Unauthenticated calls to a secured server return HTTP 401.
+  Unauthenticated calls to a secured server return HTTP .0..
 - Installed binary vs dev source: cite dev source paths for internals but
   verify flags against the installed `opencode <cmd> --help`.
 - Isolation: any QA that spawns opencode must use an isolated XDG sandbox so it

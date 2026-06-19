@@ -1,4 +1,4 @@
-import { existsSync } from "node:fs"
+﻿import { existsSync } from "node:fs"
 import { homedir } from "node:os"
 import { join } from "node:path"
 
@@ -16,7 +16,7 @@ import {
   type CodegraphWorkspacePreparation,
   type PrepareCodegraphWorkspaceOptions,
   type ResolveCodegraphCommandOptions,
-} from "@oh-my-opencode/utils"
+} from "@oh-my-open-pentest/utils"
 
 import type { CodegraphConfig } from "../../config"
 import { log } from "../../shared"

@@ -1,4 +1,4 @@
-import { mkdir, mkdtemp, readFile } from "node:fs/promises";
+﻿import { mkdir, mkdtemp, readFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
@@ -39,7 +39,7 @@ function makeGoal(overrides: Partial<UlwLoopItem> = {}): UlwLoopItem {
 	return {
 		id: "G001",
 		title: "Build durable plan",
-		objective: "Complete one ulw-loop story",
+		objective: "Complete one pentest-loop story",
 		status: "pending",
 		successCriteria: [makeCriterion()],
 		attempt: 1,
@@ -54,9 +54,9 @@ function makePlan(overrides: Partial<UlwLoopPlan> = {}): UlwLoopPlan {
 		version: 1,
 		createdAt: NOW,
 		updatedAt: NOW,
-		briefPath: ".omo/ulw-loop/brief.md",
-		goalsPath: ".omo/ulw-loop/goals.json",
-		ledgerPath: ".omo/ulw-loop/ledger.jsonl",
+		briefPath: ".omo/pentest-loop/brief.md",
+		goalsPath: ".omo/pentest-loop/goals.json",
+		ledgerPath: ".omo/pentest-loop/ledger.jsonl",
 		codexGoalMode: "aggregate",
 		codexObjective: ULW_LOOP_AGGREGATE_CODEX_OBJECTIVE,
 		goals: [makeGoal({ status: "in_progress" })],
@@ -129,24 +129,24 @@ describe("recordFinalReviewBlockers happy path", () => {
 });
 
 describe("recordFinalReviewBlockers error cases", () => {
-	it("throws ulw_loop_goal_not_found for unknown goalId", async () => {
+	it("throws pentest_loop_goal_not_found for unknown goalId", async () => {
 		const repo = await bootstrapRepo(finalPlan());
 		await expectUlwLoopCode(
 			() => recordFinalReviewBlockers(repo, { ...validArgs, goalId: "G999" }),
-			"ulw_loop_goal_not_found",
+			"pentest_loop_goal_not_found",
 		);
 	});
 
-	it("throws ulw_loop_goal_not_in_progress when goal.status !== in_progress", async () => {
+	it("throws pentest_loop_goal_not_in_progress when goal.status !== in_progress", async () => {
 		const repo = await bootstrapRepo(
 			makePlan({
 				goals: [makeGoal({ id: "G001", status: "in_progress" }), makeGoal({ id: "G002", status: "pending" })],
 			}),
 		);
-		await expectUlwLoopCode(() => recordFinalReviewBlockers(repo, validArgs), "ulw_loop_goal_not_in_progress");
+		await expectUlwLoopCode(() => recordFinalReviewBlockers(repo, validArgs), "pentest_loop_goal_not_in_progress");
 	});
 
-	it("throws ulw_loop_not_final_story when other unresolved goals remain", async () => {
+	it("throws pentest_loop_not_final_story when other unresolved goals remain", async () => {
 		const repo = await bootstrapRepo(
 			makePlan({
 				goals: [makeGoal({ id: "G001", status: "in_progress" }), makeGoal({ id: "G002", status: "pending" })],
@@ -154,17 +154,17 @@ describe("recordFinalReviewBlockers error cases", () => {
 		);
 		await expectUlwLoopCode(
 			() => recordFinalReviewBlockers(repo, { ...validArgs, goalId: "G001" }),
-			"ulw_loop_not_final_story",
+			"pentest_loop_not_final_story",
 		);
 	});
 
-	it("throws ulw_loop_codex_snapshot_mismatch when objective mismatches", async () => {
+	it("throws pentest_loop_codex_snapshot_mismatch when objective mismatches", async () => {
 		const repo = await bootstrapRepo(finalPlan());
 		const codexGoalJson = JSON.stringify({ goal: { objective: "wrong", status: "active" } });
 
 		await expectUlwLoopCode(
 			() => recordFinalReviewBlockers(repo, { ...validArgs, codexGoalJson }),
-			"ulw_loop_codex_snapshot_mismatch",
+			"pentest_loop_codex_snapshot_mismatch",
 		);
 	});
 });

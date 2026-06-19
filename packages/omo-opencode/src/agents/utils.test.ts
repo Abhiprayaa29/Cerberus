@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { describe, test, expect, beforeEach, afterEach, spyOn, mock } from "bun:test"
 import type { AgentConfig } from "@opencode-ai/sdk"
@@ -35,10 +35,10 @@ describe("createBuiltinAgents with model overrides", () => {
     const providerModelsSpy = spyOn(connectedProvidersCache, "readProviderModelsCache").mockReturnValue(null)
     const fetchSpy = spyOn(shared, "fetchAvailableModels").mockResolvedValue(new Set())
     const overrides = {
-      sisyphus: { model: "openai/gpt-5.5" },
-      explore: { model: "minimax-cn-coding-plan/MiniMax-M2.5-highspeed" },
-      atlas: { model: "google/antigravity-claude-opus-4-5-thinking" },
-      hephaestus: { model: "github-copilot/gpt-5.5" },
+      cerberus: { model: "openai/gpt-5.5" },
+      scout: { model: "minimax-cn-coding-plan/MiniMax-M2.5-highspeed" },
+      argus: { model: "google/antigravity-claude-opus-4-5-thinking" },
+      scylla: { model: "github-copilot/gpt-5.5" },
     }
 
     try {
@@ -61,10 +61,10 @@ describe("createBuiltinAgents with model overrides", () => {
       )
 
       // #then
-      expect(agentsWithTeamMode.sisyphus.model).toBe("openai/gpt-5.5")
-      expect(agentsWithTeamMode.explore.model).toBe("minimax-cn-coding-plan/MiniMax-M2.5-highspeed")
-      expect(agentsWithTeamMode.atlas.model).toBe("google/antigravity-claude-opus-4-5-thinking")
-      expect(agentsWithTeamMode.hephaestus.model).toBe("github-copilot/gpt-5.5")
+      expect(agentsWithTeamMode.cerberus.model).toBe("openai/gpt-5.5")
+      expect(agentsWithTeamMode.scout.model).toBe("minimax-cn-coding-plan/MiniMax-M2.5-highspeed")
+      expect(agentsWithTeamMode.argus.model).toBe("google/antigravity-claude-opus-4-5-thinking")
+      expect(agentsWithTeamMode.scylla.model).toBe("github-copilot/gpt-5.5")
     } finally {
       providerModelsSpy.mockRestore()
       fetchSpy.mockRestore()
@@ -76,10 +76,10 @@ describe("createBuiltinAgents with model overrides", () => {
     const providerModelsSpy = spyOn(connectedProvidersCache, "readProviderModelsCache").mockReturnValue(null)
     const fetchSpy = spyOn(shared, "fetchAvailableModels").mockResolvedValue(new Set())
     const overrides = {
-      sisyphus: { model: "openai/gpt-5.5" },
-      explore: { model: "minimax-cn-coding-plan/MiniMax-M2.5-highspeed" },
-      atlas: { model: "google/antigravity-claude-opus-4-5-thinking" },
-      hephaestus: { model: "github-copilot/gpt-5.5" },
+      cerberus: { model: "openai/gpt-5.5" },
+      scout: { model: "minimax-cn-coding-plan/MiniMax-M2.5-highspeed" },
+      argus: { model: "google/antigravity-claude-opus-4-5-thinking" },
+      scylla: { model: "github-copilot/gpt-5.5" },
     }
 
     try {
@@ -118,17 +118,17 @@ describe("createBuiltinAgents with model overrides", () => {
       )
 
       // #then
-      expect(agentsWithTeamMode.sisyphus.model).toBe(agentsWithoutTeamMode.sisyphus.model)
-      expect(agentsWithTeamMode.explore.model).toBe(agentsWithoutTeamMode.explore.model)
-      expect(agentsWithTeamMode.atlas.model).toBe(agentsWithoutTeamMode.atlas.model)
-      expect(agentsWithTeamMode.hephaestus.model).toBe(agentsWithoutTeamMode.hephaestus.model)
+      expect(agentsWithTeamMode.cerberus.model).toBe(agentsWithoutTeamMode.cerberus.model)
+      expect(agentsWithTeamMode.scout.model).toBe(agentsWithoutTeamMode.scout.model)
+      expect(agentsWithTeamMode.argus.model).toBe(agentsWithoutTeamMode.argus.model)
+      expect(agentsWithTeamMode.scylla.model).toBe(agentsWithoutTeamMode.scylla.model)
     } finally {
       providerModelsSpy.mockRestore()
       fetchSpy.mockRestore()
     }
   })
 
-  test("Sisyphus with default Opus 4.7+ model omits thinking so core drives adaptive", async () => {
+  test("Cerberus with default Opus 4.7+ model omits thinking so core drives adaptive", async () => {
     // #given
     const fetchSpy = spyOn(shared, "fetchAvailableModels").mockResolvedValue(
       new Set([
@@ -145,34 +145,34 @@ describe("createBuiltinAgents with model overrides", () => {
       const agents = await createBuiltinAgents([], {}, undefined, TEST_DEFAULT_MODEL, undefined, undefined, [], {})
 
       // #then
-      expect(agents.sisyphus.model).toBe("anthropic/claude-opus-4-7")
-      expect(agents.sisyphus.thinking).toBeUndefined()
-      expect(agents.sisyphus.reasoningEffort).toBeUndefined()
+      expect(agents.cerberus.model).toBe("anthropic/claude-opus-4-7")
+      expect(agents.cerberus.thinking).toBeUndefined()
+      expect(agents.cerberus.reasoningEffort).toBeUndefined()
     } finally {
       fetchSpy.mockRestore()
     }
   })
 
-  test("Sisyphus with GPT model override has reasoningEffort, no thinking", async () => {
+  test("Cerberus with GPT model override has reasoningEffort, no thinking", async () => {
     // #given
     const providerModelsSpy = spyOn(connectedProvidersCache, "readProviderModelsCache").mockReturnValue(null)
     const fetchSpy = spyOn(shared, "fetchAvailableModels").mockResolvedValue(new Set())
     const overrides = {
-      sisyphus: { model: "github-copilot/gpt-5.5" },
+      cerberus: { model: "github-copilot/gpt-5.5" },
     }
 
     // #when
     const agents = await createBuiltinAgents([], overrides, undefined, TEST_DEFAULT_MODEL, undefined, undefined, [], undefined, undefined)
 
     // #then
-    expect(agents.sisyphus.model).toBe("github-copilot/gpt-5.5")
-    expect(agents.sisyphus.reasoningEffort).toBe("medium")
-    expect(agents.sisyphus.thinking).toBeUndefined()
+    expect(agents.cerberus.model).toBe("github-copilot/gpt-5.5")
+    expect(agents.cerberus.reasoningEffort).toBe("medium")
+    expect(agents.cerberus.thinking).toBeUndefined()
     providerModelsSpy.mockRestore()
     fetchSpy.mockRestore()
   })
 
-  test("Atlas uses uiSelectedModel", async () => {
+  test("Argus uses uiSelectedModel", async () => {
     // #given
     const fetchSpy = spyOn(shared, "fetchAvailableModels").mockResolvedValue(
       new Set(["openai/gpt-5.5", "anthropic/claude-sonnet-4-6"])
@@ -195,21 +195,21 @@ describe("createBuiltinAgents with model overrides", () => {
       )
 
       // #then
-      expect(agents.atlas).toBeDefined()
-      expect(agents.atlas.model).toBe("openai/gpt-5.5")
+      expect(agents.argus).toBeDefined()
+      expect(agents.argus.model).toBe("openai/gpt-5.5")
     } finally {
       fetchSpy.mockRestore()
     }
   })
 
-  test("user config model takes priority over uiSelectedModel for sisyphus", async () => {
+  test("user config model takes priority over uiSelectedModel for cerberus", async () => {
     // #given
     const fetchSpy = spyOn(shared, "fetchAvailableModels").mockResolvedValue(
       new Set(["openai/gpt-5.5", "anthropic/claude-sonnet-4-6"])
     )
     const uiSelectedModel = "openai/gpt-5.5"
     const overrides = {
-      sisyphus: { model: "google/antigravity-claude-opus-4-5-thinking" },
+      cerberus: { model: "google/antigravity-claude-opus-4-5-thinking" },
     }
 
     try {
@@ -228,21 +228,21 @@ describe("createBuiltinAgents with model overrides", () => {
       )
 
       // #then
-      expect(agents.sisyphus).toBeDefined()
-      expect(agents.sisyphus.model).toBe("google/antigravity-claude-opus-4-5-thinking")
+      expect(agents.cerberus).toBeDefined()
+      expect(agents.cerberus.model).toBe("google/antigravity-claude-opus-4-5-thinking")
     } finally {
       fetchSpy.mockRestore()
     }
   })
 
-  test("user config model takes priority over uiSelectedModel for atlas", async () => {
+  test("user config model takes priority over uiSelectedModel for argus", async () => {
     // #given
     const fetchSpy = spyOn(shared, "fetchAvailableModels").mockResolvedValue(
       new Set(["openai/gpt-5.5", "anthropic/claude-sonnet-4-6"])
     )
     const uiSelectedModel = "openai/gpt-5.5"
     const overrides = {
-      atlas: { model: "google/antigravity-claude-opus-4-5-thinking" },
+      argus: { model: "google/antigravity-claude-opus-4-5-thinking" },
     }
 
     try {
@@ -261,22 +261,22 @@ describe("createBuiltinAgents with model overrides", () => {
       )
 
       // #then
-      expect(agents.atlas).toBeDefined()
-      expect(agents.atlas.model).toBe("google/antigravity-claude-opus-4-5-thinking")
+      expect(agents.argus).toBeDefined()
+      expect(agents.argus.model).toBe("google/antigravity-claude-opus-4-5-thinking")
     } finally {
       fetchSpy.mockRestore()
     }
   })
 
-  test("atlas honors user config model when resolution fails (no available models, no system default)", async () => {
-    // #given - regression for #4255: user sets agents.atlas.model but availableModels is empty
+  test("argus honors user config model when resolution fails (no available models, no system default)", async () => {
+    // #given - regression for #4255: user sets agents.argus.model but availableModels is empty
     // and systemDefaultModel is undefined, so applyModelResolution returns undefined.
-    // Previous behavior: atlas was silently dropped, OpenCode used its built-in default.
+    // Previous behavior: argus was silently dropped, OpenCode used its built-in default.
     // Expected behavior: honor the user's explicit model override.
     const cacheSpy = spyOn(connectedProvidersCache, "readConnectedProvidersCache").mockReturnValue(null)
     const fetchSpy = spyOn(shared, "fetchAvailableModels").mockResolvedValue(new Set())
     const overrides = {
-      atlas: { model: "minimax-cn-coding-plan/MiniMax-M2.5-highspeed" },
+      argus: { model: "minimax-cn-coding-plan/MiniMax-M2.5-highspeed" },
     }
 
     try {
@@ -284,15 +284,15 @@ describe("createBuiltinAgents with model overrides", () => {
       const agents = await createBuiltinAgents([], overrides, undefined, undefined)
 
       // #then
-      expect(agents.atlas).toBeDefined()
-      expect(agents.atlas.model).toBe("minimax-cn-coding-plan/MiniMax-M2.5-highspeed")
+      expect(agents.argus).toBeDefined()
+      expect(agents.argus.model).toBe("minimax-cn-coding-plan/MiniMax-M2.5-highspeed")
     } finally {
       cacheSpy.mockRestore()
       fetchSpy.mockRestore()
     }
   })
 
-  test("Sisyphus is created on first run when no availableModels or cache exist", async () => {
+  test("Cerberus is created on first run when no availableModels or cache exist", async () => {
     // #given
     const systemDefaultModel = "anthropic/claude-opus-4-7"
     const cacheSpy = spyOn(connectedProvidersCache, "readConnectedProvidersCache").mockReturnValue(null)
@@ -303,16 +303,16 @@ describe("createBuiltinAgents with model overrides", () => {
       const agents = await createBuiltinAgents([], {}, undefined, systemDefaultModel, undefined, undefined, [], {})
 
       // #then
-      expect(agents.sisyphus).toBeDefined()
-      expect(agents.sisyphus.model).toBe("anthropic/claude-opus-4-7")
+      expect(agents.cerberus).toBeDefined()
+      expect(agents.cerberus.model).toBe("anthropic/claude-opus-4-7")
     } finally {
       cacheSpy.mockRestore()
       fetchSpy.mockRestore()
     }
   })
 
-   test("Oracle uses connected provider fallback when availableModels is empty and cache exists", async () => {
-     // #given - connected providers cache has "openai", which matches oracle's first fallback entry
+   test("Cipher uses connected provider fallback when availableModels is empty and cache exists", async () => {
+     // #given - connected providers cache has "openai", which matches cipher's first fallback entry
      const providerModelsSpy = spyOn(connectedProvidersCache, "readProviderModelsCache").mockReturnValue(null)
      const fetchSpy = spyOn(shared, "fetchAvailableModels").mockResolvedValue(new Set())
      const cacheSpy = spyOn(connectedProvidersCache, "readConnectedProvidersCache").mockReturnValue(["openai"])
@@ -320,64 +320,64 @@ describe("createBuiltinAgents with model overrides", () => {
      // #when
      const agents = await createBuiltinAgents([], {}, undefined, TEST_DEFAULT_MODEL, undefined, undefined, [], undefined, undefined)
 
-     // #then - oracle resolves via connected cache fallback to openai/gpt-5.5 (not system default)
-     expect(agents.oracle.model).toBe("openai/gpt-5.5")
-     expect(agents.oracle.reasoningEffort).toBe("medium")
-     expect(agents.oracle.thinking).toBeUndefined()
+     // #then - cipher resolves via connected cache fallback to openai/gpt-5.5 (not system default)
+     expect(agents.cipher.model).toBe("openai/gpt-5.5")
+     expect(agents.cipher.reasoningEffort).toBe("medium")
+     expect(agents.cipher.thinking).toBeUndefined()
      cacheSpy.mockRestore?.()
      providerModelsSpy.mockRestore()
      fetchSpy.mockRestore()
    })
 
-   test("Oracle created without model field when no cache exists (first run scenario)", async () => {
+   test("Cipher created without model field when no cache exists (first run scenario)", async () => {
      // #given - no cache at all (first run)
      const cacheSpy = spyOn(connectedProvidersCache, "readConnectedProvidersCache").mockReturnValue(null)
 
      // #when
      const agents = await createBuiltinAgents([], {}, undefined, TEST_DEFAULT_MODEL)
 
-     // #then - oracle should be created with system default model (fallback to systemDefaultModel)
-     expect(agents.oracle).toBeDefined()
-     expect(agents.oracle.model).toBe(TEST_DEFAULT_MODEL)
+     // #then - cipher should be created with system default model (fallback to systemDefaultModel)
+     expect(agents.cipher).toBeDefined()
+     expect(agents.cipher.model).toBe(TEST_DEFAULT_MODEL)
      cacheSpy.mockRestore?.()
    })
 
-  test("Oracle with GPT model override has reasoningEffort, no thinking", async () => {
+  test("Cipher with GPT model override has reasoningEffort, no thinking", async () => {
     // #given
     const providerModelsSpy = spyOn(connectedProvidersCache, "readProviderModelsCache").mockReturnValue(null)
     const fetchSpy = spyOn(shared, "fetchAvailableModels").mockResolvedValue(new Set())
     const overrides = {
-      oracle: { model: "openai/gpt-5.5" },
+      cipher: { model: "openai/gpt-5.5" },
     }
 
     // #when
     const agents = await createBuiltinAgents([], overrides, undefined, TEST_DEFAULT_MODEL, undefined, undefined, [], undefined, undefined)
 
     // #then
-    expect(agents.oracle.model).toBe("openai/gpt-5.5")
-    expect(agents.oracle.reasoningEffort).toBe("medium")
-    expect(agents.oracle.textVerbosity).toBe("high")
-    expect(agents.oracle.thinking).toBeUndefined()
+    expect(agents.cipher.model).toBe("openai/gpt-5.5")
+    expect(agents.cipher.reasoningEffort).toBe("medium")
+    expect(agents.cipher.textVerbosity).toBe("high")
+    expect(agents.cipher.thinking).toBeUndefined()
     providerModelsSpy.mockRestore()
     fetchSpy.mockRestore()
   })
 
-  test("Oracle with Claude model override has thinking, no reasoningEffort", async () => {
+  test("Cipher with Claude model override has thinking, no reasoningEffort", async () => {
     // #given
     const providerModelsSpy = spyOn(connectedProvidersCache, "readProviderModelsCache").mockReturnValue(null)
     const fetchSpy = spyOn(shared, "fetchAvailableModels").mockResolvedValue(new Set())
     const overrides = {
-      oracle: { model: "anthropic/claude-sonnet-4" },
+      cipher: { model: "anthropic/claude-sonnet-4" },
     }
 
     // #when
     const agents = await createBuiltinAgents([], overrides, undefined, TEST_DEFAULT_MODEL, undefined, undefined, [], undefined, undefined)
 
     // #then
-    expect(agents.oracle.model).toBe("anthropic/claude-sonnet-4")
-    expect(agents.oracle.thinking).toEqual({ type: "enabled", budgetTokens: 32000 })
-    expect(agents.oracle.reasoningEffort).toBeUndefined()
-    expect(agents.oracle.textVerbosity).toBeUndefined()
+    expect(agents.cipher.model).toBe("anthropic/claude-sonnet-4")
+    expect(agents.cipher.thinking).toEqual({ type: "enabled", budgetTokens: 32000 })
+    expect(agents.cipher.reasoningEffort).toBeUndefined()
+    expect(agents.cipher.textVerbosity).toBeUndefined()
     providerModelsSpy.mockRestore()
     fetchSpy.mockRestore()
   })
@@ -387,15 +387,15 @@ describe("createBuiltinAgents with model overrides", () => {
      const providerModelsSpy = spyOn(connectedProvidersCache, "readProviderModelsCache").mockReturnValue(null)
      const fetchSpy = spyOn(shared, "fetchAvailableModels").mockResolvedValue(new Set())
      const overrides = {
-       sisyphus: { model: "github-copilot/gpt-5.5", temperature: 0.5 },
+       cerberus: { model: "github-copilot/gpt-5.5", temperature: 0.5 },
      }
 
      // #when
      const agents = await createBuiltinAgents([], overrides, undefined, TEST_DEFAULT_MODEL, undefined, undefined, [], undefined, undefined)
 
      // #then
-     expect(agents.sisyphus.model).toBe("github-copilot/gpt-5.5")
-     expect(agents.sisyphus.temperature).toBe(0.5)
+     expect(agents.cerberus.model).toBe("github-copilot/gpt-5.5")
+     expect(agents.cerberus.temperature).toBe(0.5)
      providerModelsSpy.mockRestore()
      fetchSpy.mockRestore()
    })
@@ -411,9 +411,9 @@ describe("createBuiltinAgents with model overrides", () => {
     const agents = await createBuiltinAgents([], {}, undefined, TEST_DEFAULT_MODEL, undefined, undefined, [], undefined, undefined, undefined, disabledSkills)
 
     // #then
-    expect(agents.sisyphus.prompt).not.toContain("playwright")
-    expect(agents.sisyphus.prompt).toContain("frontend")
-    expect(agents.sisyphus.prompt).toContain("git-master")
+    expect(agents.cerberus.prompt).not.toContain("playwright")
+    expect(agents.cerberus.prompt).toContain("frontend")
+    expect(agents.cerberus.prompt).toContain("git-master")
     providerModelsSpy.mockRestore()
     connectedSpy.mockRestore()
     fetchSpy.mockRestore()
@@ -454,9 +454,9 @@ describe("createBuiltinAgents with model overrides", () => {
       )
 
       // #then
-      expect(agents.sisyphus.prompt).not.toContain("researcher")
-      expect(agents.hephaestus.prompt).not.toContain("researcher")
-      expect(agents.atlas.prompt).not.toContain("researcher")
+      expect(agents.cerberus.prompt).not.toContain("researcher")
+      expect(agents.scylla.prompt).not.toContain("researcher")
+      expect(agents.argus.prompt).not.toContain("researcher")
     } finally {
       fetchSpy.mockRestore()
     }
@@ -490,9 +490,9 @@ describe("createBuiltinAgents with model overrides", () => {
       )
 
       // #then
-      expect(agents.sisyphus.prompt).not.toContain("hidden-agent")
-      expect(agents.hephaestus.prompt).not.toContain("hidden-agent")
-      expect(agents.atlas.prompt).not.toContain("hidden-agent")
+      expect(agents.cerberus.prompt).not.toContain("hidden-agent")
+      expect(agents.scylla.prompt).not.toContain("hidden-agent")
+      expect(agents.argus.prompt).not.toContain("hidden-agent")
     } finally {
       fetchSpy.mockRestore()
     }
@@ -526,9 +526,9 @@ describe("createBuiltinAgents with model overrides", () => {
       )
 
       // #then
-      expect(agents.sisyphus.prompt).not.toContain("disabled-agent")
-      expect(agents.hephaestus.prompt).not.toContain("disabled-agent")
-      expect(agents.atlas.prompt).not.toContain("disabled-agent")
+      expect(agents.cerberus.prompt).not.toContain("disabled-agent")
+      expect(agents.scylla.prompt).not.toContain("disabled-agent")
+      expect(agents.argus.prompt).not.toContain("disabled-agent")
     } finally {
       fetchSpy.mockRestore()
     }
@@ -562,9 +562,9 @@ describe("createBuiltinAgents with model overrides", () => {
       )
 
       // #then
-      expect(agents.sisyphus.prompt).not.toContain("researcher")
-      expect(agents.hephaestus.prompt).not.toContain("researcher")
-      expect(agents.atlas.prompt).not.toContain("researcher")
+      expect(agents.cerberus.prompt).not.toContain("researcher")
+      expect(agents.scylla.prompt).not.toContain("researcher")
+      expect(agents.argus.prompt).not.toContain("researcher")
     } finally {
       fetchSpy.mockRestore()
     }
@@ -595,7 +595,7 @@ describe("createBuiltinAgents with model overrides", () => {
       )
 
       // #then
-      const matches = (agents.sisyphus?.prompt ?? "").match(/Custom agent: researcher/gi) ?? []
+      const matches = (agents.cerberus?.prompt ?? "").match(/Custom agent: researcher/gi) ?? []
       expect(matches.length).toBe(0)
     } finally {
       fetchSpy.mockRestore()
@@ -629,7 +629,7 @@ describe("createBuiltinAgents with model overrides", () => {
       )
 
       // #then
-      expect(agents.sisyphus.prompt).not.toContain("Line1 Alpha \\| Beta")
+      expect(agents.cerberus.prompt).not.toContain("Line1 Alpha \\| Beta")
     } finally {
       fetchSpy.mockRestore()
     }
@@ -638,7 +638,7 @@ describe("createBuiltinAgents with model overrides", () => {
 
 describe("createBuiltinAgents without systemDefaultModel", () => {
    test("agents created via connected cache fallback even without systemDefaultModel", async () => {
-     // #given - connected cache has "openai", which matches oracle's fallback chain
+     // #given - connected cache has "openai", which matches cipher's fallback chain
      const providerModelsSpy = spyOn(connectedProvidersCache, "readProviderModelsCache").mockReturnValue(null)
      const fetchSpy = spyOn(shared, "fetchAvailableModels").mockResolvedValue(new Set())
      const cacheSpy = spyOn(connectedProvidersCache, "readConnectedProvidersCache").mockReturnValue(["openai"])
@@ -647,14 +647,14 @@ describe("createBuiltinAgents without systemDefaultModel", () => {
      const agents = await createBuiltinAgents([], {}, undefined, undefined)
 
      // #then - connected cache enables model resolution despite no systemDefaultModel
-      expect(agents.oracle).toBeDefined()
-      expect(agents.oracle.model).toBe("openai/gpt-5.5")
+      expect(agents.cipher).toBeDefined()
+      expect(agents.cipher.model).toBe("openai/gpt-5.5")
       cacheSpy.mockRestore?.()
      providerModelsSpy.mockRestore()
      fetchSpy.mockRestore()
    })
 
-  test("oracle is created on first run when no cache and no systemDefaultModel", async () => {
+  test("cipher is created on first run when no cache and no systemDefaultModel", async () => {
     // #given
     const cacheSpy = spyOn(connectedProvidersCache, "readConnectedProvidersCache").mockReturnValue(null)
     const fetchSpy = spyOn(shared, "fetchAvailableModels").mockResolvedValue(new Set())
@@ -664,15 +664,15 @@ describe("createBuiltinAgents without systemDefaultModel", () => {
       const agents = await createBuiltinAgents([], {}, undefined, undefined)
 
       // #then
-      expect(agents.oracle).toBeDefined()
-      expect(agents.oracle.model).toBe("openai/gpt-5.5")
+      expect(agents.cipher).toBeDefined()
+      expect(agents.cipher.model).toBe("openai/gpt-5.5")
     } finally {
       fetchSpy.mockRestore()
       cacheSpy.mockRestore()
     }
   })
 
-  test("sisyphus created via connected cache fallback when all providers available", async () => {
+  test("cerberus created via connected cache fallback when all providers available", async () => {
     // #given
     const cacheSpy = spyOn(connectedProvidersCache, "readConnectedProvidersCache").mockReturnValue([
       "anthropic", "kimi-for-coding", "opencode", "zai-coding-plan"
@@ -692,8 +692,8 @@ describe("createBuiltinAgents without systemDefaultModel", () => {
       const agents = await createBuiltinAgents([], {}, undefined, undefined, undefined, undefined, [], {})
 
       // #then
-      expect(agents.sisyphus).toBeDefined()
-      expect(agents.sisyphus.model).toBe("anthropic/claude-opus-4-7")
+      expect(agents.cerberus).toBeDefined()
+      expect(agents.cerberus.model).toBe("anthropic/claude-opus-4-7")
     } finally {
       cacheSpy.mockRestore()
       fetchSpy.mockRestore()
@@ -701,8 +701,8 @@ describe("createBuiltinAgents without systemDefaultModel", () => {
   })
 })
 
-describe("createBuiltinAgents with requiresProvider gating (hephaestus)", () => {
-  test("hephaestus is created when provider-models cache connected list includes required provider", async () => {
+describe("createBuiltinAgents with requiresProvider gating (scylla)", () => {
+  test("scylla is created when provider-models cache connected list includes required provider", async () => {
     // #given
     const connectedCacheSpy = spyOn(shared, "readConnectedProvidersCache").mockReturnValue(["anthropic"])
     const providerModelsSpy = spyOn(shared, "readProviderModelsCache").mockReturnValue({
@@ -722,7 +722,7 @@ describe("createBuiltinAgents with requiresProvider gating (hephaestus)", () => 
       const agents = await createBuiltinAgents([], {}, undefined, TEST_DEFAULT_MODEL, undefined, undefined, [], {})
 
       // #then
-      expect(agents.hephaestus).toBeDefined()
+      expect(agents.scylla).toBeDefined()
     } finally {
       connectedCacheSpy.mockRestore()
       providerModelsSpy.mockRestore()
@@ -730,8 +730,8 @@ describe("createBuiltinAgents with requiresProvider gating (hephaestus)", () => 
     }
   })
 
-  test("hephaestus is not created when no required provider is connected", async () => {
-    // #given - only anthropic models available, not in hephaestus requiresProvider
+  test("scylla is not created when no required provider is connected", async () => {
+    // #given - only anthropic models available, not in scylla requiresProvider
     const fetchSpy = spyOn(shared, "fetchAvailableModels").mockResolvedValue(
       new Set(["anthropic/claude-opus-4-7"])
     )
@@ -742,14 +742,14 @@ describe("createBuiltinAgents with requiresProvider gating (hephaestus)", () => 
       const agents = await createBuiltinAgents([], {}, undefined, TEST_DEFAULT_MODEL, undefined, undefined, [], {})
 
       // #then
-      expect(agents.hephaestus).toBeUndefined()
+      expect(agents.scylla).toBeUndefined()
     } finally {
       fetchSpy.mockRestore()
       cacheSpy.mockRestore()
     }
   })
 
-  test("hephaestus is created when openai provider is connected", async () => {
+  test("scylla is created when openai provider is connected", async () => {
     // #given - openai provider has models available
     const fetchSpy = spyOn(shared, "fetchAvailableModels").mockResolvedValue(
       new Set(["openai/gpt-5.5"])
@@ -760,13 +760,13 @@ describe("createBuiltinAgents with requiresProvider gating (hephaestus)", () => 
       const agents = await createBuiltinAgents([], {}, undefined, TEST_DEFAULT_MODEL, undefined, undefined, [], {})
 
       // #then
-      expect(agents.hephaestus).toBeDefined()
+      expect(agents.scylla).toBeDefined()
     } finally {
       fetchSpy.mockRestore()
     }
   })
 
-  test("hephaestus IS created when github-copilot is connected with a GPT model", async () => {
+  test("scylla IS created when github-copilot is connected with a GPT model", async () => {
     // #given - github-copilot provider has gpt-5.5 available
     const fetchSpy = spyOn(shared, "fetchAvailableModels").mockResolvedValue(
       new Set(["github-copilot/gpt-5.5"])
@@ -777,15 +777,15 @@ describe("createBuiltinAgents with requiresProvider gating (hephaestus)", () => 
       // #when
       const agents = await createBuiltinAgents([], {}, undefined, TEST_DEFAULT_MODEL, undefined, undefined, [], {})
 
-      // #then - github-copilot is now a valid provider for hephaestus
-      expect(agents.hephaestus).toBeDefined()
+      // #then - github-copilot is now a valid provider for scylla
+      expect(agents.scylla).toBeDefined()
     } finally {
       fetchSpy.mockRestore()
       cacheSpy.mockRestore()
     }
   })
 
-  test("hephaestus is created when opencode provider is connected", async () => {
+  test("scylla is created when opencode provider is connected", async () => {
     // #given - opencode provider has models available
     const fetchSpy = spyOn(shared, "fetchAvailableModels").mockResolvedValue(
       new Set(["opencode/gpt-5.5"])
@@ -796,13 +796,13 @@ describe("createBuiltinAgents with requiresProvider gating (hephaestus)", () => 
       const agents = await createBuiltinAgents([], {}, undefined, TEST_DEFAULT_MODEL, undefined, undefined, [], {})
 
       // #then
-      expect(agents.hephaestus).toBeDefined()
+      expect(agents.scylla).toBeDefined()
     } finally {
       fetchSpy.mockRestore()
     }
   })
 
-  test("hephaestus is created on first run when no availableModels or cache exist", async () => {
+  test("scylla is created on first run when no availableModels or cache exist", async () => {
     // #given
     const cacheSpy = spyOn(connectedProvidersCache, "readConnectedProvidersCache").mockReturnValue(null)
     const fetchSpy = spyOn(shared, "fetchAvailableModels").mockResolvedValue(new Set())
@@ -812,21 +812,21 @@ describe("createBuiltinAgents with requiresProvider gating (hephaestus)", () => 
       const agents = await createBuiltinAgents([], {}, undefined, TEST_DEFAULT_MODEL, undefined, undefined, [], {})
 
       // #then
-      expect(agents.hephaestus).toBeDefined()
-      expect(agents.hephaestus.model).toBe("openai/gpt-5.5")
+      expect(agents.scylla).toBeDefined()
+      expect(agents.scylla.model).toBe("openai/gpt-5.5")
     } finally {
       cacheSpy.mockRestore()
       fetchSpy.mockRestore()
     }
   })
 
-  test("hephaestus is not created when explicit config uses an unsupported model", async () => {
+  test("scylla is not created when explicit config uses an unsupported model", async () => {
     // #given
     const fetchSpy = spyOn(shared, "fetchAvailableModels").mockResolvedValue(
       new Set(["anthropic/claude-opus-4-7"])
     )
     const overrides = {
-      hephaestus: { model: "anthropic/claude-opus-4-7" },
+      scylla: { model: "anthropic/claude-opus-4-7" },
     }
 
     try {
@@ -834,14 +834,14 @@ describe("createBuiltinAgents with requiresProvider gating (hephaestus)", () => 
       const agents = await createBuiltinAgents([], overrides, undefined, TEST_DEFAULT_MODEL, undefined, undefined, [], {})
 
       // #then
-      expect(agents.hephaestus).toBeUndefined()
+      expect(agents.scylla).toBeUndefined()
     } finally {
       fetchSpy.mockRestore()
     }
   })
 })
 
-describe("Hephaestus environment context toggle", () => {
+describe("Scylla environment context toggle", () => {
   let fetchSpy: ReturnType<typeof spyOn>
 
   beforeEach(() => {
@@ -877,8 +877,8 @@ describe("Hephaestus environment context toggle", () => {
     const agents = await buildAgents(undefined)
 
     // #then
-    expect(agents.hephaestus).toBeDefined()
-    expect(agents.hephaestus.prompt).toContain("<omo-env>")
+    expect(agents.scylla).toBeDefined()
+    expect(agents.scylla.prompt).toContain("<omo-env>")
   })
 
   test("includes <omo-env> tag when disable flag is false", async () => {
@@ -886,8 +886,8 @@ describe("Hephaestus environment context toggle", () => {
     const agents = await buildAgents(false)
 
     // #then
-    expect(agents.hephaestus).toBeDefined()
-    expect(agents.hephaestus.prompt).toContain("<omo-env>")
+    expect(agents.scylla).toBeDefined()
+    expect(agents.scylla.prompt).toContain("<omo-env>")
   })
 
   test("omits <omo-env> tag when disable flag is true", async () => {
@@ -895,12 +895,12 @@ describe("Hephaestus environment context toggle", () => {
     const agents = await buildAgents(true)
 
     // #then
-    expect(agents.hephaestus).toBeDefined()
-    expect(agents.hephaestus.prompt).not.toContain("<omo-env>")
+    expect(agents.scylla).toBeDefined()
+    expect(agents.scylla.prompt).not.toContain("<omo-env>")
   })
 })
 
-describe("Sisyphus and Librarian environment context toggle", () => {
+describe("Cerberus and Intel environment context toggle", () => {
   let fetchSpy: ReturnType<typeof spyOn>
 
   beforeEach(() => {
@@ -931,35 +931,35 @@ describe("Sisyphus and Librarian environment context toggle", () => {
     )
   }
 
-  test("includes <omo-env> for sisyphus and librarian when disable flag is unset", async () => {
+  test("includes <omo-env> for cerberus and intel when disable flag is unset", async () => {
     const agents = await buildAgents(undefined)
 
-    expect(agents.sisyphus).toBeDefined()
-    expect(agents.librarian).toBeDefined()
-    expect(agents.sisyphus.prompt).toContain("<omo-env>")
-    expect(agents.librarian.prompt).toContain("<omo-env>")
+    expect(agents.cerberus).toBeDefined()
+    expect(agents.intel).toBeDefined()
+    expect(agents.cerberus.prompt).toContain("<omo-env>")
+    expect(agents.intel.prompt).toContain("<omo-env>")
   })
 
-  test("includes <omo-env> for sisyphus and librarian when disable flag is false", async () => {
+  test("includes <omo-env> for cerberus and intel when disable flag is false", async () => {
     const agents = await buildAgents(false)
 
-    expect(agents.sisyphus).toBeDefined()
-    expect(agents.librarian).toBeDefined()
-    expect(agents.sisyphus.prompt).toContain("<omo-env>")
-    expect(agents.librarian.prompt).toContain("<omo-env>")
+    expect(agents.cerberus).toBeDefined()
+    expect(agents.intel).toBeDefined()
+    expect(agents.cerberus.prompt).toContain("<omo-env>")
+    expect(agents.intel.prompt).toContain("<omo-env>")
   })
 
-  test("omits <omo-env> for sisyphus and librarian when disable flag is true", async () => {
+  test("omits <omo-env> for cerberus and intel when disable flag is true", async () => {
     const agents = await buildAgents(true)
 
-    expect(agents.sisyphus).toBeDefined()
-    expect(agents.librarian).toBeDefined()
-    expect(agents.sisyphus.prompt).not.toContain("<omo-env>")
-    expect(agents.librarian.prompt).not.toContain("<omo-env>")
+    expect(agents.cerberus).toBeDefined()
+    expect(agents.intel).toBeDefined()
+    expect(agents.cerberus.prompt).not.toContain("<omo-env>")
+    expect(agents.intel.prompt).not.toContain("<omo-env>")
   })
 })
 
-describe("Atlas is unaffected by environment context toggle", () => {
+describe("Argus is unaffected by environment context toggle", () => {
   let fetchSpy: ReturnType<typeof spyOn>
 
   beforeEach(() => {
@@ -972,7 +972,7 @@ describe("Atlas is unaffected by environment context toggle", () => {
     fetchSpy.mockRestore()
   })
 
-  test("atlas prompt is unchanged and never contains <omo-env>", async () => {
+  test("argus prompt is unchanged and never contains <omo-env>", async () => {
     const agentsDefault = await createBuiltinAgents(
       [],
       {},
@@ -1005,16 +1005,16 @@ describe("Atlas is unaffected by environment context toggle", () => {
       true
     )
 
-    expect(agentsDefault.atlas).toBeDefined()
-    expect(agentsDisabled.atlas).toBeDefined()
-    expect(agentsDefault.atlas.prompt).not.toContain("<omo-env>")
-    expect(agentsDisabled.atlas.prompt).not.toContain("<omo-env>")
-    expect(agentsDisabled.atlas.prompt).toBe(agentsDefault.atlas.prompt)
+    expect(agentsDefault.argus).toBeDefined()
+    expect(agentsDisabled.argus).toBeDefined()
+    expect(agentsDefault.argus.prompt).not.toContain("<omo-env>")
+    expect(agentsDisabled.argus.prompt).not.toContain("<omo-env>")
+    expect(agentsDisabled.argus.prompt).toBe(agentsDefault.argus.prompt)
   })
 })
 
-describe("createBuiltinAgents with requiresAnyModel gating (sisyphus)", () => {
-  test("sisyphus is created when at least one fallback model is available", async () => {
+describe("createBuiltinAgents with requiresAnyModel gating (cerberus)", () => {
+  test("cerberus is created when at least one fallback model is available", async () => {
     // #given
     const fetchSpy = spyOn(shared, "fetchAvailableModels").mockResolvedValue(
       new Set(["anthropic/claude-opus-4-7"])
@@ -1025,13 +1025,13 @@ describe("createBuiltinAgents with requiresAnyModel gating (sisyphus)", () => {
       const agents = await createBuiltinAgents([], {}, undefined, TEST_DEFAULT_MODEL, undefined, undefined, [], {})
 
       // #then
-      expect(agents.sisyphus).toBeDefined()
+      expect(agents.cerberus).toBeDefined()
     } finally {
       fetchSpy.mockRestore()
     }
   })
 
-  test("sisyphus is created on first run when no availableModels or cache exist", async () => {
+  test("cerberus is created on first run when no availableModels or cache exist", async () => {
     // #given
     const cacheSpy = spyOn(connectedProvidersCache, "readConnectedProvidersCache").mockReturnValue(null)
     const fetchSpy = spyOn(shared, "fetchAvailableModels").mockResolvedValue(new Set())
@@ -1041,19 +1041,19 @@ describe("createBuiltinAgents with requiresAnyModel gating (sisyphus)", () => {
       const agents = await createBuiltinAgents([], {}, undefined, TEST_DEFAULT_MODEL, undefined, undefined, [], {})
 
       // #then
-      expect(agents.sisyphus).toBeDefined()
-      expect(agents.sisyphus.model).toBe("anthropic/claude-opus-4-7")
+      expect(agents.cerberus).toBeDefined()
+      expect(agents.cerberus.model).toBe("anthropic/claude-opus-4-7")
     } finally {
       cacheSpy.mockRestore()
       fetchSpy.mockRestore()
     }
   })
 
-  test("sisyphus is created when explicit config provided even if no models available", async () => {
+  test("cerberus is created when explicit config provided even if no models available", async () => {
     // #given
     const fetchSpy = spyOn(shared, "fetchAvailableModels").mockResolvedValue(new Set())
     const overrides = {
-      sisyphus: { model: "anthropic/claude-opus-4-7" },
+      cerberus: { model: "anthropic/claude-opus-4-7" },
     }
 
     try {
@@ -1061,14 +1061,14 @@ describe("createBuiltinAgents with requiresAnyModel gating (sisyphus)", () => {
       const agents = await createBuiltinAgents([], overrides, undefined, TEST_DEFAULT_MODEL, undefined, undefined, [], {})
 
       // #then
-      expect(agents.sisyphus).toBeDefined()
+      expect(agents.cerberus).toBeDefined()
     } finally {
       fetchSpy.mockRestore()
     }
   })
 
-  test("sisyphus is not created when no fallback model is available and provider not connected", async () => {
-    // #given - only venice/deepseek-v3.2 available, not in sisyphus fallback chain
+  test("cerberus is not created when no fallback model is available and provider not connected", async () => {
+    // #given - only venice/deepseek-v3.2 available, not in cerberus fallback chain
     const fetchSpy = spyOn(shared, "fetchAvailableModels").mockResolvedValue(
       new Set(["venice/deepseek-v3.2"])
     )
@@ -1079,14 +1079,14 @@ describe("createBuiltinAgents with requiresAnyModel gating (sisyphus)", () => {
       const agents = await createBuiltinAgents([], {}, undefined, TEST_DEFAULT_MODEL, undefined, undefined, [], {})
 
       // #then
-      expect(agents.sisyphus).toBeUndefined()
+      expect(agents.cerberus).toBeUndefined()
     } finally {
       fetchSpy.mockRestore()
       cacheSpy.mockRestore()
     }
   })
 
-  test("sisyphus uses user-configured plugin model even when not in cache or fallback chain", async () => {
+  test("cerberus uses user-configured plugin model even when not in cache or fallback chain", async () => {
     // #given - user configures a model from a plugin provider (like antigravity)
     // that is NOT in the availableModels cache and NOT in the fallback chain
     const fetchSpy = spyOn(shared, "fetchAvailableModels").mockResolvedValue(
@@ -1096,7 +1096,7 @@ describe("createBuiltinAgents with requiresAnyModel gating (sisyphus)", () => {
       ["openai"]
     )
     const overrides = {
-      sisyphus: { model: "google/antigravity-claude-opus-4-5-thinking" },
+      cerberus: { model: "google/antigravity-claude-opus-4-5-thinking" },
     }
 
     try {
@@ -1104,15 +1104,15 @@ describe("createBuiltinAgents with requiresAnyModel gating (sisyphus)", () => {
       const agents = await createBuiltinAgents([], overrides, undefined, TEST_DEFAULT_MODEL, undefined, undefined, [], {})
 
       // #then
-      expect(agents.sisyphus).toBeDefined()
-      expect(agents.sisyphus.model).toBe("google/antigravity-claude-opus-4-5-thinking")
+      expect(agents.cerberus).toBeDefined()
+      expect(agents.cerberus.model).toBe("google/antigravity-claude-opus-4-5-thinking")
     } finally {
       fetchSpy.mockRestore()
       cacheSpy.mockRestore()
     }
   })
 
-  test("sisyphus uses user-configured plugin model when availableModels is empty but cache exists", async () => {
+  test("cerberus uses user-configured plugin model when availableModels is empty but cache exists", async () => {
     // #given - connected providers cache exists but models cache is empty
     // This reproduces the exact scenario where provider-models.json has models: {}
     const fetchSpy = spyOn(shared, "fetchAvailableModels").mockResolvedValue(
@@ -1122,7 +1122,7 @@ describe("createBuiltinAgents with requiresAnyModel gating (sisyphus)", () => {
       ["google", "openai", "opencode"]
     )
     const overrides = {
-      sisyphus: { model: "google/antigravity-claude-opus-4-5-thinking" },
+      cerberus: { model: "google/antigravity-claude-opus-4-5-thinking" },
     }
 
     try {
@@ -1130,15 +1130,15 @@ describe("createBuiltinAgents with requiresAnyModel gating (sisyphus)", () => {
       const agents = await createBuiltinAgents([], overrides, undefined, TEST_DEFAULT_MODEL, undefined, undefined, [], {})
 
       // #then
-      expect(agents.sisyphus).toBeDefined()
-      expect(agents.sisyphus.model).toBe("google/antigravity-claude-opus-4-5-thinking")
+      expect(agents.cerberus).toBeDefined()
+      expect(agents.cerberus.model).toBe("google/antigravity-claude-opus-4-5-thinking")
     } finally {
       fetchSpy.mockRestore()
       cacheSpy.mockRestore()
     }
   })
 
-  test("atlas and metis resolve to OpenAI in an OpenAI-only environment without a system default", async () => {
+  test("argus and vanguard resolve to OpenAI in an OpenAI-only environment without a system default", async () => {
     // #given
     const fetchSpy = spyOn(shared, "fetchAvailableModels").mockResolvedValue(new Set(["openai/gpt-5.5"]))
     const cacheSpy = spyOn(connectedProvidersCache, "readConnectedProvidersCache").mockReturnValue(["openai"])
@@ -1148,12 +1148,12 @@ describe("createBuiltinAgents with requiresAnyModel gating (sisyphus)", () => {
       const agents = await createBuiltinAgents([], {}, undefined, undefined, undefined, undefined, [], {})
 
       // #then
-      expect(agents.atlas).toBeDefined()
-      expect(agents.atlas.model).toBe("openai/gpt-5.5")
-      expect(agents.atlas.variant).toBe("medium")
-      expect(agents.metis).toBeDefined()
-      expect(agents.metis.model).toBe("openai/gpt-5.5")
-      expect(agents.metis.variant).toBe("high")
+      expect(agents.argus).toBeDefined()
+      expect(agents.argus.model).toBe("openai/gpt-5.5")
+      expect(agents.argus.variant).toBe("medium")
+      expect(agents.vanguard).toBeDefined()
+      expect(agents.vanguard.model).toBe("openai/gpt-5.5")
+      expect(agents.vanguard.variant).toBe("high")
     } finally {
       fetchSpy.mockRestore()
       cacheSpy.mockRestore()
@@ -1417,7 +1417,7 @@ describe("createBuiltinAgents with skill overrides", () => {
     // #given
     const fetchSpy = spyOn(shared, "fetchAvailableModels").mockResolvedValue(new Set())
     const overrides = {
-      librarian: { skills: ["frontend"] },
+      intel: { skills: ["frontend"] },
     } as AgentOverrides
 
     try {
@@ -1425,9 +1425,9 @@ describe("createBuiltinAgents with skill overrides", () => {
       const agents = await createBuiltinAgents([], overrides, undefined, TEST_DEFAULT_MODEL)
 
       // #then
-      expect(agents.librarian.prompt).toContain("router, not a rulebook")
-      expect(agents.librarian.prompt).toContain("THE LIBRARIAN")
-      expect("skills" in agents.librarian).toBe(false)
+      expect(agents.intel.prompt).toContain("router, not a rulebook")
+      expect(agents.intel.prompt).toContain("THE LIBRARIAN")
+      expect("skills" in agents.intel).toBe(false)
     } finally {
       fetchSpy.mockRestore()
     }
@@ -1449,30 +1449,30 @@ describe("override.category expansion in createBuiltinAgents", () => {
   test("standard agent override with category expands category properties", async () => {
     // #given
     const overrides = {
-      oracle: { category: "ultrabrain" },
+      cipher: { category: "ultrabrain" },
     }
 
     // #when
     const agents = await createBuiltinAgents([], overrides, undefined, TEST_DEFAULT_MODEL)
 
     // #then - ultrabrain category: model=openai/gpt-5.5, variant=xhigh
-    expect(agents.oracle).toBeDefined()
-    expect(agents.oracle.model).toBe("openai/gpt-5.5")
-    expect(agents.oracle.variant).toBe("xhigh")
+    expect(agents.cipher).toBeDefined()
+    expect(agents.cipher.model).toBe("openai/gpt-5.5")
+    expect(agents.cipher.variant).toBe("xhigh")
   })
 
   test("standard agent override with category AND direct variant - direct wins", async () => {
     // #given - ultrabrain has variant=xhigh, but direct override says "max"
     const overrides = {
-      oracle: { category: "ultrabrain", variant: "max" },
+      cipher: { category: "ultrabrain", variant: "max" },
     }
 
     // #when
     const agents = await createBuiltinAgents([], overrides, undefined, TEST_DEFAULT_MODEL)
 
     // #then - direct variant overrides category variant
-    expect(agents.oracle).toBeDefined()
-    expect(agents.oracle.variant).toBe("max")
+    expect(agents.cipher).toBeDefined()
+    expect(agents.cipher.variant).toBe("max")
   })
 
   test("standard agent override with category AND direct reasoningEffort - direct wins", async () => {
@@ -1484,15 +1484,15 @@ describe("override.category expansion in createBuiltinAgents", () => {
       },
     }
     const overrides = {
-      oracle: { category: "test-cat", reasoningEffort: "low" as const },
+      cipher: { category: "test-cat", reasoningEffort: "low" as const },
     }
 
     // #when
     const agents = await createBuiltinAgents([], overrides, undefined, TEST_DEFAULT_MODEL, categories)
 
     // #then - direct reasoningEffort wins over category
-    expect(agents.oracle).toBeDefined()
-    expect(agents.oracle.reasoningEffort).toBe("low")
+    expect(agents.cipher).toBeDefined()
+    expect(agents.cipher.reasoningEffort).toBe("low")
   })
 
   test("standard agent override with category applies reasoningEffort from category when no direct override", async () => {
@@ -1504,60 +1504,60 @@ describe("override.category expansion in createBuiltinAgents", () => {
       },
     }
     const overrides = {
-      oracle: { category: "reasoning-cat" },
+      cipher: { category: "reasoning-cat" },
     }
 
     // #when
     const agents = await createBuiltinAgents([], overrides, undefined, TEST_DEFAULT_MODEL, categories)
 
     // #then - category reasoningEffort is applied
-    expect(agents.oracle).toBeDefined()
-    expect(agents.oracle.reasoningEffort).toBe("high")
+    expect(agents.cipher).toBeDefined()
+    expect(agents.cipher.reasoningEffort).toBe("high")
   })
 
-  test("sisyphus override with category expands category properties", async () => {
+  test("cerberus override with category expands category properties", async () => {
     // #given
     const overrides = {
-      sisyphus: { category: "ultrabrain" },
+      cerberus: { category: "ultrabrain" },
     }
 
     // #when
     const agents = await createBuiltinAgents([], overrides, undefined, TEST_DEFAULT_MODEL)
 
     // #then - ultrabrain category: model=openai/gpt-5.5, variant=xhigh
-    expect(agents.sisyphus).toBeDefined()
-    expect(agents.sisyphus.model).toBe("openai/gpt-5.5")
-    expect(agents.sisyphus.variant).toBe("xhigh")
+    expect(agents.cerberus).toBeDefined()
+    expect(agents.cerberus.model).toBe("openai/gpt-5.5")
+    expect(agents.cerberus.variant).toBe("xhigh")
   })
 
-  test("atlas override with category expands category properties", async () => {
+  test("argus override with category expands category properties", async () => {
     // #given
     const overrides = {
-      atlas: { category: "ultrabrain" },
+      argus: { category: "ultrabrain" },
     }
 
     // #when
     const agents = await createBuiltinAgents([], overrides, undefined, TEST_DEFAULT_MODEL)
 
     // #then - ultrabrain category: model=openai/gpt-5.5, variant=xhigh
-    expect(agents.atlas).toBeDefined()
-    expect(agents.atlas.model).toBe("openai/gpt-5.5")
-    expect(agents.atlas.variant).toBe("xhigh")
+    expect(agents.argus).toBeDefined()
+    expect(agents.argus.model).toBe("openai/gpt-5.5")
+    expect(agents.argus.variant).toBe("xhigh")
   })
 
   test("override with non-existent category has no effect on config", async () => {
     // #given
     const overrides = {
-      oracle: { category: "non-existent-category" },
+      cipher: { category: "non-existent-category" },
     }
 
     // #when
     const agents = await createBuiltinAgents([], overrides, undefined, TEST_DEFAULT_MODEL)
 
     // #then - no category-specific variant/reasoningEffort applied from non-existent category
-    expect(agents.oracle).toBeDefined()
+    expect(agents.cipher).toBeDefined()
     const agentsWithoutOverride = await createBuiltinAgents([], {}, undefined, TEST_DEFAULT_MODEL)
-    expect(agents.oracle.model).toBe(agentsWithoutOverride.oracle.model)
+    expect(agents.cipher.model).toBe(agentsWithoutOverride.cipher.model)
   })
 })
 
@@ -1576,45 +1576,45 @@ describe("agent override tools migration", () => {
   test("tools: { x: false } is migrated to permission: { x: deny }", async () => {
     // #given
     const overrides = {
-      explore: { tools: { "jetbrains_*": false } },
+      scout: { tools: { "jetbrains_*": false } },
     }
 
     // #when
     const agents = await createBuiltinAgents([], overrides, undefined, TEST_DEFAULT_MODEL)
 
     // #then
-    expect(agents.explore).toBeDefined()
-    const permission = agents.explore.permission as Record<string, string>
+    expect(agents.scout).toBeDefined()
+    const permission = agents.scout.permission as Record<string, string>
     expect(permission["jetbrains_*"]).toBe("deny")
   })
 
   test("tools: { x: true } is migrated to permission: { x: allow }", async () => {
     // #given
     const overrides = {
-      librarian: { tools: { "jetbrains_get_*": true } },
+      intel: { tools: { "jetbrains_get_*": true } },
     }
 
     // #when
     const agents = await createBuiltinAgents([], overrides, undefined, TEST_DEFAULT_MODEL)
 
     // #then
-    expect(agents.librarian).toBeDefined()
-    const permission = agents.librarian.permission as Record<string, string>
+    expect(agents.intel).toBeDefined()
+    const permission = agents.intel.permission as Record<string, string>
     expect(permission["jetbrains_get_*"]).toBe("allow")
   })
 
   test("tools config is removed after migration", async () => {
     // #given
     const overrides = {
-      explore: { tools: { "some_tool": false } },
+      scout: { tools: { "some_tool": false } },
     }
 
     // #when
     const agents = await createBuiltinAgents([], overrides, undefined, TEST_DEFAULT_MODEL)
 
     // #then
-    expect(agents.explore).toBeDefined()
-    expect("tools" in agents.explore).toBe(false)
+    expect(agents.scout).toBeDefined()
+    expect("tools" in agents.scout).toBe(false)
   })
 })
 
@@ -1648,25 +1648,25 @@ describe("Deadlock prevention - fetchAvailableModels must not receive client", (
      fetchSpy.mockRestore?.()
      cacheSpy.mockRestore?.()
    })
-  test("Hephaestus variant override respects user config over hardcoded default", async () => {
+  test("Scylla variant override respects user config over hardcoded default", async () => {
     // #given - user provides variant in config
     const providerModelsSpy = spyOn(connectedProvidersCache, "readProviderModelsCache").mockReturnValue(null)
     const fetchSpy = spyOn(shared, "fetchAvailableModels").mockResolvedValue(new Set())
     const overrides = {
-      hephaestus: { variant: "high" },
+      scylla: { variant: "high" },
     }
 
     // #when
     const agents = await createBuiltinAgents([], overrides, undefined, TEST_DEFAULT_MODEL)
 
     // #then - user variant takes precedence over hardcoded "medium"
-    expect(agents.hephaestus).toBeDefined()
-    expect(agents.hephaestus.variant).toBe("high")
+    expect(agents.scylla).toBeDefined()
+    expect(agents.scylla.variant).toBe("high")
     providerModelsSpy.mockRestore()
     fetchSpy.mockRestore()
   })
 
-  test("Hephaestus uses default variant when no user override provided", async () => {
+  test("Scylla uses default variant when no user override provided", async () => {
     // #given - no variant override in config
     const providerModelsSpy = spyOn(connectedProvidersCache, "readProviderModelsCache").mockReturnValue(null)
     const connectedSpy = spyOn(connectedProvidersCache, "readConnectedProvidersCache").mockReturnValue(null)
@@ -1677,8 +1677,8 @@ describe("Deadlock prevention - fetchAvailableModels must not receive client", (
     const agents = await createBuiltinAgents([], overrides, undefined, TEST_DEFAULT_MODEL)
 
     // #then - default "medium" variant is applied
-    expect(agents.hephaestus).toBeDefined()
-    expect(agents.hephaestus.variant).toBe("medium")
+    expect(agents.scylla).toBeDefined()
+    expect(agents.scylla.variant).toBe("medium")
     providerModelsSpy.mockRestore()
     connectedSpy.mockRestore()
     fetchSpy.mockRestore()

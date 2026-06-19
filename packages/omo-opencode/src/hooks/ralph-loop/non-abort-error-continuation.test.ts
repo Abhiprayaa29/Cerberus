@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 import { afterEach, beforeEach, describe, expect, test } from "bun:test"
 import { existsSync, mkdirSync, rmSync } from "node:fs"
 import { tmpdir } from "node:os"
@@ -7,8 +7,8 @@ import { createRalphLoopHook } from "./index"
 import { clearState } from "./storage"
 import { DEFAULT_PROMPT_ASYNC_POST_DISPATCH_HOLD_MS } from "../shared/prompt-async-gate"
 
-describe("ralph-loop non-abort error continuation", () => {
-	const testDirectory = join(tmpdir(), `ralph-loop-non-abort-error-${Date.now()}`)
+describe("pentest-loop non-abort error continuation", () => {
+	const testDirectory = join(tmpdir(), `pentest-loop-non-abort-error-${Date.now()}`)
 	let promptCalls: Array<{ sessionID: string; text: string }>
 	let messagesCalls: Array<{ sessionID: string }>
 	let syncPromptCalls: number
@@ -88,7 +88,7 @@ describe("ralph-loop non-abort error continuation", () => {
 		expect(messagesCalls.length).toBeGreaterThan(0)
 		expect(hook.getState()?.iteration).toBe(2)
 	})
-	test("continues ultrawork loop immediately after non-abort session error", async () => {
+	test("continues fullscan loop immediately after non-abort session error", async () => {
 		// given - an active ULW Loop receives a recoverable runtime error
 		const hook = createRalphLoopHook({
 			directory: testDirectory,
@@ -120,10 +120,10 @@ describe("ralph-loop non-abort error continuation", () => {
 			},
 		} as never)
 
-		hook.startLoop("session-123", "Keep ultraworking", {
+		hook.startLoop("session-123", "Keep fullscaning", {
 			messageCountAtStart: 0,
 			maxIterations: 5,
-			ultrawork: true,
+			fullscan: true,
 		})
 
 		await hook.event({
@@ -136,11 +136,11 @@ describe("ralph-loop non-abort error continuation", () => {
 			},
 		})
 
-		// then - the ULW continuation keeps the ultrawork directive
+		// then - the ULW continuation keeps the fullscan directive
 		expect(promptCalls).toHaveLength(1)
 		expect(promptCalls[0]?.sessionID).toBe("session-123")
-		expect(promptCalls[0]?.text).toMatch(/^ultrawork /)
-		expect(promptCalls[0]?.text).toContain("Keep ultraworking")
+		expect(promptCalls[0]?.text).toMatch(/^fullscan /)
+		expect(promptCalls[0]?.text).toContain("Keep fullscaning")
 		expect(hook.getState()?.iteration).toBe(2)
 	})
 

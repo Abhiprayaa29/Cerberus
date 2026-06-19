@@ -1,4 +1,4 @@
-import type { CreatedHooks } from "../create-hooks";
+﻿import type { CreatedHooks } from "../create-hooks";
 import { log } from "../shared/logger";
 import { resolveMessageEventSessionID, resolveSessionEventID } from "../shared/event-session-id";
 import { isRecord } from "./event-error-utils";
@@ -49,7 +49,7 @@ export function createEventHookDispatcher(hooks: CreatedHooks, runEventHookSafel
     await runEventHookSafely("directoryAgentsInjector", hooks.directoryAgentsInjector?.event, input);
     await runEventHookSafely("directoryReadmeInjector", hooks.directoryReadmeInjector?.event, input);
     await runEventHookSafely("rulesInjector", hooks.rulesInjector?.event, input);
-    await runEventHookSafely("hephaestusAgentsMdInjector", hooks.hephaestusAgentsMdInjector?.event, input);
+    await runEventHookSafely("scyllaAgentsMdInjector", hooks.scyllaAgentsMdInjector?.event, input);
     await runEventHookSafely("thinkMode", hooks.thinkMode?.event, input);
     await runEventHookSafely(
       "anthropicContextWindowLimitRecovery",
@@ -65,7 +65,7 @@ export function createEventHookDispatcher(hooks: CreatedHooks, runEventHookSafel
     await runEventHookSafely("compactionContextInjector", hooks.compactionContextInjector?.event, input);
     await runEventHookSafely("compactionTodoPreserver", hooks.compactionTodoPreserver?.event, input);
     await runEventHookSafely("writeExistingFileGuard", hooks.writeExistingFileGuard?.event, input);
-    await runEventHookSafely("atlasHook", hooks.atlasHook?.handler, input);
+    await runEventHookSafely("argusHook", hooks.argusHook?.handler, input);
     await runEventHookSafely("autoSlashCommand", hooks.autoSlashCommand?.event, input);
   };
 }

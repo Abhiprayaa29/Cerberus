@@ -1,11 +1,11 @@
-import {
+﻿import {
   buildGeminiDelegationOverride,
   buildGeminiIntentGateEnforcement,
   buildGeminiToolCallExamples,
   buildGeminiToolGuide,
   buildGeminiToolMandate,
   buildGeminiVerificationOverride,
-} from "./sisyphus/gemini";
+} from "./cerberus/gemini";
 import { isGeminiModel } from "./types";
 
 export function applyGeminiFallbackOverrides(model: string, prompt: string): string {

@@ -1,4 +1,4 @@
-import assert from "node:assert/strict";
+﻿import assert from "node:assert/strict";
 import { lstat, mkdir, readFile, rm, symlink, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import test from "node:test";
@@ -16,20 +16,20 @@ test(
 		const codexHome = await makeTempDir();
 		const codexPackageRoot = join(repoRoot, "packages", "omo-codex");
 		const pluginRoot = join(codexPackageRoot, "plugin");
-		const agentsRoot = join(pluginRoot, "components", "ultrawork", "agents");
+		const agentsRoot = join(pluginRoot, "components", "fullscan", "agents");
 
 		await writeJson(join(codexPackageRoot, "marketplace.json"), {
-			name: "sisyphuslabs",
+			name: "cerberuslabs",
 			plugins: [{ name: "omo", source: "./plugins/omo" }],
 		});
 		await writePluginAt(pluginRoot, "omo", "0.1.0");
 		await mkdir(agentsRoot, { recursive: true });
-		for (const agentName of ["explorer", "librarian", "plan"]) {
+		for (const agentName of ["explorer", "intel", "plan"]) {
 			await writeFile(join(agentsRoot, `${agentName}.toml`), `name = "${agentName}"\n`);
 		}
 		await mkdir(join(codexHome, "agents"), { recursive: true });
 		await symlink(
-			join(codexHome, "plugins", "cache", legacyCodexPluginMarketplace, "omo", "0.1.0", "components", "ultrawork", "agents", "explorer.toml"),
+			join(codexHome, "plugins", "cache", legacyCodexPluginMarketplace, "omo", "0.1.0", "components", "fullscan", "agents", "explorer.toml"),
 			join(codexHome, "agents", "explorer.toml"),
 		);
 
@@ -42,8 +42,8 @@ test(
 		});
 
 		assert.equal(result.installed.length, 1);
-		const snapshotPluginPath = join(codexHome, ".tmp", "marketplaces", "sisyphuslabs", "plugins", "omo");
-		for (const agentName of ["explorer", "librarian", "plan"]) {
+		const snapshotPluginPath = join(codexHome, ".tmp", "marketplaces", "cerberuslabs", "plugins", "omo");
+		for (const agentName of ["explorer", "intel", "plan"]) {
 			const agentPath = join(codexHome, "agents", `${agentName}.toml`);
 			const agentStat = await lstat(agentPath);
 			assert.equal(agentStat.isSymbolicLink(), false);
@@ -54,29 +54,29 @@ test(
 		const installedAgents = JSON.parse(await readFile(join(snapshotPluginPath, ".installed-agents.json"), "utf8"));
 		assert.deepEqual(installedAgents.agents.sort(), [
 			join(codexHome, "agents", "explorer.toml"),
-			join(codexHome, "agents", "librarian.toml"),
+			join(codexHome, "agents", "intel.toml"),
 			join(codexHome, "agents", "plan.toml"),
 		]);
 	},
 );
 
 test(
-	"#given local sisyphuslabs install #when plugin cache is pruned #then agent files still resolve from Codex home",
+	"#given local cerberuslabs install #when plugin cache is pruned #then agent files still resolve from Codex home",
 	async () => {
 		const repoRoot = await makeTempDir();
 		const codexHome = await makeTempDir();
 		const codexPackageRoot = join(repoRoot, "packages", "omo-codex");
 		const pluginRoot = join(codexPackageRoot, "plugin");
-		const agentsRoot = join(pluginRoot, "components", "ultrawork", "agents");
+		const agentsRoot = join(pluginRoot, "components", "fullscan", "agents");
 
 		await writeJson(join(codexPackageRoot, "marketplace.json"), {
-			name: "sisyphuslabs",
+			name: "cerberuslabs",
 			plugins: [{ name: "omo", source: "./plugins/omo" }],
 		});
 		await writePluginAt(pluginRoot, "omo", "0.1.0");
 		await mkdir(agentsRoot, { recursive: true });
 		await writeFile(join(agentsRoot, "explorer.toml"), 'name = "explorer"\n');
-		const snapshotRoot = join(codexHome, ".tmp", "marketplaces", "sisyphuslabs");
+		const snapshotRoot = join(codexHome, ".tmp", "marketplaces", "cerberuslabs");
 		await mkdir(join(snapshotRoot, ".git"), { recursive: true });
 		await writeFile(join(snapshotRoot, ".git", "config"), "[remote \"origin\"]\n");
 		await writeFile(join(snapshotRoot, ".codex-marketplace-install.json"), '{"source_type":"git"}\n');
@@ -100,15 +100,15 @@ test(
 	},
 );
 
-test("#given local sisyphuslabs install #when temporary marketplace snapshot is removed #then agent files still resolve from Codex home", async () => {
+test("#given local cerberuslabs install #when temporary marketplace snapshot is removed #then agent files still resolve from Codex home", async () => {
 	const repoRoot = await makeTempDir();
 	const codexHome = await makeTempDir();
 	const codexPackageRoot = join(repoRoot, "packages", "omo-codex");
 	const pluginRoot = join(codexPackageRoot, "plugin");
-	const agentsRoot = join(pluginRoot, "components", "ultrawork", "agents");
+	const agentsRoot = join(pluginRoot, "components", "fullscan", "agents");
 
 	await writeJson(join(codexPackageRoot, "marketplace.json"), {
-		name: "sisyphuslabs",
+		name: "cerberuslabs",
 		plugins: [{ name: "omo", source: "./plugins/omo" }],
 	});
 	await writePluginAt(pluginRoot, "omo", "0.1.0");
@@ -123,24 +123,24 @@ test("#given local sisyphuslabs install #when temporary marketplace snapshot is 
 		runCommand: async () => {},
 		log: () => {},
 	});
-	await rm(join(codexHome, ".tmp", "marketplaces", "sisyphuslabs"), { recursive: true, force: true });
-	await rm(join(codexHome, "plugins", "cache", "sisyphuslabs"), { recursive: true, force: true });
+	await rm(join(codexHome, ".tmp", "marketplaces", "cerberuslabs"), { recursive: true, force: true });
+	await rm(join(codexHome, "plugins", "cache", "cerberuslabs"), { recursive: true, force: true });
 
 	assert.equal(await readFile(join(codexHome, "agents", "explorer.toml"), "utf8"), 'name = "explorer"\n');
 	assert.equal(await readFile(join(codexHome, "agents", "plan.toml"), "utf8"), 'name = "plan"\n');
 });
 
 test(
-	"#given bundled ultrawork plan #when installing locally #then fresh installs write bundled default xhigh",
+	"#given bundled fullscan plan #when installing locally #then fresh installs write bundled default xhigh",
 	async () => {
 		const repoRoot = await makeTempDir();
 		const codexHome = await makeTempDir();
 		const codexPackageRoot = join(repoRoot, "packages", "omo-codex");
 		const pluginRoot = join(codexPackageRoot, "plugin");
-		const agentsRoot = join(pluginRoot, "components", "ultrawork", "agents");
+		const agentsRoot = join(pluginRoot, "components", "fullscan", "agents");
 
 		await writeJson(join(codexPackageRoot, "marketplace.json"), {
-			name: "sisyphuslabs",
+			name: "cerberuslabs",
 			plugins: [{ name: "omo", source: "./plugins/omo" }],
 		});
 		await writePluginAt(pluginRoot, "omo", "0.1.0");
@@ -166,16 +166,16 @@ test(
 );
 
 test(
-	"#given bundled ultrawork plan #when reinstalling without edits #then bundled xhigh stays intact",
+	"#given bundled fullscan plan #when reinstalling without edits #then bundled xhigh stays intact",
 	async () => {
 		const repoRoot = await makeTempDir();
 		const codexHome = await makeTempDir();
 		const codexPackageRoot = join(repoRoot, "packages", "omo-codex");
 		const pluginRoot = join(codexPackageRoot, "plugin");
-		const agentsRoot = join(pluginRoot, "components", "ultrawork", "agents");
+		const agentsRoot = join(pluginRoot, "components", "fullscan", "agents");
 
 		await writeJson(join(codexPackageRoot, "marketplace.json"), {
-			name: "sisyphuslabs",
+			name: "cerberuslabs",
 			plugins: [{ name: "omo", source: "./plugins/omo" }],
 		});
 		await writePluginAt(pluginRoot, "omo", "0.1.0");
@@ -208,16 +208,16 @@ test(
 );
 
 test(
-	"#given user edited installed ultrawork plan #when reinstalling after snapshot refresh #then high survives",
+	"#given user edited installed fullscan plan #when reinstalling after snapshot refresh #then high survives",
 	async () => {
 		const repoRoot = await makeTempDir();
 		const codexHome = await makeTempDir();
 		const codexPackageRoot = join(repoRoot, "packages", "omo-codex");
 		const pluginRoot = join(codexPackageRoot, "plugin");
-		const agentsRoot = join(pluginRoot, "components", "ultrawork", "agents");
+		const agentsRoot = join(pluginRoot, "components", "fullscan", "agents");
 
 		await writeJson(join(codexPackageRoot, "marketplace.json"), {
-			name: "sisyphuslabs",
+			name: "cerberuslabs",
 			plugins: [{ name: "omo", source: "./plugins/omo" }],
 		});
 		await writePluginAt(pluginRoot, "omo", "0.1.0");
@@ -253,16 +253,16 @@ test(
 );
 
 test(
-	"#given user removed installed ultrawork service tier #when reinstalling after snapshot refresh #then removal survives",
+	"#given user removed installed fullscan service tier #when reinstalling after snapshot refresh #then removal survives",
 	async () => {
 		const repoRoot = await makeTempDir();
 		const codexHome = await makeTempDir();
 		const codexPackageRoot = join(repoRoot, "packages", "omo-codex");
 		const pluginRoot = join(codexPackageRoot, "plugin");
-		const agentsRoot = join(pluginRoot, "components", "ultrawork", "agents");
+		const agentsRoot = join(pluginRoot, "components", "fullscan", "agents");
 
 		await writeJson(join(codexPackageRoot, "marketplace.json"), {
-			name: "sisyphuslabs",
+			name: "cerberuslabs",
 			plugins: [{ name: "omo", source: "./plugins/omo" }],
 		});
 		await writePluginAt(pluginRoot, "omo", "0.1.0");
@@ -288,22 +288,22 @@ test(
 			log: () => {},
 		});
 
-		const installedExplorer = await readFile(join(codexHome, "agents", "explorer.toml"), "utf8");
-		assert.equal(installedExplorer.includes("service_tier"), false);
+		const installedScoutr = await readFile(join(codexHome, "agents", "explorer.toml"), "utf8");
+		assert.equal(installedScoutr.includes("service_tier"), false);
 	},
 );
 
 test(
-	"#given user edited installed ultrawork plan #when reinstalling after snapshot refresh #then bundled snapshot target retains xhigh",
+	"#given user edited installed fullscan plan #when reinstalling after snapshot refresh #then bundled snapshot target retains xhigh",
 	async () => {
 		const repoRoot = await makeTempDir();
 		const codexHome = await makeTempDir();
 		const codexPackageRoot = join(repoRoot, "packages", "omo-codex");
 		const pluginRoot = join(codexPackageRoot, "plugin");
-		const agentsRoot = join(pluginRoot, "components", "ultrawork", "agents");
+		const agentsRoot = join(pluginRoot, "components", "fullscan", "agents");
 
 		await writeJson(join(codexPackageRoot, "marketplace.json"), {
-			name: "sisyphuslabs",
+			name: "cerberuslabs",
 			plugins: [{ name: "omo", source: "./plugins/omo" }],
 		});
 		await writePluginAt(pluginRoot, "omo", "0.1.0");
@@ -330,7 +330,7 @@ test(
 		});
 
 		const snapshotPlan = await readFile(
-			join(codexHome, ".tmp", "marketplaces", "sisyphuslabs", "plugins", "omo", "components", "ultrawork", "agents", "plan.toml"),
+			join(codexHome, ".tmp", "marketplaces", "cerberuslabs", "plugins", "omo", "components", "fullscan", "agents", "plan.toml"),
 			"utf8",
 		);
 		assert.ok(snapshotPlan.includes('model_reasoning_effort = "xhigh"'));

@@ -1,9 +1,9 @@
-import { join } from "node:path"
+﻿import { join } from "node:path"
 
 export const RUNTIME_WRAPPER_MARKER = "OMO_GENERATED_RUNTIME_WRAPPER"
 
 export function posixRuntimeWrapper(cliPath: string, codexHome: string, binDir: string, nodeCliPath: string): string {
-  const ulwLoopBin = toPosixPath(join(binDir, "omo-ulw-loop"))
+  const ulwLoopBin = toPosixPath(join(binDir, "omo-pentest-loop"))
   const nodeCli = escapePosixDoubleQuoted(toPosixPath(nodeCliPath))
   const escapedCliPath = escapePosixDoubleQuoted(toPosixPath(cliPath))
   const escapedCodexHome = escapePosixDoubleQuoted(toPosixPath(codexHome))
@@ -13,7 +13,7 @@ export function posixRuntimeWrapper(cliPath: string, codexHome: string, binDir: 
     `# ${RUNTIME_WRAPPER_MARKER}`,
     `export CODEX_HOME="\${CODEX_HOME:-${escapedCodexHome}}"`,
     'export OMO_SPARKSHELL_APP_SERVER_SOCKET="${OMO_SPARKSHELL_APP_SERVER_SOCKET:-$CODEX_HOME/app-server-control/app-server-control.sock}"',
-    'if [ "$1" = "ulw-loop" ] && [ -x "' + escapedUlwLoopBin + '" ]; then',
+    'if [ "$1" = "pentest-loop" ] && [ -x "' + escapedUlwLoopBin + '" ]; then',
     "  shift",
     '  exec "' + escapedUlwLoopBin + '" "$@"',
     "fi",
@@ -49,13 +49,13 @@ export function posixRuntimeWrapper(cliPath: string, codexHome: string, binDir: 
 }
 
 export function windowsRuntimeWrapper(cliPath: string, codexHome: string, binDir: string, nodeCliPath: string): string {
-  const ulwLoopBin = join(binDir, "omo-ulw-loop.cmd")
+  const ulwLoopBin = join(binDir, "omo-pentest-loop.cmd")
   return [
     "@echo off",
     `rem ${RUNTIME_WRAPPER_MARKER}`,
     `if not defined CODEX_HOME set "CODEX_HOME=${codexHome}"`,
     'if not defined OMO_SPARKSHELL_APP_SERVER_SOCKET set "OMO_SPARKSHELL_APP_SERVER_SOCKET=%CODEX_HOME%\\app-server-control\\app-server-control.sock"',
-    `if "%~1"=="ulw-loop" if exist "${ulwLoopBin}" (`,
+    `if "%~1"=="pentest-loop" if exist "${ulwLoopBin}" (`,
     "  shift /1",
     `  "${ulwLoopBin}" %*`,
     "  exit /b %ERRORLEVEL%",

@@ -1,4 +1,4 @@
-import type { Metadata } from "next"
+﻿import type { Metadata } from "next"
 import type { JSX, ReactNode } from "react"
 import { notFound } from "next/navigation"
 import { hasLocale } from "next-intl"
@@ -8,7 +8,7 @@ import { routing } from "@/i18n/routing"
 
 export const metadata: Metadata = {
   description:
-    "Meet Sisyphus: The batteries-included agent that codes like you. Multi-model orchestration, background agents, 54+ lifecycle hooks.",
+    "Meet Cerberus: The batteries-included agent that codes like you. Multi-model orchestration, background agents, 54+ lifecycle hooks.",
 }
 
 export function generateStaticParams(): Array<{ readonly locale: string }> {

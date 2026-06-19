@@ -1,1 +1,1 @@
-export * from "@oh-my-opencode/utils/process-stream-reader"
+﻿export * from "@oh-my-open-pentest/utils/process-stream-reader"

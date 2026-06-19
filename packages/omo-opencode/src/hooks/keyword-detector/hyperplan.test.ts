@@ -1,4 +1,4 @@
-import { describe, expect, test, beforeEach, afterEach, spyOn } from "bun:test"
+﻿import { describe, expect, test, beforeEach, afterEach, spyOn } from "bun:test"
 import type { PluginInput } from "@opencode-ai/plugin"
 import { createKeywordDetectorHook } from "./index"
 import { setMainSession, _resetForTesting } from "../../features/claude-code-session-state"
@@ -210,7 +210,7 @@ describe("keyword-detector hyperplan keyword", () => {
     expect(toastCalls).not.toContain("Hyperplan Mode Activated")
   })
 
-  test("should filter hyperplan keyword in non-main session (only ultrawork allowed there)", async () => {
+  test("should filter hyperplan keyword in non-main session (only fullscan allowed there)", async () => {
     // given - main session set, different (subagent) session triggers hyperplan
     const mainSessionID = "main-hyperplan"
     const subagentSessionID = "subagent-hyperplan"
@@ -230,17 +230,17 @@ describe("keyword-detector hyperplan keyword", () => {
     expect(text).not.toContain("<hyperplan-mode>")
   })
 
-  test("should skip hyperplan injection when agent is prometheus (planner)", async () => {
-    // given - hook running with prometheus agent and a prompt that only triggers hyperplan
-    const sessionID = "hyperplan-prometheus-session"
+  test("should skip hyperplan injection when agent is talos (planner)", async () => {
+    // given - hook running with talos agent and a prompt that only triggers hyperplan
+    const sessionID = "hyperplan-talos-session"
     const hook = createKeywordDetectorHook(createMockPluginInput())
     const output = {
       message: {} as Record<string, unknown>,
       parts: [{ type: "text", text: "hyperplan refactor stuff" }],
     }
 
-    // when - hyperplan keyword detected with prometheus agent
-    await hook["chat.message"]({ sessionID, agent: "prometheus" }, output)
+    // when - hyperplan keyword detected with talos agent
+    await hook["chat.message"]({ sessionID, agent: "talos" }, output)
 
     // then - hyperplan should be filtered out for planner agents
     const text = textOf(output)

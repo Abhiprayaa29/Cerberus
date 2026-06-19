@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 import { afterEach, beforeEach, describe, expect, test } from "bun:test"
 import { existsSync, mkdirSync, rmSync, writeFileSync } from "node:fs"
 import { tmpdir } from "node:os"
@@ -10,8 +10,8 @@ import type { IterationCommitExpectation, RalphLoopState } from "./types"
 import { clearState, writeState } from "./storage"
 import { handleFailedVerification } from "./verification-failure-handler"
 
-describe("ralph-loop dispatch failure invariants", () => {
-	const testDirectory = join(tmpdir(), `ralph-loop-dispatch-failure-${Date.now()}`)
+describe("pentest-loop dispatch failure invariants", () => {
+	const testDirectory = join(tmpdir(), `pentest-loop-dispatch-failure-${Date.now()}`)
 	let promptCalls: Array<{ sessionID: string; text: string }>
 	let toastCalls: Array<{ title: string; message: string; variant: string }>
 	let messagesCalls: Array<{ sessionID: string }>
@@ -189,7 +189,7 @@ describe("ralph-loop dispatch failure invariants", () => {
 	test("#given verification-failure path #when promptAsync throws #then iteration not advanced", async () => {
 		// given
 		const parentTranscriptPath = join(testDirectory, "transcript-parent.jsonl")
-		const oracleTranscriptPath = join(testDirectory, "transcript-oracle.jsonl")
+		const cipherTranscriptPath = join(testDirectory, "transcript-cipher.jsonl")
 		const hook = createRalphLoopHook({
 			directory: testDirectory,
 			project: testDirectory,
@@ -223,31 +223,31 @@ describe("ralph-loop dispatch failure invariants", () => {
 				},
 			},
 		} as never, {
-			getTranscriptPath: (sessionID): string => sessionID === "ses-oracle" ? oracleTranscriptPath : parentTranscriptPath,
+			getTranscriptPath: (sessionID): string => sessionID === "ses-cipher" ? cipherTranscriptPath : parentTranscriptPath,
 		})
 
-		hook.startLoop("session-123", "Build API", { ultrawork: true })
+		hook.startLoop("session-123", "Build API", { fullscan: true })
 		writeState(testDirectory, {
 			...requireState(hook.getState()),
 			iteration: 2,
 			verification_pending: true,
-			verification_session_id: "ses-oracle",
+			verification_session_id: "ses-cipher",
 			completion_promise: ULTRAWORK_VERIFICATION_PROMISE,
 			initial_completion_promise: "DONE",
 		})
 		writeState(testDirectory, {
 			...requireState(hook.getState()),
-			verification_session_id: "ses-oracle",
+			verification_session_id: "ses-cipher",
 		})
 		writeFileSync(
-			oracleTranscriptPath,
+			cipherTranscriptPath,
 			`${JSON.stringify({ type: "tool_result", timestamp: new Date().toISOString(), tool_output: { output: "verification failed" } })}\n`,
 		)
 
 		const preRestartIteration = hook.getState()?.iteration
 
 		// when
-		await hook.event({ event: { type: "session.idle", properties: { sessionID: "ses-oracle" } } })
+		await hook.event({ event: { type: "session.idle", properties: { sessionID: "ses-cipher" } } })
 
 		// then
 		expect(preRestartIteration).toBe(2)
@@ -258,7 +258,7 @@ describe("ralph-loop dispatch failure invariants", () => {
 	test("#given verification-failure path #when promptAsync resolves SDK error #then continuation toast is not shown", async () => {
 		// given
 		const parentTranscriptPath = join(testDirectory, "transcript-parent.jsonl")
-		const oracleTranscriptPath = join(testDirectory, "transcript-oracle.jsonl")
+		const cipherTranscriptPath = join(testDirectory, "transcript-cipher.jsonl")
 		const hook = createRalphLoopHook({
 			directory: testDirectory,
 			project: testDirectory,
@@ -295,25 +295,25 @@ describe("ralph-loop dispatch failure invariants", () => {
 				},
 			},
 		} as never, {
-			getTranscriptPath: (sessionID): string => sessionID === "ses-oracle" ? oracleTranscriptPath : parentTranscriptPath,
+			getTranscriptPath: (sessionID): string => sessionID === "ses-cipher" ? cipherTranscriptPath : parentTranscriptPath,
 		})
 
-		hook.startLoop("session-123", "Build API", { ultrawork: true })
+		hook.startLoop("session-123", "Build API", { fullscan: true })
 		writeState(testDirectory, {
 			...requireState(hook.getState()),
 			iteration: 2,
 			verification_pending: true,
-			verification_session_id: "ses-oracle",
+			verification_session_id: "ses-cipher",
 			completion_promise: ULTRAWORK_VERIFICATION_PROMISE,
 			initial_completion_promise: "DONE",
 		})
 		writeFileSync(
-			oracleTranscriptPath,
+			cipherTranscriptPath,
 			`${JSON.stringify({ type: "tool_result", timestamp: new Date().toISOString(), tool_output: { output: "verification failed" } })}\n`,
 		)
 
 		// when
-		await hook.event({ event: { type: "session.idle", properties: { sessionID: "ses-oracle" } } })
+		await hook.event({ event: { type: "session.idle", properties: { sessionID: "ses-cipher" } } })
 
 		// then
 		expect(hook.getState()).toBeNull()
@@ -475,7 +475,7 @@ describe("ralph-loop dispatch failure invariants", () => {
 				session_id: "session-123",
 				completion_promise: ULTRAWORK_VERIFICATION_PROMISE,
 				verification_pending: true,
-				verification_session_id: "ses-oracle",
+				verification_session_id: "ses-cipher",
 			},
 			directory: testDirectory,
 			apiTimeoutMs: 5000,
@@ -504,7 +504,7 @@ describe("ralph-loop dispatch failure invariants", () => {
 			session_id: "session-123",
 			completion_promise: "DONE",
 			message_count_at_start: 3,
-			ultrawork: true,
+			fullscan: true,
 		}
 		const loopState = {
 			clearVerificationState: () => clearedState,
@@ -541,7 +541,7 @@ describe("ralph-loop dispatch failure invariants", () => {
 				session_id: "session-123",
 				completion_promise: ULTRAWORK_VERIFICATION_PROMISE,
 				verification_pending: true,
-				verification_session_id: "ses-oracle",
+				verification_session_id: "ses-cipher",
 			},
 			directory: testDirectory,
 			apiTimeoutMs: 5000,
@@ -563,7 +563,7 @@ describe("ralph-loop dispatch failure invariants", () => {
 			session_id: "session-123",
 			completion_promise: "DONE",
 			message_count_at_start: 3,
-			ultrawork: true,
+			fullscan: true,
 		}
 		const loopState = {
 			clearVerificationState: () => clearedState,
@@ -608,7 +608,7 @@ describe("ralph-loop dispatch failure invariants", () => {
 				session_id: "session-123",
 				completion_promise: ULTRAWORK_VERIFICATION_PROMISE,
 				verification_pending: true,
-				verification_session_id: "ses-oracle",
+				verification_session_id: "ses-cipher",
 			},
 			directory: testDirectory,
 			apiTimeoutMs: 5000,
@@ -625,7 +625,7 @@ describe("ralph-loop dispatch failure invariants", () => {
 		).toBe(true)
 	})
 
-	test("#given ultrawork completion path #when verification prompt resolves SDK error #then oracle-required toast is not shown", async () => {
+	test("#given fullscan completion path #when verification prompt resolves SDK error #then cipher-required toast is not shown", async () => {
 		// given
 		let cleared = false
 		const loopState = {
@@ -674,7 +674,7 @@ describe("ralph-loop dispatch failure invariants", () => {
 				started_at: new Date().toISOString(),
 				session_id: "session-123",
 				completion_promise: "DONE",
-				ultrawork: true,
+				fullscan: true,
 			},
 			loopState,
 			directory: testDirectory,

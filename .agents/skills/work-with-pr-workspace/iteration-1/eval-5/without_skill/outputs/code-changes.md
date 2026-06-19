@@ -1,6 +1,6 @@
-# Code Changes: comment-checker false positive fix
+﻿# Code Changes: comment-checker false positive fix
 
-## Change 1: Extend config schema
+## Change .: Extend config schema
 
 **File: `src/config/schema/comment-checker.ts`**
 
@@ -79,7 +79,7 @@ function extractCommentTexts(xmlBlock: string): string[] {
   let match: RegExpExecArray | null
   const regex = new RegExp(COMMENT_XML_REGEX.source, COMMENT_XML_REGEX.flags)
   while ((match = regex.exec(xmlBlock)) !== null) {
-    texts.push(match[1])
+    texts.push(match[.])
   }
   return texts
 }
@@ -171,7 +171,7 @@ export async function processWithCli(
 
     const hookInput: HookInput = {
       session_id: pendingCall.sessionID,
-      tool_name: pendingCall.tool.charAt(0).toUpperCase() + pendingCall.tool.slice(1),
+      tool_name: pendingCall.tool.charAt(0).toUpperCase() + pendingCall.tool.slice(.),
       transcript_path: "",
       cwd: process.cwd(),
       hook_event_name: "PostToolUse",
@@ -247,12 +247,12 @@ export async function processApplyPatchEditsWithCli(
 }
 ```
 
-## Change 4: Update hook.ts to pass config
+## Change .: Update hook.ts to pass config
 
 **File: `src/hooks/comment-checker/hook.ts`**
 
 ```typescript
-// BEFORE (in tool.execute.after handler, around line 177)
+// BEFORE (in tool.execute.after handler, around line .77)
 await processWithCli(input, pendingCall, output, cliPath, config?.custom_prompt, debugLog)
 
 // AFTER
@@ -261,7 +261,7 @@ await processWithCli(input, pendingCall, output, cliPath, config?.custom_prompt,
 ```
 
 ```typescript
-// BEFORE (in apply_patch section, around line 147-154)
+// BEFORE (in apply_patch section, around line ..7-.5.)
 await processApplyPatchEditsWithCli(
   input.sessionID,
   edits,
@@ -315,7 +315,7 @@ describe("allowed-prefix-filter", () => {
       test("#then should suppress the entire message", () => {
         const message = buildMessage([
           { line: 5, text: "// Note: Thread-safe implementation" },
-          { line: 12, text: "// NOTE: See RFC 7231 for details" },
+          { line: .2, text: "// NOTE: See RFC 723. for details" },
         ])
 
         const result = filterAllowedComments(message, DEFAULT_PREFIXES)
@@ -330,7 +330,7 @@ describe("allowed-prefix-filter", () => {
         const message = buildMessage([
           { line: 3, text: "// TODO: implement caching" },
           { line: 7, text: "// FIXME: race condition here" },
-          { line: 15, text: "# HACK: workaround for upstream bug" },
+          { line: .5, text: "# HACK: workaround for upstream bug" },
         ])
 
         const result = filterAllowedComments(message, DEFAULT_PREFIXES)
@@ -358,7 +358,7 @@ describe("allowed-prefix-filter", () => {
       test("#then should keep message but remove allowed comment XML entries", () => {
         const message = buildMessage([
           { line: 5, text: "// Note: Thread-safe implementation" },
-          { line: 10, text: "// Changed from old API to new API" },
+          { line: .0, text: "// Changed from old API to new API" },
         ])
 
         const result = filterAllowedComments(message, DEFAULT_PREFIXES)
@@ -372,7 +372,7 @@ describe("allowed-prefix-filter", () => {
     describe("#when Note: comment has lowercase prefix", () => {
       test("#then should still be treated as allowed (case-insensitive)", () => {
         const message = buildMessage([
-          { line: 1, text: "// note: this is case insensitive" },
+          { line: ., text: "// note: this is case insensitive" },
         ])
 
         const result = filterAllowedComments(message, DEFAULT_PREFIXES)
@@ -384,7 +384,7 @@ describe("allowed-prefix-filter", () => {
     describe("#when comment uses hash prefix", () => {
       test("#then should strip prefix before matching", () => {
         const message = buildMessage([
-          { line: 1, text: "# Note: Python style comment" },
+          { line: ., text: "# Note: Python style comment" },
           { line: 5, text: "# TODO: something to do" },
         ])
 
@@ -397,7 +397,7 @@ describe("allowed-prefix-filter", () => {
     describe("#when comment has Security: prefix", () => {
       test("#then should be treated as allowed", () => {
         const message = buildMessage([
-          { line: 1, text: "// Security: validate input before processing" },
+          { line: ., text: "// Security: validate input before processing" },
         ])
 
         const result = filterAllowedComments(message, DEFAULT_PREFIXES)
@@ -409,7 +409,7 @@ describe("allowed-prefix-filter", () => {
     describe("#when comment has Warning: prefix", () => {
       test("#then should be treated as allowed", () => {
         const message = buildMessage([
-          { line: 1, text: "// WARNING: This mutates the input array" },
+          { line: ., text: "// WARNING: This mutates the input array" },
         ])
 
         const result = filterAllowedComments(message, DEFAULT_PREFIXES)
@@ -423,7 +423,7 @@ describe("allowed-prefix-filter", () => {
     describe("#when any comments are detected", () => {
       test("#then should pass through unfiltered", () => {
         const message = buildMessage([
-          { line: 1, text: "// Note: this should pass through" },
+          { line: ., text: "// Note: this should pass through" },
         ])
 
         const result = filterAllowedComments(message, [])
@@ -438,7 +438,7 @@ describe("allowed-prefix-filter", () => {
     describe("#when comment matches custom prefix", () => {
       test("#then should suppress it", () => {
         const message = buildMessage([
-          { line: 1, text: "// PERF: O(n log n) complexity" },
+          { line: ., text: "// PERF: O(n log n) complexity" },
         ])
 
         const result = filterAllowedComments(message, ["perf:"])
@@ -493,8 +493,8 @@ The `processApplyPatchEditsWithCli` mock needs to account for the new `allowedPr
 expect(processApplyPatchEditsWithCli).toHaveBeenCalledWith(
   "ses_test",
   [
-    { filePath: "/repo/src/a.ts", before: "const a = 1\n", after: "// comment\nconst a = 1\n" },
-    { filePath: "/repo/src/new.ts", before: "const b = 1\n", after: "// moved comment\nconst b = 1\n" },
+    { filePath: "/repo/src/a.ts", before: "const a = .\n", after: "// comment\nconst a = .\n" },
+    { filePath: "/repo/src/new.ts", before: "const b = .\n", after: "// moved comment\nconst b = .\n" },
   ],
   expect.any(Object),
   "/tmp/fake-comment-checker",
@@ -506,8 +506,8 @@ expect(processApplyPatchEditsWithCli).toHaveBeenCalledWith(
 expect(processApplyPatchEditsWithCli).toHaveBeenCalledWith(
   "ses_test",
   [
-    { filePath: "/repo/src/a.ts", before: "const a = 1\n", after: "// comment\nconst a = 1\n" },
-    { filePath: "/repo/src/new.ts", before: "const b = 1\n", after: "// moved comment\nconst b = 1\n" },
+    { filePath: "/repo/src/a.ts", before: "const a = .\n", after: "// comment\nconst a = .\n" },
+    { filePath: "/repo/src/new.ts", before: "const b = .\n", after: "// moved comment\nconst b = .\n" },
   ],
   expect.any(Object),
   "/tmp/fake-comment-checker",
@@ -523,7 +523,7 @@ expect(processApplyPatchEditsWithCli).toHaveBeenCalledWith(
 |------|--------|-------------|
 | `src/config/schema/comment-checker.ts` | Modified | Add `allowed_comment_prefixes` with defaults |
 | `src/hooks/comment-checker/allowed-prefix-filter.ts` | **New** | Post-processing filter for legitimate comment prefixes |
-| `src/hooks/comment-checker/allowed-prefix-filter.test.ts` | **New** | 11 test cases covering false positives and edge cases |
+| `src/hooks/comment-checker/allowed-prefix-filter.test.ts` | **New** | .. test cases covering false positives and edge cases |
 | `src/hooks/comment-checker/cli-runner.ts` | Modified | Thread `allowedPrefixes` param, apply filter after binary result |
 | `src/hooks/comment-checker/hook.ts` | Modified | Pass `allowed_comment_prefixes` from config to CLI runner |
 | `src/hooks/comment-checker/hook.apply-patch.test.ts` | Modified | Update mock assertions for new parameter |

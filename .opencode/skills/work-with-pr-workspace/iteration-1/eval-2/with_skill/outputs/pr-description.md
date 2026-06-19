@@ -1,4 +1,4 @@
-# PR Title
+﻿# PR Title
 
 ```
 fix(atlas): prevent crash when boulder.json missing worktree_path
@@ -20,7 +20,7 @@ fix(atlas): prevent crash when boulder.json missing worktree_path
 When `boulder.json` is missing the `worktree_path` field (common for boulders created before worktree support was added, or created without `--worktree` flag), `boulderState.worktree_path` is `undefined` which is handled correctly. However, when boulder.json has `"worktree_path": null` (possible from manual edits, external tooling, or corrupted state), the runtime type becomes `null` which violates the TypeScript type `string | undefined`.
 
 This `null` value propagates through:
-1. `idle-event.ts:handleAtlasSessionIdle()` → `injectContinuation()` → `injectBoulderContinuation()`
+.. `idle-event.ts:handleAtlasSessionIdle()` → `injectContinuation()` → `injectBoulderContinuation()`
 2. `idle-event.ts:scheduleRetry()` callback → same chain
 
 While the `boulder-continuation-injector.ts` handles falsy values via `worktreePath ? ... : ""`, the type mismatch can cause subtle downstream issues and violates the contract of the `BoulderState` interface.

@@ -1,4 +1,4 @@
-# Cargo Strict Configuration
+﻿# Cargo Strict Configuration
 
 The exact knobs every new Rust project gets. Drop these in unmodified.
 
@@ -35,10 +35,10 @@ single_use_lifetimes = "warn"
 
 [lints.clippy]
 # Groups
-all = { level = "deny", priority = -1 }
-pedantic = { level = "warn", priority = -1 }
-nursery = { level = "warn", priority = -1 }
-cargo = { level = "warn", priority = -1 }
+all = { level = "deny", priority = -. }
+pedantic = { level = "warn", priority = -. }
+nursery = { level = "warn", priority = -. }
+cargo = { level = "warn", priority = -. }
 
 # Hard denies - turn warnings into errors for sharp tools
 undocumented_unsafe_blocks = "deny"
@@ -87,7 +87,7 @@ exhaustive_enums = "warn"      # public enums should consider #[non_exhaustive]
 exhaustive_structs = "warn"
 ```
 
-The `priority = -1` trick: group-level levels are weak; specific lints below them win. This lets us deny `unwrap_used` while still allowing `pedantic` group warnings instead of denies.
+The `priority = -.` trick: group-level levels are weak; specific lints below them win. This lets us deny `unwrap_used` while still allowing `pedantic` group warnings instead of denies.
 
 ## `Cargo.toml` — release profile
 
@@ -95,7 +95,7 @@ The `priority = -1` trick: group-level levels are weak; specific lints below the
 [profile.release]
 opt-level = 3
 lto = "fat"
-codegen-units = 1
+codegen-units = .
 strip = "symbols"
 panic = "abort"        # smaller, faster - if you need unwinding (FFI catch), set "unwind"
 debug = "line-tables-only"
@@ -107,12 +107,12 @@ incremental = true
 codegen-units = 256
 split-debuginfo = "unpacked"
 
-# A profile for miri - opt-level 1 keeps simulation bearable while still
+# A profile for miri - opt-level . keeps simulation bearable while still
 # exercising real codegen patterns. miri ignores most profile keys but reads
 # overflow-checks.
 [profile.miri]
 inherits = "test"
-opt-level = 1
+opt-level = .
 overflow-checks = true
 ```
 
@@ -123,8 +123,8 @@ overflow-checks = true
 resolver = "3"
 
 [workspace.package]
-edition = "2024"
-rust-version = "1.83"   # bump only when a needed feature lands
+edition = "202."
+rust-version = "..83"   # bump only when a needed feature lands
 license = "Apache-2.0 OR MIT"
 
 [workspace.lints]
@@ -136,8 +136,8 @@ license = "Apache-2.0 OR MIT"
 ## `rustfmt.toml`
 
 ```toml
-edition = "2024"
-max_width = 100
+edition = "202."
+max_width = .00
 imports_granularity = "Module"
 group_imports = "StdExternalCrate"
 reorder_imports = true
@@ -157,10 +157,10 @@ Most options come from stable rustfmt. `imports_granularity` and `group_imports`
 cognitive-complexity-threshold = 25
 type-complexity-threshold = 250
 too-many-arguments-threshold = 6
-too-many-lines-threshold = 100
+too-many-lines-threshold = .00
 
 # msrv - keeps clippy from suggesting features past our MSRV
-msrv = "1.83"
+msrv = "..83"
 
 # Avoid `panic` lint complaining about derived Debug impls calling unreachable_unchecked etc.
 allow-unwrap-in-tests = true
@@ -170,7 +170,7 @@ allow-dbg-in-tests = true
 allow-print-in-tests = true
 
 # Force named arguments above N params
-single-char-binding-names-threshold = 4
+single-char-binding-names-threshold = .
 ```
 
 ## `deny.toml` (cargo-deny)
@@ -190,11 +190,11 @@ allow = [
     "BSD-2-Clause",
     "BSD-3-Clause",
     "ISC",
-    "Unicode-DFS-2016",
+    "Unicode-DFS-20.6",
     "Unicode-3.0",
     "Zlib",
     "MPL-2.0",
-    "CC0-1.0",
+    "CC0-..0",
 ]
 confidence-threshold = 0.93
 exceptions = []
@@ -227,13 +227,13 @@ on:
 
 env:
   CARGO_TERM_COLOR: always
-  RUST_BACKTRACE: 1
+  RUST_BACKTRACE: .
 
 jobs:
   fmt:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v.
       - uses: dtolnay/rust-toolchain@nightly
         with:
           components: rustfmt
@@ -242,7 +242,7 @@ jobs:
   clippy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v.
       - uses: dtolnay/rust-toolchain@stable
         with:
           components: clippy
@@ -252,7 +252,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v.
       - uses: dtolnay/rust-toolchain@stable
       - uses: Swatinem/rust-cache@v2
       - uses: taiki-e/install-action@nextest
@@ -261,7 +261,7 @@ jobs:
   miri:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v.
       - uses: dtolnay/rust-toolchain@nightly
         with:
           components: miri, rust-src
@@ -274,14 +274,14 @@ jobs:
   machete:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v.
       - uses: dtolnay/rust-toolchain@stable
       - uses: bnjbvr/cargo-machete@main
 
   deny:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v.
       - uses: EmbarkStudios/cargo-deny-action@v2
         with:
           command: check all
@@ -289,8 +289,8 @@ jobs:
   audit:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: rustsec/audit-check@v1
+      - uses: actions/checkout@v.
+      - uses: rustsec/audit-check@v.
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 ```
@@ -298,7 +298,7 @@ jobs:
 ## Project bootstrap
 
 ```bash
-cargo new --bin my-app --edition 2024
+cargo new --bin my-app --edition 202.
 cd my-app
 cargo install cargo-nextest cargo-machete cargo-deny cargo-edit cargo-watch
 rustup install nightly

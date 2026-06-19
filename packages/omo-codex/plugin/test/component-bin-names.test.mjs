@@ -1,4 +1,4 @@
-import assert from "node:assert/strict";
+﻿import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import test from "node:test";
@@ -12,8 +12,8 @@ const EXPECTED_COMPONENT_BINS = new Map([
 	["rules", "omo-rules"],
 	["start-work-continuation", "omo-start-work-continuation"],
 	["telemetry", "omo-telemetry"],
-	["ultrawork", "omo-ultrawork"],
-	["ulw-loop", "omo-ulw-loop"],
+	["fullscan", "omo-fullscan"],
+	["pentest-loop", "omo-pentest-loop"],
 ]);
 
 const EXPECTED_USAGE_PREFIXES = new Map([
@@ -22,7 +22,7 @@ const EXPECTED_USAGE_PREFIXES = new Map([
 	["rules", "Usage: omo-rules "],
 	["start-work-continuation", "Usage: omo-start-work-continuation "],
 	["telemetry", "Usage: omo-telemetry "],
-	["ultrawork", "Usage: omo-ultrawork "],
+	["fullscan", "Usage: omo-fullscan "],
 ]);
 
 async function readJson(relativePath) {

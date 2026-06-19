@@ -1,4 +1,4 @@
-import { describe, expect, test } from "bun:test"
+﻿import { describe, expect, test } from "bun:test"
 import { resolveSessionAgent } from "./session-agent-resolver"
 
 describe("resolveSessionAgent", () => {
@@ -9,8 +9,8 @@ describe("resolveSessionAgent", () => {
         messages: async () => ({
           data: [
             { info: { role: "user" } },
-            { info: { role: "assistant", agent: "explore" } },
-            { info: { role: "assistant", agent: "oracle" } },
+            { info: { role: "assistant", agent: "scout" } },
+            { info: { role: "assistant", agent: "cipher" } },
           ],
         }),
       },
@@ -20,7 +20,7 @@ describe("resolveSessionAgent", () => {
     const agent = await resolveSessionAgent(client, "ses_test")
 
     //#then
-    expect(agent).toBe("explore")
+    expect(agent).toBe("scout")
   })
 
   test("skips messages without agent field", async () => {

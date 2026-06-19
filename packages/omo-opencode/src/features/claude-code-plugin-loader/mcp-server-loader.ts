@@ -1,1 +1,1 @@
-export * from "@oh-my-opencode/claude-code-compat-core/claude-code-plugin-loader/mcp-server-loader"
+﻿export * from "@oh-my-open-pentest/claude-code-compat-core/claude-code-plugin-loader/mcp-server-loader"

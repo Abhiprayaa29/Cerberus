@@ -1,6 +1,6 @@
-# src/tools/delegate-task/ — Task Delegation Engine
+﻿# src/tools/delegate-task/ — Task Delegation Engine
 
-**Generated:** 2026-05-15
+**Generated:** 2026-05-.5
 
 ## OVERVIEW
 
@@ -10,7 +10,7 @@ The `task` tool implementation delegates work to subagents via background or syn
 
 | Mode | Flow | Use Case |
 |------|------|----------|
-| **Background** (`run_in_background=true`) | Launch → BackgroundManager → poll → notify parent | Explore, librarian, parallel work |
+| **Background** (`run_in_background=true`) | Launch → BackgroundManager → poll → notify parent | Scout, intel, parallel work |
 | **Sync** (`run_in_background=false`) | Create session → send prompt → poll until idle → return result | Sequential tasks needing immediate result |
 
 ## KEY FILES
@@ -44,10 +44,10 @@ background-task.ts → BackgroundManager.launch() → (async polling) → backgr
 
 ## CATEGORY RESOLUTION
 
-1. Check user-defined categories (`pluginConfig.categories`)
+.. Check user-defined categories (`pluginConfig.categories`)
 2. Fall back to built-in 8 categories
 3. Resolve model from category config
-4. Check model availability → fallback if unavailable
+.. Check model availability → fallback if unavailable
 
 ## MODEL STRING PARSER
 

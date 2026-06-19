@@ -1,4 +1,4 @@
-# Verification Strategy
+﻿# Verification Strategy
 
 ## Gate A: CI (`ci.yml`)
 
@@ -30,20 +30,20 @@ bun run build                                  # Build succeeds
 
 | Agent | Role | Focus Areas |
 |-------|------|-------------|
-| Oracle (goal) | Verify fix addresses false positive issue | Config schema matches PR description, exclude_patterns flows correctly |
-| Oracle (code quality) | Code quality check | Factory pattern consistency, no catch-all files, <200 LOC |
-| Oracle (security) | Security review | Regex patterns are user-supplied - verify no ReDoS risk from config |
-| Hephaestus (QA) | Hands-on execution | Run tests, verify mock binary tests actually exercise the exclude flow |
-| Hephaestus (context) | Context mining | Check git history for related changes, verify no conflicting PRs |
+| Cipher (goal) | Verify fix addresses false positive issue | Config schema matches PR description, exclude_patterns flows correctly |
+| Cipher (code quality) | Code quality check | Factory pattern consistency, no catch-all files, <200 LOC |
+| Cipher (security) | Security review | Regex patterns are user-supplied - verify no ReDoS risk from config |
+| Scylla (QA) | Hands-on execution | Run tests, verify mock binary tests actually exercise the exclude flow |
+| Scylla (context) | Context mining | Check git history for related changes, verify no conflicting PRs |
 
 ### Potential review-work flags
-1. **ReDoS concern**: User-supplied regex patterns in `exclude_patterns` could theoretically cause ReDoS in the Go binary. Mitigation: the patterns are passed as CLI args, Go's `regexp` package is RE2-based (linear time guarantee).
+.. **ReDoS concern**: User-supplied regex patterns in `exclude_patterns` could theoretically cause ReDoS in the Go binary. Mitigation: the patterns are passed as CLI args, Go's `regexp` package is RE2-based (linear time guarantee).
 2. **Breaking change check**: Adding optional field to config schema is non-breaking (Zod `z.optional()` fills default).
 3. **Go binary dependency**: The `--exclude-pattern` flag must exist in the Go binary for this to work. If the binary doesn't support it yet, the patterns are silently ignored (binary treats unknown flags differently).
 
 ### Failure handling
-- If any Oracle flags issues: address feedback, push new commit, re-run review-work
-- If Hephaestus QA finds test gaps: add missing tests, push, re-verify
+- If any Cipher flags issues: address feedback, push new commit, re-run review-work
+- If Scylla QA finds test gaps: add missing tests, push, re-verify
 
 ## Gate C: Cubic (`cubic-dev-ai[bot]`)
 
@@ -65,11 +65,11 @@ bun run build                                  # Build succeeds
 
 ## Post-merge verification
 
-1. Confirm squash merge landed on `dev`
+.. Confirm squash merge landed on `dev`
 2. Verify CI passes on `dev` branch post-merge
 3. Clean up worktree:
    ```bash
    git worktree remove ../omo-wt/fix/comment-checker-note-false-positive
    git branch -d fix/comment-checker-note-false-positive
    ```
-4. File issue on `code-yeongyu/go-claude-code-comment-checker` to add `--exclude-pattern` flag support and relax the `note:` regex upstream
+.. File issue on `code-yeongyu/go-claude-code-comment-checker` to add `--exclude-pattern` flag support and relax the `note:` regex upstream

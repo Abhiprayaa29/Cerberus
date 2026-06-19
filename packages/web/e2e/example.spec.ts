@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test"
+﻿import { test, expect } from "@playwright/test"
 
 test.describe("Landing Page", () => {
   test("renders hero section with title and CTA", async ({ page }) => {
@@ -10,7 +10,7 @@ test.describe("Landing Page", () => {
     const getStartedButton = page.getByRole("button", { name: "Get Started" })
 
     // then
-    await expect(page).toHaveTitle(/Oh My OpenAgent/)
+    await expect(page).toHaveTitle(/Oh My Open Pentest/)
     await expect(heading).toBeVisible()
     await expect(getStartedButton).toBeVisible()
   })
@@ -20,7 +20,7 @@ test.describe("Landing Page", () => {
     await page.goto("/")
 
     // when
-    const installCommand = page.getByText("bunx oh-my-openagent install").first()
+    const installCommand = page.getByText("bunx oh-my-open-pentest install").first()
 
     // then
     await expect(installCommand).toBeVisible()
@@ -32,14 +32,14 @@ test.describe("Landing Page", () => {
 
     // when / then
     const agentNames = [
-      "Sisyphus",
-      "Hephaestus",
-      "Oracle",
-      "Librarian",
-      "Explore",
-      "Prometheus",
-      "Metis",
-      "Momus",
+      "Cerberus",
+      "Scylla",
+      "Cipher",
+      "Intel",
+      "Scout",
+      "Talos",
+      "Vanguard",
+      "Sentinel",
       "Atlas",
     ]
     for (const name of agentNames) {
@@ -201,10 +201,10 @@ test.describe("Manifesto Page", () => {
     await page.goto("/manifesto", { waitUntil: "domcontentloaded", timeout: 45000 })
 
     // when
-    const ctaLink = page.getByRole("link", { name: /Get Oh My OpenAgent/i })
+    const ctaLink = page.getByRole("link", { name: /Get Oh My Open Pentest/i })
 
     // then
     await expect(ctaLink).toBeVisible()
-    await expect(ctaLink).toHaveAttribute("href", "https://github.com/code-yeongyu/oh-my-openagent")
+    await expect(ctaLink).toHaveAttribute("href", "https://github.com/code-yeongyu/oh-my-open-pentest")
   })
 })

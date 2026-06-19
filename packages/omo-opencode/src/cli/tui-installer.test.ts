@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from "bun:test"
+﻿import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from "bun:test"
 import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs"
 import { tmpdir } from "node:os"
 import { join } from "node:path"
@@ -142,7 +142,7 @@ describe("runTuiInstaller", () => {
       }),
       spyOn(configManager, "writeOmoConfig").mockReturnValue({
         success: true,
-        configPath: "/tmp/oh-my-opencode.jsonc",
+        configPath: "/tmp/oh-my-open-pentest.jsonc",
       }),
     ]
 
@@ -201,7 +201,7 @@ describe("runTuiInstaller", () => {
         }),
         spyOn(configManager, "writeOmoConfig").mockReturnValue({
           success: true,
-          configPath: join(configDir, "oh-my-openagent.jsonc"),
+          configPath: join(configDir, "oh-my-open-pentest.jsonc"),
         }),
       ]
 
@@ -287,7 +287,7 @@ describe("runTuiInstaller", () => {
       }),
       spyOn(configManager, "writeOmoConfig").mockReturnValue({
         success: true,
-        configPath: "/tmp/oh-my-opencode.jsonc",
+        configPath: "/tmp/oh-my-open-pentest.jsonc",
       }),
     ]
 
@@ -342,7 +342,7 @@ describe("runTuiInstaller", () => {
       }),
       spyOn(configManager, "writeOmoConfig").mockReturnValue({
         success: true,
-        configPath: "/tmp/oh-my-opencode.jsonc",
+        configPath: "/tmp/oh-my-open-pentest.jsonc",
       }),
     ]
 
@@ -472,11 +472,11 @@ describe("runTuiInstaller", () => {
       }),
       spyOn(configManager, "writeOmoConfig").mockReturnValue({
         success: true,
-        configPath: "/tmp/oh-my-opencode.jsonc",
+        configPath: "/tmp/oh-my-open-pentest.jsonc",
       }),
     ]
     const starSpy = spyOn(starRequest, "starGitHubRepositories").mockResolvedValue([
-      { repository: "code-yeongyu/oh-my-openagent", ok: true },
+      { repository: "code-yeongyu/oh-my-open-pentest", ok: true },
       { repository: "code-yeongyu/lazycodex", ok: true },
     ])
 

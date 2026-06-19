@@ -1,5 +1,5 @@
-import { describe, expect, it } from "bun:test"
-import { OMO_INTERNAL_INITIATOR_MARKER } from "../../shared/internal-initiator-marker"
+﻿import { describe, expect, it } from "bun:test"
+import { OMOP_INTERNAL_INITIATOR_MARKER } from "../../shared/internal-initiator-marker"
 import {
   detectSlashCommand,
   extractPromptText,
@@ -175,11 +175,11 @@ After`
   })
 
   describe("isExcludedCommand", () => {
-    it("should exclude ralph-loop", () => {
-      // given ralph-loop command
+    it("should exclude pentest-loop", () => {
+      // given pentest-loop command
       // when checking exclusion
       // then should be excluded
-      expect(isExcludedCommand("ralph-loop")).toBe(true)
+      expect(isExcludedCommand("pentest-loop")).toBe(true)
     })
 
     it("should exclude cancel-ralph", () => {
@@ -246,7 +246,7 @@ After`
 
     it("should NOT detect excluded commands", () => {
       // given excluded command
-      const text = "/ralph-loop do something"
+      const text = "/pentest-loop do something"
 
       // when detecting
       const result = detectSlashCommand(text)
@@ -312,7 +312,7 @@ After`
       // given
       const parts = [
         { type: "text", text: "/commit from synthetic", synthetic: true },
-        { type: "text", text: `/commit from marker\n${OMO_INTERNAL_INITIATOR_MARKER}` },
+        { type: "text", text: `/commit from marker\n${OMOP_INTERNAL_INITIATOR_MARKER}` },
         { type: "text", text: "real request" },
       ]
 
@@ -329,7 +329,7 @@ After`
       // given
       const parts = [
         { type: "text", text: "/commit synthetic", synthetic: true },
-        { type: "text", text: `/plan internal\n${OMO_INTERNAL_INITIATOR_MARKER}` },
+        { type: "text", text: `/plan internal\n${OMOP_INTERNAL_INITIATOR_MARKER}` },
         { type: "text", text: "/real-command" },
       ]
 
@@ -344,7 +344,7 @@ After`
       // given
       const parts = [
         { type: "text", text: "/commit synthetic", synthetic: true },
-        { type: "text", text: `/plan internal\n${OMO_INTERNAL_INITIATOR_MARKER}` },
+        { type: "text", text: `/plan internal\n${OMOP_INTERNAL_INITIATOR_MARKER}` },
       ]
 
       // when

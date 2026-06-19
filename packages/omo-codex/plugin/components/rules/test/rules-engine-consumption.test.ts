@@ -1,4 +1,4 @@
-import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+﻿import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
@@ -9,7 +9,7 @@ import {
 	parseRule,
 	scanRuleFiles,
 	SOURCE_PRIORITY,
-} from "@oh-my-opencode/rules-engine/engine";
+} from "@oh-my-open-pentest/rules-engine/engine";
 
 const tempDirectories: string[] = [];
 
@@ -25,7 +25,7 @@ describe("rules-engine package consumption", () => {
 		const pluginRoot = mkdtempSync(join(tmpdir(), "codex-rules-engine-consumption-"));
 		tempDirectories.push(pluginRoot);
 		mkdirSync(join(pluginRoot, "bundled-rules"), { recursive: true });
-		writeFileSync(join(pluginRoot, "bundled-rules", "hephaestus.md"), "---\nalwaysApply: true\n---\nBundled\n");
+		writeFileSync(join(pluginRoot, "bundled-rules", "scylla.md"), "---\nalwaysApply: true\n---\nBundled\n");
 		writeFileSync(
 			join(pluginRoot, "bundled-rules", "windows-git-bash.md"),
 			"---\nalwaysApply: true\n---\nWindows only\n",
@@ -38,10 +38,10 @@ describe("rules-engine package consumption", () => {
 		// then
 		expect(SOURCE_PRIORITY.get("plugin-bundled")).toBe(200);
 		expect(nonWindowsCandidates.map((candidate) => candidate.relativePath)).toEqual([
-			"bundled-rules/hephaestus.md",
+			"bundled-rules/scylla.md",
 		]);
 		expect(windowsCandidates.map((candidate) => candidate.relativePath)).toEqual([
-			"bundled-rules/hephaestus.md",
+			"bundled-rules/scylla.md",
 			"bundled-rules/windows-git-bash.md",
 		]);
 	});

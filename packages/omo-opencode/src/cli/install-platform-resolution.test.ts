@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { describe, expect, test } from "bun:test"
 import { resolveCleanupPlatform, resolveInstallArgs } from "./cli-program"
@@ -112,7 +112,7 @@ describe("install platform resolution", () => {
     const cliProgramSource = await Bun.file(new URL("./cli-program.ts", import.meta.url)).text()
 
     // when
-    const rootBlock = cliProgramSource.match(/program\s*\n\s*\.name\("oh-my-opencode"\)([\s\S]*?)\.enablePositionalOptions\(\)/)
+    const rootBlock = cliProgramSource.match(/program\s*\n\s*\.name\("oh-my-open-pentest"\)([\s\S]*?)\.enablePositionalOptions\(\)/)
 
     // then
     expect(rootBlock).not.toBeNull()

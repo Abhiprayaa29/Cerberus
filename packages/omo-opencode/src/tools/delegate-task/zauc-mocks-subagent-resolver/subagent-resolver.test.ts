@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { afterEach, beforeEach, describe, expect, mock, test } from "bun:test"
 import type { DelegateTaskArgs } from "../types"
@@ -40,7 +40,7 @@ function createBaseArgs(overrides?: Partial<DelegateTaskArgs>): DelegateTaskArgs
     prompt: "Review the current changes",
     run_in_background: false,
     load_skills: [],
-    subagent_type: "oracle",
+    subagent_type: "cipher",
     ...overrides,
   }
 }
@@ -111,12 +111,12 @@ describe("resolveSubagentExecution", () => {
     })
 
     //#when
-    const result = await resolveSubagentExecution(args, executorCtx, "sisyphus", "deep")
+    const result = await resolveSubagentExecution(args, executorCtx, "cerberus", "deep")
 
     //#then
     expect(result.agentToUse).toBe("")
     expect(result.categoryModel).toBeUndefined()
-    expect(result.error).toBe("Failed to delegate to agent \"oracle\": agents API unavailable")
+    expect(result.error).toBe("Failed to delegate to agent \"cipher\": agents API unavailable")
   })
 
   test("returns delegation error when subagent resolution throws", async () => {
@@ -127,7 +127,7 @@ describe("resolveSubagentExecution", () => {
     })
 
     //#when
-    const result = await resolveSubagentExecution(args, executorCtx, "sisyphus", "deep")
+    const result = await resolveSubagentExecution(args, executorCtx, "cerberus", "deep")
 
     //#then
     expect(result.agentToUse).toBe("")
@@ -137,39 +137,39 @@ describe("resolveSubagentExecution", () => {
 
   test("hides primary agents from task delegation lookups", async () => {
     //#given
-    const args = createBaseArgs({ subagent_type: "sisyphus" })
+    const args = createBaseArgs({ subagent_type: "cerberus" })
     const executorCtx = createExecutorContext(async () => ([
-      { name: "sisyphus", mode: "primary" },
-      { name: "oracle", mode: "subagent" },
-      { name: "metis", mode: "all" },
+      { name: "cerberus", mode: "primary" },
+      { name: "cipher", mode: "subagent" },
+      { name: "vanguard", mode: "all" },
     ]))
 
     //#when
-    const result = await resolveSubagentExecution(args, executorCtx, "sisyphus", "deep")
+    const result = await resolveSubagentExecution(args, executorCtx, "cerberus", "deep")
 
     //#then
     expect(result.agentToUse).toBe("")
     expect(result.categoryModel).toBeUndefined()
-    expect(result.error).toBe('Cannot delegate to primary agent "sisyphus" via task. Select that agent directly instead.')
+    expect(result.error).toBe('Cannot delegate to primary agent "cerberus" via task. Select that agent directly instead.')
   })
 
   test("returns explicit error for primary display-name agents", async () => {
     //#given
-    const args = createBaseArgs({ subagent_type: "Prometheus - Plan Builder" })
+    const args = createBaseArgs({ subagent_type: "Talos - Plan Builder" })
     const executorCtx = createExecutorContext(async () => ([
-      { name: "Prometheus - Plan Builder", mode: "primary" },
-      { name: "oracle", mode: "subagent" },
+      { name: "Talos - Plan Builder", mode: "primary" },
+      { name: "cipher", mode: "subagent" },
     ]))
 
     //#when
-    const result = await resolveSubagentExecution(args, executorCtx, "sisyphus", "deep")
+    const result = await resolveSubagentExecution(args, executorCtx, "cerberus", "deep")
 
     //#then
     expect(result.agentToUse).toBe("")
     expect(result.categoryModel).toBeUndefined()
-    // Prometheus is registry-hard-reject (AGENT_ELIGIBILITY_REGISTRY); the coordinator guard (#4027 / #4071) fires before
-    // the primary-agent guard. Either rejection message is acceptable as long as prometheus is blocked from delegation.
-    expect(result.error).toContain('"Prometheus - Plan Builder"')
+    // Talos is registry-hard-reject (AGENT_ELIGIBILITY_REGISTRY); the coordinator guard (#4027 / #4071) fires before
+    // the primary-agent guard. Either rejection message is acceptable as long as talos is blocked from delegation.
+    expect(result.error).toContain('"Talos - Plan Builder"')
     expect(result.error).toMatch(/Cannot delegate to (coordinator agent|primary agent)/)
   })
 
@@ -180,54 +180,54 @@ describe("resolveSubagentExecution", () => {
       connected: ["anthropic"],
       updatedAt: "2026-03-03T00:00:00.000Z",
     })
-    const args = createBaseArgs({ subagent_type: "sisyphus" })
+    const args = createBaseArgs({ subagent_type: "cerberus" })
     const executorCtx = createExecutorContext(async () => ([
-      { name: "Sisyphus - ultraworker", mode: "primary", model: "anthropic/claude-opus-4-7" },
-      { name: "oracle", mode: "subagent" },
+      { name: "Cerberus - fullscaner", mode: "primary", model: "anthropic/claude-opus-4-7" },
+      { name: "cipher", mode: "subagent" },
     ]))
 
     //#when
-    const result = await resolveSubagentExecution(args, executorCtx, "sisyphus", "deep", {
+    const result = await resolveSubagentExecution(args, executorCtx, "cerberus", "deep", {
       allowPrimaryAgentDelegation: true,
     })
 
     //#then
     expect(result.error).toBeUndefined()
-    expect(result.agentToUse).toBe("Sisyphus - ultraworker")
+    expect(result.agentToUse).toBe("Cerberus - fullscaner")
   })
 
-  test("allows delegating to Sisyphus-Junior when allowSisyphusJuniorDirect is enabled (team-mode path)", async () => {
+  test("allows delegating to Cerberus-Junior when allowCerberusJuniorDirect is enabled (team-mode path)", async () => {
     //#given
     readProviderModelsCacheMock.mockReturnValue({
       models: { anthropic: ["claude-sonnet-4-6"] },
       connected: ["anthropic"],
       updatedAt: "2026-03-03T00:00:00.000Z",
     })
-    const args = createBaseArgs({ subagent_type: "sisyphus-junior" })
+    const args = createBaseArgs({ subagent_type: "cerberus-junior" })
     const executorCtx = createExecutorContext(async () => ([
-      { name: "Sisyphus-Junior", mode: "subagent", model: "anthropic/claude-sonnet-4-6" },
-      { name: "oracle", mode: "subagent" },
+      { name: "Cerberus-Junior", mode: "subagent", model: "anthropic/claude-sonnet-4-6" },
+      { name: "cipher", mode: "subagent" },
     ]))
 
     //#when
-    const result = await resolveSubagentExecution(args, executorCtx, "sisyphus", "deep", {
-      allowSisyphusJuniorDirect: true,
+    const result = await resolveSubagentExecution(args, executorCtx, "cerberus", "deep", {
+      allowCerberusJuniorDirect: true,
     })
 
     //#then
     expect(result.error).toBeUndefined()
-    expect(result.agentToUse).toBe("Sisyphus-Junior")
+    expect(result.agentToUse).toBe("Cerberus-Junior")
   })
 
-  test("renders a usable fallback hint when categoryExamples is empty for the default Sisyphus-Junior block", async () => {
+  test("renders a usable fallback hint when categoryExamples is empty for the default Cerberus-Junior block", async () => {
     //#given
-    const args = createBaseArgs({ subagent_type: "sisyphus-junior" })
+    const args = createBaseArgs({ subagent_type: "cerberus-junior" })
     const executorCtx = createExecutorContext(async () => ([
-      { name: "Sisyphus-Junior", mode: "subagent" },
+      { name: "Cerberus-Junior", mode: "subagent" },
     ]))
 
     //#when
-    const result = await resolveSubagentExecution(args, executorCtx, "sisyphus", "")
+    const result = await resolveSubagentExecution(args, executorCtx, "cerberus", "")
 
     //#then
     expect(result.agentToUse).toBe("")
@@ -236,20 +236,20 @@ describe("resolveSubagentExecution", () => {
     expect(result.error).toContain("pick one of: quick, deep, ultrabrain")
   })
 
-  test("blocks zero-width-prefixed direct Sisyphus-Junior requests", async () => {
+  test("blocks zero-width-prefixed direct Cerberus-Junior requests", async () => {
     //#given
-    const args = createBaseArgs({ subagent_type: "\u200Bsisyphus-junior" })
+    const args = createBaseArgs({ subagent_type: "\u200Bcerberus-junior" })
     const executorCtx = createExecutorContext(async () => ([
-      { name: "Sisyphus-Junior", mode: "subagent" },
+      { name: "Cerberus-Junior", mode: "subagent" },
     ]))
 
     //#when
-    const result = await resolveSubagentExecution(args, executorCtx, "sisyphus", "deep")
+    const result = await resolveSubagentExecution(args, executorCtx, "cerberus", "deep")
 
     //#then
     expect(result.agentToUse).toBe("")
     expect(result.error).toBeDefined()
-    expect(result.error).toContain('Cannot use subagent_type="Sisyphus-Junior" directly')
+    expect(result.error).toContain('Cannot use subagent_type="Cerberus-Junior" directly')
   })
 
   test("requires explicit all or subagent mode for task-callable agents", async () => {
@@ -257,16 +257,16 @@ describe("resolveSubagentExecution", () => {
     const args = createBaseArgs({ subagent_type: "custom-worker" })
     const executorCtx = createExecutorContext(async () => ([
       { name: "custom-worker" },
-      { name: "oracle", mode: "subagent" },
+      { name: "cipher", mode: "subagent" },
     ]))
 
     //#when
-    const result = await resolveSubagentExecution(args, executorCtx, "sisyphus", "deep")
+    const result = await resolveSubagentExecution(args, executorCtx, "cerberus", "deep")
 
     //#then
     expect(result.agentToUse).toBe("")
     expect(result.categoryModel).toBeUndefined()
-    expect(result.error).toBe('Unknown agent: "custom-worker". Available agents: oracle')
+    expect(result.error).toBe('Unknown agent: "custom-worker". Available agents: cipher')
   })
 
   test("rejects delegation to hidden native execution agents (regression #3957)", async () => {
@@ -274,16 +274,16 @@ describe("resolveSubagentExecution", () => {
     const args = createBaseArgs({ subagent_type: "build" })
     const executorCtx = createExecutorContext(async () => ([
       { name: "build", mode: "subagent", hidden: true },
-      { name: "oracle", mode: "subagent" },
+      { name: "cipher", mode: "subagent" },
     ]))
 
     //#when
-    const result = await resolveSubagentExecution(args, executorCtx, "sisyphus", "deep")
+    const result = await resolveSubagentExecution(args, executorCtx, "cerberus", "deep")
 
     //#then
     expect(result.agentToUse).toBe("")
     expect(result.categoryModel).toBeUndefined()
-    expect(result.error).toBe('Unknown agent: "build". Available agents: oracle')
+    expect(result.error).toBe('Unknown agent: "build". Available agents: cipher')
   })
 
   test("allows delegation to hidden plan agent demoted to subagent", async () => {
@@ -291,11 +291,11 @@ describe("resolveSubagentExecution", () => {
     const args = createBaseArgs({ subagent_type: "plan" })
     const executorCtx = createExecutorContext(async () => ([
       { name: "plan", mode: "subagent", hidden: true },
-      { name: "oracle", mode: "subagent" },
+      { name: "cipher", mode: "subagent" },
     ]))
 
     //#when
-    const result = await resolveSubagentExecution(args, executorCtx, "sisyphus", "deep")
+    const result = await resolveSubagentExecution(args, executorCtx, "cerberus", "deep")
 
     //#then
     expect(result.error).toBeUndefined()
@@ -313,11 +313,11 @@ describe("resolveSubagentExecution", () => {
     const args = createBaseArgs({ subagent_type: "plan" })
     const executorCtx = createExecutorContext(async () => ([
       { name: "1|plan", mode: "subagent", hidden: true, model: "anthropic/claude-opus-4-7" },
-      { name: "oracle", mode: "subagent" },
+      { name: "cipher", mode: "subagent" },
     ]))
 
     //#when
-    const result = await resolveSubagentExecution(args, executorCtx, "sisyphus", "deep")
+    const result = await resolveSubagentExecution(args, executorCtx, "cerberus", "deep")
 
     //#then
     expect(result.error).toBeUndefined()
@@ -329,16 +329,16 @@ describe("resolveSubagentExecution", () => {
     //#given
     const args = createBaseArgs({ subagent_type: "plan" })
     const executorCtx = createExecutorContext(async () => ([
-      { name: "oracle", mode: "subagent" },
+      { name: "cipher", mode: "subagent" },
     ]), {
-      sisyphusAgentConfig: {
+      cerberusAgentConfig: {
         planner_enabled: true,
         replace_plan: true,
       },
     })
 
     //#when
-    const result = await resolveSubagentExecution(args, executorCtx, "sisyphus", "deep")
+    const result = await resolveSubagentExecution(args, executorCtx, "cerberus", "deep")
 
     //#then
     expect(result.error).toBeUndefined()
@@ -389,16 +389,16 @@ describe("resolveSubagentExecution", () => {
 
       const args = createBaseArgs({ subagent_type: "plan" })
       const executorCtx = createExecutorContext(async () => ([
-        { name: "oracle", mode: "subagent" },
+        { name: "cipher", mode: "subagent" },
       ]), {
-        sisyphusAgentConfig: {
+        cerberusAgentConfig: {
           planner_enabled: true,
           replace_plan: true,
         },
       })
 
       //#when
-      const result = await resolveSubagentExecution(args, executorCtx, "sisyphus", "deep")
+      const result = await resolveSubagentExecution(args, executorCtx, "cerberus", "deep")
 
       //#then
       expect(result.error).toBeUndefined()
@@ -444,16 +444,16 @@ describe("resolveSubagentExecution", () => {
 
       const args = createBaseArgs({ subagent_type: "plan" })
       const executorCtx = createExecutorContext(async () => ([
-        { name: "oracle", mode: "subagent" },
+        { name: "cipher", mode: "subagent" },
       ]), {
-        sisyphusAgentConfig: {
+        cerberusAgentConfig: {
           planner_enabled: true,
           replace_plan: true,
         },
       })
 
       //#when
-      const result = await resolveSubagentExecution(args, executorCtx, "sisyphus", "deep")
+      const result = await resolveSubagentExecution(args, executorCtx, "cerberus", "deep")
 
       //#then
       expect(result.error).toBeUndefined()
@@ -503,16 +503,16 @@ describe("resolveSubagentExecution", () => {
 
       const args = createBaseArgs({ subagent_type: "build" })
       const executorCtx = createExecutorContext(async () => ([
-        { name: "oracle", mode: "subagent" },
+        { name: "cipher", mode: "subagent" },
       ]))
 
       //#when
-      const result = await resolveSubagentExecution(args, executorCtx, "sisyphus", "deep")
+      const result = await resolveSubagentExecution(args, executorCtx, "cerberus", "deep")
 
       //#then
       expect(result.agentToUse).toBe("")
       expect(result.categoryModel).toBeUndefined()
-      expect(result.error).toBe('Unknown agent: "build". Available agents: oracle')
+      expect(result.error).toBe('Unknown agent: "build". Available agents: cipher')
     },
   )
 
@@ -526,16 +526,16 @@ describe("resolveSubagentExecution", () => {
     const args = createBaseArgs({ subagent_type: "plan" })
     const executorCtx = createExecutorContext(async () => ([
       { name: "plan", mode: "subagent", model: "openai/gpt-5.5" },
-      { name: "oracle", mode: "subagent" },
+      { name: "cipher", mode: "subagent" },
     ]), {
-      sisyphusAgentConfig: {
+      cerberusAgentConfig: {
         planner_enabled: true,
         replace_plan: true,
       },
     })
 
     //#when
-    const result = await resolveSubagentExecution(args, executorCtx, "sisyphus", "deep")
+    const result = await resolveSubagentExecution(args, executorCtx, "cerberus", "deep")
 
     //#then
     expect(result.error).toBeUndefined()
@@ -548,22 +548,22 @@ describe("resolveSubagentExecution", () => {
     [{ planner_enabled: true, replace_plan: false }],
   ])(
     "does not allow hidden plan fallback when planner config blocks replacement (%j)",
-    async (sisyphusAgentConfig) => {
+    async (cerberusAgentConfig) => {
       //#given
       const args = createBaseArgs({ subagent_type: "plan" })
       const executorCtx = createExecutorContext(async () => ([
-        { name: "oracle", mode: "subagent" },
+        { name: "cipher", mode: "subagent" },
       ]), {
-        sisyphusAgentConfig,
+        cerberusAgentConfig,
       })
 
       //#when
-      const result = await resolveSubagentExecution(args, executorCtx, "sisyphus", "deep")
+      const result = await resolveSubagentExecution(args, executorCtx, "cerberus", "deep")
 
       //#then
       expect(result.agentToUse).toBe("")
       expect(result.categoryModel).toBeUndefined()
-      expect(result.error).toBe('Unknown agent: "plan". Available agents: oracle')
+      expect(result.error).toBe('Unknown agent: "plan". Available agents: cipher')
     },
   )
 
@@ -573,17 +573,17 @@ describe("resolveSubagentExecution", () => {
     const executorCtx = createExecutorContext(async () => ([
       { name: "build", mode: "subagent", hidden: true },
       { name: "plan", mode: "subagent", hidden: true },
-      { name: "oracle", mode: "subagent" },
-      { name: "explore", mode: "subagent" },
+      { name: "cipher", mode: "subagent" },
+      { name: "scout", mode: "subagent" },
     ]))
 
     //#when
-    const result = await resolveSubagentExecution(args, executorCtx, "sisyphus", "deep")
+    const result = await resolveSubagentExecution(args, executorCtx, "cerberus", "deep")
 
     //#then
     expect(result.agentToUse).toBe("")
     expect(result.error).toBeDefined()
-    expect(result.error).toContain('Available agents: explore, oracle, plan')
+    expect(result.error).toContain('Available agents: scout, cipher, plan')
     expect(result.error).not.toContain("build")
   })
 
@@ -599,16 +599,16 @@ describe("resolveSubagentExecution", () => {
     const args = createBaseArgs({ subagent_type: "build" })
     const executorCtx = createExecutorContext(async () => ([
       { name: "build", mode: "subagent", hidden: true },
-      { name: "oracle", mode: "subagent" },
+      { name: "cipher", mode: "subagent" },
     ]))
 
     //#when
-    const result = await resolveSubagentExecution(args, executorCtx, "sisyphus", "deep")
+    const result = await resolveSubagentExecution(args, executorCtx, "cerberus", "deep")
 
     //#then
     expect(result.agentToUse).toBe("")
     expect(result.categoryModel).toBeUndefined()
-    expect(result.error).toBe('Unknown agent: "build". Available agents: oracle')
+    expect(result.error).toBe('Unknown agent: "build". Available agents: cipher')
   })
 
   test("uses built-in hidden plan instead of quoted user agent alias", async () => {
@@ -623,11 +623,11 @@ describe("resolveSubagentExecution", () => {
     const args = createBaseArgs({ subagent_type: "plan" })
     const executorCtx = createExecutorContext(async () => ([
       { name: "plan", mode: "subagent", hidden: true },
-      { name: "oracle", mode: "subagent" },
+      { name: "cipher", mode: "subagent" },
     ]))
 
     //#when
-    const result = await resolveSubagentExecution(args, executorCtx, "sisyphus", "deep")
+    const result = await resolveSubagentExecution(args, executorCtx, "cerberus", "deep")
 
     //#then
     expect(result.error).toBeUndefined()
@@ -647,16 +647,16 @@ describe("resolveSubagentExecution", () => {
     const args = createBaseArgs({ subagent_type: "build" })
     const executorCtx = createExecutorContext(async () => ([
       { name: "build", mode: "subagent", hidden: true },
-      { name: "oracle", mode: "subagent" },
+      { name: "cipher", mode: "subagent" },
     ]))
 
     //#when
-    const result = await resolveSubagentExecution(args, executorCtx, "sisyphus", "deep")
+    const result = await resolveSubagentExecution(args, executorCtx, "cerberus", "deep")
 
     //#then
     expect(result.agentToUse).toBe("")
     expect(result.categoryModel).toBeUndefined()
-    expect(result.error).toBe('Unknown agent: "build". Available agents: oracle')
+    expect(result.error).toBe('Unknown agent: "build". Available agents: cipher')
   })
 
   test("normalizes matched agent model string before returning categoryModel", async () => {
@@ -666,13 +666,13 @@ describe("resolveSubagentExecution", () => {
       connected: ["openai"],
       updatedAt: "2026-03-03T00:00:00.000Z",
     })
-    const args = createBaseArgs({ subagent_type: "oracle" })
+    const args = createBaseArgs({ subagent_type: "cipher" })
     const executorCtx = createExecutorContext(async () => ([
-      { name: "oracle", mode: "subagent", model: "openai/gpt-5.5" },
+      { name: "cipher", mode: "subagent", model: "openai/gpt-5.5" },
     ]))
 
     //#when
-    const result = await resolveSubagentExecution(args, executorCtx, "sisyphus", "deep")
+    const result = await resolveSubagentExecution(args, executorCtx, "cerberus", "deep")
 
     //#then
     expect(result.error).toBeUndefined()
@@ -681,13 +681,13 @@ describe("resolveSubagentExecution", () => {
 
   test("normalizes matched agent object model before returning categoryModel", async () => {
     //#given
-    const args = createBaseArgs({ subagent_type: "oracle" })
+    const args = createBaseArgs({ subagent_type: "cipher" })
     const executorCtx = createExecutorContext(async () => ([
-      { name: "oracle", mode: "subagent", model: { providerID: "openai", modelID: "gpt-5.5" } },
+      { name: "cipher", mode: "subagent", model: { providerID: "openai", modelID: "gpt-5.5" } },
     ]))
 
     //#when
-    const result = await resolveSubagentExecution(args, executorCtx, "sisyphus", "deep")
+    const result = await resolveSubagentExecution(args, executorCtx, "cerberus", "deep")
 
     //#then
     expect(result.error).toBeUndefined()
@@ -696,17 +696,17 @@ describe("resolveSubagentExecution", () => {
 
   test("matches agents even when zero-width characters are present in the requested name", async () => {
     //#given
-    const args = createBaseArgs({ subagent_type: "\uFEFFSisyphus - Ultraworker" })
+    const args = createBaseArgs({ subagent_type: "\uFEFFCerberus - Ultraworker" })
     const executorCtx = createExecutorContext(async () => ([
-      { name: "\u200BSisyphus - ultraworker", mode: "subagent", model: "openai/gpt-5.5" },
+      { name: "\u200BCerberus - fullscaner", mode: "subagent", model: "openai/gpt-5.5" },
     ]))
 
     //#when
-    const result = await resolveSubagentExecution(args, executorCtx, "oracle", "deep")
+    const result = await resolveSubagentExecution(args, executorCtx, "cipher", "deep")
 
     //#then
     expect(result.error).toBeUndefined()
-    expect(result.agentToUse).toBe("Sisyphus - ultraworker")
+    expect(result.agentToUse).toBe("Cerberus - fullscaner")
   })
 
   test("uses agent override fallback_models for subagent runtime fallback chain", async () => {
@@ -716,14 +716,14 @@ describe("resolveSubagentExecution", () => {
       connected: ["quotio"],
       updatedAt: "2026-03-03T00:00:00.000Z",
     })
-    const args = createBaseArgs({ subagent_type: "explore" })
+    const args = createBaseArgs({ subagent_type: "scout" })
     const executorCtx = createExecutorContext(
       async () => ([
-        { name: "explore", mode: "subagent", model: "quotio/claude-haiku-4-5" },
+        { name: "scout", mode: "subagent", model: "quotio/claude-haiku-4-5" },
       ]),
       {
         agentOverrides: {
-          explore: {
+          scout: {
             fallback_models: ["quotio/gpt-5.5", "glm-5(max)"],
           },
         } as ExecutorContext["agentOverrides"],
@@ -731,7 +731,7 @@ describe("resolveSubagentExecution", () => {
     )
 
     //#when
-    const result = await resolveSubagentExecution(args, executorCtx, "sisyphus", "deep")
+    const result = await resolveSubagentExecution(args, executorCtx, "cerberus", "deep")
 
     //#then
     expect(result.error).toBeUndefined()
@@ -748,14 +748,14 @@ describe("resolveSubagentExecution", () => {
       connected: ["anthropic"],
       updatedAt: "2026-03-03T00:00:00.000Z",
     })
-    const args = createBaseArgs({ subagent_type: "explore" })
+    const args = createBaseArgs({ subagent_type: "scout" })
     const executorCtx = createExecutorContext(
       async () => ([
-        { name: "explore", mode: "subagent", model: "quotio/claude-haiku-4-5" },
+        { name: "scout", mode: "subagent", model: "quotio/claude-haiku-4-5" },
       ]),
       {
         agentOverrides: {
-          explore: {
+          scout: {
             category: "research",
           },
         } as ExecutorContext["agentOverrides"],
@@ -768,7 +768,7 @@ describe("resolveSubagentExecution", () => {
     )
 
     //#when
-    const result = await resolveSubagentExecution(args, executorCtx, "sisyphus", "deep")
+    const result = await resolveSubagentExecution(args, executorCtx, "cerberus", "deep")
 
     //#then
     expect(result.error).toBeUndefined()
@@ -785,14 +785,14 @@ describe("resolveSubagentExecution", () => {
       updatedAt: "2026-03-03T00:00:00.000Z",
     })
     readConnectedProvidersCacheMock.mockReturnValue(["openai"])
-    const args = createBaseArgs({ subagent_type: "explore" })
+    const args = createBaseArgs({ subagent_type: "scout" })
     const executorCtx = createExecutorContext(
       async () => ([
-        { name: "explore", mode: "subagent", model: "quotio/claude-haiku-4-5-unavailable" },
+        { name: "scout", mode: "subagent", model: "quotio/claude-haiku-4-5-unavailable" },
       ]),
       {
         agentOverrides: {
-          explore: {
+          scout: {
             fallback_models: [
               {
                 model: "openai/gpt-5.4 high",
@@ -810,7 +810,7 @@ describe("resolveSubagentExecution", () => {
     )
 
     //#when
-    const result = await resolveSubagentExecution(args, executorCtx, "sisyphus", "deep")
+    const result = await resolveSubagentExecution(args, executorCtx, "cerberus", "deep")
 
     //#then
     expect(result.error).toBeUndefined()
@@ -834,14 +834,14 @@ describe("resolveSubagentExecution", () => {
       updatedAt: "2026-03-03T00:00:00.000Z",
     })
     readConnectedProvidersCacheMock.mockReturnValue(["openai"])
-    const args = createBaseArgs({ subagent_type: "explore" })
+    const args = createBaseArgs({ subagent_type: "scout" })
     const executorCtx = createExecutorContext(
       async () => ([
-        { name: "explore", mode: "subagent", model: "openai/gpt-5.4-preview" },
+        { name: "scout", mode: "subagent", model: "openai/gpt-5.4-preview" },
       ]),
       {
         agentOverrides: {
-          explore: {
+          scout: {
             fallback_models: [
               {
                 model: "openai/gpt-5.4",
@@ -855,7 +855,7 @@ describe("resolveSubagentExecution", () => {
     )
 
     //#when
-    const result = await resolveSubagentExecution(args, executorCtx, "sisyphus", "deep")
+    const result = await resolveSubagentExecution(args, executorCtx, "cerberus", "deep")
 
     //#then
     expect(result.error).toBeUndefined()
@@ -873,14 +873,14 @@ describe("resolveSubagentExecution", () => {
       updatedAt: "2026-03-03T00:00:00.000Z",
     })
     readConnectedProvidersCacheMock.mockReturnValue(["openai"])
-    const args = createBaseArgs({ subagent_type: "explore" })
+    const args = createBaseArgs({ subagent_type: "scout" })
     const executorCtx = createExecutorContext(
       async () => ([
-        { name: "explore", mode: "subagent", model: "quotio/claude-haiku-4-5-unavailable" },
+        { name: "scout", mode: "subagent", model: "quotio/claude-haiku-4-5-unavailable" },
       ]),
       {
         agentOverrides: {
-          explore: {
+          scout: {
             fallback_models: [
               {
                 model: "openai/gpt-5.4",
@@ -898,7 +898,7 @@ describe("resolveSubagentExecution", () => {
     )
 
     //#when
-    const result = await resolveSubagentExecution(args, executorCtx, "sisyphus", "deep")
+    const result = await resolveSubagentExecution(args, executorCtx, "cerberus", "deep")
 
     //#then
     expect(result.error).toBeUndefined()
@@ -922,14 +922,14 @@ describe("resolveSubagentExecution", () => {
       updatedAt: "2026-03-03T00:00:00.000Z",
     })
     readConnectedProvidersCacheMock.mockReturnValue(["openai"])
-    const args = createBaseArgs({ subagent_type: "explore" })
+    const args = createBaseArgs({ subagent_type: "scout" })
     const executorCtx = createExecutorContext(
       async () => ([
-        { name: "explore", mode: "subagent", model: "quotio/claude-haiku-4-5-unavailable" },
+        { name: "scout", mode: "subagent", model: "quotio/claude-haiku-4-5-unavailable" },
       ]),
       {
         agentOverrides: {
-          explore: {
+          scout: {
             fallback_models: [
               {
                 model: "openai/gpt-5.4",
@@ -948,7 +948,7 @@ describe("resolveSubagentExecution", () => {
     )
 
     //#when
-    const result = await resolveSubagentExecution(args, executorCtx, "sisyphus", "deep")
+    const result = await resolveSubagentExecution(args, executorCtx, "cerberus", "deep")
 
     //#then
     expect(result.error).toBeUndefined()
@@ -968,14 +968,14 @@ describe("resolveSubagentExecution", () => {
       updatedAt: "2026-03-03T00:00:00.000Z",
     })
     readConnectedProvidersCacheMock.mockReturnValue(["openai"])
-    const args = createBaseArgs({ subagent_type: "explore" })
+    const args = createBaseArgs({ subagent_type: "scout" })
     const executorCtx = createExecutorContext(
       async () => ([
-        { name: "explore", mode: "subagent", model: "quotio/claude-haiku-4-5-unavailable" },
+        { name: "scout", mode: "subagent", model: "quotio/claude-haiku-4-5-unavailable" },
       ]),
       {
         agentOverrides: {
-          explore: {
+          scout: {
             fallback_models: [
               {
                 model: "openai/gpt-5.4",
@@ -989,7 +989,7 @@ describe("resolveSubagentExecution", () => {
     )
 
     //#when
-    const result = await resolveSubagentExecution(args, executorCtx, "sisyphus", "deep")
+    const result = await resolveSubagentExecution(args, executorCtx, "cerberus", "deep")
 
     //#then
     expect(result.error).toBeUndefined()
@@ -1017,7 +1017,7 @@ describe("resolveSubagentExecution", () => {
     )
 
     //#when
-    const result = await resolveSubagentExecution(args, executorCtx, "sisyphus", "deep")
+    const result = await resolveSubagentExecution(args, executorCtx, "cerberus", "deep")
 
     //#then
     expect(result.error).toBeUndefined()
@@ -1040,7 +1040,7 @@ describe("resolveSubagentExecution", () => {
     )
 
     //#when
-    const result = await resolveSubagentExecution(args, executorCtx, "sisyphus", "deep")
+    const result = await resolveSubagentExecution(args, executorCtx, "cerberus", "deep")
 
     //#then
     expect(result.error).toBeUndefined()
@@ -1055,14 +1055,14 @@ describe("resolveSubagentExecution", () => {
       updatedAt: "2026-03-03T00:00:00.000Z",
     })
     readConnectedProvidersCacheMock.mockReturnValue(["openai"])
-    const args = createBaseArgs({ subagent_type: "explore" })
+    const args = createBaseArgs({ subagent_type: "scout" })
     const executorCtx = createExecutorContext(
       async () => ([
-        { name: "explore", mode: "subagent", model: "quotio/claude-haiku-4-5-unavailable" },
+        { name: "scout", mode: "subagent", model: "quotio/claude-haiku-4-5-unavailable" },
       ]),
       {
         agentOverrides: {
-          explore: {
+          scout: {
             fallback_models: [
               {
                 model: "openai/gpt-4",
@@ -1081,7 +1081,7 @@ describe("resolveSubagentExecution", () => {
     )
 
     //#when
-    const result = await resolveSubagentExecution(args, executorCtx, "sisyphus", "deep")
+    const result = await resolveSubagentExecution(args, executorCtx, "cerberus", "deep")
 
     //#then
     expect(result.error).toBeUndefined()
@@ -1101,14 +1101,14 @@ describe("resolveSubagentExecution", () => {
       updatedAt: "2026-03-03T00:00:00.000Z",
     })
     readConnectedProvidersCacheMock.mockReturnValue(["openai"])
-    const args = createBaseArgs({ subagent_type: "explore" })
+    const args = createBaseArgs({ subagent_type: "scout" })
     const executorCtx = createExecutorContext(
       async () => ([
-        { name: "explore", mode: "subagent", model: "quotio/claude-haiku-4-5-unavailable" },
+        { name: "scout", mode: "subagent", model: "quotio/claude-haiku-4-5-unavailable" },
       ]),
       {
         agentOverrides: {
-          explore: {
+          scout: {
             category: "research",
           },
         } as ExecutorContext["agentOverrides"],
@@ -1128,7 +1128,7 @@ describe("resolveSubagentExecution", () => {
     )
 
     //#when
-    const result = await resolveSubagentExecution(args, executorCtx, "sisyphus", "deep")
+    const result = await resolveSubagentExecution(args, executorCtx, "cerberus", "deep")
 
     //#then
     expect(result.error).toBeUndefined()
@@ -1149,14 +1149,14 @@ describe("resolveSubagentExecution", () => {
       updatedAt: "2026-03-03T00:00:00.000Z",
     })
     readConnectedProvidersCacheMock.mockReturnValue([])
-    const args = createBaseArgs({ subagent_type: "explore" })
+    const args = createBaseArgs({ subagent_type: "scout" })
     const executorCtx = createExecutorContext(
       async () => ([
-        { name: "explore", mode: "subagent", model: "openai/gpt-5.4" },
+        { name: "scout", mode: "subagent", model: "openai/gpt-5.4" },
       ]),
       {
         agentOverrides: {
-          explore: {
+          scout: {
             category: "research",
           },
         } as ExecutorContext["agentOverrides"],
@@ -1175,7 +1175,7 @@ describe("resolveSubagentExecution", () => {
     )
 
     //#when
-    const result = await resolveSubagentExecution(args, executorCtx, "sisyphus", "deep")
+    const result = await resolveSubagentExecution(args, executorCtx, "cerberus", "deep")
 
     //#then
     expect(result.error).toBeUndefined()
@@ -1211,7 +1211,7 @@ describe("resolveSubagentExecution", () => {
     const executorCtx = createExecutorContext(async () => [])
 
     //#when
-    const result = await resolveSubagentExecution(args, executorCtx, "sisyphus", "deep")
+    const result = await resolveSubagentExecution(args, executorCtx, "cerberus", "deep")
 
     //#then
     expect(result.error).toBeUndefined()
@@ -1239,7 +1239,7 @@ describe("resolveSubagentExecution", () => {
     const executorCtx = createExecutorContext(async () => [])
 
     //#when
-    const result = await resolveSubagentExecution(args, executorCtx, "sisyphus", "deep")
+    const result = await resolveSubagentExecution(args, executorCtx, "cerberus", "deep")
 
     //#then
     expect(result.error).toBeUndefined()
@@ -1256,24 +1256,24 @@ describe("resolveSubagentExecution", () => {
     })
     readConnectedProvidersCacheMock.mockReturnValue(["openai"])
     loadUserAgentsMock.mockImplementation(() => ({
-      "explore": {
-        description: "User explore agent",
+      "scout": {
+        description: "User scout agent",
         mode: "subagent",
         prompt: "User prompt",
         model: "openai/gpt-3.5",
       },
     }))
-    const args = createBaseArgs({ subagent_type: "explore" })
+    const args = createBaseArgs({ subagent_type: "scout" })
     const executorCtx = createExecutorContext(async () => ([
-      { name: "explore", mode: "subagent", model: "openai/gpt-5.4" },
+      { name: "scout", mode: "subagent", model: "openai/gpt-5.4" },
     ]))
 
     //#when
-    const result = await resolveSubagentExecution(args, executorCtx, "sisyphus", "deep")
+    const result = await resolveSubagentExecution(args, executorCtx, "cerberus", "deep")
 
     //#then
     expect(result.error).toBeUndefined()
-    expect(result.agentToUse).toBe("explore")
+    expect(result.agentToUse).toBe("scout")
     expect(result.categoryModel?.modelID).toBe("gpt-5.4")
   })
 
@@ -1305,7 +1305,7 @@ describe("resolveSubagentExecution", () => {
     const executorCtx = createExecutorContext(async () => [])
 
     //#when
-    const result = await resolveSubagentExecution(args, executorCtx, "sisyphus", "deep")
+    const result = await resolveSubagentExecution(args, executorCtx, "cerberus", "deep")
 
     //#then
     expect(result.error).toBeUndefined()
@@ -1326,7 +1326,7 @@ describe("resolveSubagentExecution", () => {
     const executorCtx = createExecutorContext(async () => [])
 
     //#when
-    const result = await resolveSubagentExecution(args, executorCtx, "sisyphus", "deep")
+    const result = await resolveSubagentExecution(args, executorCtx, "cerberus", "deep")
 
     //#then
     expect(result.error).toBe('Cannot delegate to primary agent "my-primary-agent" via task. Select that agent directly instead.')
@@ -1373,24 +1373,24 @@ describe("resolveSubagentExecution - agent name sanitization", () => {
     mock.restore()
   })
 
-  test("strips backslash-wrapped agent names like \\hephaestus\\", async () => {
+  test("strips backslash-wrapped agent names like \\scylla\\", async () => {
     //#given
     readProviderModelsCacheMock.mockReturnValue({
       models: {},
       connected: [],
       updatedAt: "2026-03-03T00:00:00.000Z",
     })
-    const args = createBaseArgs({ subagent_type: "\\hephaestus\\" })
+    const args = createBaseArgs({ subagent_type: "\\scylla\\" })
     const executorCtx = createExecutorContext(async () => ([
-      { name: "Hephaestus - Deep Agent", mode: "subagent", model: "openai/gpt-5.5" },
+      { name: "Scylla - Deep Agent", mode: "subagent", model: "openai/gpt-5.5" },
     ]))
 
     //#when
-    const result = await resolveSubagentExecution(args, executorCtx, "sisyphus", "deep")
+    const result = await resolveSubagentExecution(args, executorCtx, "cerberus", "deep")
 
     //#then
     expect(result.error).toBeUndefined()
-    expect(result.agentToUse).toBe("Hephaestus - Deep Agent")
+    expect(result.agentToUse).toBe("Scylla - Deep Agent")
   })
 
   test("strips double-quoted agent names", async () => {
@@ -1400,17 +1400,17 @@ describe("resolveSubagentExecution - agent name sanitization", () => {
       connected: [],
       updatedAt: "2026-03-03T00:00:00.000Z",
     })
-    const args = createBaseArgs({ subagent_type: '"oracle"' })
+    const args = createBaseArgs({ subagent_type: '"cipher"' })
     const executorCtx = createExecutorContext(async () => ([
-      { name: "oracle", mode: "subagent" },
+      { name: "cipher", mode: "subagent" },
     ]))
 
     //#when
-    const result = await resolveSubagentExecution(args, executorCtx, "sisyphus", "deep")
+    const result = await resolveSubagentExecution(args, executorCtx, "cerberus", "deep")
 
     //#then
     expect(result.error).toBeUndefined()
-    expect(result.agentToUse).toBe("oracle")
+    expect(result.agentToUse).toBe("cipher")
   })
 
   test("strips single-quoted agent names", async () => {
@@ -1420,17 +1420,17 @@ describe("resolveSubagentExecution - agent name sanitization", () => {
       connected: [],
       updatedAt: "2026-03-03T00:00:00.000Z",
     })
-    const args = createBaseArgs({ subagent_type: "'explore'" })
+    const args = createBaseArgs({ subagent_type: "'scout'" })
     const executorCtx = createExecutorContext(async () => ([
-      { name: "explore", mode: "subagent" },
+      { name: "scout", mode: "subagent" },
     ]))
 
     //#when
-    const result = await resolveSubagentExecution(args, executorCtx, "sisyphus", "deep")
+    const result = await resolveSubagentExecution(args, executorCtx, "cerberus", "deep")
 
     //#then
     expect(result.error).toBeUndefined()
-    expect(result.agentToUse).toBe("explore")
+    expect(result.agentToUse).toBe("scout")
   })
 
   test("matches runtime agent names that include invisible sort prefixes", async () => {
@@ -1440,17 +1440,17 @@ describe("resolveSubagentExecution - agent name sanitization", () => {
       connected: [],
       updatedAt: "2026-03-03T00:00:00.000Z",
     })
-    const args = createBaseArgs({ subagent_type: "Sisyphus - Ultraworker" })
+    const args = createBaseArgs({ subagent_type: "Cerberus - Ultraworker" })
     const executorCtx = createExecutorContext(async () => ([
-      { name: "\u200BSisyphus - ultraworker", mode: "subagent", model: "openai/gpt-5.5" },
+      { name: "\u200BCerberus - fullscaner", mode: "subagent", model: "openai/gpt-5.5" },
     ]))
 
     //#when
-    const result = await resolveSubagentExecution(args, executorCtx, "oracle", "deep")
+    const result = await resolveSubagentExecution(args, executorCtx, "cipher", "deep")
 
     //#then
     expect(result.error).toBeUndefined()
-    expect(result.agentToUse).toBe("Sisyphus - ultraworker")
+    expect(result.agentToUse).toBe("Cerberus - fullscaner")
   })
 
   test("strips legacy ZWSP-prefixed agent names from persisted subagent runtime state (GH-3259)", async () => {
@@ -1460,16 +1460,16 @@ describe("resolveSubagentExecution - agent name sanitization", () => {
       connected: [],
       updatedAt: "2026-03-03T00:00:00.000Z",
     })
-    const args = createBaseArgs({ subagent_type: "Hephaestus - Deep Agent" })
+    const args = createBaseArgs({ subagent_type: "Scylla - Deep Agent" })
     const executorCtx = createExecutorContext(async () => ([
-      { name: "\u200B\u200BHephaestus - Deep Agent", mode: "subagent", model: "openai/gpt-5.5" },
+      { name: "\u200B\u200BScylla - Deep Agent", mode: "subagent", model: "openai/gpt-5.5" },
     ]))
 
     //#when
-    const result = await resolveSubagentExecution(args, executorCtx, "oracle", "deep")
+    const result = await resolveSubagentExecution(args, executorCtx, "cipher", "deep")
 
     //#then
     expect(result.error).toBeUndefined()
-    expect(result.agentToUse).toBe("Hephaestus - Deep Agent")
+    expect(result.agentToUse).toBe("Scylla - Deep Agent")
   })
 })

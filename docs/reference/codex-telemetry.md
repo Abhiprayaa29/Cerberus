@@ -1,6 +1,6 @@
-# Codex Light Telemetry
+﻿# Codex Light Telemetry
 
-Codex Light, installed through `lazycodex-ai`, sends anonymous daily-active telemetry for the Codex adapter only. The public package alias is `lazycodex-ai`; the Codex marketplace identity remains `sisyphuslabs` / `omo`.
+Codex Light, installed through `lazycodex-ai`, sends anonymous daily-active telemetry for the Codex adapter only. The public package alias is `lazycodex-ai`; the Codex marketplace identity remains `cerberuslabs` / `omo`.
 
 ## Event
 
@@ -68,15 +68,15 @@ Set one of these environment variables before running the installer or launching
 Codex-only opt-out:
 
 ```bash
-export OMO_CODEX_DISABLE_POSTHOG=1
-export OMO_CODEX_SEND_ANONYMOUS_TELEMETRY=0
+export OMOP_CODEX_DISABLE_POSTHOG=.
+export OMOP_CODEX_SEND_ANONYMOUS_TELEMETRY=0
 ```
 
-Global opt-out, covering both oh-my-openagent and omo-codex telemetry:
+Global opt-out, covering both oh-my-open-pentest and omo-codex telemetry:
 
 ```bash
-export OMO_DISABLE_POSTHOG=1
-export OMO_SEND_ANONYMOUS_TELEMETRY=0
+export OMOP_DISABLE_POSTHOG=.
+export OMOP_SEND_ANONYMOUS_TELEMETRY=0
 ```
 
 When telemetry is disabled, the PostHog client is a no-op and no telemetry network call is made.

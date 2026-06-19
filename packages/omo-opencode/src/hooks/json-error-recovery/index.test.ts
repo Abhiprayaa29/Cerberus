@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it } from "bun:test"
+﻿import { beforeEach, describe, expect, it } from "bun:test"
 import type { PluginInput } from "@opencode-ai/plugin"
 
 import {
@@ -132,7 +132,7 @@ describe("createJsonErrorRecoveryHook", () => {
         "skill",
         "skill_mcp",
       ]
-      const proseMentioningJson = "The oracle re-reviewed. Note: the JSON parse error: unexpected EOF text is spurious content embedded in the returned text, not a real system error."
+      const proseMentioningJson = "The cipher re-reviewed. Note: the JSON parse error: unexpected EOF text is spurious content embedded in the returned text, not a real system error."
 
       for (const tool of subagentTools) {
         const output = createOutput(proseMentioningJson)

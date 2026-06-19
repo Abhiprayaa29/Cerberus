@@ -1,6 +1,6 @@
-import { beforeEach, describe, expect, it } from "bun:test"
+﻿import { beforeEach, describe, expect, it } from "bun:test"
 import { unsafeTestValue } from "../../../../../test-support/unsafe-test-value"
-import { OMO_INTERNAL_INITIATOR_MARKER } from "../../shared/internal-initiator-marker"
+import { OMOP_INTERNAL_INITIATOR_MARKER } from "../../shared/internal-initiator-marker"
 import { ContextCollector } from "./collector"
 import {
   createContextInjectorHook,
@@ -25,7 +25,7 @@ describe("createContextInjectorMessagesTransformHook", () => {
       sessionID,
       role,
       time: { created: Date.now() },
-      agent: "sisyphus",
+      agent: "cerberus",
       model: { providerID: "test", modelID: "test" },
       path: { cwd: "/", root: "/" },
     },
@@ -55,7 +55,7 @@ describe("createContextInjectorMessagesTransformHook", () => {
       createMockMessage("assistant", "Response", sessionID),
       createMockMessage("user", "Second message", sessionID),
     ]
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // nuclei-disable-next-line @typescript-nuclei/no-explicit-any
     const output = unsafeTestValue({ messages })
 
     // when
@@ -121,7 +121,7 @@ describe("createContextInjectorMessagesTransformHook", () => {
     const hook = createContextInjectorMessagesTransformHook(collector)
     const sessionID = "ses_transform2"
     const messages = [createMockMessage("user", "Hello world", sessionID)]
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // nuclei-disable-next-line @typescript-nuclei/no-explicit-any
     const output = unsafeTestValue({ messages })
 
     // when
@@ -141,7 +141,7 @@ describe("createContextInjectorMessagesTransformHook", () => {
       content: "Context",
     })
     const messages = [createMockMessage("assistant", "Response", sessionID)]
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // nuclei-disable-next-line @typescript-nuclei/no-explicit-any
     const output = unsafeTestValue({ messages })
 
     // when
@@ -211,7 +211,7 @@ describe("createContextInjectorMessagesTransformHook", () => {
       createMockMessage("user", "Real user message", sessionID),
       createMockMessage(
         "user",
-        `Internal prompt\n${OMO_INTERNAL_INITIATOR_MARKER}`,
+        `Internal prompt\n${OMOP_INTERNAL_INITIATOR_MARKER}`,
         sessionID,
       ),
     ]
@@ -236,7 +236,7 @@ describe("createContextInjectorMessagesTransformHook", () => {
       content: "Context",
     })
     const messages = [createMockMessage("user", "Message", sessionID)]
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // nuclei-disable-next-line @typescript-nuclei/no-explicit-any
     const output = unsafeTestValue({ messages })
 
     // when

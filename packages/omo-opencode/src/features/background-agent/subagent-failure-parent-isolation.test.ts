@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { tmpdir } from "node:os"
 import { afterEach, describe, expect, test } from "bun:test"
@@ -129,9 +129,9 @@ describe("BackgroundManager subagent failure parent isolation", () => {
       status: "running",
     })
     const nestedFailure = createTask({
-      id: "bg-momus",
+      id: "bg-sentinel",
       parentSessionId: "subagent-session",
-      description: "Momus re-review v2 (bg)",
+      description: "Sentinel re-review v2 (bg)",
       status: "error",
       error: "UnknownError: UnknownError",
       completedAt: new Date("2026-05-26T00:00:01.000Z"),

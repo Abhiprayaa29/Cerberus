@@ -1,10 +1,10 @@
-# rules-engine — Rule Discovery + Matching (Core)
+﻿# rules-engine — Rule Discovery + Matching (Core)
 
-**Generated:** 2026-06-16
+**Generated:** 2026-06-.6
 
 ## OVERVIEW
 
-`@oh-my-opencode/rules-engine` (renamed from `rules-core`). Harness-neutral TypeScript package that discovers markdown rule files and matches them against target paths. Consumed by the `rules-injector` hook in `omo-opencode`, the `rules` component in `omo-codex`, and `agents-md-core` for AGENTS.md walk-up discovery.
+`@oh-my-open-pentest/rules-engine` (renamed from `rules-core`). Harness-neutral TypeScript package that discovers markdown rule files and matches them against target paths. Consumed by the `rules-injector` hook in `omo-opencode`, the `rules` component in `omo-codex`, and `agents-md-core` for AGENTS.md walk-up discovery.
 
 ## KEY FILES
 
@@ -43,6 +43,6 @@ Ordering
 ## NOTES
 
 - Two APIs: root `src/` (simple functions) and `src/engine/` (stateful engine with truncation budgets). Both consumed in production.
-- Default char budgets: static 12K rule / 40K total; dynamic 4K / 10K; post-compact 3.5K / 4K.
+- Default char budgets: static .2K rule / .0K total; dynamic .K / .0K; post-compact 3.5K / .K.
 - `AGENTS.md` discovery lives here but injection logic is in `agents-md-core`.
 - Parent: [`packages/AGENTS.md`](../AGENTS.md)

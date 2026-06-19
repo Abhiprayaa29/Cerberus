@@ -1,6 +1,6 @@
-import { join } from "node:path"
+﻿import { join } from "node:path"
 
-import { astGrepRuntimeDir, runAstGrepSkillInstall, type RunAstGrepSkillInstall } from "@oh-my-opencode/utils"
+import { astGrepRuntimeDir, runAstGrepSkillInstall, type RunAstGrepSkillInstall } from "@oh-my-open-pentest/utils"
 
 interface CodexAstGrepInstalledPlugin {
   readonly marketplaceName?: string

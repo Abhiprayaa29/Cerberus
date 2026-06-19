@@ -1,4 +1,4 @@
-export { createTodoContinuationEnforcer, type TodoContinuationEnforcer } from "./todo-continuation-enforcer";
+﻿export { createTodoContinuationEnforcer, type TodoContinuationEnforcer } from "./todo-continuation-enforcer";
 export { createSessionNotification } from "./session-notification";
 export { sendSessionNotification, playSessionNotificationSound, detectPlatform, getDefaultSoundPath } from "./session-notification-sender";
 export { buildWindowsToastScript, escapeAppleScriptText, escapePowerShellSingleQuotedText } from "./session-notification-formatting";
@@ -35,18 +35,18 @@ export { createTeamMailboxInjector } from "./team-mailbox-injector";
 export { createTeamModeStatusInjector } from "./team-mode-status-injector";
 export { createToolPairValidatorHook } from "./tool-pair-validator";
 export { createCategorySkillReminderHook } from "./category-skill-reminder";
-export { createRalphLoopHook, type RalphLoopHook } from "./ralph-loop";
-export { createNoSisyphusGptHook } from "./no-sisyphus-gpt";
-export { createNoHephaestusNonGptHook } from "./no-hephaestus-non-gpt";
-export { createHephaestusAgentsMdInjectorHook } from "./hephaestus-agents-md-injector";
+export { createRalphLoopHook, type RalphLoopHook } from "./pentest-loop";
+export { createNoCerberusGptHook } from "./no-cerberus-gpt";
+export { createNoScyllaNonGptHook } from "./no-scylla-non-gpt";
+export { createScyllaAgentsMdInjectorHook } from "./scylla-agents-md-injector";
 export { createAutoSlashCommandHook } from "./auto-slash-command";
 export { createEditErrorRecoveryHook } from "./edit-error-recovery";
 
-export { createPrometheusMdOnlyHook } from "./prometheus-md-only";
-export { createSisyphusJuniorNotepadHook } from "./sisyphus-junior-notepad";
+export { createTalosMdOnlyHook } from "./talos-md-only";
+export { createCerberusJuniorNotepadHook } from "./cerberus-junior-notepad";
 export { createTaskResumeInfoHook } from "./task-resume-info";
 export { createStartWorkHook } from "./start-work";
-export { createAtlasHook } from "./atlas";
+export { createArgusHook } from "./argus";
 export { createTeamToolGating } from "./team-tool-gating"
 export { createDelegateTaskRetryHook } from "./delegate-task-retry";
 export { createQuestionLabelTruncatorHook } from "./question-label-truncator";

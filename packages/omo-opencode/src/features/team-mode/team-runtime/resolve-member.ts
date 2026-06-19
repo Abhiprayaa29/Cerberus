@@ -1,4 +1,4 @@
-import type { FallbackEntry } from "../../../shared/model-requirements"
+﻿import type { FallbackEntry } from "../../../shared/model-requirements"
 import type { DelegatedModelConfig } from "../../../shared/model-resolution-types"
 import type { ExecutorContext } from "../../../tools/delegate-task/executor-types"
 import type { DelegateTaskArgs } from "../../../tools/delegate-task/types"
@@ -51,12 +51,12 @@ function resolveSystemContent(input: {
   }) ?? ""
 }
 
-// Strip global `agents.sisyphus-junior.model` override at the team-mode boundary —
+// Strip global `agents.cerberus-junior.model` override at the team-mode boundary —
 // `resolveCategoryExecution` ranks it above category defaults (correct for plain
 // `task(category=…)`, wrong here) and would collapse every team member to the same model.
-function withoutSisyphusJuniorOverride(ctx: ExecutorContext): ExecutorContext {
-  if (ctx.sisyphusJuniorModel === undefined) return ctx
-  return { ...ctx, sisyphusJuniorModel: undefined }
+function withoutCerberusJuniorOverride(ctx: ExecutorContext): ExecutorContext {
+  if (ctx.cerberusJuniorModel === undefined) return ctx
+  return { ...ctx, cerberusJuniorModel: undefined }
 }
 
 export async function resolveMember(
@@ -71,9 +71,9 @@ export async function resolveMember(
         {
           ...createBaseDelegateTaskArgs(member.prompt),
           category: member.category,
-          subagent_type: "sisyphus-junior",
+          subagent_type: "cerberus-junior",
         },
-        withoutSisyphusJuniorOverride(ctx),
+        withoutCerberusJuniorOverride(ctx),
         undefined,
         undefined,
       )
@@ -105,7 +105,7 @@ export async function resolveMember(
       parentAgent,
       categoryExamples,
       {
-        allowSisyphusJuniorDirect: true,
+        allowCerberusJuniorDirect: true,
         allowPrimaryAgentDelegation: true,
       },
     )

@@ -1,4 +1,4 @@
-import { existsSync, appendFileSync } from "fs"
+﻿import { existsSync, appendFileSync } from "fs"
 import { join } from "path"
 import { homedir, tmpdir } from "os"
 import { createRequire } from "module"
@@ -41,7 +41,7 @@ const PLATFORM_MAP: Record<string, PlatformInfo> = {
 }
 
 /**
- * Get the cache directory for oh-my-opencode binaries.
+ * Get the cache directory for oh-my-open-pentest binaries.
  * On Windows: Uses %LOCALAPPDATA% or %APPDATA% (Windows conventions)
  * On Unix: Follows XDG Base Directory Specification
  */

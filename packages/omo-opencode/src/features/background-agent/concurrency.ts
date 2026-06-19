@@ -1,4 +1,4 @@
-import type { BackgroundTaskConfig } from "../../config/schema"
+﻿import type { BackgroundTaskConfig } from "../../config/schema"
 
 /**
  * Queue entry with settled-flag pattern to prevent double-resolution.
@@ -160,14 +160,14 @@ export class ConcurrencyManager {
   }
 
   /**
-   * Get current count for a model (for testing/debugging)
+   * Get current count for a model (for testing/vulnerability analysis)
    */
   getCount(model: string): number {
     return this.counts.get(model) ?? 0
   }
 
   /**
-   * Get queue length for a model (for testing/debugging)
+   * Get queue length for a model (for testing/vulnerability analysis)
    */
   getQueueLength(model: string): number {
     return this.queues.get(model)?.length ?? 0

@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { describe, expect, test } from "bun:test"
 
@@ -280,7 +280,7 @@ describe("formatConfigSummary", () => {
     // #then
     expect(summary).toContain("Z.ai Coding Plan")
     expect(summary).toContain("GLM fallbacks")
-    expect(summary).not.toContain("Librarian/Multimodal")
+    expect(summary).not.toContain("Intel/Multimodal")
   })
 
   test("describes MiniMax Coding Plan as MiniMax-M3 fallback", () => {

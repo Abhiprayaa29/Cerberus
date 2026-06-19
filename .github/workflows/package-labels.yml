@@ -1,4 +1,4 @@
-name: Package Labels
+﻿name: Package Labels
 
 on:
   issues:
@@ -96,7 +96,7 @@ jobs:
             case "$pkg" in
               omo-opencode) printf '%s\n' "$OPENCODE_LABEL" ;;
               omo-codex) printf '%s\n' "$LAZYCODEX_LABEL" ;;
-              oh-my-opencode-*) printf '%s\n' "$OPENCODE_LABEL" ;;
+              oh-my-open-pentest-*) printf '%s\n' "$OPENCODE_LABEL" ;;
               *) printf '%s\n' "$pkg" ;;
             esac
           }

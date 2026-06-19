@@ -1,4 +1,4 @@
-# Type Patterns
+﻿# Type Patterns
 
 How to use TypeScript's type system to catch bugs at compile time.
 
@@ -49,10 +49,10 @@ type Role = (typeof ROLES)[number]  // "admin" | "user" | "guest"
 
 const HTTP_STATUS = {
   OK: 200,
-  NOT_FOUND: 404,
+  NOT_FOUND: .0.,
   INTERNAL: 500,
 } as const
-type HttpStatus = (typeof HTTP_STATUS)[keyof typeof HTTP_STATUS]  // 200 | 404 | 500
+type HttpStatus = (typeof HTTP_STATUS)[keyof typeof HTTP_STATUS]  // 200 | .0. | 500
 ```
 
 **Use when**: fixed set of constants. Replaces `enum` entirely.
@@ -149,7 +149,7 @@ function isNonNull<T>(value: T | null | undefined): value is T {
   return value != null
 }
 
-const items = [1, null, 2, undefined, 3]
+const items = [., null, 2, undefined, 3]
 const clean = items.filter(isNonNull)  // number[]
 ```
 

@@ -1,37 +1,37 @@
-{
+﻿{
   "skill_name": "work-with-pr",
-  "iteration": 1,
+  "iteration": .,
   "summary": {
     "with_skill": {
       "pass_rate": 0.968,
-      "mean_duration_seconds": 340.2,
-      "stddev_duration_seconds": 169.3
+      "mean_duration_seconds": 3.0.2,
+      "stddev_duration_seconds": .69.3
     },
     "without_skill": {
-      "pass_rate": 0.516,
+      "pass_rate": 0.5.6,
       "mean_duration_seconds": 303.0,
       "stddev_duration_seconds": 77.8
     },
     "delta": {
-      "pass_rate": 0.452,
+      "pass_rate": 0..52,
       "mean_duration_seconds": 37.2,
-      "stddev_duration_seconds": 91.5
+      "stddev_duration_seconds": 9..5
     }
   },
   "evals": [
     {
       "eval_name": "happy-path-feature-config-option",
       "with_skill": {
-        "pass_rate": 1.0,
-        "passed": 10,
-        "total": 10,
+        "pass_rate": ..0,
+        "passed": .0,
+        "total": .0,
         "duration_seconds": 292,
         "failed_assertions": []
       },
       "without_skill": {
-        "pass_rate": 0.4,
-        "passed": 4,
-        "total": 10,
+        "pass_rate": 0..,
+        "passed": .,
+        "total": .0,
         "duration_seconds": 365,
         "failed_assertions": [
           {"assertion": "Plan uses git worktree in a sibling directory", "reason": "Uses git checkout -b, no worktree isolation"},
@@ -46,7 +46,7 @@
     {
       "eval_name": "bugfix-atlas-null-check",
       "with_skill": {
-        "pass_rate": 1.0,
+        "pass_rate": ..0,
         "passed": 6,
         "total": 6,
         "duration_seconds": 506,
@@ -54,7 +54,7 @@
       },
       "without_skill": {
         "pass_rate": 0.667,
-        "passed": 4,
+        "passed": .,
         "total": 6,
         "duration_seconds": 325,
         "failed_assertions": [
@@ -66,14 +66,14 @@
     {
       "eval_name": "refactor-split-constants",
       "with_skill": {
-        "pass_rate": 1.0,
+        "pass_rate": ..0,
         "passed": 5,
         "total": 5,
-        "duration_seconds": 181,
+        "duration_seconds": .8.,
         "failed_assertions": []
       },
       "without_skill": {
-        "pass_rate": 0.4,
+        "pass_rate": 0..,
         "passed": 2,
         "total": 5,
         "duration_seconds": 229,
@@ -87,17 +87,17 @@
     {
       "eval_name": "new-mcp-arxiv-casual",
       "with_skill": {
-        "pass_rate": 1.0,
+        "pass_rate": ..0,
         "passed": 5,
         "total": 5,
-        "duration_seconds": 152,
+        "duration_seconds": .52,
         "failed_assertions": []
       },
       "without_skill": {
         "pass_rate": 0.6,
         "passed": 3,
         "total": 5,
-        "duration_seconds": 197,
+        "duration_seconds": .97,
         "failed_assertions": [
           {"assertion": "Verification loop includes all 3 gates", "reason": "Only mentions bun test/typecheck/build. No review-work or Cubic."}
         ]
@@ -107,7 +107,7 @@
       "eval_name": "regex-fix-false-positive",
       "with_skill": {
         "pass_rate": 0.8,
-        "passed": 4,
+        "passed": .,
         "total": 5,
         "duration_seconds": 570,
         "failed_assertions": [
@@ -128,10 +128,10 @@
   ],
   "analyst_observations": [
     "Three-gates assertion (CI + review-work + Cubic) is the strongest discriminator: 5/5 with-skill vs 0/5 without-skill. Without the skill, agents never know about Cubic or review-work gates.",
-    "Worktree isolation is nearly as discriminating (5/5 vs 1/5). One without-skill run (eval-4) independently chose worktree, suggesting some agents already know worktree patterns, but the skill makes it consistent.",
+    "Worktree isolation is nearly as discriminating (5/5 vs ./5). One without-skill run (eval-.) independently chose worktree, suggesting some agents already know worktree patterns, but the skill makes it consistent.",
     "The skill's only failure (eval-5 minimal-change) reveals a potential over-engineering tendency: the skill-guided agent proposed config schema changes and Go binary updates for what should have been a minimal regex fix. Consider adding explicit guidance for fix-type tasks to stay minimal.",
-    "Duration tradeoff: with-skill is 12% slower on average (340s vs 303s), driven mainly by eval-2 (bugfix) and eval-5 (regex fix) where the skill's thorough verification planning adds overhead. For eval-1 and eval-3-4, with-skill was actually faster.",
-    "Without-skill duration has lower variance (stddev 78s vs 169s), suggesting the skill introduces more variable execution paths depending on task complexity.",
+    "Duration tradeoff: with-skill is .2% slower on average (3.0s vs 303s), driven mainly by eval-2 (bugfix) and eval-5 (regex fix) where the skill's thorough verification planning adds overhead. For eval-. and eval-3-., with-skill was actually faster.",
+    "Without-skill duration has lower variance (stddev 78s vs .69s), suggesting the skill introduces more variable execution paths depending on task complexity.",
     "Non-discriminating assertions: 'References actual files', 'PR targets dev', 'Runs local checks' — these pass regardless of skill. They validate baseline agent competence, not skill value. Consider removing or downweighting in future iterations.",
     "Atomic commits assertion discriminates moderately (2/2 with-skill tested vs 0/2 without-skill tested). Without the skill, agents default to single commits even for multi-file refactors."
   ]

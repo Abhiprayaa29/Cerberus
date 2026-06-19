@@ -1,4 +1,4 @@
-import { readFile } from "node:fs/promises";
+﻿import { readFile } from "node:fs/promises";
 
 import { type CheckpointUlwLoopArgs, checkpointUlwLoop } from "./checkpoint.js";
 import {
@@ -54,7 +54,7 @@ export async function createGoals(
 	if (json) printJson({ ok: true, plan, summary: summarizeUlwLoopPlan(plan) });
 	else {
 		process.stdout.write(
-			`ulw-loop plan created: ${plan.goals.length} goal(s)\nbrief: ${plan.briefPath}\ngoals: ${plan.goalsPath}\nledger: ${plan.ledgerPath}\n`,
+			`pentest-loop plan created: ${plan.goals.length} goal(s)\nbrief: ${plan.briefPath}\ngoals: ${plan.goalsPath}\nledger: ${plan.ledgerPath}\n`,
 		);
 	}
 	return 0;
@@ -85,7 +85,7 @@ export async function completeGoals(
 				summary: summarizeUlwLoopPlan(result.plan),
 				plan: result.plan,
 			});
-		} else process.stdout.write(`${handoff || "ulw-loop: all goals complete"}\n`);
+		} else process.stdout.write(`${handoff || "pentest-loop: all goals complete"}\n`);
 		return 0;
 	}
 	const instruction = buildCodexGoalInstruction({ plan: result.plan, goal: result.goal });
@@ -119,7 +119,7 @@ export async function checkpoint(
 	};
 	const result = await checkpointUlwLoop(repoRoot, args, scope);
 	if (json) printJson({ ok: true, ...result, summary: summarizeUlwLoopPlan(result.plan) });
-	else process.stdout.write(`ulw-loop checkpoint: ${result.goal.id} -> ${result.goal.status}\n`);
+	else process.stdout.write(`pentest-loop checkpoint: ${result.goal.id} -> ${result.goal.status}\n`);
 	return 0;
 }
 
@@ -148,7 +148,7 @@ export async function addGoal(
 	);
 	if (json) printJson({ ok: true, plan: result.plan, goal: result.goal, summary: summarizeUlwLoopPlan(result.plan) });
 	else {
-		process.stdout.write(`ulw-loop added goal: ${result.goal.id}\n`);
+		process.stdout.write(`pentest-loop added goal: ${result.goal.id}\n`);
 		printStatus(result.plan);
 	}
 	return 0;
@@ -179,7 +179,7 @@ export async function captureEvidence(
 	if (json) printJson({ ok: true, ...result, summary: summarizeUlwLoopPlan(result.plan) });
 	else {
 		process.stdout.write(
-			`ulw-loop evidence recorded: ${result.goal.id}/${result.criterion.id} -> ${result.criterion.status}\n`,
+			`pentest-loop evidence recorded: ${result.goal.id}/${result.criterion.id} -> ${result.criterion.status}\n`,
 		);
 	}
 	return 0;
@@ -217,7 +217,7 @@ export async function reviewBlockers(
 		});
 	} else {
 		process.stdout.write(
-			`ulw-loop final review blockers recorded: ${result.blockedGoal.id} -> review_blocked; added ${result.newGoal.id}\n`,
+			`pentest-loop final review blockers recorded: ${result.blockedGoal.id} -> review_blocked; added ${result.newGoal.id}\n`,
 		);
 	}
 	return 0;
@@ -246,5 +246,5 @@ function checkpointStatus(value: string): CheckpointStatus {
 function findGoal(plan: { readonly goals: readonly UlwLoopItem[] }, goalId: string): UlwLoopItem {
 	const goal = plan.goals.find((candidate) => candidate.id === goalId);
 	if (goal !== undefined) return goal;
-	throw new UlwLoopError(`Unknown ulw-loop id: ${goalId}.`, "ULW_LOOP_GOAL_NOT_FOUND", { details: { goalId } });
+	throw new UlwLoopError(`Unknown pentest-loop id: ${goalId}.`, "ULW_LOOP_GOAL_NOT_FOUND", { details: { goalId } });
 }

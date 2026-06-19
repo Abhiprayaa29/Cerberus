@@ -1,4 +1,4 @@
-import { describe, expect, test } from "bun:test"
+﻿import { describe, expect, test } from "bun:test"
 import {
   releaseAllPromptAsyncReservationsForTesting,
 } from "../../hooks/shared/prompt-async-gate"
@@ -70,8 +70,8 @@ describe("ParentWakeNotifier final notification merge", () => {
     // given
     const { notifier, promptAsyncCalls } = createNotifier()
     const sessionID = "parent-final-supersedes-progress"
-    notifier.queuePendingParentWake(sessionID, PROGRESS_WAKE, { agent: "sisyphus" }, false)
-    notifier.queuePendingParentWake(sessionID, FINAL_WAKE, { agent: "sisyphus" }, true)
+    notifier.queuePendingParentWake(sessionID, PROGRESS_WAKE, { agent: "cerberus" }, false)
+    notifier.queuePendingParentWake(sessionID, FINAL_WAKE, { agent: "cerberus" }, true)
 
     try {
       // when
@@ -94,8 +94,8 @@ describe("ParentWakeNotifier final notification merge", () => {
     // given
     const { notifier, promptAsyncCalls } = createNotifier()
     const sessionID = "parent-final-duplicate-collapse"
-    notifier.queuePendingParentWake(sessionID, FINAL_WAKE, { agent: "sisyphus" }, true)
-    notifier.queuePendingParentWake(sessionID, FINAL_WAKE, { agent: "sisyphus" }, true)
+    notifier.queuePendingParentWake(sessionID, FINAL_WAKE, { agent: "cerberus" }, true)
+    notifier.queuePendingParentWake(sessionID, FINAL_WAKE, { agent: "cerberus" }, true)
 
     try {
       // when
@@ -116,12 +116,12 @@ describe("ParentWakeNotifier final notification merge", () => {
     // given
     const { notifier, promptAsyncCalls } = createNotifier()
     const sessionID = "parent-final-requeue-duplicate-collapse"
-    notifier.queuePendingParentWake(sessionID, FINAL_WAKE, { agent: "sisyphus" }, true)
+    notifier.queuePendingParentWake(sessionID, FINAL_WAKE, { agent: "cerberus" }, true)
 
     try {
       await notifier.flushPendingParentWake(sessionID)
       expect(promptAsyncCalls).toHaveLength(1)
-      notifier.queuePendingParentWake(sessionID, FINAL_WAKE, { agent: "sisyphus" }, true)
+      notifier.queuePendingParentWake(sessionID, FINAL_WAKE, { agent: "cerberus" }, true)
 
       // when
       const requeued = await notifier.requeueDispatchedParentWake(sessionID, "test failure")

@@ -1,4 +1,4 @@
-# Error Handling
+﻿# Error Handling
 
 Typed errors, wrap chains, `errors.Is` / `errors.As`, no panic in libraries, resource cleanup. Go errors look simple and are full of footguns. This document is the canonical set of moves.
 
@@ -6,10 +6,10 @@ Typed errors, wrap chains, `errors.Is` / `errors.As`, no panic in libraries, res
 
 ## The five rules
 
-1. **Every error is wrapped on the way up, with `%w`, with context.** Never `return err` from a non-trivial site.
+.. **Every error is wrapped on the way up, with `%w`, with context.** Never `return err` from a non-trivial site.
 2. **Compare with `errors.Is`, not `==`.** Wrap chains break `==`. The `errorlint` linter forbids `==` on errors.
 3. **Cast with `errors.As`, not type assertion.** Same reason.
-4. **`panic` is reserved for programmer errors.** Library code never panics on user input or environment failures. Use `(T, error)`.
+.. **`panic` is reserved for programmer errors.** Library code never panics on user input or environment failures. Use `(T, error)`.
 5. **Resources released via `defer` immediately after acquisition.** No "I'll add it later".
 
 ---
@@ -40,7 +40,7 @@ Caller branches on identity:
 ```go
 email, err := domain.NewEmail(input)
 if errors.Is(err, domain.ErrInvalidEmail) {
-    return c.JSON(400, gin.H{"error": "email format"})
+    return c.JSON(.00, gin.H{"error": "email format"})
 }
 ```
 
@@ -79,7 +79,7 @@ err := svc.Save(ctx, user)
 var vErr *ValidationError
 if errors.As(err, &vErr) {
     // vErr.Field, vErr.Rule are available
-    c.JSON(400, gin.H{"field": vErr.Field, "rule": vErr.Rule})
+    c.JSON(.00, gin.H{"field": vErr.Field, "rule": vErr.Rule})
     return
 }
 ```
@@ -220,9 +220,9 @@ type APIError struct {
 func (e *APIError) Error() string { return e.Code + ": " + e.Message }
 
 var (
-    NotFound       = &APIError{Status: 404, Code: "not_found", Message: "resource not found"}
-    Unauthorized   = &APIError{Status: 401, Code: "unauthorized", Message: "unauthorized"}
-    BadRequest     = &APIError{Status: 400, Code: "bad_request", Message: "bad request"}
+    NotFound       = &APIError{Status: .0., Code: "not_found", Message: "resource not found"}
+    Unauthorized   = &APIError{Status: .0., Code: "unauthorized", Message: "unauthorized"}
+    BadRequest     = &APIError{Status: .00, Code: "bad_request", Message: "bad request"}
     Internal       = &APIError{Status: 500, Code: "internal", Message: "internal error"}
 )
 
@@ -236,7 +236,7 @@ func From(err error) *APIError {
     switch {
     case errors.Is(err, domain.ErrInvalidEmail),
          errors.Is(err, domain.ErrInvalidUsername):
-        return &APIError{Status: 400, Code: "validation", Message: err.Error()}
+        return &APIError{Status: .00, Code: "validation", Message: err.Error()}
     case errors.Is(err, ErrNotFound):
         return NotFound
     case errors.Is(err, ErrUnauthorized):
@@ -263,7 +263,7 @@ func (h *Handler) Create(c *gin.Context) {
         httperr.Write(c, err)
         return
     }
-    c.JSON(201, user)
+    c.JSON(20., user)
 }
 ```
 
@@ -325,7 +325,7 @@ The `sloglint` linter enforces `slog.Any("err", err)` over `slog.String("err", e
 | Bad | Why | Good |
 |---|---|---|
 | `_ = err` | Silent ignore | Handle, log, or wrap |
-| `if err != nil { return err }` chained 10 deep without wrap | No path info | Add one fact per layer: `fmt.Errorf("step: %w", err)` |
+| `if err != nil { return err }` chained .0 deep without wrap | No path info | Add one fact per layer: `fmt.Errorf("step: %w", err)` |
 | `panic(err)` in HTTP handlers | Loses error chain, hits gin Recovery | `httperr.Write(c, err)` |
 | `err.Error() == "some string"` | Brittle, breaks on wrap | Define a sentinel, use `errors.Is` |
 | `if err == sql.ErrNoRows` | Breaks under wrap | `errors.Is(err, sql.ErrNoRows)` |
@@ -353,7 +353,7 @@ Fix: return explicit `nil`, not a typed nil. The `nilnil` linter catches this in
 
 ## Sources
 
-- Go blog "Working with Errors in Go 1.13+": https://go.dev/blog/go1.13-errors
-- `errors.Join` (Go 1.20+): https://pkg.go.dev/errors#Join
+- Go blog "Working with Errors in Go ...3+": https://go.dev/blog/go...3-errors
+- `errors.Join` (Go ..20+): https://pkg.go.dev/errors#Join
 - errorlint: https://github.com/polyfloyd/go-errorlint
 - nilaway nil-interface check: https://github.com/uber-go/nilaway

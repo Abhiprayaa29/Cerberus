@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { describe, expect, test } from "bun:test"
 
@@ -18,7 +18,7 @@ function createTestCacheContext(
   createConnectedProvidersCacheStore: ConnectedProvidersCacheModule["createConnectedProvidersCacheStore"],
 ) {
 	const fakeUserCacheRoot = mkdtempSync(join(tmpdir(), "connected-providers-user-cache-"))
-	const testCacheDir = join(fakeUserCacheRoot, "oh-my-opencode")
+	const testCacheDir = join(fakeUserCacheRoot, "oh-my-open-pentest")
 	const testCacheStore = createConnectedProvidersCacheStore(() => testCacheDir)
 
 	return {
@@ -98,7 +98,7 @@ describe("updateConnectedProvidersCache", () => {
 		const { testCacheStore, fakeUserCacheRoot } = createTestCacheContext(createConnectedProvidersCacheStore)
 
 		try {
-			//#given - a previous complete provider snapshot includes the Sisyphus fallback provider
+			//#given - a previous complete provider snapshot includes the Cerberus fallback provider
 			await testCacheStore.updateConnectedProvidersCache({
 				provider: {
 					list: async () => ({
@@ -411,7 +411,7 @@ describe("updateConnectedProvidersCache", () => {
 		const { testCacheStore, fakeUserCacheRoot } = createTestCacheContext(createConnectedProvidersCacheStore)
 
 		//#given
-		const realCacheDir = join(fakeUserCacheRoot, "oh-my-opencode")
+		const realCacheDir = join(fakeUserCacheRoot, "oh-my-open-pentest")
 		const sentinelPath = join(realCacheDir, "connected-providers-cache.test-sentinel.json")
 		mkdirSync(realCacheDir, { recursive: true })
 		writeFileSync(sentinelPath, JSON.stringify({ keep: true }))

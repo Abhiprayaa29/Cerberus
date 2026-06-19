@@ -1,4 +1,4 @@
-import { afterEach, describe, it, expect, mock } from "bun:test"
+﻿import { afterEach, describe, it, expect, mock } from "bun:test"
 import { dispatchInternalPrompt, releaseAllPromptAsyncReservationsForTesting } from "./prompt-async-gate"
 import { parseModelSuggestion, promptWithModelSuggestionRetry, promptSyncWithModelSuggestionRetry } from "./model-suggestion-retry"
 import { unsafeTestValue } from "../../../../test-support/unsafe-test-value"
@@ -348,7 +348,7 @@ describe("promptWithModelSuggestionRetry", () => {
       promptWithModelSuggestionRetry(unsafeTestValue(client), {
         path: { id: "session-1" },
         body: {
-          agent: "explore",
+          agent: "scout",
           parts: [{ type: "text", text: "hello" }],
           model: { providerID: "anthropic", modelID: "claude-sonet-4" },
         },
@@ -470,7 +470,7 @@ describe("promptWithModelSuggestionRetry", () => {
     await promptWithModelSuggestionRetry(unsafeTestValue(client), {
       path: { id: "session-1" },
       body: {
-        agent: "explore",
+        agent: "scout",
         system: "You are a helpful agent",
         tools: { task: false },
         parts: [{ type: "text", text: "hello" }],
@@ -481,7 +481,7 @@ describe("promptWithModelSuggestionRetry", () => {
 
     // then call should pass all fields through unchanged
     const call = promptMock.mock.calls[0][0]
-    expect(call.body.agent).toBe("explore")
+    expect(call.body.agent).toBe("scout")
     expect(call.body.system).toBe("You are a helpful agent")
     expect(call.body.tools).toEqual({ task: false })
     expect(call.body.variant).toBe("max")
@@ -727,7 +727,7 @@ describe("promptSyncWithModelSuggestionRetry", () => {
     await promptSyncWithModelSuggestionRetry(unsafeTestValue(client), {
       path: { id: "session-1" },
       body: {
-        agent: "multimodal-looker",
+        agent: "lens",
         tools: { task: false },
         parts: [{ type: "text", text: "analyze" }],
         model: { providerID: "google", modelID: "gemini-3-flash" },
@@ -737,7 +737,7 @@ describe("promptSyncWithModelSuggestionRetry", () => {
 
     // then call should pass all fields through unchanged
     const call = promptMock.mock.calls[0][0]
-    expect(call.body.agent).toBe("multimodal-looker")
+    expect(call.body.agent).toBe("lens")
     expect(call.body.tools).toEqual({ task: false })
     expect(call.body.variant).toBe("max")
   })

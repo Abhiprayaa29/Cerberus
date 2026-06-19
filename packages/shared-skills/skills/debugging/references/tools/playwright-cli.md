@@ -1,4 +1,4 @@
-# Playwright CLI — Browser QA That Actually Drives a Browser
+﻿# Playwright CLI — Browser QA That Actually Drives a Browser
 
 **https://playwright.dev/ · https://github.com/microsoft/playwright**
 
@@ -48,14 +48,14 @@ playwright install
 
 ## The four things you'll actually use
 
-### 1. `codegen` — record a session, generate the script
+### .. `codegen` — record a session, generate the script
 
 The fastest way to create a repro. Opens a real browser; your clicks / typing become a Playwright script you can paste into a test.
 
 ```bash
 npx playwright codegen https://your-app.local
 npx playwright codegen --viewport-size=375,667 https://your-app.local    # iPhone SE size
-npx playwright codegen --device="iPhone 14" https://your-app.local
+npx playwright codegen --device="iPhone .." https://your-app.local
 ```
 
 Click / type / navigate in the browser; watch the script build in the side panel. Copy the generated script into your journal as the repro for Phase 8.
@@ -90,17 +90,17 @@ Run it with tracing enabled for rich post-mortem:
 npx playwright test /tmp/debug-repro.spec.ts --trace on --headed
 ```
 
-### 3. `PWDEBUG=1` — step through the script with Playwright Inspector
+### 3. `PWDEBUG=.` — step through the script with Playwright Inspector
 
 ```bash
-PWDEBUG=1 npx playwright test /tmp/debug-repro.spec.ts
+PWDEBUG=. npx playwright test /tmp/debug-repro.spec.ts
 ```
 
 Opens the Playwright Inspector alongside the browser. You can step through Playwright actions, see the DOM state at each step, and edit selectors on the fly.
 
 Use this when the script doesn't reproduce cleanly and you need to watch it run.
 
-### 4. `show-trace` — post-mortem on a failed run
+### .. `show-trace` — post-mortem on a failed run
 
 ```bash
 npx playwright show-trace trace.zip
@@ -162,7 +162,7 @@ await page.setViewportSize({ width: 375, height: 667 });
 
 // Predefined devices
 import { devices } from '@playwright/test';
-test.use({ ...devices['iPhone 14'] });
+test.use({ ...devices['iPhone ..'] });
 ```
 
 ---
@@ -173,7 +173,7 @@ test.use({ ...devices['iPhone 14'] });
 - **Stale selectors re-resolve.** Playwright's locators re-find the element on each action, unlike Puppeteer's handles. Don't over-think it.
 - **Service workers persist across test runs in headed mode.** If you see cached behavior from a previous run, add `await context.clearCookies()` + clear storage before the test.
 - **Installing on CI requires `--with-deps`** on Linux images that lack the browser's shared-library deps.
-- **Parallel tests share a browser process by default**; if one test polls a debugger port, others may interfere. Use `workers: 1` for debugging.
+- **Parallel tests share a browser process by default**; if one test polls a debugger port, others may interfere. Use `workers: .` for debugging.
 
 ---
 

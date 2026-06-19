@@ -1,4 +1,4 @@
-import { describe, expect, test } from "bun:test"
+﻿import { describe, expect, test } from "bun:test"
 import { createKeywordDetectorHook } from "./index"
 import { _resetForTesting, setMainSession } from "../../features/claude-code-session-state"
 import { unsafeTestValue } from "../../../../../test-support/unsafe-test-value"
@@ -15,8 +15,8 @@ function createMockPluginInput(toastMessages: string[]) {
   })
 }
 
-describe("keyword-detector ultrawork runtime variant gating", () => {
-  test("#given runtime max variant #when ultrawork activates #then maximum precision toast is preserved", async () => {
+describe("keyword-detector fullscan runtime variant gating", () => {
+  test("#given runtime max variant #when fullscan activates #then maximum precision toast is preserved", async () => {
     // given
     _resetForTesting()
     setMainSession("main-session")
@@ -24,7 +24,7 @@ describe("keyword-detector ultrawork runtime variant gating", () => {
     const hook = createKeywordDetectorHook(createMockPluginInput(toastMessages))
     const output = {
       message: { variant: "max" } as Record<string, unknown>,
-      parts: [{ type: "text", text: "ultrawork do it" }],
+      parts: [{ type: "text", text: "fullscan do it" }],
     }
 
     // when
@@ -36,7 +36,7 @@ describe("keyword-detector ultrawork runtime variant gating", () => {
     _resetForTesting()
   })
 
-  test("#given runtime non-max variant #when ultrawork activates #then variant stays unchanged and toast does not claim max", async () => {
+  test("#given runtime non-max variant #when fullscan activates #then variant stays unchanged and toast does not claim max", async () => {
     // given
     _resetForTesting()
     setMainSession("main-session")
@@ -44,7 +44,7 @@ describe("keyword-detector ultrawork runtime variant gating", () => {
     const hook = createKeywordDetectorHook(createMockPluginInput(toastMessages))
     const output = {
       message: { variant: "medium" } as Record<string, unknown>,
-      parts: [{ type: "text", text: "ultrawork do it" }],
+      parts: [{ type: "text", text: "fullscan do it" }],
     }
 
     // when

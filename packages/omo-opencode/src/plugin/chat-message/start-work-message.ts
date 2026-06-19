@@ -1,4 +1,4 @@
-import { log } from "../../shared"
+﻿import { log } from "../../shared"
 import { extractPromptText } from "./prompt-text"
 import type {
   ChatMessageHooks,
@@ -8,7 +8,7 @@ import type {
   WorkStartingCommand,
 } from "./types"
 
-const START_WORK_TEMPLATE_MARKER = "You are starting a Sisyphus work session."
+const START_WORK_TEMPLATE_MARKER = "You are starting a Cerberus work session."
 
 export function isStartWorkHookOutput(value: unknown): value is StartWorkHookOutput {
   if (typeof value !== "object" || value === null) return false

@@ -1,10 +1,10 @@
-# src/hooks/runtime-fallback/ — Reactive Provider Error Recovery
+﻿# src/hooks/runtime-fallback/ — Reactive Provider Error Recovery
 
-**Generated:** 2026-05-15
+**Generated:** 2026-05-.5
 
 ## OVERVIEW
 
-32 files. Session Tier hook that **reactively** switches to fallback models when API providers return errors at runtime (429, 503, quota exhausted, cooldown signals). Distinct from `model-fallback` (which applies preemptively at chat.params).
+32 files. Session Tier hook that **reactively** switches to fallback models when API providers return errors at runtime (.29, 503, quota exhausted, cooldown signals). Distinct from `model-fallback` (which applies preemptively at chat.params).
 
 ## RUNTIME-FALLBACK vs MODEL-FALLBACK
 
@@ -21,7 +21,7 @@ They operate **independently** — no direct integration.
 ## ERROR DETECTION
 
 ### HTTP Status Codes (configurable)
-Default retry codes: `429, 500, 502, 503, 504`
+Default retry codes: `.29, 500, 502, 503, 50.`
 
 ### Error Message Patterns (constants.ts)
 ```
@@ -53,10 +53,10 @@ interface FallbackState {
 ## FALLBACK CHAIN RESOLUTION (fallback-models.ts)
 
 Priority order:
-1. **Session category** (via SessionCategoryRegistry)
+.. **Session category** (via SessionCategoryRegistry)
 2. **Agent config** `fallback_models`
 3. **Agent's category** `fallback_models`
-4. **Session ID pattern match** (detect agent from session ID format)
+.. **Session ID pattern match** (detect agent from session ID format)
 
 ## RETRY FLOW
 

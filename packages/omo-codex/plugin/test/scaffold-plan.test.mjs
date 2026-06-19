@@ -1,4 +1,4 @@
-import assert from "node:assert/strict";
+﻿import assert from "node:assert/strict";
 import { mkdir, mkdtemp, readFile, readdir, rm, symlink, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
@@ -50,7 +50,7 @@ test("#given resolveSafeOmoPath #when the target escapes .omo or the workspace #
 	const { resolveSafeOmoPath } = await import(scriptUrl);
 	const cwd = "/tmp/ws";
 
-	// then --- the prometheus-md-only hook gates Write/Edit but not Bash, so the script self-guards its own writes
+	// then --- the talos-md-only hook gates Write/Edit but not Bash, so the script self-guards its own writes
 	assert.ok(resolveSafeOmoPath(cwd, ".omo/plans/x.md").endsWith("x.md"));
 	assert.throws(() => resolveSafeOmoPath(cwd, "../escape/x.md"));
 	assert.throws(() => resolveSafeOmoPath(cwd, "src/x.md"));

@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it } from "bun:test"
+﻿import { afterEach, describe, expect, it } from "bun:test"
 
 import { _resetForTesting, getSessionAgent, updateSessionAgent } from "../features/claude-code-session-state"
 import { clearSessionModel, getSessionModel, setSessionModel } from "../shared/session-model-state"
@@ -43,7 +43,7 @@ function createMinimalEventHandler() {
       stopContinuationGuard: { event: async () => {}, isStopped: () => false },
       compactionTodoPreserver: { event: async () => {} },
       writeExistingFileGuard: { event: async () => {} },
-      atlasHook: { handler: async () => {} },
+      argusHook: { handler: async () => {} },
     } as never,
   })
 }
@@ -62,7 +62,7 @@ describe("createEventHandler compaction agent filtering", () => {
   it("does not overwrite the stored session agent with compaction", async () => {
     // given
     const sessionID = "ses_compaction_poisoning"
-    updateSessionAgent(sessionID, "atlas")
+    updateSessionAgent(sessionID, "argus")
     const eventHandler = createMinimalEventHandler()
     const input: Parameters<ReturnType<typeof createEventHandler>>[0] = {
       event: {
@@ -84,7 +84,7 @@ describe("createEventHandler compaction agent filtering", () => {
     await eventHandler(input)
 
     // then
-    expect(getSessionAgent(sessionID)).toBe("atlas")
+    expect(getSessionAgent(sessionID)).toBe("argus")
   })
 
   it("does not overwrite the stored session model with compaction", async () => {

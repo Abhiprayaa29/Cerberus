@@ -1,9 +1,9 @@
-import {
+﻿import {
   getTelemetryApiKey,
   getTelemetryHost,
   hasTelemetryApiKey,
   shouldDisableTelemetry,
-} from "@oh-my-opencode/telemetry-core"
+} from "@oh-my-open-pentest/telemetry-core"
 
 import { createCodexTelemetryProductConfig } from "./product-identity"
 

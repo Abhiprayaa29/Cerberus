@@ -1,4 +1,4 @@
-/// <reference path="../../../bun-test.d.ts" />
+﻿/// <reference path="../../../bun-test.d.ts" />
 import { afterEach, describe, expect, test } from "bun:test"
 
 import {
@@ -288,8 +288,8 @@ describe("dispatchInternalPrompt semantic dedupe", () => {
       expect(first.status).toBe("dispatched")
       expect(second.status).toBe("dispatched")
       expect(promptCalls).toEqual([
-        "internal route A\n<!-- OMO_INTERNAL_INITIATOR -->",
-        "internal route B\n<!-- OMO_INTERNAL_INITIATOR -->",
+        "internal route A\n<!-- OMOP_INTERNAL_INITIATOR -->",
+        "internal route B\n<!-- OMOP_INTERNAL_INITIATOR -->",
       ])
     } finally {
       Date.now = originalDateNow
@@ -321,7 +321,7 @@ describe("dispatchInternalPrompt semantic dedupe", () => {
           path: { id: sessionID },
           body: {
             parts: [createInternalAgentContinuationTextPart("continue from route A")],
-            agent: "sisyphus",
+            agent: "cerberus",
             model: "openai/gpt-5",
           },
           query: { directory: "/workspace/project", tools: ["task"], route: "todo-enforcer" },

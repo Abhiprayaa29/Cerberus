@@ -1,4 +1,4 @@
-# codex-start-work-continuation
+﻿# codex-start-work-continuation
 
 Codex Stop-hook continuation injector for the omo-codex `start-work` skill.
 
@@ -32,13 +32,13 @@ cat > "$TMP/.omo/plans/test.md" <<EOF
 - [ ] Task two
 EOF
 cat > "$TMP/.omo/boulder.json" <<EOF
-{"schema_version":2,"active_work_id":"w1","works":{"w1":{"work_id":"w1","active_plan":".omo/plans/test.md","plan_name":"test","session_ids":["codex:smoke-session"],"status":"active"}}}
+{"schema_version":2,"active_work_id":"w.","works":{"w.":{"work_id":"w.","active_plan":".omo/plans/test.md","plan_name":"test","session_ids":["codex:smoke-session"],"status":"active"}}}
 EOF
-PAYLOAD='{"session_id":"smoke-session","turn_id":"t1","transcript_path":"","cwd":"'"$TMP"'","hook_event_name":"Stop","model":"gpt-5.5","permission_mode":"default","stop_hook_active":false}'
+PAYLOAD='{"session_id":"smoke-session","turn_id":"t.","transcript_path":"","cwd":"'"$TMP"'","hook_event_name":"Stop","model":"gpt-5.5","permission_mode":"default","stop_hook_active":false}'
 npm run build
 echo "$PAYLOAD" | node dist/cli.js hook stop
 
-PAYLOAD_LOOP='{"session_id":"smoke-session","turn_id":"t1","transcript_path":"","cwd":"'"$TMP"'","hook_event_name":"Stop","model":"gpt-5.5","permission_mode":"default","stop_hook_active":true}'
+PAYLOAD_LOOP='{"session_id":"smoke-session","turn_id":"t.","transcript_path":"","cwd":"'"$TMP"'","hook_event_name":"Stop","model":"gpt-5.5","permission_mode":"default","stop_hook_active":true}'
 echo "$PAYLOAD_LOOP" | node dist/cli.js hook stop
 
 rm -rf "$TMP"

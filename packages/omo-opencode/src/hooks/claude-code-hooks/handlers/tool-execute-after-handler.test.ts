@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, mock, afterAll } from "bun:test"
+﻿import { beforeEach, describe, expect, it, mock, afterAll } from "bun:test"
 import { restoreModuleMocksForTestFile } from "../../../testing/module-mock-lifecycle"
 
 type PostToolUseMockResult = {
@@ -72,8 +72,8 @@ describe("createToolExecuteAfterHandler", () => {
           filePath: "src/example.ts",
           path: "src/duplicate-path.ts",
           file: "src/duplicate-file.ts",
-          sessionId: "ses_oracle",
-          agent: "oracle",
+          sessionId: "ses_cipher",
+          agent: "cipher",
           prompt: "very large hidden prompt",
           diff: "x".repeat(5000),
           noopEdits: 1,
@@ -116,8 +116,8 @@ describe("createToolExecuteAfterHandler", () => {
       tool_output: {
         output: "Updated src/example.ts",
         filePath: "src/example.ts",
-        sessionId: "ses_oracle",
-        agent: "oracle",
+        sessionId: "ses_cipher",
+        agent: "cipher",
         noopEdits: 1,
         deduplicatedEdits: 2,
         firstChangedLine: 42,

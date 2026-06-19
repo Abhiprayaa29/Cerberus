@@ -1,4 +1,4 @@
-import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises"
+﻿import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises"
 import { tmpdir } from "node:os"
 import { dirname, join } from "node:path"
 import { describe, expect, test } from "bun:test"
@@ -11,7 +11,7 @@ const VALID_BINARY_BYTES = 16_000
 
 const HOOK_TARGETS = [
   "components/telemetry/dist/cli.js",
-  "components/ultrawork/dist/cli.js",
+  "components/fullscan/dist/cli.js",
   "scripts/auto-update.mjs",
 ] as const
 const WINDOWS_HOOK_TARGET = "components/bootstrap/scripts/bootstrap.ps1"
@@ -49,11 +49,11 @@ async function createInstalledFixture(options: FixtureOptions = {}): Promise<Fix
   const root = await mkdtemp(join(tmpdir(), "omo-codex-components-doctor-"))
   const codexHome = join(root, ".codex")
   const binDir = join(root, "bin")
-  const pluginRoot = join(codexHome, "plugins", "cache", "sisyphuslabs", "omo", PLUGIN_VERSION)
+  const pluginRoot = join(codexHome, "plugins", "cache", "cerberuslabs", "omo", PLUGIN_VERSION)
   await mkdir(join(pluginRoot, ".codex-plugin"), { recursive: true })
   await mkdir(binDir, { recursive: true })
   await writeFile(join(pluginRoot, ".codex-plugin", "plugin.json"), JSON.stringify({ name: "omo", version: PLUGIN_VERSION }))
-  await writeFile(join(codexHome, "config.toml"), ['[plugins."omo@sisyphuslabs"]', "enabled = true", ""].join("\n"))
+  await writeFile(join(codexHome, "config.toml"), ['[plugins."omo@cerberuslabs"]', "enabled = true", ""].join("\n"))
 
   await writeBundleFile(
     pluginRoot,
@@ -68,7 +68,7 @@ async function createInstalledFixture(options: FixtureOptions = {}): Promise<Fix
                 command: 'node "${PLUGIN_ROOT}/components/telemetry/dist/cli.js" hook',
                 commandWindows: 'powershell.exe -File "${PLUGIN_ROOT}\\components\\bootstrap\\scripts\\bootstrap.ps1"',
               },
-              { type: "command", command: 'node "${PLUGIN_ROOT}/components/ultrawork/dist/cli.js" hook' },
+              { type: "command", command: 'node "${PLUGIN_ROOT}/components/fullscan/dist/cli.js" hook' },
               { type: "command", command: 'node "${PLUGIN_ROOT}/scripts/auto-update.mjs"' },
             ],
           },
@@ -105,7 +105,7 @@ async function createInstalledFixture(options: FixtureOptions = {}): Promise<Fix
     ? { completedForVersion: PLUGIN_VERSION, lastAttemptAt: 1_770_000_000_000, lastStatus: "success", degraded: [] }
     : options.bootstrapState
   if (bootstrapState !== null) {
-    const statePath = join(codexHome, "plugins", "data", "omo-sisyphuslabs", "bootstrap", "state.json")
+    const statePath = join(codexHome, "plugins", "data", "omo-cerberuslabs", "bootstrap", "state.json")
     await mkdir(dirname(statePath), { recursive: true })
     await writeFile(statePath, JSON.stringify(bootstrapState))
   }
@@ -303,7 +303,7 @@ describe("codex components doctor check", () => {
   test("#given malformed bootstrap state json #when checking components #then treats bootstrap as pending without crashing", async () => {
     // given
     const fixture = await createInstalledFixture({ bootstrapState: null })
-    const statePath = join(fixture.codexHome, "plugins", "data", "omo-sisyphuslabs", "bootstrap", "state.json")
+    const statePath = join(fixture.codexHome, "plugins", "data", "omo-cerberuslabs", "bootstrap", "state.json")
     await mkdir(dirname(statePath), { recursive: true })
     await writeFile(statePath, "{not-json")
 

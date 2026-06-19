@@ -1,9 +1,9 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from "bun:test"
 import type { PluginInput } from "@opencode-ai/plugin"
 
-import { OhMyOpenCodeConfigSchema } from "./config/schema/oh-my-opencode-config"
+import { OhMyOpenCodeConfigSchema } from "./config/schema/oh-my-open-pentest-config"
 import { createManagers } from "./create-managers"
 import * as openclawRuntimeDispatch from "./openclaw/runtime-dispatch"
 import { createModelCacheState } from "./plugin-state"

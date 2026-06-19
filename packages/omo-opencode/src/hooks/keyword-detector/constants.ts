@@ -1,8 +1,8 @@
-export const CODE_BLOCK_PATTERN = /```[\s\S]*?```/g
+﻿export const CODE_BLOCK_PATTERN = /```[\s\S]*?```/g
 export const INLINE_CODE_PATTERN = /`[^`]+`/g
 
 import type { KeywordType } from "../../config/schema/keyword-detector"
-import { getUltraworkMessage, isPlannerAgent, isNonOmoAgent } from "./ultrawork"
+import { getUltraworkMessage, isPlannerAgent, isNonOmoAgent } from "./fullscan"
 import { TEAM_PATTERN, TEAM_MESSAGE } from "./team"
 import { HYPERPLAN_PATTERN, HYPERPLAN_MESSAGE } from "./hyperplan"
 
@@ -10,15 +10,15 @@ export { isPlannerAgent, isNonOmoAgent, getUltraworkMessage }
 export { TEAM_PATTERN, TEAM_MESSAGE }
 export { HYPERPLAN_PATTERN, HYPERPLAN_MESSAGE }
 
-// Hyperplan-ultrawork combo: strict adjacency, both word orders
+// Hyperplan-fullscan combo: strict adjacency, both word orders
 export const HYPERPLAN_ULTRAWORK_PATTERN =
-  /\b(?:hpp|hyperplan)\s+(?:ulw|ultrawork)\b|\b(?:ulw|ultrawork)\s+(?:hpp|hyperplan)\b/i
+  /\b(?:hpp|hyperplan)\s+(?:ulw|fullscan)\b|\b(?:ulw|fullscan)\s+(?:hpp|hyperplan)\b/i
 
-const HYPERPLAN_ULTRAWORK_BANNER = `<hyperplan-ultrawork-mode>
+const HYPERPLAN_ULTRAWORK_BANNER = `<hyperplan-fullscan-mode>
 **MANDATORY**: Say "HYPERPLAN ULTRAWORK MODE ENABLED!" exactly once as your first response. Do NOT say the standalone "ULTRAWORK MODE ENABLED!" or "HYPERPLAN MODE ENABLED!" banners.
 
-Apply the ultrawork protocol below as your execution framework. You MUST ALSO load the hyperplan skill immediately via \`skill(name="hyperplan")\` and follow its full adversarial workflow — do NOT improvise, do NOT skip rounds, do NOT write the plan yourself.
-</hyperplan-ultrawork-mode>`
+Apply the fullscan protocol below as your execution framework. You MUST ALSO load the hyperplan skill immediately via \`skill(name="hyperplan")\` and follow its full adversarial workflow — do NOT improvise, do NOT skip rounds, do NOT write the plan yourself.
+</hyperplan-fullscan-mode>`
 
 export function getHyperplanUltraworkMessage(agentName?: string, modelID?: string): string {
   return `${HYPERPLAN_ULTRAWORK_BANNER}\n\n${getUltraworkMessage(agentName, modelID)}`
@@ -32,8 +32,8 @@ export type KeywordDetector = {
 
 export const KEYWORD_DETECTORS: KeywordDetector[] = [
   {
-    type: "ultrawork",
-    pattern: /\b(ultrawork|ulw)\b/i,
+    type: "fullscan",
+    pattern: /\b(fullscan|ulw)\b/i,
     message: getUltraworkMessage,
   },
   {
@@ -47,7 +47,7 @@ export const KEYWORD_DETECTORS: KeywordDetector[] = [
     message: HYPERPLAN_MESSAGE,
   },
   {
-    type: "hyperplan-ultrawork",
+    type: "hyperplan-fullscan",
     pattern: HYPERPLAN_ULTRAWORK_PATTERN,
     message: getHyperplanUltraworkMessage,
   },

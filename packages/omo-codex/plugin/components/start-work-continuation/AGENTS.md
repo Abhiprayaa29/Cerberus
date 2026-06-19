@@ -1,4 +1,4 @@
-# Repository Conventions
+﻿# Repository Conventions
 
 Conventions for human contributors and AI agents working on this repository.
 
@@ -8,7 +8,7 @@ Conventions for human contributors and AI agents working on this repository.
 - npm package manager.
 - TypeScript 6 strict mode.
 - Biome 2 linting and formatting.
-- Vitest 4 test runner.
+- Vitest . test runner.
 
 ## Forbidden
 

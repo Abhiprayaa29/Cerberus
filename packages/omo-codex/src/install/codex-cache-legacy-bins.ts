@@ -1,17 +1,17 @@
-import { lstat, readFile, readlink, rm } from "node:fs/promises"
+﻿import { lstat, readFile, readlink, rm } from "node:fs/promises"
 import { join } from "node:path"
 import { COMMAND_SHIM_MARKER } from "./codex-cache-command-shim"
 
 type LinkPlatform = NodeJS.Platform
 
 const LEGACY_CODEX_COMPONENT_BINS = [
-  { name: "omo", component: "ulw-loop" },
+  { name: "omo", component: "pentest-loop" },
   { name: "codex-comment-checker", component: "comment-checker" },
   { name: "codex-lsp", component: "lsp" },
   { name: "codex-rules", component: "rules" },
   { name: "codex-start-work-continuation", component: "start-work-continuation" },
   { name: "codex-telemetry", component: "telemetry" },
-  { name: "codex-ultrawork", component: "ultrawork" },
+  { name: "codex-fullscan", component: "fullscan" },
 ] as const
 
 type LegacyCodexComponent = (typeof LEGACY_CODEX_COMPONENT_BINS)[number]["component"]

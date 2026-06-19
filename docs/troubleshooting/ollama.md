@@ -1,10 +1,10 @@
-# Ollama Troubleshooting
+﻿# Ollama Troubleshooting
 
 ## Streaming Issue: JSON Parse Error
 
 ### Problem
 
-When using Ollama as a provider with oh-my-openagent agents, you may encounter:
+When using Ollama as a provider with oh-my-open-pentest agents, you may encounter:
 
 ```
 JSON Parse error: Unexpected EOF
@@ -26,11 +26,11 @@ Claude Code SDK expects a single JSON object, not multiple NDJSON lines, causing
 **Why this happens:**
 - **Ollama API**: Returns streaming responses as NDJSON by design
 - **Claude Code SDK**: Doesn't properly handle NDJSON responses for tool calls
-- **oh-my-openagent**: Passes through the SDK's behavior (can't fix at this layer)
+- **oh-my-open-pentest**: Passes through the SDK's behavior (can't fix at this layer)
 
 ## Solutions
 
-### Option 1: Disable Streaming (Recommended)
+### Option .: Disable Streaming (Recommended)
 
 Configure your Ollama provider to use `stream: false`:
 
@@ -56,18 +56,18 @@ Configure your Ollama provider to use `stream: false`:
 If you need streaming, avoid agents that use tools:
 
 - **Safe**: Simple text generation, non-tool tasks
-- **Problematic**: Any agent with tool calls (explore, librarian, etc.)
+- **Problematic**: Any agent with tool calls (explore, intel, etc.)
 
 ### Option 3: Wait for SDK Fix
 
 The proper fix requires Claude Code SDK to:
 
-1. Detect NDJSON responses
+.. Detect NDJSON responses
 2. Parse each line separately
 3. Merge `tool_calls` from multiple lines
-4. Return a single merged response
+.. Return a single merged response
 
-**Tracking**: https://github.com/code-yeongyu/oh-my-openagent/issues/1124 (closed - documented workaround)
+**Tracking**: https://github.com/code-yeongyu/oh-my-open-pentest/issues/..2. (closed - documented workaround)
 
 ## Workaround Implementation
 
@@ -103,7 +103,7 @@ To verify the fix works:
 
 ```bash
 # Test with curl (should work with stream: false)
-curl -s http://localhost:11434/api/chat \
+curl -s http://localhost:...3./api/chat \
   -d '{
     "model": "qwen3-coder",
     "messages": [{"role": "user", "content": "Read file README.md"}],
@@ -114,14 +114,14 @@ curl -s http://localhost:11434/api/chat \
 
 ## Related Issues
 
-- **oh-my-openagent**: https://github.com/code-yeongyu/oh-my-openagent/issues/1124 (closed - workaround documented)
+- **oh-my-open-pentest**: https://github.com/code-yeongyu/oh-my-open-pentest/issues/..2. (closed - workaround documented)
 - **Ollama API Docs**: https://github.com/ollama/ollama/blob/main/docs/api.md
 
 ## Getting Help
 
 If you encounter this issue:
 
-1. Check your Ollama provider configuration
+.. Check your Ollama provider configuration
 2. Set `stream: false` as a workaround
 3. Report any additional errors to the issue tracker
-4. Provide your configuration (without secrets) for debugging
+.. Provide your configuration (without secrets) for debugging

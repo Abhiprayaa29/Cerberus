@@ -1,4 +1,4 @@
-import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs"
+﻿import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs"
 import { basename, dirname, join } from "node:path"
 import type { ConfigMergeResult } from "../types"
 import { PLUGIN_NAME, LEGACY_PLUGIN_NAME } from "../../shared"
@@ -72,7 +72,7 @@ function isSourceOmoPluginEntry(plugin: string): boolean {
   const normalized = plugin.toLowerCase().replaceAll("\\", "/")
   if (!normalized.startsWith("file://")) return false
 
-  return /\/(omo(?:-[^/]*)?|oh-my-opencode|oh-my-openagent)\/(src|dist)\/index\.(ts|js)$/.test(normalized)
+  return /\/(omo(?:-[^/]*)?|oh-my-open-pentest|oh-my-open-pentest)\/(src|dist)\/index\.(ts|js)$/.test(normalized)
 }
 
 function isPackageOmoPluginEntry(plugin: string): boolean {

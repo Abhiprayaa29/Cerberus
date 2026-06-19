@@ -1,4 +1,4 @@
-import { describe, it, expect } from "bun:test"
+﻿import { describe, it, expect } from "bun:test"
 
 function expectDefined<T>(value: T | null | undefined, label: string): T {
   expect(value, label).toBeDefined()
@@ -61,12 +61,12 @@ describe("model-resolution check", () => {
       const info = getModelResolutionInfo()
 
       // then: Should have agent entries
-      const sisyphus = expectDefined(
-        info.agents.find((a) => a.name === "sisyphus"),
-        "sisyphus agent resolution",
+      const cerberus = expectDefined(
+        info.agents.find((a) => a.name === "cerberus"),
+        "cerberus agent resolution",
       )
-      expect(sisyphus.requirement.fallbackChain[0]?.model).toBe("claude-opus-4-7")
-      expect(sisyphus.requirement.fallbackChain[0]?.providers).toContain("anthropic")
+      expect(cerberus.requirement.fallbackChain[0]?.model).toBe("claude-opus-4-7")
+      expect(cerberus.requirement.fallbackChain[0]?.providers).toContain("anthropic")
     })
 
     it("returns category requirements with provider chains", async () => {
@@ -85,26 +85,26 @@ describe("model-resolution check", () => {
   })
 
   describe("getModelResolutionInfoWithOverrides", () => {
-    // given: User has overrides in oh-my-opencode.json
+    // given: User has overrides in oh-my-open-pentest.json
     // when: Getting resolution info with config
     // then: Shows user override in Step 1 position
 
     it("shows user override for agent when configured", async () => {
       const { getModelResolutionInfoWithOverrides } = await import("./model-resolution")
 
-      // given: User has override for oracle agent
+      // given: User has override for cipher agent
       const mockConfig = {
         agents: {
-          oracle: { model: "anthropic/claude-opus-4-7" },
+          cipher: { model: "anthropic/claude-opus-4-7" },
         },
       }
 
       const info = getModelResolutionInfoWithOverrides(mockConfig)
 
-      // then: Oracle should show the override
-      const oracle = expectDefined(info.agents.find((a) => a.name === "oracle"), "oracle agent resolution")
-      expect(oracle.userOverride).toBe("anthropic/claude-opus-4-7")
-      expect(oracle.effectiveResolution).toBe("User override: anthropic/claude-opus-4-7")
+      // then: Cipher should show the override
+      const cipher = expectDefined(info.agents.find((a) => a.name === "cipher"), "cipher agent resolution")
+      expect(cipher.userOverride).toBe("anthropic/claude-opus-4-7")
+      expect(cipher.effectiveResolution).toBe("User override: anthropic/claude-opus-4-7")
     })
 
     it("shows user override for category when configured", async () => {
@@ -137,32 +137,32 @@ describe("model-resolution check", () => {
       const info = getModelResolutionInfoWithOverrides(mockConfig)
 
       // then: Should show provider fallback chain
-      const sisyphus = expectDefined(
-        info.agents.find((a) => a.name === "sisyphus"),
-        "sisyphus agent resolution",
+      const cerberus = expectDefined(
+        info.agents.find((a) => a.name === "cerberus"),
+        "cerberus agent resolution",
       )
-      expect(sisyphus.userOverride).toBeUndefined()
-      expect(sisyphus.effectiveResolution).toContain("Provider fallback:")
-      expect(sisyphus.effectiveResolution).toContain("anthropic")
+      expect(cerberus.userOverride).toBeUndefined()
+      expect(cerberus.effectiveResolution).toContain("Provider fallback:")
+      expect(cerberus.effectiveResolution).toContain("anthropic")
     })
 
     it("captures user variant for agent when configured", async () => {
       const { getModelResolutionInfoWithOverrides } = await import("./model-resolution")
 
-      //#given User has model with variant override for oracle agent
+      //#given User has model with variant override for cipher agent
       const mockConfig = {
         agents: {
-          oracle: { model: "openai/gpt-5.4", variant: "xhigh" },
+          cipher: { model: "openai/gpt-5.4", variant: "xhigh" },
         },
       }
 
       //#when getting resolution info with config
       const info = getModelResolutionInfoWithOverrides(mockConfig)
 
-      //#then Oracle should have userVariant set
-      const oracle = expectDefined(info.agents.find((a) => a.name === "oracle"), "oracle agent resolution")
-      expect(oracle.userOverride).toBe("openai/gpt-5.4")
-      expect(oracle.userVariant).toBe("xhigh")
+      //#then Cipher should have userVariant set
+      const cipher = expectDefined(info.agents.find((a) => a.name === "cipher"), "cipher agent resolution")
+      expect(cipher.userOverride).toBe("openai/gpt-5.4")
+      expect(cipher.userVariant).toBe("xhigh")
     })
 
     it("captures user variant for category when configured", async () => {
@@ -191,12 +191,12 @@ describe("model-resolution check", () => {
       const { getModelResolutionInfoWithOverrides } = await import("./model-resolution")
 
       const info = getModelResolutionInfoWithOverrides({})
-      const sisyphus = expectDefined(
-        info.agents.find((a) => a.name === "sisyphus"),
-        "sisyphus agent resolution",
+      const cerberus = expectDefined(
+        info.agents.find((a) => a.name === "cerberus"),
+        "cerberus agent resolution",
       )
 
-      expect(sisyphus.capabilityDiagnostics).toMatchObject({
+      expect(cerberus.capabilityDiagnostics).toMatchObject({
         resolutionMode: "snapshot-backed",
         snapshot: { source: "bundled-snapshot" },
       })
@@ -230,13 +230,13 @@ describe("model-resolution check", () => {
 
       const info = getModelResolutionInfoWithOverrides({
         agents: {
-          oracle: { model: "anthropic/claude-opus-4-7-thinking" },
+          cipher: { model: "anthropic/claude-opus-4-7-thinking" },
         },
       })
 
-      const oracle = expectDefined(info.agents.find((agent) => agent.name === "oracle"), "oracle agent resolution")
-      expect(oracle.effectiveModel).toBe("anthropic/claude-opus-4-7-thinking")
-      expect(oracle.capabilityDiagnostics).toMatchObject({
+      const cipher = expectDefined(info.agents.find((agent) => agent.name === "cipher"), "cipher agent resolution")
+      expect(cipher.effectiveModel).toBe("anthropic/claude-opus-4-7-thinking")
+      expect(cipher.capabilityDiagnostics).toMatchObject({
         resolutionMode: "alias-backed",
         canonicalization: {
           source: "pattern-alias",
@@ -285,7 +285,7 @@ describe("model-resolution check", () => {
 
       const info = getModelResolutionInfoWithOverrides({
         agents: {
-          oracle: { model: "custom/unknown-llm" },
+          cipher: { model: "custom/unknown-llm" },
         },
       })
 
@@ -293,7 +293,7 @@ describe("model-resolution check", () => {
 
       expect(issues).toHaveLength(1)
       expect(issues[0]?.title).toContain("compatibility fallback")
-      expect(issues[0]?.description).toContain("oracle=custom/unknown-llm")
+      expect(issues[0]?.description).toContain("cipher=custom/unknown-llm")
     })
 
     it("does not warn for known provider aliases used by current recommended models", async () => {
@@ -302,8 +302,8 @@ describe("model-resolution check", () => {
       // #given current recommended provider aliases from user configuration
       const info = getModelResolutionInfoWithOverrides({
         agents: {
-          sisyphus: { model: "kimi-for-coding/k2pb" },
-          metis: { model: "github-copilot/claude-opus-4.7" },
+          cerberus: { model: "kimi-for-coding/k2pb" },
+          vanguard: { model: "github-copilot/claude-opus-4.7" },
         },
         categories: {
           "visual-engineering": { model: "github-copilot/claude-opus-4.7" },

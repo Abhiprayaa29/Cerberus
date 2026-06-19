@@ -1,4 +1,4 @@
-import { describe, test, expect, beforeEach, afterEach } from "bun:test"
+﻿import { describe, test, expect, beforeEach, afterEach } from "bun:test"
 import { existsSync, rmSync, mkdirSync } from "fs"
 import { join } from "path"
 import type { TaskObject } from "./types"
@@ -7,7 +7,7 @@ import { createTaskCreateTool } from "./task-create"
 const TEST_STORAGE = ".test-task-create-tool"
 const TEST_DIR = join(process.cwd(), TEST_STORAGE)
 const TEST_CONFIG = {
-  sisyphus: {
+  cerberus: {
     tasks: {
       storage_path: TEST_STORAGE,
     },

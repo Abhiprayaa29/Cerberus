@@ -1,4 +1,4 @@
-import { stat } from "node:fs/promises";
+﻿import { stat } from "node:fs/promises";
 import { readFile } from "node:fs/promises";
 import { homedir } from "node:os";
 import { dirname, join, resolve } from "node:path";
@@ -25,7 +25,7 @@ export interface InstallFlowDetection {
 
 export const INSTALL_SNAPSHOT_FILENAME = "lazycodex-install.json";
 
-const DEFAULT_MARKETPLACE_NAME = "sisyphuslabs";
+const DEFAULT_MARKETPLACE_NAME = "cerberuslabs";
 const MAX_CODEX_HOME_WALK_UP_LEVELS = 6;
 
 export async function detectInstallFlowDetailed(options: DetectInstallFlowOptions): Promise<InstallFlowDetection> {

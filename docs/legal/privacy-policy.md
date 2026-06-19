@@ -1,14 +1,14 @@
-# Privacy Policy
+﻿# Privacy Policy
 
 Last updated: May 2, 2026
 
-This Privacy Policy explains how oh-my-opencode and oh-my-openagent collect, use, and protect information related to the published CLI package, the OpenCode plugin, and the project website or repository materials where they apply.
+This Privacy Policy explains how oh-my-open-pentest and oh-my-open-pentest collect, use, and protect information related to the published CLI package, the OpenCode plugin, and the project website or repository materials where they apply.
 
-For this policy, "Application" means the published `oh-my-opencode` CLI package and the OpenCode plugin runtime it installs. "Service" means the Application and the project distribution surfaces together. "We" and "our" refer to the maintainer of oh-my-opencode. "You" refers to a user of the Service.
+For this policy, "Application" means the published `oh-my-open-pentest` CLI package and the OpenCode plugin runtime it installs. "Service" means the Application and the project distribution surfaces together. "We" and "our" refer to the maintainer of oh-my-open-pentest. "You" refers to a user of the Service.
 
 By using the Service, you accept this Privacy Policy and the accompanying Terms of Service in [terms-of-service.md](./terms-of-service.md).
 
-## 1. Information We Collect
+## .. Information We Collect
 
 We collect limited non-personal information needed to operate and improve the Service.
 
@@ -34,16 +34,16 @@ The Application uses PostHog for anonymous product analytics. Telemetry is enabl
 Telemetry can be disabled at any time by setting one of these environment variables before running the CLI or plugin host:
 
 ```bash
-export OMO_SEND_ANONYMOUS_TELEMETRY=0
+export OMOP_SEND_ANONYMOUS_TELEMETRY=0
 # or
-export OMO_DISABLE_POSTHOG=1
+export OMOP_DISABLE_POSTHOG=.
 # codex-only opt-out flags
-export OMO_CODEX_DISABLE_POSTHOG=1
-export OMO_CODEX_SEND_ANONYMOUS_TELEMETRY=0
+export OMOP_CODEX_DISABLE_POSTHOG=.
+export OMOP_CODEX_SEND_ANONYMOUS_TELEMETRY=0
 ```
 
-`OMO_CODEX_DISABLE_POSTHOG` and `OMO_CODEX_SEND_ANONYMOUS_TELEMETRY` suppress only `omo-codex` telemetry.
-Global flags (`OMO_DISABLE_POSTHOG`, `OMO_SEND_ANONYMOUS_TELEMETRY`) suppress telemetry for both oh-my-openagent/oh-my-opencode and omo-codex.
+`OMOP_CODEX_DISABLE_POSTHOG` and `OMOP_CODEX_SEND_ANONYMOUS_TELEMETRY` suppress only `omo-codex` telemetry.
+Global flags (`OMOP_DISABLE_POSTHOG`, `OMOP_SEND_ANONYMOUS_TELEMETRY`) suppress telemetry for both oh-my-open-pentest/oh-my-open-pentest and omo-codex.
 
 When telemetry is disabled, PostHog events are not sent.
 
@@ -57,7 +57,7 @@ The Service may use third-party providers including:
 
 Each third-party service has its own terms and privacy practices.
 
-## 4. How We Use Information
+## .. How We Use Information
 
 We use collected information to:
 

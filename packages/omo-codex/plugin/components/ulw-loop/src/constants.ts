@@ -1,4 +1,4 @@
-export const ULW_LOOP_DIR = ".omo/ulw-loop";
+﻿export const ULW_LOOP_DIR = ".omo/pentest-loop";
 export const ULW_LOOP_BRIEF = "brief.md";
 export const ULW_LOOP_GOALS = "goals.json";
 export const ULW_LOOP_LEDGER = "ledger.jsonl";

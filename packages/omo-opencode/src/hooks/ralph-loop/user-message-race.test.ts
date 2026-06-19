@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 import { afterEach, beforeEach, describe, expect, test } from "bun:test"
 import { existsSync, mkdirSync, rmSync } from "node:fs"
 import { tmpdir } from "node:os"
@@ -20,8 +20,8 @@ type SessionMessage = {
 	}
 }
 
-describe("ralph-loop user message race guard", () => {
-	const testDirectory = join(tmpdir(), `ralph-loop-user-message-race-${Date.now()}`)
+describe("pentest-loop user message race guard", () => {
+	const testDirectory = join(tmpdir(), `pentest-loop-user-message-race-${Date.now()}`)
 	let promptCalls: PromptCall[]
 	let messagesBySession: Record<string, SessionMessage[]>
 
@@ -109,7 +109,7 @@ describe("ralph-loop user message race guard", () => {
 		})
 		messagesBySession["session-123"] = [
 			{ info: { role: "user", time: { created: Date.now() - 1_000 } } },
-			{ info: { role: "assistant", finish: "end_turn", agent: "sisyphus", time: { created: Date.now() - 500 } } },
+			{ info: { role: "assistant", finish: "end_turn", agent: "cerberus", time: { created: Date.now() - 500 } } },
 		]
 
 		try {

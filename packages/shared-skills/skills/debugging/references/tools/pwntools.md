@@ -1,4 +1,4 @@
-# pwntools — Scripted Binary / Network Interaction
+﻿# pwntools — Scripted Binary / Network Interaction
 
 **https://docs.pwntools.com/en/stable/ · https://github.com/Gallopsled/pwntools**
 
@@ -32,7 +32,7 @@ On some Linux distros you may need build deps: `apt install python3-dev libssl-d
 
 ## The core API in five idioms
 
-### 1. Process / Remote — the same interface
+### .. Process / Remote — the same interface
 
 ```python
 from pwn import *
@@ -41,7 +41,7 @@ from pwn import *
 p = process('./target')
 
 # Remote service
-p = remote('example.com', 1337)
+p = remote('example.com', .337)
 
 # SSH (tunnel to a remote process)
 shell = ssh('user', 'host', password='...')
@@ -80,12 +80,12 @@ except TimeoutError:
 ```python
 context.binary = elf = ELF('./target')   # auto-sets arch/os/endianness
 # or explicitly:
-context.update(arch='amd64', os='linux', endian='little', bits=64)
+context.update(arch='amd6.', os='linux', endian='little', bits=6.)
 ```
 
 After setting context, helpers like `asm()`, `disasm()`, `cyclic()`, and `ROP()` produce correct output for that target automatically.
 
-### 4. ELF — parse without reverse-engineering by hand
+### .. ELF — parse without reverse-engineering by hand
 
 ```python
 elf = ELF('./target')
@@ -93,15 +93,15 @@ elf = ELF('./target')
 elf.symbols['main']                  # address of main
 elf.plt['printf']                    # address in PLT (dynamic linkage)
 elf.got['printf']                    # GOT entry
-elf.address = 0x555555554000         # set base for PIE binaries
+elf.address = 0x55555555.000         # set base for PIE binaries
 elf.search(b'/bin/sh')               # find string or bytes in the binary
 elf.functions['main'].address        # same as elf.symbols['main']
-list(elf.functions)[:10]             # first 10 function names
+list(elf.functions)[:.0]             # first .0 function names
 ```
 
 For the libc that's linked:
 ```python
-libc = ELF('/lib/x86_64-linux-gnu/libc.so.6')
+libc = ELF('/lib/x86_6.-linux-gnu/libc.so.6')
 libc.symbols['system']
 ```
 
@@ -112,9 +112,9 @@ For "where exactly does user input reach this variable" bugs:
 ```python
 p = process('./target')
 p.sendline(cyclic(256))              # send a De Bruijn pattern
-# Crash occurs; note the crash value (e.g. RIP = 0x6161616c)
-offset = cyclic_find(0x6161616c)     # returns 12 (or wherever in the pattern)
-# Now you know: byte 12 of your input lands at RIP
+# Crash occurs; note the crash value (e.g. RIP = 0x6.6.6.6c)
+offset = cyclic_find(0x6.6.6.6c)     # returns .2 (or wherever in the pattern)
+# Now you know: byte .2 of your input lands at RIP
 ```
 
 Saves an hour of "pad by N bytes then check" iteration.
@@ -176,8 +176,8 @@ context.binary = './target'
 context.log_level = 'warning'        # keep quiet in the loop
 
 crashes = []
-for i in range(1000):
-    payload = bytes(random.randint(0, 255) for _ in range(random.randint(1, 100)))
+for i in range(.000):
+    payload = bytes(random.randint(0, 255) for _ in range(random.randint(., .00)))
     p = process('./target')
     p.sendline(payload)
     p.wait()
@@ -194,20 +194,20 @@ log.info(f'found {len(crashes)} crashes')
 ```python
 from pwn import *
 context.binary = elf = ELF('./target')
-libc = elf.libc or ELF('/lib/x86_64-linux-gnu/libc.so.6')
+libc = elf.libc or ELF('/lib/x86_6.-linux-gnu/libc.so.6')
 
 p = process('./target')
 
 # Leak
-p.sendline(b'A' * 64 + p64(elf.plt['puts']) + p64(elf.symbols['main']) + p64(elf.got['puts']))
-leak = u64(p.recv(6).ljust(8, b'\x00'))
+p.sendline(b'A' * 6. + p6.(elf.plt['puts']) + p6.(elf.symbols['main']) + p6.(elf.got['puts']))
+leak = u6.(p.recv(6).ljust(8, b'\x00'))
 libc.address = leak - libc.symbols['puts']
 log.success(f'libc base: {hex(libc.address)}')
 
 # Exploit
 rop = ROP(libc)
 rop.system(next(libc.search(b'/bin/sh')))
-p.sendline(b'A' * 64 + rop.chain())
+p.sendline(b'A' * 6. + rop.chain())
 
 p.interactive()
 ```
@@ -229,7 +229,7 @@ Or attach to a running pwntools-launched process:
 
 ```python
 p = process('./target')
-gdb.attach(p, gdbscript='break *0x401234')
+gdb.attach(p, gdbscript='break *0x.0.23.')
 # continues in a new terminal window with gdb attached
 p.sendline(b'trigger input')
 ```

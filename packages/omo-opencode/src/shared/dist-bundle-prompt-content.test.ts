@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { describe, expect, test } from "bun:test"
 
@@ -7,17 +7,17 @@ const SKIP_MESSAGE = "[skipped - dist not built]"
 
 const PROMPT_SIGNATURES = [
   {
-    path: "packages/prompts-core/prompts/ultrawork/default.md",
+    path: "packages/prompts-core/prompts/fullscan/default.md",
     label: "Ultrawork default",
     signature: "ULTRAWORK MODE ENABLED!",
   },
   {
-    path: "packages/prompts-core/prompts/ultrawork/gemini.md",
+    path: "packages/prompts-core/prompts/fullscan/gemini.md",
     label: "Ultrawork Gemini",
     signature: "ULTRAWORK MODE ENABLED!",
   },
   {
-    path: "packages/prompts-core/prompts/ultrawork/gpt.md",
+    path: "packages/prompts-core/prompts/fullscan/gpt.md",
     label: "Ultrawork GPT",
     signature: "ULTRAWORK MODE ENABLED!",
   },

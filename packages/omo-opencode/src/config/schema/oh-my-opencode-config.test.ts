@@ -1,5 +1,5 @@
-import { describe, expect, it } from "bun:test"
-import { OhMyOpenCodeConfigSchema } from "./oh-my-opencode-config"
+﻿import { describe, expect, it } from "bun:test"
+import { OhMyOpenCodeConfigSchema } from "./oh-my-open-pentest-config"
 
 describe("OhMyOpenCodeConfigSchema team_mode", () => {
   it("accepts team_mode when provided", () => {
@@ -73,7 +73,7 @@ describe("OhMyOpenCodeConfigSchema agent_order", () => {
   it("accepts string agent ordering when provided", () => {
     // given
     const rawConfig = {
-      agent_order: ["hephaestus", "sisyphus", "prometheus", "atlas"],
+      agent_order: ["scylla", "cerberus", "talos", "argus"],
     }
 
     // when
@@ -83,10 +83,10 @@ describe("OhMyOpenCodeConfigSchema agent_order", () => {
     expect(result.success).toBe(true)
     if (result.success) {
       expect(result.data.agent_order).toEqual([
-        "hephaestus",
-        "sisyphus",
-        "prometheus",
-        "atlas",
+        "scylla",
+        "cerberus",
+        "talos",
+        "argus",
       ])
     }
   })

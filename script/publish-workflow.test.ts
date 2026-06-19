@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { describe, expect, test } from "bun:test"
 import { readFileSync, readdirSync } from "node:fs"
@@ -334,10 +334,10 @@ describe("test workflows", () => {
     const warnsOnInstallMismatch = workflow.includes("::warning::lazycodex-ai install dry-run output changed:")
     const warnsOnDoctorMismatch = workflow.includes("::warning::lazycodex-ai doctor dry-run output changed:")
     const removedStrictInstallGate = !workflow.includes(
-      'test "$npx_install_output" = "npx --yes --package oh-my-openagent omo install --platform=codex --no-tui --codex-autonomous"',
+      'test "$npx_install_output" = "npx --yes --package oh-my-open-pentest omo install --platform=codex --no-tui --codex-autonomous"',
     )
     const removedStrictDoctorGate = !workflow.includes(
-      'test "$npx_doctor_output" = "npx --yes --package oh-my-openagent omo doctor"',
+      'test "$npx_doctor_output" = "npx --yes --package oh-my-open-pentest omo doctor"',
     )
 
     // #then
@@ -378,12 +378,12 @@ describe("test workflows", () => {
     // #when
     const opencodePublishStep = sliceWorkflowSection(
       workflow,
-      "      - name: Publish oh-my-opencode-${{ matrix.platform }}",
-      "      - name: Publish oh-my-openagent-${{ matrix.platform }}",
+      "      - name: Publish oh-my-open-pentest-${{ matrix.platform }}",
+      "      - name: Publish oh-my-open-pentest-${{ matrix.platform }}",
     )
     const openagentPublishStep = sliceWorkflowSection(
       workflow,
-      "      - name: Publish oh-my-openagent-${{ matrix.platform }}",
+      "      - name: Publish oh-my-open-pentest-${{ matrix.platform }}",
       "        timeout-minutes: 15",
     )
 
@@ -424,7 +424,7 @@ describe("test workflows", () => {
 
     // #then
     expect(buildStep).toContain("bun run build:binaries")
-    expect(buildStep).toContain("bin/oh-my-opencode.js")
+    expect(buildStep).toContain("bin/oh-my-open-pentest.js")
     expect(buildStep).not.toContain("bun build packages/omo-opencode/src/cli/index.ts --compile")
     expect(darwinVerifyStep).toContain("#!/usr/bin/env node")
     expect(darwinVerifyStep).not.toContain("codesign")
@@ -518,7 +518,7 @@ describe("test workflows", () => {
       readFileSync(new URL("../package.json", import.meta.url), "utf8"),
     )
     const buildBinariesPlatforms = PLATFORMS.map((entry) => entry.platform).sort()
-    const platformPrefix = "oh-my-opencode-"
+    const platformPrefix = "oh-my-open-pentest-"
 
     const optionalDependencyPlatforms = Object.keys(rootManifest.optionalDependencies ?? {})
       .filter((name) => name.startsWith(platformPrefix))

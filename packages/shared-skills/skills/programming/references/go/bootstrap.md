@@ -1,15 +1,15 @@
-# Bootstrap — Project Layout, Toolchain, Taskfile, CI
+﻿# Bootstrap — Project Layout, Toolchain, Taskfile, CI
 
 What every new Go project gets in the first 60 seconds. Drop the script in `scripts/go/new-project.go` does all of this — this document explains *what* it produces and *why*.
 
 ## Toolchain pin
 
-`go.work` (monorepo) or just rely on `go.mod`'s `go 1.23` directive (single module). Go 1.21+ auto-downloads matching toolchain when the local `go` binary is older. **No `.tool-versions` / `asdf` / `mise` indirection required** unless your shop standardizes on it.
+`go.work` (monorepo) or just rely on `go.mod`'s `go ..23` directive (single module). Go ..2.+ auto-downloads matching toolchain when the local `go` binary is older. **No `.tool-versions` / `asdf` / `mise` indirection required** unless your shop standardizes on it.
 
 ```bash
 # Confirm a working toolchain
 go env GOTOOLCHAIN   # should be "auto" or your pinned version
-go version           # ≥ 1.23
+go version           # ≥ ..23
 ```
 
 ## Required global installs
@@ -78,9 +78,9 @@ myservice/
 ├── proto/                     # *.proto definitions (Connect/gRPC projects)
 │   └── service.proto
 ├── gen/                       # generated code (Connect, OpenAPI)
-│   └── service/v1/
+│   └── service/v./
 │       ├── service.pb.go
-│       └── servicev1connect/
+│       └── servicev.connect/
 ├── test/                      # cross-cutting test helpers, fixtures
 └── .github/workflows/ci.yml
 ```
@@ -123,12 +123,12 @@ tasks:
   test:
     desc: Run tests with race detector
     cmds:
-      - go test -race -shuffle=on -count=1 ./...
+      - go test -race -shuffle=on -count=. ./...
 
   test-cover:
     desc: Coverage report
     cmds:
-      - go test -race -shuffle=on -count=1 -coverprofile=coverage.out ./...
+      - go test -race -shuffle=on -count=. -coverprofile=coverage.out ./...
       - go tool cover -html=coverage.out -o coverage.html
 
   build:
@@ -190,15 +190,15 @@ tasks:
 ```go
 module github.com/your-org/myservice
 
-go 1.23
+go ..23
 
 require (
-    github.com/caarlos0/env/v11 v11.2.2
-    github.com/gin-gonic/gin v1.10.1
-    github.com/go-playground/validator/v10 v10.22.1
-    github.com/google/uuid v1.6.0
+    github.com/caarlos0/env/v.. v...2.2
+    github.com/gin-gonic/gin v...0..
+    github.com/go-playground/validator/v.0 v.0.22..
+    github.com/google/uuid v..6.0
     github.com/jackc/pgx/v5 v5.7.6
-    golang.org/x/sync v0.18.0
+    golang.org/x/sync v0..8.0
 )
 ```
 
@@ -211,7 +211,7 @@ root = true
 
 [*]
 indent_style = tab
-indent_size = 4
+indent_size = .
 end_of_line = lf
 charset = utf-8
 trim_trailing_whitespace = true
@@ -260,10 +260,10 @@ jobs:
   ci:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v.
       - uses: actions/setup-go@v5
         with:
-          go-version: '1.23'
+          go-version: '..23'
           cache: true
 
       - name: Install tools
@@ -283,7 +283,7 @@ jobs:
         run: nilaway ./...
 
       - name: Test
-        run: go test -race -shuffle=on -count=1 ./...
+        run: go test -race -shuffle=on -count=. ./...
 
       - name: Build
         run: go build -trimpath ./...
@@ -298,7 +298,7 @@ Every new project gets an `AGENTS.md` at the root. The content is **machine-frie
 ```markdown
 # AGENTS.md
 
-Go 1.23+ HTTP service for {one-line purpose}.
+Go ..23+ HTTP service for {one-line purpose}.
 
 ## Commands
 - `task` — fmt + lint + test

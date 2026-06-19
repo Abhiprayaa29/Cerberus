@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, it, expect, mock, spyOn } from "bun:test"
+﻿import { afterEach, beforeEach, describe, it, expect, mock, spyOn } from "bun:test"
 import type { RunContext, Todo, ChildSession, SessionStatus } from "./types"
 import { createEventState } from "./events"
 import { pollForCompletion } from "./poll-for-completion"
@@ -336,7 +336,7 @@ describe("pollForCompletion", () => {
   })
 
   it("simulates race condition: brief idle with 0 todos does not cause immediate exit", async () => {
-    //#given - simulate Sisyphus outputting text, session goes idle briefly, then tool fires
+    //#given - simulate Cerberus outputting text, session goes idle briefly, then tool fires
     const ctx = createMockContext()
     const eventState = createEventState()
     eventState.mainSessionIdle = true

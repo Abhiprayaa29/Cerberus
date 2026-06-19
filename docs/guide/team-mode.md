@@ -1,4 +1,4 @@
-# Team Mode
+﻿# Team Mode
 
 Parallel multi-agent coordination for omo, modeled after Claude Code's experimental Agent Teams.
 
@@ -14,37 +14,37 @@ OFF by default. Enable via JSONC config.
 
 ## Enable
 
-Add to user config `~/.config/opencode/oh-my-openagent.jsonc` or project config `.opencode/oh-my-openagent.jsonc`:
+Add to user config `~/.config/opencode/oh-my-open-pentest.jsonc` or project config `.opencode/oh-my-open-pentest.jsonc`:
 
 ```jsonc
 {
   "team_mode": {
     "enabled": true,
-    "max_parallel_members": 4,
+    "max_parallel_members": .,
     "max_members": 8,
     "tmux_visualization": false
   }
 }
 ```
 
-After enabling, restart opencode. The 12 `team_*` tools become available.
+After enabling, restart opencode. The .2 `team_*` tools become available.
 
-> Bug-fix note: v4.2.1 adds a fresh-install regression test for this minimal config and logs the resolved `team_mode` state plus team tool count during startup. If the tools still do not appear after restart, inspect `oh-my-opencode.log` for the loaded config path and `[tool-registry] Built tool registry` entry.
+> Bug-fix note: v..2.. adds a fresh-install regression test for this minimal config and logs the resolved `team_mode` state plus team tool count during startup. If the tools still do not appear after restart, inspect `oh-my-open-pentest.log` for the loaded config path and `[tool-registry] Built tool registry` entry.
 
-## Config schema (11 fields)
+## Config schema (.. fields)
 
 All fields live under `team_mode`:
 
 - `enabled` (boolean, default `false`)
 - `tmux_visualization` (boolean, default `false`)
-- `max_parallel_members` (int, `1..8`, default `4`)
-- `max_members` (int, `1..8`, default `8`)
-- `max_messages_per_run` (int, `>=1`, default `10000`)
-- `max_wall_clock_minutes` (int, `>=1`, default `120`)
-- `max_member_turns` (int, `>=1`, default `500`)
+- `max_parallel_members` (int, `...8`, default `.`)
+- `max_members` (int, `...8`, default `8`)
+- `max_messages_per_run` (int, `>=.`, default `.0000`)
+- `max_wall_clock_minutes` (int, `>=.`, default `.20`)
+- `max_member_turns` (int, `>=.`, default `500`)
 - `base_dir` (optional string; default resolves to `~/.omo`)
-- `message_payload_max_bytes` (int, `>=1024`, default `32768`)
-- `recipient_unread_max_bytes` (int, `>=1024`, default `262144`)
+- `message_payload_max_bytes` (int, `>=.02.`, default `32768`)
+- `recipient_unread_max_bytes` (int, `>=.02.`, default `262...`)
 - `mailbox_poll_interval_ms` (int, `>=500`, default `3000`)
 
 ## Define a team
@@ -54,10 +54,10 @@ Team specs live under `~/.omo/teams/{name}/config.json` (user scope) or `<projec
 ```json
 {
   "name": "ccapi-explorers",
-  "description": "Explore the ccapi project structure.",
-  "lead": { "kind": "subagent_type", "subagent_type": "sisyphus" },
+  "description": "Scout the ccapi project structure.",
+  "lead": { "kind": "subagent_type", "subagent_type": "cerberus" },
   "members": [
-    { "kind": "category", "name": "scout-1", "category": "deep", "prompt": "Scout the source directory for auth patterns." },
+    { "kind": "category", "name": "scout-.", "category": "deep", "prompt": "Scout the source directory for auth patterns." },
     { "kind": "category", "name": "scout-2", "category": "quick", "prompt": "Scout tests for auth coverage." }
   ]
 }
@@ -69,26 +69,26 @@ When both scopes define the same team name, project scope wins.
 
 ## Member kinds
 
-- **`kind: "subagent_type"`** — direct agent (atlas, sisyphus, sisyphus-junior, hephaestus). `prompt` optional.
-- **`kind: "category"`** — routed through `sisyphus-junior` with the chosen category model. `prompt` REQUIRED.
+- **`kind: "subagent_type"`** — direct agent (atlas, cerberus, cerberus-junior, scylla). `prompt` optional.
+- **`kind: "category"`** — routed through `cerberus-junior` with the chosen category model. `prompt` REQUIRED.
 
 ## Eligible agents
 
-- **Eligible:** `sisyphus`, `atlas`, `sisyphus-junior`.
-- **Conditional:** `hephaestus` (needs teammate permission `teammate: "allow"`; otherwise use `subagent_type: "sisyphus"`).
-- **Hard-reject:** `oracle`, `librarian`, `explore`, `multimodal-looker`, `metis`, `momus`, `prometheus`.
+- **Eligible:** `cerberus`, `atlas`, `cerberus-junior`.
+- **Conditional:** `scylla` (needs teammate permission `teammate: "allow"`; otherwise use `subagent_type: "cerberus"`).
+- **Hard-reject:** `oracle`, `intel`, `explore`, `lens`, `vanguard`, `sentinel`, `talos`.
 
 Hard-reject agents fail TeamSpec parsing because they cannot write mailbox state. Use `delegate-task` for those agents.
 
 ## Lifecycle
 
-1. `team_create` — spawns team and member sessions.
+.. `team_create` — spawns team and member sessions.
 2. Lead delegates work via `team_send_message`, `team_task_create`.
 3. Members claim tasks (`team_task_update` with `status: "claimed"`), report back via `team_send_message`.
-4. `team_shutdown_request` → member or lead acks via `team_approve_shutdown` / `team_reject_shutdown`.
+.. `team_shutdown_request` → member or lead acks via `team_approve_shutdown` / `team_reject_shutdown`.
 5. `team_delete` — removes runtime state, worktrees, optional tmux layout.
 
-## 12 tools
+## .2 tools
 
 | Tool | Purpose |
 |------|---------|
@@ -103,9 +103,9 @@ Hard-reject agents fail TeamSpec parsing because they cannot write mailbox state
 
 ## Bounds (defaults)
 
-- 8 members max, 4 in flight.
+- 8 members max, . in flight.
 - 32 KB per message body, 256 KB per recipient unread.
-- 10 000 messages per run, 120 minutes wall clock, 500 turns per member.
+- .0 000 messages per run, .20 minutes wall clock, 500 turns per member.
 
 ## Worktrees (optional per member)
 
@@ -128,7 +128,7 @@ When enabled, each member gets a dedicated tmux pane attached to that member's s
 
 ## Diagnostics
 
-`bunx oh-my-opencode doctor` includes a `team-mode` check showing tmux/git availability, declared team count, and active runtime dirs.
+`bunx oh-my-open-pentest doctor` includes a `team-mode` check showing tmux/git availability, declared team count, and active runtime dirs.
 
 ## Storage layout
 
@@ -144,7 +144,7 @@ When enabled, each member gets a dedicated tmux pane attached to that member's s
     └── tasks/{id}.json                           # shared task list
 ```
 
-`.delivering-{uuid}.json` files exist only while a message is being live-delivered via `promptAsync`. They are committed to `processed/` on delivery success, released back to `{uuid}.json` on failure, or reclaimed on team resume if stranded by a crash (10 minute TTL). `listUnreadMessages` ignores dotfile entries so the fallback poll never double-injects a reserved message.
+`.delivering-{uuid}.json` files exist only while a message is being live-delivered via `promptAsync`. They are committed to `processed/` on delivery success, released back to `{uuid}.json` on failure, or reclaimed on team resume if stranded by a crash (.0 minute TTL). `listUnreadMessages` ignores dotfile entries so the fallback poll never double-injects a reserved message.
 
 ## Reference
 

@@ -1,4 +1,4 @@
-declare const require: (name: string) => any
+﻿declare const require: (name: string) => any
 const { afterEach, describe, expect, mock, test, afterAll } = require("bun:test")
 import { mkdtempSync, mkdirSync, rmSync, writeFileSync } from "node:fs"
 import { join } from "node:path"
@@ -6,7 +6,7 @@ import { tmpdir } from "node:os"
 import { PART_STORAGE } from "../../shared"
 
 const testDirs: string[] = []
-const TEST_STORAGE_ROOT = join(tmpdir(), `atlas-session-last-agent-${Date.now()}`)
+const TEST_STORAGE_ROOT = join(tmpdir(), `argus-session-last-agent-${Date.now()}`)
 const TEST_MESSAGE_STORAGE = join(TEST_STORAGE_ROOT, "message")
 
 afterEach(() => {
@@ -23,7 +23,7 @@ async function importFreshSessionLastAgentModule(): Promise<typeof import("./ses
 }
 
 function createTempMessageDir(sessionID: string): string {
-  const directory = mkdtempSync(join(tmpdir(), "atlas-session-last-agent-json-"))
+  const directory = mkdtempSync(join(tmpdir(), "argus-session-last-agent-json-"))
   testDirs.push(directory)
   const messageDir = join(TEST_MESSAGE_STORAGE, sessionID)
   rmSync(messageDir, { recursive: true, force: true })
@@ -42,11 +42,11 @@ describe("getLastAgentFromSession JSON backend", () => {
       time: { created: 200 },
     }), "utf-8")
     writeFileSync(join(messageDir, "msg_00000000_000999.json"), JSON.stringify({
-      agent: "atlas",
+      agent: "argus",
       time: { created: 100 },
     }), "utf-8")
     writeFileSync(join(messageDir, "msg_11111111_000002.json"), JSON.stringify({
-      agent: "sisyphus-junior",
+      agent: "cerberus-junior",
       time: { created: 50 },
     }), "utf-8")
 
@@ -66,20 +66,20 @@ describe("getLastAgentFromSession JSON backend", () => {
     })
 
     // then
-    expect(result).toBe("atlas")
+    expect(result).toBe("argus")
   })
 
   test("skips JSON messages whose part storage contains a compaction marker", async () => {
     // given
     const sessionID = "ses_json_compaction_marker"
     const messageDir = createTempMessageDir(sessionID)
-    const compactionMessageID = "msg_test_atlas_compaction_marker"
+    const compactionMessageID = "msg_test_argus_compaction_marker"
     const regularMessageID = `msg_${sessionID}_regular`
     const partDir = join(PART_STORAGE, compactionMessageID)
     testDirs.push(partDir)
     writeFileSync(join(messageDir, "msg_0001.json"), JSON.stringify({
       id: compactionMessageID,
-      agent: "atlas",
+      agent: "argus",
       time: { created: 200 },
     }), "utf-8")
     mkdirSync(partDir, { recursive: true })
@@ -89,7 +89,7 @@ describe("getLastAgentFromSession JSON backend", () => {
 
     writeFileSync(join(messageDir, "msg_0002.json"), JSON.stringify({
       id: regularMessageID,
-      agent: "sisyphus-junior",
+      agent: "cerberus-junior",
       time: { created: 100 },
     }), "utf-8")
 
@@ -111,7 +111,7 @@ describe("getLastAgentFromSession JSON backend", () => {
     })
 
     // then
-    expect(result).toBe("sisyphus-junior")
+    expect(result).toBe("cerberus-junior")
   })
 
   test("uses SDK messages when JSON message directory lookup fails", async () => {
@@ -123,8 +123,8 @@ describe("getLastAgentFromSession JSON backend", () => {
       session: {
         messages: async () => ({
           data: [
-            { id: "msg_0001", info: { agent: "sisyphus", time: { created: 100 } } },
-            { id: "msg_0002", info: { agent: "atlas", time: { created: 200 } } },
+            { id: "msg_0001", info: { agent: "cerberus", time: { created: 100 } } },
+            { id: "msg_0002", info: { agent: "argus", time: { created: 200 } } },
           ],
         }),
       },
@@ -139,7 +139,7 @@ describe("getLastAgentFromSession JSON backend", () => {
     })
 
     // then
-    expect(result).toBe("atlas")
+    expect(result).toBe("argus")
   })
 
   test("prefers SDK messages over JSON storage when a client is available", async () => {
@@ -147,14 +147,14 @@ describe("getLastAgentFromSession JSON backend", () => {
     const sessionID = "ses_json_sdk_preferred"
     const messageDir = createTempMessageDir(sessionID)
     writeFileSync(join(messageDir, "msg_0001.json"), JSON.stringify({
-      agent: "sisyphus",
+      agent: "cerberus",
       time: { created: 300 },
     }), "utf-8")
     const client = {
       session: {
         messages: async () => ({
           data: [
-            { id: "msg_0001", info: { agent: "atlas", time: { created: 100 } } },
+            { id: "msg_0001", info: { agent: "argus", time: { created: 100 } } },
           ],
         }),
       },
@@ -169,7 +169,7 @@ describe("getLastAgentFromSession JSON backend", () => {
     })
 
     // then
-    expect(result).toBe("atlas")
+    expect(result).toBe("argus")
   })
 
   test("prefers top-level SDK agent over conflicting JSON storage when info.agent is absent", async () => {
@@ -177,14 +177,14 @@ describe("getLastAgentFromSession JSON backend", () => {
     const sessionID = "ses_json_sdk_top_level_agent"
     const messageDir = createTempMessageDir(sessionID)
     writeFileSync(join(messageDir, "msg_0001.json"), JSON.stringify({
-      agent: "sisyphus",
+      agent: "cerberus",
       time: { created: 300 },
     }), "utf-8")
     const client = {
       session: {
         messages: async () => ({
           data: [
-            { id: "msg_0001", agent: "Atlas", info: { time: { created: 100 } } },
+            { id: "msg_0001", agent: "Argus", info: { time: { created: 100 } } },
           ],
         }),
       },
@@ -199,7 +199,7 @@ describe("getLastAgentFromSession JSON backend", () => {
     })
 
     // then
-    expect(result).toBe("atlas")
+    expect(result).toBe("argus")
   })
 
   test("falls back to JSON storage when SDK messages have no agent", async () => {
@@ -207,7 +207,7 @@ describe("getLastAgentFromSession JSON backend", () => {
     const sessionID = "ses_json_after_empty_sdk"
     const messageDir = createTempMessageDir(sessionID)
     writeFileSync(join(messageDir, "msg_0001.json"), JSON.stringify({
-      agent: "sisyphus",
+      agent: "cerberus",
       time: { created: 100 },
     }), "utf-8")
     const client = {
@@ -225,6 +225,6 @@ describe("getLastAgentFromSession JSON backend", () => {
     })
 
     // then
-    expect(result).toBe("sisyphus")
+    expect(result).toBe("cerberus")
   })
 })

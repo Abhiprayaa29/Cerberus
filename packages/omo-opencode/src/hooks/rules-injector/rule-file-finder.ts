@@ -1,7 +1,7 @@
-import { setSisyphusRuleDeprecationLogger } from "@oh-my-opencode/rules-engine";
+﻿import { setCerberusRuleDeprecationLogger } from "@oh-my-open-pentest/rules-engine";
 import { log } from "../../shared/logger";
 
-setSisyphusRuleDeprecationLogger(log);
+setCerberusRuleDeprecationLogger(log);
 
-export { findRuleFiles } from "@oh-my-opencode/rules-engine";
-export type { FindRuleFilesOptions } from "@oh-my-opencode/rules-engine";
+export { findRuleFiles } from "@oh-my-open-pentest/rules-engine";
+export type { FindRuleFilesOptions } from "@oh-my-open-pentest/rules-engine";

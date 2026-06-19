@@ -1,4 +1,4 @@
-import { describe, expect, test } from "bun:test"
+﻿import { describe, expect, test } from "bun:test"
 
 import { createBuiltinSkills } from "../skills"
 import { teamModeSkill } from "./team-mode"
@@ -55,10 +55,10 @@ describe("teamModeSkill gating", () => {
       "member",
       "category",
       "subagent_type",
-      "sisyphus",
-      "atlas",
-      "hephaestus",
-      "oracle",
+      "cerberus",
+      "argus",
+      "scylla",
+      "cipher",
       "eligible",
     ]
 

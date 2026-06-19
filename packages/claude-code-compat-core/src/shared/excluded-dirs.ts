@@ -1,11 +1,11 @@
-const EXCLUDED_DIR_NAMES = [
+﻿const EXCLUDED_DIR_NAMES = [
   "node_modules",
   ".git",
   "dist",
   "build",
   ".next",
   ".omo",
-  ".sisyphus",
+  ".cerberus",
   ".turbo",
   "coverage",
   "out",

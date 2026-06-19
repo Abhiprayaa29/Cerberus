@@ -1,4 +1,4 @@
-import { createHash } from "node:crypto"
+﻿import { createHash } from "node:crypto"
 import { describe, expect, test } from "bun:test"
 import { existsSync, mkdtempSync, rmSync } from "node:fs"
 import { tmpdir } from "node:os"
@@ -26,7 +26,7 @@ const PRODUCT = {
   defaultHost: DEFAULT_POSTHOG_HOST,
   eventName: "omo_codex_daily_active",
   machineIdPrefix: "omo-codex:",
-  packageName: "@oh-my-opencode/omo-codex",
+  packageName: "@oh-my-open-pentest/omo-codex",
   packageVersion: "4.9.2",
   platform: "omo-codex",
   productName: "omo-codex",
@@ -82,7 +82,7 @@ describe("posthog telemetry client", () => {
       properties: {
         platform: "omo-codex",
         product_name: "omo-codex",
-        package_name: "@oh-my-opencode/omo-codex",
+        package_name: "@oh-my-open-pentest/omo-codex",
         package_version: "4.9.2",
         runtime: "bun",
         runtime_version: process.versions.bun ?? process.version,
@@ -178,7 +178,7 @@ describe("posthog telemetry client", () => {
     try {
       // when
       await recordDailyActive({
-        env: { OMO_CODEX_DISABLE_POSTHOG: "1", POSTHOG_API_KEY: "test-key" },
+        env: { OMOP_CODEX_DISABLE_POSTHOG: "1", POSTHOG_API_KEY: "test-key" },
         now: new Date("2026-05-25T01:02:03.000Z"),
         osProvider: OS_PROVIDER,
         product: PRODUCT,

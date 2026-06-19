@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { describe, expect, test } from "bun:test"
 import { applyProviderConfig } from "./provider-config-handler"
@@ -97,8 +97,8 @@ describe("applyProviderConfig", () => {
     ])
   })
 
-  test("trusts user-configured multimodal-looker model even when provider config omits modalities", () => {
-    // given - user configures glm-5.1 as multimodal-looker but provider model entry has no modalities/capabilities
+  test("trusts user-configured lens model even when provider config omits modalities", () => {
+    // given - user configures glm-5.1 as lens but provider model entry has no modalities/capabilities
     const modelCacheState = createModelCacheState()
     const visionCapableModelsCache = modelCacheState.visionCapableModelsCache
     if (!visionCapableModelsCache) {

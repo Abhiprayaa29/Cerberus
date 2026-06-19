@@ -1,4 +1,4 @@
-import { mkdtemp, writeFile } from "node:fs/promises";
+﻿import { mkdtemp, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { beforeEach, describe, expect, it } from "vitest";
@@ -92,7 +92,7 @@ describe("readCodexGoalSnapshotInput", () => {
 
 		// then
 		expect(snapshot?.available).toBe(true);
-		expect(snapshot?.objective).toBe("Complete the durable ulw-loop plan");
+		expect(snapshot?.objective).toBe("Complete the durable pentest-loop plan");
 	});
 
 	it("throws CodexGoalSnapshotError when input is neither JSON nor a path", async () => {

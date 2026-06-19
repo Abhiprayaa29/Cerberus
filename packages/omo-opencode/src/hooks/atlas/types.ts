@@ -1,4 +1,4 @@
-import type { AgentOverrides } from "../../config"
+﻿import type { AgentOverrides } from "../../config"
 import type { TopLevelTaskRef } from "../../features/boulder-state"
 
 export type ModelInfo = { providerID: string; modelID: string; variant?: string }
@@ -7,7 +7,7 @@ export interface BackgroundTaskStatusProvider {
   getTasksByParentSession: (sessionID: string) => Array<{ status: string }>
 }
 
-export interface AtlasHookOptions {
+export interface ArgusHookOptions {
   directory: string
   backgroundManager?: BackgroundTaskStatusProvider
   isContinuationStopped?: (sessionID: string) => boolean

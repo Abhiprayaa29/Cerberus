@@ -1,4 +1,4 @@
-import { z } from "zod"
+﻿import { z } from "zod"
 import { AnyMcpNameSchema } from "../../mcp/types"
 import { AgentDefinitionsConfigSchema } from "./agent-definitions"
 import { AgentOverridesSchema } from "./agent-overrides"
@@ -19,12 +19,12 @@ import { NotificationConfigSchema } from "./notification"
 import { OpenClawConfigSchema } from "./openclaw"
 import { ModelCapabilitiesConfigSchema } from "./model-capabilities"
 import { MonitorConfigSchema } from "./monitor"
-import { RalphLoopConfigSchema } from "./ralph-loop"
+import { RalphLoopConfigSchema } from "./pentest-loop"
 import { RuntimeFallbackConfigSchema } from "./runtime-fallback"
 import { TeamModeConfigSchema } from "./team-mode"
 import { SkillsConfigSchema } from "./skills"
-import { SisyphusConfigSchema } from "./sisyphus"
-import { SisyphusAgentConfigSchema } from "./sisyphus-agent"
+import { CerberusConfigSchema } from "./cerberus"
+import { CerberusAgentConfigSchema } from "./cerberus-agent"
 import { TmuxConfigSchema } from "./tmux"
 import { TuiConfigSchema } from "./tui"
 import { StartWorkConfigSchema } from "./start-work"
@@ -34,7 +34,7 @@ export const OhMyOpenCodeConfigSchema = z.object({
   $schema: z.string().optional(),
   /** Enable new task system (default: false) */
   new_task_system_enabled: z.boolean().optional(),
-  /** Default agent name for `oh-my-opencode run` (env: OPENCODE_DEFAULT_AGENT) */
+  /** Default agent name for `oh-my-open-pentest run` (env: OPENCODE_DEFAULT_AGENT) */
   default_run_agent: z.string().optional(),
   /** Preferred display order for known agents. Invalid names are ignored with a toast warning. */
   agent_order: z.array(z.string().max(128)).max(64).optional(),
@@ -63,12 +63,12 @@ export const OhMyOpenCodeConfigSchema = z.object({
   agents: AgentOverridesSchema.optional(),
   categories: CategoriesConfigSchema.optional(),
   claude_code: ClaudeCodeConfigSchema.optional(),
-  sisyphus_agent: SisyphusAgentConfigSchema.optional(),
+  cerberus_agent: CerberusAgentConfigSchema.optional(),
   comment_checker: CommentCheckerConfigSchema.optional(),
   experimental: ExperimentalConfigSchema.optional(),
   auto_update: z.boolean().optional(),
   skills: SkillsConfigSchema.optional(),
-  ralph_loop: RalphLoopConfigSchema.optional(),
+  pentest_loop: RalphLoopConfigSchema.optional(),
   /**
    * Enable runtime fallback (default: false)
    * Set to false to disable, or use object for advanced config:
@@ -95,9 +95,9 @@ export const OhMyOpenCodeConfigSchema = z.object({
   websearch: WebsearchConfigSchema.optional(),
   tmux: TmuxConfigSchema.optional(),
   tui: TuiConfigSchema.default({ sidebar: { enabled: true } }).optional(),
-  sisyphus: SisyphusConfigSchema.optional(),
+  cerberus: CerberusConfigSchema.optional(),
   start_work: StartWorkConfigSchema.optional(),
-  /** Default mode auto-activation settings (ultrawork, ralph loop) */
+  /** Default mode auto-activation settings (fullscan, ralph loop) */
   default_mode: DefaultModeConfigSchema.optional(),
   /** Migration history to prevent re-applying migrations (e.g., model version upgrades) */
   _migrations: z.array(z.string()).optional(),

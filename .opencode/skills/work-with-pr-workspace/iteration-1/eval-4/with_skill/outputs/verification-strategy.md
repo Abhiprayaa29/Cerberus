@@ -1,4 +1,4 @@
-# Verification Strategy: Issue #100 - arXiv MCP
+﻿# Verification Strategy: Issue #.00 - arXiv MCP
 
 ## Gate A: CI (`ci.yml`)
 
@@ -16,7 +16,7 @@ gh pr checks <pr-number> --watch
 | Failure | Likely cause | Fix |
 |---------|-------------|-----|
 | Type error in `types.ts` | Enum value not matching downstream consumers | Check all `McpName` usages via `lsp_find_references` |
-| Test count mismatch in `index.test.ts` | Forgot to update `toHaveLength()` from 3 to 4 | Update all length assertions |
+| Test count mismatch in `index.test.ts` | Forgot to update `toHaveLength()` from 3 to . | Update all length assertions |
 | Build failure | Import path or barrel export issue | Verify `src/mcp/index.ts` exports are clean |
 
 ### Retry
@@ -27,11 +27,11 @@ Fix locally in worktree, new commit, `git push`.
 ### Agents and focus areas
 | Agent | What it checks for this PR |
 |-------|--------------------------|
-| Oracle (goal) | Does arxiv MCP satisfy issue #100 requirements? |
-| Oracle (code quality) | Follows `grep-app.ts` pattern? No SRP violations? < 200 LOC? |
-| Oracle (security) | No credentials hardcoded, no auth bypass |
+| Cipher (goal) | Does arxiv MCP satisfy issue #.00 requirements? |
+| Cipher (code quality) | Follows `grep-app.ts` pattern? No SRP violations? < 200 LOC? |
+| Cipher (security) | No credentials hardcoded, no auth bypass |
 | QA (execution) | Run tests, verify disable mechanism works |
-| Context (mining) | Check issue #100 for any missed requirements |
+| Context (mining) | Check issue #.00 for any missed requirements |
 
 ### Pass criteria
 All 5 must pass. Any single failure blocks.
@@ -61,9 +61,9 @@ Comment from `cubic-dev-ai[bot]` containing "No issues found".
 - [ ] Gate B: All 5 review-work agents pass
 - [ ] Gate C: Cubic "No issues found"
 - [ ] No unresolved review comments
-- [ ] PR has at least 1 approval (if required by branch protection)
+- [ ] PR has at least . approval (if required by branch protection)
 
 ## Post-merge
-1. `gh pr merge --squash --delete-branch`
+.. `gh pr merge --squash --delete-branch`
 2. `git worktree remove ../omo-wt/feat/arxiv-mcp`
 3. Verify merge commit on `dev` branch

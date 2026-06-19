@@ -1,4 +1,4 @@
-import { describe, expect, test } from "bun:test"
+﻿import { describe, expect, test } from "bun:test"
 import {
   releaseAllPromptAsyncReservationsForTesting,
   releasePromptAsyncReservation,
@@ -111,7 +111,7 @@ describe("ParentWakeNotifier non-Error retry recovery", () => {
       },
     })
     const sessionID = "parent-non-error-prompt-retry"
-    notifier.queuePendingParentWake(sessionID, FINAL_WAKE, { agent: "sisyphus" }, true)
+    notifier.queuePendingParentWake(sessionID, FINAL_WAKE, { agent: "cerberus" }, true)
 
     try {
       // when
@@ -154,7 +154,7 @@ describe("ParentWakeNotifier non-Error retry recovery", () => {
       },
     })
     const sessionID = "parent-non-error-messages-retry"
-    notifier.queuePendingParentWake(sessionID, FINAL_WAKE, { agent: "sisyphus" }, true)
+    notifier.queuePendingParentWake(sessionID, FINAL_WAKE, { agent: "cerberus" }, true)
 
     try {
       // when
@@ -175,7 +175,7 @@ describe("ParentWakeNotifier non-Error retry recovery", () => {
     const restoreTimers = installThrowingUnrefTimers()
     const { notifier, promptAsyncCalls } = createNotifier()
     const sessionID = "parent-non-error-unref-after-accepted"
-    notifier.queuePendingParentWake(sessionID, FINAL_WAKE, { agent: "sisyphus" }, true)
+    notifier.queuePendingParentWake(sessionID, FINAL_WAKE, { agent: "cerberus" }, true)
 
     try {
       // when

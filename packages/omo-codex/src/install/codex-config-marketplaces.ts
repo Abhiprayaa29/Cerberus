@@ -1,11 +1,11 @@
-import { appendBlock, findTomlSection } from "./toml-section-editor"
+﻿import { appendBlock, findTomlSection } from "./toml-section-editor"
 import { parseJsonString, parsePluginHeaderKey, removeTomlSections } from "./codex-config-toml-sections"
 import type { CodexMarketplaceSource } from "./types"
 
-const SISYPHUS_LEGACY_MARKETPLACES = ["lazycodex", "code-yeongyu-codex-plugins"] as const
+const CERBERUS_LEGACY_MARKETPLACES = ["lazycodex", "code-yeongyu-codex-plugins"] as const
 
 export function legacyMarketplaceNames(marketplaceName: string): readonly string[] {
-  return marketplaceName === "sisyphuslabs" ? SISYPHUS_LEGACY_MARKETPLACES : []
+  return marketplaceName === "cerberuslabs" ? CERBERUS_LEGACY_MARKETPLACES : []
 }
 
 export function removeMarketplaceBlock(config: string, marketplaceName: string): string {

@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 import { describe, expect, test } from "bun:test"
 import { unsafeTestValue } from "../../../../../test-support/unsafe-test-value"
 import { executeUnstableAgentTask } from "./unstable-agent-task"
@@ -23,7 +23,7 @@ describe("executeUnstableAgentTask terminal fast path", () => {
       {
         sessionID: "ses_parent",
         messageID: "msg_parent",
-        agent: "sisyphus",
+        agent: "cerberus",
         abort: new AbortController().signal,
       },
       unsafeTestValue({
@@ -32,7 +32,7 @@ describe("executeUnstableAgentTask terminal fast path", () => {
             id: "bg_terminal",
             sessionId: "ses_terminal",
             description: "terminal task",
-            agent: "sisyphus-junior",
+            agent: "cerberus-junior",
             status: "interrupt",
             error: "already stopped",
           }),
@@ -40,7 +40,7 @@ describe("executeUnstableAgentTask terminal fast path", () => {
             id: "bg_terminal",
             sessionId: "ses_terminal",
             description: "terminal task",
-            agent: "sisyphus-junior",
+            agent: "cerberus-junior",
             status: "interrupt",
             error: "already stopped",
           }),
@@ -52,8 +52,8 @@ describe("executeUnstableAgentTask terminal fast path", () => {
           },
         },
       }),
-      { sessionID: "ses_parent", messageID: "msg_parent", agent: "sisyphus" },
-      "sisyphus-junior",
+      { sessionID: "ses_parent", messageID: "msg_parent", agent: "cerberus" },
+      "cerberus-junior",
       undefined,
       undefined,
       "test-model",

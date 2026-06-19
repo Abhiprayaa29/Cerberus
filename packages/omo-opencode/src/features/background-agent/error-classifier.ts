@@ -1,4 +1,4 @@
-import { isRecord } from "@oh-my-opencode/utils"
+﻿import { isRecord } from "@oh-my-open-pentest/utils"
 export { isRecord }
 
 export function isAbortedSessionError(error: unknown): boolean {

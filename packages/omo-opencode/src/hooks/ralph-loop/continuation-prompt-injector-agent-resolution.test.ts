@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { afterEach, describe, expect, test } from "bun:test"
 import type { PluginInput } from "@opencode-ai/plugin"
@@ -11,20 +11,20 @@ import { releaseAllPromptAsyncReservationsForTesting } from "../shared/prompt-as
 import { unsafeTestValue } from "../../../../../test-support/unsafe-test-value"
 import { injectContinuationPrompt } from "./continuation-prompt-injector"
 
-describe("ralph-loop continuation prompt agent resolution", () => {
+describe("pentest-loop continuation prompt agent resolution", () => {
   afterEach(() => {
     releaseAllPromptAsyncReservationsForTesting()
     _resetForTesting()
   })
 
-  test("#given OpenCode registered Atlas under legacy display name #when inherited agent is config key #then prompt uses registered name", async () => {
+  test("#given OpenCode registered Argus under legacy display name #when inherited agent is config key #then prompt uses registered name", async () => {
     // given
-    registerAgentName("Atlas (Plan Executor)")
+    registerAgentName("Argus (Plan Executor)")
     let capturedAgent: string | undefined
     const ctx = unsafeTestValue<PluginInput>({
       client: {
         session: {
-          messages: async () => ({ data: [{ info: { agent: "atlas" } }] }),
+          messages: async () => ({ data: [{ info: { agent: "argus" } }] }),
           promptAsync: async (input: { readonly body: { readonly agent?: string } }) => {
             capturedAgent = input.body.agent
             return {}
@@ -35,13 +35,13 @@ describe("ralph-loop continuation prompt agent resolution", () => {
 
     // when
     await injectContinuationPrompt(ctx, {
-      sessionID: "ses_ralph_registered_atlas",
+      sessionID: "ses_ralph_registered_argus",
       prompt: "continue",
       directory: "/tmp/test",
       apiTimeoutMs: 50,
     })
 
     // then
-    expect(capturedAgent).toBe("Atlas (Plan Executor)")
+    expect(capturedAgent).toBe("Argus (Plan Executor)")
   })
 })

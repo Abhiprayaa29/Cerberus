@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { afterEach, beforeEach, describe, expect, test } from "bun:test"
 import type { PluginInput } from "@opencode-ai/plugin"
@@ -22,7 +22,7 @@ type SessionCreateArgs = {
 type PromptCall = { readonly path: { readonly id: string }; readonly body?: unknown }
 
 const originalXdgCacheHome = process.env.XDG_CACHE_HOME
-const testDirectory = "/tmp/omo-atlas-fallback-test"
+const testDirectory = "/tmp/omo-argus-fallback-test"
 let cacheCounter = 0
 
 beforeEach(() => {
@@ -54,14 +54,14 @@ async function flushAsyncWork(cycles = 30): Promise<void> {
   }
 }
 
-function createAtlasHarness(): {
+function createArgusHarness(): {
   readonly manager: BackgroundManager
   readonly createdSessions: Array<{ readonly id: string; readonly body: SessionCreateArgs["body"] }>
   readonly promptCalls: PromptCall[]
   readonly markSessionMissing: (sessionID: string) => void
 } {
   const directory = testDirectory
-  const sessionAlive = new Map<string, boolean>([["atlas-parent", true]])
+  const sessionAlive = new Map<string, boolean>([["argus-parent", true]])
   const createdSessions: Array<{ readonly id: string; readonly body: SessionCreateArgs["body"] }> = []
   const promptCalls: PromptCall[] = []
   const sessionIDs = ["ses_primary", "ses_fallback"]
@@ -69,11 +69,11 @@ function createAtlasHarness(): {
   const client = {
     session: {
       get: async ({ path }: SessionGetArgs) => {
-        if (path.id === "atlas-parent") {
+        if (path.id === "argus-parent") {
           return { data: { id: path.id, directory, parentID: undefined } }
         }
         if (sessionAlive.get(path.id)) {
-          return { data: { id: path.id, directory, parentID: "atlas-parent" } }
+          return { data: { id: path.id, directory, parentID: "argus-parent" } }
         }
         return { error: { status: 404, message: `session ${path.id} not found` } }
       },
@@ -103,14 +103,14 @@ function createAtlasHarness(): {
   }
 }
 
-async function launchAtlasOracleSubagent(manager: BackgroundManager): Promise<string> {
+async function launchArgusCipherSubagent(manager: BackgroundManager): Promise<string> {
   const task = await manager.launch({
-    description: "Atlas oracle subagent",
+    description: "Argus cipher subagent",
     prompt: "Investigate fallback behavior",
-    agent: "oracle",
-    parentSessionId: "atlas-parent",
-    parentMessageId: "atlas-message",
-    parentAgent: "atlas",
+    agent: "cipher",
+    parentSessionId: "argus-parent",
+    parentMessageId: "argus-message",
+    parentAgent: "argus",
     model: { providerID: "openai", modelID: "gpt-5.5", variant: "high" },
     fallbackChain: [
       { providers: ["github-copilot"], model: "claude-sonnet-4.6", variant: "high" },
@@ -138,11 +138,11 @@ function emitUsageLimitError(manager: BackgroundManager, sessionID: string): voi
   })
 }
 
-describe("Atlas-spawned subagent runtime fallback", () => {
-  test("retries oracle subagent on OpenAI usage_limit_reached and registers the fallback session", async () => {
+describe("Argus-spawned subagent runtime fallback", () => {
+  test("retries cipher subagent on OpenAI usage_limit_reached and registers the fallback session", async () => {
     //#given
-    const { manager, createdSessions, promptCalls } = createAtlasHarness()
-    const taskID = await launchAtlasOracleSubagent(manager)
+    const { manager, createdSessions, promptCalls } = createArgusHarness()
+    const taskID = await launchArgusCipherSubagent(manager)
 
     //#when
     emitUsageLimitError(manager, "ses_primary")
@@ -159,15 +159,15 @@ describe("Atlas-spawned subagent runtime fallback", () => {
     expect(promptCalls).toHaveLength(2)
     expect(subagentSessions.has("ses_primary")).toBe(false)
     expect(subagentSessions.has("ses_fallback")).toBe(true)
-    expect(getSessionAgent("ses_fallback")).toBe("oracle")
+    expect(getSessionAgent("ses_fallback")).toBe("cipher")
 
     manager.shutdown()
   })
 
-  test("surfaces non-retryable oracle subagent errors without creating a fallback session", async () => {
+  test("surfaces non-retryable cipher subagent errors without creating a fallback session", async () => {
     //#given
-    const { manager, createdSessions, markSessionMissing } = createAtlasHarness()
-    const taskID = await launchAtlasOracleSubagent(manager)
+    const { manager, createdSessions, markSessionMissing } = createArgusHarness()
+    const taskID = await launchArgusCipherSubagent(manager)
     markSessionMissing("ses_primary")
 
     //#when
@@ -189,10 +189,10 @@ describe("Atlas-spawned subagent runtime fallback", () => {
     manager.shutdown()
   })
 
-  test("marks oracle subagent errored when usage_limit_reached exhausts all fallbacks", async () => {
+  test("marks cipher subagent errored when usage_limit_reached exhausts all fallbacks", async () => {
     //#given
-    const { manager, createdSessions, markSessionMissing } = createAtlasHarness()
-    const taskID = await launchAtlasOracleSubagent(manager)
+    const { manager, createdSessions, markSessionMissing } = createArgusHarness()
+    const taskID = await launchArgusCipherSubagent(manager)
     emitUsageLimitError(manager, "ses_primary")
     await flushAsyncWork(60)
     markSessionMissing("ses_fallback")

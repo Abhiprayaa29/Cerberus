@@ -1,4 +1,4 @@
-name: publish
+﻿name: publish
 run-name: "${{ format('release {0}', inputs.version || inputs.bump) }}"
 
 on:
@@ -156,7 +156,7 @@ jobs:
   preflight-trust:
     runs-on: ubuntu-latest
     needs: [release-metadata]
-    if: github.repository == 'code-yeongyu/oh-my-openagent'
+    if: github.repository == 'code-yeongyu/oh-my-open-pentest'
     permissions:
       id-token: write
       contents: read
@@ -173,7 +173,7 @@ jobs:
 
       - name: Verify trusted publisher for release packages
         env:
-          REPO: code-yeongyu/oh-my-openagent
+          REPO: code-yeongyu/oh-my-open-pentest
           WORKFLOW_FILE: publish.yml
           PUBLISH_LAZYCODEX: ${{ inputs.publish_lazycodex }}
         run: |
@@ -187,13 +187,13 @@ jobs:
           fi
 
           PLATFORMS=(darwin-arm64 darwin-x64 darwin-x64-baseline linux-x64 linux-x64-baseline linux-arm64 linux-x64-musl linux-x64-musl-baseline linux-arm64-musl windows-x64 windows-x64-baseline windows-arm64)
-          ALL_PACKAGES=(oh-my-opencode oh-my-openagent)
+          ALL_PACKAGES=(oh-my-open-pentest oh-my-open-pentest)
           if [ "${PUBLISH_LAZYCODEX}" = "true" ]; then
             ALL_PACKAGES+=(lazycodex-ai)
           fi
           for plat in "${PLATFORMS[@]}"; do
-            ALL_PACKAGES+=("oh-my-opencode-${plat}")
-            ALL_PACKAGES+=("oh-my-openagent-${plat}")
+            ALL_PACKAGES+=("oh-my-open-pentest-${plat}")
+            ALL_PACKAGES+=("oh-my-open-pentest-${plat}")
           done
 
           FAILED=()
@@ -272,7 +272,7 @@ jobs:
         run: |
           VERSION="$RAW_VERSION"
           if [ -z "$VERSION" ]; then
-            PREV=$(curl -s https://registry.npmjs.org/oh-my-opencode/latest | jq -r '.version // "0.0.0"')
+            PREV=$(curl -s https://registry.npmjs.org/oh-my-open-pentest/latest | jq -r '.version // "0.0.0"')
             BASE="${PREV%%-*}"
             IFS='.' read -r MAJOR MINOR PATCH <<< "$BASE"
             case "$BUMP" in
@@ -334,7 +334,7 @@ jobs:
     needs: [test, typecheck, codex-compatibility, preflight-trust, release-metadata, publish-platform]
     if: >-
       always() &&
-      github.repository == 'code-yeongyu/oh-my-openagent' &&
+      github.repository == 'code-yeongyu/oh-my-open-pentest' &&
       needs.test.result == 'success' &&
       needs.typecheck.result == 'success' &&
       needs.codex-compatibility.result == 'success' &&
@@ -370,7 +370,7 @@ jobs:
           PLATFORMS=(darwin-arm64 darwin-x64 darwin-x64-baseline linux-x64 linux-x64-baseline linux-arm64 linux-x64-musl linux-x64-musl-baseline linux-arm64-musl windows-x64 windows-x64-baseline windows-arm64)
           FAILED=()
           for platform in "${PLATFORMS[@]}"; do
-            for family in oh-my-opencode oh-my-openagent; do
+            for family in oh-my-open-pentest oh-my-open-pentest; do
               pkg="${family}-${platform}"
               STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://registry.npmjs.org/${pkg}/${VERSION}")
               if [ "$STATUS" = "200" ]; then
@@ -395,23 +395,23 @@ jobs:
         env:
           VERSION: ${{ needs.release-metadata.outputs.version }}
         run: |
-          STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://registry.npmjs.org/oh-my-opencode/${VERSION}")
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://registry.npmjs.org/oh-my-open-pentest/${VERSION}")
           if [ "$STATUS" = "200" ]; then
             echo "skip=true" >> "$GITHUB_OUTPUT"
-            echo "✓ oh-my-opencode@${VERSION} already published"
+            echo "✓ oh-my-open-pentest@${VERSION} already published"
           else
             echo "skip=false" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Check if oh-my-openagent already published
+      - name: Check if oh-my-open-pentest already published
         id: check-openagent
         env:
           VERSION: ${{ needs.release-metadata.outputs.version }}
         run: |
-          STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://registry.npmjs.org/oh-my-openagent/${VERSION}")
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://registry.npmjs.org/oh-my-open-pentest/${VERSION}")
           if [ "$STATUS" = "200" ]; then
             echo "skip=true" >> "$GITHUB_OUTPUT"
-            echo "✓ oh-my-openagent@${VERSION} already published"
+            echo "✓ oh-my-open-pentest@${VERSION} already published"
           else
             echo "skip=false" >> "$GITHUB_OUTPUT"
           fi
@@ -441,7 +441,7 @@ jobs:
           jq --arg v "$VERSION" '.version = $v' package.json > tmp.json && mv tmp.json package.json
 
           for platform in darwin-arm64 darwin-x64 darwin-x64-baseline linux-x64 linux-x64-baseline linux-arm64 linux-x64-musl linux-x64-musl-baseline linux-arm64-musl windows-x64 windows-x64-baseline windows-arm64; do
-            package_dir="packages/oh-my-opencode-${platform}"
+            package_dir="packages/oh-my-open-pentest-${platform}"
             jq --arg v "$VERSION" '.version = $v' "${package_dir}/package.json" > tmp.json
             mv tmp.json "${package_dir}/package.json"
           done
@@ -486,7 +486,7 @@ jobs:
             fi
           done
 
-      - name: Publish oh-my-opencode
+      - name: Publish oh-my-open-pentest
         if: steps.check.outputs.skip != 'true'
         env:
           DIST_TAG: ${{ needs.release-metadata.outputs.dist_tag }}
@@ -498,20 +498,20 @@ jobs:
             npm publish --access public --provenance --tag latest --loglevel verbose
           fi
 
-      - name: Publish oh-my-openagent
+      - name: Publish oh-my-open-pentest
         if: steps.check-openagent.outputs.skip != 'true'
         env:
           VERSION: ${{ needs.release-metadata.outputs.version }}
           DIST_TAG: ${{ needs.release-metadata.outputs.dist_tag }}
           NPM_CONFIG_PROVENANCE: true
         run: |
-          # Update package name, version, and optionalDependencies for oh-my-openagent
+          # Update package name, version, and optionalDependencies for oh-my-open-pentest
           jq --arg v "$VERSION" '
-            .name = "oh-my-openagent" |
+            .name = "oh-my-open-pentest" |
             .version = $v |
             .optionalDependencies = (
               .optionalDependencies | to_entries |
-              map(.key = (.key | sub("^oh-my-opencode-"; "oh-my-openagent-")) | .value = $v) |
+              map(.key = (.key | sub("^oh-my-open-pentest-"; "oh-my-open-pentest-")) | .value = $v) |
               from_entries
             )
           ' package.json > tmp.json && mv tmp.json package.json
@@ -538,7 +538,7 @@ jobs:
             .name = "lazycodex-ai" |
             .version = $omo_version |
             .bin = { "lazycodex-ai": "packages/omo-codex/scripts/install-local.mjs", "lazycodex": "packages/omo-codex/scripts/install-local.mjs" } |
-            .files = ["dist/cli", "dist/cli-node", "packages/omo-codex/scripts/install-local.mjs", "packages/omo-codex/scripts/install-dist", "packages/omo-codex/plugin", "packages/omo-codex/plugin/components/start-work-continuation/dist/cli.js", "packages/omo-codex/plugin/components/ulw-loop/dist/cli.js", "packages/omo-codex/plugin/.codex-plugin", "packages/omo-codex/marketplace.json", "packages/omo-codex/lazycodex-repository", "packages/lsp-tools-mcp/package.json", "packages/lsp-tools-mcp/dist", "packages/lsp-daemon/package.json", "packages/lsp-daemon/dist", "packages/git-bash-mcp/dist", "packages/shared-skills"] |
+            .files = ["dist/cli", "dist/cli-node", "packages/omo-codex/scripts/install-local.mjs", "packages/omo-codex/scripts/install-dist", "packages/omo-codex/plugin", "packages/omo-codex/plugin/components/start-work-continuation/dist/cli.js", "packages/omo-codex/plugin/components/pentest-loop/dist/cli.js", "packages/omo-codex/plugin/.codex-plugin", "packages/omo-codex/marketplace.json", "packages/omo-codex/lazycodex-repository", "packages/lsp-tools-mcp/package.json", "packages/lsp-tools-mcp/dist", "packages/lsp-daemon/package.json", "packages/lsp-daemon/dist", "packages/git-bash-mcp/dist", "packages/shared-skills"] |
             .scripts = {} |
             .dependencies = {} |
             .devDependencies = {} |
@@ -572,8 +572,8 @@ jobs:
 
               if npx_install_output=$(npx -y "$package_spec" --dry-run install --no-tui --codex-autonomous 2>&1) &&
                  npx_doctor_output=$(npx -y "$package_spec" --dry-run doctor 2>&1) &&
-                 [ "$npx_install_output" = "npx --yes --package oh-my-openagent omo install --platform=codex --no-tui --codex-autonomous" ] &&
-                 [ "$npx_doctor_output" = "npx --yes --package oh-my-openagent omo doctor" ] &&
+                 [ "$npx_install_output" = "npx --yes --package oh-my-open-pentest omo install --platform=codex --no-tui --codex-autonomous" ] &&
+                 [ "$npx_doctor_output" = "npx --yes --package oh-my-open-pentest omo doctor" ] &&
                  npx -y "$package_spec" install --no-tui --codex-autonomous &&
                  [ -x "$CODEX_LOCAL_BIN_DIR/omo" ] &&
                  omo_version_output=$("$CODEX_LOCAL_BIN_DIR/omo" --version 2>&1) &&
@@ -616,7 +616,7 @@ jobs:
           JOB_SUMMARY_STATUS: ${{ job.status }}
           JOB_SUMMARY_DETAILS: |
             - Verifies platform packages exist before wrapper publish.
-            - Publishes `oh-my-opencode`, `oh-my-openagent`, and optionally `lazycodex-ai`.
+            - Publishes `oh-my-open-pentest`, `oh-my-open-pentest`, and optionally `lazycodex-ai`.
             - Smoke-tests the published LazyCodex package when it was published.
           JOB_SUMMARY_NEXT: Check package existence probes first, then npm publish logs and the LazyCodex smoke section.
         run: GITHUB_STEP_SUMMARY="$GITHUB_STEP_SUMMARY" bash .github/scripts/write-job-summary.sh
@@ -625,7 +625,7 @@ jobs:
     needs: [test, typecheck, codex-compatibility, preflight-trust, release-metadata]
     if: >-
       always() &&
-      github.repository == 'code-yeongyu/oh-my-openagent' &&
+      github.repository == 'code-yeongyu/oh-my-open-pentest' &&
       inputs.skip_platform != true &&
       needs.test.result == 'success' &&
       needs.typecheck.result == 'success' &&
@@ -701,7 +701,7 @@ jobs:
           jq --arg v "$VERSION" '.version = $v' package.json > tmp.json && mv tmp.json package.json
 
           for platform in darwin-arm64 darwin-x64 darwin-x64-baseline linux-x64 linux-x64-baseline linux-arm64 linux-x64-musl linux-x64-musl-baseline linux-arm64-musl windows-x64 windows-x64-baseline windows-arm64; do
-            package_dir="packages/oh-my-opencode-${platform}"
+            package_dir="packages/oh-my-open-pentest-${platform}"
             jq --arg v "$VERSION" '.version = $v' "${package_dir}/package.json" > tmp.json
             mv tmp.json "${package_dir}/package.json"
           done
@@ -719,7 +719,7 @@ jobs:
         run: |
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
-          git add package.json packages/oh-my-opencode-*/package.json packages/omo-codex/package.json packages/omo-codex/plugin/package.json packages/omo-codex/plugin/.codex-plugin/plugin.json packages/omo-codex/plugin/components/*/package.json packages/omo-codex/plugin/hooks/hooks.json packages/omo-codex/plugin/components/*/hooks/hooks.json bun.lock
+          git add package.json packages/oh-my-open-pentest-*/package.json packages/omo-codex/package.json packages/omo-codex/plugin/package.json packages/omo-codex/plugin/.codex-plugin/plugin.json packages/omo-codex/plugin/components/*/package.json packages/omo-codex/plugin/hooks/hooks.json packages/omo-codex/plugin/components/*/hooks/hooks.json bun.lock
           git diff --cached --quiet || git commit -m "release: v${VERSION}"
 
       - name: Create release tag
@@ -837,7 +837,7 @@ jobs:
           GH_TOKEN: ${{ secrets.LAZYCODEX_SYNC_TOKEN }}
         run: |
           {
-            printf '%s\n' "Synced Codex Light marketplace payload from oh-my-openagent v${VERSION}."
+            printf '%s\n' "Synced Codex Light marketplace payload from oh-my-open-pentest v${VERSION}."
             printf '%s\n' ""
             printf '%s\n' "Compared against: lazycodex-ai@${PREVIOUS_LAZYCODEX_VERSION}"
           } > /tmp/lazycodex-release-notes.md

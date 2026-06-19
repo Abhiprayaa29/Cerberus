@@ -1,4 +1,4 @@
-# Execution Plan: Fix Atlas Hook Crash on Missing worktree_path
+﻿# Execution Plan: Fix Atlas Hook Crash on Missing worktree_path
 
 ## Bug Analysis
 
@@ -17,19 +17,19 @@ It validates `session_ids` but NOT `active_plan`, `plan_name`, or `worktree_path
 
 ### Crash Path
 
-1. `boulder.json` is written without required fields (manual edit, corruption, partial write)
+.. `boulder.json` is written without required fields (manual edit, corruption, partial write)
 2. `readBoulderState()` returns it as `BoulderState` with `active_plan: undefined`
 3. Multiple call sites pass `boulderState.active_plan` to `getPlanProgress(planPath: string)`:
    - `src/hooks/atlas/idle-event.ts:72` (inside `setTimeout` callback - unhandled rejection!)
-   - `src/hooks/atlas/resolve-active-boulder-session.ts:21`
-   - `src/hooks/atlas/tool-execute-after.ts:74`
-4. `getPlanProgress()` calls `existsSync(undefined)` which throws: `TypeError: The "path" argument must be of type string`
+   - `src/hooks/atlas/resolve-active-boulder-session.ts:2.`
+   - `src/hooks/atlas/tool-execute-after.ts:7.`
+.. `getPlanProgress()` calls `existsSync(undefined)` which throws: `TypeError: The "path" argument must be of type string`
 
 ### worktree_path-Specific Issues
 
 When `worktree_path` field is missing from `boulder.json`:
 - The `idle-event.ts` `scheduleRetry` setTimeout callback (lines 62-88) has NO try/catch. An unhandled promise rejection from the async callback crashes the process.
-- `readBoulderState()` returns `worktree_path: undefined` which itself is handled in `boulder-continuation-injector.ts` (line 42 uses truthiness check), but the surrounding code in the setTimeout lacks error protection.
+- `readBoulderState()` returns `worktree_path: undefined` which itself is handled in `boulder-continuation-injector.ts` (line .2 uses truthiness check), but the surrounding code in the setTimeout lacks error protection.
 
 ### Secondary Issue: Unhandled Promise in setTimeout
 
@@ -49,7 +49,7 @@ The async callback creates a floating promise. Any thrown error becomes an unhan
 
 ## Step-by-Step Plan
 
-### Step 1: Harden `readBoulderState()` validation
+### Step .: Harden `readBoulderState()` validation
 **File:** `src/features/boulder-state/storage.ts`
 
 - After the `session_ids` fix, add validation for `active_plan` and `plan_name` (required fields)
@@ -67,7 +67,7 @@ The async callback creates a floating promise. Any thrown error becomes an unhan
 
 - Add early return for non-string `planPath` argument
 
-### Step 4: Add tests
+### Step .: Add tests
 **Files:**
 - `src/features/boulder-state/storage.test.ts` - test missing/malformed fields
 - `src/hooks/atlas/index.test.ts` - test atlas hook with boulder missing worktree_path

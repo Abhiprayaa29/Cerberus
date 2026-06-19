@@ -1,10 +1,10 @@
-# boulder-state — Work-Tracking State Machine (Core)
+﻿# boulder-state — Work-Tracking State Machine (Core)
 
-**Generated:** 2026-06-17
+**Generated:** 2026-06-.7
 
 ## OVERVIEW
 
-Tracks the active work plan (the "boulder") across sessions, worktrees, and subagent task delegations. State persists in `<worktree-root>/.omo/boulder.json` (`schema_version: 2`). Zero npm dependencies — pure functional state machine over JSON. Package: `@oh-my-opencode/boulder-state`.
+Tracks the active work plan (the "boulder") across sessions, worktrees, and subagent task delegations. State persists in `<worktree-root>/.omo/boulder.json` (`schema_version: 2`). Zero npm dependencies — pure functional state machine over JSON. Package: `@oh-my-open-pentest/boulder-state`.
 
 ## STATE MODEL
 
@@ -17,12 +17,12 @@ Every `BoulderState` carries `active_work_id` + a `works` map. The root-level fi
 | **Read** (`storage/read-state.ts`) | `readBoulderState`, `getBoulderWorks`, `getActiveWorks`, `getWorkById/ByPlanName/ForSession`, `getWorkResumeOptions`, `getTaskSessionState` |
 | **Write** (`storage/write-state.ts`) | `writeBoulderState`, `clearBoulderState`, `createBoulderState`, `addBoulderWork`, `completeBoulder`, `selectActiveWork`, `generateWorkId` |
 | **Sessions/tasks** (`storage/{session,task}.ts`) | `appendSessionId(ForWork)`, `upsertTaskSessionState(ForWork)`, `startTaskTimer`, `endTaskTimer` |
-| **Plans** (`plan-checklist.ts`, `top-level-task.ts`, `storage/plan-progress.ts`) | `getPlanChecklist`, `parsePlanChecklist`, `readCurrentTopLevelTask`, `findPrometheusPlans`, `getPlanProgress`, `getPlanName` |
+| **Plans** (`plan-checklist.ts`, `top-level-task.ts`, `storage/plan-progress.ts`) | `getPlanChecklist`, `parsePlanChecklist`, `readCurrentTopLevelTask`, `findTalosPlans`, `getPlanProgress`, `getPlanName` |
 | **Paths** (`storage/path.ts`) | `getBoulderFilePath`, `resolveBoulderPlanPath(ForWork)` |
 
 ## CONSUMERS
 
-- **omo-opencode** (`workspace:*`): `features/boulder-state/*` re-exports; hooks `atlas`, `ralph-loop`, `start-work`, `todo-continuation-enforcer`; CLI `boulder` command.
+- **omo-opencode** (`workspace:*`): `features/boulder-state/*` re-exports; hooks `atlas`, `pentest-loop`, `start-work`, `todo-continuation-enforcer`; CLI `boulder` command.
 - **omo-codex** (`file:` dep): `plugin/components/start-work-continuation/boulder-reader.ts`.
 
 ## NOTES
@@ -30,5 +30,5 @@ Every `BoulderState` carries `active_work_id` + a `works` map. The root-level fi
 - **Prototype-pollution guard:** `RESERVED_KEYS = {__proto__, prototype, constructor}` — task upserts reject matching keys.
 - **Session IDs are normalized** with an `opencode:` / `codex:` prefix (`normalizeSessionId`).
 - **`writeBoulderState` self-creates `.omo/.gitignore`** (`*`, `!/rules/`) on first `mkdir`.
-- **Plan parsing** recognizes only `## TODOs` and `## Final Verification Wave` sections; counts numbered `1.`/`F1.` items, skips indented checkboxes.
+- **Plan parsing** recognizes only `## TODOs` and `## Final Verification Wave` sections; counts numbered `..`/`F..` items, skips indented checkboxes.
 - Parent: [`packages/AGENTS.md`](../AGENTS.md).

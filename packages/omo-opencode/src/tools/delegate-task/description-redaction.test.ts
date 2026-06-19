@@ -1,4 +1,4 @@
-import { describe, expect, test } from "bun:test"
+﻿import { describe, expect, test } from "bun:test"
 import { unsafeTestValue } from "../../../../../test-support/unsafe-test-value"
 import { executeBackgroundTask } from "./background-task"
 import { executeUnstableAgentTask } from "./unstable-agent-task"
@@ -8,14 +8,14 @@ import type { DelegateTaskArgs, ToolContextWithMetadata } from "./types"
 const parentContext = {
   sessionID: "ses_parent",
   messageID: "msg_parent",
-  agent: "sisyphus",
+  agent: "cerberus",
 }
 
 function createToolContext(): ToolContextWithMetadata {
   return {
     sessionID: "ses_parent",
     messageID: "msg_parent",
-    agent: "sisyphus",
+    agent: "cerberus",
     abort: new AbortController().signal,
     metadata: async () => {},
   }
@@ -67,7 +67,7 @@ describe("background task description redaction", () => {
     )
 
     // then
-    expect(launchedDescription).toBe("Sisyphus-Junior background task")
+    expect(launchedDescription).toBe("Cerberus-Junior background task")
     expect(launchedDescription).not.toContain("SECRET_TOKEN")
   })
 
@@ -80,7 +80,7 @@ describe("background task description redaction", () => {
       prompt: "SECRET_TOKEN=never-write-this do work",
       run_in_background: true,
       load_skills: [],
-      subagent_type: "atlas",
+      subagent_type: "argus",
     })
 
     // when
@@ -103,13 +103,13 @@ describe("background task description redaction", () => {
         },
       }),
       parentContext,
-      "atlas",
+      "argus",
       undefined,
       undefined,
     )
 
     // then
-    expect(launchedDescription).toBe("atlas background task")
+    expect(launchedDescription).toBe("argus background task")
     expect(launchedDescription).not.toContain("SECRET_TOKEN")
   })
 
@@ -145,7 +145,7 @@ describe("background task description redaction", () => {
             id: "bg_unstable_secret",
             sessionId: "ses_unstable_secret",
             description: launchedDescription,
-            agent: "sisyphus-junior",
+            agent: "cerberus-junior",
             status: "completed",
           }),
         },
@@ -163,14 +163,14 @@ describe("background task description redaction", () => {
         syncPollTimeoutMs: 100,
       }),
       parentContext,
-      "sisyphus-junior",
+      "cerberus-junior",
       undefined,
       undefined,
       "test-model",
     )
 
     // then
-    expect(launchedDescription).toBe("sisyphus-junior background task")
+    expect(launchedDescription).toBe("cerberus-junior background task")
     expect(launchedDescription).not.toContain("SECRET_TOKEN")
   })
 })

@@ -1,10 +1,10 @@
-import type { PluginInput } from "@opencode-ai/plugin"
-import { createAtlasEventHandler } from "./event-handler"
+﻿import type { PluginInput } from "@opencode-ai/plugin"
+import { createArgusEventHandler } from "./event-handler"
 import { createToolExecuteAfterHandler } from "./tool-execute-after"
 import { createToolExecuteBeforeHandler } from "./tool-execute-before"
-import type { AtlasHookOptions, PendingTaskRef, SessionState } from "./types"
+import type { ArgusHookOptions, PendingTaskRef, SessionState } from "./types"
 
-export function createAtlasHook(ctx: PluginInput, options?: AtlasHookOptions) {
+export function createArgusHook(ctx: PluginInput, options?: ArgusHookOptions) {
   const sessions = new Map<string, SessionState>()
   const pendingFilePaths = new Map<string, string>()
   const pendingTaskRefs = new Map<string, PendingTaskRef>()
@@ -21,7 +21,7 @@ export function createAtlasHook(ctx: PluginInput, options?: AtlasHookOptions) {
   }
 
   return {
-    handler: createAtlasEventHandler({ ctx, options, sessions, getState }),
+    handler: createArgusEventHandler({ ctx, options, sessions, getState }),
     "tool.execute.before": createToolExecuteBeforeHandler({
       ctx,
       pendingFilePaths,

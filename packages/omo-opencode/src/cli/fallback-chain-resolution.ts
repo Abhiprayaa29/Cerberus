@@ -1,4 +1,4 @@
-import type { FallbackEntry } from "../shared/model-requirements"
+﻿import type { FallbackEntry } from "../shared/model-requirements"
 import type { ProviderAvailability } from "./model-fallback-types"
 import { CLI_AGENT_MODEL_REQUIREMENTS } from "./model-fallback-requirements"
 import { isProviderAvailable } from "./provider-availability"
@@ -22,8 +22,8 @@ export function resolveModelFromChain(
 	return null
 }
 
-export function getSisyphusFallbackChain(): FallbackEntry[] {
-	return CLI_AGENT_MODEL_REQUIREMENTS.sisyphus.fallbackChain
+export function getCerberusFallbackChain(): FallbackEntry[] {
+	return CLI_AGENT_MODEL_REQUIREMENTS.cerberus.fallbackChain
 }
 
 export function isAnyFallbackEntryAvailable(

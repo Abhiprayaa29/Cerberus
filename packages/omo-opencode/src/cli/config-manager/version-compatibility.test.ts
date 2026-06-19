@@ -1,4 +1,4 @@
-import { describe, expect, it } from "bun:test"
+﻿import { describe, expect, it } from "bun:test"
 import {
   checkVersionCompatibility,
   extractVersionFromPluginEntry,
@@ -72,22 +72,22 @@ describe("checkVersionCompatibility", () => {
 
 describe("extractVersionFromPluginEntry", () => {
   it("extracts version from canonical plugin entry", () => {
-    const version = extractVersionFromPluginEntry("oh-my-openagent@3.15.0")
+    const version = extractVersionFromPluginEntry("oh-my-open-pentest@3.15.0")
     expect(version).toBe("3.15.0")
   })
 
   it("extracts version from legacy plugin entry", () => {
-    const version = extractVersionFromPluginEntry("oh-my-opencode@3.14.0")
+    const version = extractVersionFromPluginEntry("oh-my-open-pentest@3.14.0")
     expect(version).toBe("3.14.0")
   })
 
   it("returns null for bare plugin entry", () => {
-    const version = extractVersionFromPluginEntry("oh-my-openagent")
+    const version = extractVersionFromPluginEntry("oh-my-open-pentest")
     expect(version).toBeNull()
   })
 
   it("handles prerelease versions", () => {
-    const version = extractVersionFromPluginEntry("oh-my-openagent@3.16.0-beta.1")
+    const version = extractVersionFromPluginEntry("oh-my-open-pentest@3.16.0-beta.1")
     expect(version).toBe("3.16.0-beta.1")
   })
 })

@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { afterEach, beforeEach, describe, expect, spyOn, test } from "bun:test"
 import { existsSync, mkdirSync, rmSync, writeFileSync } from "node:fs"
@@ -54,12 +54,12 @@ describe("buildStartWorkContextInfo", () => {
     const clearSpy = spyOn(boulderState, "clearBoulderState")
     const planAPath = writePlan("plan-alpha", "## TODOs\n- [ ] 1. Alpha")
     const planBPath = writePlan("plan-beta", "## TODOs\n- [ ] 1. Beta")
-    const initialState = createBoulderState(planAPath, "session-a", "atlas", "/tmp/worktree-a")
+    const initialState = createBoulderState(planAPath, "session-a", "argus", "/tmp/worktree-a")
     writeBoulderState(testDirectory, initialState)
     addBoulderWork(testDirectory, {
       planPath: planBPath,
       sessionId: "session-b",
-      agent: "atlas",
+      agent: "argus",
       worktreePath: "/tmp/worktree-b",
     })
 
@@ -70,7 +70,7 @@ describe("buildStartWorkContextInfo", () => {
       existingState: readExistingState(),
       sessionId: "session-current",
       timestamp: "2026-05-11T00:00:00.000Z",
-      activeAgent: "atlas",
+      activeAgent: "argus",
       worktreePath: undefined,
       worktreeBlock: "",
     })
@@ -86,7 +86,7 @@ describe("buildStartWorkContextInfo", () => {
     // given
     const clearSpy = spyOn(boulderState, "clearBoulderState")
     const planPath = writePlan("single-active-plan", "## TODOs\n- [ ] 1. Single task")
-    const initialState = createBoulderState(planPath, "session-a", "atlas", "/tmp/worktree-single")
+    const initialState = createBoulderState(planPath, "session-a", "argus", "/tmp/worktree-single")
     writeBoulderState(testDirectory, initialState)
 
     // when
@@ -96,7 +96,7 @@ describe("buildStartWorkContextInfo", () => {
       existingState: readExistingState(),
       sessionId: "session-current",
       timestamp: "2026-05-11T00:00:00.000Z",
-      activeAgent: "atlas",
+      activeAgent: "argus",
       worktreePath: undefined,
       worktreeBlock: "",
     })
@@ -113,12 +113,12 @@ describe("buildStartWorkContextInfo", () => {
     const clearSpy = spyOn(boulderState, "clearBoulderState")
     const planAPath = writePlan("explicit-plan-a", "## TODOs\n- [ ] 1. A")
     const planBPath = writePlan("explicit-plan-b", "## TODOs\n- [ ] 1. B")
-    const initialState = createBoulderState(planAPath, "session-a", "atlas", "/tmp/worktree-a")
+    const initialState = createBoulderState(planAPath, "session-a", "argus", "/tmp/worktree-a")
     writeBoulderState(testDirectory, initialState)
     addBoulderWork(testDirectory, {
       planPath: planBPath,
       sessionId: "session-b",
-      agent: "atlas",
+      agent: "argus",
       worktreePath: "/tmp/worktree-b",
     })
 
@@ -129,7 +129,7 @@ describe("buildStartWorkContextInfo", () => {
       existingState: readExistingState(),
       sessionId: "session-current",
       timestamp: "2026-05-11T00:00:00.000Z",
-      activeAgent: "atlas",
+      activeAgent: "argus",
       worktreePath: "/tmp/worktree-a",
       worktreeBlock: "",
     })
@@ -157,7 +157,7 @@ describe("buildStartWorkContextInfo", () => {
       existingState: null,
       sessionId: "session-current",
       timestamp: "2026-05-11T00:00:00.000Z",
-      activeAgent: "atlas",
+      activeAgent: "argus",
       worktreePath: undefined,
       worktreeBlock: "",
     })
@@ -182,7 +182,7 @@ describe("buildStartWorkContextInfo", () => {
       existingState: null,
       sessionId: "session-current",
       timestamp: "2026-05-11T00:00:00.000Z",
-      activeAgent: "atlas",
+      activeAgent: "argus",
       worktreePath: "/tmp/preferred-worktree",
       worktreeBlock: "## Worktree\n/tmp/preferred-worktree",
       preferredPlanPath,
@@ -198,14 +198,14 @@ describe("buildStartWorkContextInfo", () => {
     const nextState = readBoulderState(testDirectory)
     expect(nextState?.active_plan).toBe(preferredPlanPath)
     expect(nextState?.session_ids).toEqual(["opencode:session-current"])
-    expect(nextState?.agent).toBe("atlas")
+    expect(nextState?.agent).toBe("argus")
     expect(nextState?.worktree_path).toBe("/tmp/preferred-worktree")
   })
 
   test("#given existing active state with stale agent and worktree #when resuming #then state is rewritten for current session", () => {
     // given
     const planPath = writePlan("resume-existing-plan", "## TODOs\n- [ ] 1. Continue")
-    const initialState = createBoulderState(planPath, "session-old", "sisyphus", "/tmp/old-worktree")
+    const initialState = createBoulderState(planPath, "session-old", "cerberus", "/tmp/old-worktree")
     writeBoulderState(testDirectory, initialState)
 
     // when
@@ -215,7 +215,7 @@ describe("buildStartWorkContextInfo", () => {
       existingState: readExistingState(),
       sessionId: "session-current",
       timestamp: "2026-05-11T00:00:00.000Z",
-      activeAgent: "atlas",
+      activeAgent: "argus",
       worktreePath: "/tmp/new-worktree",
       worktreeBlock: "## Worktree\n/tmp/new-worktree",
     })
@@ -227,7 +227,7 @@ describe("buildStartWorkContextInfo", () => {
     expect(contextInfo).toContain("session-current")
 
     const nextState = readBoulderState(testDirectory)
-    expect(nextState?.agent).toBe("atlas")
+    expect(nextState?.agent).toBe("argus")
     expect(nextState?.worktree_path).toBe("/tmp/new-worktree")
     expect(nextState?.session_ids).toEqual(["opencode:session-old", "opencode:session-current"])
   })
@@ -236,12 +236,12 @@ describe("buildStartWorkContextInfo", () => {
     // given
     const activePlanPath = writePlan("active-plan", "## TODOs\n- [ ] 1. Continue")
     const completedPlanPath = writePlan("completed-plan", "## TODOs\n- [x] 1. Done")
-    const initialState = createBoulderState(activePlanPath, "session-active", "atlas", undefined)
+    const initialState = createBoulderState(activePlanPath, "session-active", "argus", undefined)
     writeBoulderState(testDirectory, initialState)
     const completedState = addBoulderWork(testDirectory, {
       planPath: completedPlanPath,
       sessionId: "session-completed",
-      agent: "atlas",
+      agent: "argus",
       worktreePath: undefined,
     })
     if (!completedState?.active_work_id) {
@@ -261,7 +261,7 @@ describe("buildStartWorkContextInfo", () => {
       existingState: readExistingState(),
       sessionId: "session-current",
       timestamp: "2026-05-11T00:00:00.000Z",
-      activeAgent: "atlas",
+      activeAgent: "argus",
       worktreePath: undefined,
       worktreeBlock: "",
     })
@@ -278,7 +278,7 @@ describe("buildStartWorkContextInfo", () => {
     // given
     const activePlanPath = writePlan("single-active-plan", "## TODOs\n- [ ] 1. Continue")
     const stalePreferredPlanPath = join(testDirectory, ".omo", "plans", "missing-plan.md")
-    const initialState = createBoulderState(activePlanPath, "session-active", "atlas", undefined)
+    const initialState = createBoulderState(activePlanPath, "session-active", "argus", undefined)
     writeBoulderState(testDirectory, initialState)
 
     // when
@@ -288,7 +288,7 @@ describe("buildStartWorkContextInfo", () => {
       existingState: readExistingState(),
       sessionId: "session-current",
       timestamp: "2026-05-11T00:00:00.000Z",
-      activeAgent: "atlas",
+      activeAgent: "argus",
       worktreePath: undefined,
       worktreeBlock: "",
       preferredPlanPath: stalePreferredPlanPath,
@@ -314,7 +314,7 @@ describe("buildStartWorkContextInfo", () => {
       existingState: null,
       sessionId: "session-current",
       timestamp: "2026-05-11T00:00:00.000Z",
-      activeAgent: "atlas",
+      activeAgent: "argus",
       worktreePath: undefined,
       worktreeBlock: "",
     })
@@ -342,7 +342,7 @@ describe("buildStartWorkContextInfo", () => {
       existingState: null,
       sessionId: "session-current",
       timestamp: "2026-05-11T00:00:00.000Z",
-      activeAgent: "atlas",
+      activeAgent: "argus",
       worktreePath: undefined,
       worktreeBlock: "",
     })
@@ -365,7 +365,7 @@ describe("buildStartWorkContextInfo", () => {
     const initialState = createBoulderState(
       join(testDirectory, ".omo", "plans", "work-a.md"),
       "session-a",
-      "atlas",
+      "argus",
       "/tmp/worktree-a",
     )
     writeBoulderState(testDirectory, initialState)
@@ -377,7 +377,7 @@ describe("buildStartWorkContextInfo", () => {
     const withSecondWork = addBoulderWork(testDirectory, {
       planPath: workBPath,
       sessionId: "session-b",
-      agent: "atlas",
+      agent: "argus",
       worktreePath: "/tmp/worktree-b",
     })
     if (!withSecondWork?.works) {
@@ -395,7 +395,7 @@ describe("buildStartWorkContextInfo", () => {
       existingState: readExistingState(),
       sessionId: "session-c",
       timestamp: "2026-05-11T00:00:00.000Z",
-      activeAgent: "atlas",
+      activeAgent: "argus",
       worktreePath: undefined,
       worktreeBlock: "",
     })

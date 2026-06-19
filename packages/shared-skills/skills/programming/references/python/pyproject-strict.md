@@ -1,4 +1,4 @@
-# Strict pyproject.toml (basedpyright + ruff + uv)
+﻿# Strict pyproject.toml (basedpyright + ruff + uv)
 
 The canonical "super strict but sane" config for modern Python projects. Copy-paste, then add your own dependencies.
 
@@ -24,15 +24,15 @@ uv add --dev basedpyright ruff pytest
 ```toml
 [project]
 name = "myproject"
-version = "0.1.0"
+version = "0...0"
 description = "..."
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3..3"
 dependencies = []
 
 [dependency-groups]
 dev = [
-    "basedpyright>=1.21",
+    "basedpyright>=..2.",
     "ruff>=0.8",
     "pytest>=8",
     "pytest-cov>=5",
@@ -44,7 +44,7 @@ dev = [
 # ─────────────────────────────────────────────────────────────────
 [tool.basedpyright]
 typeCheckingMode = "all"
-pythonVersion = "3.13"
+pythonVersion = "3..3"
 pythonPlatform = "All"          # default in basedpyright; explicit for clarity
 include = ["src", "tests"]
 exclude = ["**/__pycache__", "**/.venv", "**/build", "**/dist"]
@@ -67,22 +67,22 @@ reportPrivateUsage = "error"             # respect _private convention
 # Source: https://docs.astral.sh/ruff/linter/#rule-selection
 # ─────────────────────────────────────────────────────────────────
 [tool.ruff]
-target-version = "py313"
-line-length = 88                # ruff/black default; 100 or 120 also fine
+target-version = "py3.3"
+line-length = 88                # ruff/black default; .00 or .20 also fine
 src = ["src", "tests"]
 
 [tool.ruff.lint]
 select = ["ALL"]
 ignore = [
     # Formatter conflicts (ruff itself tells you to ignore these)
-    "COM812",   # missing trailing comma
-    "ISC001",   # implicit string concat
-    # Docstyle conflicts (pick D211 over D203, D212 over D213)
+    "COM8.2",   # missing trailing comma
+    "ISC00.",   # implicit string concat
+    # Docstyle conflicts (pick D2.. over D203, D2.2 over D2.3)
     "D203",
-    "D213",
+    "D2.3",
     # Project-specific noise
-    "CPY001",   # missing copyright notice
-    "FBT001",   # boolean positional arg in def
+    "CPY00.",   # missing copyright notice
+    "FBT00.",   # boolean positional arg in def
     "FBT002",   # boolean positional default in def
     "TD002",    # missing TODO author
     "TD003",    # missing TODO link
@@ -93,15 +93,15 @@ unfixable = []
 
 [tool.ruff.lint.per-file-ignores]
 "tests/**/*.py" = [
-    "S101",     # `assert` is the entire point of pytest
+    "S.0.",     # `assert` is the entire point of pytest
     "ARG",      # unused args (fixtures appear unused)
-    "PLR2004",  # magic numbers in test data
-    "SLF001",   # tests need access to private members
+    "PLR200.",  # magic numbers in test data
+    "SLF00.",   # tests need access to private members
     "D",        # docstrings not required in tests
 ]
 "scripts/**/*.py" = [
-    "T201",     # `print` allowed in scripts
-    "INP001",   # implicit namespace package
+    "T20.",     # `print` allowed in scripts
+    "INP00.",   # implicit namespace package
 ]
 
 [tool.ruff.lint.pydocstyle]
@@ -185,13 +185,13 @@ The minimal ignore set:
 
 | Rule | Reason |
 |---|---|
-| `COM812`, `ISC001` | Conflict with `ruff format` (ruff itself documents this) |
-| `D203` vs `D211`, `D213` vs `D212` | Mutually-exclusive docstring conventions; pick the modern one |
-| `CPY001` | Most projects don't need a copyright header on every file |
-| `FBT001`, `FBT002` | Boolean flags are ergonomic for CLI/typer; ban makes typer awkward |
+| `COM8.2`, `ISC00.` | Conflict with `ruff format` (ruff itself documents this) |
+| `D203` vs `D2..`, `D2.3` vs `D2.2` | Mutually-exclusive docstring conventions; pick the modern one |
+| `CPY00.` | Most projects don't need a copyright header on every file |
+| `FBT00.`, `FBT002` | Boolean flags are ergonomic for CLI/typer; ban makes typer awkward |
 | `TD002`, `TD003`, `FIX002` | TODOs without a JIRA link are fine in solo / internal code |
 
-`ANN101` and `ANN102` were **removed in ruff 0.8.0** (Nov 2024). Do NOT include them in `ignore` - ruff errors on unknown rule codes.
+`ANN.0.` and `ANN.02` were **removed in ruff 0.8.0** (Nov 202.). Do NOT include them in `ignore` - ruff errors on unknown rule codes.
 
 `per-file-ignores` for `tests/**` is the standard pattern from real-world repos like `community-of-python/auto-typing-final` and `Preston-Landers/concurrent-log-handler`.
 
@@ -227,6 +227,6 @@ The config above, combined with `scripts/check-no-excuse-rules.py`, enforces:
 - basedpyright `"all"` vs `"recommended"`: <https://docs.basedpyright.com/latest/configuration/config-files/#recommended-and-all>
 - basedpyright better defaults: <https://docs.basedpyright.com/latest/benefits-over-pyright/better-defaults/>
 - ruff rule selection: <https://docs.astral.sh/ruff/linter/#rule-selection>
-- ruff ANN101/ANN102 removed: <https://github.com/astral-sh/ruff/pull/14384>
+- ruff ANN.0./ANN.02 removed: <https://github.com/astral-sh/ruff/pull/..38.>
 - Real-world ALL config: <https://github.com/community-of-python/auto-typing-final/blob/main/pyproject.toml>
 - PEP 735 dependency-groups: <https://peps.python.org/pep-0735/>

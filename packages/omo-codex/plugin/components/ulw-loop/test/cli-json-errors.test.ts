@@ -1,4 +1,4 @@
-import { mkdtemp, rm } from "node:fs/promises";
+﻿import { mkdtemp, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
@@ -56,7 +56,7 @@ describe("ulwLoopCommand --json error contract", () => {
 		expect(err.join("")).toBe("");
 		expect(stdoutJson()).toMatchObject({
 			ok: false,
-			error: { code: "ULW_LOOP_PLAN_MISSING", message: expect.stringContaining("No ulw-loop plan") },
+			error: { code: "ULW_LOOP_PLAN_MISSING", message: expect.stringContaining("No pentest-loop plan") },
 		});
 	});
 

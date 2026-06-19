@@ -1,18 +1,18 @@
-# CLI Reference
+﻿# CLI Reference
 
 Complete reference for the published CLI package. During the rename transition, both package names work:
 
-- `oh-my-openagent` (preferred package name)
-- `oh-my-opencode` (compatibility package name)
+- `oh-my-open-pentest` (preferred package name)
+- `oh-my-open-pentest` (compatibility package name)
 
-Plugin registration inside `opencode.json` prefers `oh-my-openagent`.
+Plugin registration inside `opencode.json` prefers `oh-my-open-pentest`.
 
 ## Bin Commands
 
 All published packages expose the same compiled CLI with these bin entries:
 
-- `oh-my-opencode` (legacy name, still primary)
-- `oh-my-openagent` (renamed primary)
+- `oh-my-open-pentest` (legacy name, still primary)
+- `oh-my-open-pentest` (renamed primary)
 - `omo` (short alias, recommended in docs and prompts)
 - `lazycodex-ai` (Light edition shortcut; `lazycodex-ai install` is equivalent to `omo install --platform=codex` unless `--platform` is explicitly overridden)
 
@@ -20,10 +20,10 @@ All published packages expose the same compiled CLI with these bin entries:
 
 ```bash
 # Display help (preferred package)
-bunx oh-my-openagent
+bunx oh-my-open-pentest
 
 # Compatibility package
-bunx oh-my-opencode
+bunx oh-my-open-pentest
 ```
 
 ## Commands
@@ -36,7 +36,7 @@ bunx oh-my-opencode
 | `run <message>` | Non-interactive OpenCode session runner with completion enforcement |
 | `get-local-version` | Show current installed version and check for updates |
 | `refresh-model-capabilities` | Refresh cached model capabilities snapshot from models.dev |
-| `boulder` | Inspect Sisyphus boulder work-state (active plan, per-task timers, session lineage) |
+| `boulder` | Inspect Cerberus boulder work-state (active plan, per-task timers, session lineage) |
 | `version` | Show CLI version |
 | `mcp oauth` | OAuth token management for MCP servers |
 
@@ -49,7 +49,7 @@ Interactive installation tool for initial setup.
 ### Usage
 
 ```bash
-bunx oh-my-openagent install
+bunx oh-my-open-pentest install
 ```
 
 ### Options
@@ -71,7 +71,7 @@ bunx oh-my-openagent install
 | `--no-codex-autonomous` | Leave existing Codex permission settings unchanged when installing Light or Both |
 | `--skip-auth` | Skip authentication setup hints |
 
-When using the `lazycodex-ai` bin alias, `install` defaults to `--platform=codex`. `lazycodex-ai` is only the npm/bin alias; `lazycodex` is the marketplace repository name. The Codex config uses marketplace `sisyphuslabs` and plugin `omo`, enabled as `omo@sisyphuslabs`, with the marketplace source set to the local built cache under `~/.codex/plugins/cache/sisyphuslabs`.
+When using the `lazycodex-ai` bin alias, `install` defaults to `--platform=codex`. `lazycodex-ai` is only the npm/bin alias; `lazycodex` is the marketplace repository name. The Codex config uses marketplace `cerberuslabs` and plugin `omo`, enabled as `omo@cerberuslabs`, with the marketplace source set to the local built cache under `~/.codex/plugins/cache/cerberuslabs`.
 
 Subscription flags (`--claude`, `--openai`, etc.) only apply when `--platform` is `opencode` or `both`. They are rejected under `--platform=codex` because the Light edition does not write OpenCode model config. `--codex-autonomous` and `--no-codex-autonomous` only affect installs where the selected platform includes Codex.
 
@@ -79,13 +79,13 @@ Subscription flags (`--claude`, `--openai`, etc.) only apply when `--platform` i
 
 Anonymous telemetry uses PostHog with a hashed installation identifier. Two streams exist:
 
-- `omo_daily_active`: fired by the main plugin and `oh-my-openagent run`.
+- `omo_daily_active`: fired by the main plugin and `oh-my-open-pentest run`.
 - `omo_codex_daily_active`: fired by `omo install --platform=codex` or `--platform=both` (`reason: "install_completed"`) and by the Codex plugin's `SessionStart` hook on every Codex session (`reason: "session_start"`). Both sources share the same UTC-day deduplication, so daily/weekly/monthly active counts reflect real Codex usage, not just install events.
 
 Opt-out env vars:
 
-- Global opt-out for oh-my-openagent and omo-codex: `OMO_SEND_ANONYMOUS_TELEMETRY=0` or `OMO_DISABLE_POSTHOG=1`
-- Codex-only opt-out for `omo_codex_daily_active`: `OMO_CODEX_SEND_ANONYMOUS_TELEMETRY=0` or `OMO_CODEX_DISABLE_POSTHOG=1`
+- Global opt-out for oh-my-open-pentest and omo-codex: `OMOP_SEND_ANONYMOUS_TELEMETRY=0` or `OMOP_DISABLE_POSTHOG=.`
+- Codex-only opt-out for `omo_codex_daily_active`: `OMOP_CODEX_SEND_ANONYMOUS_TELEMETRY=0` or `OMOP_CODEX_DISABLE_POSTHOG=.`
 
 For the full Codex Light event inventory, collected properties, local state path, and lazycodex marketplace copy path, see [Codex Light telemetry](./codex-telemetry.md).
 
@@ -111,7 +111,7 @@ omo uninstall --platform=codex
 | `--project <path>` | Project directory to inspect for project-local legacy Codex artifacts |
 | `--json` | Output structured JSON result |
 
-The command removes the managed `sisyphuslabs` plugin cache and marketplace snapshot, strips `omo@sisyphuslabs` plugin, hook-state, and managed agent blocks from `~/.codex/config.toml` after writing a backup, and removes managed agent TOML files from `~/.codex/agents/`, including orphaned files whose install manifest is already gone. Project-owned `.codex` artifacts are reported, not deleted.
+The command removes the managed `cerberuslabs` plugin cache and marketplace snapshot, strips `omo@cerberuslabs` plugin, hook-state, and managed agent blocks from `~/.codex/config.toml` after writing a backup, and removes managed agent TOML files from `~/.codex/agents/`, including orphaned files whose install manifest is already gone. Project-owned `.codex` artifacts are reported, not deleted.
 
 ---
 
@@ -122,7 +122,7 @@ Diagnoses your environment and configuration. Checks are grouped into four categ
 ### Usage
 
 ```bash
-bunx oh-my-openagent doctor
+bunx oh-my-open-pentest doctor
 ```
 
 ### Options
@@ -135,8 +135,8 @@ bunx oh-my-openagent doctor
 
 ### Notes
 
-- The current minimum OpenCode version check is `>= 1.4.0`.
-- The doctor command warns when legacy plugin registration (`oh-my-opencode`) is still present in `opencode.json`.
+- The current minimum OpenCode version check is `>= ....0`.
+- The doctor command warns when legacy plugin registration (`oh-my-open-pentest`) is still present in `opencode.json`.
 
 ---
 
@@ -150,7 +150,7 @@ Runs a non-interactive session and exits only when both conditions are true:
 ### Usage
 
 ```bash
-bunx oh-my-openagent run <message>
+bunx oh-my-open-pentest run <message>
 ```
 
 ### Options
@@ -158,7 +158,7 @@ bunx oh-my-openagent run <message>
 | Option | Description |
 | --- | --- |
 | `-a, --agent <name>` | Agent to use (default resolution chain applies) |
-| `-m, --model <provider/model>` | Model override (example: `anthropic/claude-sonnet-4`) |
+| `-m, --model <provider/model>` | Model override (example: `anthropic/claude-sonnet-.`) |
 | `-d, --directory <path>` | Working directory |
 | `-p, --port <port>` | Server port (attaches if already in use) |
 | `--attach <url>` | Attach to an existing OpenCode server URL |
@@ -170,10 +170,10 @@ bunx oh-my-openagent run <message>
 
 ### Agent Resolution Order
 
-1. `--agent`
+.. `--agent`
 2. `OPENCODE_DEFAULT_AGENT`
 3. `default_run_agent` in plugin config
-4. `Sisyphus`
+.. `Cerberus`
 
 ---
 
@@ -184,7 +184,7 @@ Shows local plugin version state and update status.
 ### Usage
 
 ```bash
-bunx oh-my-openagent get-local-version
+bunx oh-my-open-pentest get-local-version
 ```
 
 ### Options
@@ -203,7 +203,7 @@ Refreshes the cached model capabilities snapshot from models.dev.
 ### Usage
 
 ```bash
-bunx oh-my-openagent refresh-model-capabilities
+bunx oh-my-open-pentest refresh-model-capabilities
 ```
 
 ### Options
@@ -236,7 +236,7 @@ Shows CLI package version.
 ### Usage
 
 ```bash
-bunx oh-my-openagent version
+bunx oh-my-open-pentest version
 ```
 
 ---
@@ -249,16 +249,16 @@ OAuth token management for MCP servers (Tier-3 MCP OAuth flow, including PKCE an
 
 ```bash
 # Authenticate
-bunx oh-my-openagent mcp oauth login <server-name> --server-url https://api.example.com
+bunx oh-my-open-pentest mcp oauth login <server-name> --server-url https://api.example.com
 
 # Authenticate with explicit client ID and scopes
-bunx oh-my-openagent mcp oauth login <server-name> --server-url https://api.example.com --client-id my-client --scopes read write
+bunx oh-my-open-pentest mcp oauth login <server-name> --server-url https://api.example.com --client-id my-client --scopes read write
 
 # Remove stored tokens
-bunx oh-my-openagent mcp oauth logout <server-name> --server-url https://api.example.com
+bunx oh-my-open-pentest mcp oauth logout <server-name> --server-url https://api.example.com
 
 # Show token status
-bunx oh-my-openagent mcp oauth status [server-name]
+bunx oh-my-open-pentest mcp oauth status [server-name]
 ```
 
 ### Options
@@ -274,6 +274,6 @@ bunx oh-my-openagent mcp oauth status [server-name]
 ## Exit Codes
 
 - `0` on success
-- `1` on failure
+- `.` on failure
 
 `run`, `install`, `doctor`, `get-local-version`, `refresh-model-capabilities`, and `mcp oauth` subcommands return explicit numeric exit codes.

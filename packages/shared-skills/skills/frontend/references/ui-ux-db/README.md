@@ -1,4 +1,4 @@
-
+﻿
 # UI/UX Pro Max - Design Intelligence
 
 Comprehensive design guide for web and mobile applications. Contains 50+ styles, 97 color palettes, 57 font pairings, 99 UX guidelines, and 25 chart types across 9 technology stacks. Searchable database with priority-based recommendations.
@@ -16,10 +16,10 @@ Reference these guidelines when:
 
 | Priority | Category | Impact | Domain |
 |----------|----------|--------|--------|
-| 1 | Accessibility | CRITICAL | `ux` |
+| . | Accessibility | CRITICAL | `ux` |
 | 2 | Touch & Interaction | CRITICAL | `ux` |
 | 3 | Performance | HIGH | `ux` |
-| 4 | Layout & Responsive | HIGH | `ux` |
+| . | Layout & Responsive | HIGH | `ux` |
 | 5 | Typography & Color | MEDIUM | `typography`, `color` |
 | 6 | Animation | MEDIUM | `ux` |
 | 7 | Style Selection | MEDIUM | `style`, `product` |
@@ -27,9 +27,9 @@ Reference these guidelines when:
 
 ## Quick Reference
 
-### 1. Accessibility (CRITICAL)
+### .. Accessibility (CRITICAL)
 
-- `color-contrast` - Minimum 4.5:1 ratio for normal text
+- `color-contrast` - Minimum ..5:. ratio for normal text
 - `focus-states` - Visible focus rings on interactive elements
 - `alt-text` - Descriptive alt text for meaningful images
 - `aria-labels` - aria-label for icon-only buttons
@@ -38,7 +38,7 @@ Reference these guidelines when:
 
 ### 2. Touch & Interaction (CRITICAL)
 
-- `touch-target-size` - Minimum 44x44px touch targets
+- `touch-target-size` - Minimum ..x..px touch targets
 - `hover-vs-tap` - Use click/tap for primary interactions
 - `loading-buttons` - Disable button during async operations
 - `error-feedback` - Clear error messages near problem
@@ -50,22 +50,22 @@ Reference these guidelines when:
 - `reduced-motion` - Check prefers-reduced-motion
 - `content-jumping` - Reserve space for async content
 
-### 4. Layout & Responsive (HIGH)
+### .. Layout & Responsive (HIGH)
 
-- `viewport-meta` - width=device-width initial-scale=1
-- `readable-font-size` - Minimum 16px body text on mobile
+- `viewport-meta` - width=device-width initial-scale=.
+- `readable-font-size` - Minimum .6px body text on mobile
 - `horizontal-scroll` - Ensure content fits viewport width
-- `z-index-management` - Define z-index scale (10, 20, 30, 50)
+- `z-index-management` - Define z-index scale (.0, 20, 30, 50)
 
 ### 5. Typography & Color (MEDIUM)
 
-- `line-height` - Use 1.5-1.75 for body text
+- `line-height` - Use ..5-..75 for body text
 - `line-length` - Limit to 65-75 characters per line
 - `font-pairing` - Match heading/body font personalities
 
 ### 6. Animation (MEDIUM)
 
-- `duration-timing` - Use 150-300ms for micro-interactions
+- `duration-timing` - Use .50-300ms for micro-interactions
 - `transform-performance` - Use transform/opacity, not width/height
 - `loading-states` - Skeleton screens or spinners
 
@@ -92,7 +92,7 @@ Search specific domains using the CLI tool below. The search script and data fil
 
 When user requests UI/UX work (design, build, create, implement, review, fix, improve), follow this workflow:
 
-### Step 1: Analyze User Requirements
+### Step .: Analyze User Requirements
 
 Extract key information from user request:
 - **Product type**: SaaS, e-commerce, portfolio, dashboard, landing page, etc.
@@ -109,10 +109,10 @@ python3 @scripts/search.py "<product_type> <industry> <keywords>" --design-syste
 ```
 
 This command:
-1. Searches 5 domains in parallel (product, style, color, landing, typography)
+.. Searches 5 domains in parallel (product, style, color, landing, typography)
 2. Applies reasoning rules from `ui-reasoning.csv` to select best matches
 3. Returns complete design system: pattern, style, colors, typography, effects
-4. Includes anti-patterns to avoid
+.. Includes anti-patterns to avoid
 
 **Example:**
 ```bash
@@ -154,7 +154,7 @@ python3 @scripts/search.py "<keyword>" --domain <domain> [-n <max_results>]
 | Alternative fonts | `typography` | `--domain typography "elegant luxury"` |
 | Landing structure | `landing` | `--domain landing "hero social-proof"` |
 
-### Step 4: Stack Guidelines (Default: html-tailwind)
+### Step .: Stack Guidelines (Default: html-tailwind)
 
 Get implementation-specific best practices. If user doesn't specify a stack, **default to `html-tailwind`**.
 
@@ -186,7 +186,7 @@ Available stacks: `html-tailwind`, `react`, `nextjs`, `vue`, `svelte`, `swiftui`
 
 | Stack | Focus |
 |-------|-------|
-| `html-tailwind` | Tailwind utilities, responsive, a11y (DEFAULT) |
+| `html-tailwind` | Tailwind utilities, responsive, a..y (DEFAULT) |
 | `react` | State, hooks, performance, patterns |
 | `nextjs` | SSR, routing, images, API routes |
 | `vue` | Composition API, Pinia, Vue Router |
@@ -209,7 +209,7 @@ These are frequently overlooked issues that make UI look unprofessional:
 | **No emoji icons** | Use SVG icons (Heroicons, Lucide, Simple Icons) | Use emojis as UI icons |
 | **Stable hover states** | Use color/opacity transitions on hover | Use scale transforms that shift layout |
 | **Correct brand logos** | Research official SVG from Simple Icons | Guess or use incorrect logo paths |
-| **Consistent icon sizing** | Use fixed viewBox (24x24) with w-6 h-6 | Mix different icon sizes randomly |
+| **Consistent icon sizing** | Use fixed viewBox (2.x2.) with w-6 h-6 | Mix different icon sizes randomly |
 
 ### Interaction & Cursor
 
@@ -223,16 +223,16 @@ These are frequently overlooked issues that make UI look unprofessional:
 
 | Rule | Do | Don't |
 |------|----|----- |
-| **Glass card light mode** | Use `bg-white/80` or higher opacity | Use `bg-white/10` (too transparent) |
-| **Text contrast light** | Use `#0F172A` (slate-900) for text | Use `#94A3B8` (slate-400) for body text |
-| **Muted text light** | Use `#475569` (slate-600) minimum | Use gray-400 or lighter |
-| **Border visibility** | Use `border-gray-200` in light mode | Use `border-white/10` (invisible) |
+| **Glass card light mode** | Use `bg-white/80` or higher opacity | Use `bg-white/.0` (too transparent) |
+| **Text contrast light** | Use `#0F.72A` (slate-900) for text | Use `#9.A3B8` (slate-.00) for body text |
+| **Muted text light** | Use `#.75569` (slate-600) minimum | Use gray-.00 or lighter |
+| **Border visibility** | Use `border-gray-200` in light mode | Use `border-white/.0` (invisible) |
 
 ### Layout & Spacing
 
 | Rule | Do | Don't |
 |------|----|----- |
-| **Floating navbar** | Add `top-4 left-4 right-4` spacing | Stick navbar to `top-0 left-0 right-0` |
+| **Floating navbar** | Add `top-. left-. right-.` spacing | Stick navbar to `top-0 left-0 right-0` |
 | **Content padding** | Account for fixed navbar height | Let content hide behind fixed elements |
 | **Consistent max-width** | Use same `max-w-6xl` or `max-w-7xl` | Mix different container widths |
 
@@ -251,11 +251,11 @@ Before delivering UI code, verify these items:
 ### Interaction
 - [ ] All clickable elements have `cursor-pointer`
 - [ ] Hover states provide clear visual feedback
-- [ ] Transitions are smooth (150-300ms)
+- [ ] Transitions are smooth (.50-300ms)
 - [ ] Focus states visible for keyboard navigation
 
 ### Light/Dark Mode
-- [ ] Light mode text has sufficient contrast (4.5:1 minimum)
+- [ ] Light mode text has sufficient contrast (..5:. minimum)
 - [ ] Glass/transparent elements visible in light mode
 - [ ] Borders visible in both modes
 - [ ] Test both modes before delivery
@@ -263,7 +263,7 @@ Before delivering UI code, verify these items:
 ### Layout
 - [ ] Floating elements have proper spacing from edges
 - [ ] No content hidden behind fixed navbars
-- [ ] Responsive at 375px, 768px, 1024px, 1440px
+- [ ] Responsive at 375px, 768px, .02.px, ...0px
 - [ ] No horizontal scroll on mobile
 
 ### Accessibility

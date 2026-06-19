@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { describe, expect, test } from "bun:test"
 import {
@@ -578,12 +578,12 @@ describe("HookNameSchema", () => {
   })
 })
 
-describe("Sisyphus-Junior agent override", () => {
-  test("schema accepts agents['Sisyphus-Junior'] and retains the key after parsing", () => {
+describe("Cerberus-Junior agent override", () => {
+  test("schema accepts agents['Cerberus-Junior'] and retains the key after parsing", () => {
     // given
     const config = {
       agents: {
-        "sisyphus-junior": {
+        "cerberus-junior": {
           model: "openai/gpt-5.4",
           temperature: 0.2,
         },
@@ -596,18 +596,18 @@ describe("Sisyphus-Junior agent override", () => {
     // then
     expect(result.success).toBe(true)
     if (result.success) {
-      expect(result.data.agents?.["sisyphus-junior"]).toBeDefined()
-      expect(result.data.agents?.["sisyphus-junior"]?.model).toBe("openai/gpt-5.4")
-      expect(result.data.agents?.["sisyphus-junior"]?.temperature).toBe(0.2)
+      expect(result.data.agents?.["cerberus-junior"]).toBeDefined()
+      expect(result.data.agents?.["cerberus-junior"]?.model).toBe("openai/gpt-5.4")
+      expect(result.data.agents?.["cerberus-junior"]?.temperature).toBe(0.2)
     }
   })
 
-  test("schema accepts sisyphus-junior with prompt_append", () => {
+  test("schema accepts cerberus-junior with prompt_append", () => {
     // given
     const config = {
       agents: {
-        "sisyphus-junior": {
-          prompt_append: "Additional instructions for sisyphus-junior",
+        "cerberus-junior": {
+          prompt_append: "Additional instructions for cerberus-junior",
         },
       },
     }
@@ -618,17 +618,17 @@ describe("Sisyphus-Junior agent override", () => {
     // then
     expect(result.success).toBe(true)
     if (result.success) {
-      expect(result.data.agents?.["sisyphus-junior"]?.prompt_append).toBe(
-        "Additional instructions for sisyphus-junior"
+      expect(result.data.agents?.["cerberus-junior"]?.prompt_append).toBe(
+        "Additional instructions for cerberus-junior"
       )
     }
   })
 
-  test("schema accepts sisyphus-junior with tools override", () => {
+  test("schema accepts cerberus-junior with tools override", () => {
     // given
     const config = {
       agents: {
-        "sisyphus-junior": {
+        "cerberus-junior": {
           tools: {
             read: true,
             write: false,
@@ -643,24 +643,24 @@ describe("Sisyphus-Junior agent override", () => {
     // then
     expect(result.success).toBe(true)
     if (result.success) {
-      expect(result.data.agents?.["sisyphus-junior"]?.tools).toEqual({
+      expect(result.data.agents?.["cerberus-junior"]?.tools).toEqual({
         read: true,
         write: false,
       })
     }
   })
 
-  test("schema accepts lowercase agent names (sisyphus, atlas, prometheus)", () => {
+  test("schema accepts lowercase agent names (cerberus, argus, talos)", () => {
     // given
     const config = {
       agents: {
-        sisyphus: {
+        cerberus: {
           temperature: 0.1,
         },
-        atlas: {
+        argus: {
           temperature: 0.2,
         },
-        prometheus: {
+        talos: {
           temperature: 0.3,
         },
       },
@@ -672,20 +672,20 @@ describe("Sisyphus-Junior agent override", () => {
     // then
     expect(result.success).toBe(true)
     if (result.success) {
-      expect(result.data.agents?.sisyphus?.temperature).toBe(0.1)
-      expect(result.data.agents?.atlas?.temperature).toBe(0.2)
-      expect(result.data.agents?.prometheus?.temperature).toBe(0.3)
+      expect(result.data.agents?.cerberus?.temperature).toBe(0.1)
+      expect(result.data.agents?.argus?.temperature).toBe(0.2)
+      expect(result.data.agents?.talos?.temperature).toBe(0.3)
     }
   })
 
-  test("schema accepts lowercase metis and momus agent names", () => {
+  test("schema accepts lowercase vanguard and sentinel agent names", () => {
     // given
     const config = {
       agents: {
-        metis: {
+        vanguard: {
           category: "ultrabrain",
         },
-        momus: {
+        sentinel: {
           category: "quick",
         },
       },
@@ -697,8 +697,8 @@ describe("Sisyphus-Junior agent override", () => {
     // then
     expect(result.success).toBe(true)
     if (result.success) {
-      expect(result.data.agents?.metis?.category).toBe("ultrabrain")
-      expect(result.data.agents?.momus?.category).toBe("quick")
+      expect(result.data.agents?.vanguard?.category).toBe("ultrabrain")
+      expect(result.data.agents?.sentinel?.category).toBe("quick")
     }
   })
 })

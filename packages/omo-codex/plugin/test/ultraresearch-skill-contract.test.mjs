@@ -1,9 +1,9 @@
-import assert from "node:assert/strict";
+﻿import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
-import { sharedSkillsRootPath } from "@oh-my-opencode/shared-skills";
+import { sharedSkillsRootPath } from "@oh-my-open-pentest/shared-skills";
 
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
 
@@ -104,9 +104,9 @@ test("#given ultraresearch expansion loop #when stop rules are inspected #then c
 	}
 });
 
-test("#given ultraresearch under ultrawork #when coexistence is inspected #then marker and done-definition conflicts are resolved", async () => {
+test("#given ultraresearch under fullscan #when coexistence is inspected #then marker and done-definition conflicts are resolved", async () => {
 	for (const copy of await readUltraresearchCopies()) {
-		assert.match(copy.content, /ultrawork|\bulw\b/i, `${copy.label}: body must address ultrawork coexistence`);
+		assert.match(copy.content, /fullscan|\bulw\b/i, `${copy.label}: body must address fullscan coexistence`);
 		assert.match(
 			copy.content,
 			/first(?:-| )line/i,

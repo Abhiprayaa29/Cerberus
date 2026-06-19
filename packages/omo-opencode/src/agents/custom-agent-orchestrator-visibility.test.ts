@@ -1,4 +1,4 @@
-import { describe, expect, spyOn, test } from "bun:test"
+﻿import { describe, expect, spyOn, test } from "bun:test"
 import { createBuiltinAgents } from "./builtin-agents"
 import * as shared from "../shared"
 
@@ -30,9 +30,9 @@ describe("createBuiltinAgents custom agent visibility", () => {
 			)
 
 			//#then
-			expect(agents.sisyphus.prompt).not.toContain("backend-engineer")
-			expect(agents.hephaestus.prompt).not.toContain("backend-engineer")
-			expect(agents.atlas.prompt).not.toContain("backend-engineer")
+			expect(agents.cerberus.prompt).not.toContain("backend-engineer")
+			expect(agents.scylla.prompt).not.toContain("backend-engineer")
+			expect(agents.argus.prompt).not.toContain("backend-engineer")
 		} finally {
 			fetchSpy.mockRestore()
 		}

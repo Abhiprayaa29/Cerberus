@@ -1,7 +1,7 @@
-import * as path from "node:path"
+﻿import * as path from "node:path"
 import * as os from "node:os"
 import { accessSync, constants, mkdirSync } from "node:fs"
-import { resolveXdgDataDir } from "@oh-my-opencode/utils"
+import { resolveXdgDataDir } from "@oh-my-open-pentest/utils"
 
 import { CACHE_DIR_NAME } from "./plugin-identity"
 
@@ -52,8 +52,8 @@ export function getCacheDir(): string {
 }
 
 /**
- * Returns the oh-my-opencode cache directory.
- * All platforms: ~/.cache/oh-my-opencode
+ * Returns the oh-my-open-pentest cache directory.
+ * All platforms: ~/.cache/oh-my-open-pentest
  */
 export function getOmoOpenCodeCacheDir(): string {
   return path.join(getCacheDir(), CACHE_DIR_NAME)

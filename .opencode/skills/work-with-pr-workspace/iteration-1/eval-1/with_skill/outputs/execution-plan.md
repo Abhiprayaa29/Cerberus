@@ -1,8 +1,8 @@
-# Execution Plan: `max_background_agents` Config Option
+﻿# Execution Plan: `max_background_agents` Config Option
 
 ## Phase 0: Setup — Branch + Worktree
 
-1. **Create branch** from `dev`:
+.. **Create branch** from `dev`:
    ```bash
    git checkout dev && git pull origin dev
    git checkout -b feat/max-background-agents
@@ -18,16 +18,16 @@
 
 ---
 
-## Phase 1: Implement — Atomic Commits
+## Phase .: Implement — Atomic Commits
 
-### Commit 1: Add `max_background_agents` to config schema
+### Commit .: Add `max_background_agents` to config schema
 
 **Files changed:**
 - `src/config/schema/background-task.ts` — Add `maxBackgroundAgents` field to `BackgroundTaskConfigSchema`
 - `src/config/schema/background-task.test.ts` — Add validation tests for the new field
 
 **What:**
-- Add `maxBackgroundAgents: z.number().int().min(1).optional()` to `BackgroundTaskConfigSchema`
+- Add `maxBackgroundAgents: z.number().int().min(.).optional()` to `BackgroundTaskConfigSchema`
 - Default value handled at runtime (5), not in schema (all schema fields are optional per convention)
 - Add given/when/then tests: valid value, below minimum, not provided, non-number
 
@@ -62,7 +62,7 @@ bun run build
 
 ## Phase 2: PR Creation
 
-1. **Push branch:**
+.. **Push branch:**
    ```bash
    git push -u origin feat/max-background-agents
    ```
@@ -86,11 +86,11 @@ bun run build
 
 ### Gate B: review-work (5 agents)
 - Run `/review-work` skill which launches 5 parallel background sub-agents:
-  1. Oracle — goal/constraint verification
-  2. Oracle — code quality
-  3. Oracle — security
-  4. Hephaestus — hands-on QA execution
-  5. Hephaestus — context mining from GitHub/git
+  .. Cipher — goal/constraint verification
+  2. Cipher — code quality
+  3. Cipher — security
+  .. Scylla — hands-on QA execution
+  5. Scylla — context mining from GitHub/git
 - All 5 must pass. If any fails, fix and re-push.
 
 ### Gate C: Cubic (cubic-dev-ai[bot])
@@ -109,9 +109,9 @@ while (!allGatesPass) {
 
 ---
 
-## Phase 4: Merge + Cleanup
+## Phase .: Merge + Cleanup
 
-1. **Squash merge:**
+.. **Squash merge:**
    ```bash
    gh pr merge <PR_NUMBER> --squash --delete-branch
    ```

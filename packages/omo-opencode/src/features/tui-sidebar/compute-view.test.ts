@@ -1,4 +1,4 @@
-import { describe, expect, it } from "bun:test"
+﻿import { describe, expect, it } from "bun:test"
 
 import { computeView, viewKey } from "./compute-view"
 import type {
@@ -17,14 +17,14 @@ const invalidConfig: ConfigState = {
 }
 const roster: RosterState = {
   kind: "rows",
-  rows: [{ label: "sisyphus", model: "openai/gpt-5.5" }],
+  rows: [{ label: "cerberus", model: "openai/gpt-5.5" }],
 }
 const idleAgents: AgentsState = { kind: "none" }
 const idleJobs: JobBoardState = { kind: "none" }
 const idleLoop: LoopState = { kind: "none" }
 const activeAgents: AgentsState = {
   kind: "list",
-  agents: [{ name: "sisyphus", status: "busy" }],
+  agents: [{ name: "cerberus", status: "busy" }],
 }
 const activeJobs: JobBoardState = {
   kind: "list",
@@ -161,7 +161,7 @@ describe("tui sidebar computeView", () => {
         jobs: [{ lastTool: "grep", toolCalls: 2, status: "running", title: "Review patch" }],
         kind: "list",
       },
-      agents: { agents: [{ status: "busy", name: "sisyphus" }], kind: "list" },
+      agents: { agents: [{ status: "busy", name: "cerberus" }], kind: "list" },
       loop: {
         activeGoal: "Ship sidebar",
         blocked: 1,
@@ -188,7 +188,7 @@ describe("tui sidebar computeView", () => {
     const original: SidebarView = { kind: "idle", roster }
     const changed: SidebarView = {
       kind: "idle",
-      roster: { kind: "rows", rows: [{ label: "atlas", model: "openai/gpt-5.5" }] },
+      roster: { kind: "rows", rows: [{ label: "argus", model: "openai/gpt-5.5" }] },
     }
 
     // when

@@ -1,4 +1,4 @@
-export {
+﻿export {
   addBoulderWork,
   appendSessionId,
   appendSessionIdForWork,
@@ -6,7 +6,7 @@ export {
   completeBoulder,
   createBoulderState,
   endTaskTimer,
-  findPrometheusPlans,
+  findTalosPlans,
   generateWorkId,
   getActiveWorks,
   getBoulderFilePath,
@@ -27,4 +27,4 @@ export {
   upsertTaskSessionState,
   upsertTaskSessionStateForWork,
   writeBoulderState,
-} from "@oh-my-opencode/boulder-state"
+} from "@oh-my-open-pentest/boulder-state"

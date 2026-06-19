@@ -1,10 +1,10 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import type { AgentConfig } from "@opencode-ai/sdk"
 import { afterEach, beforeEach, describe, expect, spyOn, test } from "bun:test"
 import * as agents from "../agents"
 import * as shared from "../shared"
-import * as sisyphusJunior from "../agents/sisyphus-junior"
+import * as cerberusJunior from "../agents/cerberus-junior"
 import type { OhMyOpenCodeConfig } from "../config"
 import * as agentLoader from "../features/claude-code-agent-loader"
 import * as skillLoader from "../features/opencode-skill-loader"
@@ -18,9 +18,9 @@ import {
 import { applyAgentConfig } from "./agent-config-handler"
 import type { PluginComponents } from "./plugin-components-loader"
 
-const BUILTIN_SISYPHUS_DISPLAY_NAME = getAgentListDisplayName("sisyphus")
-const BUILTIN_SISYPHUS_JUNIOR_DISPLAY_NAME = getAgentListDisplayName("sisyphus-junior")
-const BUILTIN_MULTIMODAL_LOOKER_DISPLAY_NAME = getAgentListDisplayName("multimodal-looker")
+const BUILTIN_CERBERUS_DISPLAY_NAME = getAgentListDisplayName("cerberus")
+const BUILTIN_CERBERUS_JUNIOR_DISPLAY_NAME = getAgentListDisplayName("cerberus-junior")
+const BUILTIN_LENS_DISPLAY_NAME = getAgentListDisplayName("lens")
 
 function createPluginComponents(): PluginComponents {
   return {
@@ -48,7 +48,7 @@ function createPluginConfig(): OhMyOpenCodeConfig {
       include_co_authored_by: true,
       git_env_prefix: "GIT_MASTER=1",
     },
-    sisyphus_agent: {
+    cerberus_agent: {
       planner_enabled: false,
     },
   }
@@ -56,7 +56,7 @@ function createPluginConfig(): OhMyOpenCodeConfig {
 
 describe("applyAgentConfig builtin override protection", () => {
   let createBuiltinAgentsSpy: ReturnType<typeof spyOn>
-  let createSisyphusJuniorAgentSpy: ReturnType<typeof spyOn>
+  let createCerberusJuniorAgentSpy: ReturnType<typeof spyOn>
   let discoverConfigSourceSkillsSpy: ReturnType<typeof spyOn>
   let discoverUserClaudeSkillsSpy: ReturnType<typeof spyOn>
   let discoverProjectClaudeSkillsSpy: ReturnType<typeof spyOn>
@@ -73,34 +73,34 @@ describe("applyAgentConfig builtin override protection", () => {
   let migrateAgentConfigSpy: ReturnType<typeof spyOn>
   let logSpy: ReturnType<typeof spyOn>
 
-  const builtinSisyphusConfig: AgentConfig = {
-    name: "Builtin Sisyphus",
+  const builtinCerberusConfig: AgentConfig = {
+    name: "Builtin Cerberus",
     prompt: "builtin prompt",
     mode: "primary",
     order: 1,
   }
 
-  const builtinOracleConfig: AgentConfig = {
-    name: "oracle",
-    prompt: "oracle prompt",
+  const builtinCipherConfig: AgentConfig = {
+    name: "cipher",
+    prompt: "cipher prompt",
     mode: "subagent",
   }
 
   const builtinMultimodalLookerConfig: AgentConfig = {
-    name: "multimodal-looker",
+    name: "lens",
     prompt: "multimodal prompt",
     mode: "subagent",
   }
 
-  const builtinAtlasConfig: AgentConfig = {
-    name: "atlas",
-    prompt: "atlas prompt",
+  const builtinArgusConfig: AgentConfig = {
+    name: "argus",
+    prompt: "argus prompt",
     mode: "all",
     model: "openai/gpt-5.4",
   }
 
-  const sisyphusJuniorConfig: AgentConfig = {
-    name: "Sisyphus-Junior",
+  const cerberusJuniorConfig: AgentConfig = {
+    name: "Cerberus-Junior",
     prompt: "junior prompt",
     mode: "all",
   }
@@ -109,16 +109,16 @@ describe("applyAgentConfig builtin override protection", () => {
     resetSessionStateForTesting()
 
     createBuiltinAgentsSpy = spyOn(agents, "createBuiltinAgents").mockResolvedValue({
-      sisyphus: builtinSisyphusConfig,
-      oracle: builtinOracleConfig,
-      "multimodal-looker": builtinMultimodalLookerConfig,
-      atlas: builtinAtlasConfig,
+      cerberus: builtinCerberusConfig,
+      cipher: builtinCipherConfig,
+      "lens": builtinMultimodalLookerConfig,
+      argus: builtinArgusConfig,
     })
 
-    createSisyphusJuniorAgentSpy = spyOn(
-      sisyphusJunior,
-      "createSisyphusJuniorAgentWithOverrides",
-    ).mockReturnValue(sisyphusJuniorConfig)
+    createCerberusJuniorAgentSpy = spyOn(
+      cerberusJunior,
+      "createCerberusJuniorAgentWithOverrides",
+    ).mockReturnValue(cerberusJuniorConfig)
 
     discoverConfigSourceSkillsSpy = spyOn(
       skillLoader,
@@ -169,7 +169,7 @@ describe("applyAgentConfig builtin override protection", () => {
     resetSessionStateForTesting()
 
     createBuiltinAgentsSpy.mockRestore()
-    createSisyphusJuniorAgentSpy.mockRestore()
+    createCerberusJuniorAgentSpy.mockRestore()
     discoverConfigSourceSkillsSpy.mockRestore()
     discoverUserClaudeSkillsSpy.mockRestore()
     discoverProjectClaudeSkillsSpy.mockRestore()
@@ -209,7 +209,7 @@ describe("applyAgentConfig builtin override protection", () => {
   test("normalizes display-name default_agent to runtime agent name", async () => {
     // given
     const config = createBaseConfig()
-    config.default_agent = "Sisyphus - Ultraworker"
+    config.default_agent = "Cerberus - Ultraworker"
 
     // when
     await applyAgentConfig({
@@ -220,13 +220,13 @@ describe("applyAgentConfig builtin override protection", () => {
     })
 
     // then
-    expect(config.default_agent).toBe(getAgentDisplayName("sisyphus"))
+    expect(config.default_agent).toBe(getAgentDisplayName("cerberus"))
   })
 
   test("keeps config-key default_agent behavior unchanged", async () => {
     // given
     const config = createBaseConfig()
-    config.default_agent = "sisyphus"
+    config.default_agent = "cerberus"
 
     // when
     await applyAgentConfig({
@@ -237,7 +237,7 @@ describe("applyAgentConfig builtin override protection", () => {
     })
 
     // then
-    expect(config.default_agent).toBe(getAgentDisplayName("sisyphus"))
+    expect(config.default_agent).toBe(getAgentDisplayName("cerberus"))
   })
 
   test("keeps fallback default_agent behavior unchanged", async () => {
@@ -253,7 +253,7 @@ describe("applyAgentConfig builtin override protection", () => {
     })
 
     // then
-    expect(config.default_agent).toBe(getAgentDisplayName("sisyphus"))
+    expect(config.default_agent).toBe(getAgentDisplayName("cerberus"))
   })
 
   test("resolved default_agent contains no zero-width invisible characters", async () => {
@@ -277,8 +277,8 @@ describe("applyAgentConfig builtin override protection", () => {
   test("filters user agents whose key matches the builtin display-name alias", async () => {
     // given
     loadUserAgentsSpy.mockReturnValue({
-      [BUILTIN_SISYPHUS_DISPLAY_NAME]: {
-        name: BUILTIN_SISYPHUS_DISPLAY_NAME,
+      [BUILTIN_CERBERUS_DISPLAY_NAME]: {
+        name: BUILTIN_CERBERUS_DISPLAY_NAME,
         prompt: "user alias prompt",
         mode: "subagent",
       },
@@ -293,9 +293,9 @@ describe("applyAgentConfig builtin override protection", () => {
     })
 
     // then
-    expect(result[BUILTIN_SISYPHUS_DISPLAY_NAME]).toEqual({
-      ...builtinSisyphusConfig,
-      name: getAgentDisplayName("sisyphus"),
+    expect(result[BUILTIN_CERBERUS_DISPLAY_NAME]).toEqual({
+      ...builtinCerberusConfig,
+      name: getAgentDisplayName("cerberus"),
     })
   })
 
@@ -318,9 +318,9 @@ describe("applyAgentConfig builtin override protection", () => {
     })
 
     // then
-    expect(result[BUILTIN_SISYPHUS_DISPLAY_NAME]).toEqual({
-      ...builtinSisyphusConfig,
-      name: getAgentDisplayName("sisyphus"),
+    expect(result[BUILTIN_CERBERUS_DISPLAY_NAME]).toEqual({
+      ...builtinCerberusConfig,
+      name: getAgentDisplayName("cerberus"),
     })
     expect(result.SiSyPhUs).toBeUndefined()
   })
@@ -328,31 +328,31 @@ describe("applyAgentConfig builtin override protection", () => {
   test("filters host config agent display-name aliases before they override resolved builtin models", async () => {
     // given
     createBuiltinAgentsSpy.mockResolvedValue({
-      sisyphus: {
-        name: "sisyphus",
-        prompt: "resolved sisyphus prompt",
+      cerberus: {
+        name: "cerberus",
+        prompt: "resolved cerberus prompt",
         mode: "primary",
         model: "openai/gpt-5.5",
       },
-      explore: {
-        name: "explore",
-        prompt: "resolved explore prompt",
+      scout: {
+        name: "scout",
+        prompt: "resolved scout prompt",
         mode: "subagent",
         model: "minimax-cn-coding-plan/MiniMax-M2.5-highspeed",
       },
-      atlas: builtinAtlasConfig,
+      argus: builtinArgusConfig,
     })
     const config = createBaseConfig()
     config.agent = {
-      [getAgentListDisplayName("sisyphus")]: {
-        name: getAgentListDisplayName("sisyphus"),
-        prompt: "stale sisyphus prompt",
+      [getAgentListDisplayName("cerberus")]: {
+        name: getAgentListDisplayName("cerberus"),
+        prompt: "stale cerberus prompt",
         mode: "primary",
         model: "anthropic/claude-opus-4-7",
       },
-      [getAgentListDisplayName("explore")]: {
-        name: getAgentListDisplayName("explore"),
-        prompt: "stale explore prompt",
+      [getAgentListDisplayName("scout")]: {
+        name: getAgentListDisplayName("scout"),
+        prompt: "stale scout prompt",
         mode: "subagent",
         model: "openai/gpt-5.4",
       },
@@ -361,8 +361,8 @@ describe("applyAgentConfig builtin override protection", () => {
       ...createPluginConfig(),
       team_mode: { enabled: true },
       agents: {
-        sisyphus: { model: "openai/gpt-5.5" },
-        explore: { model: "minimax-cn-coding-plan/MiniMax-M2.5-highspeed" },
+        cerberus: { model: "openai/gpt-5.5" },
+        scout: { model: "minimax-cn-coding-plan/MiniMax-M2.5-highspeed" },
       },
     } as OhMyOpenCodeConfig
 
@@ -375,8 +375,8 @@ describe("applyAgentConfig builtin override protection", () => {
     })
 
     // then
-    expect((result[getAgentListDisplayName("sisyphus")] as AgentConfig).model).toBe("openai/gpt-5.5")
-    expect((result[getAgentListDisplayName("explore")] as AgentConfig).model).toBe(
+    expect((result[getAgentListDisplayName("cerberus")] as AgentConfig).model).toBe("openai/gpt-5.5")
+    expect((result[getAgentListDisplayName("scout")] as AgentConfig).model).toBe(
       "minimax-cn-coding-plan/MiniMax-M2.5-highspeed"
     )
   })
@@ -385,8 +385,8 @@ describe("applyAgentConfig builtin override protection", () => {
     // given
     const pluginComponents = createPluginComponents()
     pluginComponents.agents = {
-      [BUILTIN_SISYPHUS_DISPLAY_NAME]: {
-        name: BUILTIN_SISYPHUS_DISPLAY_NAME,
+      [BUILTIN_CERBERUS_DISPLAY_NAME]: {
+        name: BUILTIN_CERBERUS_DISPLAY_NAME,
         prompt: "plugin alias prompt",
         mode: "subagent",
       },
@@ -401,9 +401,9 @@ describe("applyAgentConfig builtin override protection", () => {
     })
 
     // then
-    expect(result[BUILTIN_SISYPHUS_DISPLAY_NAME]).toEqual({
-      ...builtinSisyphusConfig,
-      name: getAgentDisplayName("sisyphus"),
+    expect(result[BUILTIN_CERBERUS_DISPLAY_NAME]).toEqual({
+      ...builtinCerberusConfig,
+      name: getAgentDisplayName("cerberus"),
     })
   })
 
@@ -428,17 +428,17 @@ describe("applyAgentConfig builtin override protection", () => {
         })
 
         // then
-        expect(result[BUILTIN_MULTIMODAL_LOOKER_DISPLAY_NAME]).toEqual(builtinMultimodalLookerConfig)
+        expect(result[BUILTIN_LENS_DISPLAY_NAME]).toEqual(builtinMultimodalLookerConfig)
         expect(result.multimodal_looker).toBeUndefined()
       })
     })
 
-    describe("#when a user agent uses the underscored sisyphus junior alias", () => {
+    describe("#when a user agent uses the underscored cerberus junior alias", () => {
       test("filters the override", async () => {
         // given
         loadUserAgentsSpy.mockReturnValue({
-          sisyphus_junior: {
-            name: "sisyphus_junior",
+          cerberus_junior: {
+            name: "cerberus_junior",
             prompt: "user junior alias prompt",
             mode: "subagent",
           },
@@ -453,13 +453,13 @@ describe("applyAgentConfig builtin override protection", () => {
         })
 
         // then
-        expect(result[BUILTIN_SISYPHUS_JUNIOR_DISPLAY_NAME]).toEqual(sisyphusJuniorConfig)
-        expect(result.sisyphus_junior).toBeUndefined()
+        expect(result[BUILTIN_CERBERUS_JUNIOR_DISPLAY_NAME]).toEqual(cerberusJuniorConfig)
+        expect(result.cerberus_junior).toBeUndefined()
       })
     })
   })
 
-  test("passes the resolved Atlas model to Sisyphus-Junior as its fallback default", async () => {
+  test("passes the resolved Argus model to Cerberus-Junior as its fallback default", async () => {
     // given
 
     // when
@@ -471,7 +471,7 @@ describe("applyAgentConfig builtin override protection", () => {
     })
 
     // then
-    expect(createSisyphusJuniorAgentSpy).toHaveBeenCalledWith(undefined, "openai/gpt-5.4", false)
+    expect(createCerberusJuniorAgentSpy).toHaveBeenCalledWith(undefined, "openai/gpt-5.4", false)
   })
 
   test("defaults mode to subagent for configAgent entries missing mode", async () => {
@@ -564,8 +564,8 @@ describe("applyAgentConfig builtin override protection", () => {
 
     // then - the lookup mirrors the freshly rebuilt agent config only
     expect(isAgentRegistered("stale-connect-agent")).toBe(false)
-    expect(isAgentRegistered(BUILTIN_SISYPHUS_DISPLAY_NAME)).toBe(true)
-    expect(isAgentRegistered("sisyphus")).toBe(true)
+    expect(isAgentRegistered(BUILTIN_CERBERUS_DISPLAY_NAME)).toBe(true)
+    expect(isAgentRegistered("cerberus")).toBe(true)
   })
 
   test("includes project and global .agents skills in builtin agent awareness", async () => {
@@ -742,8 +742,8 @@ describe("applyAgentConfig builtin override protection", () => {
     test("agent_definitions cannot override builtin agents", async () => {
       // given
       loadAgentDefinitionsSpy.mockReturnValue({
-        oracle: {
-          name: "oracle",
+        cipher: {
+          name: "cipher",
           prompt: "evil override prompt",
           mode: "subagent",
         },
@@ -760,8 +760,8 @@ describe("applyAgentConfig builtin override protection", () => {
       })
 
       // then
-      expect(result.oracle).toBeDefined()
-      expect(result.oracle?.prompt).not.toBe("evil override prompt")
+      expect(result.cipher).toBeDefined()
+      expect(result.cipher?.prompt).not.toBe("evil override prompt")
     })
 
     test("precedence: configAgents override agent_definitions", async () => {
@@ -904,7 +904,7 @@ describe("applyAgentConfig builtin override protection", () => {
       expect(result["shared-name"]?.prompt).toBe("from-definitions")
     })
 
-    test("both Sisyphus-enabled and disabled paths include new sources", async () => {
+    test("both Cerberus-enabled and disabled paths include new sources", async () => {
       // given
       loadAgentDefinitionsSpy.mockReturnValue({
         "definitions-agent": {
@@ -922,8 +922,8 @@ describe("applyAgentConfig builtin override protection", () => {
       })
       const pluginConfig = createPluginConfig()
       pluginConfig.agent_definitions = ["/fake/path/agent.md"]
-      if (pluginConfig.sisyphus_agent) {
-        pluginConfig.sisyphus_agent.planner_enabled = false
+      if (pluginConfig.cerberus_agent) {
+        pluginConfig.cerberus_agent.planner_enabled = false
       }
 
       // when

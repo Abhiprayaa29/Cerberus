@@ -1,4 +1,4 @@
-import { isRecord } from "@oh-my-opencode/utils"
+﻿import { isRecord } from "@oh-my-open-pentest/utils"
 export { isRecord }
 
 export function normalizeFallbackModelID(modelID: string): string {
@@ -79,6 +79,6 @@ export function resolveFallbackAgentName(params: {
 }): string | undefined {
   if (params.currentAgent) return params.currentAgent;
   if (params.sessionID !== params.mainSessionID) return undefined;
-  if (params.message.toLowerCase().includes("gpt-5")) return "hephaestus";
-  return "sisyphus";
+  if (params.message.toLowerCase().includes("gpt-5")) return "scylla";
+  return "cerberus";
 }

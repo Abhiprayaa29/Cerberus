@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 import { afterEach, describe, expect, test } from "bun:test"
 import { unsafeTestValue } from "../../../../../test-support/unsafe-test-value"
 import { pollSyncSession } from "./sync-session-poller"
@@ -8,7 +8,7 @@ import type { OpencodeClient, ToolContextWithMetadata } from "./types"
 const toolContext: ToolContextWithMetadata = {
   sessionID: "ses_parent",
   messageID: "msg_parent",
-  agent: "sisyphus",
+  agent: "cerberus",
   abort: new AbortController().signal,
 }
 
@@ -40,7 +40,7 @@ describe("pollSyncSession status fallback", () => {
     // when
     const result = await pollSyncSession(toolContext, client, {
       sessionID: "ses_missing_status",
-      agentToUse: "sisyphus",
+      agentToUse: "cerberus",
       toastManager: null,
       taskId: undefined,
     }, 50)

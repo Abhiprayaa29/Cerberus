@@ -1,4 +1,4 @@
-import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+﻿import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
@@ -10,7 +10,7 @@ import {
 	runSessionStartHook,
 	runUserPromptSubmitHook,
 } from "../src/codex-hook.js";
-import { createRuleDiscoveryCache, findRuleCandidates } from "@oh-my-opencode/rules-engine/engine";
+import { createRuleDiscoveryCache, findRuleCandidates } from "@oh-my-open-pentest/rules-engine/engine";
 
 interface FixtureOptions {
 	readonly writeProjectDuplicate?: boolean;
@@ -67,11 +67,11 @@ function makeFixture(options: FixtureOptions = {}): Fixture {
 	mkdirSync(join(root, ".omo", "rules"), { recursive: true });
 	mkdirSync(join(pluginRoot, "bundled-rules"), { recursive: true });
 
-	const bundledRulePath = join(pluginRoot, "bundled-rules", "hephaestus.md");
+	const bundledRulePath = join(pluginRoot, "bundled-rules", "scylla.md");
 	const bundledBody = options.writeProjectDuplicate === true ? SHARED_BODY : BUNDLED_BODY;
 	writeFileSync(bundledRulePath, ruleMarkdown(bundledBody));
 
-	const projectRulePath = join(root, ".omo", "rules", "hephaestus.md");
+	const projectRulePath = join(root, ".omo", "rules", "scylla.md");
 	if (options.writeProjectDuplicate === true) {
 		writeFileSync(projectRulePath, ruleMarkdown(SHARED_BODY));
 	}
@@ -145,12 +145,12 @@ describe("plugin bundled rules", () => {
 
 		// then
 		expect(candidates.map((candidate) => `${candidate.source}:${candidate.relativePath}`)).toEqual([
-			"plugin-bundled:bundled-rules/hephaestus.md",
+			"plugin-bundled:bundled-rules/scylla.md",
 		]);
 		expect(cache.scannedRuleFiles.has(join(pluginRoot, "bundled-rules"))).toBe(true);
 	});
 
-	it("#given alwaysApply bundled Hephaestus rule #when SessionStart runs #then static context expands it inline", async () => {
+	it("#given alwaysApply bundled Scylla rule #when SessionStart runs #then static context expands it inline", async () => {
 		// given
 		const { root, pluginData, bundledRulePath } = makeFixture();
 
@@ -166,7 +166,7 @@ describe("plugin bundled rules", () => {
 		expect(output).toContain(BUNDLED_BODY);
 		expect(output).toContain("## Project Instructions");
 		expect(output).not.toContain("must read project rules:");
-		expect(output).not.toContain(`- [hephaestus.md]{${bundledRulePath}}`);
+		expect(output).not.toContain(`- [scylla.md]{${bundledRulePath}}`);
 	});
 
 	it("#given same project and bundled body #when SessionStart runs #then project rule file wins", async () => {
@@ -180,7 +180,7 @@ describe("plugin bundled rules", () => {
 		});
 
 		// then
-		expect(occurrenceCount(output, "- [hephaestus.md]{")).toBe(0);
+		expect(occurrenceCount(output, "- [scylla.md]{")).toBe(0);
 		expect(output).toContain(`Instructions from: ${projectRulePath}`);
 		expect(output).toContain(SHARED_BODY);
 		expect(output).not.toContain(bundledRulePath);
@@ -224,7 +224,7 @@ describe("plugin bundled rules", () => {
 		expect(output).not.toContain("[Truncated. Full:");
 	});
 
-	it("#given bundled Hephaestus rule body exceeds per-rule cap #when SessionStart runs #then static context expands the body within result budget", async () => {
+	it("#given bundled Scylla rule body exceeds per-rule cap #when SessionStart runs #then static context expands the body within result budget", async () => {
 		// given
 		const root = mkdtempSync(join(tmpdir(), "codex-rules-bundled-large-project-"));
 		const pluginRoot = mkdtempSync(join(tmpdir(), "codex-rules-bundled-large-plugin-"));
@@ -235,7 +235,7 @@ describe("plugin bundled rules", () => {
 		const oversizedBody = "The bundled craftsman discipline is non-negotiable. ".repeat(400);
 		expect(oversizedBody.length).toBeGreaterThan(12000);
 		const tailMarker = "BUNDLED_TAIL_SENTINEL_LANDS_IN_FULL";
-		const bundledRulePath = join(pluginRoot, "bundled-rules", "hephaestus.md");
+		const bundledRulePath = join(pluginRoot, "bundled-rules", "scylla.md");
 		const bundledBody = `${oversizedBody}\n\n${tailMarker}\n`;
 		writeFileSync(bundledRulePath, ruleMarkdown(bundledBody));
 		process.env["PLUGIN_ROOT"] = pluginRoot;

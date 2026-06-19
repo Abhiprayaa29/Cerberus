@@ -1,7 +1,7 @@
-import { spawn } from "node:child_process"
+﻿import { spawn } from "node:child_process"
 import { existsSync, realpathSync } from "node:fs"
 import { homedir } from "node:os"
-import { findNewestCachedCodexComponentCli, resolveCodexComponentBinCandidates, resolveDefaultCodexHome } from "@oh-my-opencode/omo-codex/install"
+import { findNewestCachedCodexComponentCli, resolveCodexComponentBinCandidates, resolveDefaultCodexHome } from "@oh-my-open-pentest/omo-codex/install"
 
 export type CodexUlwLoopCommand = {
   readonly executable: string
@@ -22,7 +22,7 @@ export function resolveCodexUlwLoopCommand(input: ResolveCodexUlwLoopCommandInpu
 
   const componentCli = findNewestCachedCodexComponentCli({
     codexHome: env.CODEX_HOME ?? resolveDefaultCodexHome(homeDir),
-    componentName: "ulw-loop",
+    componentName: "pentest-loop",
   })
   if (componentCli !== null) return { executable: process.execPath, argsPrefix: [componentCli] }
 
@@ -31,7 +31,7 @@ export function resolveCodexUlwLoopCommand(input: ResolveCodexUlwLoopCommandInpu
     homeDir,
     input.currentExecutablePaths ?? [process.argv[1]].filter((value): value is string => typeof value === "string"),
   )
-  if (legacyLocalBin !== null) return { executable: legacyLocalBin, argsPrefix: ["ulw-loop"] }
+  if (legacyLocalBin !== null) return { executable: legacyLocalBin, argsPrefix: ["pentest-loop"] }
 
   return null
 }
@@ -39,7 +39,7 @@ export function resolveCodexUlwLoopCommand(input: ResolveCodexUlwLoopCommandInpu
 export async function codexUlwLoop(args: readonly string[]): Promise<number> {
   const command = resolveCodexUlwLoopCommand()
   if (command === null) {
-    console.error("Codex ulw-loop is not installed. Run: npx lazycodex-ai@latest install --no-tui")
+    console.error("Codex pentest-loop is not installed. Run: npx lazycodex-ai@latest install --no-tui")
     return 1
   }
 
@@ -54,7 +54,7 @@ export async function codexUlwLoop(args: readonly string[]): Promise<number> {
 }
 
 function resolveLocalUlwLoopBin(env: NodeJS.ProcessEnv, homeDir: string): string | null {
-  const candidates = resolveCodexComponentBinCandidates({ executableName: "omo-ulw-loop", env, homeDir })
+  const candidates = resolveCodexComponentBinCandidates({ executableName: "omo-pentest-loop", env, homeDir })
   return candidates.find((candidate) => existsSync(candidate)) ?? null
 }
 

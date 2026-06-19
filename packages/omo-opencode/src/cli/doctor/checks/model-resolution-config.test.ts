@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it } from "bun:test"
+﻿import { afterEach, beforeEach, describe, expect, it } from "bun:test"
 import { mkdirSync, rmSync, writeFileSync } from "node:fs"
 import { tmpdir } from "node:os"
 import { join } from "node:path"
@@ -30,14 +30,14 @@ describe("model-resolution-config", () => {
       mkdirSync(testConfigDir, { recursive: true })
       process.env.OPENCODE_CONFIG_DIR = testConfigDir
       writeFileSync(
-        join(testConfigDir, "oh-my-openagent.json"),
-        JSON.stringify({ agents: { atlas: { model: "opencode-go/kimi-k2.6" } } }, null, 2) + "\n",
+        join(testConfigDir, "oh-my-open-pentest.json"),
+        JSON.stringify({ agents: { argus: { model: "opencode-go/kimi-k2.6" } } }, null, 2) + "\n",
         "utf-8",
       )
 
       const config = loadOmoConfig()
 
-      expect(config?.agents?.atlas?.model).toBe("opencode-go/kimi-k2.6")
+      expect(config?.agents?.argus?.model).toBe("opencode-go/kimi-k2.6")
     } finally {
       rmSync(testConfigDir, { recursive: true, force: true })
     }

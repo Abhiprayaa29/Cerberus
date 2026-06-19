@@ -1,1 +1,1 @@
-export * from "@oh-my-opencode/mcp-client-core/mcp-oauth/storage"
+﻿export * from "@oh-my-open-pentest/mcp-client-core/mcp-oauth/storage"

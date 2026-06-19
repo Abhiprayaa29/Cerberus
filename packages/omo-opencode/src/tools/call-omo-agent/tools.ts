@@ -1,4 +1,4 @@
-import { tool, type PluginInput, type ToolDefinition } from "@opencode-ai/plugin"
+﻿import { tool, type PluginInput, type ToolDefinition } from "@opencode-ai/plugin"
 import { ALLOWED_AGENTS, CALL_OMO_AGENT_DESCRIPTION } from "./constants"
 import type { CallOmoAgentArgs, ToolContextWithMetadata } from "./types"
 import type { BackgroundManager } from "../../features/background-agent"
@@ -122,7 +122,7 @@ export function createCallOmoAgent(
       subagent_type: tool.schema
         .string()
         .describe(
-          "The agent to invoke. Only explore and librarian are allowed.",
+          "The agent to invoke. Only scout and intel are allowed.",
         ),
       run_in_background: tool.schema
         .boolean()
@@ -146,7 +146,7 @@ export function createCallOmoAgent(
 
       const callableAgents = await resolveCallableAgents(ctx.client);
 
-      // Strip ZWSP and case-insensitive agent validation - allows "Explore", "EXPLORE", "explore" etc.
+      // Strip ZWSP and case-insensitive agent validation - allows "Scout", "EXPLORE", "scout" etc.
       const strippedAgentType = stripInvisibleAgentCharacters(args.subagent_type)
       if (
         !callableAgents.some(

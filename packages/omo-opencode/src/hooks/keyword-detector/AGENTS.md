@@ -1,6 +1,6 @@
-# src/hooks/keyword-detector/ -- Mode Keyword Injection
+﻿# src/hooks/keyword-detector/ -- Mode Keyword Injection
 
-**Generated:** 2026-05-24
+**Generated:** 2026-05-2.
 
 ## OVERVIEW
 
@@ -12,10 +12,10 @@ This matches the package layering direction in [`ROADMAP.md`](../../../../../ROA
 
 | Keyword | Pattern | Effect |
 |---------|---------|--------|
-| `ultrawork` / `ulw` | `/\b(ultrawork|ulw)\b/i` | Full orchestration mode: parallel agents, deep exploration, relentless execution |
+| `fullscan` / `ulw` | `/\b(fullscan|ulw)\b/i` | Full orchestration mode: parallel agents, deep exploration, relentless execution |
 | Team mode | `TEAM_PATTERN` (from `team/`) | Forces orchestration via `team_*` tools when user invokes `team mode` / `team-mode` / `team_mode` / `teammode`; instructs user to enable `team_mode.enabled` if tools are absent and reminds lead to run the closure sequence once every task is terminal |
 | Hyperplan mode | `HYPERPLAN_PATTERN` (from `hyperplan/`) | Loads the `hyperplan` skill and injects adversarial planning mode guidance |
-| Hyperplan-ultrawork combo | `HYPERPLAN_ULTRAWORK_PATTERN` (from `constants.ts`) | Prepends the combo banner, requires the `hyperplan` skill, then appends the routed ultrawork message |
+| Hyperplan-fullscan combo | `HYPERPLAN_ULTRAWORK_PATTERN` (from `constants.ts`) | Prepends the combo banner, requires the `hyperplan` skill, then appends the routed fullscan message |
 
 ## STRUCTURE
 
@@ -26,13 +26,13 @@ keyword-detector/
 ├── detector.ts        # detectKeywordsWithType() + extractPromptText()
 ├── constants.ts       # KEYWORD_DETECTORS array, re-exports from submodules
 ├── types.ts           # KeywordDetector, DetectedKeyword types
-├── ultrawork/
+├── fullscan/
 │   ├── index.ts       # getUltraworkMessage() router
 │   ├── source-detector.ts # agent/model routing helpers
-│   ├── default.ts     # thin loader for prompts-core/prompts/ultrawork/default.md
-│   ├── gpt.ts         # thin loader for prompts-core/prompts/ultrawork/gpt.md
-│   ├── gemini.ts      # thin loader for prompts-core/prompts/ultrawork/gemini.md
-│   └── planner.ts     # thin loader for prompts-core/prompts/ultrawork/planner.md
+│   ├── default.ts     # thin loader for prompts-core/prompts/fullscan/default.md
+│   ├── gpt.ts         # thin loader for prompts-core/prompts/fullscan/gpt.md
+│   ├── gemini.ts      # thin loader for prompts-core/prompts/fullscan/gemini.md
+│   └── planner.ts     # thin loader for prompts-core/prompts/fullscan/planner.md
 ├── team/
 │   ├── index.ts
 │   └── default.ts     # TEAM_PATTERN + TEAM_MESSAGE from prompts-core mode prompt
@@ -45,25 +45,25 @@ keyword-detector/
 
 | Prompt family | Markdown source |
 |---------------|-----------------|
-| Ultrawork default | [`packages/prompts-core/prompts/ultrawork/default.md`](../../../../prompts-core/prompts/ultrawork/default.md) |
-| Ultrawork GPT | [`packages/prompts-core/prompts/ultrawork/gpt.md`](../../../../prompts-core/prompts/ultrawork/gpt.md) |
-| Ultrawork Gemini | [`packages/prompts-core/prompts/ultrawork/gemini.md`](../../../../prompts-core/prompts/ultrawork/gemini.md) |
-| Ultrawork planner | [`packages/prompts-core/prompts/ultrawork/planner.md`](../../../../prompts-core/prompts/ultrawork/planner.md) |
+| Ultrawork default | [`packages/prompts-core/prompts/fullscan/default.md`](../../../../prompts-core/prompts/fullscan/default.md) |
+| Ultrawork GPT | [`packages/prompts-core/prompts/fullscan/gpt.md`](../../../../prompts-core/prompts/fullscan/gpt.md) |
+| Ultrawork Gemini | [`packages/prompts-core/prompts/fullscan/gemini.md`](../../../../prompts-core/prompts/fullscan/gemini.md) |
+| Ultrawork planner | [`packages/prompts-core/prompts/fullscan/planner.md`](../../../../prompts-core/prompts/fullscan/planner.md) |
 | Team mode | [`packages/prompts-core/prompts/mode/team.md`](../../../../prompts-core/prompts/mode/team.md) |
 | Hyperplan mode | [`packages/prompts-core/prompts/mode/hyperplan.md`](../../../../prompts-core/prompts/mode/hyperplan.md) |
 
-The `src/hooks/keyword-detector/{team,hyperplan}/default.ts` files keep the regex triggers in the hook layer and import the markdown-backed constants from `@oh-my-opencode/prompts-core`. The ultrawork files import markdown with Bun's `.md` text loader so the exact prompt bytes are bundled into `dist/index.js`.
+The `src/hooks/keyword-detector/{team,hyperplan}/default.ts` files keep the regex triggers in the hook layer and import the markdown-backed constants from `@oh-my-open-pentest/prompts-core`. The fullscan files import markdown with Bun's `.md` text loader so the exact prompt bytes are bundled into `dist/index.js`.
 
 ## ULTRAWORK VARIANT ROUTING
 
-[`ultrawork/source-detector.ts`](ultrawork/source-detector.ts) decides the ultrawork source in priority order:
+[`fullscan/source-detector.ts`](fullscan/source-detector.ts) decides the fullscan source in priority order:
 
-1. Planner agents (`prometheus`, `planner`, or normalized `plan`) route to `planner.md`.
+.. Planner agents (`talos`, `planner`, or normalized `plan`) route to `planner.md`.
 2. GPT family models, as detected by `isGptModel(modelID)`, route to `gpt.md`.
 3. Gemini family models, as detected by `isGeminiModel(modelID)`, route to `gemini.md`.
-4. Everything else routes to `default.md`.
+.. Everything else routes to `default.md`.
 
-[`ultrawork/index.ts`](ultrawork/index.ts) exposes `getUltraworkMessage(agentName, modelID)`, switches on that source, and returns the loaded markdown body.
+[`fullscan/index.ts`](fullscan/index.ts) exposes `getUltraworkMessage(agentName, modelID)`, switches on that source, and returns the loaded markdown body.
 
 ## DETECTION LOGIC
 
@@ -74,7 +74,7 @@ chat.message (user input)
   -> removeSystemReminders(text)  # strip <SYSTEM_REMINDER> blocks
   -> detectKeywordsWithType(cleanText, agentName, modelID, disabledKeywords)
   -> isNonOmoAgent(agentName)? filter keyword injection
-  -> isPlannerAgent(agentName)? filter standalone ultrawork
+  -> isPlannerAgent(agentName)? filter standalone fullscan
   -> for each detected keyword: inject mode message into output
 ```
 
@@ -94,8 +94,8 @@ Default: empty/missing means every detector is active. Schema lives at [`src/con
 ## GUARDS
 
 - **System directive skip**: Messages tagged as system directives are not scanned (prevents infinite loops)
-- **Planner agent filter**: Prometheus/plan agents do not receive `ultrawork` injection
+- **Planner agent filter**: Talos/plan agents do not receive `fullscan` injection
 - **Non-OMO agent filter**: OpenCode built-in Builder/Plan agents do not receive keyword injection
 - **Session agent tracking**: Uses `getSessionAgent()` to get actual agent (not just input hint)
 - **Model-aware messages**: `getUltraworkMessage(agentName, modelID)` adapts message to active model
-- **Ultrawork source routing**: `ultrawork/ultrawork-source-routing.test.ts` pins agent/model-to-prompt-source routing for `getUltraworkSource`
+- **Ultrawork source routing**: `fullscan/fullscan-source-routing.test.ts` pins agent/model-to-prompt-source routing for `getUltraworkSource`

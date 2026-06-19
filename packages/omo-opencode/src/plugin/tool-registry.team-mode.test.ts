@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { afterEach, describe, expect, mock, test } from "bun:test"
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs"
@@ -57,7 +57,7 @@ describe("team-mode tool registry wiring", () => {
     mkdirSync(userConfigDir, { recursive: true })
     mkdirSync(projectDir, { recursive: true })
     writeFileSync(
-      join(userConfigDir, "oh-my-openagent.json"),
+      join(userConfigDir, "oh-my-open-pentest.json"),
       JSON.stringify({ team_mode: { enabled: true } }),
     )
     process.env.OPENCODE_CONFIG_DIR = userConfigDir

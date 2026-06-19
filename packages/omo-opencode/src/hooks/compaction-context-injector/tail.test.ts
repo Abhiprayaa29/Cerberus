@@ -1,4 +1,4 @@
-import { afterAll, describe, expect, it, mock } from "bun:test"
+﻿import { afterAll, describe, expect, it, mock } from "bun:test"
 
 mock.module("../../shared/system-directive", () => ({
   createSystemDirective: (type: string) => `[DIRECTIVE:${type}]`,
@@ -10,7 +10,7 @@ mock.module("../../shared/system-directive", () => ({
     SINGLE_TASK_ONLY: "SINGLE TASK ONLY",
     COMPACTION_CONTEXT: "COMPACTION CONTEXT",
     CONTEXT_WINDOW_MONITOR: "CONTEXT WINDOW MONITOR",
-    PROMETHEUS_READ_ONLY: "PROMETHEUS READ-ONLY",
+    TALOS_READ_ONLY: "TALOS READ-ONLY",
   },
 }))
 
@@ -31,9 +31,9 @@ type PromptAsyncInput = {
 function createMockContext(promptAsyncMock = mock(async (_input: PromptAsyncInput) => ({}))) {
   let callIndex = 0
   const responses = [
-    [{ info: { role: "user", agent: "atlas", model: { providerID: "openai", modelID: "gpt-5" } } }],
-    [{ info: { role: "user", agent: "atlas", model: { providerID: "openai", modelID: "gpt-5" } } }],
-    [{ info: { role: "user", agent: "atlas", model: { providerID: "openai", modelID: "gpt-5" } } }],
+    [{ info: { role: "user", agent: "argus", model: { providerID: "openai", modelID: "gpt-5" } } }],
+    [{ info: { role: "user", agent: "argus", model: { providerID: "openai", modelID: "gpt-5" } } }],
+    [{ info: { role: "user", agent: "argus", model: { providerID: "openai", modelID: "gpt-5" } } }],
   ]
 
   return {
@@ -87,6 +87,6 @@ describe("createCompactionContextInjector tail recovery", () => {
     const recoveryCall = promptAsyncMock.mock.calls[0]?.[0]
     expect(recoveryCall?.path).toEqual({ id: "ses_no_text_tail" })
     expect(recoveryCall?.body.noReply).toBe(true)
-    expect(recoveryCall?.body.agent).toBe("atlas")
+    expect(recoveryCall?.body.agent).toBe("argus")
   })
 })

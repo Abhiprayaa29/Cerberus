@@ -1,11 +1,11 @@
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+﻿import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
 
 import {
 	cleanupTelemetryDiagnostics,
-} from "@oh-my-opencode/telemetry-core";
+} from "@oh-my-open-pentest/telemetry-core";
 import {
 	getComponentTelemetryDiagnosticsFilePath,
 	getComponentTelemetryStateDir,

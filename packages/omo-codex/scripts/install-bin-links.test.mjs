@@ -1,4 +1,4 @@
-import assert from "node:assert/strict";
+﻿import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
 import { chmod, lstat, mkdir, readFile, readlink, symlink, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
@@ -230,7 +230,7 @@ test("#given managed legacy Codex LSP symlink #when linking bins #then removes s
 test("#given nested component declares reserved omo bin #when linking bins #then skips the nested top-level command", async () => {
 	const root = await makeTempDir();
 	const pluginRoot = join(root, "plugin");
-	const componentRoot = join(pluginRoot, "components", "ulw-loop");
+	const componentRoot = join(pluginRoot, "components", "pentest-loop");
 	const binDir = join(root, "bin");
 
 	await mkdir(join(componentRoot, "dist"), { recursive: true });
@@ -238,10 +238,10 @@ test("#given nested component declares reserved omo bin #when linking bins #then
 		name: "@example/omo",
 	});
 	await writeJson(join(componentRoot, "package.json"), {
-		name: "@example/ulw-loop",
+		name: "@example/pentest-loop",
 		bin: {
 			omo: "./dist/cli.js",
-			"omo-ulw-loop": "./dist/cli.js",
+			"omo-pentest-loop": "./dist/cli.js",
 		},
 	});
 	await writeFile(join(componentRoot, "dist", "cli.js"), "#!/usr/bin/env node\n");
@@ -249,21 +249,21 @@ test("#given nested component declares reserved omo bin #when linking bins #then
 	const linked = await linkCachedPluginBins({ binDir, pluginRoot, platform: "linux" });
 
 	assert.deepEqual(linked, [
-		{ name: "omo-ulw-loop", path: join(binDir, "omo-ulw-loop"), target: join(componentRoot, "dist", "cli.js") },
+		{ name: "omo-pentest-loop", path: join(binDir, "omo-pentest-loop"), target: join(componentRoot, "dist", "cli.js") },
 	]);
 	await assert.rejects(readlink(join(binDir, "omo")));
-	assert.equal(await readlink(join(binDir, "omo-ulw-loop")), join(componentRoot, "dist", "cli.js"));
+	assert.equal(await readlink(join(binDir, "omo-pentest-loop")), join(componentRoot, "dist", "cli.js"));
 });
 
-test("#given stale managed ulw-loop omo symlink #when linking bins #then removes it without touching user-owned omo", async () => {
+test("#given stale managed pentest-loop omo symlink #when linking bins #then removes it without touching user-owned omo", async () => {
 	const root = await makeTempDir();
 	const pluginRoot = join(root, "plugin");
 	const componentRoot = join(pluginRoot, "components", "rules");
 	const binDir = join(root, "bin");
-	const oldTarget = join(root, "codex-home", "plugins", "cache", "sisyphuslabs", "omo", "0.1.0", "components", "ulw-loop", "dist", "cli.js");
+	const oldTarget = join(root, "codex-home", "plugins", "cache", "cerberuslabs", "omo", "0.1.0", "components", "pentest-loop", "dist", "cli.js");
 
 	await mkdir(join(componentRoot, "dist"), { recursive: true });
-	await mkdir(join(root, "codex-home", "plugins", "cache", "sisyphuslabs", "omo", "0.1.0", "components", "ulw-loop", "dist"), { recursive: true });
+	await mkdir(join(root, "codex-home", "plugins", "cache", "cerberuslabs", "omo", "0.1.0", "components", "pentest-loop", "dist"), { recursive: true });
 	await mkdir(binDir, { recursive: true });
 	await writeJson(join(pluginRoot, "package.json"), {
 		name: "@example/omo",
@@ -282,15 +282,15 @@ test("#given stale managed ulw-loop omo symlink #when linking bins #then removes
 	assert.equal(await readlink(join(binDir, "omo-rules")), join(componentRoot, "dist", "cli.js"));
 });
 
-test("#given stale local-source ulw-loop omo symlink #when linking bins #then removes it", async () => {
+test("#given stale local-source pentest-loop omo symlink #when linking bins #then removes it", async () => {
 	const root = await makeTempDir();
 	const pluginRoot = join(root, "plugin");
 	const componentRoot = join(pluginRoot, "components", "rules");
 	const binDir = join(root, "bin");
-	const oldTarget = join(root, "repo", "packages", "omo-codex", "plugin", "components", "ulw-loop", "dist", "cli.js");
+	const oldTarget = join(root, "repo", "packages", "omo-codex", "plugin", "components", "pentest-loop", "dist", "cli.js");
 
 	await mkdir(join(componentRoot, "dist"), { recursive: true });
-	await mkdir(join(root, "repo", "packages", "omo-codex", "plugin", "components", "ulw-loop", "dist"), { recursive: true });
+	await mkdir(join(root, "repo", "packages", "omo-codex", "plugin", "components", "pentest-loop", "dist"), { recursive: true });
 	await mkdir(binDir, { recursive: true });
 	await writeJson(join(pluginRoot, "package.json"), {
 		name: "@example/omo",

@@ -1,4 +1,4 @@
-# Bootstrap — Runtime, Package Manager, Tooling
+﻿# Bootstrap — Runtime, Package Manager, Tooling
 
 When starting a new TypeScript project (or scripting against the world), the choice of runtime, package manager, framework, and toolchain compounds. The wrong default at minute zero costs hours every week. The right defaults for 2026:
 
@@ -42,7 +42,7 @@ Use Node when:
 If you must use Node, use pnpm. NEVER npm except in legacy projects you don't control.
 
 Why pnpm:
-- Content-addressable store: 10x less disk usage on a machine with many projects
+- Content-addressable store: .0x less disk usage on a machine with many projects
 - Strict node_modules layout: phantom dependencies fail at install time, not at runtime
 - Workspaces are first-class
 - Significantly faster than npm
@@ -104,7 +104,7 @@ bun biome init
 
 ```json
 {
-  "$schema": "https://biomejs.dev/schemas/1.9.0/schema.json",
+  "$schema": "https://biomejs.dev/schemas/..9.0/schema.json",
   "organizeImports": { "enabled": true },
   "linter": { "enabled": true, "rules": { "recommended": true } },
   "formatter": { "enabled": true, "indentStyle": "space", "indentWidth": 2 }
@@ -185,7 +185,7 @@ bun biome init
 }
 ```
 
-Wire the `app.ts` from [backend-hono.md](backend-hono.md). You have a documented, validated, OpenAPI-spec-emitting service in ~15 minutes.
+Wire the `app.ts` from [backend-hono.md](backend-hono.md). You have a documented, validated, OpenAPI-spec-emitting service in ~.5 minutes.
 
 ## When NOT to bootstrap from scratch
 

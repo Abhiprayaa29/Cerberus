@@ -1,7 +1,7 @@
-import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+﻿import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { getPlanChecklist } from "@oh-my-opencode/boulder-state";
+import { getPlanChecklist } from "@oh-my-open-pentest/boulder-state";
 import { afterEach, describe, expect, it } from "vitest";
 import { readContinuationState } from "../src/boulder-reader.js";
 

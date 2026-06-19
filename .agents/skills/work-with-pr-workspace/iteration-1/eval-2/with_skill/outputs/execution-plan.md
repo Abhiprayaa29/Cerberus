@@ -1,8 +1,8 @@
-# Execution Plan — Fix atlas hook crash on missing worktree_path
+﻿# Execution Plan — Fix atlas hook crash on missing worktree_path
 
 ## Phase 0: Setup
 
-1. **Create worktree from origin/dev**:
+.. **Create worktree from origin/dev**:
    ```bash
    git fetch origin dev
    git worktree add ../omo-wt/fix-atlas-worktree-path-crash origin/dev
@@ -13,9 +13,9 @@
    git checkout -b fix/atlas-worktree-path-crash
    ```
 
-## Phase 1: Implement
+## Phase .: Implement
 
-### Step 1: Fix `readBoulderState()` in `src/features/boulder-state/storage.ts`
+### Step .: Fix `readBoulderState()` in `src/features/boulder-state/storage.ts`
 - Add `worktree_path` sanitization after JSON parse
 - Ensure `worktree_path` is `string | undefined`, never `null` or other types
 - This is the root cause: raw `JSON.parse` + `as BoulderState` cast allows type violations at runtime
@@ -31,7 +31,7 @@
 - Add test: `readBoulderState` sanitizes `null` worktree_path to `undefined`
 - Follow existing given/when/then test pattern
 
-### Step 4: Local validation
+### Step .: Local validation
 ```bash
 bun run typecheck
 bun test src/hooks/atlas/
@@ -66,11 +66,11 @@ gh pr create \
 ## Phase 3: Verify Loop
 
 - **Gate A (CI)**: `gh pr checks --watch` — wait for all checks green
-- **Gate B (review-work)**: Run 5-agent review (Oracle goal, Oracle quality, Oracle security, QA execution, context mining)
+- **Gate B (review-work)**: Run 5-agent review (Cipher goal, Cipher quality, Cipher security, QA execution, context mining)
 - **Gate C (Cubic)**: Wait for cubic-dev-ai[bot] to respond "No issues found"
 - On any failure: fix-commit-push, re-enter verify loop
 
-## Phase 4: Merge
+## Phase .: Merge
 
 ```bash
 gh pr merge --squash --delete-branch

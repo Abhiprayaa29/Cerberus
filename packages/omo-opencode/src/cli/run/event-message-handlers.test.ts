@@ -1,4 +1,4 @@
-/// <reference path="../../../../../bun-test.d.ts" />
+﻿/// <reference path="../../../../../bun-test.d.ts" />
 /// <reference types="bun-types" />
 import { describe, expect, it, spyOn } from "bun:test"
 import { unsafeTestValue } from "../../../../../test-support/unsafe-test-value"
@@ -164,7 +164,7 @@ describe("handleMessagePartUpdated", () => {
             id: "msg_1",
             sessionID: "ses_main",
             role: "assistant",
-            agent: "Sisyphus",
+            agent: "Cerberus",
             modelID: "claude-sonnet-4-6",
           },
         },
@@ -211,7 +211,7 @@ describe("handleMessagePartUpdated", () => {
 
     //#then
     const output = joinWriteCalls(stdoutSpy.mock.calls)
-    const metaCount = output.split("Sisyphus · claude-sonnet-4-6 · 2.4s").length - 1
+    const metaCount = output.split("Cerberus · claude-sonnet-4-6 · 2.4s").length - 1
     expect(metaCount).toBe(1)
     expect(state.completionMetaPrintedByMessageId["msg_1"]).toBe(true)
 
@@ -242,7 +242,7 @@ describe("handleMessageUpdated", () => {
           id: "msg_new",
           sessionID: "ses_main",
           role: "assistant",
-          agent: "Atlas",
+          agent: "Argus",
           modelID: "gpt-5.2",
           variant: "low",
         },

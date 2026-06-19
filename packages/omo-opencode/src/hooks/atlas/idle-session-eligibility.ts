@@ -1,4 +1,4 @@
-import type { PluginInput } from "@opencode-ai/plugin"
+﻿import type { PluginInput } from "@opencode-ai/plugin"
 import { normalizeSessionId } from "../../features/boulder-state"
 import { getSessionAgent } from "../../features/claude-code-session-state"
 import { getAgentConfigKey } from "../../shared/agent-display-names"
@@ -39,8 +39,8 @@ export async function canContinueTrackedBoulderSession(input: {
     return false
   }
 
-  const requiredAgentKey = getAgentConfigKey(input.requiredAgent ?? "atlas")
+  const requiredAgentKey = getAgentConfigKey(input.requiredAgent ?? "argus")
   const sessionAgentKey = getAgentConfigKey(sessionAgent)
   return sessionAgentKey === requiredAgentKey
-    || (requiredAgentKey === getAgentConfigKey("atlas") && sessionAgentKey === getAgentConfigKey("sisyphus"))
+    || (requiredAgentKey === getAgentConfigKey("argus") && sessionAgentKey === getAgentConfigKey("cerberus"))
 }

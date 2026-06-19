@@ -1,6 +1,6 @@
-import type { SisyphusDynamicPromptSections } from "./sisyphus-dynamic-prompt-sections";
+﻿import type { CerberusDynamicPromptSections } from "./cerberus-dynamic-prompt-sections";
 
-export function renderToneAndConstraintsSection(sections: SisyphusDynamicPromptSections): string {
+export function renderToneAndConstraintsSection(sections: CerberusDynamicPromptSections): string {
   return `<Tone_and_Style>
 ## Communication Style
 

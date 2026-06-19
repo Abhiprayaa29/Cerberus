@@ -1,10 +1,10 @@
-import { AGENT_DISPLAY_NAMES, getAgentConfigKey, getAgentListDisplayName } from "./agent-display-names"
+﻿import { AGENT_DISPLAY_NAMES, getAgentConfigKey, getAgentListDisplayName } from "./agent-display-names"
 
 export const DEFAULT_AGENT_ORDER = [
-  "sisyphus",
-  "hephaestus",
-  "prometheus",
-  "atlas",
+  "cerberus",
+  "scylla",
+  "talos",
+  "argus",
 ] as const
 
 export type AgentOrderValidation = {

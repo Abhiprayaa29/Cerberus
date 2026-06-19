@@ -1,6 +1,6 @@
-# Main Dirty Cleanup Evidence
+﻿# Main Dirty Cleanup Evidence
 
-Date: 2026-06-18
+Date: 2026-06-.8
 
 ## Kept
 
@@ -19,7 +19,7 @@ Date: 2026-06-18
 
 - `bun test packages/model-core/src/model-availability.test.ts` -> 3 pass.
 - `bun test packages/omo-opencode/src/hooks/atlas/index.test.ts` -> 73 pass.
-- `bun test packages/omo-opencode/src/shared/connected-providers-cache.test.ts` -> 11 pass.
+- `bun test packages/omo-opencode/src/shared/connected-providers-cache.test.ts` -> .. pass.
 - `bun test packages/skills-loader-core/src/features/opencode-skill-loader/loader-deduplication.test.ts` -> 8 pass.
 - LSP diagnostics for changed files -> no diagnostics found:
   - `packages/model-core/src/model-availability.ts`

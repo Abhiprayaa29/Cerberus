@@ -1,17 +1,17 @@
-import { afterEach, beforeEach, describe, expect, mock, test } from "bun:test"
+﻿import { afterEach, beforeEach, describe, expect, mock, test } from "bun:test"
 import { existsSync, mkdirSync, rmSync, writeFileSync } from "node:fs"
 import { tmpdir } from "node:os"
 import { join } from "node:path"
 import { randomUUID } from "node:crypto"
 import type { PluginInput } from "@opencode-ai/plugin"
-import { createAtlasHook } from "./atlas-hook"
+import { createArgusHook } from "./argus-hook"
 import { clearBoulderState, writeBoulderState } from "../../features/boulder-state"
 import { _resetForTesting, clearSessionAgent, registerAgentName, setSessionAgent } from "../../features/claude-code-session-state"
 import { DEFAULT_PROMPT_DISPATCH_TIMEOUT_MS } from "../../shared/prompt-async-gate"
 import { RETRY_DELAY_MS } from "./idle-constants"
 import { unsafeTestValue } from "../../../../../test-support/unsafe-test-value"
 
-// Force process isolation in CI runner (globalThis.setTimeout override conflicts with other atlas tests)
+// Force process isolation in CI runner (globalThis.setTimeout override conflicts with other argus tests)
 mock.module("../../shared/opencode-storage-detection", () => ({
   isSqliteBackend: () => true,
   resetSqliteBackendCache: () => {},
@@ -19,7 +19,7 @@ mock.module("../../shared/opencode-storage-detection", () => ({
 
 type LongTimerCallback = (...args: unknown[]) => void | Promise<void>
 
-describe("atlas background task retry", () => {
+describe("argus background task retry", () => {
   let testDir: string
   const sessionID = "main-session-123"
   const capturedTimers = new Map<number, { callback: () => Promise<void> | void; cleared: boolean }>()
@@ -64,10 +64,10 @@ describe("atlas background task retry", () => {
 
   beforeEach(() => {
     _resetForTesting()
-    registerAgentName("atlas")
-    registerAgentName("sisyphus")
+    registerAgentName("argus")
+    registerAgentName("cerberus")
 
-    testDir = join(tmpdir(), `atlas-background-retry-${randomUUID()}`)
+    testDir = join(tmpdir(), `argus-background-retry-${randomUUID()}`)
     mkdirSync(testDir, { recursive: true })
 
     capturedTimers.clear()
@@ -116,7 +116,7 @@ describe("atlas background task retry", () => {
     }
   })
 
-  test("#given background tasks are still running #when retry fires before they finish #then atlas keeps retrying until continuation can resume", async () => {
+  test("#given background tasks are still running #when retry fires before they finish #then argus keeps retrying until continuation can resume", async () => {
     // given
     const planPath = join(testDir, "test-plan.md")
     writeFileSync(planPath, "# Plan\n- [ ] Task 1\n- [ ] Task 2")
@@ -125,12 +125,12 @@ describe("atlas background task retry", () => {
       started_at: "2026-01-02T10:00:00Z",
       session_ids: [sessionID],
       plan_name: "test-plan",
-      agent: "atlas",
+      agent: "argus",
     })
 
     let backgroundRunning = true
     const promptMock = mock(async () => ({}))
-    const hook = createAtlasHook(unsafeTestValue<PluginInput>({
+    const hook = createArgusHook(unsafeTestValue<PluginInput>({
       directory: testDir,
       client: {
         session: {
@@ -140,7 +140,7 @@ describe("atlas background task retry", () => {
       },
     }), {
       directory: testDir,
-      backgroundManager: unsafeTestValue<NonNullable<Parameters<typeof createAtlasHook>[1]>["backgroundManager"] & {
+      backgroundManager: unsafeTestValue<NonNullable<Parameters<typeof createArgusHook>[1]>["backgroundManager"] & {
         getTasksByParentSession: (sessionID: string) => Array<{ status: string }>
       }>({
         getTasksByParentSession: () => backgroundRunning ? [{ status: "running" }] : [],
@@ -157,7 +157,7 @@ describe("atlas background task retry", () => {
     expect(promptMock).toHaveBeenCalledTimes(1)
   })
 
-  test("#given multiple idle events arrive while background retry is already pending #when tasks are still running #then atlas keeps only one retry timer active", async () => {
+  test("#given multiple idle events arrive while background retry is already pending #when tasks are still running #then argus keeps only one retry timer active", async () => {
     // given
     const planPath = join(testDir, "test-plan.md")
     writeFileSync(planPath, "# Plan\n- [ ] Task 1\n- [ ] Task 2")
@@ -166,12 +166,12 @@ describe("atlas background task retry", () => {
       started_at: "2026-01-02T10:00:00Z",
       session_ids: [sessionID],
       plan_name: "test-plan",
-      agent: "atlas",
+      agent: "argus",
     })
 
     let backgroundRunning = true
     const promptMock = mock(async () => ({}))
-    const hook = createAtlasHook(unsafeTestValue<PluginInput>({
+    const hook = createArgusHook(unsafeTestValue<PluginInput>({
       directory: testDir,
       client: {
         session: {
@@ -181,7 +181,7 @@ describe("atlas background task retry", () => {
       },
     }), {
       directory: testDir,
-      backgroundManager: unsafeTestValue<NonNullable<Parameters<typeof createAtlasHook>[1]>["backgroundManager"] & {
+      backgroundManager: unsafeTestValue<NonNullable<Parameters<typeof createArgusHook>[1]>["backgroundManager"] & {
         getTasksByParentSession: (sessionID: string) => Array<{ status: string }>
       }>({
         getTasksByParentSession: () => backgroundRunning ? [{ status: "running" }] : [],
@@ -200,7 +200,7 @@ describe("atlas background task retry", () => {
     expect(promptMock).toHaveBeenCalledTimes(1)
   })
 
-  test("#given background tasks keep running across multiple retries #when they finally finish on a later retry #then atlas resumes exactly once", async () => {
+  test("#given background tasks keep running across multiple retries #when they finally finish on a later retry #then argus resumes exactly once", async () => {
     // given
     const planPath = join(testDir, "test-plan.md")
     writeFileSync(planPath, "# Plan\n- [ ] Task 1\n- [ ] Task 2")
@@ -209,12 +209,12 @@ describe("atlas background task retry", () => {
       started_at: "2026-01-02T10:00:00Z",
       session_ids: [sessionID],
       plan_name: "test-plan",
-      agent: "atlas",
+      agent: "argus",
     })
 
     let remainingRunningRetries = 2
     const promptMock = mock(async () => ({}))
-    const hook = createAtlasHook(unsafeTestValue<PluginInput>({
+    const hook = createArgusHook(unsafeTestValue<PluginInput>({
       directory: testDir,
       client: {
         session: {
@@ -224,7 +224,7 @@ describe("atlas background task retry", () => {
       },
     }), {
       directory: testDir,
-      backgroundManager: unsafeTestValue<NonNullable<Parameters<typeof createAtlasHook>[1]>["backgroundManager"] & {
+      backgroundManager: unsafeTestValue<NonNullable<Parameters<typeof createArgusHook>[1]>["backgroundManager"] & {
         getTasksByParentSession: (sessionID: string) => Array<{ status: string }>
       }>({
         getTasksByParentSession: () => {
@@ -253,7 +253,7 @@ describe("atlas background task retry", () => {
     expect(capturedTimers.size).toBe(0)
   })
 
-  test("#given retry gate sees no running task but injector still does #when retry fires #then atlas schedules another retry and does not advance cooldown", async () => {
+  test("#given retry gate sees no running task but injector still does #when retry fires #then argus schedules another retry and does not advance cooldown", async () => {
     // given
     const planPath = join(testDir, "test-plan.md")
     writeFileSync(planPath, "# Plan\n- [ ] Task 1\n- [ ] Task 2")
@@ -262,13 +262,13 @@ describe("atlas background task retry", () => {
       started_at: "2026-01-02T10:00:00Z",
       session_ids: [sessionID],
       plan_name: "test-plan",
-      agent: "atlas",
+      agent: "argus",
     })
 
     const promptAsyncMock = mock(async () => ({}))
     let backgroundCheckCount = 0
 
-    const hook = createAtlasHook(unsafeTestValue<PluginInput>({
+    const hook = createArgusHook(unsafeTestValue<PluginInput>({
       directory: testDir,
       client: {
         session: {
@@ -278,7 +278,7 @@ describe("atlas background task retry", () => {
       },
     }), {
       directory: testDir,
-      backgroundManager: unsafeTestValue<NonNullable<Parameters<typeof createAtlasHook>[1]>["backgroundManager"] & {
+      backgroundManager: unsafeTestValue<NonNullable<Parameters<typeof createArgusHook>[1]>["backgroundManager"] & {
         getTasksByParentSession: (sessionID: string) => Array<{ status: string }>
       }>({
         getTasksByParentSession: () => {
@@ -318,12 +318,12 @@ describe("atlas background task retry", () => {
       started_at: "2026-01-02T10:00:00Z",
       session_ids: [sessionID],
       plan_name: "test-plan",
-      agent: "atlas",
+      agent: "argus",
     })
 
     let backgroundRunning = true
     const promptAsyncMock = mock(async () => ({}))
-    const hook = createAtlasHook(unsafeTestValue<PluginInput>({
+    const hook = createArgusHook(unsafeTestValue<PluginInput>({
       directory: testDir,
       client: {
         session: {
@@ -333,7 +333,7 @@ describe("atlas background task retry", () => {
       },
     }), {
       directory: testDir,
-      backgroundManager: unsafeTestValue<NonNullable<Parameters<typeof createAtlasHook>[1]>["backgroundManager"] & {
+      backgroundManager: unsafeTestValue<NonNullable<Parameters<typeof createArgusHook>[1]>["backgroundManager"] & {
         getTasksByParentSession: (sessionID: string) => Array<{ status: string }>
       }>({
         getTasksByParentSession: () => backgroundRunning ? [{ status: "running" }] : [],
@@ -355,10 +355,10 @@ describe("atlas background task retry", () => {
     expect(promptAsyncMock).toHaveBeenCalledTimes(1)
   })
 
-  test("#given a persisted descendant becomes ineligible before retry fires #when retry runs #then atlas re-checks descendant eligibility and does not inject", async () => {
+  test("#given a persisted descendant becomes ineligible before retry fires #when retry runs #then argus re-checks descendant eligibility and does not inject", async () => {
     // given
     const descendantSessionID = "ses_descendant_retry_mismatch"
-    setSessionAgent(descendantSessionID, "atlas")
+    setSessionAgent(descendantSessionID, "argus")
     const planPath = join(testDir, "test-plan.md")
     writeFileSync(planPath, "# Plan\n- [ ] Task 1\n- [ ] Task 2")
     writeBoulderState(testDir, {
@@ -370,13 +370,13 @@ describe("atlas background task retry", () => {
         [descendantSessionID]: "appended",
       },
       plan_name: "test-plan",
-      agent: "atlas",
+      agent: "argus",
     })
 
     let backgroundRunning = true
-    let descendantAgent = "atlas"
+    let descendantAgent = "argus"
     const promptAsyncMock = mock(async () => ({}))
-    const hook = createAtlasHook(unsafeTestValue<PluginInput>({
+    const hook = createArgusHook(unsafeTestValue<PluginInput>({
       directory: testDir,
       client: {
         session: {
@@ -396,7 +396,7 @@ describe("atlas background task retry", () => {
       },
     }), {
       directory: testDir,
-      backgroundManager: unsafeTestValue<NonNullable<Parameters<typeof createAtlasHook>[1]>["backgroundManager"] & {
+      backgroundManager: unsafeTestValue<NonNullable<Parameters<typeof createArgusHook>[1]>["backgroundManager"] & {
         getTasksByParentSession: (sessionID: string) => Array<{ status: string }>
       }>({
         getTasksByParentSession: (currentSessionID: string) => {
@@ -411,7 +411,7 @@ describe("atlas background task retry", () => {
     // when
     await hook.handler({ event: { type: "session.idle", properties: { sessionID: descendantSessionID } } })
     expect(capturedTimers.size).toBe(1)
-    descendantAgent = "prometheus"
+    descendantAgent = "talos"
     clearSessionAgent(descendantSessionID)
     backgroundRunning = false
     await firePendingTimers()
@@ -420,7 +420,7 @@ describe("atlas background task retry", () => {
     expect(promptAsyncMock).toHaveBeenCalledTimes(0)
   })
 
-  test("#given continuation injection is already in flight #when another idle event arrives #then atlas does not inject twice", async () => {
+  test("#given continuation injection is already in flight #when another idle event arrives #then argus does not inject twice", async () => {
     // given
     const planPath = join(testDir, "test-plan.md")
     writeFileSync(planPath, "# Plan\n- [ ] Task 1\n- [ ] Task 2")
@@ -429,12 +429,12 @@ describe("atlas background task retry", () => {
       started_at: "2026-01-02T10:00:00Z",
       session_ids: [sessionID],
       plan_name: "test-plan",
-      agent: "atlas",
+      agent: "argus",
     })
 
     const deferredPrompt = createDeferred<unknown>()
     const promptAsyncMock = mock(() => deferredPrompt.promise)
-    const hook = createAtlasHook(unsafeTestValue<PluginInput>({
+    const hook = createArgusHook(unsafeTestValue<PluginInput>({
       directory: testDir,
       client: {
         session: {
@@ -455,7 +455,7 @@ describe("atlas background task retry", () => {
     expect(promptAsyncMock).toHaveBeenCalledTimes(1)
   })
 
-  test("#given a retry timer fires during an in-flight continuation that later fails #when the in-flight guard re-arms retry #then atlas can recover on the next retry", async () => {
+  test("#given a retry timer fires during an in-flight continuation that later fails #when the in-flight guard re-arms retry #then argus can recover on the next retry", async () => {
     // given
     const planPath = join(testDir, "test-plan.md")
     writeFileSync(planPath, "# Plan\n- [ ] Task 1\n- [ ] Task 2")
@@ -464,7 +464,7 @@ describe("atlas background task retry", () => {
       started_at: "2026-01-02T10:00:00Z",
       session_ids: [sessionID],
       plan_name: "test-plan",
-      agent: "atlas",
+      agent: "argus",
     })
 
     const deferredPrompt = createDeferred<unknown>()
@@ -472,7 +472,7 @@ describe("atlas background task retry", () => {
     promptAsyncMock.mockImplementationOnce(() => deferredPrompt.promise)
     promptAsyncMock.mockImplementationOnce(async () => ({}))
 
-    const hook = createAtlasHook(unsafeTestValue<PluginInput>({
+    const hook = createArgusHook(unsafeTestValue<PluginInput>({
       directory: testDir,
       client: {
         session: {
@@ -482,7 +482,7 @@ describe("atlas background task retry", () => {
       },
     }), {
       directory: testDir,
-      backgroundManager: unsafeTestValue<NonNullable<Parameters<typeof createAtlasHook>[1]>["backgroundManager"] & {
+      backgroundManager: unsafeTestValue<NonNullable<Parameters<typeof createArgusHook>[1]>["backgroundManager"] & {
         getTasksByParentSession: (sessionID: string) => Array<{ status: string }>
       }>({
         getTasksByParentSession: () => [],
@@ -506,7 +506,7 @@ describe("atlas background task retry", () => {
     expect(promptAsyncMock).toHaveBeenCalledTimes(2)
   })
 
-  test("#given a retry-driven continuation fails once #when retry handling re-arms the chain #then atlas recovers on the next retry", async () => {
+  test("#given a retry-driven continuation fails once #when retry handling re-arms the chain #then argus recovers on the next retry", async () => {
     // given
     const planPath = join(testDir, "test-plan.md")
     writeFileSync(planPath, "# Plan\n- [ ] Task 1\n- [ ] Task 2")
@@ -515,7 +515,7 @@ describe("atlas background task retry", () => {
       started_at: "2026-01-02T10:00:00Z",
       session_ids: [sessionID],
       plan_name: "test-plan",
-      agent: "atlas",
+      agent: "argus",
     })
 
     let backgroundRunning = true
@@ -525,7 +525,7 @@ describe("atlas background task retry", () => {
     })
     promptAsyncMock.mockImplementationOnce(async () => ({}))
 
-    const hook = createAtlasHook(unsafeTestValue<PluginInput>({
+    const hook = createArgusHook(unsafeTestValue<PluginInput>({
       directory: testDir,
       client: {
         session: {
@@ -535,7 +535,7 @@ describe("atlas background task retry", () => {
       },
     }), {
       directory: testDir,
-      backgroundManager: unsafeTestValue<NonNullable<Parameters<typeof createAtlasHook>[1]>["backgroundManager"] & {
+      backgroundManager: unsafeTestValue<NonNullable<Parameters<typeof createArgusHook>[1]>["backgroundManager"] & {
         getTasksByParentSession: (sessionID: string) => Array<{ status: string }>
       }>({
         getTasksByParentSession: () => backgroundRunning ? [{ status: "running" }] : [],

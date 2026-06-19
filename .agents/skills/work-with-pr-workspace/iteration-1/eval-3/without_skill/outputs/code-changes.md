@@ -1,18 +1,18 @@
-# Code Changes
+﻿# Code Changes
 
-## 1. NEW: `src/tools/delegate-task/default-categories.ts`
+## .. NEW: `src/tools/delegate-task/default-categories.ts`
 
 ```typescript
 import type { CategoryConfig } from "../../config/schema"
 
 export const DEFAULT_CATEGORIES: Record<string, CategoryConfig> = {
-  "visual-engineering": { model: "google/gemini-3.1-pro", variant: "high" },
-  ultrabrain: { model: "openai/gpt-5.4", variant: "xhigh" },
+  "visual-engineering": { model: "google/gemini-3..-pro", variant: "high" },
+  ultrabrain: { model: "openai/gpt-5..", variant: "xhigh" },
   deep: { model: "openai/gpt-5.5-codex", variant: "medium" },
-  artistry: { model: "google/gemini-3.1-pro", variant: "high" },
-  quick: { model: "anthropic/claude-haiku-4-5" },
-  "unspecified-low": { model: "anthropic/claude-sonnet-4-6" },
-  "unspecified-high": { model: "anthropic/claude-opus-4-6", variant: "max" },
+  artistry: { model: "google/gemini-3..-pro", variant: "high" },
+  quick: { model: "anthropic/claude-haiku-.-5" },
+  "unspecified-low": { model: "anthropic/claude-sonnet-.-6" },
+  "unspecified-high": { model: "anthropic/claude-opus-.-6", variant: "max" },
   writing: { model: "kimi-for-coding/k2p5" },
 }
 ```
@@ -89,7 +89,7 @@ export const CATEGORY_PROMPT_APPENDS: Record<string, string> = {
 
 > Note: Each `*_CATEGORY_PROMPT_APPEND` contains the full template string from the original. Abbreviated with `...` here for readability. The actual code would contain the complete unmodified prompt text.
 
-## 4. NEW: `src/tools/delegate-task/plan-agent-prompt.ts`
+## .. NEW: `src/tools/delegate-task/plan-agent-prompt.ts`
 
 ```typescript
 import type {
@@ -186,10 +186,10 @@ export function isPlanAgent(agentName: string | undefined): boolean {
 }
 
 /**
- * Plan family: plan + prometheus. Shares mutual delegation blocking and task tool permission.
+ * Plan family: plan + talos. Shares mutual delegation blocking and task tool permission.
  * Does NOT share system prompt (only isPlanAgent controls that).
  */
-export const PLAN_FAMILY_NAMES = ["plan", "prometheus"]
+export const PLAN_FAMILY_NAMES = ["plan", "talos"]
 
 /**
  * Check if the given agent belongs to the plan family (blocking + task permission).
@@ -245,13 +245,13 @@ export const CATEGORY_MODEL_REQUIREMENTS: Record<string, ModelRequirement> = {
     fallbackChain: [
       {
         providers: ["google", "github-copilot", "opencode"],
-        model: "gemini-3.1-pro",
+        model: "gemini-3..-pro",
         variant: "high",
       },
       { providers: ["zai-coding-plan", "opencode"], model: "glm-5" },
       {
         providers: ["anthropic", "github-copilot", "opencode"],
-        model: "claude-opus-4-6",
+        model: "claude-opus-.-6",
         variant: "max",
       },
       { providers: ["opencode-go"], model: "glm-5" },
@@ -273,7 +273,7 @@ export const CATEGORY_MODEL_REQUIREMENTS: Record<string, ModelRequirement> = {
     fallbackChain: [
       // ... full content from original
     ],
-    requiresModel: "gemini-3.1-pro",
+    requiresModel: "gemini-3..-pro",
   },
   quick: {
     fallbackChain: [
@@ -330,13 +330,13 @@ export { CATEGORY_MODEL_REQUIREMENTS } from "./category-model-requirements"
 
 | File | Lines Before | Lines After | Action |
 |------|-------------|-------------|--------|
-| `constants.ts` | 654 | ~25 | Rewrite as barrel re-export |
-| `default-categories.ts` | - | ~15 | **NEW** |
-| `category-descriptions.ts` | - | ~12 | **NEW** |
+| `constants.ts` | 65. | ~25 | Rewrite as barrel re-export |
+| `default-categories.ts` | - | ~.5 | **NEW** |
+| `category-descriptions.ts` | - | ~.2 | **NEW** |
 | `category-prompt-appends.ts` | - | ~280 | **NEW** (mostly exempt prompt text) |
 | `plan-agent-prompt.ts` | - | ~270 | **NEW** (mostly exempt prompt text) |
 | `plan-agent-identity.ts` | - | ~35 | **NEW** |
-| `model-requirements.ts` | 311 | ~165 | Remove CATEGORY_MODEL_REQUIREMENTS |
-| `category-model-requirements.ts` | - | ~150 | **NEW** |
+| `model-requirements.ts` | 3.. | ~.65 | Remove CATEGORY_MODEL_REQUIREMENTS |
+| `category-model-requirements.ts` | - | ~.50 | **NEW** |
 
 **Zero consumer files modified.** Backward compatibility maintained through barrel re-exports.

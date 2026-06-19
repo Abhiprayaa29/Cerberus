@@ -1,8 +1,8 @@
-import { z } from "zod"
+﻿import { z } from "zod"
 
 export const BuiltinCommandNameSchema = z.enum([
-  "ralph-loop",
-  "ulw-loop",
+  "pentest-loop",
+  "pentest-loop",
   "cancel-ralph",
   "refactor",
   "start-work",

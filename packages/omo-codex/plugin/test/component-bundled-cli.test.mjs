@@ -1,4 +1,4 @@
-import assert from "node:assert/strict";
+﻿import assert from "node:assert/strict";
 import { chmodSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
@@ -17,8 +17,8 @@ const HOOK_EVENTS_BY_COMPONENT = {
 	rules: "session-start",
 	"start-work-continuation": "stop",
 	telemetry: "session-start",
-	ultrawork: "user-prompt-submit",
-	"ulw-loop": "pre-tool-use",
+	fullscan: "user-prompt-submit",
+	"pentest-loop": "pre-tool-use",
 };
 const MCP_ONLY_COMPONENTS = new Set(["codegraph"]);
 const HOOK_CLI_TEST_TIMEOUT_MS = 45_000;
@@ -281,7 +281,7 @@ function hookEnv(tempRoot, extraEnv = {}) {
 		...extraEnv,
 		HOME: join(tempRoot, "home"),
 		PLUGIN_DATA: join(tempRoot, "plugin-data"),
-		OMO_CODEX_DISABLE_POSTHOG: "1",
-		OMO_CODEX_SEND_ANONYMOUS_TELEMETRY: "0",
+		OMOP_CODEX_DISABLE_POSTHOG: "1",
+		OMOP_CODEX_SEND_ANONYMOUS_TELEMETRY: "0",
 	};
 }

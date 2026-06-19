@@ -1,8 +1,8 @@
-import type { OhMyOpenCodeConfig } from "../config"
+﻿import type { OhMyOpenCodeConfig } from "../config"
 
 import { updateSessionAgent } from "../features/claude-code-session-state"
 import { isSyntheticOrInternalOnlyTextParts, log } from "../shared"
-import { applyUltraworkModelOverrideOnMessage } from "./ultrawork-model-override"
+import { applyUltraworkModelOverrideOnMessage } from "./fullscan-model-override"
 import type { PluginContext } from "./types"
 import { handleRalphLoopMessage } from "./chat-message/loop-commands"
 import { notifyWhenModelCacheIsMissing } from "./chat-message/model-cache-warning"
@@ -63,9 +63,9 @@ async function runChatMessageHooks(args: {
   await hooks.thinkMode?.["chat.message"]?.(input, output)
   await hooks.claudeCodeHooks?.["chat.message"]?.(input, output)
   await hooks.autoSlashCommand?.["chat.message"]?.(input, output)
-  await hooks.noSisyphusGpt?.["chat.message"]?.(input, output)
-  await hooks.noHephaestusNonGpt?.["chat.message"]?.(input, output)
-  await hooks.hephaestusAgentsMdInjector?.["chat.message"]?.(input, output)
+  await hooks.noCerberusGpt?.["chat.message"]?.(input, output)
+  await hooks.noScyllaNonGpt?.["chat.message"]?.(input, output)
+  await hooks.scyllaAgentsMdInjector?.["chat.message"]?.(input, output)
 }
 
 export function createChatMessageHandler(args: {

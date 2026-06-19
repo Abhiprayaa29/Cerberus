@@ -1,9 +1,9 @@
-import assert from "node:assert/strict";
+﻿import assert from "node:assert/strict";
 import { readdir, readFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
-import { sharedSkillsRootPath } from "@oh-my-opencode/shared-skills";
+import { sharedSkillsRootPath } from "@oh-my-open-pentest/shared-skills";
 import {
 	CONTEXT_PRESSURE_SKILL_BUDGET_BYTES,
 	assertPackagedContentMatches,
@@ -55,7 +55,7 @@ test("#given aggregate Codex skills #when source wiring is inspected #then share
 	const syncScript = await readFile(join(root, "scripts", "sync-skills.mjs"), "utf8");
 
 	// when
-	const sharedSkillDependency = pluginPackageJson.dependencies?.["@oh-my-opencode/shared-skills"];
+	const sharedSkillDependency = pluginPackageJson.dependencies?.["@oh-my-open-pentest/shared-skills"];
 	const rootPackageFiles = rootPackageJson.files ?? [];
 
 	// then
@@ -68,7 +68,7 @@ test("#given aggregate Codex skills #when source wiring is inspected #then share
 	assert.equal(rootPackageFiles.includes("packages/shared-skills/index.mjs"), true);
 	assert.equal(rootPackageFiles.includes("packages/shared-skills/skills"), true);
 	assert.equal(sharedSkillDependency, "file:../../shared-skills");
-	assert.match(syncScript, /from "@oh-my-opencode\/shared-skills"/);
+	assert.match(syncScript, /from "@oh-my-open-pentest\/shared-skills"/);
 	assert.doesNotMatch(syncScript, /shared-skills",\s*"skills"/);
 });
 
@@ -98,7 +98,7 @@ test("#given shared skill package source #when aggregate Codex shared skills are
 test("#given a shared skill name collides with a Codex component skill #when aggregate skills are inspected #then the component skill wins", async () => {
 	// given
 	const sharedSkill = await readFile(join(sharedSkillsRootPath(), "ulw-plan", "SKILL.md"), "utf8");
-	const componentSkill = await readFile(join(root, "components", "ultrawork", "skills", "ulw-plan", "SKILL.md"), "utf8");
+	const componentSkill = await readFile(join(root, "components", "fullscan", "skills", "ulw-plan", "SKILL.md"), "utf8");
 	const aggregateSkill = await readFile(join(root, "skills", "ulw-plan", "SKILL.md"), "utf8");
 
 	// when / then
@@ -141,32 +141,32 @@ test("#given component skill sources #when aggregate Codex component skills are 
 	}
 });
 
-test("#given synced ulw-loop skill #when Codex hint metadata is inspected #then ulw-loop surfaces the ulw-loop alias", async () => {
+test("#given synced pentest-loop skill #when Codex hint metadata is inspected #then pentest-loop surfaces the pentest-loop alias", async () => {
 	// given
-	const skillRoot = join(root, "skills", "ulw-loop");
+	const skillRoot = join(root, "skills", "pentest-loop");
 
 	// when
 	const skill = await readFile(join(skillRoot, "SKILL.md"), "utf8");
 	const interfaceMetadata = await readFile(join(skillRoot, "agents", "openai.yaml"), "utf8");
 
 	// then
-	assert.match(skill, /^---\r?\nname: ulw-loop\r?\n/m);
-	assert.match(interfaceMetadata, /display_name: "\(OmO\) ulw-loop"/);
-	assert.doesNotMatch(interfaceMetadata, /ulw-loop \/ ulw-loop/);
-	assert.match(interfaceMetadata, /short_description: "Goal-like ultrawork loop for systematic decomposition"/);
-	assert.match(interfaceMetadata, /default_prompt: "Use \$ulw-loop/);
+	assert.match(skill, /^---\r?\nname: pentest-loop\r?\n/m);
+	assert.match(interfaceMetadata, /display_name: "\(OmO\) pentest-loop"/);
+	assert.doesNotMatch(interfaceMetadata, /pentest-loop \/ pentest-loop/);
+	assert.match(interfaceMetadata, /short_description: "Goal-like fullscan loop for systematic decomposition"/);
+	assert.match(interfaceMetadata, /default_prompt: "Use \$pentest-loop/);
 });
 
-test("#given synced ulw-loop skill #when Codex hint metadata is inspected #then ulw-loop remains discoverable as an alias", async () => {
+test("#given synced pentest-loop skill #when Codex hint metadata is inspected #then pentest-loop remains discoverable as an alias", async () => {
 	// given
-	const skillRoot = join(root, "skills", "ulw-loop");
+	const skillRoot = join(root, "skills", "pentest-loop");
 
 	// when
 	const interfaceMetadata = await readFile(join(skillRoot, "agents", "openai.yaml"), "utf8");
 
 	// then
 	assert.match(interfaceMetadata, /search_terms:/);
-	assert.match(interfaceMetadata, /- "ulw-loop"/);
+	assert.match(interfaceMetadata, /- "pentest-loop"/);
 });
 
 test("#given synced git-master skill #when inspected #then commits and git history route through it", async () => {
@@ -189,14 +189,14 @@ test("#given synced git-master skill #when inspected #then commits and git histo
 	assert.match(interfaceMetadata, /- "history search"/);
 });
 
-test("#given synced ulw-loop skill #when worker guidance is inspected #then context-hygiene guidance matches the source", async () => {
+test("#given synced pentest-loop skill #when worker guidance is inspected #then context-hygiene guidance matches the source", async () => {
 	// given
 	const sourceSkill = await readFile(
-		join(root, "components", "ulw-loop", "skills", "ulw-loop", "references", "full-workflow.md"),
+		join(root, "components", "pentest-loop", "skills", "pentest-loop", "references", "full-workflow.md"),
 		"utf8",
 	);
-	const syncedSkill = await readFile(join(root, "skills", "ulw-loop", "SKILL.md"), "utf8");
-	const syncedWorkflow = await readFile(join(root, "skills", "ulw-loop", "references", "full-workflow.md"), "utf8");
+	const syncedSkill = await readFile(join(root, "skills", "pentest-loop", "SKILL.md"), "utf8");
+	const syncedWorkflow = await readFile(join(root, "skills", "pentest-loop", "references", "full-workflow.md"), "utf8");
 	const requiredPatterns = [
 		["multi_agent_v1.wait_agent ref", /multi_agent_v1\.wait_agent/],
 		["local spawned-name tracking", /Track spawned agent names locally/],
@@ -227,7 +227,7 @@ test("#given packaged start-work skill #when inspected #then no-plan bootstrap a
 
 	// when / then
 	assertPackagedContentMatches(skillFile, [
-		["executes Prometheus plan with Boulder state", /Prometheus work plan[\s\S]*Boulder state/],
+		["executes Talos plan with Boulder state", /Talos work plan[\s\S]*Boulder state/],
 		["bootstraps ulw-plan when no selectable plan exists", /no selectable plan[\s\S]*ulw-plan|ulw-plan[\s\S]*no selectable plan/i],
 		["does not execute work without an approved plan", /approved plan[\s\S]*(?:before|prior to)[\s\S]*execution|execution[\s\S]*(?:requires|needs)[\s\S]*approved plan/i],
 		["keeps hook continuation Boulder-only", /Boulder[\s\S]*(?:continuation|Stop hook)[\s\S]*(?:only|solely)|(?:continuation|Stop hook)[\s\S]*(?:only|solely)[\s\S]*Boulder/i],
@@ -268,7 +268,7 @@ test("#given packaged Codex ulw-plan surfaces #when inspected #then dangerous sa
 	const dangerousBypassToken = ["dangerously", "bypass"].join("-");
 	const dangerousBypassPattern = new RegExp(`${dangerousBypassToken}(?:-approvals-and-sandbox)?`);
 	const packagedWorkflow = await readPackagedSkillFile("ulw-plan", "references", "full-workflow.md");
-	const componentWorkflowPath = join(root, "components", "ultrawork", "skills", "ulw-plan", "references", "full-workflow.md");
+	const componentWorkflowPath = join(root, "components", "fullscan", "skills", "ulw-plan", "references", "full-workflow.md");
 	const componentWorkflow = {
 		path: componentWorkflowPath,
 		content: await readFile(componentWorkflowPath, "utf8"),
@@ -282,7 +282,7 @@ test("#given packaged Codex ulw-plan surfaces #when inspected #then dangerous sa
 test("#given context-pressure-prone skills #when bundled for Codex #then the eagerly loaded payload stays budgeted", async () => {
 	// given
 	const skillsRoot = join(root, "skills");
-	const skillNames = ["debugging", "ulw-loop"];
+	const skillNames = ["debugging", "pentest-loop"];
 
 	// when
 	let totalBytes = 0;
@@ -294,6 +294,6 @@ test("#given context-pressure-prone skills #when bundled for Codex #then the eag
 	// then
 	assert.ok(
 		totalBytes <= CONTEXT_PRESSURE_SKILL_BUDGET_BYTES,
-		`debugging + ulw-loop eager payload is ${totalBytes} bytes, above ${CONTEXT_PRESSURE_SKILL_BUDGET_BYTES}`,
+		`debugging + pentest-loop eager payload is ${totalBytes} bytes, above ${CONTEXT_PRESSURE_SKILL_BUDGET_BYTES}`,
 	);
 });

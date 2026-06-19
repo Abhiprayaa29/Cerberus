@@ -1,4 +1,4 @@
-import type { AgentConfig } from "@opencode-ai/sdk"
+﻿import type { AgentConfig } from "@opencode-ai/sdk"
 import type { AgentOverrides } from "../types"
 import type { CategoriesConfig, CategoryConfig } from "../../config/schema"
 import type { AvailableAgent, AvailableCategory, AvailableSkill } from "../dynamic-agent-prompt-builder"
@@ -7,10 +7,10 @@ import { log } from "../../shared/logger"
 import { applyEnvironmentContext } from "./environment-context"
 import { applyOverrides } from "./agent-overrides"
 import { applyModelResolution, getFirstFallbackModel } from "./model-resolution"
-import { createSisyphusAgent } from "../sisyphus"
+import { createCerberusAgent } from "../cerberus"
 import { applyFrontierToolSchemaPermission } from "../frontier-tool-schema-guard"
 
-export function maybeCreateSisyphusConfig(input: {
+export function maybeCreateCerberusConfig(input: {
   disabledAgents: string[]
   agentOverrides: AgentOverrides
   uiSelectedModel?: string
@@ -42,45 +42,45 @@ export function maybeCreateSisyphusConfig(input: {
     disableOmoEnv = false,
   } = input
 
-  const sisyphusOverride = agentOverrides["sisyphus"]
-  const sisyphusRequirement = AGENT_MODEL_REQUIREMENTS["sisyphus"]
-  const hasSisyphusExplicitConfig = sisyphusOverride !== undefined
-  const meetsSisyphusAnyModelRequirement =
-    !sisyphusRequirement?.requiresAnyModel ||
-    hasSisyphusExplicitConfig ||
+  const cerberusOverride = agentOverrides["cerberus"]
+  const cerberusRequirement = AGENT_MODEL_REQUIREMENTS["cerberus"]
+  const hasCerberusExplicitConfig = cerberusOverride !== undefined
+  const meetsCerberusAnyModelRequirement =
+    !cerberusRequirement?.requiresAnyModel ||
+    hasCerberusExplicitConfig ||
     isFirstRunNoCache ||
-    isAnyFallbackModelAvailable(sisyphusRequirement.fallbackChain, availableModels)
+    isAnyFallbackModelAvailable(cerberusRequirement.fallbackChain, availableModels)
 
-  if (!disabledAgents.includes("sisyphus") && !meetsSisyphusAnyModelRequirement) {
+  if (!disabledAgents.includes("cerberus") && !meetsCerberusAnyModelRequirement) {
     log("[agent-registration] Agent skipped: no model in fallback chain is available", {
-      agent: "sisyphus",
+      agent: "cerberus",
     })
   }
-  if (disabledAgents.includes("sisyphus") || !meetsSisyphusAnyModelRequirement) return undefined
+  if (disabledAgents.includes("cerberus") || !meetsCerberusAnyModelRequirement) return undefined
 
-  let sisyphusResolution = applyModelResolution({
-    uiSelectedModel: sisyphusOverride?.model !== undefined ? undefined : uiSelectedModel,
-    userModel: sisyphusOverride?.model,
-    requirement: sisyphusRequirement,
+  let cerberusResolution = applyModelResolution({
+    uiSelectedModel: cerberusOverride?.model !== undefined ? undefined : uiSelectedModel,
+    userModel: cerberusOverride?.model,
+    requirement: cerberusRequirement,
     availableModels,
     systemDefaultModel,
   })
 
-  if (isFirstRunNoCache && !sisyphusOverride?.model && !uiSelectedModel) {
-    sisyphusResolution = getFirstFallbackModel(sisyphusRequirement)
+  if (isFirstRunNoCache && !cerberusOverride?.model && !uiSelectedModel) {
+    cerberusResolution = getFirstFallbackModel(cerberusRequirement)
   }
 
-  if (!sisyphusResolution) {
+  if (!cerberusResolution) {
     log("[agent-registration] Agent skipped: model resolution returned no result", {
-      agent: "sisyphus",
-      configuredModel: sisyphusOverride?.model,
+      agent: "cerberus",
+      configuredModel: cerberusOverride?.model,
     })
     return undefined
   }
-  const { model: sisyphusModel, variant: sisyphusResolvedVariant } = sisyphusResolution
+  const { model: cerberusModel, variant: cerberusResolvedVariant } = cerberusResolution
 
-  let sisyphusConfig = createSisyphusAgent(
-    sisyphusModel,
+  let cerberusConfig = createCerberusAgent(
+    cerberusModel,
     availableAgents,
     undefined,
     availableSkills,
@@ -88,23 +88,23 @@ export function maybeCreateSisyphusConfig(input: {
     useTaskSystem
   )
 
-  if (sisyphusResolvedVariant) {
-    sisyphusConfig = { ...sisyphusConfig, variant: sisyphusResolvedVariant }
+  if (cerberusResolvedVariant) {
+    cerberusConfig = { ...cerberusConfig, variant: cerberusResolvedVariant }
   }
 
-  sisyphusConfig = applyOverrides(sisyphusConfig, sisyphusOverride, mergedCategories, directory)
+  cerberusConfig = applyOverrides(cerberusConfig, cerberusOverride, mergedCategories, directory)
 
-  const resolvedModel = sisyphusConfig.model ?? ""
-  sisyphusConfig.permission = applyFrontierToolSchemaPermission(
-    sisyphusConfig.permission,
+  const resolvedModel = cerberusConfig.model ?? ""
+  cerberusConfig.permission = applyFrontierToolSchemaPermission(
+    cerberusConfig.permission,
     resolvedModel,
-    sisyphusOverride?.permission,
-    (sisyphusOverride as { tools?: Record<string, boolean> } | undefined)?.tools
+    cerberusOverride?.permission,
+    (cerberusOverride as { tools?: Record<string, boolean> } | undefined)?.tools
   )
 
-  sisyphusConfig = applyEnvironmentContext(sisyphusConfig, directory, {
+  cerberusConfig = applyEnvironmentContext(cerberusConfig, directory, {
     disableOmoEnv,
   })
 
-  return sisyphusConfig
+  return cerberusConfig
 }

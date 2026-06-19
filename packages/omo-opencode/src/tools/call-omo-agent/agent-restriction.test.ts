@@ -1,4 +1,4 @@
-import { describe, expect, mock, test } from "bun:test"
+﻿import { describe, expect, mock, test } from "bun:test"
 import { createCallOmoAgent } from "./tools"
 import { clearCallableAgentsCache } from "./agent-resolver"
 
@@ -23,7 +23,7 @@ function createBackgroundManager() {
     id: "task-id",
     sessionId: "session-id",
     description: "Test task",
-    agent: "explore",
+    agent: "scout",
     status: "pending",
   }))
 
@@ -45,7 +45,7 @@ function createBackgroundManager() {
 const toolContext = {
   sessionID: "parent-session",
   messageID: "message-id",
-  agent: "sisyphus-junior",
+  agent: "cerberus-junior",
   abort: new AbortController().signal,
 }
 
@@ -54,8 +54,8 @@ describe("call_omo_agent restricted agent set", () => {
     //#given
     clearCallableAgentsCache()
     const pluginInput = createPluginInput([
-      { name: "explore", mode: "subagent" },
-      { name: "librarian", mode: "subagent" },
+      { name: "scout", mode: "subagent" },
+      { name: "intel", mode: "subagent" },
       { name: "general", mode: "subagent" },
     ])
     const { manager, launch } = createBackgroundManager()
@@ -69,50 +69,50 @@ describe("call_omo_agent restricted agent set", () => {
 
     //#then
     expect(result).toContain("Invalid agent type")
-    expect(result).toContain("Only explore, librarian are allowed")
+    expect(result).toContain("Only scout, intel are allowed")
     expect(launch).not.toHaveBeenCalled()
   })
 
-  test("#when caller requests oracle #then call_omo_agent rejects it because only research lookup agents are callable", async () => {
+  test("#when caller requests cipher #then call_omo_agent rejects it because only research lookup agents are callable", async () => {
     //#given
     clearCallableAgentsCache()
     const pluginInput = createPluginInput([
-      { name: "explore", mode: "subagent" },
-      { name: "librarian", mode: "subagent" },
-      { name: "oracle", mode: "subagent" },
+      { name: "scout", mode: "subagent" },
+      { name: "intel", mode: "subagent" },
+      { name: "cipher", mode: "subagent" },
     ])
     const { manager, launch } = createBackgroundManager()
     const toolDefinition = createCallOmoAgent(pluginInput, manager)
 
     //#when
     const result = await toolDefinition.execute(
-      { description: "Test", prompt: "Review this", subagent_type: "oracle", run_in_background: true },
+      { description: "Test", prompt: "Review this", subagent_type: "cipher", run_in_background: true },
       toolContext,
     )
 
     //#then
     expect(result).toContain("Invalid agent type")
-    expect(result).toContain("Only explore, librarian are allowed")
+    expect(result).toContain("Only scout, intel are allowed")
     expect(launch).not.toHaveBeenCalled()
   })
 
-  test("#when caller requests explore or librarian #then call_omo_agent still launches them", async () => {
+  test("#when caller requests scout or intel #then call_omo_agent still launches them", async () => {
     //#given
     clearCallableAgentsCache()
     const pluginInput = createPluginInput([
-      { name: "explore", mode: "subagent" },
-      { name: "librarian", mode: "subagent" },
+      { name: "scout", mode: "subagent" },
+      { name: "intel", mode: "subagent" },
     ])
     const { manager, launch } = createBackgroundManager()
     const toolDefinition = createCallOmoAgent(pluginInput, manager)
 
     //#when
     await toolDefinition.execute(
-      { description: "Explore", prompt: "Read code", subagent_type: "explore", run_in_background: true },
+      { description: "Scout", prompt: "Read code", subagent_type: "scout", run_in_background: true },
       toolContext,
     )
     await toolDefinition.execute(
-      { description: "Research", prompt: "Find docs", subagent_type: "librarian", run_in_background: true },
+      { description: "Research", prompt: "Find docs", subagent_type: "intel", run_in_background: true },
       toolContext,
     )
 

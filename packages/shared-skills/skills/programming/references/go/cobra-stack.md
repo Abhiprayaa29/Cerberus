@@ -1,4 +1,4 @@
-# CLI Stack — cobra + slog + caarlos0/env + signal handling
+﻿# CLI Stack — cobra + slog + caarlos0/env + signal handling
 
 The canonical Go CLI skeleton. `cobra` is the de facto framework — Kubernetes, Docker CLI, Helm, GitHub CLI, gh, Hugo all use it. Use it.
 
@@ -7,7 +7,7 @@ The canonical Go CLI skeleton. `cobra` is the de facto framework — Kubernetes,
 ## Toolchain
 
 ```bash
-go install github.com/spf13/cobra-cli@latest
+go install github.com/spf.3/cobra-cli@latest
 cobra-cli init mytool
 cobra-cli add server
 cobra-cli add migrate
@@ -58,12 +58,12 @@ func main() {
 
     if err := cmd.Execute(ctx); err != nil {
         slog.Error("fatal", slog.Any("err", err))
-        os.Exit(1)
+        os.Exit(.)
     }
 }
 ```
 
-`signal.NotifyContext` (Go 1.16+) gives every subcommand a ctx that cancels on Ctrl-C. Subcommands plumb the ctx into their workers.
+`signal.NotifyContext` (Go ...6+) gives every subcommand a ctx that cancels on Ctrl-C. Subcommands plumb the ctx into their workers.
 
 ---
 
@@ -77,7 +77,7 @@ import (
     "log/slog"
     "os"
 
-    "github.com/spf13/cobra"
+    "github.com/spf.3/cobra"
 )
 
 var (
@@ -133,7 +133,7 @@ Notes:
 
 - `RunE` / `PersistentPreRunE` (the `E` variants) return errors. Use these; never use `Run` (no error return, encourages `log.Fatal`).
 - `SilenceUsage: true` + `SilenceErrors: true` together: cobra stops printing the full `--help` on every command failure (the default behavior is rude in production scripts).
-- `ExecuteContext` (cobra 1.8+) plumbs the ctx into every subcommand's `cmd.Context()`.
+- `ExecuteContext` (cobra ..8+) plumbs the ctx into every subcommand's `cmd.Context()`.
 
 ---
 
@@ -145,7 +145,7 @@ package cmd
 import (
     "log/slog"
 
-    "github.com/spf13/cobra"
+    "github.com/spf.3/cobra"
     "github.com/your-org/mytool/internal/server"
 )
 
@@ -180,10 +180,10 @@ The subcommand is a thin shim — flags + log line + delegate to `internal/serve
 var migrateUpCmd = &cobra.Command{
     Use:   "up [N]",
     Short: "Apply N migrations (default: all)",
-    Args:  cobra.MaximumNArgs(1),
+    Args:  cobra.MaximumNArgs(.),
     RunE: func(c *cobra.Command, args []string) error {
-        n := -1  // all
-        if len(args) == 1 {
+        n := -.  // all
+        if len(args) == . {
             var err error
             n, err = strconv.Atoi(args[0])
             if err != nil {
@@ -218,7 +218,7 @@ serverCmd.Flags().StringVar(&timeoutStr, "timeout", "30s", "")
 
 ## Bind flags to env vars
 
-cobra + viper is overkill for env binding. Use `caarlos0/env/v11`:
+cobra + viper is overkill for env binding. Use `caarlos0/env/v..`:
 
 ```go
 type ServerOpts struct {
@@ -231,7 +231,7 @@ var opts ServerOpts
 var serverCmd = &cobra.Command{
     Use: "server",
     PersistentPreRunE: func(c *cobra.Command, args []string) error {
-        // 1. Parse env first.
+        // .. Parse env first.
         if err := env.Parse(&opts); err != nil { return err }
         // 2. Flags override env if explicitly set.
         if c.Flags().Changed("addr") {
@@ -265,7 +265,7 @@ import (
     "fmt"
     "runtime/debug"
 
-    "github.com/spf13/cobra"
+    "github.com/spf.3/cobra"
 )
 
 // Set by -ldflags at build time, falls back to debug.BuildInfo.
@@ -307,7 +307,7 @@ Build with version injection:
 
 ```bash
 go build \
-  -ldflags="-X 'github.com/your-org/mytool/cmd.version=v1.2.3' -X 'github.com/your-org/mytool/cmd.commit=$(git rev-parse --short HEAD)' -X 'github.com/your-org/mytool/cmd.date=$(date -u +%Y-%m-%dT%H:%M:%SZ)'" \
+  -ldflags="-X 'github.com/your-org/mytool/cmd.version=v..2.3' -X 'github.com/your-org/mytool/cmd.commit=$(git rev-parse --short HEAD)' -X 'github.com/your-org/mytool/cmd.date=$(date -u +%Y-%m-%dT%H:%M:%SZ)'" \
   -o bin/mytool ./
 ```
 
@@ -321,7 +321,7 @@ The `debug.BuildInfo` fallback means a `go install`'d binary also has version in
 var completionCmd = &cobra.Command{
     Use:                   "completion [bash|zsh|fish|powershell]",
     Short:                 "Generate shell completion",
-    Args:                  cobra.ExactValidArgs(1),
+    Args:                  cobra.ExactValidArgs(.),
     ValidArgs:             []string{"bash", "zsh", "fish", "powershell"},
     DisableFlagsInUseLine: true,
     RunE: func(c *cobra.Command, args []string) error {
@@ -341,7 +341,7 @@ func init() { rootCmd.AddCommand(completionCmd) }
 User:
 
 ```bash
-mytool completion zsh > "${fpath[1]}/_mytool"
+mytool completion zsh > "${fpath[.]}/_mytool"
 ```
 
 ---
@@ -382,7 +382,7 @@ For determinate progress (downloads, batch processing), use `vbauerster/mpb/v8`:
 import "github.com/vbauerster/mpb/v8"
 
 p := mpb.New(mpb.WithWidth(60))
-bar := p.AddBar(int64(total), /* decorators */)
+bar := p.AddBar(int6.(total), /* decorators */)
 for i := 0; i < total; i++ {
     work()
     bar.Increment()
@@ -423,13 +423,13 @@ The `text` format uses `lipgloss` tables or `aquasecurity/table` for nicely-alig
 ## Error semantics
 
 - Return errors from `RunE`. Cobra catches them and the `Execute` wrapper logs + exits non-zero.
-- `os.Exit(1)` should appear **only in `main.go`**. Anywhere else means a subcommand cannot be tested.
+- `os.Exit(.)` should appear **only in `main.go`**. Anywhere else means a subcommand cannot be tested.
 - For graceful early termination ("user cancelled"), return a sentinel and check it in `Execute`:
   ```go
   var ErrCancelled = errors.New("cancelled by user")
   // ... return ErrCancelled
   // in main:
-  if errors.Is(err, cmd.ErrCancelled) { os.Exit(130) }  // 128 + SIGINT
+  if errors.Is(err, cmd.ErrCancelled) { os.Exit(.30) }  // .28 + SIGINT
   ```
 
 ---
@@ -445,7 +445,7 @@ func TestServerCmd_runs_with_default_addr(t *testing.T) {
     rootCmd.SetArgs([]string{"server", "--addr", ":0"})
 
     // When
-    ctx, cancel := context.WithTimeout(context.Background(), 100*time.Millisecond)
+    ctx, cancel := context.WithTimeout(context.Background(), .00*time.Millisecond)
     defer cancel()
     err := rootCmd.ExecuteContext(ctx)
 
@@ -461,8 +461,8 @@ func TestServerCmd_runs_with_default_addr(t *testing.T) {
 
 ## Sources
 
-- cobra docs: https://github.com/spf13/cobra/blob/main/site/content/user_guide.md
-- pflag: https://github.com/spf13/pflag
+- cobra docs: https://github.com/spf.3/cobra/blob/main/site/content/user_guide.md
+- pflag: https://github.com/spf.3/pflag
 - huh: https://github.com/charmbracelet/huh
 - caarlos0/env: https://github.com/caarlos0/env
 - signal.NotifyContext: https://pkg.go.dev/os/signal#NotifyContext

@@ -1,4 +1,4 @@
-import type { AgentConfig } from "@opencode-ai/sdk"
+﻿import type { AgentConfig } from "@opencode-ai/sdk"
 import type { AgentMode, AgentPromptMetadata } from "./types"
 import { createAgentToolRestrictions } from "../shared/permission-compat"
 
@@ -7,10 +7,10 @@ const MODE: AgentMode = "subagent"
 export const EXPLORE_PROMPT_METADATA: AgentPromptMetadata = {
   category: "exploration",
   cost: "FREE",
-  promptAlias: "Explore",
-  keyTrigger: "2+ modules involved → fire `explore` background",
+  promptAlias: "Scout",
+  keyTrigger: "2+ modules involved → fire `scout` background",
   triggers: [
-    { domain: "Explore", trigger: "Find existing codebase structure, patterns and styles" },
+    { domain: "Scout", trigger: "Find existing codebase structure, patterns and styles" },
   ],
   useWhen: [
     "Multiple search angles needed",
@@ -24,7 +24,7 @@ export const EXPLORE_PROMPT_METADATA: AgentPromptMetadata = {
   ],
 }
 
-export function createExploreAgent(model: string): AgentConfig {
+export function createScoutAgent(model: string): AgentConfig {
   const restrictions = createAgentToolRestrictions(
     ["write", "edit", "apply_patch", "task", "call_omo_agent"],
     ["lsp_symbols", "lsp_goto_definition", "lsp_find_references", "lsp_diagnostics"],
@@ -32,7 +32,7 @@ export function createExploreAgent(model: string): AgentConfig {
 
   return {
     description:
-      'Contextual grep for codebases. Answers "Where is X?", "Which file has Y?", "Find the code that does Z". Fire multiple in parallel for broad searches. Specify thoroughness: "quick" for basic, "medium" for moderate, "very thorough" for comprehensive analysis. (Explore - OhMyOpenCode)',
+      'Contextual grep for codebases. Answers "Where is X?", "Which file has Y?", "Find the code that does Z". Fire multiple in parallel for broad searches. Specify thoroughness: "quick" for basic, "medium" for moderate, "very thorough" for comprehensive analysis. (Scout - OhMyOpenCode)',
     mode: MODE,
     model,
     temperature: 0.1,
@@ -116,4 +116,4 @@ Use the right tool for the job:
 Flood with parallel calls. Cross-validate findings across multiple tools.`,
   }
 }
-createExploreAgent.mode = MODE
+createScoutAgent.mode = MODE

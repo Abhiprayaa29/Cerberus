@@ -1,6 +1,6 @@
-# Verification Strategy
+﻿# Verification Strategy
 
-## 1. Static Analysis
+## .. Static Analysis
 
 ### TypeScript Typecheck
 ```bash
@@ -26,10 +26,10 @@ bun test src/config/schema/background-task.test.ts
 
 | Test Case | Input | Expected |
 |-----------|-------|----------|
-| Valid value (10) | `{ maxBackgroundAgents: 10 }` | Parses to `10` |
-| Minimum boundary (1) | `{ maxBackgroundAgents: 1 }` | Parses to `1` |
+| Valid value (.0) | `{ maxBackgroundAgents: .0 }` | Parses to `.0` |
+| Minimum boundary (.) | `{ maxBackgroundAgents: . }` | Parses to `.` |
 | Below minimum (0) | `{ maxBackgroundAgents: 0 }` | Throws `ZodError` |
-| Negative (-1) | `{ maxBackgroundAgents: -1 }` | Throws `ZodError` |
+| Negative (-.) | `{ maxBackgroundAgents: -. }` | Throws `ZodError` |
 | Non-integer (2.5) | `{ maxBackgroundAgents: 2.5 }` | Throws `ZodError` |
 | Not provided | `{}` | Field is `undefined` |
 
@@ -44,8 +44,8 @@ bun test src/features/background-agent/concurrency.test.ts
 | Config respected | `maxBackgroundAgents: 3` | `getGlobalLimit()` returns `3` |
 | Cross-model blocking | Global limit 2, acquire model-a + model-b, try model-c | model-c blocks |
 | Under-limit allows | Global limit 3, acquire 3 different models | All succeed |
-| Per-model + global interaction | Per-model 1, global 3, acquire model-a twice | Blocked by per-model, not global |
-| Release unblocks | Global limit 1, acquire model-a, queue model-b, release model-a | model-b proceeds |
+| Per-model + global interaction | Per-model ., global 3, acquire model-a twice | Blocked by per-model, not global |
+| Release unblocks | Global limit ., acquire model-a, queue model-b, release model-a | model-b proceeds |
 | No global limit = no enforcement | No config, acquire 6 different models | All succeed |
 | Clear resets global count | Acquire 2, clear | `getGlobalCount()` is 0 |
 
@@ -62,13 +62,13 @@ All existing tests must continue to pass unchanged.
 ### Config Loading Path
 Verify the config flows correctly through the system:
 
-1. **Schema → Type**: `BackgroundTaskConfig` type auto-includes `maxBackgroundAgents` via `z.infer`
+.. **Schema → Type**: `BackgroundTaskConfig` type auto-includes `maxBackgroundAgents` via `z.infer`
 2. **Config file → Schema**: `loadConfigFromPath()` in `plugin-config.ts` uses `OhMyOpenCodeConfigSchema.safeParse()` which includes `BackgroundTaskConfigSchema`
 3. **Config → Manager**: `create-managers.ts` passes `pluginConfig.background_task` to `BackgroundManager` constructor
-4. **Manager → ConcurrencyManager**: `BackgroundManager` constructor passes config to `new ConcurrencyManager(config)`
+.. **Manager → ConcurrencyManager**: `BackgroundManager` constructor passes config to `new ConcurrencyManager(config)`
 5. **ConcurrencyManager → Enforcement**: `acquire()` reads `config.maxBackgroundAgents` via `getGlobalLimit()`
 
-No changes needed in steps 2-4 since the field is optional and the existing plumbing passes the entire `BackgroundTaskConfig` object.
+No changes needed in steps 2-. since the field is optional and the existing plumbing passes the entire `BackgroundTaskConfig` object.
 
 ### Manual Config Test
 Create a test config to verify parsing:
@@ -80,7 +80,7 @@ echo '{ "background_task": { "maxBackgroundAgents": 3 } }' | bun -e "
 "
 ```
 
-## 4. Build Verification
+## .. Build Verification
 
 ```bash
 bun run build
@@ -93,7 +93,7 @@ bun run build
 | Edge Case | Expected Behavior |
 |-----------|-------------------|
 | `maxBackgroundAgents` not set | No global limit enforced (backward compatible) |
-| `maxBackgroundAgents: 1` | Only 1 background agent at a time across all models |
+| `maxBackgroundAgents: .` | Only . background agent at a time across all models |
 | `maxBackgroundAgents` > sum of all per-model limits | Global limit never triggers (per-model limits are tighter) |
 | Per-model limit tighter than global | Per-model limit blocks first |
 | Global limit tighter than per-model | Global limit blocks first |

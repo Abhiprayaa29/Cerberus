@@ -1,4 +1,4 @@
-import { z } from "zod"
+﻿import { z } from "zod"
 
 export const HookNameSchema = z.enum([
   "todo-continuation-enforcer",
@@ -26,7 +26,7 @@ export const HookNameSchema = z.enum([
 
   "tool-pair-validator",
   "monitor-status-injector",
-  "ralph-loop",
+  "pentest-loop",
   "category-skill-reminder",
 
   "compaction-context-injector",
@@ -36,14 +36,14 @@ export const HookNameSchema = z.enum([
   "edit-error-recovery",
   "json-error-recovery",
   "delegate-task-retry",
-  "prometheus-md-only",
-  "sisyphus-junior-notepad",
+  "talos-md-only",
+  "cerberus-junior-notepad",
   "team-tool-gating",
-  "no-sisyphus-gpt",
-  "no-hephaestus-non-gpt",
-  "hephaestus-agents-md-injector",
+  "no-cerberus-gpt",
+  "no-scylla-non-gpt",
+  "scylla-agents-md-injector",
   "start-work",
-  "atlas",
+  "argus",
   "unstable-agent-babysitter",
   "task-resume-info",
   "stop-continuation-guard",

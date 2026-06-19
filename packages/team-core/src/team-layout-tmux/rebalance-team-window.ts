@@ -1,4 +1,4 @@
-export type RebalanceLayout = "main-vertical" | "tiled"
+﻿export type RebalanceLayout = "main-vertical" | "tiled"
 
 export type RebalanceTeamWindowDeps = {
   runTmux: (args: string[]) => Promise<{ success: boolean }>
@@ -53,7 +53,7 @@ export async function rebalanceTeamWindow(
 ): Promise<boolean> {
   const [{ log }, { runTmuxCommand }] = await Promise.all([
     import("../logger"),
-    import("@oh-my-opencode/tmux-core"),
+    import("@oh-my-open-pentest/tmux-core"),
   ])
   const tmuxPath = "tmux"
 

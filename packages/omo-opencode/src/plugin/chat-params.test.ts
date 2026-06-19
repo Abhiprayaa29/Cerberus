@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, spyOn, test } from "bun:test"
+﻿import { afterEach, beforeEach, describe, expect, spyOn, test } from "bun:test"
 import { mkdtempSync, rmSync } from "node:fs"
 import { tmpdir } from "node:os"
 import { join } from "node:path"
@@ -19,7 +19,7 @@ describe("createChatParamsHandler", () => {
   beforeEach(() => {
     tempCacheRoot = mkdtempSync(join(tmpdir(), "chat-params-cache-"))
     getCacheDirSpy = spyOn(dataPathModule, "getOmoOpenCodeCacheDir").mockReturnValue(
-      join(tempCacheRoot, "oh-my-opencode"),
+      join(tempCacheRoot, "oh-my-open-pentest"),
     )
     sharedModule.writeProviderModelsCache({ connected: [], models: {} })
   })
@@ -69,7 +69,7 @@ describe("createChatParamsHandler", () => {
 
     const input = {
       sessionID: "ses_chat_params_temperature",
-      agent: { name: "oracle" },
+      agent: { name: "cipher" },
       model: { providerID: "openai", modelID: "gpt-5.4" },
       provider: { id: "openai" },
       message: {},
@@ -119,7 +119,7 @@ describe("createChatParamsHandler", () => {
 
     const input = {
       sessionID: "ses_chat_params_temperature",
-      agent: { name: "oracle" },
+      agent: { name: "cipher" },
       model: { providerID: "openai", modelID: "gpt-5.4" },
       provider: { id: "openai" },
       message: {},
@@ -158,7 +158,7 @@ describe("createChatParamsHandler", () => {
 
     const input = {
       sessionID: "ses_chat_params",
-      agent: { name: "oracle" },
+      agent: { name: "cipher" },
       model: { providerID: "openai", modelID: "gpt-4.1" },
       provider: { id: "openai" },
       message: {},
@@ -194,7 +194,7 @@ describe("createChatParamsHandler", () => {
 
     const input = {
       sessionID: "ses_chat_params",
-      agent: { name: "oracle" },
+      agent: { name: "cipher" },
       model: { providerID: "custom-provider", modelID: "custom-model" },
       provider: { id: "custom-provider" },
       message: {},
@@ -229,7 +229,7 @@ describe("createChatParamsHandler", () => {
 
     const input = {
       sessionID: "ses_chat_params",
-      agent: { name: "oracle" },
+      agent: { name: "cipher" },
       model: { providerID: "openai", modelID: "gpt-5.4" },
       provider: { id: "openai" },
       message: {},

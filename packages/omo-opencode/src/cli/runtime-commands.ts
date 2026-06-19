@@ -1,7 +1,7 @@
-import type { Command } from "commander"
+﻿import type { Command } from "commander"
 
 import { boulder } from "./boulder"
-import { codexUlwLoop } from "./codex-ulw-loop"
+import { codexUlwLoop } from "./codex-pentest-loop"
 import { refreshModelCapabilities } from "./refresh-model-capabilities"
 import { runSparkShell } from "./sparkshell"
 import { PLUGIN_NAME } from "../shared"
@@ -13,7 +13,7 @@ export function configureRuntimeCommands(program: Command): void {
   program
     .command("refresh-model-capabilities")
     .description("Refresh the cached models.dev-based model capabilities snapshot")
-    .option("-d, --directory <path>", "Working directory to read oh-my-opencode config from")
+    .option("-d, --directory <path>", "Working directory to read oh-my-open-pentest config from")
     .option("--source-url <url>", "Override the models.dev source URL")
     .option("--json", "Output refresh summary as JSON")
     .action(async (options: { readonly directory?: string; readonly sourceUrl?: string; readonly json?: boolean }) => {
@@ -59,10 +59,10 @@ export function configureRuntimeCommands(program: Command): void {
     })
 
   program
-    .command("ulw-loop [args...]")
+    .command("pentest-loop [args...]")
     .allowUnknownOption()
     .passThroughOptions()
-    .description("Run the Codex LazyCodex ulw-loop CLI")
+    .description("Run the Codex LazyCodex pentest-loop CLI")
     .action(async (args: string[] = []) => {
       const exitCode = await codexUlwLoop(args)
       process.exit(exitCode)

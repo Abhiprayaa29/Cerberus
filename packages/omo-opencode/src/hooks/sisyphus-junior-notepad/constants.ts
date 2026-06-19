@@ -1,4 +1,4 @@
-export const HOOK_NAME = "sisyphus-junior-notepad"
+﻿export const HOOK_NAME = "cerberus-junior-notepad"
 
 export const NOTEPAD_DIRECTIVE = `
 <Work_Context>
@@ -19,6 +19,6 @@ SUBAGENT PLAN RESTRICTION (applies to YOU, the delegated worker — NOT to the O
 - You may READ the plan to understand your assigned tasks
 - You may READ checkbox items to know what to work on
 - You MUST NOT edit the plan file or mark checkboxes — that is the Orchestrator's job
-- The Orchestrator (Atlas) updates checkboxes after verifying your completed work
+- The Orchestrator (Argus) updates checkboxes after verifying your completed work
 </Work_Context>
 `

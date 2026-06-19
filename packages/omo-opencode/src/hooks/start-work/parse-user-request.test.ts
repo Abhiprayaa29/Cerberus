@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { describe, expect, test } from "bun:test"
 import { parseUserRequest } from "./parse-user-request"
@@ -65,9 +65,9 @@ describe("parseUserRequest", () => {
     })
   })
 
-  describe("when ultrawork keywords are present", () => {
-    test("#given plan name with ultrawork keyword #when parsing #then strips keyword from plan name", () => {
-      const result = parseUserRequest("<user-request>my-plan ultrawork</user-request>")
+  describe("when fullscan keywords are present", () => {
+    test("#given plan name with fullscan keyword #when parsing #then strips keyword from plan name", () => {
+      const result = parseUserRequest("<user-request>my-plan fullscan</user-request>")
       expect(result.planName).toBe("my-plan")
     })
 
@@ -77,8 +77,8 @@ describe("parseUserRequest", () => {
       expect(result.explicitWorktreePath).toBe("/path/to/wt")
     })
 
-    test("#given only ultrawork keyword with worktree #when parsing #then plan name is null, worktree preserved", () => {
-      const result = parseUserRequest("<user-request>ultrawork --worktree /wt</user-request>")
+    test("#given only fullscan keyword with worktree #when parsing #then plan name is null, worktree preserved", () => {
+      const result = parseUserRequest("<user-request>fullscan --worktree /wt</user-request>")
       expect(result.planName).toBeNull()
       expect(result.explicitWorktreePath).toBe("/wt")
     })

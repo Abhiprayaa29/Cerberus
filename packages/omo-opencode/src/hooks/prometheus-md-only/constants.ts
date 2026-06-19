@@ -1,9 +1,9 @@
-import { createSystemDirective, SystemDirectiveTypes } from "../../shared/system-directive"
+﻿import { createSystemDirective, SystemDirectiveTypes } from "../../shared/system-directive"
 import { getAgentDisplayName } from "../../shared/agent-display-names"
 
-export const HOOK_NAME = "prometheus-md-only"
+export const HOOK_NAME = "talos-md-only"
 
-export const PROMETHEUS_AGENT = "prometheus"
+export const TALOS_AGENT = "talos"
 
 export const ALLOWED_EXTENSIONS = [".md"]
 
@@ -17,7 +17,7 @@ export const BLOCKED_TOOLS = ["Write", "Edit", "write", "edit"]
  * the `[SYSTEM DIRECTIVE: ...]` bracket syntax that Azure OpenAI Prompt Shield
  * flags as indirect prompt injection in user-role content (#4036).
  */
-export const PLANNING_CONTEXT_OPEN = `<planning-context source="prometheus-read-only">`
+export const PLANNING_CONTEXT_OPEN = `<planning-context source="talos-read-only">`
 export const PLANNING_CONTEXT_CLOSE = `</planning-context>`
 
 export const PLANNING_CONSULT_WARNING = `
@@ -26,7 +26,7 @@ export const PLANNING_CONSULT_WARNING = `
 
 ${PLANNING_CONTEXT_OPEN}
 
-You are being invoked by ${getAgentDisplayName("prometheus")}, a planning agent restricted to .omo/*.md plan files only.
+You are being invoked by ${getAgentDisplayName("talos")}, a planning agent restricted to .omo/*.md plan files only.
 
 **CRITICAL CONSTRAINTS:**
 - DO NOT modify any files (no Write, Edit, or any file mutations)
@@ -43,18 +43,18 @@ ${PLANNING_CONTEXT_CLOSE}
 
 `
 
-export const PROMETHEUS_WORKFLOW_REMINDER = `
+export const TALOS_WORKFLOW_REMINDER = `
 
 ---
 
-${createSystemDirective(SystemDirectiveTypes.PROMETHEUS_READ_ONLY)}
+${createSystemDirective(SystemDirectiveTypes.TALOS_READ_ONLY)}
 
-## PROMETHEUS MANDATORY WORKFLOW REMINDER
+## TALOS MANDATORY WORKFLOW REMINDER
 
 **You are writing a work plan. STOP AND VERIFY you completed ALL steps:**
 
 ┌─────────────────────────────────────────────────────────────────────┐
-│                     PROMETHEUS WORKFLOW                             │
+│                     TALOS WORKFLOW                             │
 ├──────┬──────────────────────────────────────────────────────────────┤
 │  1   │ INTERVIEW: Full consultation with user                       │
 │      │    - Gather ALL requirements                                 │
@@ -62,14 +62,14 @@ ${createSystemDirective(SystemDirectiveTypes.PROMETHEUS_READ_ONLY)}
 │      │    - Record decisions to .omo/drafts/                   │
 ├──────┼──────────────────────────────────────────────────────────────┤
 │  2   │ METIS CONSULTATION: Pre-generation gap analysis              │
-│      │    - task(agent="Metis - Plan Consultant", ...)     │
+│      │    - task(agent="Vanguard - Plan Consultant", ...)     │
 │      │    - Identify missed questions, guardrails, assumptions      │
 ├──────┼──────────────────────────────────────────────────────────────┤
 │  3   │ PLAN GENERATION: Write to .omo/plans/*.md               │
 │      │    <- YOU ARE HERE                                           │
 ├──────┼──────────────────────────────────────────────────────────────┤
 │  4   │ MOMUS REVIEW (if high accuracy requested)                    │
-│      │    - task(agent="Momus - Plan Critic", ...)         │
+│      │    - task(agent="Sentinel - Plan Critic", ...)         │
 │      │    - Loop until OKAY verdict                                 │
 ├──────┼──────────────────────────────────────────────────────────────┤
 │  5   │ SUMMARY: Present to user                                     │

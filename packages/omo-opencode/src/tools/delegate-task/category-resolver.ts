@@ -1,9 +1,9 @@
-import type { ModelFallbackInfo } from "../../features/task-toast-manager/types"
+﻿import type { ModelFallbackInfo } from "../../features/task-toast-manager/types"
 import type { DelegateTaskArgs } from "./types"
 import type { ExecutorContext } from "./executor-types"
 import type { FallbackEntry } from "../../shared/model-requirements"
 import { mergeCategories } from "../../shared/merge-categories"
-import { SISYPHUS_JUNIOR_AGENT } from "./sisyphus-junior-agent"
+import { CERBERUS_JUNIOR_AGENT } from "./cerberus-junior-agent"
 import { resolveCategoryConfig } from "./categories"
 import { CATEGORY_PROMPT_APPEND_RESOLVERS } from "./constants"
 import { parseModelString } from "../../shared/model-string-parser"
@@ -64,7 +64,7 @@ export async function resolveCategoryExecution(
   inheritedModel: string | undefined,
   systemDefaultModel: string | undefined
 ): Promise<CategoryResolutionResult> {
-  const { client, userCategories, sisyphusJuniorModel } = executorCtx
+  const { client, userCategories, cerberusJuniorModel } = executorCtx
 
   const categoryName = args.category!
   const enabledCategories = mergeCategories(userCategories)
@@ -110,12 +110,12 @@ Available categories: ${allCategoryNames}`)
   let fallbackEntry: FallbackEntry | undefined
   let matchedFallback = false
 
-  const overrideModel = sisyphusJuniorModel
+  const overrideModel = cerberusJuniorModel
   const explicitCategoryModel = userCategories?.[args.category!]?.model
 
   if (!requirement) {
-    // Precedence: explicit category model > sisyphus-junior default > category resolved model
-    // This keeps `sisyphus-junior.model` useful as a global default while allowing
+    // Precedence: explicit category model > cerberus-junior default > category resolved model
+    // This keeps `cerberus-junior.model` useful as a global default while allowing
     // per-category overrides via `categories[category].model`.
     actualModel = explicitCategoryModel ?? overrideModel ?? resolved.model
     if (actualModel) {
@@ -248,7 +248,7 @@ Available categories: ${categoryNames.join(", ")}`)
   }
 
   return {
-    agentToUse: SISYPHUS_JUNIOR_AGENT,
+    agentToUse: CERBERUS_JUNIOR_AGENT,
     categoryModel,
     categoryPromptAppend,
     maxPromptTokens: resolved.config.max_prompt_tokens,

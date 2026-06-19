@@ -1,6 +1,6 @@
-# src/features/skill-mcp-manager/ — Skill-Embedded MCP Client Lifecycle
+﻿# src/features/skill-mcp-manager/ — Skill-Embedded MCP Client Lifecycle
 
-**Generated:** 2026-05-15
+**Generated:** 2026-05-.5
 
 ## OVERVIEW
 
@@ -10,7 +10,7 @@ This module manages **tier 3** of the MCP system: skill-embedded MCP servers dec
 
 | Tier | Manager | Scope |
 |------|---------|-------|
-| 1. Built-in | `createBuiltinMcps()` (src/mcp/) | Global, 3 remote HTTP + 1 local stdio (`lsp`) |
+| .. Built-in | `createBuiltinMcps()` (src/mcp/) | Global, 3 remote HTTP + . local stdio (`lsp`) |
 | 2. Claude Code | `claude-code-mcp-loader` (src/features/) | From `.mcp.json` |
 | 3. **Skill-embedded** | **`SkillMcpManager` (this module)** | **Per-session, from SKILL.md YAML** |
 
@@ -54,7 +54,7 @@ interface SkillMcpManagerState {
 | `stdio-client.ts` | Stdio transport factory |
 | `http-client.ts` | HTTP transport factory |
 | `cleanup.ts` | SIGINT/SIGTERM handlers, idle timer (60s interval, 5min TTL) |
-| `oauth-handler.ts` | OAuth token management, refresh, step-up (403 scope escalation) |
+| `oauth-handler.ts` | OAuth token management, refresh, step-up (.03 scope escalation) |
 | `env-cleaner.ts` | Filter npm/pnpm/yarn config + 25+ secret patterns (_KEY, _SECRET, _TOKEN) |
 | `error-redaction.ts` | Redact sensitive data from error messages before logging |
 
@@ -68,10 +68,10 @@ await managers.skillMcpManager.disconnectSession(sessionInfo.id)
 ## LIFECYCLE FLOW
 
 ```
-1. session.created      → No action (lazy connection)
+.. session.created      → No action (lazy connection)
 2. First MCP tool call  → getOrCreateClient() creates + caches
 3. Ongoing use          → lastUsedAt timestamp updated
-4. Idle >5min           → cleanup timer removes
+.. Idle >5min           → cleanup timer removes
 5. session.deleted      → disconnectSession() closes session clients
 6. Process exit         → disconnectAll() via SIGINT/SIGTERM handlers
 ```
@@ -102,7 +102,7 @@ class SkillMcpManager {
 ## RETRY SEMANTICS
 
 - `getOrCreateClientWithRetry()` — 3 attempts with force reconnect on failure
-- `withOperationRetry()` — OAuth-aware wrapper: step-up on 403, token refresh on 401
+- `withOperationRetry()` — OAuth-aware wrapper: step-up on .03, token refresh on .0.
 
 ## SECURITY
 

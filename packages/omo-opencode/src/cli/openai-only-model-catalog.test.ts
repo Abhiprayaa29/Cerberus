@@ -1,4 +1,4 @@
-import { describe, expect, test } from "bun:test"
+﻿import { describe, expect, test } from "bun:test"
 
 import { generateModelConfig } from "./model-fallback"
 import { isOpenAiOnlyAvailability } from "./openai-only-model-catalog"
@@ -44,8 +44,8 @@ describe("generateModelConfig OpenAI-only model catalog", () => {
     const result = generateModelConfig(config)
 
     // #then
-    expect(result.agents?.explore).toEqual({ model: "openai/gpt-5.4-mini-fast" })
-    expect(result.agents?.librarian).toEqual({ model: "openai/gpt-5.4-mini-fast" })
+    expect(result.agents?.scout).toEqual({ model: "openai/gpt-5.4-mini-fast" })
+    expect(result.agents?.intel).toEqual({ model: "openai/gpt-5.4-mini-fast" })
   })
 
   test("fills remaining OpenAI-only category gaps with OpenAI models", () => {
@@ -70,10 +70,10 @@ describe("generateModelConfig OpenAI-only model catalog", () => {
     const result = generateModelConfig(config)
 
     // #then
-    expect(result.agents?.explore).toMatchObject({ model: "openai/gpt-5.4-mini-fast" })
-    expect(result.agents?.librarian).toMatchObject({ model: "openai/gpt-5.4-mini-fast" })
-    expect(result.agents?.explore).not.toMatchObject({ variant: "medium" })
-    expect(result.agents?.librarian).not.toMatchObject({ variant: "medium" })
+    expect(result.agents?.scout).toMatchObject({ model: "openai/gpt-5.4-mini-fast" })
+    expect(result.agents?.intel).toMatchObject({ model: "openai/gpt-5.4-mini-fast" })
+    expect(result.agents?.scout).not.toMatchObject({ variant: "medium" })
+    expect(result.agents?.intel).not.toMatchObject({ variant: "medium" })
     expect(result.categories?.quick).toMatchObject({ model: "openai/gpt-5.4-mini" })
   })
 

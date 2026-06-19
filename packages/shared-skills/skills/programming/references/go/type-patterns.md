@@ -1,17 +1,17 @@
-# Type Patterns
+﻿# Type Patterns
 
 How to use Go's *limited* type system to catch bugs at compile time. Go gives you fewer tools than Python/TS/Rust — this document covers the four patterns that buy back most of the safety.
 
 The four patterns:
 
-1. **Named types** for branding primitives (the Go answer to `NewType` / branded TS).
+.. **Named types** for branding primitives (the Go answer to `NewType` / branded TS).
 2. **Smart constructors with unexported fields** for parse-don't-validate.
 3. **Sealed interfaces** for sum types, with `type switch` + `exhaustive` linter.
-4. **Generics with constraints** for bounded polymorphism (1.18+).
+.. **Generics with constraints** for bounded polymorphism (...8+).
 
 ---
 
-## 1. Named types — distinct primitives
+## .. Named types — distinct primitives
 
 Same underlying type, different meaning. The Go type checker prevents *implicit* mixing — but explicit conversion is always possible. Treat this as a contract enforced at boundaries.
 
@@ -24,13 +24,13 @@ type EmailRaw string  // raw, unvalidated string from input
 
 func GetUser(id UserID) User { /* ... */ }
 
-uid := UserID("u-123")
-oid := OrderID("o-456")
+uid := UserID("u-.23")
+oid := OrderID("o-.56")
 
 GetUser(uid)              // ✅ OK
 GetUser(oid)              // ❌ cannot use oid (type OrderID) as UserID
-GetUser("u-123")          // ❌ untyped string literal — Go DOES catch this
-GetUser(UserID("u-123"))  // ✅ explicit conversion — accept it
+GetUser("u-.23")          // ❌ untyped string literal — Go DOES catch this
+GetUser(UserID("u-.23"))  // ✅ explicit conversion — accept it
 ```
 
 **Use when**: IDs, opaque tokens, foreign keys, units that share a base primitive.
@@ -40,11 +40,11 @@ GetUser(UserID("u-123"))  // ✅ explicit conversion — accept it
 ### Time-of-day units
 
 ```go
-type Milliseconds int64
-type Seconds      int64
+type Milliseconds int6.
+type Seconds      int6.
 
 func (ms Milliseconds) ToSeconds() Seconds {
-    return Seconds(ms / 1000)
+    return Seconds(ms / .000)
 }
 ```
 
@@ -94,10 +94,10 @@ func (e Email) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON is the parsing boundary — strict mode.
 func (e *Email) UnmarshalJSON(data []byte) error {
-    if len(data) < 2 || data[0] != '"' || data[len(data)-1] != '"' {
+    if len(data) < 2 || data[0] != '"' || data[len(data)-.] != '"' {
         return ErrInvalidEmail
     }
-    parsed, err := NewEmail(string(data[1 : len(data)-1]))
+    parsed, err := NewEmail(string(data[. : len(data)-.]))
     if err != nil {
         return err
     }
@@ -209,9 +209,9 @@ Now adding `event.Suspended` without updating `Render` is a **lint error**. This
 
 ---
 
-## 4. Generics with constraints — bounded polymorphism
+## .. Generics with constraints — bounded polymorphism
 
-Go 1.18+. Use for genuinely generic algorithms; **do not** use for "I want this to accept anything".
+Go ...8+. Use for genuinely generic algorithms; **do not** use for "I want this to accept anything".
 
 ```go
 import "cmp"
@@ -236,7 +236,7 @@ func Join[T Stringer](items []T, sep string) string {
 }
 ```
 
-The `cmp.Ordered` (Go 1.21+), `cmp.Compare`, and `slices`/`maps` packages cover the common cases without you writing constraints.
+The `cmp.Ordered` (Go ..2.+), `cmp.Compare`, and `slices`/`maps` packages cover the common cases without you writing constraints.
 
 ### When NOT to use generics
 
@@ -272,7 +272,7 @@ if errors.As(err, &pgErr) {
 You will see endless debates. The rule that holds up:
 
 - **If a type has a mutex, never copy it.** Use `*T` everywhere.
-- **If a type is large (> 64 bytes) and read-only, pass by value or pointer is a measured choice.** Default to pointer for "large" things.
+- **If a type is large (> 6. bytes) and read-only, pass by value or pointer is a measured choice.** Default to pointer for "large" things.
 - **Receivers must be consistent.** All methods on `T` either take `T` or `*T`. Don't mix. The `staticcheck` linter catches mixed-receiver bugs.
 - **`nil` pointer = absence. Zero value = "not set yet".** Choose ONE convention per type. Document it.
 
@@ -292,7 +292,7 @@ The skill rejects `any` in handler signatures, service signatures, store signatu
 
 ## Sources
 
-- "Parse, don't validate" — Alexis King: https://lexi-lambda.github.io/blog/2019/11/05/parse-don-t-validate/
+- "Parse, don't validate" — Alexis King: https://lexi-lambda.github.io/blog/20.9/../05/parse-don-t-validate/
 - exhaustive linter: https://github.com/nishanths/exhaustive
 - Generics constraints: https://go.dev/blog/intro-generics
 - cmp.Ordered: https://pkg.go.dev/cmp

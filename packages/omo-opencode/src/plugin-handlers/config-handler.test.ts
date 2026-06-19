@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { describe, test, expect, spyOn, beforeEach, afterEach, mock } from "bun:test"
 import type { CategoryConfig } from "../config/schema"
@@ -7,7 +7,7 @@ import { getAgentDisplayName, getAgentListDisplayName } from "../shared/agent-di
 import { resolveCategoryConfig } from "./category-config-resolver"
 
 import * as agents from "../agents"
-import * as sisyphusJunior from "../agents/sisyphus-junior"
+import * as cerberusJunior from "../agents/cerberus-junior"
 import * as commandLoader from "../features/claude-code-command-loader"
 import * as builtinCommands from "../features/builtin-commands"
 import * as skillLoader from "../features/opencode-skill-loader"
@@ -21,7 +21,7 @@ import * as permissionCompat from "../shared/permission-compat"
 import * as modelResolver from "../shared/model-resolver"
 import * as configErrors from "../shared/config-errors"
 import * as agentPriorityOrder from "./agent-priority-order"
-import * as prometheusAgentConfigBuilder from "./prometheus-agent-config-builder"
+import * as talosAgentConfigBuilder from "./talos-agent-config-builder"
 import { unsafeTestValue } from "../../../../test-support/unsafe-test-value"
 
 let createConfigHandler: (typeof import("./config-handler"))["createConfigHandler"]
@@ -48,8 +48,8 @@ beforeEach(async () => {
   configErrors.clearConfigLoadErrors()
 
   spyOn(agents, unsafeTestValue("createBuiltinAgents")).mockResolvedValue({
-    sisyphus: { name: "sisyphus", prompt: "test", mode: "primary" },
-    oracle: { name: "oracle", prompt: "test", mode: "subagent" },
+    cerberus: { name: "cerberus", prompt: "test", mode: "primary" },
+    cipher: { name: "cipher", prompt: "test", mode: "subagent" },
   })
 
   spyOn(commandLoader, unsafeTestValue("loadUserCommands")).mockResolvedValue({})
@@ -97,7 +97,7 @@ beforeEach(async () => {
     configJson: "/tmp/.config/opencode/opencode.json",
     configJsonc: "/tmp/.config/opencode/opencode.jsonc",
     packageJson: "/tmp/.config/opencode/package.json",
-    omoConfig: "/tmp/.config/opencode/oh-my-opencode.jsonc",
+    omoConfig: "/tmp/.config/opencode/oh-my-open-pentest.jsonc",
   })
 
   spyOn(permissionCompat, unsafeTestValue("migrateAgentConfig")).mockImplementation((config: Record<string, unknown>) => config)
@@ -108,7 +108,7 @@ beforeEach(async () => {
 
 afterEach(() => {
   (unsafeTestValue(agents.createBuiltinAgents))?.mockRestore?.()
-  ;(unsafeTestValue(sisyphusJunior.createSisyphusJuniorAgentWithOverrides))?.mockRestore?.()
+  ;(unsafeTestValue(cerberusJunior.createCerberusJuniorAgentWithOverrides))?.mockRestore?.()
   ;(unsafeTestValue(commandLoader.loadUserCommands))?.mockRestore?.()
   ;(unsafeTestValue(commandLoader.loadProjectCommands))?.mockRestore?.()
   ;(unsafeTestValue(commandLoader.loadOpencodeGlobalCommands))?.mockRestore?.()
@@ -141,7 +141,7 @@ afterEach(() => {
   mock.restore()
 })
 
-describe("Sisyphus-Junior model inheritance", () => {
+describe("Cerberus-Junior model inheritance", () => {
   test("does not inherit UI-selected model as system default", async () => {
     // #given
     const pluginConfig = createPluginConfig({})
@@ -163,16 +163,16 @@ describe("Sisyphus-Junior model inheritance", () => {
 
     // #then
     const agentConfig = config.agent as Record<string, { model?: string }>
-    expect(agentConfig[getAgentDisplayName("sisyphus-junior")]?.model).toBe(
-      sisyphusJunior.SISYPHUS_JUNIOR_DEFAULTS.model
+    expect(agentConfig[getAgentDisplayName("cerberus-junior")]?.model).toBe(
+      cerberusJunior.CERBERUS_JUNIOR_DEFAULTS.model
     )
   })
 
-  test("uses explicitly configured sisyphus-junior model", async () => {
+  test("uses explicitly configured cerberus-junior model", async () => {
     // #given
     const pluginConfig = createPluginConfig({
       agents: {
-        "sisyphus-junior": {
+        "cerberus-junior": {
           model: "openai/gpt-5.5",
         },
       },
@@ -195,7 +195,7 @@ describe("Sisyphus-Junior model inheritance", () => {
 
     // #then
     const agentConfig = config.agent as Record<string, { model?: string }>
-    expect(agentConfig[getAgentDisplayName("sisyphus-junior")]?.model).toBe(
+    expect(agentConfig[getAgentDisplayName("cerberus-junior")]?.model).toBe(
       "openai/gpt-5.5"
     )
   })
@@ -319,20 +319,20 @@ describe("runtime security skill source registration", () => {
 })
 
 describe("Plan agent demote behavior", () => {
-  test("orders core agents as sisyphus -> hephaestus -> prometheus -> atlas", async () => {
+  test("orders core agents as cerberus -> scylla -> talos -> argus", async () => {
     // #given
     const createBuiltinAgentsMock = unsafeTestValue<{
       mockResolvedValue: (value: Record<string, unknown>) => void
       mock: { calls: unknown[][] }
     }>(agents.createBuiltinAgents)
     createBuiltinAgentsMock.mockResolvedValue({
-      sisyphus: { name: "sisyphus", prompt: "test", mode: "primary" },
-      hephaestus: { name: "hephaestus", prompt: "test", mode: "primary" },
-      oracle: { name: "oracle", prompt: "test", mode: "subagent" },
-      atlas: { name: "atlas", prompt: "test", mode: "primary" },
+      cerberus: { name: "cerberus", prompt: "test", mode: "primary" },
+      scylla: { name: "scylla", prompt: "test", mode: "primary" },
+      cipher: { name: "cipher", prompt: "test", mode: "subagent" },
+      argus: { name: "argus", prompt: "test", mode: "primary" },
     })
     const pluginConfig = createPluginConfig({
-      sisyphus_agent: {
+      cerberus_agent: {
         planner_enabled: true,
       },
     })
@@ -355,10 +355,10 @@ describe("Plan agent demote behavior", () => {
     // #then
     const keys = Object.keys(config.agent as Record<string, unknown>)
     const coreAgents = [
-      getAgentListDisplayName("sisyphus"),
-      getAgentListDisplayName("hephaestus"),
-      getAgentListDisplayName("prometheus"),
-      getAgentListDisplayName("atlas"),
+      getAgentListDisplayName("cerberus"),
+      getAgentListDisplayName("scylla"),
+      getAgentListDisplayName("talos"),
+      getAgentListDisplayName("argus"),
     ]
     const ordered = keys.filter((key) => coreAgents.includes(key))
     expect(ordered).toEqual(coreAgents)
@@ -371,14 +371,14 @@ describe("Plan agent demote behavior", () => {
       mock: { calls: unknown[][] }
     }>(agents.createBuiltinAgents)
     createBuiltinAgentsMock.mockResolvedValue({
-      sisyphus: { name: "sisyphus", prompt: "test", mode: "primary" },
-      hephaestus: { name: "hephaestus", prompt: "test", mode: "primary" },
-      oracle: { name: "oracle", prompt: "test", mode: "subagent" },
-      atlas: { name: "atlas", prompt: "test", mode: "primary" },
+      cerberus: { name: "cerberus", prompt: "test", mode: "primary" },
+      scylla: { name: "scylla", prompt: "test", mode: "primary" },
+      cipher: { name: "cipher", prompt: "test", mode: "subagent" },
+      argus: { name: "argus", prompt: "test", mode: "primary" },
     })
     const reorderSpy = unsafeTestValue(spyOn(agentPriorityOrder, "reorderAgentsByPriority"))
     const pluginConfig = createPluginConfig({
-      sisyphus_agent: {
+      cerberus_agent: {
         planner_enabled: true,
       },
     })
@@ -403,10 +403,10 @@ describe("Plan agent demote behavior", () => {
       reorderSpy.mock.calls.at(0)?.[0] as Record<string, unknown>
     )
     expect(assembledAgentKeys.slice(0, 4)).toEqual([
-      getAgentListDisplayName("sisyphus"),
-      getAgentListDisplayName("hephaestus"),
-      getAgentListDisplayName("prometheus"),
-      getAgentListDisplayName("atlas"),
+      getAgentListDisplayName("cerberus"),
+      getAgentListDisplayName("scylla"),
+      getAgentListDisplayName("talos"),
+      getAgentListDisplayName("argus"),
     ])
   })
 
@@ -416,13 +416,13 @@ describe("Plan agent demote behavior", () => {
       mockResolvedValue: (value: Record<string, unknown>) => void
     }>(agents.createBuiltinAgents)
     createBuiltinAgentsMock.mockResolvedValue({
-      sisyphus: { prompt: "test", mode: "primary" },
-      hephaestus: { prompt: "test", mode: "primary" },
-      oracle: { prompt: "test", mode: "subagent" },
-      atlas: { prompt: "test", mode: "primary" },
+      cerberus: { prompt: "test", mode: "primary" },
+      scylla: { prompt: "test", mode: "primary" },
+      cipher: { prompt: "test", mode: "subagent" },
+      argus: { prompt: "test", mode: "primary" },
     })
     const pluginConfig = createPluginConfig({
-      sisyphus_agent: {
+      cerberus_agent: {
         planner_enabled: true,
       },
     })
@@ -449,28 +449,28 @@ describe("Plan agent demote behavior", () => {
 
     expect(emittedCoreEntries).toEqual([
       [
-        getAgentListDisplayName("sisyphus"),
-        expect.objectContaining({ name: getAgentListDisplayName("sisyphus") }),
+        getAgentListDisplayName("cerberus"),
+        expect.objectContaining({ name: getAgentListDisplayName("cerberus") }),
       ],
       [
-        getAgentListDisplayName("hephaestus"),
-        expect.objectContaining({ name: getAgentListDisplayName("hephaestus") }),
+        getAgentListDisplayName("scylla"),
+        expect.objectContaining({ name: getAgentListDisplayName("scylla") }),
       ],
       [
-        getAgentListDisplayName("prometheus"),
-        expect.objectContaining({ name: getAgentListDisplayName("prometheus") }),
+        getAgentListDisplayName("talos"),
+        expect.objectContaining({ name: getAgentListDisplayName("talos") }),
       ],
       [
-        getAgentListDisplayName("atlas"),
-        expect.objectContaining({ name: getAgentListDisplayName("atlas") }),
+        getAgentListDisplayName("argus"),
+        expect.objectContaining({ name: getAgentListDisplayName("argus") }),
       ],
     ])
   })
 
-  test("plan agent should be demoted to subagent without inheriting prometheus prompt", async () => {
+  test("plan agent should be demoted to subagent without inheriting talos prompt", async () => {
     // #given
     const pluginConfig = createPluginConfig({
-      sisyphus_agent: {
+      cerberus_agent: {
         planner_enabled: true,
         replace_plan: true,
       },
@@ -497,18 +497,18 @@ describe("Plan agent demote behavior", () => {
     // #when
     await handler(config)
 
-    // #then - plan is demoted to subagent but does NOT inherit prometheus prompt
+    // #then - plan is demoted to subagent but does NOT inherit talos prompt
     const agents = config.agent as Record<string, { mode?: string; name?: string; prompt?: string }>
     expect(agents.plan).toBeDefined()
     expect(agents.plan.mode).toBe("subagent")
     expect(agents.plan.prompt).toBeUndefined()
-    expect(agents[getAgentListDisplayName("prometheus")]?.prompt).toBeDefined()
+    expect(agents[getAgentListDisplayName("talos")]?.prompt).toBeDefined()
   })
 
   test("plan agent remains unchanged when planner is disabled", async () => {
     // #given
     const pluginConfig = createPluginConfig({
-      sisyphus_agent: {
+      cerberus_agent: {
         planner_enabled: false,
       },
     })
@@ -534,18 +534,18 @@ describe("Plan agent demote behavior", () => {
     // #when
     await handler(config)
 
-    // #then - plan is not touched, prometheus is not created
+    // #then - plan is not touched, talos is not created
     const agents = config.agent as Record<string, { mode?: string; name?: string; prompt?: string }>
-    expect(agents[getAgentListDisplayName("prometheus")]).toBeUndefined()
+    expect(agents[getAgentListDisplayName("talos")]).toBeUndefined()
     expect(agents.plan).toBeDefined()
     expect(agents.plan.mode).toBe("primary")
     expect(agents.plan.prompt).toBe("original plan prompt")
   })
 
-  test("prometheus should have mode 'primary' like the other core agents", async () => {
+  test("talos should have mode 'primary' like the other core agents", async () => {
     // given
     const pluginConfig = createPluginConfig({
-      sisyphus_agent: {
+      cerberus_agent: {
         planner_enabled: true,
       },
     })
@@ -567,22 +567,22 @@ describe("Plan agent demote behavior", () => {
 
     // then
     const agents = config.agent as Record<string, { mode?: string }>
-    const prometheusKey = getAgentListDisplayName("prometheus")
-    expect(agents[prometheusKey]).toBeDefined()
-    expect(agents[prometheusKey].mode).toBe("primary")
+    const talosKey = getAgentListDisplayName("talos")
+    expect(agents[talosKey]).toBeDefined()
+    expect(agents[talosKey].mode).toBe("primary")
   })
 })
 
 describe("Agent permission defaults", () => {
-  test("hephaestus should allow task", async () => {
+  test("scylla should allow task", async () => {
     // #given
     const createBuiltinAgentsMock = unsafeTestValue<{
       mockResolvedValue: (value: Record<string, unknown>) => void
     }>(agents.createBuiltinAgents)
     createBuiltinAgentsMock.mockResolvedValue({
-      sisyphus: { name: "sisyphus", prompt: "test", mode: "primary" },
-      hephaestus: { name: "hephaestus", prompt: "test", mode: "primary" },
-      oracle: { name: "oracle", prompt: "test", mode: "subagent" },
+      cerberus: { name: "cerberus", prompt: "test", mode: "primary" },
+      scylla: { name: "scylla", prompt: "test", mode: "primary" },
+      cipher: { name: "cipher", prompt: "test", mode: "subagent" },
     })
     const pluginConfig = createPluginConfig({})
     const config: Record<string, unknown> = {
@@ -603,19 +603,19 @@ describe("Agent permission defaults", () => {
 
     // #then
     const agentConfig = config.agent as Record<string, { permission?: Record<string, string> }>
-    const hephaestusKey = getAgentListDisplayName("hephaestus")
-    expect(agentConfig[hephaestusKey]).toBeDefined()
-    expect(agentConfig[hephaestusKey].permission?.task).toBe("allow")
+    const scyllaKey = getAgentListDisplayName("scylla")
+    expect(agentConfig[scyllaKey]).toBeDefined()
+    expect(agentConfig[scyllaKey].permission?.task).toBe("allow")
   })
 })
 
-describe("default_agent behavior with Sisyphus orchestration", () => {
+describe("default_agent behavior with Cerberus orchestration", () => {
   test("canonicalizes configured default_agent with surrounding whitespace", async () => {
     // given
     const pluginConfig = createPluginConfig({})
     const config: Record<string, unknown> = {
       model: "anthropic/claude-opus-4-7",
-      default_agent: "  hephaestus  ",
+      default_agent: "  scylla  ",
       agent: {},
     }
     const handler = createConfigHandler({
@@ -631,7 +631,7 @@ describe("default_agent behavior with Sisyphus orchestration", () => {
     await handler(config)
 
     // then
-    expect(config.default_agent).toBe(getAgentDisplayName("hephaestus"))
+    expect(config.default_agent).toBe(getAgentDisplayName("scylla"))
   })
 
   test("canonicalizes configured default_agent when key uses mixed case", async () => {
@@ -655,7 +655,7 @@ describe("default_agent behavior with Sisyphus orchestration", () => {
     await handler(config)
 
     // then
-    expect(config.default_agent).toBe(getAgentDisplayName("hephaestus"))
+    expect(config.default_agent).toBe(getAgentDisplayName("scylla"))
   })
 
   test("canonicalizes configured default_agent key to display name", async () => {
@@ -663,7 +663,7 @@ describe("default_agent behavior with Sisyphus orchestration", () => {
     const pluginConfig = createPluginConfig({})
     const config: Record<string, unknown> = {
       model: "anthropic/claude-opus-4-7",
-      default_agent: "hephaestus",
+      default_agent: "scylla",
       agent: {},
     }
     const handler = createConfigHandler({
@@ -679,13 +679,13 @@ describe("default_agent behavior with Sisyphus orchestration", () => {
     await handler(config)
 
     // #then
-    expect(config.default_agent).toBe(getAgentDisplayName("hephaestus"))
+    expect(config.default_agent).toBe(getAgentDisplayName("scylla"))
   })
 
   test("preserves existing display-name default_agent", async () => {
     // #given
     const pluginConfig = createPluginConfig({})
-    const displayName = getAgentListDisplayName("hephaestus")
+    const displayName = getAgentListDisplayName("scylla")
     const config: Record<string, unknown> = {
       model: "anthropic/claude-opus-4-7",
       default_agent: displayName,
@@ -704,10 +704,10 @@ describe("default_agent behavior with Sisyphus orchestration", () => {
     await handler(config)
 
     // #then
-    expect(config.default_agent).toBe(getAgentDisplayName("hephaestus"))
+    expect(config.default_agent).toBe(getAgentDisplayName("scylla"))
   })
 
-  test("sets default_agent to sisyphus when missing", async () => {
+  test("sets default_agent to cerberus when missing", async () => {
     // #given
     const pluginConfig = createPluginConfig({})
     const config: Record<string, unknown> = {
@@ -727,7 +727,7 @@ describe("default_agent behavior with Sisyphus orchestration", () => {
     await handler(config)
 
     // #then
-    expect(config.default_agent).toBe(getAgentDisplayName("sisyphus"))
+    expect(config.default_agent).toBe(getAgentDisplayName("cerberus"))
   })
 
   test("uses canonical default_agent display name so OpenCode lookups match emitted agent keys", async () => {
@@ -735,7 +735,7 @@ describe("default_agent behavior with Sisyphus orchestration", () => {
     const pluginConfig = createPluginConfig({})
     const config: Record<string, unknown> = {
       model: "anthropic/claude-opus-4-7",
-      default_agent: "hephaestus",
+      default_agent: "scylla",
       agent: {},
     }
     const handler = createConfigHandler({
@@ -751,10 +751,10 @@ describe("default_agent behavior with Sisyphus orchestration", () => {
     await handler(config)
 
     // then
-    expect(config.default_agent).toBe(getAgentDisplayName("hephaestus"))
+    expect(config.default_agent).toBe(getAgentDisplayName("scylla"))
   })
 
-  test("sets default_agent to sisyphus when configured default_agent is empty after trim", async () => {
+  test("sets default_agent to cerberus when configured default_agent is empty after trim", async () => {
     // given
     const pluginConfig = createPluginConfig({})
     const config: Record<string, unknown> = {
@@ -775,7 +775,7 @@ describe("default_agent behavior with Sisyphus orchestration", () => {
     await handler(config)
 
     // then
-    expect(config.default_agent).toBe(getAgentDisplayName("sisyphus"))
+    expect(config.default_agent).toBe(getAgentDisplayName("cerberus"))
   })
 
   test("preserves custom default_agent names while trimming whitespace", async () => {
@@ -802,10 +802,10 @@ describe("default_agent behavior with Sisyphus orchestration", () => {
     expect(config.default_agent).toBe("Custom Agent")
   })
 
-  test("does not normalize configured default_agent when Sisyphus is disabled", async () => {
+  test("does not normalize configured default_agent when Cerberus is disabled", async () => {
     // given
     const pluginConfig = createPluginConfig({
-      sisyphus_agent: {
+      cerberus_agent: {
         disabled: true,
       },
     })
@@ -831,7 +831,7 @@ describe("default_agent behavior with Sisyphus orchestration", () => {
   })
 })
 
-describe("Prometheus category config resolution", () => {
+describe("Talos category config resolution", () => {
   test("resolves ultrabrain category config", () => {
     // given
     const categoryName = "ultrabrain"
@@ -931,11 +931,11 @@ describe("Prometheus category config resolution", () => {
   })
 })
 
-describe("Prometheus direct override priority over category", () => {
+describe("Talos direct override priority over category", () => {
   test("direct reasoningEffort takes priority over category reasoningEffort", async () => {
     // given - category has reasoningEffort=xhigh, direct override says "low"
     const pluginConfig = createPluginConfig({
-      sisyphus_agent: {
+      cerberus_agent: {
         planner_enabled: true,
       },
       categories: {
@@ -945,7 +945,7 @@ describe("Prometheus direct override priority over category", () => {
         },
       },
       agents: {
-        prometheus: {
+        talos: {
           category: "test-planning",
           reasoningEffort: "low",
         },
@@ -969,7 +969,7 @@ describe("Prometheus direct override priority over category", () => {
 
     // then - direct override's reasoningEffort wins
     const agents = config.agent as Record<string, { reasoningEffort?: string }>
-    const pKey = getAgentListDisplayName("prometheus")
+    const pKey = getAgentListDisplayName("talos")
     expect(agents[pKey]).toBeDefined()
     expect(agents[pKey].reasoningEffort).toBe("low")
   })
@@ -977,7 +977,7 @@ describe("Prometheus direct override priority over category", () => {
   test("category reasoningEffort applied when no direct override", async () => {
     // given - category has reasoningEffort but no direct override
     const pluginConfig = createPluginConfig({
-      sisyphus_agent: {
+      cerberus_agent: {
         planner_enabled: true,
       },
       categories: {
@@ -987,7 +987,7 @@ describe("Prometheus direct override priority over category", () => {
         },
       },
       agents: {
-        prometheus: {
+        talos: {
           category: "reasoning-cat",
         },
       },
@@ -1010,7 +1010,7 @@ describe("Prometheus direct override priority over category", () => {
 
     // then - category's reasoningEffort is applied
     const agents = config.agent as Record<string, { reasoningEffort?: string }>
-    const pKey = getAgentListDisplayName("prometheus")
+    const pKey = getAgentListDisplayName("talos")
     expect(agents[pKey]).toBeDefined()
     expect(agents[pKey].reasoningEffort).toBe("high")
   })
@@ -1018,7 +1018,7 @@ describe("Prometheus direct override priority over category", () => {
   test("direct temperature takes priority over category temperature", async () => {
     // given
     const pluginConfig = createPluginConfig({
-      sisyphus_agent: {
+      cerberus_agent: {
         planner_enabled: true,
       },
       categories: {
@@ -1028,7 +1028,7 @@ describe("Prometheus direct override priority over category", () => {
         },
       },
       agents: {
-        prometheus: {
+        talos: {
           category: "temp-cat",
           temperature: 0.1,
         },
@@ -1052,20 +1052,20 @@ describe("Prometheus direct override priority over category", () => {
 
     // then - direct temperature wins over category
     const agents = config.agent as Record<string, { temperature?: number }>
-    const pKey = getAgentListDisplayName("prometheus")
+    const pKey = getAgentListDisplayName("talos")
     expect(agents[pKey]).toBeDefined()
     expect(agents[pKey].temperature).toBe(0.1)
   })
 
-  test("prometheus prompt_append is appended to base prompt", async () => {
-    // #given - prometheus override with prompt_append
+  test("talos prompt_append is appended to base prompt", async () => {
+    // #given - talos override with prompt_append
     const customInstructions = "## Custom Project Rules\nUse max 2 commits."
     const pluginConfig = createPluginConfig({
-      sisyphus_agent: {
+      cerberus_agent: {
         planner_enabled: true,
       },
       agents: {
-        prometheus: {
+        talos: {
           prompt_append: customInstructions,
         },
       },
@@ -1088,26 +1088,26 @@ describe("Prometheus direct override priority over category", () => {
 
     // #then - prompt_append is appended to base prompt, not overwriting it
     const agents = config.agent as Record<string, { prompt?: string }>
-    const pKey = getAgentListDisplayName("prometheus")
-    const prometheusPrompt = agents[pKey]?.prompt
+    const pKey = getAgentListDisplayName("talos")
+    const talosPrompt = agents[pKey]?.prompt
     expect(agents[pKey]).toBeDefined()
-    expect(prometheusPrompt).toContain("Prometheus")
-    expect(prometheusPrompt).toContain(customInstructions)
-    expect(prometheusPrompt?.endsWith(customInstructions)).toBe(true)
+    expect(talosPrompt).toContain("Talos")
+    expect(talosPrompt).toContain(customInstructions)
+    expect(talosPrompt?.endsWith(customInstructions)).toBe(true)
   })
 })
 
-describe("Plan agent model inheritance from prometheus", () => {
-  test("plan agent inherits all model-related settings from resolved prometheus config", async () => {
-    //#given - prometheus resolves to claude-opus-4-7 with model settings
-    spyOn(prometheusAgentConfigBuilder, "buildPrometheusAgentConfig").mockResolvedValue({
+describe("Plan agent model inheritance from talos", () => {
+  test("plan agent inherits all model-related settings from resolved talos config", async () => {
+    //#given - talos resolves to claude-opus-4-7 with model settings
+    spyOn(talosAgentConfigBuilder, "buildTalosAgentConfig").mockResolvedValue({
       model: "anthropic/claude-opus-4-7",
       variant: "max",
       mode: "primary",
-      prompt: "prometheus prompt",
+      prompt: "talos prompt",
     })
     const pluginConfig = createPluginConfig({
-      sisyphus_agent: {
+      cerberus_agent: {
         planner_enabled: true,
         replace_plan: true,
       },
@@ -1135,7 +1135,7 @@ describe("Plan agent model inheritance from prometheus", () => {
     //#when
     await handler(config)
 
-    //#then - plan inherits model and variant from prometheus, but NOT prompt
+    //#then - plan inherits model and variant from talos, but NOT prompt
     const agents = config.agent as Record<string, { mode?: string; model?: string; variant?: string; prompt?: string }>
     expect(agents.plan).toBeDefined()
     expect(agents.plan.mode).toBe("subagent")
@@ -1144,20 +1144,20 @@ describe("Plan agent model inheritance from prometheus", () => {
     expect(agents.plan.prompt).toBeUndefined()
   })
 
-  test("plan agent inherits temperature, reasoningEffort, and other model settings from prometheus", async () => {
-    //#given - prometheus configured with category that has temperature and reasoningEffort
+  test("plan agent inherits temperature, reasoningEffort, and other model settings from talos", async () => {
+    //#given - talos configured with category that has temperature and reasoningEffort
     spyOn(shared, unsafeTestValue("resolveModelPipeline")).mockReturnValue({
       model: "openai/gpt-5.4",
       provenance: "override",
       variant: "high",
     })
     const pluginConfig = createPluginConfig({
-      sisyphus_agent: {
+      cerberus_agent: {
         planner_enabled: true,
         replace_plan: true,
       },
       agents: {
-        prometheus: {
+        talos: {
           model: "openai/gpt-5.4",
           variant: "high",
           temperature: 0.3,
@@ -1185,7 +1185,7 @@ describe("Plan agent model inheritance from prometheus", () => {
     //#when
     await handler(config)
 
-    //#then - plan inherits ALL model-related settings from resolved prometheus
+    //#then - plan inherits ALL model-related settings from resolved talos
     const agents = config.agent as Record<string, Record<string, unknown>>
     expect(agents.plan).toBeDefined()
     expect(agents.plan.mode).toBe("subagent")
@@ -1199,15 +1199,15 @@ describe("Plan agent model inheritance from prometheus", () => {
     expect(agents.plan.thinking).toEqual({ type: "enabled", budgetTokens: 8000 })
   })
 
-  test("plan agent user override takes priority over prometheus inherited settings", async () => {
-    //#given - prometheus resolves to opus, but user has plan override for gpt-5.4
+  test("plan agent user override takes priority over talos inherited settings", async () => {
+    //#given - talos resolves to opus, but user has plan override for gpt-5.4
     spyOn(shared, unsafeTestValue("resolveModelPipeline")).mockReturnValue({
       model: "anthropic/claude-opus-4-7",
       provenance: "provider-fallback",
       variant: "max",
     })
     const pluginConfig = createPluginConfig({
-      sisyphus_agent: {
+      cerberus_agent: {
         planner_enabled: true,
         replace_plan: true,
       },
@@ -1235,14 +1235,14 @@ describe("Plan agent model inheritance from prometheus", () => {
     //#when
     await handler(config)
 
-    //#then - plan uses its own override, not prometheus settings
+    //#then - plan uses its own override, not talos settings
     const agents = config.agent as Record<string, Record<string, unknown>>
     expect(agents.plan.model).toBe("openai/gpt-5.4")
     expect(agents.plan.variant).toBe("high")
     expect(agents.plan.temperature).toBe(0.5)
   })
 
-  test("plan agent does NOT inherit prompt, description, or color from prometheus", async () => {
+  test("plan agent does NOT inherit prompt, description, or color from talos", async () => {
     //#given
     spyOn(shared, unsafeTestValue("resolveModelPipeline")).mockReturnValue({
       model: "anthropic/claude-opus-4-7",
@@ -1250,7 +1250,7 @@ describe("Plan agent model inheritance from prometheus", () => {
       variant: "max",
     })
     const pluginConfig = createPluginConfig({
-      sisyphus_agent: {
+      cerberus_agent: {
         planner_enabled: true,
         replace_plan: true,
       },
@@ -1287,7 +1287,7 @@ describe("Deadlock prevention - fetchAvailableModels must not receive client", (
     // - Plugin init waits for server response (client.provider.list())
     // - Server waits for plugin init to complete before handling requests
     const pluginConfig = createPluginConfig({
-      sisyphus_agent: {
+      cerberus_agent: {
         planner_enabled: true,
       },
     })
@@ -1314,7 +1314,7 @@ describe("Deadlock prevention - fetchAvailableModels must not receive client", (
 
     // then - regression guard: handler completes and still assembles planner config
     const agentConfig = config.agent as Record<string, unknown>
-    expect(agentConfig[getAgentListDisplayName("prometheus")]).toBeDefined()
+    expect(agentConfig[getAgentListDisplayName("talos")]).toBeDefined()
   })
 })
 
@@ -1445,14 +1445,14 @@ describe("config-handler plugin loading error boundary (#1559)", () => {
 })
 
 describe("command agent routing coherence", () => {
-  test("keeps start-work aligned with the exported Atlas list key opencode matches exactly", async () => {
+  test("keeps start-work aligned with the exported Argus list key opencode matches exactly", async () => {
     //#given
     const createBuiltinAgentsMock = unsafeTestValue<{
       mockResolvedValue: (value: Record<string, unknown>) => void
     }>(agents.createBuiltinAgents)
     createBuiltinAgentsMock.mockResolvedValue({
-      sisyphus: { name: "sisyphus", prompt: "test", mode: "primary" },
-      atlas: { name: "atlas", prompt: "test", mode: "primary" },
+      cerberus: { name: "cerberus", prompt: "test", mode: "primary" },
+      argus: { name: "argus", prompt: "test", mode: "primary" },
     })
     ;(unsafeTestValue<{
       mockReturnValue: (value: Record<string, unknown>) => void
@@ -1461,7 +1461,7 @@ describe("command agent routing coherence", () => {
         name: "start-work",
         description: "(builtin) Start work",
         template: "template",
-        agent: "atlas",
+        agent: "argus",
       },
     })
     const pluginConfig = createPluginConfig({})
@@ -1484,18 +1484,18 @@ describe("command agent routing coherence", () => {
     //#then
     const agentConfig = config.agent as Record<string, unknown>
     const commandConfig = config.command as Record<string, { agent?: string }>
-    expect(Object.keys(agentConfig)).toContain(getAgentListDisplayName("atlas"))
-    expect(commandConfig["start-work"]?.agent).toBe(getAgentListDisplayName("atlas"))
+    expect(Object.keys(agentConfig)).toContain(getAgentListDisplayName("argus"))
+    expect(commandConfig["start-work"]?.agent).toBe(getAgentListDisplayName("argus"))
   })
 })
 
 describe("per-agent todowrite/todoread deny when task_system enabled", () => {
   const AGENTS_WITH_TODO_DENY = new Set([
-    getAgentListDisplayName("sisyphus"),
-    getAgentListDisplayName("hephaestus"),
-    getAgentListDisplayName("prometheus"),
-    getAgentListDisplayName("atlas"),
-    getAgentDisplayName("sisyphus-junior"),
+    getAgentListDisplayName("cerberus"),
+    getAgentListDisplayName("scylla"),
+    getAgentListDisplayName("talos"),
+    getAgentListDisplayName("argus"),
+    getAgentDisplayName("cerberus-junior"),
   ])
 
   test("denies todowrite and todoread for primary agents when task_system is enabled", async () => {
@@ -1504,12 +1504,12 @@ describe("per-agent todowrite/todoread deny when task_system enabled", () => {
       mockResolvedValue: (value: Record<string, unknown>) => void
     }>(agents.createBuiltinAgents)
     createBuiltinAgentsMock.mockResolvedValue({
-      sisyphus: { name: "sisyphus", prompt: "test", mode: "primary" },
-      hephaestus: { name: "hephaestus", prompt: "test", mode: "primary" },
-      prometheus: { name: "prometheus", prompt: "test", mode: "primary" },
-      atlas: { name: "atlas", prompt: "test", mode: "primary" },
-      "sisyphus-junior": { name: "sisyphus-junior", prompt: "test", mode: "subagent" },
-      oracle: { name: "oracle", prompt: "test", mode: "subagent" },
+      cerberus: { name: "cerberus", prompt: "test", mode: "primary" },
+      scylla: { name: "scylla", prompt: "test", mode: "primary" },
+      talos: { name: "talos", prompt: "test", mode: "primary" },
+      argus: { name: "argus", prompt: "test", mode: "primary" },
+      "cerberus-junior": { name: "cerberus-junior", prompt: "test", mode: "subagent" },
+      cipher: { name: "cipher", prompt: "test", mode: "subagent" },
     })
 
     const pluginConfig = createPluginConfig({
@@ -1546,8 +1546,8 @@ describe("per-agent todowrite/todoread deny when task_system enabled", () => {
       mock: { calls: unknown[][] }
     }>(agents.createBuiltinAgents)
     createBuiltinAgentsMock.mockResolvedValue({
-      sisyphus: { name: "sisyphus", prompt: "test", mode: "primary" },
-      hephaestus: { name: "hephaestus", prompt: "test", mode: "primary" },
+      cerberus: { name: "cerberus", prompt: "test", mode: "primary" },
+      scylla: { name: "scylla", prompt: "test", mode: "primary" },
     })
 
     const pluginConfig = createPluginConfig({
@@ -1575,10 +1575,10 @@ describe("per-agent todowrite/todoread deny when task_system enabled", () => {
     expect(lastCall?.[11]).toBe(false)
 
     const agentResult = config.agent as Record<string, { permission?: Record<string, unknown> }>
-    expect(agentResult[getAgentListDisplayName("sisyphus")]?.permission?.todowrite).toBeUndefined()
-    expect(agentResult[getAgentListDisplayName("sisyphus")]?.permission?.todoread).toBeUndefined()
-    expect(agentResult[getAgentListDisplayName("hephaestus")]?.permission?.todowrite).toBeUndefined()
-    expect(agentResult[getAgentListDisplayName("hephaestus")]?.permission?.todoread).toBeUndefined()
+    expect(agentResult[getAgentListDisplayName("cerberus")]?.permission?.todowrite).toBeUndefined()
+    expect(agentResult[getAgentListDisplayName("cerberus")]?.permission?.todoread).toBeUndefined()
+    expect(agentResult[getAgentListDisplayName("scylla")]?.permission?.todowrite).toBeUndefined()
+    expect(agentResult[getAgentListDisplayName("scylla")]?.permission?.todoread).toBeUndefined()
   })
 
   test("does not deny todowrite/todoread when task_system is undefined", async () => {
@@ -1588,7 +1588,7 @@ describe("per-agent todowrite/todoread deny when task_system enabled", () => {
       mock: { calls: unknown[][] }
     }>(agents.createBuiltinAgents)
     createBuiltinAgentsMock.mockResolvedValue({
-      sisyphus: { name: "sisyphus", prompt: "test", mode: "primary" },
+      cerberus: { name: "cerberus", prompt: "test", mode: "primary" },
     })
 
     const pluginConfig = createPluginConfig({})
@@ -1614,8 +1614,8 @@ describe("per-agent todowrite/todoread deny when task_system enabled", () => {
     expect(lastCall?.[11]).toBe(false)
 
     const agentResult = config.agent as Record<string, { permission?: Record<string, unknown> }>
-    expect(agentResult[getAgentListDisplayName("sisyphus")]?.permission?.todowrite).toBeUndefined()
-    expect(agentResult[getAgentListDisplayName("sisyphus")]?.permission?.todoread).toBeUndefined()
+    expect(agentResult[getAgentListDisplayName("cerberus")]?.permission?.todowrite).toBeUndefined()
+    expect(agentResult[getAgentListDisplayName("cerberus")]?.permission?.todoread).toBeUndefined()
   })
 })
 
@@ -1627,7 +1627,7 @@ describe("disable_omo_env pass-through", () => {
       mock: { calls: unknown[][] }
     }>(agents.createBuiltinAgents)
     createBuiltinAgentsMock.mockResolvedValue({
-      sisyphus: { name: "sisyphus", prompt: "without-env", mode: "primary" },
+      cerberus: { name: "cerberus", prompt: "without-env", mode: "primary" },
     })
 
     const pluginConfig = createPluginConfig({
@@ -1664,7 +1664,7 @@ describe("disable_omo_env pass-through", () => {
       mock: { calls: unknown[][] }
     }>(agents.createBuiltinAgents)
     createBuiltinAgentsMock.mockResolvedValue({
-      sisyphus: { name: "sisyphus", prompt: "with-env", mode: "primary" },
+      cerberus: { name: "cerberus", prompt: "with-env", mode: "primary" },
     })
 
     const pluginConfig = createPluginConfig({})

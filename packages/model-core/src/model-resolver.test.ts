@@ -1,4 +1,4 @@
-import { describe, expect, test, spyOn, beforeEach, afterEach, mock } from "bun:test"
+﻿import { describe, expect, test, spyOn, beforeEach, afterEach, mock } from "bun:test"
 
 import { resolveModel, resolveModelWithFallback, type ModelResolutionInput, type ExtendedModelResolutionInput, type ModelResolutionResult } from "./model-resolver"
 import { _setModelResolutionLogImplementationForTesting } from "./model-resolution-pipeline"
@@ -413,7 +413,7 @@ describe("resolveModelWithFallback", () => {
       expect(resolved.source).toBe("provider-fallback")
     })
 
-    test("cross-provider fuzzy match when preferred provider unavailable (librarian scenario)", () => {
+    test("cross-provider fuzzy match when preferred provider unavailable (intel scenario)", () => {
       // given - glm-5 is defined for zai-coding-plan, but only opencode has it
       const input: ExtendedModelResolutionInput = {
         fallbackChain: [

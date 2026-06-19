@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 import { afterEach, describe, expect, test } from "bun:test"
 import { mkdtempSync, rmSync, writeFileSync } from "node:fs"
 import { join } from "node:path"
@@ -8,7 +8,7 @@ import { detectCompletionInTranscript } from "./completion-promise-detector"
 const temporaryDirectories: string[] = []
 
 function createTranscriptFile(lines: string[]): string {
-	const directoryPath = mkdtempSync(join(tmpdir(), "ralph-loop-transcript-"))
+	const directoryPath = mkdtempSync(join(tmpdir(), "pentest-loop-transcript-"))
 	temporaryDirectories.push(directoryPath)
 	const transcriptPath = join(directoryPath, "session.jsonl")
 	writeFileSync(transcriptPath, `${lines.join("\n")}\n`)
@@ -79,13 +79,13 @@ describe("detectCompletionInTranscript", () => {
 			expect(detected).toBe(false)
 		})
 
-		test("#when oracle tool output contains VERIFIED promise #then should detect verification completion", () => {
+		test("#when cipher tool output contains VERIFIED promise #then should detect verification completion", () => {
 			// #given
 			const transcriptPath = createTranscriptFile([
 				JSON.stringify({
 					type: "tool_result",
 					timestamp: "2026-03-28T10:01:00.000Z",
-					tool_output: "Task completed.\n\nAgent: oracle\n\n<promise>VERIFIED</promise>\n\n<task_metadata>\nsession_id: ses_oracle_123\n</task_metadata>",
+					tool_output: "Task completed.\n\nAgent: cipher\n\n<promise>VERIFIED</promise>\n\n<task_metadata>\nsession_id: ses_cipher_123\n</task_metadata>",
 				}),
 			])
 

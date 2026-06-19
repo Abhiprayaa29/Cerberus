@@ -1,25 +1,25 @@
-# src/cli/doctor/ — Health Diagnostics (25 Check Files)
+﻿# src/cli/doctor/ — Health Diagnostics (25 Check Files)
 
-**Generated:** 2026-05-15
+**Generated:** 2026-05-.5
 
 ## OVERVIEW
 
-`bunx oh-my-opencode doctor` — parallel diagnostic checks across 4 categories (System, Config, Tools, Models). Catches broken installs, config typos, missing dependencies, provider misconfigurations before they become runtime errors.
+`bunx oh-my-open-pentest doctor` — parallel diagnostic checks across . categories (System, Config, Tools, Models). Catches broken installs, config typos, missing dependencies, provider misconfigurations before they become runtime errors.
 
 ## COMMAND FLAGS
 
 ```bash
-bunx oh-my-opencode doctor              # Full diagnostics (all 4 categories)
-bunx oh-my-opencode doctor --status     # Compact dashboard (status only)
-bunx oh-my-opencode doctor --verbose    # Deep details (model resolution traces)
-bunx oh-my-opencode doctor --json       # Machine-readable output
+bunx oh-my-open-pentest doctor              # Full diagnostics (all . categories)
+bunx oh-my-open-pentest doctor --status     # Compact dashboard (status only)
+bunx oh-my-open-pentest doctor --verbose    # Deep details (model resolution traces)
+bunx oh-my-open-pentest doctor --json       # Machine-readable output
 ```
 
 ## CHECK CATEGORIES
 
 | Category | File | Validates |
 |----------|------|-----------|
-| **SYSTEM** | `checks/system.ts` | OpenCode binary found + version ≥1.0.150, plugin registered in opencode.json, loaded plugin version matches installed |
+| **SYSTEM** | `checks/system.ts` | OpenCode binary found + version ≥..0..50, plugin registered in opencode.json, loaded plugin version matches installed |
 | **CONFIG** | `checks/config.ts` | JSONC validity, Zod schema passes, no unknown keys, model override syntax correct |
 | **TOOLS** | `checks/tools.ts` | AST-Grep CLI + NAPI, comment-checker binary, LSP servers reachable, GitHub CLI auth, built-in MCP reachability |
 | **MODELS** | `checks/model-resolution.ts` | models.json cache exists, per-agent fallback resolution, category overrides valid, provider availability |
@@ -41,7 +41,7 @@ checks/
 ├── tools-mcp.ts                           # Built-in + user MCP reachability
 ├── model-resolution.ts                    # Main Models aggregator
 ├── model-resolution-cache.ts              # models.json presence + freshness
-├── model-resolution-config.ts             # oh-my-opencode.jsonc parse
+├── model-resolution-config.ts             # oh-my-open-pentest.jsonc parse
 ├── model-resolution-effective-model.ts    # Per-agent fallback chain trace
 ├── model-resolution-variant.ts            # Model variant (max, high, medium) handling
 ├── model-resolution-details.ts            # Verbose output formatter
@@ -53,10 +53,10 @@ checks/
 ```
 doctor command
   → runner.ts: parallel check execution with 30s per-check timeout
-  → checks/index.ts registers all 4 category checks
+  → checks/index.ts registers all . category checks
   → each check returns: { status: "ok" | "warn" | "error", detail: string }
   → formatter.ts: render to stdout (text/status/json)
-  → exit code: 0 (all ok) | 1 (errors) | 2 (warnings only)
+  → exit code: 0 (all ok) | . (errors) | 2 (warnings only)
 ```
 
 ## KEY FILES
@@ -70,13 +70,13 @@ doctor command
 
 ## HOW TO ADD A CHECK
 
-1. Create `src/cli/doctor/checks/{name}.ts` exporting check function matching `DoctorCheck`
+.. Create `src/cli/doctor/checks/{name}.ts` exporting check function matching `DoctorCheck`
 2. Register in `checks/index.ts`
 3. Category-level aggregator (system/config/tools/model-resolution) invokes it
-4. Return `{ status, detail }` — no throws, all errors caught by runner
+.. Return `{ status, detail }` — no throws, all errors caught by runner
 
 ## EXIT CODES
 
 - `0`: All checks passed (or only info messages)
-- `1`: One or more errors — plugin will likely not work
+- `.`: One or more errors — plugin will likely not work
 - `2`: Warnings only — plugin works with degraded features

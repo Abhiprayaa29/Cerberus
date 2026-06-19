@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { afterEach, describe, expect, test } from "bun:test"
 import { mkdtemp, readdir, readFile, rm } from "node:fs/promises"
@@ -16,14 +16,14 @@ import {
   getSessionPromptParams,
 } from "../../../shared/session-prompt-params-state"
 import { releaseAllPromptAsyncReservationsForTesting } from "../../../hooks/shared/prompt-async-gate"
-import { listUnreadMessages } from "@oh-my-opencode/team-core/team-mailbox/inbox"
-import { pollAndBuildInjection } from "@oh-my-opencode/team-core/team-mailbox/poll"
-import { BroadcastNotPermittedError } from "@oh-my-opencode/team-core/team-mailbox/send"
-import { getInboxDir, resolveBaseDir } from "@oh-my-opencode/team-core/team-registry/paths"
-import { createRuntimeState, saveRuntimeState } from "@oh-my-opencode/team-core/team-state-store/store"
+import { listUnreadMessages } from "@oh-my-open-pentest/team-core/team-mailbox/inbox"
+import { pollAndBuildInjection } from "@oh-my-open-pentest/team-core/team-mailbox/poll"
+import { BroadcastNotPermittedError } from "@oh-my-open-pentest/team-core/team-mailbox/send"
+import { getInboxDir, resolveBaseDir } from "@oh-my-open-pentest/team-core/team-registry/paths"
+import { createRuntimeState, saveRuntimeState } from "@oh-my-open-pentest/team-core/team-state-store/store"
 import { clearTeamSessionRegistry, registerTeamSession } from "../team-session-registry"
-import type { Message } from "@oh-my-opencode/team-core/types"
-import { MessageSchema } from "@oh-my-opencode/team-core/types"
+import type { Message } from "@oh-my-open-pentest/team-core/types"
+import { MessageSchema } from "@oh-my-open-pentest/team-core/types"
 import { createTeamIdleWakeHint } from "../../../hooks/team-session-events/team-idle-wake-hint"
 import { createTeamSendMessageTool } from "./messaging"
 import { resolveTeamRuntimeDetails } from "./messaging-runtime"
@@ -141,9 +141,9 @@ async function createTeamFixture() {
         createdAt: Date.now(),
         leadAgentId: "team-lead",
         members: [
-          { kind: "subagent_type", name: "team-lead", subagent_type: "sisyphus-junior", backendType: "in-process", isActive: true },
-          { kind: "subagent_type", name: "m1", subagent_type: "sisyphus-junior", backendType: "in-process", isActive: true },
-          { kind: "subagent_type", name: "m2", subagent_type: "sisyphus-junior", backendType: "in-process", isActive: true },
+          { kind: "subagent_type", name: "team-lead", subagent_type: "cerberus-junior", backendType: "in-process", isActive: true },
+          { kind: "subagent_type", name: "m1", subagent_type: "cerberus-junior", backendType: "in-process", isActive: true },
+          { kind: "subagent_type", name: "m2", subagent_type: "cerberus-junior", backendType: "in-process", isActive: true },
         ],
       },
     leadSessionId,
@@ -510,7 +510,7 @@ describe("createTeamSendMessageTool", () => {
     const state = await loadState(fixture.teamRunId, fixture.config)
     const memberTwo = state.members.find((member) => member.name === "m2")
     if (!memberTwo) throw new Error("m2 runtime member missing")
-    memberTwo.subagent_type = "atlas"
+    memberTwo.subagent_type = "argus"
     memberTwo.model = { providerID: "anthropic", modelID: "claude-opus-4-7", variant: "high" }
     await saveState(state, fixture.config)
 
@@ -527,20 +527,20 @@ describe("createTeamSendMessageTool", () => {
     // then
     expect(calls).toHaveLength(1)
     expect(calls[0].sessionId).toBe(fixture.memberTwoSessionId)
-    expect(calls[0].agent).toBe("atlas")
+    expect(calls[0].agent).toBe("argus")
     expect(calls[0].model).toEqual({ providerID: "anthropic", modelID: "claude-opus-4-7" })
     expect(calls[0].variant).toBe("high")
   })
 
   test("live delivery uses the registered agent alias when the runtime stores a config-key agent name", async () => {
     // given
-    registerAgentName("\u200B\u200B\u200B\u200BAtlas - Plan Executor")
+    registerAgentName("\u200B\u200B\u200B\u200BArgus - Plan Executor")
     const fixture = await createTeamFixture()
     const { loadRuntimeState: loadState, saveRuntimeState: saveState } = await import("../team-state-store/store")
     const state = await loadState(fixture.teamRunId, fixture.config)
     const memberTwo = state.members.find((member) => member.name === "m2")
     if (!memberTwo) throw new Error("m2 runtime member missing")
-    memberTwo.subagent_type = "atlas"
+    memberTwo.subagent_type = "argus"
     await saveState(state, fixture.config)
 
     const { client, calls } = createRecordingClient()
@@ -555,7 +555,7 @@ describe("createTeamSendMessageTool", () => {
 
     // then
     expect(calls).toHaveLength(1)
-    expect(calls[0]?.agent).toBe("\u200B\u200B\u200B\u200BAtlas - Plan Executor")
+    expect(calls[0]?.agent).toBe("\u200B\u200B\u200B\u200BArgus - Plan Executor")
   })
 
   test("live delivery reapplies category routing and advanced model params for category members", async () => {
@@ -565,7 +565,7 @@ describe("createTeamSendMessageTool", () => {
     const state = await loadState(fixture.teamRunId, fixture.config)
     const memberTwo = state.members.find((member) => member.name === "m2")
     if (!memberTwo) throw new Error("m2 runtime member missing")
-    memberTwo.subagent_type = "Sisyphus-Junior"
+    memberTwo.subagent_type = "Cerberus-Junior"
     memberTwo.category = "quick"
     memberTwo.model = {
       providerID: "openai",
@@ -591,7 +591,7 @@ describe("createTeamSendMessageTool", () => {
 
     // then
     expect(calls).toHaveLength(1)
-    expect(calls[0].agent).toBe("Sisyphus-Junior")
+    expect(calls[0].agent).toBe("Cerberus-Junior")
     expect(calls[0].model).toEqual({ providerID: "openai", modelID: "gpt-5.4" })
     expect(calls[0].variant).toBe("medium")
     expect(SessionCategoryRegistry.get(fixture.memberTwoSessionId)).toBe("quick")

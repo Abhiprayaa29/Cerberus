@@ -1,4 +1,4 @@
-import type { JSX } from "react"
+﻿import type { JSX } from "react"
 import { getTranslations } from "next-intl/server"
 import { Button } from "@/components/ui/button"
 import { Link } from "@/i18n/routing"
@@ -23,7 +23,7 @@ export async function CtaSection(): Promise<JSX.Element> {
               </div>
               <div className="flex flex-col justify-center gap-4 sm:flex-row">
                 <Link
-                  href="https://github.com/code-yeongyu/oh-my-openagent"
+                  href="https://github.com/code-yeongyu/oh-my-open-pentest"
                   target="_blank"
                   rel="noopener noreferrer"
                 >

@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { afterEach, describe, expect, mock, test } from "bun:test"
 import { randomUUID } from "node:crypto"
@@ -114,7 +114,7 @@ describe("team-mode integration", () => {
     const baseDir = await createBaseDir()
     const config = createConfig(baseDir)
     const manager = createManager()
-    const runtime = await createTeamRun(createSpec("echo-team", "echo", [{ kind: "subagent_type", name: "echo", subagent_type: "atlas", backendType: "in-process", isActive: true }]), "ses_lead", createContext(baseDir, manager, new Set(["ses_lead"])), config, manager)
+    const runtime = await createTeamRun(createSpec("echo-team", "echo", [{ kind: "subagent_type", name: "echo", subagent_type: "argus", backendType: "in-process", isActive: true }]), "ses_lead", createContext(baseDir, manager, new Set(["ses_lead"])), config, manager)
 
     // when
     const delivered = await sendMessage({ version: 1, messageId: randomUUID(), from: "echo", to: "echo", kind: "message", body: "hello", timestamp: Date.now() }, runtime.teamRunId, config, { isLead: true, activeMembers: ["echo"] })
@@ -136,8 +136,8 @@ describe("team-mode integration", () => {
     const config = createConfig(baseDir)
     const manager = createManager()
     const runtime = await createTeamRun(createSpec("pipeline-team", "lead", [
-      { kind: "subagent_type", name: "lead", subagent_type: "sisyphus", backendType: "in-process", isActive: true },
-      { kind: "subagent_type", name: "worker", subagent_type: "atlas", backendType: "in-process", isActive: true },
+      { kind: "subagent_type", name: "lead", subagent_type: "cerberus", backendType: "in-process", isActive: true },
+      { kind: "subagent_type", name: "worker", subagent_type: "argus", backendType: "in-process", isActive: true },
     ]), "ses_lead", createContext(baseDir, manager, new Set(["ses_lead"])), config, manager)
     const createdTask = await createTask(runtime.teamRunId, { subject: "X", description: "Ship X", blocks: [], blockedBy: [], status: "pending" }, config)
 
@@ -161,10 +161,10 @@ describe("team-mode integration", () => {
     const config = createConfig(baseDir)
     const manager = createManager()
     const context = createContext(baseDir, manager, aliveSessionIds)
-    const aliveRuntime = await createTeamRun(createSpec("alive-team", "lead", [{ kind: "subagent_type", name: "lead", subagent_type: "sisyphus", backendType: "in-process", isActive: true }]), "ses_alive", context, config, manager)
-    const deadRuntime = await createTeamRun(createSpec("dead-team", "lead", [{ kind: "subagent_type", name: "lead", subagent_type: "atlas", backendType: "in-process", isActive: true }]), "ses_dead", context, config, manager)
-    const stuckRuntime = await createTeamRun(createSpec("stuck-team", "lead", [{ kind: "subagent_type", name: "lead", subagent_type: "atlas", backendType: "in-process", isActive: true }]), "ses_stuck", context, config, manager)
-    const deletingRuntime = await createTeamRun(createSpec("deleting-team", "lead", [{ kind: "subagent_type", name: "lead", subagent_type: "atlas", backendType: "in-process", isActive: true }]), "ses_delete", context, config, manager)
+    const aliveRuntime = await createTeamRun(createSpec("alive-team", "lead", [{ kind: "subagent_type", name: "lead", subagent_type: "cerberus", backendType: "in-process", isActive: true }]), "ses_alive", context, config, manager)
+    const deadRuntime = await createTeamRun(createSpec("dead-team", "lead", [{ kind: "subagent_type", name: "lead", subagent_type: "argus", backendType: "in-process", isActive: true }]), "ses_dead", context, config, manager)
+    const stuckRuntime = await createTeamRun(createSpec("stuck-team", "lead", [{ kind: "subagent_type", name: "lead", subagent_type: "argus", backendType: "in-process", isActive: true }]), "ses_stuck", context, config, manager)
+    const deletingRuntime = await createTeamRun(createSpec("deleting-team", "lead", [{ kind: "subagent_type", name: "lead", subagent_type: "argus", backendType: "in-process", isActive: true }]), "ses_delete", context, config, manager)
     await saveRuntimeState({ ...(await loadRuntimeState(stuckRuntime.teamRunId, config)), status: "creating", createdAt: Date.now() - 40 * 60 * 1000 }, config)
     await saveRuntimeState({ ...(await loadRuntimeState(deletingRuntime.teamRunId, config)), status: "deleting" }, config)
 
@@ -221,7 +221,7 @@ describe("team-mode integration", () => {
     const ctx = { client: recordingClient, manager, directory: baseDir }
 
     const runtime = await createTeamRun(createSpec("msg-team", "lead", [
-      { kind: "subagent_type", name: "lead", subagent_type: "sisyphus", backendType: "in-process", isActive: true },
+      { kind: "subagent_type", name: "lead", subagent_type: "cerberus", backendType: "in-process", isActive: true },
       { kind: "category", name: "worker", category: "quick", prompt: "work the queue", backendType: "in-process", isActive: true },
     ]), "ses_lead", ctx, config, manager)
 
@@ -307,9 +307,9 @@ describe("team-mode integration", () => {
 
     // when
     await createTeamRun(createSpec("parallel-team", "lead", [
-      { kind: "subagent_type", name: "lead", subagent_type: "sisyphus", backendType: "in-process", isActive: true },
-      { kind: "subagent_type", name: "worker-a", subagent_type: "atlas", backendType: "in-process", isActive: true },
-      { kind: "subagent_type", name: "worker-b", subagent_type: "atlas", backendType: "in-process", isActive: true },
+      { kind: "subagent_type", name: "lead", subagent_type: "cerberus", backendType: "in-process", isActive: true },
+      { kind: "subagent_type", name: "worker-a", subagent_type: "argus", backendType: "in-process", isActive: true },
+      { kind: "subagent_type", name: "worker-b", subagent_type: "argus", backendType: "in-process", isActive: true },
     ]), "ses_lead", createContext(baseDir, manager, new Set(["ses_lead"])), createConfig(baseDir, { max_parallel_members: 2 }), manager)
 
     // then

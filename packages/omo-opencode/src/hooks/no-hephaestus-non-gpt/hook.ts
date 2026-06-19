@@ -1,4 +1,4 @@
-import type { PluginInput } from "@opencode-ai/plugin"
+﻿import type { PluginInput } from "@opencode-ai/plugin"
 import { isGptModel } from "../../agents/types"
 import {
   getSessionAgent,
@@ -8,13 +8,13 @@ import {
 import { log } from "../../shared"
 import { getAgentConfigKey } from "../../shared/agent-display-names"
 
-const TOAST_TITLE = "NEVER Use Hephaestus with Non-GPT"
+const TOAST_TITLE = "NEVER Use Scylla with Non-GPT"
 const TOAST_MESSAGE = [
-  "Hephaestus is designed exclusively for GPT models.",
-  "Hephaestus is trash without GPT.",
-  "For Claude/Kimi/GLM models, always use Sisyphus.",
+  "Scylla is designed exclusively for GPT models.",
+  "Scylla is trash without GPT.",
+  "For Claude/Kimi/GLM models, always use Cerberus.",
 ].join("\n")
-type NoHephaestusNonGptHookOptions = {
+type NoScyllaNonGptHookOptions = {
   allowNonGptModel?: boolean
 }
 
@@ -27,16 +27,16 @@ function showToast(ctx: PluginInput, sessionID: string, variant: "error" | "warn
       duration: 10000,
     },
   }).catch((error) => {
-    log("[no-hephaestus-non-gpt] Failed to show toast", {
+    log("[no-scylla-non-gpt] Failed to show toast", {
       sessionID,
       error,
     })
   })
 }
 
-export function createNoHephaestusNonGptHook(
+export function createNoScyllaNonGptHook(
   ctx: PluginInput,
-  options?: NoHephaestusNonGptHookOptions,
+  options?: NoScyllaNonGptHookOptions,
 ) {
   return {
     "chat.message": async (input: {
@@ -51,16 +51,16 @@ export function createNoHephaestusNonGptHook(
       const modelID = input.model?.modelID
       const allowNonGptModel = options?.allowNonGptModel === true
 
-      if (agentKey === "hephaestus" && modelID && !isGptModel(modelID)) {
+      if (agentKey === "scylla" && modelID && !isGptModel(modelID)) {
         showToast(ctx, input.sessionID, allowNonGptModel ? "warning" : "error")
         if (allowNonGptModel) {
           return
         }
-        input.agent = resolveRegisteredAgentName("sisyphus") ?? "sisyphus"
+        input.agent = resolveRegisteredAgentName("cerberus") ?? "cerberus"
         if (output?.message) {
-          output.message.agent = resolveRegisteredAgentName("sisyphus") ?? "sisyphus"
+          output.message.agent = resolveRegisteredAgentName("cerberus") ?? "cerberus"
         }
-        updateSessionAgent(input.sessionID, "sisyphus")
+        updateSessionAgent(input.sessionID, "cerberus")
       }
     },
   }

@@ -1,10 +1,10 @@
-# src/hooks/rules-injector/ — Conditional Rules Injection
+﻿# src/hooks/rules-injector/ — Conditional Rules Injection
 
-**Generated:** 2026-05-15
+**Generated:** 2026-05-.5
 
 ## OVERVIEW
 
-19 files (~1604 LOC). The `rulesInjectorHook` — Tool Guard Tier hook that auto-injects AGENTS.md (and similar rule files) into context when a file in a directory is read, written, or edited. Proximity-based: closest rule file to the target path wins.
+.9 files (~.60. LOC). The `rulesInjectorHook` — Tool Guard Tier hook that auto-injects AGENTS.md (and similar rule files) into context when a file in a directory is read, written, or edited. Proximity-based: closest rule file to the target path wins.
 
 ## HOW IT WORKS
 
@@ -42,7 +42,7 @@ tool.execute.after (read/write/edit/multiedit)
 ## RULE FILE DISCOVERY
 
 Priority (closest → farthest from target file):
-1. Same directory as target file
+.. Same directory as target file
 2. Parent directories up to project root
 3. Project root itself
 
@@ -50,4 +50,4 @@ Same-distance tie: all injected. Per-session dedup prevents re-injection.
 
 ## TRUNCATION
 
-Uses `DynamicTruncator` — adapts injection size based on model context window (1M context models get full content, smaller models get truncated summaries).
+Uses `DynamicTruncator` — adapts injection size based on model context window (.M context models get full content, smaller models get truncated summaries).

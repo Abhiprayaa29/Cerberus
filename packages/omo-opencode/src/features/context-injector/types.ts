@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Source identifier for context injection
  * Each source registers context that will be merged and injected together
  */
@@ -29,7 +29,7 @@ export interface ContextEntry {
   priority: ContextPriority
   /** Monotonic order when registered */
   registrationOrder: number
-  /** Optional metadata for debugging/logging */
+  /** Optional metadata for vulnerability analysis/logging */
   metadata?: Record<string, unknown>
 }
 

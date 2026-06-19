@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, test } from "bun:test"
+﻿import { afterEach, describe, expect, test } from "bun:test"
 import { releaseAllPromptAsyncReservationsForTesting } from "../../hooks/shared/prompt-async-gate"
 import { ParentWakeNotifier } from "./parent-wake-notifier"
 
@@ -62,7 +62,7 @@ describe("ParentWakeNotifier assistant error history", () => {
           role: "user",
           time: { created: dispatchedAt + 1 },
         },
-        parts: [{ type: "text", text: `${FINAL_WAKE}\n<!-- OMO_INTERNAL_INITIATOR -->` }],
+        parts: [{ type: "text", text: `${FINAL_WAKE}\n<!-- OMOP_INTERNAL_INITIATOR -->` }],
       },
       {
         info: {
@@ -74,7 +74,7 @@ describe("ParentWakeNotifier assistant error history", () => {
         parts: [],
       },
     ])
-    notifier.queuePendingParentWake("parent-assistant-error-history", FINAL_WAKE, { agent: "sisyphus" }, true)
+    notifier.queuePendingParentWake("parent-assistant-error-history", FINAL_WAKE, { agent: "cerberus" }, true)
 
     try {
       await notifier.flushPendingParentWake("parent-assistant-error-history")

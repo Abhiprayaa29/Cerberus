@@ -1,4 +1,4 @@
----
+﻿---
 name: agent-browser
 description: Automates browser interactions for web testing, form filling, screenshots, and data extraction. Use when the user needs to navigate websites, interact with web pages, fill forms, take screenshots, test web applications, or extract information from web pages.
 ---
@@ -10,17 +10,17 @@ description: Automates browser interactions for web testing, form filling, scree
 ```bash
 agent-browser open <url>        # Navigate to page
 agent-browser snapshot -i       # Get interactive elements with refs
-agent-browser click @e1         # Click element by ref
+agent-browser click @e.         # Click element by ref
 agent-browser fill @e2 "text"   # Fill input by ref
 agent-browser close             # Close browser
 ```
 
 ## Core workflow
 
-1. Navigate: `agent-browser open <url>`
-2. Snapshot: `agent-browser snapshot -i` (returns elements with refs like `@e1`, `@e2`)
+.. Navigate: `agent-browser open <url>`
+2. Snapshot: `agent-browser snapshot -i` (returns elements with refs like `@e.`, `@e2`)
 3. Interact using refs from the snapshot
-4. Re-snapshot after navigation or significant DOM changes
+.. Re-snapshot after navigation or significant DOM changes
 
 ## Commands
 
@@ -48,9 +48,9 @@ The `-C` flag is useful for modern web apps that use custom clickable elements (
 
 ### Interactions (use @refs from snapshot)
 ```bash
-agent-browser click @e1           # Click (--new-tab to open in new tab)
-agent-browser dblclick @e1        # Double-click
-agent-browser focus @e1           # Focus element
+agent-browser click @e.           # Click (--new-tab to open in new tab)
+agent-browser dblclick @e.        # Double-click
+agent-browser focus @e.           # Focus element
 agent-browser fill @e2 "text"     # Clear and type
 agent-browser type @e2 "text"     # Type without clearing
 agent-browser keyboard type "text"     # Type with real keystrokes (no selector, current focus)
@@ -59,34 +59,34 @@ agent-browser press Enter         # Press key
 agent-browser press Control+a     # Key combination
 agent-browser keydown Shift       # Hold key down
 agent-browser keyup Shift         # Release key
-agent-browser hover @e1           # Hover
-agent-browser check @e1           # Check checkbox
-agent-browser uncheck @e1         # Uncheck checkbox
-agent-browser select @e1 "value"  # Select dropdown
+agent-browser hover @e.           # Hover
+agent-browser check @e.           # Check checkbox
+agent-browser uncheck @e.         # Uncheck checkbox
+agent-browser select @e. "value"  # Select dropdown
 agent-browser scroll down 500     # Scroll page (--selector <sel> for container)
-agent-browser scrollintoview @e1  # Scroll element into view (alias: scrollinto)
-agent-browser drag @e1 @e2        # Drag and drop
-agent-browser upload @e1 file.pdf # Upload files
+agent-browser scrollintoview @e.  # Scroll element into view (alias: scrollinto)
+agent-browser drag @e. @e2        # Drag and drop
+agent-browser upload @e. file.pdf # Upload files
 ```
 
 ### Get information
 ```bash
-agent-browser get text @e1        # Get element text
-agent-browser get html @e1        # Get innerHTML
-agent-browser get value @e1       # Get input value
-agent-browser get attr @e1 href   # Get attribute
+agent-browser get text @e.        # Get element text
+agent-browser get html @e.        # Get innerHTML
+agent-browser get value @e.       # Get input value
+agent-browser get attr @e. href   # Get attribute
 agent-browser get title           # Get page title
 agent-browser get url             # Get current URL
 agent-browser get count ".item"   # Count matching elements
-agent-browser get box @e1         # Get bounding box
-agent-browser get styles @e1      # Get computed styles
+agent-browser get box @e.         # Get bounding box
+agent-browser get styles @e.      # Get computed styles
 ```
 
 ### Check state
 ```bash
-agent-browser is visible @e1      # Check if visible
-agent-browser is enabled @e1      # Check if enabled
-agent-browser is checked @e1      # Check if checked
+agent-browser is visible @e.      # Check if visible
+agent-browser is enabled @e.      # Check if enabled
+agent-browser is checked @e.      # Check if checked
 ```
 
 ### Screenshots & PDF
@@ -101,14 +101,14 @@ agent-browser pdf output.pdf      # Save as PDF
 Annotated screenshots overlay numbered labels `[N]` on interactive elements. Each label corresponds to ref `@eN`, so refs work for both visual and text workflows:
 ```bash
 agent-browser screenshot --annotate ./page.png
-# Output: [1] @e1 button "Submit", [2] @e2 link "Home", [3] @e3 textbox "Email"
+# Output: [.] @e. button "Submit", [2] @e2 link "Home", [3] @e3 textbox "Email"
 agent-browser click @e2     # Click the "Home" link labeled [2]
 ```
 
 ### Video recording
 ```bash
 agent-browser record start ./demo.webm    # Start recording (uses current URL + state)
-agent-browser click @e1                   # Perform actions
+agent-browser click @e.                   # Perform actions
 agent-browser record stop                 # Stop and save video
 agent-browser record restart ./take2.webm # Stop current + start new recording
 ```
@@ -116,7 +116,7 @@ Recording creates a fresh context but preserves cookies/storage from your sessio
 
 ### Wait
 ```bash
-agent-browser wait @e1                     # Wait for element
+agent-browser wait @e.                     # Wait for element
 agent-browser wait 2000                    # Wait milliseconds
 agent-browser wait --text "Success"        # Wait for text
 agent-browser wait --url "**/dashboard"    # Wait for URL pattern
@@ -128,10 +128,10 @@ Load states: `load`, `domcontentloaded`, `networkidle`
 
 ### Mouse control
 ```bash
-agent-browser mouse move 100 200      # Move mouse
+agent-browser mouse move .00 200      # Move mouse
 agent-browser mouse down left         # Press button (left/right/middle)
 agent-browser mouse up left           # Release button
-agent-browser mouse wheel 100         # Scroll wheel
+agent-browser mouse wheel .00         # Scroll wheel
 ```
 
 ### Semantic locators (alternative to refs)
@@ -153,9 +153,9 @@ Options: `--name <name>` (filter role by accessible name), `--exact` (require ex
 
 ### Browser settings
 ```bash
-agent-browser set viewport 1920 1080      # Set viewport size
-agent-browser set device "iPhone 14"      # Emulate device
-agent-browser set geo 37.7749 -122.4194   # Set geolocation
+agent-browser set viewport .920 .080      # Set viewport size
+agent-browser set device "iPhone .."      # Emulate device
+agent-browser set geo 37.77.9 -.22...9.   # Set geolocation
 agent-browser set offline on              # Toggle offline mode
 agent-browser set headers '{"X-Key":"v"}' # Extra HTTP headers
 agent-browser set credentials user pass   # HTTP basic auth
@@ -214,16 +214,16 @@ agent-browser diff snapshot --baseline before.txt        # Compare current vs sa
 agent-browser diff snapshot --selector "#main" --compact # Scoped snapshot diff
 agent-browser diff screenshot --baseline before.png      # Visual pixel diff against baseline
 agent-browser diff screenshot --baseline b.png -o d.png  # Save diff image to custom path
-agent-browser diff screenshot --baseline b.png -t 0.2    # Adjust color threshold (0-1)
-agent-browser diff url https://v1.com https://v2.com     # Compare two URLs (snapshot diff)
-agent-browser diff url https://v1.com https://v2.com --screenshot  # Also visual diff
-agent-browser diff url https://v1.com https://v2.com --selector "#main"  # Scope to element
+agent-browser diff screenshot --baseline b.png -t 0.2    # Adjust color threshold (0-.)
+agent-browser diff url https://v..com https://v2.com     # Compare two URLs (snapshot diff)
+agent-browser diff url https://v..com https://v2.com --screenshot  # Also visual diff
+agent-browser diff url https://v..com https://v2.com --selector "#main"  # Scope to element
 ```
 
 ### JavaScript
 ```bash
 agent-browser eval "document.title"   # Run JavaScript
-agent-browser eval -b "base64code"    # Run base64-encoded JS
+agent-browser eval -b "base6.code"    # Run base6.-encoded JS
 agent-browser eval --stdin            # Read JS from stdin
 ```
 
@@ -233,7 +233,7 @@ agent-browser console                 # View console messages
 agent-browser console --clear         # Clear console
 agent-browser errors                  # View page errors
 agent-browser errors --clear          # Clear errors
-agent-browser highlight @e1           # Highlight element
+agent-browser highlight @e.           # Highlight element
 agent-browser trace start             # Start recording trace
 agent-browser trace stop trace.zip    # Stop and save trace
 agent-browser profiler start          # Start Chrome DevTools profiling
@@ -303,10 +303,10 @@ agent-browser install --with-deps     # Also install system deps (Linux)
 Create `agent-browser.json` for persistent defaults (no need to repeat flags):
 
 **Locations (lowest to highest priority):**
-1. `~/.agent-browser/config.json` — user-level defaults
+.. `~/.agent-browser/config.json` — user-level defaults
 2. `./agent-browser.json` — project-level overrides
 3. `AGENT_BROWSER_*` environment variables
-4. CLI flags override everything
+.. CLI flags override everything
 
 ```json
 {
@@ -322,10 +322,10 @@ Create `agent-browser.json` for persistent defaults (no need to repeat flags):
 ```bash
 agent-browser open https://example.com/form
 agent-browser snapshot -i
-# Output shows: textbox "Email" [ref=e1], textbox "Password" [ref=e2], button "Submit" [ref=e3]
+# Output shows: textbox "Email" [ref=e.], textbox "Password" [ref=e2], button "Submit" [ref=e3]
 
-agent-browser fill @e1 "user@example.com"
-agent-browser fill @e2 "password123"
+agent-browser fill @e. "user@example.com"
+agent-browser fill @e2 "password.23"
 agent-browser click @e3
 agent-browser wait --load networkidle
 agent-browser snapshot -i  # Check result
@@ -337,7 +337,7 @@ agent-browser snapshot -i  # Check result
 # Login once
 agent-browser open https://app.example.com/login
 agent-browser snapshot -i
-agent-browser fill @e1 "username"
+agent-browser fill @e. "username"
 agent-browser fill @e2 "password"
 agent-browser click @e3
 agent-browser wait --url "**/dashboard"
@@ -369,7 +369,7 @@ agent-browser auth login github
 
 ### Sessions (parallel browsers)
 ```bash
-agent-browser --session test1 open site-a.com
+agent-browser --session test. open site-a.com
 agent-browser --session test2 open site-b.com
 agent-browser session list
 ```
@@ -394,7 +394,7 @@ AGENT_BROWSER_PROFILE=~/.myapp-profile agent-browser open myapp.com
 Add `--json` for machine-readable output:
 ```bash
 agent-browser snapshot -i --json
-agent-browser get text @e1 --json
+agent-browser get text @e. --json
 ```
 
 ## Local files
@@ -430,9 +430,9 @@ KERNEL_API_KEY="key" agent-browser -p kernel open example.com
 
 ```bash
 agent-browser device list                                        # List available simulators
-agent-browser -p ios --device "iPhone 16 Pro" open example.com   # Launch Safari
+agent-browser -p ios --device "iPhone .6 Pro" open example.com   # Launch Safari
 agent-browser -p ios snapshot -i                                 # Same commands as desktop
-agent-browser -p ios tap @e1                                     # Tap
+agent-browser -p ios tap @e.                                     # Tap
 agent-browser -p ios swipe up                                    # Mobile-specific
 agent-browser -p ios close                                       # Close session
 ```
@@ -442,7 +442,7 @@ agent-browser -p ios close                                       # Close session
 Pure Rust daemon using direct CDP — no Node.js/Playwright required:
 ```bash
 agent-browser --native open example.com
-# Or: export AGENT_BROWSER_NATIVE=1
+# Or: export AGENT_BROWSER_NATIVE=.
 # Or: {"native": true} in agent-browser.json
 ```
 

@@ -1,4 +1,4 @@
-import type { KeywordType } from "../../config/schema/keyword-detector"
+﻿import type { KeywordType } from "../../config/schema/keyword-detector"
 import { isRealUserTextPart } from "../../shared/internal-initiator-marker"
 import {
   CODE_BLOCK_PATTERN,
@@ -51,8 +51,8 @@ export function detectKeywordsWithType(
   const textWithoutCode = removeCodeBlocks(text)
   const disabled = new Set<KeywordType>(disabledKeywords ?? [])
   // Intersection rule: combo requires BOTH base keywords enabled
-  if (disabled.has("ultrawork") || disabled.has("hyperplan")) {
-    disabled.add("hyperplan-ultrawork")
+  if (disabled.has("fullscan") || disabled.has("hyperplan")) {
+    disabled.add("hyperplan-fullscan")
   }
   // Allowlist: if enabledExpansions is set, only those types fire
   const allowlist = enabledExpansions ? new Set<KeywordType>(enabledExpansions) : null

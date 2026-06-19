@@ -1,4 +1,4 @@
-import { copyFile, mkdir, mkdtemp, readdir, readFile, writeFile } from "node:fs/promises";
+﻿import { copyFile, mkdir, mkdtemp, readdir, readFile, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { beforeEach, describe, expect, it } from "vitest";
@@ -15,7 +15,7 @@ import { UlwLoopError } from "../src/types.js";
 
 const NOW = "2026-05-23T00:00:00.000Z";
 const STABLE_OBJECTIVE =
-	"Complete the durable ulw-loop plan in .omo/ulw-loop/goals.json, including later accepted/appended stories, under the original brief constraints; use .omo/ulw-loop/ledger.jsonl as the audit trail.";
+	"Complete the durable pentest-loop plan in .omo/pentest-loop/goals.json, including later accepted/appended stories, under the original brief constraints; use .omo/pentest-loop/ledger.jsonl as the audit trail.";
 
 function makeGoal(overrides: Partial<UlwLoopItem> = {}): UlwLoopItem {
 	return {
@@ -36,9 +36,9 @@ function makePlan(overrides: Partial<UlwLoopPlan> = {}): UlwLoopPlan {
 		version: 1,
 		createdAt: NOW,
 		updatedAt: NOW,
-		briefPath: ".omo/ulw-loop/brief.md",
-		goalsPath: ".omo/ulw-loop/goals.json",
-		ledgerPath: ".omo/ulw-loop/ledger.jsonl",
+		briefPath: ".omo/pentest-loop/brief.md",
+		goalsPath: ".omo/pentest-loop/goals.json",
+		ledgerPath: ".omo/pentest-loop/ledger.jsonl",
 		codexGoalMode: "aggregate",
 		codexObjective: STABLE_OBJECTIVE,
 		codexObjectiveAliases: [],
@@ -76,7 +76,7 @@ describe("readUlwLoopPlan", () => {
 	it("throws UlwLoopError when goals.json is missing", async () => {
 		// when/then
 		await expect(readUlwLoopPlan(repoRoot)).rejects.toThrow(UlwLoopError);
-		await expect(readUlwLoopPlan(repoRoot)).rejects.toThrow("omo ulw-loop create-goals");
+		await expect(readUlwLoopPlan(repoRoot)).rejects.toThrow("omo pentest-loop create-goals");
 	});
 
 	it("returns parsed plan when fixture is present", async () => {
@@ -96,7 +96,7 @@ describe("readUlwLoopPlan", () => {
 
 	it("migrates legacy aggregate objective on read + writes aggregate_objective_migrated ledger entry + retains alias", async () => {
 		// given
-		const legacyObjective = "Complete all ulw-loop stories in .omo/ulw-loop/goals.json: G001 Build auth service";
+		const legacyObjective = "Complete all pentest-loop stories in .omo/pentest-loop/goals.json: G001 Build auth service";
 		await writeRawPlan(repoRoot, makePlan({ codexObjective: legacyObjective }));
 
 		// when

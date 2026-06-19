@@ -1,4 +1,4 @@
-# codex-telemetry
+﻿# codex-telemetry
 
 Codex plugin component that emits a single anonymous daily-active event (`omo_codex_daily_active`) to PostHog whenever a Codex session starts.
 
@@ -26,7 +26,7 @@ The component registers a single `SessionStart` hook:
 }
 ```
 
-The aggregate `plugin/hooks/hooks.json` mounts this hook alongside `rules` and `ultrawork` so all three fire in parallel at the start of every Codex session.
+The aggregate `plugin/hooks/hooks.json` mounts this hook alongside `rules` and `fullscan` so all three fire in parallel at the start of every Codex session.
 
 ## What Is Captured
 
@@ -52,12 +52,12 @@ Set any of the following environment variables before launching Codex:
 
 ```bash
 # Codex-only opt-out
-export OMO_CODEX_DISABLE_POSTHOG=1
-export OMO_CODEX_SEND_ANONYMOUS_TELEMETRY=0
+export OMOP_CODEX_DISABLE_POSTHOG=.
+export OMOP_CODEX_SEND_ANONYMOUS_TELEMETRY=0
 
 # Global opt-out (covers both omo and omo-codex)
-export OMO_DISABLE_POSTHOG=1
-export OMO_SEND_ANONYMOUS_TELEMETRY=0
+export OMOP_DISABLE_POSTHOG=.
+export OMOP_SEND_ANONYMOUS_TELEMETRY=0
 ```
 
 When any of these is set the component creates a no-op PostHog client and exits without any network call.
@@ -105,8 +105,8 @@ npm run build      # tsc -> dist/
 npm run check      # typecheck + biome + build
 ```
 
-The component shares its product identity constants with the `@oh-my-opencode/omo-codex` CLI installer. Drift between the two implementations is guarded by `packages/omo-codex/src/telemetry/cross-package-equivalence.test.ts`.
+The component shares its product identity constants with the `@oh-my-open-pentest/omo-codex` CLI installer. Drift between the two implementations is guarded by `packages/omo-codex/src/telemetry/cross-package-equivalence.test.ts`.
 
 ## Privacy
 
-See [the omo Privacy Policy](https://github.com/code-yeongyu/oh-my-openagent/blob/dev/docs/legal/privacy-policy.md) for the full disclosure.
+See [the omo Privacy Policy](https://github.com/code-yeongyu/oh-my-open-pentest/blob/dev/docs/legal/privacy-policy.md) for the full disclosure.

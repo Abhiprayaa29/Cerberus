@@ -1,4 +1,4 @@
-import { describe, expect, test } from "bun:test"
+﻿import { describe, expect, test } from "bun:test"
 import { existsSync } from "node:fs"
 import { fileURLToPath } from "node:url"
 import { dirname, join } from "node:path"
@@ -26,7 +26,7 @@ describe("codex-hook-trust", () => {
 
     // when
     const states = await trustedHookStatesForPlugin({
-      marketplaceName: "sisyphuslabs",
+      marketplaceName: "cerberuslabs",
       pluginName: "omo",
       pluginRoot,
     })

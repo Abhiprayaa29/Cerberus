@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+﻿import { describe, expect, it } from "vitest";
 
 import { buildCodexGoalInstruction } from "../src/codex-goal-instruction.js";
 import { ULW_LOOP_AGGREGATE_CODEX_OBJECTIVE } from "../src/goal-status.js";
@@ -39,9 +39,9 @@ function makePlan(overrides: Partial<UlwLoopPlan> = {}): UlwLoopPlan {
 		version: 1,
 		createdAt: NOW,
 		updatedAt: NOW,
-		briefPath: ".omo/ulw-loop/brief.md",
-		goalsPath: ".omo/ulw-loop/goals.json",
-		ledgerPath: ".omo/ulw-loop/ledger.jsonl",
+		briefPath: ".omo/pentest-loop/brief.md",
+		goalsPath: ".omo/pentest-loop/goals.json",
+		ledgerPath: ".omo/pentest-loop/ledger.jsonl",
 		goals: [],
 		...overrides,
 	};
@@ -52,10 +52,10 @@ function expectTextToContainAll(text: string, terms: readonly string[]): void {
 }
 
 describe("buildCodexGoalInstruction aggregate mode", () => {
-	it("references the aggregate handoff and the .omo/ulw-loop/goals.json artifact", () => {
+	it("references the aggregate handoff and the .omo/pentest-loop/goals.json artifact", () => {
 		const { text } = buildCodexGoalInstruction({ plan: makePlan({ codexGoalMode: "aggregate" }), goal: makeGoal() });
 		expect(text).toContain("aggregate");
-		expect(text).toContain(".omo/ulw-loop/goals.json");
+		expect(text).toContain(".omo/pentest-loop/goals.json");
 	});
 
 	it("given aggregate mode when rendering create_goal payload then omits numeric limits", () => {
@@ -125,8 +125,8 @@ describe("buildCodexGoalInstruction aggregate mode", () => {
 		const { text } = buildCodexGoalInstruction({
 			plan: makePlan({
 				codexGoalMode: "aggregate",
-				goalsPath: ".omo/ulw-loop/session-A/goals.json",
-				ledgerPath: ".omo/ulw-loop/session-A/ledger.jsonl",
+				goalsPath: ".omo/pentest-loop/session-A/goals.json",
+				ledgerPath: ".omo/pentest-loop/session-A/ledger.jsonl",
 			}),
 			goal: makeGoal(),
 			isFinal: true,
@@ -193,8 +193,8 @@ describe("buildCodexGoalInstruction criteria section", () => {
 });
 
 describe("buildCodexGoalInstruction artifact guidance", () => {
-	it("references .omo/ulw-loop in artifact paths", () => {
+	it("references .omo/pentest-loop in artifact paths", () => {
 		const { text } = buildCodexGoalInstruction({ plan: makePlan({ codexGoalMode: "aggregate" }), goal: makeGoal() });
-		expect(text).toContain(".omo/ulw-loop");
+		expect(text).toContain(".omo/pentest-loop");
 	});
 });

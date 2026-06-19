@@ -1,4 +1,4 @@
-import type { PluginInput } from "@opencode-ai/plugin"
+﻿import type { PluginInput } from "@opencode-ai/plugin"
 import { log } from "../../shared/logger"
 import { buildContinuationPrompt } from "./continuation-prompt-builder"
 import { HOOK_NAME } from "./constants"
@@ -36,20 +36,20 @@ export async function handleDetectedCompletion(
 ): Promise<void> {
 	const { sessionID, state, loopState, directory, apiTimeoutMs } = input
 
-	if (state.ultrawork && !state.verification_pending) {
+	if (state.fullscan && !state.verification_pending) {
 		if (state.verification_session_id) {
 			ctx.client.session.abort({ path: { id: state.verification_session_id } }).catch(ignoreBestEffortFailure)
 		}
 
 		const verificationState = loopState.markVerificationPending(sessionID)
 		if (!verificationState) {
-			log(`[${HOOK_NAME}] Failed to transition ultrawork loop to verification`, {
+			log(`[${HOOK_NAME}] Failed to transition fullscan loop to verification`, {
 				sessionID,
 			})
 			return
 		}
 
-		releasePromptAsyncReservation(sessionID, "ralph-loop:completion-detected", {
+		releasePromptAsyncReservation(sessionID, "pentest-loop:completion-detected", {
 			reservedBy: HOOK_NAME,
 		})
 		const promptResult = await injectContinuationPrompt(ctx, {
@@ -59,7 +59,7 @@ export async function handleDetectedCompletion(
 			apiTimeoutMs,
 		})
 		if (promptResult.status === "rejected") {
-			log(`[${HOOK_NAME}] Failed to inject ultrawork verification prompt`, {
+			log(`[${HOOK_NAME}] Failed to inject fullscan verification prompt`, {
 				sessionID,
 				error: String(promptResult.error),
 			})
@@ -75,7 +75,7 @@ export async function handleDetectedCompletion(
 
 		showToastBestEffort(ctx, {
 			title: "ULTRAWORK LOOP",
-			message: "DONE detected. Oracle verification is now required.",
+			message: "DONE detected. Cipher verification is now required.",
 			variant: "info",
 			duration: 5000,
 		})
@@ -84,8 +84,8 @@ export async function handleDetectedCompletion(
 
 	loopState.clear()
 
-	const title = state.ultrawork ? "ULTRAWORK LOOP COMPLETE!" : "Ralph Loop Complete!"
-	const message = state.ultrawork
+	const title = state.fullscan ? "ULTRAWORK LOOP COMPLETE!" : "Ralph Loop Complete!"
+	const message = state.fullscan
 		? `JUST ULW ULW! Task completed after ${state.iteration} iteration(s)`
 		: `Task completed after ${state.iteration} iteration(s)`
 	showToastBestEffort(ctx, { title, message, variant: "success", duration: 5000 })

@@ -1,4 +1,4 @@
-import { appendFile, mkdir, readFile, rename, writeFile } from "node:fs/promises";
+﻿import { appendFile, mkdir, readFile, rename, writeFile } from "node:fs/promises";
 
 import { aggregateCodexObjectiveForScope } from "./goal-status.js";
 import {
@@ -12,8 +12,8 @@ import {
 import type { UlwLoopLedgerEntry, UlwLoopPlan } from "./types.js";
 import { iso, ULW_LOOP_DIR, ULW_LOOP_GOALS, ULW_LOOP_LEDGER, UlwLoopError } from "./types.js";
 
-const LEGACY_OBJECTIVE_PREFIX = `Complete all ulw-loop stories in ${ULW_LOOP_DIR}/${ULW_LOOP_GOALS}: `;
-const LEGACY_OBJECTIVE = `Complete all ulw-loop stories listed in ${ULW_LOOP_DIR}/${ULW_LOOP_GOALS}. Use ${ULW_LOOP_DIR}/${ULW_LOOP_LEDGER} as the durable audit trail.`;
+const LEGACY_OBJECTIVE_PREFIX = `Complete all pentest-loop stories in ${ULW_LOOP_DIR}/${ULW_LOOP_GOALS}: `;
+const LEGACY_OBJECTIVE = `Complete all pentest-loop stories listed in ${ULW_LOOP_DIR}/${ULW_LOOP_GOALS}. Use ${ULW_LOOP_DIR}/${ULW_LOOP_LEDGER} as the durable audit trail.`;
 const locks = new Map<string, Promise<unknown>>();
 
 function hasCode(error: unknown, code: string): boolean {
@@ -41,7 +41,7 @@ export async function withUlwLoopMutationLock<T>(
 ): Promise<T> {
 	const scope = typeof scopeOrFn === "function" ? undefined : scopeOrFn;
 	const fn = typeof scopeOrFn === "function" ? scopeOrFn : maybeFn;
-	if (fn === undefined) throw new UlwLoopError("Missing ulw-loop mutation body.", "ULW_LOOP_LOCK_BODY_MISSING");
+	if (fn === undefined) throw new UlwLoopError("Missing pentest-loop mutation body.", "ULW_LOOP_LOCK_BODY_MISSING");
 	const lockKey = `${repoRoot}\0${ulwLoopRelativeDir(scope)}`;
 	const prior = locks.get(lockKey) ?? Promise.resolve();
 	const run = prior.then(fn, fn);
@@ -60,14 +60,14 @@ export async function readUlwLoopPlan(repoRoot: string, scope?: UlwLoopScope): P
 	} catch (error) {
 		if (!hasCode(error, "ENOENT")) throw error;
 		throw new UlwLoopError(
-			`No ulw-loop plan found at ${repoRelative(path, repoRoot)}. Run \`omo ulw-loop create-goals ...\` first.`,
+			`No pentest-loop plan found at ${repoRelative(path, repoRoot)}. Run \`omo pentest-loop create-goals ...\` first.`,
 			"ULW_LOOP_PLAN_MISSING",
 			{ cause: error },
 		);
 	}
 	const parsed: UlwLoopPlan = JSON.parse(raw);
 	if (parsed.version !== 1 || !Array.isArray(parsed.goals)) {
-		throw new UlwLoopError(`Invalid ulw-loop plan at ${repoRelative(path, repoRoot)}.`, "ULW_LOOP_PLAN_INVALID");
+		throw new UlwLoopError(`Invalid pentest-loop plan at ${repoRelative(path, repoRoot)}.`, "ULW_LOOP_PLAN_INVALID");
 	}
 	const previousObjective = parsed.codexObjective;
 	if (

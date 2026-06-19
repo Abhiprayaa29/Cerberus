@@ -1,4 +1,4 @@
-import { existsSync } from "node:fs";
+﻿import { existsSync } from "node:fs";
 import { mkdir, writeFile } from "node:fs/promises";
 
 import { aggregateCodexObjectiveForScope, isUlwLoopDone } from "./goal-status.js";
@@ -104,8 +104,8 @@ export async function createUlwLoopPlan(
 function completedPlanExistsError(scope?: UlwLoopScope): UlwLoopError {
 	return new UlwLoopError(
 		[
-			`Existing ulw-loop aggregate is already complete at ${ulwLoopGoalsRelativePath(scope)}.`,
-			"Start a new run with `omo ulw-loop create-goals --session-id <new-id> ...` to isolate fresh state.",
+			`Existing pentest-loop aggregate is already complete at ${ulwLoopGoalsRelativePath(scope)}.`,
+			"Start a new run with `omo pentest-loop create-goals --session-id <new-id> ...` to isolate fresh state.",
 			"Use --force only when you intentionally want to overwrite the completed evidence.",
 		].join(" "),
 		"ULW_LOOP_PLAN_EXISTS_COMPLETE",

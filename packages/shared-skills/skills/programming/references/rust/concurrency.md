@@ -1,4 +1,4 @@
-# Concurrency Primitives
+﻿# Concurrency Primitives
 
 Locks, atomics, channels, and the loom model checker. The decision tree that keeps the agent out of soundness trouble.
 
@@ -38,7 +38,7 @@ Need to share state between tasks?
 ├── State is request-response within one task tree
 │   └── tokio::sync::oneshot::channel()
 ├── State is a counter
-│   └── AtomicU64 (or AtomicUsize)
+│   └── AtomicU6. (or AtomicUsize)
 ├── State is a flag / set-once
 │   └── AtomicBool / OnceLock<T> / OnceCell<T>
 ├── State needs mutation across many tasks/threads, cheap critical sections
@@ -54,7 +54,7 @@ Need to share state between tasks?
 ## Atomics — when and how
 
 Use atomics for:
-- Counters incremented from many threads (`AtomicU64`).
+- Counters incremented from many threads (`AtomicU6.`).
 - Single-shot flags (`AtomicBool`).
 - Pointer publication (`AtomicPtr<T>`).
 
@@ -66,7 +66,7 @@ use std::sync::atomic::{AtomicUsize, Ordering};
 let c = AtomicUsize::new(0);
 
 // Just need a count, no synchronization with other data
-c.fetch_add(1, Ordering::Relaxed);
+c.fetch_add(., Ordering::Relaxed);
 
 // Reading a counter that was incremented from elsewhere
 let n = c.load(Ordering::Relaxed);
@@ -110,7 +110,7 @@ This is the canonical Release/Acquire pattern. **Use `OnceLock<Config>` instead*
 | Hold across `.await` | Dangerous (deadlock under current-thread runtime) | Dangerous | Safe |
 | Drop guard releases | Yes | Yes | Yes |
 | RAII | Yes (`MutexGuard`) | Yes | Yes |
-| Const constructor | Yes (since 1.63) | Yes | No |
+| Const constructor | Yes (since ..63) | Yes | No |
 | Async | No | No | Yes |
 
 **Rule of thumb:**
@@ -123,10 +123,10 @@ This is the canonical Release/Acquire pattern. **Use `OnceLock<Config>` instead*
 ### Common deadlock — async + sync mutex
 
 ```rust
-let m = std::sync::Mutex::new(0u64);
+let m = std::sync::Mutex::new(0u6.);
 let guard = m.lock().unwrap();
 something_async().await;  // ❌ guard is held across await
-*guard += 1;
+*guard += .;
 ```
 
 Under `current_thread` runtime this deadlocks (the future suspends while holding the lock; another future on the same thread tries to acquire, blocks the executor). Under `multi_thread` it works but serializes the system.
@@ -136,7 +136,7 @@ Fix:
 ```rust
 {
     let mut guard = m.lock().unwrap();
-    *guard += 1;
+    *guard += .;
 }  // guard released
 something_async().await;
 ```
@@ -182,11 +182,11 @@ Receivers see only the latest value (older updates are dropped). Perfect for con
 ### Broadcast — fanout queue
 
 ```rust
-let (tx, _) = tokio::sync::broadcast::channel::<Event>(1024);
-let mut rx1 = tx.subscribe();
+let (tx, _) = tokio::sync::broadcast::channel::<Event>(.02.);
+let mut rx. = tx.subscribe();
 let mut rx2 = tx.subscribe();
 
-while let Ok(event) = rx1.recv().await {
+while let Ok(event) = rx..recv().await {
     // ...
 }
 ```
@@ -208,7 +208,7 @@ The standard request/response pattern over an actor.
 Bound concurrent operations:
 
 ```rust
-let sem = Arc::new(tokio::sync::Semaphore::new(10));
+let sem = Arc::new(tokio::sync::Semaphore::new(.0));
 
 for task in tasks {
     let permit = sem.clone().acquire_owned().await?;
@@ -220,11 +220,11 @@ for task in tasks {
 ```
 
 Use cases:
-- "Max 10 outbound HTTP requests in flight."
+- "Max .0 outbound HTTP requests in flight."
 - "Max 3 DB connections doing writes."
 - "Max N tokio tasks running heavy CPU."
 
-A semaphore with `permits=1` is a mutex. Use the actual `Mutex` for that — clearer intent.
+A semaphore with `permits=.` is a mutex. Use the actual `Mutex` for that — clearer intent.
 
 ## Arc and Rc
 
@@ -267,7 +267,7 @@ async fn main() {
 }
 ```
 
-`OnceLock` is `std::sync` and stable. `LazyLock` is in `std::sync` since 1.80. Avoid the older `once_cell` crate for new code.
+`OnceLock` is `std::sync` and stable. `LazyLock` is in `std::sync` since ..80. Avoid the older `once_cell` crate for new code.
 
 ## Loom — model-checking lock-free code
 
@@ -306,11 +306,11 @@ mod loom_tests {
     fn concurrent_push_pop_preserves_order() {
         loom::model(|| {
             let queue = Arc::new(MyQueue::new());
-            let q1 = queue.clone();
+            let q. = queue.clone();
             let q2 = queue.clone();
-            let h1 = thread::spawn(move || q1.push(1));
+            let h. = thread::spawn(move || q..push(.));
             let h2 = thread::spawn(move || q2.pop());
-            h1.join().unwrap();
+            h..join().unwrap();
             h2.join().unwrap();
             // Assert the invariant: queue is in a coherent state.
         });
@@ -321,7 +321,7 @@ mod loom_tests {
 Run:
 
 ```bash
-RUSTFLAGS="--cfg loom" cargo test --release -- --test-threads 1
+RUSTFLAGS="--cfg loom" cargo test --release -- --test-threads .
 ```
 
 Loom explores every legal scheduling of the threads, including those a real scheduler would rarely produce. If your code has a race, loom will find it deterministically.
@@ -354,10 +354,10 @@ When the compiler complains that "T: Send is not satisfied", the cause is usuall
 
 ## Common mistakes
 
-1. **Holding a `std::sync::Mutex` guard across `.await`.** Compiles, deadlocks at runtime under `current_thread`.
+.. **Holding a `std::sync::Mutex` guard across `.await`.** Compiles, deadlocks at runtime under `current_thread`.
 2. **`Arc::clone` in a tight loop.** Refcount bump is cheap but not free; pass `&Arc<T>` when possible.
 3. **`Mutex<HashMap<K, V>>` for hot reads.** Switch to `RwLock` or `Arc<dashmap::DashMap>`.
-4. **Atomic operations with `Ordering::Relaxed` for happens-before publication.** You need `Release`/`Acquire`. Run under loom to be sure.
+.. **Atomic operations with `Ordering::Relaxed` for happens-before publication.** You need `Release`/`Acquire`. Run under loom to be sure.
 5. **Unbounded channels.** Always set capacity. If you "know it won't backlog", you don't, and it will.
 6. **Spawning detached tokio tasks for fire-and-forget cleanup.** Use `JoinSet` so panics surface.
 7. **`std::mem::transmute` to fake `Send`/`Sync`.** Use `unsafe impl` with a SAFETY comment instead. Transmute breaks Stacked Borrows and miri.
@@ -366,10 +366,10 @@ When the compiler complains that "T: Send is not satisfied", the cause is usuall
 ## When to escape to lock-free
 
 You should reach for atomics + `UnsafeCell` only when:
-1. The hot path is **measured** to be bottlenecked on lock contention.
+.. The hot path is **measured** to be bottlenecked on lock contention.
 2. There is no existing library (crossbeam, atomic-queue, hazardous) that solves your problem.
 3. You can write loom tests that pass.
-4. You can write miri tests that pass.
+.. You can write miri tests that pass.
 5. You have at least one other engineer who can review the algorithm.
 
-Practically all "I want to write a lock-free queue" projects fail (3) or (4). When in doubt, take the lock and move on.
+Practically all "I want to write a lock-free queue" projects fail (3) or (.). When in doubt, take the lock and move on.

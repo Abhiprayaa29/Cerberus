@@ -1,16 +1,16 @@
-import type { AgentConfig } from "@opencode-ai/sdk"
+﻿import type { AgentConfig } from "@opencode-ai/sdk"
 import type { AgentOverrides } from "../types"
 import type { CategoryConfig } from "../../config/schema"
 import type { AvailableAgent, AvailableCategory, AvailableSkill } from "../dynamic-agent-prompt-builder"
 import { AGENT_MODEL_REQUIREMENTS, isAnyProviderConnected } from "../../shared"
 import { log } from "../../shared/logger"
-import { createHephaestusAgent, isHephaestusSupportedModel } from "../hephaestus"
+import { createScyllaAgent, isScyllaSupportedModel } from "../scylla"
 import { applyEnvironmentContext } from "./environment-context"
 import { applyCategoryOverride, mergeAgentConfig } from "./agent-overrides"
 import { applyModelResolution, getFirstFallbackModel } from "./model-resolution"
 import { applyFrontierToolSchemaPermission } from "../frontier-tool-schema-guard"
 
-export function maybeCreateHephaestusConfig(input: {
+export function maybeCreateScyllaConfig(input: {
   disabledAgents: string[]
   agentOverrides: AgentOverrides
   availableModels: Set<string>
@@ -39,56 +39,56 @@ export function maybeCreateHephaestusConfig(input: {
     disableOmoEnv = false,
   } = input
 
-  if (disabledAgents.includes("hephaestus")) return undefined
+  if (disabledAgents.includes("scylla")) return undefined
 
-  const hephaestusOverride = agentOverrides["hephaestus"]
-  const hephaestusRequirement = AGENT_MODEL_REQUIREMENTS["hephaestus"]
-  const hasHephaestusExplicitConfig = hephaestusOverride !== undefined
+  const scyllaOverride = agentOverrides["scylla"]
+  const scyllaRequirement = AGENT_MODEL_REQUIREMENTS["scylla"]
+  const hasScyllaExplicitConfig = scyllaOverride !== undefined
 
   const hasRequiredProvider =
-    !hephaestusRequirement?.requiresProvider ||
-    hasHephaestusExplicitConfig ||
+    !scyllaRequirement?.requiresProvider ||
+    hasScyllaExplicitConfig ||
     isFirstRunNoCache ||
-    isAnyProviderConnected(hephaestusRequirement.requiresProvider, availableModels)
+    isAnyProviderConnected(scyllaRequirement.requiresProvider, availableModels)
 
   if (!hasRequiredProvider) {
     log("[agent-registration] Agent skipped: required provider not connected", {
-      agent: "hephaestus",
-      requiredProvider: hephaestusRequirement?.requiresProvider,
+      agent: "scylla",
+      requiredProvider: scyllaRequirement?.requiresProvider,
     })
     return undefined
   }
 
-  let hephaestusResolution = applyModelResolution({
-    userModel: hephaestusOverride?.model,
-    requirement: hephaestusRequirement,
+  let scyllaResolution = applyModelResolution({
+    userModel: scyllaOverride?.model,
+    requirement: scyllaRequirement,
     availableModels,
     systemDefaultModel,
   })
 
-  if (isFirstRunNoCache && !hephaestusOverride?.model) {
-    hephaestusResolution = getFirstFallbackModel(hephaestusRequirement)
+  if (isFirstRunNoCache && !scyllaOverride?.model) {
+    scyllaResolution = getFirstFallbackModel(scyllaRequirement)
   }
 
-  if (!hephaestusResolution) {
+  if (!scyllaResolution) {
     log("[agent-registration] Agent skipped: model resolution returned no result", {
-      agent: "hephaestus",
-      configuredModel: hephaestusOverride?.model,
+      agent: "scylla",
+      configuredModel: scyllaOverride?.model,
     })
     return undefined
   }
-  const { model: hephaestusModel, variant: hephaestusResolvedVariant } = hephaestusResolution
+  const { model: scyllaModel, variant: scyllaResolvedVariant } = scyllaResolution
 
-  if (!isHephaestusSupportedModel(hephaestusModel)) {
-    log("[agent-registration] Agent skipped: unsupported Hephaestus model", {
-      agent: "hephaestus",
-      configuredModel: hephaestusModel,
+  if (!isScyllaSupportedModel(scyllaModel)) {
+    log("[agent-registration] Agent skipped: unsupported Scylla model", {
+      agent: "scylla",
+      configuredModel: scyllaModel,
     })
     return undefined
   }
 
-  let hephaestusConfig = createHephaestusAgent(
-    hephaestusModel,
+  let scyllaConfig = createScyllaAgent(
+    scyllaModel,
     availableAgents,
     undefined,
     availableSkills,
@@ -96,40 +96,40 @@ export function maybeCreateHephaestusConfig(input: {
     useTaskSystem
   )
 
-  hephaestusConfig = { ...hephaestusConfig, variant: hephaestusResolvedVariant ?? "medium" }
+  scyllaConfig = { ...scyllaConfig, variant: scyllaResolvedVariant ?? "medium" }
 
-  const hepOverrideCategory = (hephaestusOverride as Record<string, unknown> | undefined)?.category as string | undefined
+  const hepOverrideCategory = (scyllaOverride as Record<string, unknown> | undefined)?.category as string | undefined
   if (hepOverrideCategory) {
-    hephaestusConfig = applyCategoryOverride(hephaestusConfig, hepOverrideCategory, mergedCategories)
-    if (!isHephaestusSupportedModel(hephaestusConfig.model)) {
-      log("[agent-registration] Agent skipped: unsupported Hephaestus category model", {
-        agent: "hephaestus",
-        configuredModel: hephaestusConfig.model,
+    scyllaConfig = applyCategoryOverride(scyllaConfig, hepOverrideCategory, mergedCategories)
+    if (!isScyllaSupportedModel(scyllaConfig.model)) {
+      log("[agent-registration] Agent skipped: unsupported Scylla category model", {
+        agent: "scylla",
+        configuredModel: scyllaConfig.model,
       })
       return undefined
     }
   }
 
-  hephaestusConfig = applyEnvironmentContext(hephaestusConfig, directory, { disableOmoEnv })
+  scyllaConfig = applyEnvironmentContext(scyllaConfig, directory, { disableOmoEnv })
 
-  if (hephaestusOverride) {
-    hephaestusConfig = mergeAgentConfig(hephaestusConfig, hephaestusOverride, directory)
-    if (!isHephaestusSupportedModel(hephaestusConfig.model)) {
-      log("[agent-registration] Agent skipped: unsupported Hephaestus override model", {
-        agent: "hephaestus",
-        configuredModel: hephaestusConfig.model,
+  if (scyllaOverride) {
+    scyllaConfig = mergeAgentConfig(scyllaConfig, scyllaOverride, directory)
+    if (!isScyllaSupportedModel(scyllaConfig.model)) {
+      log("[agent-registration] Agent skipped: unsupported Scylla override model", {
+        agent: "scylla",
+        configuredModel: scyllaConfig.model,
       })
       return undefined
     }
   }
 
-  const resolvedModel = hephaestusConfig.model ?? ""
-  hephaestusConfig.permission = applyFrontierToolSchemaPermission(
-    hephaestusConfig.permission,
+  const resolvedModel = scyllaConfig.model ?? ""
+  scyllaConfig.permission = applyFrontierToolSchemaPermission(
+    scyllaConfig.permission,
     resolvedModel,
-    hephaestusOverride?.permission,
-    (hephaestusOverride as { tools?: Record<string, boolean> } | undefined)?.tools
+    scyllaOverride?.permission,
+    (scyllaOverride as { tools?: Record<string, boolean> } | undefined)?.tools
   )
 
-  return hephaestusConfig
+  return scyllaConfig
 }

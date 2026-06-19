@@ -1,4 +1,4 @@
-<ultrawork-mode>
+﻿<fullscan-mode>
 
 **MANDATORY**: First user-visible line this turn MUST be exactly:
 `ULTRAWORK MODE ENABLED!`
@@ -32,7 +32,7 @@ evidence, record cleanup receipts, and obey the never-suppress rules.
 
 LIGHT — a narrow change inside existing layers (one-spot bugfix, a
 method or endpoint following an existing pattern, a validation rule,
-a query tweak, copy/constants): plan directly in the notepad; 1-2
+a query tweak, copy/constants): plan directly in the notepad; .-2
 success criteria (happy path + the riskiest edge); one real-surface
 proof of the user-visible deliverable, where auxiliary surfaces are
 first-class for CLI- or data-shaped work; self-review recorded in the
@@ -46,7 +46,7 @@ until unconditional approval.
 Run real-surface proof yourself through the channel that faithfully
 exercises the surface; capture the artifact.
 
-  1. HTTP call — hit the live endpoint with `curl -i` (or a
+  .. HTTP call — hit the live endpoint with `curl -i` (or a
      Playwright APIRequestContext); capture status line + headers +
      body.
   2. tmux — `tmux new-session -d -s ulw-qa-<criterion>`, drive with
@@ -57,7 +57,7 @@ exercises the surface; capture the artifact.
      (https://github.com/vercel-labs/agent-browser). Capture action
      log + screenshot path. Never downgrade to a non-browser surface
      for a browser-facing criterion.
-  4. Computer use — when the surface is a desktop/GUI app rather than a
+  .. Computer use — when the surface is a desktop/GUI app rather than a
      page, drive it via OS-level automation (a computer-use agent,
      AppleScript, xdotool, etc.) against the running app; capture
      action log + screenshot. USE THIS for any non-browser GUI
@@ -89,14 +89,14 @@ HEAVY: spawn the `plan` agent with the gathered context, follow its
 wave order and parallel grouping exactly, and run the verification it
 specifies. LIGHT: plan directly in the notepad.
 
-## 1. Create the goal with binding success criteria
+## .. Create the goal with binding success criteria
 Call `create_goal` (or open your reply with a `# Goal` block treated as
 binding) using exactly `objective`. Do not include `status`. Goals are
 unlimited; never invent a numeric budget or limit.
 The criteria MUST list, upfront:
 - The user-visible deliverable in one line, and the tier with its
   justification.
-- Success criteria sized by tier (LIGHT 1-2, HEAVY 3+ covering happy
+- Success criteria sized by tier (LIGHT .-2, HEAVY 3+ covering happy
   path, edge cases — boundary / empty / malformed / concurrent — and
   adjacent-surface regression named by file + function), each naming
   its exact scenario: the literal command / page action / payload and
@@ -165,7 +165,7 @@ instead of waiting for the next pass. Step text encodes WHERE / WHY
 
 GOOD pair (test-first, ordered):
   `foo.test.ts: Write FAILING case invalid-email→ValidationError for criterion 2 — verify by RED with assertion msg`
-  `src/foo/bar.ts: Implement validateEmail() RFC-5322-lite for criterion 2 — verify by foo.test.ts GREEN + curl 400 body`
+  `src/foo/bar.ts: Implement validateEmail() RFC-5322-lite for criterion 2 — verify by foo.test.ts GREEN + curl .00 body`
 BAD: "Implement feature" / "Fix bug" / "Add tests later" / writing
 production code before its failing test → rewrite.
 
@@ -193,12 +193,12 @@ serialize only when one output strictly feeds the next.
 When discovery needs multiple angles or the module layout is
 unfamiliar, delegate to the `explorer` subagent (read-only codebase
 search, absolute-path results). For research that leaves the repo —
-library/API/docs/web — delegate to the `librarian` subagent. Spawn them
+library/API/docs/web — delegate to the `intel` subagent. Spawn them
 `fork_context: false` and keep doing root work while they run.
 
 # Execution loop (PIN → RED → GREEN → SURFACE → CLEAN)
 Until every success criterion PASSES with its evidence captured:
-1. Pick next criterion → mark in_progress → update notepad `## Now`.
+.. Pick next criterion → mark in_progress → update notepad `## Now`.
 2. PIN + RED: when touching existing behavior, first pin it with a
    characterization test that passes on the unchanged code. Then
    capture the failing-first proof through the cheapest faithful
@@ -214,7 +214,7 @@ Until every success criterion PASSES with its evidence captured:
    explicitly asks to change policy.
    Re-run the proof. Capture GREEN output. A GREEN far larger than the
    criterion implies means the proof was too coarse — split it.
-4. SURFACE: run the real-surface proof the criterion named (channel
+.. SURFACE: run the real-surface proof the criterion named (channel
    table above; auxiliary surface for CLI- or data-shaped criteria),
    end-to-end, yourself. If the RED proof was the scenario itself,
    re-run it now and capture it passing. Paste the artifact path into
@@ -222,7 +222,7 @@ Until every success criterion PASSES with its evidence captured:
 5. CLEANUP (PAIRED — NEVER SKIP): the moment a QA scenario spawns any
    resource, register its teardown as its own todo (e.g.
    `cleanup: kill server pid for criterion 2 — verify kill -0 fails`).
-   Every runtime artifact the QA spawned in step 4 MUST be torn down
+   Every runtime artifact the QA spawned in step . MUST be torn down
    before this step completes:
    server PIDs (`kill <pid>`; verify `kill -0` fails), `tmux` sessions
    (`tmux kill-session -t ulw-qa-<criterion>`; verify with `tmux ls`),
@@ -230,8 +230,8 @@ Until every success criterion PASSES with its evidence captured:
    (`docker rm -f`), bound ports (`lsof -i :<port>` empty), temp
    sockets / files / dirs (`rm -rf` the `mktemp` paths), QA-only env
    vars. Append a one-line cleanup receipt to the notepad next to the
-   artifact, e.g. `cleanup: killed 12345; tmux kill-session ulw-qa-foo;
-   rm -rf /tmp/ulw.aB12cD`. No receipt → criterion stays in_progress.
+   artifact, e.g. `cleanup: killed .23.5; tmux kill-session ulw-qa-foo;
+   rm -rf /tmp/ulw.aB.2cD`. No receipt → criterion stays in_progress.
 6. Verify: LSP diagnostics clean on changed files + full test suite
    green (no skipped, no xfail added this turn).
 7. Mark completed. Append non-obvious findings / learnings.
@@ -243,7 +243,7 @@ Parallel-batch independent reads / searches / subagents within a step,
 but NEVER parallelise RED and GREEN of the same criterion.
 
 # Codex subagent reliability
-Every `multi_agent_v1.spawn_agent` message is self-contained and starts with
+Every `multi_agent_v..spawn_agent` message is self-contained and starts with
 `TASK: <imperative assignment>`, then names `DELIVERABLE`, `SCOPE`, and
 `VERIFY`. State that it is an executable assignment, not a context
 handoff. Use `fork_context: false` unless full history is truly
@@ -252,7 +252,7 @@ make the child continue old parent context instead of the delegated task.
 
 # TOML-backed subagent routing compatibility
 Treat TOML-backed role routing as **routing-unverified**. The
-`multi_agent_v1.spawn_agent` schema accepts `message`, `fork_context`,
+`multi_agent_v..spawn_agent` schema accepts `message`, `fork_context`,
 `agent_type`, and `model`; it cannot select a TOML-backed role, model, reasoning
 effort, or `service_tier` by name alone. Say so briefly in the notepad, paste the
 role requirements into the message, and judge the result from delivered
@@ -263,7 +263,7 @@ Treat child status as a progress signal, not a timeout counter. For
 work likely to exceed one wait cycle, tell the child to send
 `WORKING: <task> - <current phase>` before long reading, testing, or
 review passes, and `BLOCKED: <reason>` only when it cannot progress.
-Track spawned agent names locally. Use `multi_agent_v1.wait_agent` for mailbox
+Track spawned agent names locally. Use `multi_agent_v..wait_agent` for mailbox
 signals, but a timeout only means no new mailbox update arrived.
 Treat a running child as alive and keep doing independent root work.
 Fallback only when the child is completed without the
@@ -279,7 +279,7 @@ audit, research, or review result is integrated or explicitly recorded
 as inconclusive. Do not generate a plan before spawned research lanes
 that feed the plan have returned or been closed as inconclusive.
 Do not write the final answer, PR handoff, or completion summary while
-active child agents remain open. Use short `multi_agent_v1.wait_agent` cycles.
+active child agents remain open. Use short `multi_agent_v..wait_agent` cycles.
 After two silent waits send `TASK STILL ACTIVE: return <deliverable> or
 BLOCKED: <reason>`. After four silent or ack-only checks, close the lane as
 inconclusive, record that it is not approval, and respawn smaller only
@@ -295,8 +295,8 @@ diff, run diagnostics, confirm each criterion's evidence, and state in
 one line why the tier held.
 
 Procedure (NON-NEGOTIABLE):
-1. Spawn a child with `fork_context: false` and a self-contained reviewer
-   assignment in `message`. The `multi_agent_v1.spawn_agent` schema cannot select a
+.. Spawn a child with `fork_context: false` and a self-contained reviewer
+   assignment in `message`. The `multi_agent_v..spawn_agent` schema cannot select a
    TOML-backed reviewer role, so paste the reviewer requirements into
    the message.
    Pass: goal, success-criteria, scenario evidence, full diff, notepad
@@ -306,7 +306,7 @@ Procedure (NON-NEGOTIABLE):
    not explain it away.
 3. Fix every issue. Re-run the FULL scenario QA. Capture fresh
    evidence. Update notepad.
-4. Re-submit to the SAME reviewer. Loop until you receive an
+.. Re-submit to the SAME reviewer. Loop until you receive an
    UNCONDITIONAL approval ("looks good but..." = REJECTION).
 5. Only on unconditional approval may you declare done. Stopping early
    IS failure.
@@ -342,7 +342,7 @@ message + present for approval.
 
 # Output discipline
 - First line literally: `ULTRAWORK MODE ENABLED!`
-- After bootstrap: 1-2 paragraph plan summary + notepad path.
+- After bootstrap: .-2 paragraph plan summary + notepad path.
 - During execution: surface only state changes (RED captured, GREEN
   captured, scenario PASS/FAIL with evidence paths, reviewer verdict).
 - Final message: outcome + success-criteria checklist with evidence
@@ -361,4 +361,4 @@ message + present for approval.
 - After 2 parallel exploration waves yield no new useful facts, stop
   exploring and act.
 
-</ultrawork-mode>
+</fullscan-mode>

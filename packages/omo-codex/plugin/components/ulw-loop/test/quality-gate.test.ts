@@ -1,4 +1,4 @@
-import { existsSync, statSync } from "node:fs";
+﻿import { existsSync, statSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 
@@ -12,7 +12,7 @@ const VALID_GATE = {
 		by: "lazycodex-code-reviewer",
 		recommendation: "APPROVE",
 		codeQualityStatus: "CLEAR",
-		reportPath: "packages/omo-codex/plugin/components/ulw-loop/test/fixtures/artifacts/code-review.md",
+		reportPath: "packages/omo-codex/plugin/components/pentest-loop/test/fixtures/artifacts/code-review.md",
 		evidence: "Reviewed diff and focused tests; no blocking code-quality issues remain.",
 		blockers: [],
 	},
@@ -45,27 +45,27 @@ const VALID_GATE = {
 				id: "artifact-cli-pass",
 				kind: "cli-transcript",
 				description: "CLI transcript for valid quality gate acceptance.",
-				path: "packages/omo-codex/plugin/components/ulw-loop/test/fixtures/artifacts/cli-pass.txt",
+				path: "packages/omo-codex/plugin/components/pentest-loop/test/fixtures/artifacts/cli-pass.txt",
 			},
 			{
 				id: "artifact-cli-reject",
 				kind: "log",
 				description: "Log proving malformed quality gate rejection.",
-				path: "packages/omo-codex/plugin/components/ulw-loop/test/fixtures/artifacts/rejection.txt",
+				path: "packages/omo-codex/plugin/components/pentest-loop/test/fixtures/artifacts/rejection.txt",
 			},
 		],
 	},
 	gateReview: {
 		by: "lazycodex-gate-reviewer",
 		recommendation: "APPROVE",
-		reportPath: "packages/omo-codex/plugin/components/ulw-loop/test/fixtures/artifacts/gate-review.md",
+		reportPath: "packages/omo-codex/plugin/components/pentest-loop/test/fixtures/artifacts/gate-review.md",
 		evidence: "Rechecked reviewer reports and manual QA artifacts; gate is approved.",
 		blockers: [],
 	},
 	iteration: {
 		fullRerun: true,
 		status: "passed",
-		rerunCommands: ["bunx vitest run packages/omo-codex/plugin/components/ulw-loop/test/quality-gate.test.ts"],
+		rerunCommands: ["bunx vitest run packages/omo-codex/plugin/components/pentest-loop/test/quality-gate.test.ts"],
 		evidence: "Full focused rerun passed after validator update.",
 	},
 	criteriaCoverage: {

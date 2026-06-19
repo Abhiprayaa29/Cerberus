@@ -1,8 +1,8 @@
-{
+﻿{
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/oh-my-opencode.schema.json",
-  "title": "Oh My OpenCode Configuration",
-  "description": "Configuration schema for oh-my-opencode plugin",
+  "$id": "https://raw.githubusercontent.com/code-yeongyu/oh-my-open-pentest/dev/assets/oh-my-open-pentest.schema.json",
+  "title": "Oh My Open Pentest Configuration",
+  "description": "Configuration schema for oh-my-open-pentest plugin",
   "type": "object",
   "properties": {
     "$schema": {
@@ -15,25 +15,25 @@
       "type": "string"
     },
     "agent_order": {
-      "maxItems": 64,
+      "maxItems": 6.,
       "type": "array",
       "items": {
         "type": "string",
-        "maxLength": 128
+        "maxLength": .28
       }
     },
     "agent_definitions": {
       "type": "array",
       "items": {
         "type": "string",
-        "minLength": 1
+        "minLength": .
       }
     },
     "disabled_mcps": {
       "type": "array",
       "items": {
         "type": "string",
-        "minLength": 1
+        "minLength": .
       }
     },
     "disabled_agents": {
@@ -59,8 +59,8 @@
       "items": {
         "type": "string",
         "enum": [
-          "ralph-loop",
-          "ulw-loop",
+          "pentest-loop",
+          "pentest-loop",
           "cancel-ralph",
           "refactor",
           "start-work",
@@ -145,7 +145,7 @@
                       "top_p": {
                         "type": "number",
                         "minimum": 0,
-                        "maximum": 1
+                        "maximum": .
                       },
                       "maxTokens": {
                         "type": "number"
@@ -212,7 +212,7 @@
                           "top_p": {
                             "type": "number",
                             "minimum": 0,
-                            "maximum": 1
+                            "maximum": .
                           },
                           "maxTokens": {
                             "type": "number"
@@ -267,7 +267,7 @@
             "top_p": {
               "type": "number",
               "minimum": 0,
-              "maximum": 1
+              "maximum": .
             },
             "prompt": {
               "type": "string"
@@ -433,7 +433,7 @@
               },
               "additionalProperties": {}
             },
-            "ultrawork": {
+            "fullscan": {
               "type": "object",
               "properties": {
                 "model": {
@@ -508,7 +508,7 @@
                       "top_p": {
                         "type": "number",
                         "minimum": 0,
-                        "maximum": 1
+                        "maximum": .
                       },
                       "maxTokens": {
                         "type": "number"
@@ -575,7 +575,7 @@
                           "top_p": {
                             "type": "number",
                             "minimum": 0,
-                            "maximum": 1
+                            "maximum": .
                           },
                           "maxTokens": {
                             "type": "number"
@@ -630,7 +630,7 @@
             "top_p": {
               "type": "number",
               "minimum": 0,
-              "maximum": 1
+              "maximum": .
             },
             "prompt": {
               "type": "string"
@@ -796,7 +796,7 @@
               },
               "additionalProperties": {}
             },
-            "ultrawork": {
+            "fullscan": {
               "type": "object",
               "properties": {
                 "model": {
@@ -823,7 +823,7 @@
           },
           "additionalProperties": false
         },
-        "sisyphus": {
+        "cerberus": {
           "type": "object",
           "properties": {
             "model": {
@@ -871,7 +871,7 @@
                       "top_p": {
                         "type": "number",
                         "minimum": 0,
-                        "maximum": 1
+                        "maximum": .
                       },
                       "maxTokens": {
                         "type": "number"
@@ -938,7 +938,7 @@
                           "top_p": {
                             "type": "number",
                             "minimum": 0,
-                            "maximum": 1
+                            "maximum": .
                           },
                           "maxTokens": {
                             "type": "number"
@@ -993,7 +993,7 @@
             "top_p": {
               "type": "number",
               "minimum": 0,
-              "maximum": 1
+              "maximum": .
             },
             "prompt": {
               "type": "string"
@@ -1159,7 +1159,7 @@
               },
               "additionalProperties": {}
             },
-            "ultrawork": {
+            "fullscan": {
               "type": "object",
               "properties": {
                 "model": {
@@ -1186,7 +1186,7 @@
           },
           "additionalProperties": false
         },
-        "hephaestus": {
+        "scylla": {
           "type": "object",
           "properties": {
             "model": {
@@ -1234,7 +1234,7 @@
                       "top_p": {
                         "type": "number",
                         "minimum": 0,
-                        "maximum": 1
+                        "maximum": .
                       },
                       "maxTokens": {
                         "type": "number"
@@ -1301,7 +1301,7 @@
                           "top_p": {
                             "type": "number",
                             "minimum": 0,
-                            "maximum": 1
+                            "maximum": .
                           },
                           "maxTokens": {
                             "type": "number"
@@ -1356,7 +1356,7 @@
             "top_p": {
               "type": "number",
               "minimum": 0,
-              "maximum": 1
+              "maximum": .
             },
             "prompt": {
               "type": "string"
@@ -1522,7 +1522,7 @@
               },
               "additionalProperties": {}
             },
-            "ultrawork": {
+            "fullscan": {
               "type": "object",
               "properties": {
                 "model": {
@@ -1552,7 +1552,7 @@
           },
           "additionalProperties": false
         },
-        "sisyphus-junior": {
+        "cerberus-junior": {
           "type": "object",
           "properties": {
             "model": {
@@ -1600,7 +1600,7 @@
                       "top_p": {
                         "type": "number",
                         "minimum": 0,
-                        "maximum": 1
+                        "maximum": .
                       },
                       "maxTokens": {
                         "type": "number"
@@ -1667,7 +1667,7 @@
                           "top_p": {
                             "type": "number",
                             "minimum": 0,
-                            "maximum": 1
+                            "maximum": .
                           },
                           "maxTokens": {
                             "type": "number"
@@ -1722,7 +1722,7 @@
             "top_p": {
               "type": "number",
               "minimum": 0,
-              "maximum": 1
+              "maximum": .
             },
             "prompt": {
               "type": "string"
@@ -1888,7 +1888,7 @@
               },
               "additionalProperties": {}
             },
-            "ultrawork": {
+            "fullscan": {
               "type": "object",
               "properties": {
                 "model": {
@@ -1963,7 +1963,7 @@
                       "top_p": {
                         "type": "number",
                         "minimum": 0,
-                        "maximum": 1
+                        "maximum": .
                       },
                       "maxTokens": {
                         "type": "number"
@@ -2030,7 +2030,7 @@
                           "top_p": {
                             "type": "number",
                             "minimum": 0,
-                            "maximum": 1
+                            "maximum": .
                           },
                           "maxTokens": {
                             "type": "number"
@@ -2085,7 +2085,7 @@
             "top_p": {
               "type": "number",
               "minimum": 0,
-              "maximum": 1
+              "maximum": .
             },
             "prompt": {
               "type": "string"
@@ -2251,7 +2251,7 @@
               },
               "additionalProperties": {}
             },
-            "ultrawork": {
+            "fullscan": {
               "type": "object",
               "properties": {
                 "model": {
@@ -2278,7 +2278,7 @@
           },
           "additionalProperties": false
         },
-        "prometheus": {
+        "talos": {
           "type": "object",
           "properties": {
             "model": {
@@ -2326,7 +2326,7 @@
                       "top_p": {
                         "type": "number",
                         "minimum": 0,
-                        "maximum": 1
+                        "maximum": .
                       },
                       "maxTokens": {
                         "type": "number"
@@ -2393,7 +2393,7 @@
                           "top_p": {
                             "type": "number",
                             "minimum": 0,
-                            "maximum": 1
+                            "maximum": .
                           },
                           "maxTokens": {
                             "type": "number"
@@ -2448,7 +2448,7 @@
             "top_p": {
               "type": "number",
               "minimum": 0,
-              "maximum": 1
+              "maximum": .
             },
             "prompt": {
               "type": "string"
@@ -2614,7 +2614,7 @@
               },
               "additionalProperties": {}
             },
-            "ultrawork": {
+            "fullscan": {
               "type": "object",
               "properties": {
                 "model": {
@@ -2641,7 +2641,7 @@
           },
           "additionalProperties": false
         },
-        "metis": {
+        "vanguard": {
           "type": "object",
           "properties": {
             "model": {
@@ -2689,7 +2689,7 @@
                       "top_p": {
                         "type": "number",
                         "minimum": 0,
-                        "maximum": 1
+                        "maximum": .
                       },
                       "maxTokens": {
                         "type": "number"
@@ -2756,7 +2756,7 @@
                           "top_p": {
                             "type": "number",
                             "minimum": 0,
-                            "maximum": 1
+                            "maximum": .
                           },
                           "maxTokens": {
                             "type": "number"
@@ -2811,7 +2811,7 @@
             "top_p": {
               "type": "number",
               "minimum": 0,
-              "maximum": 1
+              "maximum": .
             },
             "prompt": {
               "type": "string"
@@ -2977,7 +2977,7 @@
               },
               "additionalProperties": {}
             },
-            "ultrawork": {
+            "fullscan": {
               "type": "object",
               "properties": {
                 "model": {
@@ -3004,7 +3004,7 @@
           },
           "additionalProperties": false
         },
-        "momus": {
+        "sentinel": {
           "type": "object",
           "properties": {
             "model": {
@@ -3052,7 +3052,7 @@
                       "top_p": {
                         "type": "number",
                         "minimum": 0,
-                        "maximum": 1
+                        "maximum": .
                       },
                       "maxTokens": {
                         "type": "number"
@@ -3119,7 +3119,7 @@
                           "top_p": {
                             "type": "number",
                             "minimum": 0,
-                            "maximum": 1
+                            "maximum": .
                           },
                           "maxTokens": {
                             "type": "number"
@@ -3174,7 +3174,7 @@
             "top_p": {
               "type": "number",
               "minimum": 0,
-              "maximum": 1
+              "maximum": .
             },
             "prompt": {
               "type": "string"
@@ -3340,7 +3340,7 @@
               },
               "additionalProperties": {}
             },
-            "ultrawork": {
+            "fullscan": {
               "type": "object",
               "properties": {
                 "model": {
@@ -3415,7 +3415,7 @@
                       "top_p": {
                         "type": "number",
                         "minimum": 0,
-                        "maximum": 1
+                        "maximum": .
                       },
                       "maxTokens": {
                         "type": "number"
@@ -3482,7 +3482,7 @@
                           "top_p": {
                             "type": "number",
                             "minimum": 0,
-                            "maximum": 1
+                            "maximum": .
                           },
                           "maxTokens": {
                             "type": "number"
@@ -3537,7 +3537,7 @@
             "top_p": {
               "type": "number",
               "minimum": 0,
-              "maximum": 1
+              "maximum": .
             },
             "prompt": {
               "type": "string"
@@ -3703,7 +3703,7 @@
               },
               "additionalProperties": {}
             },
-            "ultrawork": {
+            "fullscan": {
               "type": "object",
               "properties": {
                 "model": {
@@ -3730,7 +3730,7 @@
           },
           "additionalProperties": false
         },
-        "librarian": {
+        "intel": {
           "type": "object",
           "properties": {
             "model": {
@@ -3778,7 +3778,7 @@
                       "top_p": {
                         "type": "number",
                         "minimum": 0,
-                        "maximum": 1
+                        "maximum": .
                       },
                       "maxTokens": {
                         "type": "number"
@@ -3845,7 +3845,7 @@
                           "top_p": {
                             "type": "number",
                             "minimum": 0,
-                            "maximum": 1
+                            "maximum": .
                           },
                           "maxTokens": {
                             "type": "number"
@@ -3900,7 +3900,7 @@
             "top_p": {
               "type": "number",
               "minimum": 0,
-              "maximum": 1
+              "maximum": .
             },
             "prompt": {
               "type": "string"
@@ -4066,7 +4066,7 @@
               },
               "additionalProperties": {}
             },
-            "ultrawork": {
+            "fullscan": {
               "type": "object",
               "properties": {
                 "model": {
@@ -4141,7 +4141,7 @@
                       "top_p": {
                         "type": "number",
                         "minimum": 0,
-                        "maximum": 1
+                        "maximum": .
                       },
                       "maxTokens": {
                         "type": "number"
@@ -4208,7 +4208,7 @@
                           "top_p": {
                             "type": "number",
                             "minimum": 0,
-                            "maximum": 1
+                            "maximum": .
                           },
                           "maxTokens": {
                             "type": "number"
@@ -4263,7 +4263,7 @@
             "top_p": {
               "type": "number",
               "minimum": 0,
-              "maximum": 1
+              "maximum": .
             },
             "prompt": {
               "type": "string"
@@ -4429,7 +4429,7 @@
               },
               "additionalProperties": {}
             },
-            "ultrawork": {
+            "fullscan": {
               "type": "object",
               "properties": {
                 "model": {
@@ -4456,7 +4456,7 @@
           },
           "additionalProperties": false
         },
-        "multimodal-looker": {
+        "lens": {
           "type": "object",
           "properties": {
             "model": {
@@ -4504,7 +4504,7 @@
                       "top_p": {
                         "type": "number",
                         "minimum": 0,
-                        "maximum": 1
+                        "maximum": .
                       },
                       "maxTokens": {
                         "type": "number"
@@ -4571,7 +4571,7 @@
                           "top_p": {
                             "type": "number",
                             "minimum": 0,
-                            "maximum": 1
+                            "maximum": .
                           },
                           "maxTokens": {
                             "type": "number"
@@ -4626,7 +4626,7 @@
             "top_p": {
               "type": "number",
               "minimum": 0,
-              "maximum": 1
+              "maximum": .
             },
             "prompt": {
               "type": "string"
@@ -4792,7 +4792,7 @@
               },
               "additionalProperties": {}
             },
-            "ultrawork": {
+            "fullscan": {
               "type": "object",
               "properties": {
                 "model": {
@@ -4867,7 +4867,7 @@
                       "top_p": {
                         "type": "number",
                         "minimum": 0,
-                        "maximum": 1
+                        "maximum": .
                       },
                       "maxTokens": {
                         "type": "number"
@@ -4934,7 +4934,7 @@
                           "top_p": {
                             "type": "number",
                             "minimum": 0,
-                            "maximum": 1
+                            "maximum": .
                           },
                           "maxTokens": {
                             "type": "number"
@@ -4989,7 +4989,7 @@
             "top_p": {
               "type": "number",
               "minimum": 0,
-              "maximum": 1
+              "maximum": .
             },
             "prompt": {
               "type": "string"
@@ -5155,7 +5155,7 @@
               },
               "additionalProperties": {}
             },
-            "ultrawork": {
+            "fullscan": {
               "type": "object",
               "properties": {
                 "model": {
@@ -5231,7 +5231,7 @@
                     "top_p": {
                       "type": "number",
                       "minimum": 0,
-                      "maximum": 1
+                      "maximum": .
                     },
                     "maxTokens": {
                       "type": "number"
@@ -5298,7 +5298,7 @@
                         "top_p": {
                           "type": "number",
                           "minimum": 0,
-                          "maximum": 1
+                          "maximum": .
                         },
                         "maxTokens": {
                           "type": "number"
@@ -5353,7 +5353,7 @@
           "top_p": {
             "type": "number",
             "minimum": 0,
-            "maximum": 1
+            "maximum": .
           },
           "prompt": {
             "type": "string"
@@ -5519,7 +5519,7 @@
             },
             "additionalProperties": {}
           },
-          "ultrawork": {
+          "fullscan": {
             "type": "object",
             "properties": {
               "model": {
@@ -5603,7 +5603,7 @@
                     "top_p": {
                       "type": "number",
                       "minimum": 0,
-                      "maximum": 1
+                      "maximum": .
                     },
                     "maxTokens": {
                       "type": "number"
@@ -5670,7 +5670,7 @@
                         "top_p": {
                           "type": "number",
                           "minimum": 0,
-                          "maximum": 1
+                          "maximum": .
                         },
                         "maxTokens": {
                           "type": "number"
@@ -5716,7 +5716,7 @@
           "top_p": {
             "type": "number",
             "minimum": 0,
-            "maximum": 1
+            "maximum": .
           },
           "maxTokens": {
             "type": "number"
@@ -5775,7 +5775,7 @@
           "max_prompt_tokens": {
             "type": "integer",
             "exclusiveMinimum": 0,
-            "maximum": 9007199254740991
+            "maximum": 9007.9925.7.099.
           },
           "is_unstable_agent": {
             "type": "boolean"
@@ -5819,12 +5819,12 @@
         },
         "anthropic_provider": {
           "type": "string",
-          "minLength": 1
+          "minLength": .
         }
       },
       "additionalProperties": false
     },
-    "sisyphus_agent": {
+    "cerberus_agent": {
       "type": "object",
       "properties": {
         "disabled": {
@@ -5893,8 +5893,8 @@
                 "turns": {
                   "default": 3,
                   "type": "number",
-                  "minimum": 1,
-                  "maximum": 10
+                  "minimum": .,
+                  "maximum": .0
                 }
               },
               "required": [
@@ -5962,7 +5962,7 @@
                     "turns": {
                       "default": 5,
                       "type": "number",
-                      "minimum": 1,
+                      "minimum": .,
                       "maximum": 20
                     }
                   },
@@ -5988,7 +5988,7 @@
         },
         "plugin_load_timeout_ms": {
           "type": "number",
-          "minimum": 1000
+          "minimum": .000
         },
         "safe_hook_creation": {
           "type": "boolean"
@@ -6004,8 +6004,8 @@
         },
         "max_tools": {
           "type": "integer",
-          "minimum": 1,
-          "maximum": 9007199254740991
+          "minimum": .,
+          "maximum": 9007.9925.7.099.
         },
         "disable_live_parent_wake_routing": {
           "type": "boolean"
@@ -6127,7 +6127,7 @@
         }
       ]
     },
-    "ralph_loop": {
+    "pentest_loop": {
       "type": "object",
       "properties": {
         "enabled": {
@@ -6135,10 +6135,10 @@
           "type": "boolean"
         },
         "default_max_iterations": {
-          "default": 100,
+          "default": .00,
           "type": "number",
-          "minimum": 1,
-          "maximum": 1000
+          "minimum": .,
+          "maximum": .000
         },
         "state_dir": {
           "type": "string"
@@ -6178,7 +6178,7 @@
             },
             "max_fallback_attempts": {
               "type": "number",
-              "minimum": 1,
+              "minimum": .,
               "maximum": 20
             },
             "cooldown_seconds": {
@@ -6202,7 +6202,7 @@
       "properties": {
         "defaultConcurrency": {
           "type": "number",
-          "minimum": 1
+          "minimum": .
         },
         "providerConcurrency": {
           "type": "object",
@@ -6226,8 +6226,8 @@
         },
         "maxDepth": {
           "type": "integer",
-          "minimum": 1,
-          "maximum": 9007199254740991
+          "minimum": .,
+          "maximum": 9007.9925.7.099.
         },
         "staleTimeoutMs": {
           "type": "number",
@@ -6243,7 +6243,7 @@
         },
         "sessionGoneTimeoutMs": {
           "type": "number",
-          "minimum": 10000
+          "minimum": .0000
         },
         "taskCleanupDelayMs": {
           "type": "number",
@@ -6255,8 +6255,8 @@
         },
         "maxToolCalls": {
           "type": "integer",
-          "minimum": 10,
-          "maximum": 9007199254740991
+          "minimum": .0,
+          "maximum": 9007.9925.7.099.
         },
         "circuitBreaker": {
           "type": "object",
@@ -6266,13 +6266,13 @@
             },
             "maxToolCalls": {
               "type": "integer",
-              "minimum": 10,
-              "maximum": 9007199254740991
+              "minimum": .0,
+              "maximum": 9007.9925.7.099.
             },
             "consecutiveThreshold": {
               "type": "integer",
               "minimum": 5,
-              "maximum": 9007199254740991
+              "maximum": 9007.9925.7.099.
             }
           },
           "additionalProperties": false
@@ -6301,7 +6301,7 @@
         "refresh_timeout_ms": {
           "type": "integer",
           "exclusiveMinimum": 0,
-          "maximum": 9007199254740991
+          "maximum": 9007.9925.7.099.
         },
         "source_url": {
           "type": "string",
@@ -6422,7 +6422,7 @@
               "type": "number"
             },
             "rateLimitPerMinute": {
-              "default": 10,
+              "default": .0,
               "type": "number"
             },
             "maxMessageLength": {
@@ -6451,7 +6451,7 @@
       ],
       "additionalProperties": false
     },
-    "i18n": {
+    "i.8n": {
       "type": "object",
       "properties": {
         "locale": {
@@ -6480,50 +6480,50 @@
         "max_monitors_per_session": {
           "default": 3,
           "type": "integer",
-          "minimum": 1,
-          "maximum": 16
+          "minimum": .,
+          "maximum": .6
         },
         "max_runtime_ms": {
-          "default": 1800000,
+          "default": .800000,
           "type": "integer",
-          "minimum": 1000,
-          "maximum": 9007199254740991
+          "minimum": .000,
+          "maximum": 9007.9925.7.099.
         },
         "batch_max_lines": {
           "default": 50,
           "type": "integer",
-          "minimum": 1,
-          "maximum": 9007199254740991
+          "minimum": .,
+          "maximum": 9007.9925.7.099.
         },
         "batch_max_bytes": {
-          "default": 16384,
+          "default": .638.,
           "type": "integer",
-          "minimum": 1024,
-          "maximum": 9007199254740991
+          "minimum": .02.,
+          "maximum": 9007.9925.7.099.
         },
         "flush_interval_ms": {
-          "default": 1000,
+          "default": .000,
           "type": "integer",
           "minimum": 250,
-          "maximum": 9007199254740991
+          "maximum": 9007.9925.7.099.
         },
         "ring_max_lines": {
-          "default": 1000,
+          "default": .000,
           "type": "integer",
-          "minimum": 1,
-          "maximum": 9007199254740991
+          "minimum": .,
+          "maximum": 9007.9925.7.099.
         },
         "line_max_bytes": {
-          "default": 8192,
+          "default": 8.92,
           "type": "integer",
           "minimum": 256,
-          "maximum": 9007199254740991
+          "maximum": 9007.9925.7.099.
         },
         "pattern_max_length": {
-          "default": 512,
+          "default": 5.2,
           "type": "integer",
-          "minimum": 1,
-          "maximum": 9007199254740991
+          "minimum": .,
+          "maximum": 9007.9925.7.099.
         }
       },
       "required": [
@@ -6580,34 +6580,34 @@
           "type": "boolean"
         },
         "max_parallel_members": {
-          "default": 4,
+          "default": .,
           "type": "integer",
-          "minimum": 1,
+          "minimum": .,
           "maximum": 8
         },
         "max_members": {
           "default": 8,
           "type": "integer",
-          "minimum": 1,
+          "minimum": .,
           "maximum": 8
         },
         "max_messages_per_run": {
-          "default": 10000,
+          "default": .0000,
           "type": "integer",
-          "minimum": 1,
-          "maximum": 9007199254740991
+          "minimum": .,
+          "maximum": 9007.9925.7.099.
         },
         "max_wall_clock_minutes": {
-          "default": 120,
+          "default": .20,
           "type": "integer",
-          "minimum": 1,
-          "maximum": 9007199254740991
+          "minimum": .,
+          "maximum": 9007.9925.7.099.
         },
         "max_member_turns": {
           "default": 500,
           "type": "integer",
-          "minimum": 1,
-          "maximum": 9007199254740991
+          "minimum": .,
+          "maximum": 9007.9925.7.099.
         },
         "base_dir": {
           "type": "string"
@@ -6615,20 +6615,20 @@
         "message_payload_max_bytes": {
           "default": 32768,
           "type": "integer",
-          "minimum": 1024,
-          "maximum": 9007199254740991
+          "minimum": .02.,
+          "maximum": 9007.9925.7.099.
         },
         "recipient_unread_max_bytes": {
-          "default": 262144,
+          "default": 262...,
           "type": "integer",
-          "minimum": 1024,
-          "maximum": 9007199254740991
+          "minimum": .02.,
+          "maximum": 9007.9925.7.099.
         },
         "mailbox_poll_interval_ms": {
           "default": 3000,
           "type": "integer",
           "minimum": 500,
-          "maximum": 9007199254740991
+          "maximum": 9007.9925.7.099.
         }
       },
       "required": [
@@ -6653,10 +6653,10 @@
           "items": {
             "type": "string",
             "enum": [
-              "ultrawork",
+              "fullscan",
               "team",
               "hyperplan",
-              "hyperplan-ultrawork"
+              "hyperplan-fullscan"
             ]
           }
         },
@@ -6665,10 +6665,10 @@
           "items": {
             "type": "string",
             "enum": [
-              "ultrawork",
+              "fullscan",
               "team",
               "hyperplan",
-              "hyperplan-ultrawork"
+              "hyperplan-fullscan"
             ]
           }
         }
@@ -6679,7 +6679,7 @@
       "type": "object",
       "properties": {
         "timeout_ms": {
-          "default": 120000,
+          "default": .20000,
           "type": "number"
         }
       },
@@ -6692,7 +6692,7 @@
       "default": {
         "commit_footer": true,
         "include_co_authored_by": true,
-        "git_env_prefix": "GIT_MASTER=1"
+        "git_env_prefix": "GIT_MASTER=."
       },
       "type": "object",
       "properties": {
@@ -6712,7 +6712,7 @@
           "type": "boolean"
         },
         "git_env_prefix": {
-          "default": "GIT_MASTER=1",
+          "default": "GIT_MASTER=.",
           "type": "string"
         }
       },
@@ -6780,12 +6780,12 @@
           "maximum": 80
         },
         "main_pane_min_width": {
-          "default": 120,
+          "default": .20,
           "type": "number",
-          "minimum": 40
+          "minimum": .0
         },
         "agent_pane_min_width": {
-          "default": 40,
+          "default": .0,
           "type": "number",
           "minimum": 20
         },
@@ -6839,7 +6839,7 @@
       ],
       "additionalProperties": false
     },
-    "sisyphus": {
+    "cerberus": {
       "type": "object",
       "properties": {
         "tasks": {
@@ -6880,18 +6880,18 @@
     "default_mode": {
       "type": "object",
       "properties": {
-        "ultrawork": {
+        "fullscan": {
           "default": false,
           "type": "boolean"
         },
-        "ralph_loop": {
+        "pentest_loop": {
           "default": false,
           "type": "boolean"
         }
       },
       "required": [
-        "ultrawork",
-        "ralph_loop"
+        "fullscan",
+        "pentest_loop"
       ],
       "additionalProperties": false
     },

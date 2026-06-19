@@ -1,15 +1,15 @@
-import { readFile } from "node:fs/promises";
+﻿import { readFile } from "node:fs/promises";
 
 import { describe, expect, it } from "vitest";
 
-const SKILL_URL = new URL("../skills/ulw-loop/SKILL.md", import.meta.url);
-const FULL_WORKFLOW_URL = new URL("../skills/ulw-loop/references/full-workflow.md", import.meta.url);
+const SKILL_URL = new URL("../skills/pentest-loop/SKILL.md", import.meta.url);
+const FULL_WORKFLOW_URL = new URL("../skills/pentest-loop/references/full-workflow.md", import.meta.url);
 
 function wordCount(text: string): number {
 	return text.split(/\s+/).filter(Boolean).length;
 }
 
-describe("ulw-loop skill contract", () => {
+describe("pentest-loop skill contract", () => {
 	it("#given full workflow #when tier triage is inspected #then criteria scale by LIGHT/HEAVY with upgrade-only ratchet", async () => {
 		// given
 		const workflow = await readFile(FULL_WORKFLOW_URL, "utf8");

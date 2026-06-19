@@ -1,4 +1,4 @@
-import { mkdtemp, rm } from "node:fs/promises";
+﻿import { mkdtemp, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
@@ -63,7 +63,7 @@ async function createPlan(brief = "- Goal A\n- Goal B"): Promise<Record<string, 
 describe("ulwLoopCommand help", () => {
 	it("prints usage when no subcommand", async () => {
 		expect(await ulwLoopCommand([])).toBe(0);
-		expect(out.join("")).toContain("omo ulw-loop");
+		expect(out.join("")).toContain("omo pentest-loop");
 	});
 });
 
@@ -116,7 +116,7 @@ describe("ulwLoopCommand record-evidence", () => {
 				"x",
 			]),
 		).toBe(1);
-		expect(err.join("")).toContain("[ulw-loop]");
+		expect(err.join("")).toContain("[pentest-loop]");
 	});
 
 	it("returns 1 + error on missing flags", async () => {
@@ -191,19 +191,19 @@ describe("ulwLoopCommand add-goal", () => {
 describe("ulwLoopCommand unknown", () => {
 	it("returns 1 + prints help on unknown subcommand", async () => {
 		expect(await ulwLoopCommand(["wat"])).toBe(1);
-		expect(out.join("")).toContain("omo ulw-loop");
+		expect(out.join("")).toContain("omo pentest-loop");
 	});
 });
 
 describe("ulwLoopCommand error handling", () => {
-	it("returns 1 + prints [ulw-loop] prefix on UlwLoopError", async () => {
+	it("returns 1 + prints [pentest-loop] prefix on UlwLoopError", async () => {
 		expect(await ulwLoopCommand(["status"])).toBe(1);
-		expect(err.join("")).toContain("[ulw-loop]");
+		expect(err.join("")).toContain("[pentest-loop]");
 	});
 
 	it("#given no --json #when an error occurs #then writes only to stderr and leaves stdout empty", async () => {
 		expect(await ulwLoopCommand(["status"])).toBe(1);
 		expect(out.join("")).toBe("");
-		expect(err.join("")).toContain("[ulw-loop]");
+		expect(err.join("")).toContain("[pentest-loop]");
 	});
 });

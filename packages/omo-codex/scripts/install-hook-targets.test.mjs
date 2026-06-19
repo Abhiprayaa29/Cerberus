@@ -1,4 +1,4 @@
-import assert from "node:assert/strict";
+﻿import assert from "node:assert/strict";
 import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
@@ -32,7 +32,7 @@ const HOOKS_MANIFEST = {
 				hooks: [
 					{
 						type: "command",
-						command: 'node "${PLUGIN_ROOT}/components/ulw-loop/dist/cli.js" hook stop',
+						command: 'node "${PLUGIN_ROOT}/components/pentest-loop/dist/cli.js" hook stop',
 					},
 				],
 			},
@@ -46,7 +46,7 @@ async function createPluginRoot({ withGitBashDist }) {
 	await writeFile(join(pluginRoot, "hooks", "hooks.json"), JSON.stringify(HOOKS_MANIFEST, null, "\t"));
 	const targets = [
 		"scripts/auto-update.mjs",
-		"components/ulw-loop/dist/cli.js",
+		"components/pentest-loop/dist/cli.js",
 		...(withGitBashDist ? ["components/git-bash/dist/cli.js"] : []),
 	];
 	for (const target of targets) {
@@ -74,7 +74,7 @@ async function createPluginRootWithHookArray({ withGitBashDist }) {
 	);
 	const targets = [
 		"scripts/auto-update.mjs",
-		"components/ulw-loop/dist/cli.js",
+		"components/pentest-loop/dist/cli.js",
 		...(withGitBashDist ? ["components/git-bash/dist/cli.js"] : []),
 	];
 	for (const target of targets) {

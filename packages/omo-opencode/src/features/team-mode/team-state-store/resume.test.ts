@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { afterEach, describe, expect, mock, test } from "bun:test"
 import { randomUUID } from "node:crypto"
@@ -39,7 +39,7 @@ function createSpec(name = `team-${randomUUID().slice(0, 8)}`): TeamSpec {
       {
         kind: "subagent_type",
         name: "lead",
-        subagent_type: "sisyphus",
+        subagent_type: "cerberus",
         backendType: "in-process",
         isActive: true,
         color: "red",
@@ -67,7 +67,7 @@ function createSpecWithTwoWorkers(name = `team-${randomUUID().slice(0, 8)}`): Te
       {
         kind: "subagent_type",
         name: "lead",
-        subagent_type: "sisyphus",
+        subagent_type: "cerberus",
         backendType: "in-process",
         isActive: true,
         color: "red",

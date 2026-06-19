@@ -1,4 +1,4 @@
-import { existsSync, readFileSync, writeFileSync, unlinkSync, mkdirSync } from "node:fs"
+﻿import { existsSync, readFileSync, writeFileSync, unlinkSync, mkdirSync } from "node:fs"
 import { dirname, join } from "node:path"
 import { parseFrontmatter } from "../../shared/frontmatter"
 import type { IterationCommitExpectation, RalphLoopState } from "./types"
@@ -40,11 +40,11 @@ export function readState(directory: string, customPath?: string): RalphLoopStat
       return str.replace(/^["']|["']$/g, "")
     }
 
-    const ultrawork = data.ultrawork === true || data.ultrawork === "true" ? true : undefined
+    const fullscan = data.fullscan === true || data.fullscan === "true" ? true : undefined
     const verificationAttemptStartedAt = Number(data.verification_attempt_started_at)
     const maxIterations =
       data.max_iterations === undefined || data.max_iterations === ""
-        ? ultrawork
+        ? fullscan
           ? undefined
           : DEFAULT_MAX_ITERATIONS
         : Number(data.max_iterations) || DEFAULT_MAX_ITERATIONS
@@ -78,7 +78,7 @@ export function readState(directory: string, customPath?: string): RalphLoopStat
       started_at: stripQuotes(data.started_at) || new Date().toISOString(),
       prompt: body.trim(),
       session_id: data.session_id ? stripQuotes(data.session_id) : undefined,
-      ultrawork,
+      fullscan,
       verification_pending:
         data.verification_pending === true || data.verification_pending === "true"
           ? true
@@ -107,7 +107,7 @@ export function writeState(
     }
 
     const sessionIdLine = state.session_id ? `session_id: "${state.session_id}"\n` : ""
-    const ultraworkLine = state.ultrawork !== undefined ? `ultrawork: ${state.ultrawork}\n` : ""
+    const fullscanLine = state.fullscan !== undefined ? `fullscan: ${state.fullscan}\n` : ""
     const verificationPendingLine =
       state.verification_pending !== undefined
         ? `verification_pending: ${state.verification_pending}\n`
@@ -145,7 +145,7 @@ active: ${state.active}
 iteration: ${state.iteration}
 ${maxIterationsLine}completion_promise: "${state.completion_promise}"
 ${initialCompletionPromiseLine}${verificationAttemptLine}${verificationAttemptStartedAtLine}${verificationSessionLine}started_at: "${state.started_at}"
-${sessionIdLine}${ultraworkLine}${verificationPendingLine}${strategyLine}${messageCountAtStartLine}---
+${sessionIdLine}${fullscanLine}${verificationPendingLine}${strategyLine}${messageCountAtStartLine}---
 ${state.prompt}
 `
 

@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import type { ToolContext } from "@opencode-ai/plugin/tool"
 import { describe, expect, test } from "bun:test"
@@ -9,7 +9,7 @@ import type { BackgroundOutputClient, BackgroundOutputManager } from "./clients"
 import { BACKGROUND_TASK_DESCRIPTION } from "./constants"
 import { createBackgroundOutput } from "./create-background-output"
 
-const projectDir = "/Users/yeongyu/local-workspaces/oh-my-opencode"
+const projectDir = "/Users/yeongyu/local-workspaces/oh-my-open-pentest"
 
 type ToolContextWithCallID = ToolContext & {
   callID: string

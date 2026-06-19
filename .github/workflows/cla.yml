@@ -1,4 +1,4 @@
-name: CLA Assistant
+﻿name: CLA Assistant
 
 on:
   issue_comment:
@@ -30,7 +30,7 @@ jobs:
               "dependabot*",
               "github-actions*",
               "*[bot]",
-              "sisyphus-dev-ai",
+              "cerberus-dev-ai",
               "web-flow",
             ];
 
@@ -137,11 +137,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           path-to-signatures: 'signatures/cla.json'
-          path-to-document: 'https://github.com/code-yeongyu/oh-my-openagent/blob/dev/CLA.md'
+          path-to-document: 'https://github.com/code-yeongyu/oh-my-open-pentest/blob/dev/CLA.md'
           branch: 'dev'
-          allowlist: code-yeongyu,bot*,dependabot*,github-actions*,*[bot],sisyphus-dev-ai,web-flow
+          allowlist: code-yeongyu,bot*,dependabot*,github-actions*,*[bot],cerberus-dev-ai,web-flow
           custom-notsigned-prcomment: |
-            Thank you for your contribution! Before we can merge this PR, we need you to sign our [Contributor License Agreement (CLA)](https://github.com/code-yeongyu/oh-my-opencode/blob/master/CLA.md).
+            Thank you for your contribution! Before we can merge this PR, we need you to sign our [Contributor License Agreement (CLA)](https://github.com/code-yeongyu/oh-my-open-pentest/blob/master/CLA.md).
             
             **To sign the CLA**, please comment on this PR with:
             ```

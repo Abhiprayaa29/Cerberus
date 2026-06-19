@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { describe, expect, it } from "bun:test"
 
@@ -159,7 +159,7 @@ describe("handleSessionIdle", () => {
             data: [
               {
                 info: { role: "user" },
-                parts: [{ type: "text", text: "continue\n<!-- OMO_INTERNAL_INITIATOR -->", synthetic: true }],
+                parts: [{ type: "text", text: "continue\n<!-- OMOP_INTERNAL_INITIATOR -->", synthetic: true }],
               },
               {
                 info: { role: "assistant", finish: "unknown", time: { completed: Date.now() } },

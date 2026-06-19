@@ -1,4 +1,4 @@
-import { describe, expect, test, beforeEach, afterEach, mock } from "bun:test"
+﻿import { describe, expect, test, beforeEach, afterEach, mock } from "bun:test"
 import { existsSync, mkdirSync, rmSync, writeFileSync } from "node:fs"
 import { join } from "node:path"
 import { tmpdir } from "node:os"
@@ -16,25 +16,25 @@ import {
   releaseAllPromptAsyncReservationsForTesting,
 } from "../../shared/prompt-async-gate"
 import { DEFAULT_SESSION_STATUS_TIMEOUT_MS } from "../../shared/session-idle-settle"
-import type { AtlasHookOptions, PendingTaskRef } from "./types"
-import { createAtlasHook } from "./index"
+import type { ArgusHookOptions, PendingTaskRef } from "./types"
+import { createArgusHook } from "./index"
 import { createToolExecuteAfterHandler } from "./tool-execute-after"
 import { createToolExecuteBeforeHandler } from "./tool-execute-before"
 
 const callerAgentBySession = new Map<string, string>()
-type MockAtlasInput = Parameters<typeof createAtlasHook>[0] & {
+type MockArgusInput = Parameters<typeof createArgusHook>[0] & {
   _promptMock: ReturnType<typeof mock>
   _sessionGetMock: ReturnType<typeof mock>
 }
 
-describe("atlas hook", () => {
+describe("argus hook", () => {
   let TEST_DIR: string
   let OMO_DIR: string
 
   function createMockPluginInput(overrides?: {
     promptMock?: ReturnType<typeof mock>
     sessionGetMock?: ReturnType<typeof mock>
-  }): MockAtlasInput {
+  }): MockArgusInput {
     const promptMock = overrides?.promptMock ?? mock(() => Promise.resolve())
     const sessionGetMock = overrides?.sessionGetMock ?? mock(async ({ path }: { path: { id: string } }) => ({
       data: {
@@ -50,11 +50,11 @@ describe("atlas hook", () => {
 
     return {
       directory: TEST_DIR,
-      project: {} as Parameters<typeof createAtlasHook>[0]["project"],
+      project: {} as Parameters<typeof createArgusHook>[0]["project"],
       worktree: TEST_DIR,
       experimental_workspace: { register: () => {} },
       serverUrl: new URL("http://localhost"),
-      $: {} as Parameters<typeof createAtlasHook>[0]["$"],
+      $: {} as Parameters<typeof createArgusHook>[0]["$"],
       client,
       _promptMock: promptMock,
       _sessionGetMock: sessionGetMock,
@@ -69,25 +69,25 @@ describe("atlas hook", () => {
     callerAgentBySession.delete(sessionID)
   }
 
-  function createTestAtlasHook(
+  function createTestArgusHook(
     input = createMockPluginInput(),
-    options: Partial<AtlasHookOptions> = {},
-  ): ReturnType<typeof createAtlasHook> {
-    const resolvedOptions: AtlasHookOptions = {
+    options: Partial<ArgusHookOptions> = {},
+  ): ReturnType<typeof createArgusHook> {
+    const resolvedOptions: ArgusHookOptions = {
       directory: TEST_DIR,
       idleSettleMs: 0,
-      isCallerOrchestrator: async (sessionID) => callerAgentBySession.get(sessionID ?? "") === "atlas",
+      isCallerOrchestrator: async (sessionID) => callerAgentBySession.get(sessionID ?? "") === "argus",
       ...options,
     }
-    return createAtlasHook(input, resolvedOptions)
+    return createArgusHook(input, resolvedOptions)
   }
 
   beforeEach(() => {
     _resetForTesting()
     releaseAllPromptAsyncReservationsForTesting()
-    registerAgentName("atlas")
-    registerAgentName("sisyphus")
-    TEST_DIR = join(tmpdir(), `atlas-test-${randomUUID()}`)
+    registerAgentName("argus")
+    registerAgentName("cerberus")
+    TEST_DIR = join(tmpdir(), `argus-test-${randomUUID()}`)
     OMO_DIR = join(TEST_DIR, ".omo")
     if (!existsSync(TEST_DIR)) {
       mkdirSync(TEST_DIR, { recursive: true })
@@ -112,7 +112,7 @@ describe("atlas hook", () => {
   describe("tool.execute.after handler", () => {
     test("should handle undefined output gracefully (issue #1035)", async () => {
       // given - hook and undefined output (e.g., from /review command)
-      const hook = createTestAtlasHook(createMockPluginInput())
+      const hook = createTestArgusHook(createMockPluginInput())
 
       // when - calling with undefined output
       const result = await hook["tool.execute.after"](
@@ -126,7 +126,7 @@ describe("atlas hook", () => {
 
     test("should ignore non-task tools", async () => {
       // given - hook and non-task tool
-      const hook = createTestAtlasHook(createMockPluginInput())
+      const hook = createTestArgusHook(createMockPluginInput())
       const output = {
         title: "Test Tool",
         output: "Original output",
@@ -143,8 +143,8 @@ describe("atlas hook", () => {
       expect(output.output).toBe("Original output")
     })
 
-     test("should not transform when caller is not Atlas", async () => {
-       // given - boulder state exists but caller agent in message storage is not Atlas
+     test("should not transform when caller is not Argus", async () => {
+       // given - boulder state exists but caller agent in message storage is not Argus
        const sessionID = "session-non-orchestrator-test"
        setupMessageStorage(sessionID, "other-agent")
       
@@ -159,9 +159,9 @@ describe("atlas hook", () => {
       }
       writeBoulderState(TEST_DIR, state)
 
-      const hook = createTestAtlasHook(createMockPluginInput())
+      const hook = createTestArgusHook(createMockPluginInput())
       const output = {
-        title: "Sisyphus Task",
+        title: "Cerberus Task",
         output: "Task completed successfully",
         metadata: {},
       }
@@ -178,14 +178,14 @@ describe("atlas hook", () => {
       cleanupMessageStorage(sessionID)
     })
 
-     test("should append standalone verification when no boulder state but caller is Atlas", async () => {
-       // given - no boulder state, but caller is Atlas
+     test("should append standalone verification when no boulder state but caller is Argus", async () => {
+       // given - no boulder state, but caller is Argus
        const sessionID = "session-no-boulder-test"
-       setupMessageStorage(sessionID, "atlas")
+       setupMessageStorage(sessionID, "argus")
       
-      const hook = createTestAtlasHook(createMockPluginInput())
+      const hook = createTestArgusHook(createMockPluginInput())
       const output = {
-        title: "Sisyphus Task",
+        title: "Cerberus Task",
         output: "Task completed successfully",
         metadata: {},
       }
@@ -204,10 +204,10 @@ describe("atlas hook", () => {
       cleanupMessageStorage(sessionID)
     })
 
-     test("should transform output when caller is Atlas with boulder state", async () => {
-       // given - Atlas caller with boulder state
+     test("should transform output when caller is Argus with boulder state", async () => {
+       // given - Argus caller with boulder state
        const sessionID = "session-transform-test"
-       setupMessageStorage(sessionID, "atlas")
+       setupMessageStorage(sessionID, "argus")
       
       const planPath = join(TEST_DIR, "test-plan.md")
       writeFileSync(planPath, "# Plan\n- [ ] Task 1\n- [x] Task 2")
@@ -220,9 +220,9 @@ describe("atlas hook", () => {
       }
       writeBoulderState(TEST_DIR, state)
 
-      const hook = createTestAtlasHook(createMockPluginInput())
+      const hook = createTestArgusHook(createMockPluginInput())
       const output = {
-        title: "Sisyphus Task",
+        title: "Cerberus Task",
         output: "Task completed successfully",
         metadata: {},
       }
@@ -233,7 +233,7 @@ describe("atlas hook", () => {
         output
       )
 
-      // then - output should be transformed (original output preserved for debugging)
+      // then - output should be transformed (original output preserved for vulnerability analysis)
       expect(output.output).toContain("Task completed successfully")
       expect(output.output).toContain("SUBAGENT WORK COMPLETED")
       expect(output.output).toContain("test-plan")
@@ -244,9 +244,9 @@ describe("atlas hook", () => {
     })
 
     test("should preserve metadata when transforming output for boulder orchestrator", async () => {
-      // given - Atlas caller with boulder state and metadata containing sessionId
+      // given - Argus caller with boulder state and metadata containing sessionId
       const sessionID = "session-metadata-preserve-test"
-      setupMessageStorage(sessionID, "atlas")
+      setupMessageStorage(sessionID, "argus")
 
       const planPath = join(TEST_DIR, "metadata-plan.md")
       writeFileSync(planPath, "# Plan\n- [ ] Task 1")
@@ -259,9 +259,9 @@ describe("atlas hook", () => {
       }
       writeBoulderState(TEST_DIR, state)
 
-      const hook = createTestAtlasHook(createMockPluginInput())
+      const hook = createTestArgusHook(createMockPluginInput())
       const output = {
-        title: "Sisyphus Task",
+        title: "Cerberus Task",
         output: `Task completed
 
 <task_metadata>
@@ -269,7 +269,7 @@ session_id: ses_subagent_abc
 </task_metadata>`,
         metadata: {
           sessionId: "ses_subagent_abc",
-          agent: "sisyphus-junior",
+          agent: "cerberus-junior",
           category: "quick",
           truncated: false,
         } as Record<string, unknown>,
@@ -284,7 +284,7 @@ session_id: ses_subagent_abc
       // then - output is transformed but metadata is preserved
       expect(output.output).toContain("SUBAGENT WORK COMPLETED")
       expect(output.metadata.sessionId).toBe("ses_subagent_abc")
-      expect(output.metadata.agent).toBe("sisyphus-junior")
+      expect(output.metadata.agent).toBe("cerberus-junior")
       expect(output.metadata.category).toBe("quick")
       expect(output.metadata.truncated).toBe(false)
 
@@ -292,13 +292,13 @@ session_id: ses_subagent_abc
     })
 
     test("should preserve metadata when appending standalone verification reminder", async () => {
-      // given - Atlas caller without boulder state, metadata containing sessionId
+      // given - Argus caller without boulder state, metadata containing sessionId
       const sessionID = "session-standalone-metadata-test"
-      setupMessageStorage(sessionID, "atlas")
+      setupMessageStorage(sessionID, "argus")
 
-      const hook = createTestAtlasHook(createMockPluginInput())
+      const hook = createTestArgusHook(createMockPluginInput())
       const output = {
-        title: "Sisyphus Task",
+        title: "Cerberus Task",
         output: `Task completed
 
 <task_metadata>
@@ -306,7 +306,7 @@ session_id: ses_standalone_def
 </task_metadata>`,
         metadata: {
           sessionId: "ses_standalone_def",
-          agent: "sisyphus-junior",
+          agent: "cerberus-junior",
           model: { providerID: "openai", modelID: "gpt-5.4" },
           truncated: false,
         } as Record<string, unknown>,
@@ -321,7 +321,7 @@ session_id: ses_standalone_def
       // then - standalone verification appended but metadata preserved
       expect(output.output).toContain("LYING")
       expect(output.metadata.sessionId).toBe("ses_standalone_def")
-      expect(output.metadata.agent).toBe("sisyphus-junior")
+      expect(output.metadata.agent).toBe("cerberus-junior")
       expect(output.metadata.model).toEqual({ providerID: "openai", modelID: "gpt-5.4" })
       expect(output.metadata.truncated).toBe(false)
 
@@ -329,9 +329,9 @@ session_id: ses_standalone_def
     })
 
      test("should still transform when plan is complete (shows progress)", async () => {
-       // given - boulder state with complete plan, Atlas caller
+       // given - boulder state with complete plan, Argus caller
        const sessionID = "session-complete-plan-test"
-       setupMessageStorage(sessionID, "atlas")
+       setupMessageStorage(sessionID, "argus")
       
       const planPath = join(TEST_DIR, "complete-plan.md")
       writeFileSync(planPath, "# Plan\n- [x] Task 1\n- [x] Task 2")
@@ -344,9 +344,9 @@ session_id: ses_standalone_def
       }
       writeBoulderState(TEST_DIR, state)
 
-      const hook = createTestAtlasHook(createMockPluginInput())
+      const hook = createTestArgusHook(createMockPluginInput())
       const output = {
-        title: "Sisyphus Task",
+        title: "Cerberus Task",
         output: "Original output",
         metadata: {},
       }
@@ -366,9 +366,9 @@ session_id: ses_standalone_def
     })
 
      test("should not append unrelated current session to boulder state if not already tracked", async () => {
-       // given - boulder state without session-append-test, Atlas caller
+       // given - boulder state without session-append-test, Argus caller
        const sessionID = "session-append-test"
-       setupMessageStorage(sessionID, "atlas")
+       setupMessageStorage(sessionID, "argus")
       
       const planPath = join(TEST_DIR, "test-plan.md")
       writeFileSync(planPath, "# Plan\n- [ ] Task 1")
@@ -381,9 +381,9 @@ session_id: ses_standalone_def
       }
       writeBoulderState(TEST_DIR, state)
 
-      const hook = createTestAtlasHook(createMockPluginInput())
+      const hook = createTestArgusHook(createMockPluginInput())
       const output = {
-        title: "Sisyphus Task",
+        title: "Cerberus Task",
         output: "Task output",
         metadata: {},
       }
@@ -402,9 +402,9 @@ session_id: ses_standalone_def
     })
 
      test("should not append current session when session lookup fails during append decision", async () => {
-       // given - boulder state without session-get-failure-test, Atlas caller, and session lookup failure
+       // given - boulder state without session-get-failure-test, Argus caller, and session lookup failure
        const sessionID = "session-get-failure-test"
-       setupMessageStorage(sessionID, "atlas")
+       setupMessageStorage(sessionID, "argus")
 
       const planPath = join(TEST_DIR, "test-plan.md")
       writeFileSync(planPath, "# Plan\n- [ ] Task 1")
@@ -417,13 +417,13 @@ session_id: ses_standalone_def
       }
       writeBoulderState(TEST_DIR, state)
 
-      const hook = createTestAtlasHook(createMockPluginInput({
+      const hook = createTestArgusHook(createMockPluginInput({
         sessionGetMock: mock(async () => {
           throw new Error("session lookup failed")
         }),
       }))
       const output = {
-        title: "Sisyphus Task",
+        title: "Cerberus Task",
         output: "Task output",
         metadata: {},
       }
@@ -442,9 +442,9 @@ session_id: ses_standalone_def
     })
 
      test("should not duplicate existing session ID", async () => {
-       // given - boulder state already has session-dup-test, Atlas caller
+       // given - boulder state already has session-dup-test, Argus caller
        const sessionID = "session-dup-test"
-       setupMessageStorage(sessionID, "atlas")
+       setupMessageStorage(sessionID, "argus")
       
       const planPath = join(TEST_DIR, "test-plan.md")
       writeFileSync(planPath, "# Plan\n- [ ] Task 1")
@@ -457,9 +457,9 @@ session_id: ses_standalone_def
       }
       writeBoulderState(TEST_DIR, state)
 
-      const hook = createTestAtlasHook(createMockPluginInput())
+      const hook = createTestArgusHook(createMockPluginInput())
       const output = {
-        title: "Sisyphus Task",
+        title: "Cerberus Task",
         output: "Task output",
         metadata: {},
       }
@@ -479,9 +479,9 @@ session_id: ses_standalone_def
     })
 
      test("should include boulder.json path and notepad path in transformed output", async () => {
-       // given - boulder state, Atlas caller
+       // given - boulder state, Argus caller
        const sessionID = "session-path-test"
-       setupMessageStorage(sessionID, "atlas")
+       setupMessageStorage(sessionID, "argus")
       
       const planPath = join(TEST_DIR, "my-feature.md")
       writeFileSync(planPath, "# Plan\n- [ ] Task 1\n- [ ] Task 2\n- [x] Task 3")
@@ -494,9 +494,9 @@ session_id: ses_standalone_def
       }
       writeBoulderState(TEST_DIR, state)
 
-      const hook = createTestAtlasHook(createMockPluginInput())
+      const hook = createTestArgusHook(createMockPluginInput())
       const output = {
-        title: "Sisyphus Task",
+        title: "Cerberus Task",
         output: "Task completed",
         metadata: {},
       }
@@ -516,9 +516,9 @@ session_id: ses_standalone_def
     })
 
      test("should include task_id and checkbox instructions in reminder", async () => {
-       // given - boulder state, Atlas caller
+       // given - boulder state, Argus caller
        const sessionID = "session-resume-test"
-       setupMessageStorage(sessionID, "atlas")
+       setupMessageStorage(sessionID, "argus")
       
       const planPath = join(TEST_DIR, "test-plan.md")
       writeFileSync(planPath, "# Plan\n- [ ] Task 1")
@@ -531,9 +531,9 @@ session_id: ses_standalone_def
       }
       writeBoulderState(TEST_DIR, state)
 
-      const hook = createTestAtlasHook(createMockPluginInput())
+      const hook = createTestArgusHook(createMockPluginInput())
       const output = {
-        title: "Sisyphus Task",
+        title: "Cerberus Task",
         output: "Task completed",
         metadata: {},
       }
@@ -556,7 +556,7 @@ session_id: ses_standalone_def
     test("should clean pending task refs when a task returns background launch output", async () => {
       // given - direct handlers with shared pending maps
       const sessionID = "session-bg-launch-cleanup-test"
-      setupMessageStorage(sessionID, "atlas")
+      setupMessageStorage(sessionID, "argus")
 
       const planPath = join(TEST_DIR, "background-cleanup-plan.md")
       writeFileSync(planPath, `# Plan
@@ -577,7 +577,7 @@ session_id: ses_standalone_def
         ctx: createMockPluginInput(),
         pendingFilePaths,
         pendingTaskRefs,
-        isCallerOrchestrator: async (id) => callerAgentBySession.get(id ?? "") === "atlas",
+        isCallerOrchestrator: async (id) => callerAgentBySession.get(id ?? "") === "argus",
       })
       const afterHandler = createToolExecuteAfterHandler({
         ctx: createMockPluginInput(),
@@ -585,7 +585,7 @@ session_id: ses_standalone_def
         pendingTaskRefs,
         autoCommit: true,
         getState: () => ({ promptFailureCount: 0 }),
-        isCallerOrchestrator: async (id) => callerAgentBySession.get(id ?? "") === "atlas",
+        isCallerOrchestrator: async (id) => callerAgentBySession.get(id ?? "") === "argus",
       })
 
       // when - the task is captured before execution
@@ -599,7 +599,7 @@ session_id: ses_standalone_def
       await afterHandler(
         { tool: "task", sessionID, callID: "call-bg-launch" },
         {
-          title: "Sisyphus Task",
+          title: "Cerberus Task",
           output: "Background task launched.\n\nSession ID: ses_bg_12345",
           metadata: {},
         }
@@ -612,9 +612,9 @@ session_id: ses_standalone_def
     })
 
      test("should persist preferred subagent session for the current top-level task", async () => {
-       // given - boulder state with a current top-level task, Atlas caller
+       // given - boulder state with a current top-level task, Argus caller
        const sessionID = "session-task-session-track-test"
-       setupMessageStorage(sessionID, "atlas")
+       setupMessageStorage(sessionID, "argus")
 
       const planPath = join(TEST_DIR, "task-session-plan.md")
       writeFileSync(planPath, `# Plan
@@ -632,16 +632,16 @@ session_id: ses_standalone_def
       }
       writeBoulderState(TEST_DIR, state)
 
-      const hook = createTestAtlasHook(createMockPluginInput())
+      const hook = createTestArgusHook(createMockPluginInput())
       const output = {
-        title: "Sisyphus Task",
+        title: "Cerberus Task",
         output: `Task completed successfully
 
 <task_metadata>
 session_id: ses_auth_flow_123
 </task_metadata>`,
         metadata: {
-          agent: "sisyphus-junior",
+          agent: "cerberus-junior",
           category: "deep",
         },
       }
@@ -656,16 +656,16 @@ session_id: ses_auth_flow_123
      const updatedState = readBoulderState(TEST_DIR)
       expect(updatedState?.task_sessions?.["todo:1"]?.session_id).toBe("opencode:ses_auth_flow_123")
       expect(updatedState?.task_sessions?.["todo:1"]?.task_title).toBe("Implement auth flow")
-      expect(updatedState?.task_sessions?.["todo:1"]?.agent).toBe("sisyphus-junior")
+      expect(updatedState?.task_sessions?.["todo:1"]?.agent).toBe("cerberus-junior")
       expect(updatedState?.task_sessions?.["todo:1"]?.category).toBe("deep")
 
       cleanupMessageStorage(sessionID)
     })
 
      test("should preserve the delegated task key even after the plan advances to the next task", async () => {
-       // given - Atlas caller starts task 1, then the plan advances before task output is processed
+       // given - Argus caller starts task 1, then the plan advances before task output is processed
        const sessionID = "session-stable-task-key-test"
-       setupMessageStorage(sessionID, "atlas")
+       setupMessageStorage(sessionID, "argus")
 
       const planPath = join(TEST_DIR, "stable-task-key-plan.md")
       writeFileSync(planPath, `# Plan
@@ -682,9 +682,9 @@ session_id: ses_auth_flow_123
         plan_name: "stable-task-key-plan",
       })
 
-      const hook = createTestAtlasHook(createMockPluginInput())
+      const hook = createTestArgusHook(createMockPluginInput())
 
-      // when - Atlas delegates task 1
+      // when - Argus delegates task 1
       await hook["tool.execute.before"](
         { tool: "task", sessionID, callID: "call-task-1" },
         { args: { prompt: "Implement auth flow" } }
@@ -701,14 +701,14 @@ session_id: ses_auth_flow_123
       await hook["tool.execute.after"](
         { tool: "task", sessionID, callID: "call-task-1" },
         {
-          title: "Sisyphus Task",
+          title: "Cerberus Task",
           output: `Task completed successfully
 
 <task_metadata>
 session_id: ses_auth_flow_123
 </task_metadata>`,
           metadata: {
-            agent: "sisyphus-junior",
+            agent: "cerberus-junior",
             category: "deep",
           },
         }
@@ -723,9 +723,9 @@ session_id: ses_auth_flow_123
     })
 
      test("should not overwrite the current task mapping when task() explicitly resumes an older session", async () => {
-       // given - current plan is on task 2, but Atlas explicitly resumes an older session for a previous task
+       // given - current plan is on task 2, but Argus explicitly resumes an older session for a previous task
        const sessionID = "session-cross-task-resume-test"
-       setupMessageStorage(sessionID, "atlas")
+       setupMessageStorage(sessionID, "argus")
 
       const planPath = join(TEST_DIR, "cross-task-resume-plan.md")
       writeFileSync(planPath, `# Plan
@@ -742,23 +742,23 @@ session_id: ses_auth_flow_123
         plan_name: "cross-task-resume-plan",
       })
 
-      const hook = createTestAtlasHook(createMockPluginInput())
+      const hook = createTestArgusHook(createMockPluginInput())
 
-      // when - Atlas resumes an explicit prior session
+      // when - Argus resumes an explicit prior session
       await hook["tool.execute.before"](
         { tool: "task", sessionID, callID: "call-resume-old-task" },
         { args: { prompt: "Follow up on previous task", session_id: "ses_old_task_111" } }
       )
 
       const output = {
-        title: "Sisyphus Task",
+        title: "Cerberus Task",
         output: `Task continued successfully
 
 <task_metadata>
 session_id: ses_old_task_111
 </task_metadata>`,
         metadata: {
-          agent: "sisyphus-junior",
+          agent: "cerberus-junior",
           category: "deep",
         },
       }
@@ -767,7 +767,7 @@ session_id: ses_old_task_111
         output
       )
 
-      // then - Atlas does not poison task 2's preferred session mapping
+      // then - Argus does not poison task 2's preferred session mapping
       const updatedState = readBoulderState(TEST_DIR)
       expect(updatedState?.task_sessions?.["todo:2"]).toBeUndefined()
       expect(output.output).not.toContain('task(session_id="ses_old_task_111"')
@@ -778,7 +778,7 @@ session_id: ses_old_task_111
     test("should not reuse an explicitly resumed session id in completion reminders", async () => {
       // given - current plan is on task 2 with an existing tracked session
       const sessionID = "session-explicit-resume-reminder-test"
-      setupMessageStorage(sessionID, "atlas")
+      setupMessageStorage(sessionID, "argus")
 
       const planPath = join(TEST_DIR, "explicit-resume-reminder-plan.md")
       writeFileSync(planPath, `# Plan
@@ -804,9 +804,9 @@ session_id: ses_old_task_111
         },
       })
 
-      const hook = createTestAtlasHook(createMockPluginInput())
+      const hook = createTestArgusHook(createMockPluginInput())
       const output = {
-        title: "Sisyphus Task",
+        title: "Cerberus Task",
         output: `Task continued successfully
 
 <task_metadata>
@@ -835,7 +835,7 @@ session_id: ses_old_task_111
     test("should skip persistence when multiple in-flight task calls claim the same top-level task", async () => {
       // given
       const sessionID = "session-parallel-task-collision-test"
-      setupMessageStorage(sessionID, "atlas")
+      setupMessageStorage(sessionID, "argus")
 
       const planPath = join(TEST_DIR, "parallel-task-collision-plan.md")
       writeFileSync(planPath, `# Plan
@@ -858,7 +858,7 @@ session_id: ses_old_task_111
         ctx: createMockPluginInput(),
         pendingFilePaths,
         pendingTaskRefs,
-        isCallerOrchestrator: async (id) => callerAgentBySession.get(id ?? "") === "atlas",
+        isCallerOrchestrator: async (id) => callerAgentBySession.get(id ?? "") === "argus",
       })
       const afterHandler = createToolExecuteAfterHandler({
         ctx: createMockPluginInput(),
@@ -866,7 +866,7 @@ session_id: ses_old_task_111
         pendingTaskRefs,
         autoCommit: true,
         getState: () => ({ promptFailureCount: 0 }),
-        isCallerOrchestrator: async (id) => callerAgentBySession.get(id ?? "") === "atlas",
+        isCallerOrchestrator: async (id) => callerAgentBySession.get(id ?? "") === "argus",
       })
 
       // when - two task() calls start before either one completes
@@ -884,7 +884,7 @@ session_id: ses_old_task_111
       await afterHandler(
         { tool: "task", sessionID, callID: "call-task-second" },
         {
-          title: "Sisyphus Task",
+          title: "Cerberus Task",
           output: `Task completed successfully
 
 <task_metadata>
@@ -913,7 +913,7 @@ session_id: ses_parallel_collision_222
     test("should ignore extracted session ids that are outside the active boulder lineage", async () => {
       // given
       const sessionID = "session-untrusted-session-id-test"
-      setupMessageStorage(sessionID, "atlas")
+      setupMessageStorage(sessionID, "argus")
 
       const planPath = join(TEST_DIR, "untrusted-session-id-plan.md")
       writeFileSync(planPath, `# Plan
@@ -929,7 +929,7 @@ session_id: ses_parallel_collision_222
         plan_name: "untrusted-session-id-plan",
       })
 
-      const hook = createTestAtlasHook(createMockPluginInput({
+      const hook = createTestArgusHook(createMockPluginInput({
         sessionGetMock: mock(async ({ path }: { path: { id: string } }) => ({
           data: {
             id: path.id,
@@ -938,7 +938,7 @@ session_id: ses_parallel_collision_222
         })),
       }))
       const output = {
-        title: "Sisyphus Task",
+        title: "Cerberus Task",
         output: `Task completed successfully
 
 <task_metadata>
@@ -967,7 +967,7 @@ session_id: ses_untrusted_999
       const COMPLETION_GATE_SESSION = "completion-gate-order-test"
 
       beforeEach(() => {
-        setupMessageStorage(COMPLETION_GATE_SESSION, "atlas")
+        setupMessageStorage(COMPLETION_GATE_SESSION, "argus")
       })
 
       afterEach(() => {
@@ -975,7 +975,7 @@ session_id: ses_untrusted_999
       })
 
       test("should include completion gate before Subagent Response in transformed boulder output", async () => {
-        // given - Atlas caller with boulder state
+        // given - Argus caller with boulder state
         const planPath = join(TEST_DIR, "test-plan.md")
         writeFileSync(planPath, "# Plan\n- [ ] Task 1\n- [x] Task 2")
 
@@ -987,9 +987,9 @@ session_id: ses_untrusted_999
         }
         writeBoulderState(TEST_DIR, state)
 
-        const hook = createTestAtlasHook(createMockPluginInput())
+        const hook = createTestArgusHook(createMockPluginInput())
         const output = {
-          title: "Sisyphus Task",
+          title: "Cerberus Task",
           output: "Task completed successfully",
           metadata: {},
         }
@@ -1010,7 +1010,7 @@ session_id: ses_untrusted_999
       })
 
       test("should include completion gate before verification phase text", async () => {
-        // given - Atlas caller with boulder state
+        // given - Argus caller with boulder state
         const planPath = join(TEST_DIR, "test-plan.md")
         writeFileSync(planPath, "# Plan\n- [ ] Task 1\n- [x] Task 2")
 
@@ -1022,9 +1022,9 @@ session_id: ses_untrusted_999
         }
         writeBoulderState(TEST_DIR, state)
 
-        const hook = createTestAtlasHook(createMockPluginInput())
+        const hook = createTestArgusHook(createMockPluginInput())
         const output = {
-          title: "Sisyphus Task",
+          title: "Cerberus Task",
           output: "Task completed successfully",
           metadata: {},
         }
@@ -1053,7 +1053,7 @@ session_id: ses_untrusted_999
       const ORCHESTRATOR_SESSION = "orchestrator-write-test"
 
        beforeEach(() => {
-         setupMessageStorage(ORCHESTRATOR_SESSION, "atlas")
+         setupMessageStorage(ORCHESTRATOR_SESSION, "argus")
        })
 
       afterEach(() => {
@@ -1062,7 +1062,7 @@ session_id: ses_untrusted_999
 
       test("should append delegation reminder when orchestrator writes outside .omo/", async () => {
         // given
-        const hook = createTestAtlasHook(createMockPluginInput())
+        const hook = createTestArgusHook(createMockPluginInput())
         const output = {
           title: "Write",
           output: "File written successfully",
@@ -1083,7 +1083,7 @@ session_id: ses_untrusted_999
 
       test("should append delegation reminder when orchestrator edits outside .omo/", async () => {
         // given
-        const hook = createTestAtlasHook(createMockPluginInput())
+        const hook = createTestArgusHook(createMockPluginInput())
         const output = {
           title: "Edit",
           output: "File edited successfully",
@@ -1102,7 +1102,7 @@ session_id: ses_untrusted_999
 
       test("should NOT append reminder when orchestrator writes inside .omo/", async () => {
         // given
-        const hook = createTestAtlasHook(createMockPluginInput())
+        const hook = createTestArgusHook(createMockPluginInput())
         const originalOutput = "File written successfully"
         const output = {
           title: "Write",
@@ -1124,9 +1124,9 @@ session_id: ses_untrusted_999
       test("should NOT append reminder when non-orchestrator writes outside .omo/", async () => {
         // given
         const nonOrchestratorSession = "non-orchestrator-session"
-        setupMessageStorage(nonOrchestratorSession, "sisyphus-junior")
+        setupMessageStorage(nonOrchestratorSession, "cerberus-junior")
         
-        const hook = createTestAtlasHook(createMockPluginInput())
+        const hook = createTestArgusHook(createMockPluginInput())
         const originalOutput = "File written successfully"
         const output = {
           title: "Write",
@@ -1149,7 +1149,7 @@ session_id: ses_untrusted_999
 
       test("should NOT append reminder for read-only tools", async () => {
         // given
-        const hook = createTestAtlasHook(createMockPluginInput())
+        const hook = createTestArgusHook(createMockPluginInput())
         const originalOutput = "File content"
         const output = {
           title: "Read",
@@ -1169,7 +1169,7 @@ session_id: ses_untrusted_999
 
       test("should handle missing filePath gracefully", async () => {
         // given
-        const hook = createTestAtlasHook(createMockPluginInput())
+        const hook = createTestArgusHook(createMockPluginInput())
         const originalOutput = "File written successfully"
         const output = {
           title: "Write",
@@ -1190,7 +1190,7 @@ session_id: ses_untrusted_999
       describe("cross-platform path validation (Windows support)", () => {
         test("should NOT append reminder when orchestrator writes inside .omo\\ (Windows backslash)", async () => {
           // given
-          const hook = createTestAtlasHook(createMockPluginInput())
+          const hook = createTestArgusHook(createMockPluginInput())
           const originalOutput = "File written successfully"
           const output = {
             title: "Write",
@@ -1211,7 +1211,7 @@ session_id: ses_untrusted_999
 
         test("should NOT append reminder when orchestrator writes inside .omo with mixed separators", async () => {
           // given
-          const hook = createTestAtlasHook(createMockPluginInput())
+          const hook = createTestArgusHook(createMockPluginInput())
           const originalOutput = "File written successfully"
           const output = {
             title: "Write",
@@ -1232,7 +1232,7 @@ session_id: ses_untrusted_999
 
         test("should NOT append reminder for absolute Windows path inside .omo\\", async () => {
           // given
-          const hook = createTestAtlasHook(createMockPluginInput())
+          const hook = createTestArgusHook(createMockPluginInput())
           const originalOutput = "File written successfully"
           const output = {
             title: "Write",
@@ -1253,7 +1253,7 @@ session_id: ses_untrusted_999
 
         test("should append reminder for Windows path outside .omo\\", async () => {
           // given
-          const hook = createTestAtlasHook(createMockPluginInput())
+          const hook = createTestArgusHook(createMockPluginInput())
           const output = {
             title: "Write",
             output: "File written successfully",
@@ -1283,10 +1283,10 @@ session_id: ses_untrusted_999
 
      beforeEach(() => {
        _resetForTesting()
-       registerAgentName("atlas")
-       registerAgentName("sisyphus")
+       registerAgentName("argus")
+       registerAgentName("cerberus")
         subagentSessions.clear()
-        setupMessageStorage(MAIN_SESSION_ID, "atlas")
+        setupMessageStorage(MAIN_SESSION_ID, "argus")
       })
 
     afterEach(() => {
@@ -1308,7 +1308,7 @@ session_id: ses_untrusted_999
       writeBoulderState(TEST_DIR, state)
 
       const mockInput = createMockPluginInput()
-      const hook = createTestAtlasHook(mockInput)
+      const hook = createTestArgusHook(mockInput)
 
       // when
       await hook.handler({
@@ -1340,7 +1340,7 @@ session_id: ses_untrusted_999
       writeBoulderState(TEST_DIR, state)
 
       const mockInput = createMockPluginInput()
-      const hook = createTestAtlasHook(mockInput)
+      const hook = createTestArgusHook(mockInput)
 
       // when
       await hook.handler({
@@ -1372,7 +1372,7 @@ session_id: ses_untrusted_999
       writeBoulderState(TEST_DIR, state)
 
       const mockInput = createMockPluginInput()
-      const hook = createTestAtlasHook(mockInput, { idleSettleMs: 50 })
+      const hook = createTestArgusHook(mockInput, { idleSettleMs: 50 })
 
       // when
       const startedAt = Date.now()
@@ -1395,7 +1395,7 @@ session_id: ses_untrusted_999
     test("should not inject when no boulder state exists", async () => {
       // given - no boulder state
       const mockInput = createMockPluginInput()
-      const hook = createTestAtlasHook(mockInput)
+      const hook = createTestArgusHook(mockInput)
 
       // when
       await hook.handler({
@@ -1423,7 +1423,7 @@ session_id: ses_untrusted_999
       writeBoulderState(TEST_DIR, state)
 
       const mockInput = createMockPluginInput()
-      const hook = createTestAtlasHook(mockInput)
+      const hook = createTestArgusHook(mockInput)
 
       // when - main session fires idle but is NOT in boulder's session_ids
       await hook.handler({
@@ -1451,10 +1451,10 @@ session_id: ses_untrusted_999
       }
       writeBoulderState(TEST_DIR, state)
       subagentSessions.add(subagentSessionID)
-      updateSessionAgent(subagentSessionID, "atlas")
+      updateSessionAgent(subagentSessionID, "argus")
 
       const mockInput = createMockPluginInput()
-      const hook = createTestAtlasHook(mockInput)
+      const hook = createTestArgusHook(mockInput)
 
       // when - subagent session goes idle before explicit tracking appends it
       await hook.handler({
@@ -1471,7 +1471,7 @@ session_id: ses_untrusted_999
 
     test("should inject when registered boulder session has incomplete tasks even if last agent differs", async () => {
       cleanupMessageStorage(MAIN_SESSION_ID)
-      setupMessageStorage(MAIN_SESSION_ID, "hephaestus")
+      setupMessageStorage(MAIN_SESSION_ID, "scylla")
 
       const planPath = join(TEST_DIR, "test-plan.md")
       writeFileSync(planPath, "# Plan\n- [ ] Task 1\n- [ ] Task 2")
@@ -1481,12 +1481,12 @@ session_id: ses_untrusted_999
         started_at: "2026-01-02T10:00:00Z",
         session_ids: [MAIN_SESSION_ID],
         plan_name: "test-plan",
-        agent: "atlas",
+        agent: "argus",
       }
       writeBoulderState(TEST_DIR, state)
 
       const mockInput = createMockPluginInput()
-      const hook = createTestAtlasHook(mockInput)
+      const hook = createTestArgusHook(mockInput)
 
       await hook.handler({
         event: {
@@ -1515,7 +1515,7 @@ session_id: ses_untrusted_999
       writeBoulderState(TEST_DIR, state)
 
       const mockInput = createMockPluginInput()
-      const hook = createTestAtlasHook(mockInput)
+      const hook = createTestArgusHook(mockInput)
 
       // when
       await hook.handler({
@@ -1532,7 +1532,7 @@ session_id: ses_untrusted_999
     test("should inject completion nudge when mirrored worktree plan is complete even if the main repo plan is stale", async () => {
       // given
       const mainPlanPath = join(TEST_DIR, ".omo", "plans", "worktree-complete-plan.md")
-      const worktreeDir = join(tmpdir(), `atlas-worktree-${randomUUID()}`)
+      const worktreeDir = join(tmpdir(), `argus-worktree-${randomUUID()}`)
       const worktreePlanPath = join(worktreeDir, ".omo", "plans", "worktree-complete-plan.md")
       mkdirSync(join(TEST_DIR, ".omo", "plans"), { recursive: true })
       mkdirSync(join(worktreeDir, ".omo", "plans"), { recursive: true })
@@ -1548,7 +1548,7 @@ session_id: ses_untrusted_999
       })
 
       const mockInput = createMockPluginInput()
-      const hook = createTestAtlasHook(mockInput)
+      const hook = createTestArgusHook(mockInput)
 
       try {
         // when
@@ -1580,7 +1580,7 @@ session_id: ses_untrusted_999
       writeBoulderState(TEST_DIR, state)
 
       const mockInput = createMockPluginInput()
-      const hook = createTestAtlasHook(mockInput)
+      const hook = createTestArgusHook(mockInput)
 
       // when - send abort error then idle
       await hook.handler({
@@ -1617,7 +1617,7 @@ session_id: ses_untrusted_999
       writeBoulderState(TEST_DIR, state)
 
       const mockInput = createMockPluginInput()
-      const hook = createTestAtlasHook(mockInput)
+      const hook = createTestArgusHook(mockInput)
 
       // when - a recoverable runtime error fires without waiting for idle
       await hook.handler({
@@ -1666,7 +1666,7 @@ session_id: ses_untrusted_999
 
       try {
         const mockInput = createMockPluginInput()
-        const hook = createTestAtlasHook(mockInput)
+        const hook = createTestArgusHook(mockInput)
 
         // when - runtime error resumes immediately and OpenCode later emits stale idle
         await hook.handler({
@@ -1714,7 +1714,7 @@ session_id: ses_untrusted_999
 
       try {
         const mockInput = createMockPluginInput()
-        const hook = createTestAtlasHook(mockInput)
+        const hook = createTestArgusHook(mockInput)
 
         // when - runtime error resumes immediately and then the retry run emits assistant activity
         await hook.handler({
@@ -1765,7 +1765,7 @@ session_id: ses_untrusted_999
        }
 
        const mockInput = createMockPluginInput()
-       const hook = createTestAtlasHook(mockInput, {
+       const hook = createTestArgusHook(mockInput, {
          directory: TEST_DIR,
          backgroundManager: mockBackgroundManager,
        })
@@ -1796,7 +1796,7 @@ session_id: ses_untrusted_999
        writeBoulderState(TEST_DIR, state)
 
        const mockInput = createMockPluginInput()
-       const hook = createTestAtlasHook(mockInput, {
+       const hook = createTestArgusHook(mockInput, {
          directory: TEST_DIR,
          isContinuationStopped: (sessionID: string) => sessionID === MAIN_SESSION_ID,
        })
@@ -1827,7 +1827,7 @@ session_id: ses_untrusted_999
       writeBoulderState(TEST_DIR, state)
 
       const mockInput = createMockPluginInput()
-      const hook = createTestAtlasHook(mockInput)
+      const hook = createTestArgusHook(mockInput)
 
       // when - abort error, then message update, then idle
       await hook.handler({
@@ -1870,7 +1870,7 @@ session_id: ses_untrusted_999
       writeBoulderState(TEST_DIR, state)
 
       const mockInput = createMockPluginInput()
-      const hook = createTestAtlasHook(mockInput)
+      const hook = createTestArgusHook(mockInput)
 
       // when
       await hook.handler({
@@ -1912,7 +1912,7 @@ session_id: ses_untrusted_999
       })
 
       const mockInput = createMockPluginInput()
-      const hook = createTestAtlasHook(mockInput)
+      const hook = createTestArgusHook(mockInput)
 
       // when
       await hook.handler({
@@ -1941,7 +1941,7 @@ session_id: ses_untrusted_999
       })
 
       const mockInput = createMockPluginInput()
-      const hook = createTestAtlasHook(mockInput)
+      const hook = createTestArgusHook(mockInput)
 
       // when
       await hook.handler({
@@ -1959,7 +1959,7 @@ session_id: ses_untrusted_999
       expect(promptText).toMatch(/text-only explanation.*not progress/i)
     })
 
-    test("#given continuation emits text without tool progress #when three continuation iterations repeat #then Atlas stalls instead of looping", async () => {
+    test("#given continuation emits text without tool progress #when three continuation iterations repeat #then Argus stalls instead of looping", async () => {
       // given - boulder state with one externally blocked task that never receives a tool edit
       const planPath = join(TEST_DIR, "blocked-loop-plan.md")
       writeFileSync(planPath, "# Plan\n- [ ] Wait for external approval")
@@ -1972,7 +1972,7 @@ session_id: ses_untrusted_999
       })
 
       const mockInput = createMockPluginInput()
-      const hook = createTestAtlasHook(mockInput)
+      const hook = createTestArgusHook(mockInput)
 
       const originalDateNow = Date.now
       let now = 0
@@ -1993,7 +1993,7 @@ session_id: ses_untrusted_999
       }
     })
 
-    test("#given one plan stalls #when a different boulder plan becomes active #then Atlas continues the new plan", async () => {
+    test("#given one plan stalls #when a different boulder plan becomes active #then Argus continues the new plan", async () => {
       // given - a boulder plan that reaches the stalled no-tool-progress threshold
       const firstPlanPath = join(TEST_DIR, "first-blocked-loop-plan.md")
       writeFileSync(firstPlanPath, "# Plan\n- [ ] Wait for external approval")
@@ -2006,7 +2006,7 @@ session_id: ses_untrusted_999
       })
 
       const mockInput = createMockPluginInput()
-      const hook = createTestAtlasHook(mockInput)
+      const hook = createTestArgusHook(mockInput)
 
       const originalDateNow = Date.now
       let now = 0
@@ -2054,7 +2054,7 @@ session_id: ses_untrusted_999
       })
 
       const mockInput = createMockPluginInput()
-      const hook = createTestAtlasHook(mockInput)
+      const hook = createTestArgusHook(mockInput)
 
       const originalDateNow = Date.now
       let now = 0
@@ -2082,8 +2082,8 @@ session_id: ses_untrusted_999
       }
     })
 
-    test("should inject when last agent is sisyphus and boulder targets atlas explicitly", async () => {
-       // given - boulder explicitly set to atlas, but last agent is sisyphus (initial state after /start-work)
+    test("should inject when last agent is cerberus and boulder targets argus explicitly", async () => {
+       // given - boulder explicitly set to argus, but last agent is cerberus (initial state after /start-work)
        const planPath = join(TEST_DIR, "test-plan.md")
        writeFileSync(planPath, "# Plan\n- [ ] Task 1\n- [ ] Task 2")
 
@@ -2092,16 +2092,16 @@ session_id: ses_untrusted_999
          started_at: "2026-01-02T10:00:00Z",
          session_ids: [MAIN_SESSION_ID],
          plan_name: "test-plan",
-         agent: "atlas",
+         agent: "argus",
        }
        writeBoulderState(TEST_DIR, state)
 
-       // given - last agent is sisyphus (typical state right after /start-work)
+       // given - last agent is cerberus (typical state right after /start-work)
        cleanupMessageStorage(MAIN_SESSION_ID)
-       setupMessageStorage(MAIN_SESSION_ID, "sisyphus")
+       setupMessageStorage(MAIN_SESSION_ID, "cerberus")
 
        const mockInput = createMockPluginInput()
-       const hook = createTestAtlasHook(mockInput)
+       const hook = createTestArgusHook(mockInput)
 
        // when
        await hook.handler({
@@ -2111,11 +2111,11 @@ session_id: ses_untrusted_999
          },
        })
 
-       // then - should call prompt because sisyphus is always allowed for atlas boulders
+       // then - should call prompt because cerberus is always allowed for argus boulders
        expect(mockInput._promptMock).toHaveBeenCalled()
      })
 
-    test("should inject when registered atlas boulder session last agent does not match", async () => {
+    test("should inject when registered argus boulder session last agent does not match", async () => {
       const planPath = join(TEST_DIR, "test-plan.md")
       writeFileSync(planPath, "# Plan\n- [ ] Task 1\n- [ ] Task 2")
 
@@ -2124,15 +2124,15 @@ session_id: ses_untrusted_999
          started_at: "2026-01-02T10:00:00Z",
          session_ids: [MAIN_SESSION_ID],
          plan_name: "test-plan",
-         agent: "atlas",
+         agent: "argus",
        }
        writeBoulderState(TEST_DIR, state)
 
        cleanupMessageStorage(MAIN_SESSION_ID)
-       setupMessageStorage(MAIN_SESSION_ID, "hephaestus")
+       setupMessageStorage(MAIN_SESSION_ID, "scylla")
 
        const mockInput = createMockPluginInput()
-       const hook = createTestAtlasHook(mockInput)
+       const hook = createTestArgusHook(mockInput)
 
       await hook.handler({
         event: {
@@ -2144,8 +2144,8 @@ session_id: ses_untrusted_999
       expect(mockInput._promptMock).toHaveBeenCalled()
     })
 
-     test("should inject when last agent matches boulder agent even if non-Atlas", async () => {
-       // given - boulder state expects sisyphus and last agent is sisyphus
+     test("should inject when last agent matches boulder agent even if non-Argus", async () => {
+       // given - boulder state expects cerberus and last agent is cerberus
        const planPath = join(TEST_DIR, "test-plan.md")
        writeFileSync(planPath, "# Plan\n- [ ] Task 1\n- [ ] Task 2")
 
@@ -2154,15 +2154,15 @@ session_id: ses_untrusted_999
          started_at: "2026-01-02T10:00:00Z",
          session_ids: [MAIN_SESSION_ID],
          plan_name: "test-plan",
-         agent: "sisyphus",
+         agent: "cerberus",
        }
        writeBoulderState(TEST_DIR, state)
 
        cleanupMessageStorage(MAIN_SESSION_ID)
-       setupMessageStorage(MAIN_SESSION_ID, "sisyphus")
+       setupMessageStorage(MAIN_SESSION_ID, "cerberus")
 
        const mockInput = createMockPluginInput()
-       const hook = createTestAtlasHook(mockInput)
+       const hook = createTestArgusHook(mockInput)
 
        // when
        await hook.handler({
@@ -2172,10 +2172,10 @@ session_id: ses_untrusted_999
          },
        })
 
-       // then - should call prompt for sisyphus
+       // then - should call prompt for cerberus
        expect(mockInput._promptMock).toHaveBeenCalled()
        const callArgs = mockInput._promptMock.mock.calls[0][0]
-       expect(callArgs.body.agent).toBe("sisyphus")
+       expect(callArgs.body.agent).toBe("cerberus")
      })
 
     test("should preserve display-name agent in continuation prompt when boulder agent uses display form", async () => {
@@ -2188,13 +2188,13 @@ session_id: ses_untrusted_999
         started_at: "2026-01-02T10:00:00Z",
         session_ids: [MAIN_SESSION_ID],
         plan_name: "test-plan",
-        agent: "Atlas - Plan Executor",
+        agent: "Argus - Plan Executor",
       }
       writeBoulderState(TEST_DIR, state)
-      registerAgentName("Atlas - Plan Executor")
+      registerAgentName("Argus - Plan Executor")
 
       const mockInput = createMockPluginInput()
-      const hook = createTestAtlasHook(mockInput)
+      const hook = createTestArgusHook(mockInput)
 
       // when
       await hook.handler({
@@ -2207,8 +2207,8 @@ session_id: ses_untrusted_999
       // then
       expect(mockInput._promptMock).toHaveBeenCalled()
       const callArgs = mockInput._promptMock.mock.calls[0][0]
-      expect(callArgs.body.agent).toBe("Atlas - Plan Executor")
-      expect(callArgs.body.agent).not.toBe("atlas")
+      expect(callArgs.body.agent).toBe("Argus - Plan Executor")
+      expect(callArgs.body.agent).not.toBe("argus")
     })
 
     test("#given boulder agent registered with ZWSP sort prefix #when continuation injects #then promptAsync receives display name without ZWSP", async () => {
@@ -2221,13 +2221,13 @@ session_id: ses_untrusted_999
         started_at: "2026-01-02T10:00:00Z",
         session_ids: [MAIN_SESSION_ID],
         plan_name: "test-plan",
-        agent: "\u200B\u200BAtlas - Plan Executor",
+        agent: "\u200B\u200BArgus - Plan Executor",
       }
       writeBoulderState(TEST_DIR, state)
-      registerAgentName("\u200B\u200BAtlas - Plan Executor")
+      registerAgentName("\u200B\u200BArgus - Plan Executor")
 
       const mockInput = createMockPluginInput()
-      const hook = createTestAtlasHook(mockInput)
+      const hook = createTestArgusHook(mockInput)
 
       // when
       await hook.handler({
@@ -2240,7 +2240,7 @@ session_id: ses_untrusted_999
       // then
       expect(mockInput._promptMock).toHaveBeenCalled()
       const callArgs = mockInput._promptMock.mock.calls[0][0]
-      expect(callArgs.body.agent).toBe("Atlas - Plan Executor")
+      expect(callArgs.body.agent).toBe("Argus - Plan Executor")
       expect(callArgs.body.agent).not.toContain("\u200B")
     })
 
@@ -2258,7 +2258,7 @@ session_id: ses_untrusted_999
       writeBoulderState(TEST_DIR, state)
 
       const mockInput = createMockPluginInput()
-      const hook = createTestAtlasHook(mockInput)
+      const hook = createTestArgusHook(mockInput)
 
       // when - fire multiple idle events in rapid succession (simulating infinite loop bug)
       await hook.handler({
@@ -2299,7 +2299,7 @@ session_id: ses_untrusted_999
 
       const promptMock = mock((): Promise<void> => Promise.reject(new Error("Bad Request")))
       const mockInput = createMockPluginInput({ promptMock })
-      const hook = createTestAtlasHook(mockInput)
+      const hook = createTestArgusHook(mockInput)
 
       const originalDateNow = Date.now
       let now = 0
@@ -2341,7 +2341,7 @@ session_id: ses_untrusted_999
       promptMock.mockImplementationOnce(() => Promise.resolve())
 
       const mockInput = createMockPluginInput({ promptMock })
-      const hook = createTestAtlasHook(mockInput)
+      const hook = createTestArgusHook(mockInput)
 
       const originalDateNow = Date.now
       let now = 0
@@ -2377,7 +2377,7 @@ session_id: ses_untrusted_999
 
       const promptMock = mock(() => Promise.reject(new Error("Bad Request")))
       const mockInput = createMockPluginInput({ promptMock })
-      const hook = createTestAtlasHook(mockInput)
+      const hook = createTestArgusHook(mockInput)
 
       const originalDateNow = Date.now
       let now = 0
@@ -2418,7 +2418,7 @@ session_id: ses_untrusted_999
 
       const promptMock = mock(() => Promise.reject(new Error("Bad Request")))
       const mockInput = createMockPluginInput({ promptMock })
-      const hook = createTestAtlasHook(mockInput)
+      const hook = createTestArgusHook(mockInput)
 
       const originalDateNow = Date.now
       let now = 0
@@ -2463,7 +2463,7 @@ session_id: ses_untrusted_999
       }
       promptMock.mockImplementationOnce(() => Promise.resolve(undefined))
       const mockInput = createMockPluginInput({ promptMock })
-      const hook = createTestAtlasHook(mockInput)
+      const hook = createTestArgusHook(mockInput)
 
       const originalDateNow = Date.now
       let now = 0
@@ -2514,7 +2514,7 @@ session_id: ses_untrusted_999
 
       const promptMock = mock(() => Promise.reject(new Error("Bad Request")))
       const mockInput = createMockPluginInput({ promptMock })
-      const hook = createTestAtlasHook(mockInput)
+      const hook = createTestArgusHook(mockInput)
 
       const originalDateNow = Date.now
       let now = 0
@@ -2558,7 +2558,7 @@ session_id: ses_untrusted_999
       writeBoulderState(TEST_DIR, state)
 
       const mockInput = createMockPluginInput()
-      const hook = createTestAtlasHook(mockInput)
+      const hook = createTestArgusHook(mockInput)
 
       // when - create abort state then delete
       await hook.handler({
@@ -2592,8 +2592,8 @@ session_id: ses_untrusted_999
       expect(mockInput._promptMock).toHaveBeenCalled()
     })
 
-    test("should inject when session agent was updated to atlas by start-work even if message storage agent differs", async () => {
-      // given - boulder targets atlas, but nearest stored message still says hephaestus
+    test("should inject when session agent was updated to argus by start-work even if message storage agent differs", async () => {
+      // given - boulder targets argus, but nearest stored message still says scylla
       const planPath = join(TEST_DIR, "test-plan.md")
       writeFileSync(planPath, "# Plan\n- [ ] Task 1\n- [ ] Task 2")
 
@@ -2602,16 +2602,16 @@ session_id: ses_untrusted_999
         started_at: "2026-01-02T10:00:00Z",
         session_ids: [MAIN_SESSION_ID],
         plan_name: "test-plan",
-        agent: "atlas",
+        agent: "argus",
       }
       writeBoulderState(TEST_DIR, state)
 
       cleanupMessageStorage(MAIN_SESSION_ID)
-      setupMessageStorage(MAIN_SESSION_ID, "hephaestus")
-      updateSessionAgent(MAIN_SESSION_ID, "atlas")
+      setupMessageStorage(MAIN_SESSION_ID, "scylla")
+      updateSessionAgent(MAIN_SESSION_ID, "argus")
 
       const mockInput = createMockPluginInput()
-      const hook = createTestAtlasHook(mockInput)
+      const hook = createTestArgusHook(mockInput)
 
       // when
       await hook.handler({
@@ -2621,7 +2621,7 @@ session_id: ses_untrusted_999
         },
       })
 
-      // then - should continue because start-work updated session agent to atlas
+      // then - should continue because start-work updated session agent to argus
       expect(mockInput._promptMock).toHaveBeenCalled()
     })
 
@@ -2696,7 +2696,7 @@ session_id: ses_untrusted_999
         writeBoulderState(TEST_DIR, state)
 
         const mockInput = createMockPluginInput()
-        const hook = createTestAtlasHook(mockInput)
+        const hook = createTestArgusHook(mockInput)
 
         // when - first idle injects, second idle within cooldown schedules retry timer
         await hook.handler({
@@ -2725,7 +2725,7 @@ session_id: ses_untrusted_999
         writeBoulderState(TEST_DIR, state)
 
         const mockInput = createMockPluginInput()
-        const hook = createTestAtlasHook(mockInput)
+        const hook = createTestArgusHook(mockInput)
 
         // when - first idle injects, then 3 rapid idles within cooldown
         await hook.handler({
@@ -2760,7 +2760,7 @@ session_id: ses_untrusted_999
         writeBoulderState(TEST_DIR, state)
 
         const mockInput = createMockPluginInput()
-        const hook = createTestAtlasHook(mockInput)
+        const hook = createTestArgusHook(mockInput)
 
         // when - first idle injects, second schedules retry, then plan completes before timer fires
         await hook.handler({
@@ -2791,7 +2791,7 @@ session_id: ses_untrusted_999
         writeBoulderState(TEST_DIR, state)
 
         const mockInput = createMockPluginInput()
-        const hook = createTestAtlasHook(mockInput)
+        const hook = createTestArgusHook(mockInput)
 
         await hook.handler({
           event: { type: "session.idle", properties: { sessionID: MAIN_SESSION_ID } },
@@ -2824,7 +2824,7 @@ session_id: ses_untrusted_999
         writeBoulderState(TEST_DIR, state)
 
         const mockInput = createMockPluginInput()
-        const hook = createTestAtlasHook(mockInput)
+        const hook = createTestArgusHook(mockInput)
 
         await hook.handler({
           event: { type: "session.idle", properties: { sessionID: MAIN_SESSION_ID } },

@@ -1,4 +1,4 @@
-export {
+﻿export {
   stripLinePrefixes,
   toNewLines,
   restoreLeadingIndent,
@@ -6,4 +6,4 @@ export {
   stripInsertBeforeEcho,
   stripInsertBoundaryEcho,
   stripRangeBoundaryEcho,
-} from "@oh-my-opencode/hashline-core"
+} from "@oh-my-open-pentest/hashline-core"

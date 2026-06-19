@@ -1,15 +1,15 @@
-{
-  "name": "@oh-my-opencode/prompts-core",
-  "version": "0.1.0",
+﻿{
+  "name": "@oh-my-open-pentest/prompts-core",
+  "version": "0...0",
   "type": "module",
   "private": true,
-  "description": "Harness-agnostic markdown prompt loading and model-variant routing for oh-my-opencode.",
+  "description": "Harness-agnostic markdown prompt loading and model-variant routing for oh-my-open-pentest.",
   "exports": {
     ".": {
       "types": "./index.d.ts",
       "import": "./src/index.ts"
     },
-    "./prompts/ultrawork/codex.md": "./prompts/ultrawork/codex.md"
+    "./prompts/fullscan/codex.md": "./prompts/fullscan/codex.md"
   },
   "types": "./index.d.ts",
   "scripts": {
@@ -17,7 +17,7 @@
     "test": "bun test src/*.test.ts test/*.test.ts"
   },
   "peerDependencies": {
-    "@oh-my-opencode/model-core": "workspace:*",
-    "@oh-my-opencode/utils": "workspace:*"
+    "@oh-my-open-pentest/model-core": "workspace:*",
+    "@oh-my-open-pentest/utils": "workspace:*"
   }
 }

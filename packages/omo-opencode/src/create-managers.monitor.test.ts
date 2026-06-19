@@ -1,9 +1,9 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { beforeEach, describe, expect, it, mock } from "bun:test"
 import type { PluginInput } from "@opencode-ai/plugin"
 
-import { OhMyOpenCodeConfigSchema } from "./config/schema/oh-my-opencode-config"
+import { OhMyOpenCodeConfigSchema } from "./config/schema/oh-my-open-pentest-config"
 import { createManagers } from "./create-managers"
 import type { MonitorManager, MonitorManagerEvent, MonitorOutputQuery, MonitorOutputResult, MonitorRecord, MonitorStartOpts } from "./features/monitor"
 import type { createMonitorManager } from "./features/monitor"

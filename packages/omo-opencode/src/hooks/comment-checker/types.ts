@@ -1,4 +1,4 @@
-export type {
+﻿export type {
   ApplyPatchAccumulator,
   ApplyPatchFileMetadata,
   CheckResult,
@@ -16,4 +16,4 @@ export type {
   SpawnFn,
   SpawnProcess,
   SpawnSignal,
-} from "@oh-my-opencode/comment-checker-core"
+} from "@oh-my-open-pentest/comment-checker-core"

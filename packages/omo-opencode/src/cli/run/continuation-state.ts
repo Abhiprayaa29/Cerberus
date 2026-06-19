@@ -1,14 +1,14 @@
-import { getPlanProgress, normalizeSessionId, readBoulderState, resolveBoulderPlanPath } from "../../features/boulder-state"
+﻿import { getPlanProgress, normalizeSessionId, readBoulderState, resolveBoulderPlanPath } from "../../features/boulder-state"
 import { getSessionAgent } from "../../features/claude-code-session-state"
 import {
   getActiveContinuationMarkerReason,
   isContinuationMarkerActive,
   readContinuationMarker,
 } from "../../features/run-continuation-state"
-import { isSessionInBoulderLineage } from "../../hooks/atlas/boulder-session-lineage"
-import { getLastAgentFromSession } from "../../hooks/atlas/session-last-agent"
+import { isSessionInBoulderLineage } from "../../hooks/argus/boulder-session-lineage"
+import { getLastAgentFromSession } from "../../hooks/argus/session-last-agent"
 import { getAgentConfigKey } from "../../shared/agent-display-names"
-import { readState as readRalphLoopState } from "../../hooks/ralph-loop/storage"
+import { readState as readRalphLoopState } from "../../hooks/pentest-loop/storage"
 import type { RunContext } from "./types"
 
 export interface ContinuationState {
@@ -79,11 +79,11 @@ async function hasActiveBoulderContinuation(
     return false
   }
 
-  const requiredAgentKey = getAgentConfigKey(boulder.agent ?? "atlas")
+  const requiredAgentKey = getAgentConfigKey(boulder.agent ?? "argus")
   const sessionAgentKey = getAgentConfigKey(sessionAgent)
   if (
     sessionAgentKey !== requiredAgentKey
-    && !(requiredAgentKey === getAgentConfigKey("atlas") && sessionAgentKey === getAgentConfigKey("sisyphus"))
+    && !(requiredAgentKey === getAgentConfigKey("argus") && sessionAgentKey === getAgentConfigKey("cerberus"))
   ) {
     return false
   }

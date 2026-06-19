@@ -1,14 +1,14 @@
-{
+﻿{
 	"name": "omo",
-	"version": "4.11.1",
+	"version": "1.0.0",
 	"description": "One Codex plugin namespace for Yeongyu's local Codex components.",
 	"author": {
 		"name": "Yeongyu Kim",
 		"email": "yeongyu@users.noreply.github.com",
 		"url": "https://github.com/code-yeongyu"
 	},
-	"homepage": "https://github.com/sisyphuslabs/omo",
-	"repository": "https://github.com/sisyphuslabs/omo",
+	"homepage": "https://github.com/cerberuslabs/omo",
+	"repository": "https://github.com/cerberuslabs/omo",
 	"license": "MIT",
 	"keywords": [
 		"codex",
@@ -26,8 +26,8 @@
 		"./hooks/session-start-checking-bootstrap-provisioning.json",
 		"./hooks/session-start-checking-codegraph-bootstrap.json",
 		"./hooks/user-prompt-submit-loading-project-rules.json",
-		"./hooks/user-prompt-submit-checking-ultrawork-trigger.json",
-		"./hooks/user-prompt-submit-checking-ulw-loop-steering.json",
+		"./hooks/user-prompt-submit-checking-fullscan-trigger.json",
+		"./hooks/user-prompt-submit-checking-pentest-loop-steering.json",
 		"./hooks/pre-tool-use-recommending-git-bash-mcp.json",
 		"./hooks/pre-tool-use-enforcing-unlimited-goal-budget.json",
 		"./hooks/post-tool-use-checking-comments.json",
@@ -44,7 +44,7 @@
 	"interface": {
 		"displayName": "OMO",
 		"shortDescription": "Unified local Codex components",
-		"longDescription": "OMO exposes local Codex Rules, Comment Checker, Git Bash, LSP, Ultrawork, ulw-loop, start-work continuation, and telemetry components as one plugin namespace while keeping each component isolated under components/ for maintenance.",
+		"longDescription": "OMO exposes local Codex Rules, Comment Checker, Git Bash, LSP, Ultrawork, pentest-loop, start-work continuation, and telemetry components as one plugin namespace while keeping each component isolated under components/ for maintenance.",
 		"developerName": "Yeongyu Kim",
 		"category": "Developer Tools",
 		"capabilities": [
@@ -54,9 +54,9 @@
 			"Workflow",
 			"Context Injection"
 		],
-		"websiteURL": "https://github.com/sisyphuslabs/omo",
-		"privacyPolicyURL": "https://github.com/sisyphuslabs/omo#privacy",
-		"termsOfServiceURL": "https://github.com/sisyphuslabs/omo#license",
+		"websiteURL": "https://github.com/cerberuslabs/omo",
+		"privacyPolicyURL": "https://github.com/cerberuslabs/omo#privacy",
+		"termsOfServiceURL": "https://github.com/cerberuslabs/omo#license",
 		"defaultPrompt": [
 			"Use OMO LSP diagnostics on this workspace.",
 			"Show which OMO rules matched this file.",

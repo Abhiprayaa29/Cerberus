@@ -1,1 +1,1 @@
-export * from "@oh-my-opencode/lsp-core/lsp/infer-extension";
+﻿export * from "@oh-my-open-pentest/lsp-core/lsp/infer-extension";

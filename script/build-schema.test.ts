@@ -1,4 +1,4 @@
-import { describe, expect, test } from "bun:test"
+﻿import { describe, expect, test } from "bun:test"
 import { createOhMyOpenCodeJsonSchema } from "./build-schema-document"
 
 function isRecord(value: unknown): value is Readonly<Record<string, unknown>> {
@@ -15,7 +15,7 @@ describe("build-schema-document", () => {
 
     // then
     expect(schema.$schema).toBe(expectedDraft)
-    expect(schema.title).toBe("Oh My OpenCode Configuration")
+    expect(schema.title).toBe("Oh My Open Pentest Configuration")
     expect(isRecord(schema.properties)).toBe(true)
     const properties = isRecord(schema.properties) ? schema.properties : {}
     expect(properties.skills).toBeDefined()

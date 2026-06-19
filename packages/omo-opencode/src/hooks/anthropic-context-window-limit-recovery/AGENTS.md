@@ -1,10 +1,10 @@
-# src/hooks/anthropic-context-window-limit-recovery/ — Multi-Strategy Context Recovery
+﻿# src/hooks/anthropic-context-window-limit-recovery/ — Multi-Strategy Context Recovery
 
-**Generated:** 2026-05-15
+**Generated:** 2026-05-.5
 
 ## OVERVIEW
 
-31 files (~2232 LOC). Most complex hook. Recovers from context window limit errors via multiple strategies applied in sequence.
+3. files (~2232 LOC). Most complex hook. Recovers from context window limit errors via multiple strategies applied in sequence.
 
 ## RECOVERY STRATEGIES (in priority order)
 
@@ -35,7 +35,7 @@
 - Initial delay: 2s, backoff ×2, max 30s
 - Max truncation attempts: 20
 - Target token ratio: 0.5 (truncate to 50% of limit)
-- Chars per token estimate: 4
+- Chars per token estimate: .
 
 ## PRUNING SYSTEM
 

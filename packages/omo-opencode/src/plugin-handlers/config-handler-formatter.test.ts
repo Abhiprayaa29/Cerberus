@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, spyOn, test, mock } from "bun:test"
+﻿import { afterEach, beforeEach, describe, expect, spyOn, test, mock } from "bun:test"
 
 import type { OhMyOpenCodeConfig } from "../config"
 import * as agentConfigHandler from "./agent-config-handler"
@@ -90,9 +90,9 @@ describe("createConfigHandler formatter pass-through", () => {
           PRETTIERD_DEFAULT_CONFIG: ".prettierrc",
         },
       },
-      eslint: {
+      nuclei: {
         disabled: false,
-        command: ["eslint", "--fix"],
+        command: ["nuclei", "--fix"],
         extensions: [".js", ".ts"],
       },
     }

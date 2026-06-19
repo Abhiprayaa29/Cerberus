@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it } from "vitest";
+﻿import { afterEach, describe, expect, it } from "vitest";
 
 import { isUltraworkPrompt, runUserPromptSubmitHook } from "../src/codex-hook.js";
 import { cleanupTempDirectories, parseHookOutput, writeTranscript } from "./codex-hook-test-helpers.js";
@@ -7,10 +7,10 @@ afterEach(() => {
 	cleanupTempDirectories();
 });
 
-describe("codex ultrawork trigger policy", () => {
-	it("#given ultrawork variants in current prompt #when hook runs #then emits directive", () => {
+describe("codex fullscan trigger policy", () => {
+	it("#given fullscan variants in current prompt #when hook runs #then emits directive", () => {
 		// given
-		const prompts = ["ultrawork this change", "Ultrawork this change", "ULTRAWORK this change"] as const;
+		const prompts = ["fullscan this change", "Ultrawork this change", "ULTRAWORK this change"] as const;
 
 		// when
 		const outputs = prompts.map((prompt) => runUserPromptSubmitHook({ hook_event_name: "UserPromptSubmit", prompt }));
@@ -50,7 +50,7 @@ describe("codex ultrawork trigger policy", () => {
 
 	it("#given sentence-level triggers in current prompt #when hook runs #then emits directive", () => {
 		// given
-		const prompts = ["please ulw this change", "why did ultrawork trigger here?"] as const;
+		const prompts = ["please ulw this change", "why did fullscan trigger here?"] as const;
 
 		// when
 		const outputs = prompts.map((prompt) => runUserPromptSubmitHook({ hook_event_name: "UserPromptSubmit", prompt }));
@@ -73,9 +73,9 @@ describe("codex ultrawork trigger policy", () => {
 			"• ULTRAWORK MODE ENABLED!",
 			"",
 			"",
-			"이런 일이 있었는데, 왜 단순히 프롬프트를 쳤는데, ultrawork 가 발생했는데 우리 여기 omo codex 코드랑 코덱스 세션들 안에 내용 다 봐봐주셈",
+			"이런 일이 있었는데, 왜 단순히 프롬프트를 쳤는데, fullscan 가 발생했는데 우리 여기 omo codex 코드랑 코덱스 세션들 안에 내용 다 봐봐주셈",
 			"",
-			"ultrawork mode enabled 는 ulw 쳤을때에만 떠야되는데 왜 안그럼?",
+			"fullscan mode enabled 는 ulw 쳤을때에만 떠야되는데 왜 안그럼?",
 		].join("\n");
 
 		// when
@@ -84,7 +84,7 @@ describe("codex ultrawork trigger policy", () => {
 
 		// then
 		expect(parsed.hookSpecificOutput.hookEventName).toBe("UserPromptSubmit");
-		expect(parsed.hookSpecificOutput.additionalContext).toMatch(/^<ultrawork-mode>/);
+		expect(parsed.hookSpecificOutput.additionalContext).toMatch(/^<fullscan-mode>/);
 		expect(isUltraworkPrompt(prompt)).toBe(true);
 	});
 
@@ -96,7 +96,7 @@ describe("codex ultrawork trigger policy", () => {
 			transcript_path: writeTranscript(
 				JSON.stringify({
 					role: "user",
-					content: "ultrawork ULTRAWORK ulw 하이ulw this older task",
+					content: "fullscan ULTRAWORK ulw 하이ulw this older task",
 				}),
 			),
 		};

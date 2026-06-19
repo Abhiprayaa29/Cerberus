@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { afterEach, describe, expect, it, spyOn } from "bun:test"
 import type { LoadedSkill } from "../../features/opencode-skill-loader"
@@ -53,7 +53,7 @@ function createRestrictedSkill(): LoadedSkill {
       name: "restricted-skill",
       description: "restricted",
       template: "restricted template",
-      agent: "hephaestus",
+      agent: "scylla",
     },
     scope: "user",
   }
@@ -93,7 +93,7 @@ describe("executeSlashCommand resolution semantics", () => {
 
     //#then
     expect(result.success).toBe(false)
-    expect(result.error).toBe('Skill "restricted-skill" is restricted to agent "hephaestus"')
+    expect(result.error).toBe('Skill "restricted-skill" is restricted to agent "scylla"')
   })
 
   it("allows slash skill invocation when invoking agent matches restriction", async () => {
@@ -108,7 +108,7 @@ describe("executeSlashCommand resolution semantics", () => {
     //#when
     const result = await executeSlashCommand(parsed, {
       skills: [createRestrictedSkill()],
-      agent: "hephaestus",
+      agent: "scylla",
     })
 
     //#then

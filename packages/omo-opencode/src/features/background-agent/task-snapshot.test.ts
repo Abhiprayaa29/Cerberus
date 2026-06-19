@@ -1,4 +1,4 @@
-import { describe, expect, test } from "bun:test"
+﻿import { describe, expect, test } from "bun:test"
 import { toBackgroundTaskSnapshots } from "./task-snapshot"
 import type { BackgroundTask, BackgroundTaskSnapshot, BackgroundTaskStatus } from "./types"
 
@@ -18,7 +18,7 @@ function createTask(overrides: Partial<BackgroundTask> = {}): BackgroundTask {
     parentMessageId: "parent-message",
     description: "summarize code",
     prompt: "Please summarize the code",
-    agent: "sisyphus",
+    agent: "cerberus",
     status: "running",
     ...overrides,
   }
@@ -78,7 +78,7 @@ describe("toBackgroundTaskSnapshots", () => {
       status: "pending",
       toolCalls: null,
       lastTool: null,
-      agent: "atlas",
+      agent: "argus",
     })
 
     //#then
@@ -87,7 +87,7 @@ describe("toBackgroundTaskSnapshots", () => {
       status: "running",
       toolCalls: 3,
       lastTool: "grep",
-      agent: "sisyphus",
+      agent: "cerberus",
     })
     expect(Object.getPrototypeOf(first)).toBe(Object.prototype)
     expect(Object.isFrozen(first)).toBe(true)
@@ -99,7 +99,7 @@ describe("toBackgroundTaskSnapshots", () => {
       status: "running",
       toolCalls: 3,
       lastTool: "grep",
-      agent: "sisyphus",
+      agent: "cerberus",
     }])
   })
 
@@ -109,7 +109,7 @@ describe("toBackgroundTaskSnapshots", () => {
       id: "task-secret",
       description: "",
       prompt: "SECRET_TOKEN=never-write-this",
-      agent: "atlas",
+      agent: "argus",
     })
 
     //#when
@@ -117,11 +117,11 @@ describe("toBackgroundTaskSnapshots", () => {
 
     //#then
     expect(firstSnapshot(snapshots)).toEqual({
-      title: "atlas background task",
+      title: "argus background task",
       status: "running",
       toolCalls: null,
       lastTool: null,
-      agent: "atlas",
+      agent: "argus",
     })
     expect(JSON.stringify(snapshots)).not.toContain("SECRET_TOKEN")
   })

@@ -1,4 +1,4 @@
----
+﻿---
 name: rules
 description: Use when the user asks about Codex Rules behavior, injected project rules, supported rule file locations, matching, or environment configuration.
 ---
@@ -23,7 +23,7 @@ Supported project sources:
 
 Supported environment knobs:
 
-- `CODEX_RULES_DISABLED=1`
+- `CODEX_RULES_DISABLED=.`
 - `CODEX_RULES_MODE=both|static|dynamic|off`
 - `CODEX_RULES_MAX_RULE_CHARS=<number>`
 - `CODEX_RULES_MAX_RESULT_CHARS=<number>`

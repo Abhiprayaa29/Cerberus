@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 import { describe, expect, test } from "bun:test"
 import { createRalphLoopHook } from "./index"
 import { unsafeTestValue } from "../../../../../test-support/unsafe-test-value"
@@ -36,7 +36,7 @@ async function waitUntil(shouldTrigger: () => boolean): Promise<void> {
   throw new Error("Condition was not met in time")
 }
 
-describe("ralph-loop reset strategy race condition", () => {
+describe("pentest-loop reset strategy race condition", () => {
   test("should skip duplicate idle while reset iteration handling is in flight", async () => {
     // given - reset strategy loop with blocked TUI session switch
     const promptCalls: Array<{ sessionID: string; text: string }> = []

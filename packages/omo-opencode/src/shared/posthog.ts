@@ -1,17 +1,17 @@
-import os from "os"
+﻿import os from "os"
 import {
   DEFAULT_POSTHOG_API_KEY,
   DEFAULT_POSTHOG_HOST,
   createDefaultPostHogTransport,
   getTelemetryDistinctId,
   getTelemetryHost,
-} from "@oh-my-opencode/telemetry-core"
+} from "@oh-my-open-pentest/telemetry-core"
 import type {
   TelemetryCaptureMessage,
   TelemetryTransport,
   TelemetryTransportFactory,
   TelemetryTransportOptions,
-} from "@oh-my-opencode/telemetry-core"
+} from "@oh-my-open-pentest/telemetry-core"
 import packageJson from "../../../../package.json" with { type: "json" }
 import { PLUGIN_NAME, PUBLISHED_PACKAGE_NAME } from "./plugin-identity"
 import { getPostHogActivityCaptureState } from "./posthog-activity-state"
@@ -87,11 +87,11 @@ function isTruthy(value: string | undefined): boolean {
 }
 
 function shouldDisablePostHog(): boolean {
-  if (isTruthy(process.env.OMO_DISABLE_POSTHOG?.trim().toLowerCase())) {
+  if (isTruthy(process.env.OMOP_DISABLE_POSTHOG?.trim().toLowerCase())) {
     return true
   }
 
-  return isFalsy(process.env.OMO_SEND_ANONYMOUS_TELEMETRY?.trim().toLowerCase())
+  return isFalsy(process.env.OMOP_SEND_ANONYMOUS_TELEMETRY?.trim().toLowerCase())
 }
 
 function hasPostHogApiKey(): boolean {
@@ -123,7 +123,7 @@ function getSharedProperties(source: PostHogSource): PostHogCaptureProperties {
   const osProvider = resolveOsProvider()
 
   return {
-    platform: "oh-my-opencode",
+    platform: "oh-my-open-pentest",
     package_name: PUBLISHED_PACKAGE_NAME,
     plugin_name: PLUGIN_NAME,
     package_version: packageJson.version,

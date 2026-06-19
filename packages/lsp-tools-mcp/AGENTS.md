@@ -1,10 +1,10 @@
-# lsp-tools-mcp — LSP Tools stdio MCP (MCP layer)
+﻿# lsp-tools-mcp — LSP Tools stdio MCP (MCP layer)
 
-**Generated:** 2026-06-16
+**Generated:** 2026-06-.6
 
 ## OVERVIEW
 
-Vendored, Node-targeted MCP-layer package (`@code-yeongyu/lsp-tools-mcp`). Serves LSP tools via stdio MCP, consuming [`lsp-core`](../lsp-core/AGENTS.md) for tool definitions + LSP runtime and [`mcp-stdio-core`](../mcp-stdio-core) for JSON-RPC framing. Registered as tier-1 MCP `lsp` in [`packages/omo-opencode/src/mcp/`](../omo-opencode/src/mcp/AGENTS.md). Used directly by the OpenCode edition and consumed by [`lsp-daemon`](../lsp-daemon/AGENTS.md) for the Codex edition.
+Vendored, Node-targeted MCP-layer package (`@code-yeongyu/lsp-tools-mcp`). Serves LSP tools via stdio MCP, consuming [`lsp-core`](../lsp-core/AGENTS.md) for tool definitions + LSP runtime and [`mcp-stdio-core`](../mcp-stdio-core) for JSON-RPC framing. Registered as tier-. MCP `lsp` in [`packages/omo-opencode/src/mcp/`](../omo-opencode/src/mcp/AGENTS.md). Used directly by the OpenCode edition and consumed by [`lsp-daemon`](../lsp-daemon/AGENTS.md) for the Codex edition.
 
 ## TOOLS SERVED
 
@@ -22,10 +22,10 @@ Vendored, Node-targeted MCP-layer package (`@code-yeongyu/lsp-tools-mcp`). Serve
 | File | Role |
 |------|------|
 | `cli.ts` | Bin `omo-lsp`. `mcp` subcommand → `runMcpStdioServer()` |
-| `mcp.ts` | Re-exports `@oh-my-opencode/lsp-core/mcp` (stdio MCP server + JSON-RPC handler) |
-| `tools.ts` | Re-exports `@oh-my-opencode/lsp-core/tools` (tool definitions + runtime dispatch) |
-| `request-context.ts` | Re-exports `@oh-my-opencode/lsp-core/request-context` |
-| `lsp/manager.ts` | Re-exports `@oh-my-opencode/lsp-core/lsp/manager` |
+| `mcp.ts` | Re-exports `@oh-my-open-pentest/lsp-core/mcp` (stdio MCP server + JSON-RPC handler) |
+| `tools.ts` | Re-exports `@oh-my-open-pentest/lsp-core/tools` (tool definitions + runtime dispatch) |
+| `request-context.ts` | Re-exports `@oh-my-open-pentest/lsp-core/request-context` |
+| `lsp/manager.ts` | Re-exports `@oh-my-open-pentest/lsp-core/lsp/manager` |
 
 ## NOTES
 

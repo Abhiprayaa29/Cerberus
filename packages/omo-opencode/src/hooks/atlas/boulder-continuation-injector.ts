@@ -1,4 +1,4 @@
-import type { PluginInput } from "@opencode-ai/plugin"
+﻿import type { PluginInput } from "@opencode-ai/plugin"
 import {
   isAgentRegistered,
   resolveRegisteredAgentName,
@@ -72,7 +72,7 @@ export async function injectBoulderContinuation(input: {
 		preferredSessionContext +
 		worktreeContext
 	const resolvedContinuationAgent = resolveRegisteredAgentName(
-		agent ?? (isAgentRegistered("atlas") ? "atlas" : undefined),
+		agent ?? (isAgentRegistered("argus") ? "argus" : undefined),
 	)
 	const continuationAgent = resolvedContinuationAgent ? stripAgentListSortPrefix(resolvedContinuationAgent) : resolvedContinuationAgent
 

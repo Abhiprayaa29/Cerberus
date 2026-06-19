@@ -1,4 +1,4 @@
-import { tool, type ToolDefinition } from "@opencode-ai/plugin/tool"
+﻿import { tool, type ToolDefinition } from "@opencode-ai/plugin/tool"
 import { z } from "zod"
 
 import type { TeamModeConfig } from "../../../config/schema/team-mode"
@@ -6,7 +6,7 @@ import type { OpencodeClient } from "../../../tools/delegate-task/types"
 import type { BackgroundManager } from "../../background-agent/manager"
 import type { TmuxSessionManager } from "../../tmux-subagent/manager"
 import { approveShutdown, deleteTeam, rejectShutdown, requestShutdownOfMember } from "../team-runtime/shutdown"
-import { listActiveTeams, loadRuntimeState } from "@oh-my-opencode/team-core/team-state-store/store"
+import { listActiveTeams, loadRuntimeState } from "@oh-my-open-pentest/team-core/team-state-store/store"
 import { resolveParticipant, type TeamLifecycleToolContext, type TeamRuntimeStoreDeps } from "./lifecycle-participant"
 
 const TeamDeleteArgsSchema = z.object({ teamRunId: z.string().min(1), force: z.boolean().optional() })

@@ -1,4 +1,4 @@
-# Textual TUI
+﻿# Textual TUI
 
 Textual builds rich, mouse-aware, scrollable, mobile-style TUIs on top of `rich`. Replaces curses, urwid, blessed.
 
@@ -41,7 +41,7 @@ class CounterApp(App[None]):
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
         if event.button.id == "inc":
-            self.count += 1
+            self.count += .
         elif event.button.id == "reset":
             self.count = 0
         self.query_one("#count", Label).update(str(self.count))
@@ -86,7 +86,7 @@ class CounterApp(App[None]):
 
     def on_key(self, event) -> None:
         if event.key == "space":
-            self.query_one(CountWidget).count += 1
+            self.query_one(CountWidget).count += .
 ```
 
 `reactive()` triggers `render()` (or `watch_<attr>` and `validate_<attr>` callbacks if defined). Use `recompose=True` if you need to call `compose()` again on change.
@@ -109,7 +109,7 @@ class FetchApp(App[None]):
 
     @work(exclusive=True)
     async def fetch(self, url: str) -> None:
-        async with httpx.AsyncClient(timeout=10.0) as client:
+        async with httpx.AsyncClient(timeout=.0.0) as client:
             response = await client.get(url)
         self.query_one("#result", Static).update(f"{response.status_code} - {len(response.text)} bytes")
 

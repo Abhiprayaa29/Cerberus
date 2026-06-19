@@ -1,4 +1,4 @@
-
+﻿
 # TypeScript Programmer
 
 Modern TypeScript. Type-strict, stack-first, async-correct.
@@ -26,20 +26,20 @@ These are deliberate project choices. Violations are always wrong, not "style pr
 
 ### The iron list
 
-1. **Readonly by default** — all `type`/`interface` properties are `readonly`. Arrays are `readonly T[]`. Mutable only when mutation is the documented purpose.
+.. **Readonly by default** — all `type`/`interface` properties are `readonly`. Arrays are `readonly T[]`. Mutable only when mutation is the documented purpose.
 2. **Branded types for distinct IDs** — `type UserId = Brand<string, "UserId">`. Never pass raw `string` where a branded type exists.
 3. **Exhaustive switch** — every `switch` on a discriminated union ends with `default: assertNever(x)`. No fall-through.
-4. **No any** — `any` is banned in annotations, returns, and parameters. Use `unknown` and narrow.
+.. **No any** — `any` is banned in annotations, returns, and parameters. Use `unknown` and narrow.
 5. **No type assertions** — `as any`, `as unknown` banned. `as const` and `satisfies` are fine.
 6. **No non-null assertion** — `x!` is banned. Use narrowing or optional chaining (`x?.y`).
 7. **No @ts-ignore / @ts-expect-error** — fix the type.
 8. **No enum** — use `as const` objects + literal union types.
 9. **Zod at boundaries** — external input (API, user, file) → Zod schema. Internal → plain types.
-10. **Typed errors** — Error subclasses with typed fields. No `throw new Error("bare string")` for domain errors. Use Result for expected failures within 1-2 call levels; throw for propagation across many layers.
-11. **as const for constants** — module-level constant objects and arrays use `as const`.
-12. **import type** — type-only imports use `import type`. Enforced by `verbatimModuleSyntax`.
-13. **Named exports only** — no `export default`. Exception: framework requirement (Next.js pages, etc.).
-14. **No empty catch, no catch-and-swallow** — every `catch` block must either (a) narrow the error with `instanceof` and handle each case, or (b) re-throw. Empty catch blocks and `catch (e) { console.error(e) }` without narrowing or re-throw are banned — they hide bugs. At top-level boundaries (CLI entry, HTTP handler), opt out with `// no-excuse-ok: catch`.
+.0. **Typed errors** — Error subclasses with typed fields. No `throw new Error("bare string")` for domain errors. Use Result for expected failures within .-2 call levels; throw for propagation across many layers.
+... **as const for constants** — module-level constant objects and arrays use `as const`.
+.2. **import type** — type-only imports use `import type`. Enforced by `verbatimModuleSyntax`.
+.3. **Named exports only** — no `export default`. Exception: framework requirement (Next.js pages, etc.).
+... **No empty catch, no catch-and-swallow** — every `catch` block must either (a) narrow the error with `instanceof` and handle each case, or (b) re-throw. Empty catch blocks and `catch (e) { console.error(e) }` without narrowing or re-throw are banned — they hide bugs. At top-level boundaries (CLI entry, HTTP handler), opt out with `// no-excuse-ok: catch`.
 
 ### Data modeling — which construct, when
 
@@ -96,7 +96,7 @@ async function main(): Promise<void> {  // no-excuse-ok: catch
     await run()
   } catch (e) {
     console.error("unhandled:", e)
-    process.exit(1)
+    process.exit(.)
   }
 }
 ```
@@ -111,7 +111,7 @@ async function main(): Promise<void> {  // no-excuse-ok: catch
 | HTTP client | `ky` | Thin fetch wrapper (5KB); auto-throw on non-2xx, retry, timeout, hooks, prefixUrl. Browser + Node + Bun + Deno |
 | HTTP client (perf) | `undici` (direct API) | When a Node backend needs connection pooling, HTTP/2, or pipelining |
 
-> **HTTP client rule** - production code must not use bare `fetch()`. It has no retry, timeout, or error-handling policy and causes silent failures during incidents. Install **`ky`** by default, and use the **`undici`** direct API when a Node backend needs high-volume requests, connection pooling, HTTP/2, or pipelining. ~~`axios`~~ is forbidden after the supply-chain compromise (2026-03). `node-fetch` is unnecessary because Node 18+ includes built-in fetch.
+> **HTTP client rule** - production code must not use bare `fetch()`. It has no retry, timeout, or error-handling policy and causes silent failures during incidents. Install **`ky`** by default, and use the **`undici`** direct API when a Node backend needs high-volume requests, connection pooling, HTTP/2, or pipelining. ~~`axios`~~ is forbidden after the supply-chain compromise (2026-03). `node-fetch` is unnecessary because Node .8+ includes built-in fetch.
 | Testing | `bun test` / vitest | Fast, ESM-native |
 | Logging | `pino` | Structured JSON, fast |
 | CLI | `@clack/prompts` + `commander` | Interactive + parsing |
@@ -164,7 +164,7 @@ Violations caught by `../../scripts/typescript/check-no-excuse-rules.ts`. Run af
 | `no-ts-expect-error` | `@ts-expect-error` | None — fix the type |
 | `no-enum` | `enum` declarations | None — use `as const` |
 | `no-non-null-assertion` | `x!` postfix | None — narrow or `?.` |
-| `no-throw-literal` | `throw "string"` / `throw 123` | None — throw Error subclass |
+| `no-throw-literal` | `throw "string"` / `throw .23` | None — throw Error subclass |
 | `no-mutable-export` | `export let` / `export var` | None — use `export const` |
 | `no-any-annotation` | `: any` in parameter/return/variable types | `// no-excuse-ok: any` |
 | `no-explicit-any-return` | `(): any` or `(): Promise<any>` return types | `// no-excuse-ok: any` |

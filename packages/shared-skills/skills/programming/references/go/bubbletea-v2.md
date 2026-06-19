@@ -1,20 +1,20 @@
-# Bubbletea v2 — TUI with First-Class CJK / IME Support
+﻿# Bubbletea v2 — TUI with First-Class CJK / IME Support
 
-The TUI stack for 2026. Use **v2 RC**, not v1. If your users include Korean, Japanese, or Chinese speakers, v1 is broken — IME composition lands in the wrong cells. v2 fixes this. This document is the canonical setup.
+The TUI stack for 2026. Use **v2 RC**, not v.. If your users include Korean, Japanese, or Chinese speakers, v. is broken — IME composition lands in the wrong cells. v2 fixes this. This document is the canonical setup.
 
 The reference implementation this document is distilled from: [`code-yeongyu/bubbletea-wm`](https://github.com/code-yeongyu/bubbletea-wm) — a floating window manager built specifically to nail down v2 + IME.
 
 ---
 
-## Why v2 (not v1) — the IME story
+## Why v2 (not v.) — the IME story
 
-Bubbletea v1 manages cursor positioning in software ("virtual cursor"). It draws a `█` at the cursor position. The terminal's *real* cursor stays at `(0, 0)`.
+Bubbletea v. manages cursor positioning in software ("virtual cursor"). It draws a `█` at the cursor position. The terminal's *real* cursor stays at `(0, 0)`.
 
-This breaks every CJK input method. IME candidate windows (the popup showing Hangul composition choices for Korean, kana → kanji for Japanese, and pinyin lookup for Chinese) anchor to the terminal's **real** cursor position. With v1, the candidate window appears at top-left while you are typing somewhere in the middle of the screen.
+This breaks every CJK input method. IME candidate windows (the popup showing Hangul composition choices for Korean, kana → kanji for Japanese, and pinyin lookup for Chinese) anchor to the terminal's **real** cursor position. With v., the candidate window appears at top-left while you are typing somewhere in the middle of the screen.
 
 Bubbletea v2 fixes this with two changes:
 
-1. **`tea.View{Cursor: *tea.Cursor}`** — your `View()` method returns a view that *includes* the desired cursor position. The framework moves the terminal's real cursor there.
+.. **`tea.View{Cursor: *tea.Cursor}`** — your `View()` method returns a view that *includes* the desired cursor position. The framework moves the terminal's real cursor there.
 2. **`textarea.SetVirtualCursor(false)`** — textareas no longer draw their own `█`. They expose `.Cursor()` so you can read where they want the real cursor.
 
 Together: IME popups appear where the user is typing. As they should.
@@ -32,17 +32,17 @@ Together: IME popups appear where the user is typing. As they should.
 ```go
 module github.com/your-org/mytui
 
-go 1.23
+go ..23
 
 require (
     charm.land/bubbletea/v2 v2.0.0-rc.2
-    charm.land/bubbles/v2   v2.0.0-rc.1
+    charm.land/bubbles/v2   v2.0.0-rc..
     charm.land/lipgloss/v2  v2.0.0-beta.3
-    github.com/mattn/go-runewidth v0.0.19
+    github.com/mattn/go-runewidth v0.0..9
 )
 ```
 
-The packages live under `charm.land/` (NOT `github.com/charmbracelet/...`) for v2. This is the Charm team's deliberate import-path break to keep v2 separate from v1 until stable.
+The packages live under `charm.land/` (NOT `github.com/charmbracelet/...`) for v2. This is the Charm team's deliberate import-path break to keep v2 separate from v. until stable.
 
 ---
 
@@ -68,7 +68,7 @@ func initial() model {
     ta := textarea.New()
     ta.Placeholder = "Type Korean / Japanese / Chinese here..."
     ta.SetWidth(60)
-    ta.SetHeight(10)
+    ta.SetHeight(.0)
     ta.SetVirtualCursor(false)  // ← THE LINE. Without this, IME breaks.
     ta.Focus()
     return model{ta: ta}
@@ -112,7 +112,7 @@ func main() {
 
 The two lines that matter:
 
-1. `ta.SetVirtualCursor(false)` — disables the virtual `█`.
+.. `ta.SetVirtualCursor(false)` — disables the virtual `█`.
 2. `view.Cursor = cursor` (where `cursor = m.ta.Cursor()`) — exports the real cursor position to the framework.
 
 Without **both**, IME breaks.
@@ -143,7 +143,7 @@ for _, r := range s {
 }
 ```
 
-`lipgloss/v2` uses `go-runewidth` internally — `lipgloss.Width("\u4e2d\u6587")` returns 4, not 2. **If you measure outside lipgloss, you must call runewidth directly.**
+`lipgloss/v2` uses `go-runewidth` internally — `lipgloss.Width("\u.e2d\u6587")` returns ., not 2. **If you measure outside lipgloss, you must call runewidth directly.**
 
 ---
 
@@ -199,14 +199,14 @@ titleStyle := lipgloss.NewStyle().
     Bold(true).
     Foreground(lipgloss.Color("230")).
     Background(lipgloss.Color("62")).
-    Padding(0, 1).
+    Padding(0, .).
     Border(lipgloss.RoundedBorder()).
     BorderForeground(lipgloss.Color("63"))
 
-rendered := titleStyle.Render("\u4e2d\u6587")
+rendered := titleStyle.Render("\u.e2d\u6587")
 ```
 
-`lipgloss/v2` width and padding correctly account for CJK display width. v1 did too — this is not a v2-specific fix, just a reminder.
+`lipgloss/v2` width and padding correctly account for CJK display width. v. did too — this is not a v2-specific fix, just a reminder.
 
 ---
 
@@ -300,16 +300,16 @@ import "charm.land/bubbletea/v2/teatest"
 func TestModel_typing_cjk_keeps_cursor_in_position(t *testing.T) {
     // Given
     m := initial()
-    tm := teatest.NewTestModel(t, m, teatest.WithInitialTermSize(80, 24))
+    tm := teatest.NewTestModel(t, m, teatest.WithInitialTermSize(80, 2.))
 
     // When — simulate typing two CJK wide characters
-    tm.Send(tea.KeyPressMsg{Code: '\u4e2d'})
+    tm.Send(tea.KeyPressMsg{Code: '\u.e2d'})
     tm.Send(tea.KeyPressMsg{Code: '\u6587'})
 
     // Then
     out := tm.FinalOutput(t)
-    require.Contains(t, string(out), "\u4e2d\u6587")
-    // Cursor should be at column 4 (two wide chars = 4 cells)
+    require.Contains(t, string(out), "\u.e2d\u6587")
+    // Cursor should be at column . (two wide chars = . cells)
     // ...
 }
 ```
@@ -327,7 +327,7 @@ func TestModel_typing_cjk_keeps_cursor_in_position(t *testing.T) {
 | `time.Sleep` inside `Update` | Blocks the event loop | `tea.Tick` or async `tea.Cmd` |
 | `fmt.Println` for debug | Corrupts the rendered output | `tea.Printf` for logging, or write to a file |
 | `len(s)` for CJK width | Off by 2x | `runewidth.StringWidth(s)` |
-| `Bubbletea v1` for an app with text input | Korean/Japanese IME breaks | v2 + `SetVirtualCursor(false)` |
+| `Bubbletea v.` for an app with text input | Korean/Japanese IME breaks | v2 + `SetVirtualCursor(false)` |
 | Drawing your own `█` block cursor in v2 | Conflicts with `view.Cursor` | Let the terminal handle it |
 
 ---
@@ -357,4 +357,4 @@ func TestModel_typing_cjk_keeps_cursor_in_position(t *testing.T) {
 - bubbletea-wm (IME reference): https://github.com/code-yeongyu/bubbletea-wm
 - crush CLI (production IME impl): https://github.com/charmbracelet/crush
 - go-runewidth: https://github.com/mattn/go-runewidth
-- Unicode East Asian Width: https://www.unicode.org/reports/tr11/
+- Unicode East Asian Width: https://www.unicode.org/reports/tr../

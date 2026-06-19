@@ -1,4 +1,4 @@
-import {
+﻿import {
 	createTelemetryClient,
 	getDailyActiveCaptureState,
 	getDefaultTelemetryOsProvider,
@@ -6,7 +6,7 @@ import {
 	type PostHogActivityCaptureState,
 	type TelemetryOsProvider,
 	type TelemetryTransportFactory,
-} from "@oh-my-opencode/telemetry-core";
+} from "@oh-my-open-pentest/telemetry-core";
 
 import {
 	MACHINE_ID_PREFIX,

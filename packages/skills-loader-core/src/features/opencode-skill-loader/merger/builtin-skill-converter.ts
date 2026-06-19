@@ -1,5 +1,5 @@
-import type { BuiltinSkill } from "../../builtin-skills/types"
-import type { CommandDefinition } from "@oh-my-opencode/claude-code-compat-core/claude-code-command-loader/types"
+﻿import type { BuiltinSkill } from "../../builtin-skills/types"
+import type { CommandDefinition } from "@oh-my-open-pentest/claude-code-compat-core/claude-code-command-loader/types"
 import type { LoadedSkill } from "../types"
 
 export function builtinToLoadedSkill(builtin: BuiltinSkill): LoadedSkill {

@@ -1,4 +1,4 @@
-import { recoverToolMetadata } from "../features/tool-metadata-store"
+﻿import { recoverToolMetadata } from "../features/tool-metadata-store"
 import type { CreatedHooks } from "../create-hooks"
 import { log as defaultLog } from "../shared/logger"
 import { stripInvisibleAgentCharacters } from "../shared/agent-display-names"
@@ -111,14 +111,14 @@ export function createToolExecuteAfterHandler(args: {
       const prompt = getMetadataString(output.metadata, ["prompt"])
       const verificationAttemptId = prompt?.match(VERIFICATION_ATTEMPT_PATTERN)?.[1]?.trim()
       const loopState = directory
-        ? (await import("../hooks/ralph-loop/storage")).readState(directory)
+        ? (await import("../hooks/pentest-loop/storage")).readState(directory)
         : null
       const isVerificationContext =
-        (agent ? stripInvisibleAgentCharacters(agent) : agent) === "oracle"
+        (agent ? stripInvisibleAgentCharacters(agent) : agent) === "cipher"
         && !!sessionId
         && !!directory
         && loopState?.active === true
-        && loopState.ultrawork === true
+        && loopState.fullscan === true
         && loopState.verification_pending === true
         && loopState.session_id === input.sessionID
 
@@ -126,7 +126,7 @@ export function createToolExecuteAfterHandler(args: {
         tool: input.tool,
         agent,
         parentSessionID: input.sessionID,
-        oracleSessionID: sessionId,
+        cipherSessionID: sessionId,
         hasPromptInMetadata: typeof prompt === "string",
         extractedVerificationAttemptId: verificationAttemptId,
       })
@@ -136,23 +136,23 @@ export function createToolExecuteAfterHandler(args: {
         && verificationAttemptId
         && loopState.verification_attempt_id === verificationAttemptId
       ) {
-        ;(await import("../hooks/ralph-loop/storage")).writeState(directory, {
+        ;(await import("../hooks/pentest-loop/storage")).writeState(directory, {
           ...loopState,
           verification_session_id: sessionId,
         })
-        log("[tool-execute-after] Stored oracle verification session via attempt match", {
+        log("[tool-execute-after] Stored cipher verification session via attempt match", {
           parentSessionID: input.sessionID,
-          oracleSessionID: sessionId,
+          cipherSessionID: sessionId,
           verificationAttemptId,
         })
       } else if (isVerificationContext && !verificationAttemptId) {
-        ;(await import("../hooks/ralph-loop/storage")).writeState(directory, {
+        ;(await import("../hooks/pentest-loop/storage")).writeState(directory, {
           ...loopState,
           verification_session_id: sessionId,
         })
-        log("[tool-execute-after] Fallback: stored oracle verification session without attempt match", {
+        log("[tool-execute-after] Fallback: stored cipher verification session without attempt match", {
           parentSessionID: input.sessionID,
-          oracleSessionID: sessionId,
+          cipherSessionID: sessionId,
           hasPromptInMetadata: typeof prompt === "string",
           expectedAttemptId: loopState.verification_attempt_id,
           extractedAttemptId: verificationAttemptId,
@@ -174,7 +174,7 @@ export function createToolExecuteAfterHandler(args: {
       await hooks.interactiveBashSession?.["tool.execute.after"]?.(hookInput, output)
       await hooks.editErrorRecovery?.["tool.execute.after"]?.(hookInput, output)
       await hooks.delegateTaskRetry?.["tool.execute.after"]?.(hookInput, output)
-      await hooks.atlasHook?.["tool.execute.after"]?.(hookInput, output)
+      await hooks.argusHook?.["tool.execute.after"]?.(hookInput, output)
       await hooks.taskResumeInfo?.["tool.execute.after"]?.(hookInput, output)
       await hooks.readImageResizer?.["tool.execute.after"]?.(hookInput, output)
       await hooks.hashlineReadEnhancer?.["tool.execute.after"]?.(hookInput, output)

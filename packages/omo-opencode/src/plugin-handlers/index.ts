@@ -1,4 +1,4 @@
-export { createConfigHandler, type ConfigHandlerDeps } from "./config-handler";
+﻿export { createConfigHandler, type ConfigHandlerDeps } from "./config-handler";
 export * from "./provider-config-handler";
 export * from "./agent-config-handler";
 export * from "./tool-config-handler";
@@ -7,5 +7,5 @@ export * from "./hook-config-handler";
 export * from "./command-config-handler";
 export * from "./plugin-components-loader";
 export * from "./category-config-resolver";
-export * from "./prometheus-agent-config-builder";
+export * from "./talos-agent-config-builder";
 export * from "./agent-priority-order";

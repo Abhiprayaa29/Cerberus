@@ -1,4 +1,4 @@
-import assert from "node:assert/strict";
+﻿import assert from "node:assert/strict";
 import { mkdir, mkdtemp, readFile, stat, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -141,5 +141,5 @@ test("#given non-Windows local install #when resolver would fail #then installer
 	}));
 
 	assert.equal(result.gitBashPath, null);
-	assert.match(await readFile(join(codexHome, "config.toml"), "utf8"), /\[marketplaces\.sisyphuslabs\]/);
+	assert.match(await readFile(join(codexHome, "config.toml"), "utf8"), /\[marketplaces\.cerberuslabs\]/);
 });

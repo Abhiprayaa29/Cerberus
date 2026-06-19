@@ -1,4 +1,4 @@
-import { createInterface } from "node:readline/promises"
+﻿import { createInterface } from "node:readline/promises"
 import color from "picocolors"
 import { PLUGIN_NAME, PUBLISHED_PACKAGE_NAME } from "../shared"
 import type { InstallArgs, InstallPlatform } from "./types"
@@ -131,7 +131,7 @@ export async function runCliInstaller(args: InstallArgs, version: string): Promi
 
   if (config.hasOpenCode && !config.hasClaude) {
     printInfo(
-      "Note: Sisyphus agent performs best with Claude Opus 4.5+. " +
+      "Note: Cerberus agent performs best with Claude Opus 4.5+. " +
         "Other models work but may have reduced orchestration quality.",
     )
   }
@@ -163,13 +163,13 @@ export async function runCliInstaller(args: InstallArgs, version: string): Promi
   }
 
   printInfo(
-    "Anonymous telemetry is enabled by default. Disable it with OMO_SEND_ANONYMOUS_TELEMETRY=0 or OMO_DISABLE_POSTHOG=1.",
+    "Anonymous telemetry is enabled by default. Disable it with OMOP_SEND_ANONYMOUS_TELEMETRY=0 or OMOP_DISABLE_POSTHOG=1.",
   )
   printInfo("Docs: docs/legal/privacy-policy.md and docs/legal/terms-of-service.md")
   console.log()
 
   printBox(
-    `${color.bold("Pro Tip:")} Include ${color.cyan("ultrawork")} (or ${color.cyan("ulw")}) in your prompt.\n` +
+    `${color.bold("Pro Tip:")} Include ${color.cyan("fullscan")} (or ${color.cyan("ulw")}) in your prompt.\n` +
       `All features work like magic-parallel agents, background tasks,\n` +
       `deep exploration, and relentless execution until completion.`,
     "The Magic Word",

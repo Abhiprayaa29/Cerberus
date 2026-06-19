@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+﻿#!/usr/bin/env node
 import { existsSync, readdirSync, readFileSync } from "node:fs"
 import { dirname, join } from "node:path"
 import { spawnSync } from "node:child_process"
@@ -40,21 +40,21 @@ const CODEX_AGGREGATE_COMPONENTS = [
   "@code-yeongyu/codex-rules",
   "@code-yeongyu/codex-start-work-continuation",
   "@code-yeongyu/codex-telemetry",
-  "@code-yeongyu/codex-ultrawork",
-  "@code-yeongyu/codex-ulw-loop",
+  "@code-yeongyu/codex-fullscan",
+  "@code-yeongyu/codex-pentest-loop",
   "@code-yeongyu/lsp-daemon",
   "@code-yeongyu/lsp-tools-mcp",
-  "@oh-my-opencode/boulder-state",
-  "@oh-my-opencode/comment-checker-core",
-  "@oh-my-opencode/git-bash-mcp",
-  "@oh-my-opencode/prompts-core",
-  "@oh-my-opencode/rules-engine",
-  "@oh-my-opencode/shared-skills",
-  "@oh-my-opencode/telemetry-core",
-  "@oh-my-opencode/utils",
-  "@sisyphuslabs/codex-bootstrap",
-  "@sisyphuslabs/codex-git-bash-hook",
-  "@sisyphuslabs/omo-codex-plugin",
+  "@oh-my-open-pentest/boulder-state",
+  "@oh-my-open-pentest/comment-checker-core",
+  "@oh-my-open-pentest/git-bash-mcp",
+  "@oh-my-open-pentest/prompts-core",
+  "@oh-my-open-pentest/rules-engine",
+  "@oh-my-open-pentest/shared-skills",
+  "@oh-my-open-pentest/telemetry-core",
+  "@oh-my-open-pentest/utils",
+  "@cerberuslabs/codex-bootstrap",
+  "@cerberuslabs/codex-git-bash-hook",
+  "@cerberuslabs/omo-codex-plugin",
   "Node.js runtime bootstrap payload",
   "pi-comment-checker",
   "pi-lsp-client",
@@ -82,14 +82,14 @@ const CODEX_COMPONENT_NOTICE_REQUIREMENTS = [
   },
   {
     path: "packages/omo-codex/plugin/components/telemetry",
-    requiredTerms: ["posthog-node", "@oh-my-opencode/telemetry-core"],
+    requiredTerms: ["posthog-node", "@oh-my-open-pentest/telemetry-core"],
   },
   {
-    path: "packages/omo-codex/plugin/components/ultrawork",
+    path: "packages/omo-codex/plugin/components/fullscan",
     requiredTerms: [],
   },
   {
-    path: "packages/omo-codex/plugin/components/ulw-loop",
+    path: "packages/omo-codex/plugin/components/pentest-loop",
     requiredTerms: [],
   },
 ]

@@ -1,7 +1,7 @@
-{
-	"name": "sisyphuslabs",
+﻿{
+	"name": "cerberuslabs",
 	"interface": {
-		"displayName": "Sisyphus Labs"
+		"displayName": "OmOP Labs"
 	},
 	"plugins": [
 		{

@@ -1,1 +1,1 @@
-export { isMarkdownFile, resolveSymlink } from "@oh-my-opencode/utils"
+﻿export { isMarkdownFile, resolveSymlink } from "@oh-my-open-pentest/utils"

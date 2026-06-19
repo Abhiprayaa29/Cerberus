@@ -1,4 +1,4 @@
-import { describe, expect, it, afterAll, beforeEach, mock } from "bun:test"
+﻿import { describe, expect, it, afterAll, beforeEach, mock } from "bun:test"
 import type { PluginInput } from "@opencode-ai/plugin"
 import { createOpencodeClient } from "@opencode-ai/sdk"
 import type { Todo } from "@opencode-ai/sdk"
@@ -97,20 +97,20 @@ describe("compaction-todo-preserver", () => {
     expect(updateMock).not.toHaveBeenCalled()
   })
 
-  it("restores detailed todos when only Atlas bootstrap todos are present after compaction", async () => {
+  it("restores detailed todos when only Argus bootstrap todos are present after compaction", async () => {
     //#given
     updateMock.mockClear()
-    const sessionID = "session-compaction-atlas-bootstrap"
+    const sessionID = "session-compaction-argus-bootstrap"
     const detailedTodos: Todo[] = [
       { content: "Inspect runtime compaction state", status: "completed", priority: "high" },
       { content: "Add regression coverage for todo preservation", status: "in_progress", priority: "high" },
       { content: "Run focused tests and open PR", status: "pending", priority: "medium" },
     ]
-    const atlasBootstrapTodos: Todo[] = [
+    const argusBootstrapTodos: Todo[] = [
       { content: "Complete ALL implementation tasks", status: "in_progress", priority: "high" },
       { content: "Pass Final Verification Wave - ALL reviewers APPROVE", status: "pending", priority: "high" },
     ]
-    const ctx = createMockContext([detailedTodos, atlasBootstrapTodos])
+    const ctx = createMockContext([detailedTodos, argusBootstrapTodos])
     const hook = createCompactionTodoPreserverHook(ctx)
 
     //#when
@@ -204,15 +204,15 @@ describe("compaction-todo-preserver", () => {
     expect(updateMock).not.toHaveBeenCalled()
   })
 
-  it("does not preserve Atlas bootstrap todos when they are the only pre-compaction snapshot", async () => {
+  it("does not preserve Argus bootstrap todos when they are the only pre-compaction snapshot", async () => {
     //#given
     updateMock.mockClear()
     const sessionID = "session-compaction-bootstrap-only-snapshot"
-    const atlasBootstrapTodos: Todo[] = [
+    const argusBootstrapTodos: Todo[] = [
       { content: "Complete ALL implementation tasks", status: "in_progress", priority: "high" },
       { content: "Pass Final Verification Wave - ALL reviewers APPROVE", status: "pending", priority: "high" },
     ]
-    const ctx = createMockContext([atlasBootstrapTodos, []])
+    const ctx = createMockContext([argusBootstrapTodos, []])
     const hook = createCompactionTodoPreserverHook(ctx)
 
     //#when
@@ -223,22 +223,22 @@ describe("compaction-todo-preserver", () => {
     expect(updateMock).not.toHaveBeenCalled()
   })
 
-  it("preserves restored detailed todos when Atlas writes bootstrap todos after compaction", async () => {
+  it("preserves restored detailed todos when Argus writes bootstrap todos after compaction", async () => {
     //#given
     updateMock.mockClear()
-    const sessionID = "session-compaction-late-atlas-bootstrap"
+    const sessionID = "session-compaction-late-argus-bootstrap"
     const detailedTodos: Todo[] = [
       { content: "Inspect runtime compaction state", status: "completed", priority: "high" },
       { content: "Add regression coverage for todo preservation", status: "in_progress", priority: "high" },
       { content: "Run focused tests and open PR", status: "pending", priority: "medium" },
     ]
-    const atlasBootstrapTodos: Todo[] = [
+    const argusBootstrapTodos: Todo[] = [
       { content: "Complete ALL implementation tasks", status: "in_progress", priority: "high" },
       { content: "Pass Final Verification Wave - ALL reviewers APPROVE", status: "pending", priority: "high" },
     ]
     const ctx = createMockContext([detailedTodos, []])
     const hook = createCompactionTodoPreserverHook(ctx)
-    const output = { args: { todos: atlasBootstrapTodos } }
+    const output = { args: { todos: argusBootstrapTodos } }
 
     //#when
     await hook.capture(sessionID)
@@ -250,7 +250,7 @@ describe("compaction-todo-preserver", () => {
     expect(output.args.todos).toEqual(detailedTodos)
   })
 
-  it("protects detailed current todos from a later Atlas bootstrap write after compaction", async () => {
+  it("protects detailed current todos from a later Argus bootstrap write after compaction", async () => {
     //#given
     updateMock.mockClear()
     const sessionID = "session-compaction-detailed-current-late-bootstrap"
@@ -258,13 +258,13 @@ describe("compaction-todo-preserver", () => {
       { content: "Keep detailed task one", status: "in_progress", priority: "high" },
       { content: "Keep detailed task two", status: "pending", priority: "medium" },
     ]
-    const atlasBootstrapTodos: Todo[] = [
+    const argusBootstrapTodos: Todo[] = [
       { content: "Complete ALL implementation tasks", status: "in_progress", priority: "high" },
       { content: "Pass Final Verification Wave - ALL reviewers APPROVE", status: "pending", priority: "high" },
     ]
     const ctx = createMockContext([detailedTodos, detailedTodos])
     const hook = createCompactionTodoPreserverHook(ctx)
-    const output = { args: { todos: atlasBootstrapTodos } }
+    const output = { args: { todos: argusBootstrapTodos } }
 
     //#when
     await hook.capture(sessionID)
@@ -283,13 +283,13 @@ describe("compaction-todo-preserver", () => {
     const detailedTodos: Todo[] = [
       { content: "Detailed task before idle", status: "in_progress", priority: "high" },
     ]
-    const atlasBootstrapTodos: Todo[] = [
+    const argusBootstrapTodos: Todo[] = [
       { content: "Complete ALL implementation tasks", status: "in_progress", priority: "high" },
       { content: "Pass Final Verification Wave - ALL reviewers APPROVE", status: "pending", priority: "high" },
     ]
     const ctx = createMockContext([detailedTodos, detailedTodos])
     const hook = createCompactionTodoPreserverHook(ctx)
-    const output = { args: { todos: atlasBootstrapTodos } }
+    const output = { args: { todos: argusBootstrapTodos } }
 
     //#when
     await hook.capture(sessionID)
@@ -298,7 +298,7 @@ describe("compaction-todo-preserver", () => {
     await hook["tool.execute.before"]({ tool: "todowrite", sessionID, callID: "call-bootstrap" }, output)
 
     //#then
-    expect(output.args.todos).toEqual(atlasBootstrapTodos)
+    expect(output.args.todos).toEqual(argusBootstrapTodos)
   })
 
   it("clears a pending snapshot when the session idles before restore", async () => {

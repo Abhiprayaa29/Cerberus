@@ -1,4 +1,4 @@
-declare const require: (name: string) => any
+﻿declare const require: (name: string) => any
 const { describe, test, expect, beforeEach, afterEach } = require("bun:test")
 import { __setTimingConfig, __resetTimingConfig, getTimingConfig } from "./timing"
 
@@ -114,7 +114,7 @@ describe("syncPollTimeoutMs threading", () => {
         await withMockedDateNow(60_000, async () => {
           const result = await pollSyncSession(createMockCtx(), mockClient, {
             sessionID: "ses_active",
-            agentToUse: "oracle",
+            agentToUse: "cipher",
             toastManager: null,
             taskId: undefined,
           }, 120_000)

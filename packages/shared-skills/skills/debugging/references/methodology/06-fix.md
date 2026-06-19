@@ -1,4 +1,4 @@
-# Phase 6 + 7 — Root Cause Confirmation & TDD Fix
+﻿# Phase 6 + 7 — Root Cause Confirmation & TDD Fix
 
 A cause is not "confirmed" until you can toggle the bug by toggling the cause. Every other level of evidence is correlation, and correlation-driven fixes ship bugs.
 
@@ -8,7 +8,7 @@ A cause is not "confirmed" until you can toggle the bug by toggling the cause. E
 
 You are allowed to call the cause "confirmed" only when ALL THREE of these hold:
 
-### 1. Captured runtime value matches the hypothesis exactly
+### .. Captured runtime value matches the hypothesis exactly
 
 Not "the value looks consistent with" — the value is exactly the value the hypothesis predicted. If your hypothesis was "baseUrl is api.anthropic.com despite ANTHROPIC_BASE_URL being set to a proxy", the captured value is literally `"https://api.anthropic.com"` in the debugger at the moment of the HTTP call.
 
@@ -51,11 +51,11 @@ The "mechanism" field is the acid test. If you can't write the causal chain from
 
 Red, green, refactor. No shortcuts.
 
-### 1. Red — failing-first test
+### .. Red — failing-first test
 
 Write a test that fails *specifically because of this bug*. Requirements:
 
-- **Test name reads like a bug report.** `test_refinement_turn_returns_empty_content_when_anthropic_returns_401` is good. `test_bug_fix` is not.
+- **Test name reads like a bug report.** `test_refinement_turn_returns_empty_content_when_anthropic_returns_.0.` is good. `test_bug_fix` is not.
 - **Failure message clearly shows what the bug looks like.** If someone reads only the failure output, they understand what's broken.
 - **Minimum infrastructure.** Don't spin up the whole server if a unit test against the right seam captures the mechanism.
 
@@ -92,7 +92,7 @@ Only cleanup directly related to the fix. Do not re-architect.
 
 If the code around the fix is rough, note it in the journal as a follow-up for the user; do not expand scope here. Refactoring during a bugfix is how one-line fixes turn into hundred-line diffs nobody can review.
 
-### 4. Regression — full suite green
+### .. Regression — full suite green
 
 Run the full test suite for the affected package (not just the one new test). Existing tests must still pass.
 

@@ -1,4 +1,4 @@
-import { AGENT_ELIGIBILITY_REGISTRY } from "../types"
+﻿import { AGENT_ELIGIBILITY_REGISTRY } from "../types"
 
 import type { Member, TeamSpec } from "../types"
 
@@ -10,7 +10,7 @@ const HYPERPLAN_REQUIRED_CATEGORIES = [
   "artistry",
 ] as const
 const UNKNOWN_SUBAGENT_MESSAGE =
-  "Unknown subagent_type '<name>'. Available ELIGIBLE agents: sisyphus, atlas, sisyphus-junior, hephaestus (if D-36 applied). Use delegate-task for read-only agents like oracle, librarian, explore, metis, momus, multimodal-looker."
+  "Unknown subagent_type '<name>'. Available ELIGIBLE agents: cerberus, atlas, cerberus-junior, scylla (if D-36 applied). Use delegate-task for read-only agents like oracle, intel, explore, vanguard, sentinel, lens."
 
 export class TeamSpecValidationError extends Error {
   constructor(

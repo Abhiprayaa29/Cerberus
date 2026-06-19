@@ -1,10 +1,10 @@
-import { tool, type ToolDefinition, type ToolContext } from "@opencode-ai/plugin/tool"
+﻿import { tool, type ToolDefinition, type ToolContext } from "@opencode-ai/plugin/tool"
 
 import type { TeamModeConfig } from "../../../config/schema/team-mode"
 import type { OpencodeClient } from "../../../tools/delegate-task/types"
-import { loadRuntimeState } from "@oh-my-opencode/team-core/team-state-store"
-import { createTask, getTask, listTasks, updateTaskStatus, claimTask } from "@oh-my-opencode/team-core/team-tasklist"
-import type { RuntimeState, Task } from "@oh-my-opencode/team-core/types"
+import { loadRuntimeState } from "@oh-my-open-pentest/team-core/team-state-store"
+import { createTask, getTask, listTasks, updateTaskStatus, claimTask } from "@oh-my-open-pentest/team-core/team-tasklist"
+import type { RuntimeState, Task } from "@oh-my-open-pentest/team-core/types"
 
 type TeamTaskToolContext = ToolContext & {
   sessionID?: string

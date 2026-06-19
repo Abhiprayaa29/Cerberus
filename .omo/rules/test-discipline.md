@@ -1,4 +1,4 @@
----
+﻿---
 description: Test discipline - fires when reading or editing any test file in this repo
 globs:
   - "**/*.test.ts"
@@ -14,7 +14,7 @@ globs:
 
 ## FLAKY = FAILING
 
-A test that passes 9 of 10 times is **failing 10% of the time**. Not "occasional." **BROKEN.**
+A test that passes 9 of .0 times is **failing .0% of the time**. Not "occasional." **BROKEN.**
 
 **FORBIDDEN in test bodies** unless time itself is the system under test (`Date.now`, real timers, debounce/throttle windows):
 
@@ -27,7 +27,7 @@ The replacement: **subscribe BEFORE the trigger, await the signal with an explic
 
 When code under test emits an event, fires a callback, or resolves a promise:
 
-1. **Register the listener / construct the awaitable BEFORE you trigger the action.** Reverse order = lost event = flake.
+.. **Register the listener / construct the awaitable BEFORE you trigger the action.** Reverse order = lost event = flake.
 2. **Race against an explicit timeout.** On timeout, **fail with a useful message** (`"waited 5s for event 'X', never fired"`). NEVER silently retry, NEVER fall through.
 3. The timeout is a **circuit breaker**, not a synchronization primitive. If the assertion logic depends on the timeout firing first, the test is wrong.
 
@@ -51,7 +51,7 @@ When testing code that builds an LLM prompt, **DO NOT pin the current wording.**
 **BANNED - these tests guard a diff, not behavior:**
 
 ```ts
-expect(prompt).toContain("You are Sisyphus")
+expect(prompt).toContain("You are Cerberus")
 expect(prompt).toMatchSnapshot()
 expect(prompt).toBe(EXPECTED_PROMPT)
 ```

@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { afterEach, describe, expect, test } from "bun:test";
 import { spawnSync } from "node:child_process";
@@ -58,7 +58,7 @@ describe("lazycodex bin wrapper", () => {
     ]);
   });
 
-  test("routes the lazycodex-ai package to the Codex installer via the oh-my-openagent platform family", async () => {
+  test("routes the lazycodex-ai package to the Codex installer via the oh-my-open-pentest platform family", async () => {
     // #given
     const fixture = await createLazyCodexFixture({ packageName: "lazycodex-ai", wrapperFileName: "lazycodex-ai" });
     const nodePath = Bun.which("node") ?? "node";
@@ -81,7 +81,7 @@ describe("lazycodex bin wrapper", () => {
 
   test("routes npm shim execution from the lazycodex package to the Codex installer", async () => {
     // #given
-    const fixture = await createLazyCodexFixture({ wrapperFileName: "oh-my-opencode.js" });
+    const fixture = await createLazyCodexFixture({ wrapperFileName: "oh-my-open-pentest.js" });
     const nodePath = Bun.which("node") ?? "node";
 
     // #when
@@ -174,7 +174,7 @@ async function createLazyCodexFixture(options: { packageName?: string; wrapperFi
 
   const wrapperFileName = options.wrapperFileName ?? "lazycodex";
   const wrapperBin = join(binDir, wrapperFileName);
-  await cp(fileURLToPath(new URL("./oh-my-opencode.js", import.meta.url)), wrapperBin);
+  await cp(fileURLToPath(new URL("./oh-my-open-pentest.js", import.meta.url)), wrapperBin);
   if (wrapperFileName !== "lazycodex") {
     await symlink(wrapperFileName, join(binDir, "lazycodex"));
   }
@@ -232,10 +232,10 @@ async function writePlatformPackages(root: string): Promise<void> {
     platform: process.platform,
     arch: process.arch,
     libcFamily: process.platform === "linux" ? "glibc" : undefined,
-    packageBaseName: "oh-my-openagent",
+    packageBaseName: "oh-my-open-pentest",
   });
   for (const packageName of packages) {
-    const binaryPath = join(root, "node_modules", packageName, "bin", "oh-my-opencode.js");
+    const binaryPath = join(root, "node_modules", packageName, "bin", "oh-my-open-pentest.js");
     await mkdir(dirname(binaryPath), { recursive: true });
     await writeFile(
       binaryPath,

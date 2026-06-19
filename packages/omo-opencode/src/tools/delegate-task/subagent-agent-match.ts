@@ -1,4 +1,4 @@
-import type { ExecutorContext } from "./executor-types"
+﻿import type { ExecutorContext } from "./executor-types"
 import { isPlanAgent } from "./constants"
 import type { AgentInfo } from "./subagent-discovery"
 import {
@@ -23,7 +23,7 @@ function shouldUseHiddenPlanAgent(
   requestedAgent: string,
   serverPrimaryAgent: AgentInfo | undefined,
   serverMatchedAgent: AgentInfo | undefined,
-  sisyphusAgentConfig: ExecutorContext["sisyphusAgentConfig"],
+  cerberusAgentConfig: ExecutorContext["cerberusAgentConfig"],
   hasDemotedPlan: boolean,
 ): boolean {
   if (serverPrimaryAgent) {
@@ -42,8 +42,8 @@ function shouldUseHiddenPlanAgent(
     return false
   }
 
-  return sisyphusAgentConfig?.planner_enabled !== false
-    && sisyphusAgentConfig?.replace_plan !== false
+  return cerberusAgentConfig?.planner_enabled !== false
+    && cerberusAgentConfig?.replace_plan !== false
 }
 
 export async function resolveSubagentAgentMatch(
@@ -65,7 +65,7 @@ export async function resolveSubagentAgentMatch(
     requestedAgent,
     serverPrimaryAgent,
     serverMatchedAgent,
-    executorCtx.sisyphusAgentConfig,
+    executorCtx.cerberusAgentConfig,
     hasDemotedPlan,
   )
 

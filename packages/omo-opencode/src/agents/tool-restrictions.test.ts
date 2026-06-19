@@ -1,14 +1,14 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { describe, test, expect } from "bun:test"
-import { createOracleAgent } from "./oracle"
-import { createLibrarianAgent } from "./librarian"
-import { createExploreAgent } from "./explore"
-import { createMomusAgent } from "./momus"
-import { createMetisAgent } from "./metis"
-import { createAtlasAgent } from "./atlas"
-import { createSisyphusAgent } from "./sisyphus"
-import { createHephaestusAgent } from "./hephaestus"
+import { createCipherAgent } from "./cipher"
+import { createIntelAgent } from "./intel"
+import { createScoutAgent } from "./scout"
+import { createSentinelAgent } from "./sentinel"
+import { createVanguardAgent } from "./vanguard"
+import { createArgusAgent } from "./argus"
+import { createCerberusAgent } from "./cerberus"
+import { createScyllaAgent } from "./scylla"
 import { getAgentToolRestrictions } from "../shared/agent-tool-restrictions"
 
 const TEST_MODEL = "anthropic/claude-sonnet-4-5"
@@ -33,13 +33,13 @@ describe("read-only agent tool restrictions", () => {
   test("denies team tools for every delegated subagent prompt", () => {
     // given
     const restrictedAgentNames = [
-      "explore",
-      "librarian",
-      "oracle",
-      "metis",
-      "momus",
-      "multimodal-looker",
-      "sisyphus-junior",
+      "scout",
+      "intel",
+      "cipher",
+      "vanguard",
+      "sentinel",
+      "lens",
+      "cerberus-junior",
       "custom-worker",
     ]
 
@@ -56,7 +56,7 @@ describe("read-only agent tool restrictions", () => {
 
   test("allows team tools for team member prompt restrictions", () => {
     // given
-    const teamMemberAgentName = "sisyphus-junior"
+    const teamMemberAgentName = "cerberus-junior"
 
     // when
     const restrictions = getAgentToolRestrictions(teamMemberAgentName, { includeTeamToolDenylist: false })
@@ -68,10 +68,10 @@ describe("read-only agent tool restrictions", () => {
     expect(restrictions.task).toBe(false)
   })
 
-  describe("Oracle", () => {
+  describe("Cipher", () => {
     test("denies all file-writing tools", () => {
       // given
-      const agent = createOracleAgent(TEST_MODEL)
+      const agent = createCipherAgent(TEST_MODEL)
 
       // when
       const permission = agent.permission as Record<string, string>
@@ -84,7 +84,7 @@ describe("read-only agent tool restrictions", () => {
 
     test("denies task but allows call_omo_agent for research", () => {
       // given
-      const agent = createOracleAgent(TEST_MODEL)
+      const agent = createCipherAgent(TEST_MODEL)
 
       // when
       const permission = agent.permission as Record<string, string>
@@ -95,10 +95,10 @@ describe("read-only agent tool restrictions", () => {
     })
   })
 
-  describe("Librarian", () => {
+  describe("Intel", () => {
     test("denies all file-writing tools", () => {
       // given
-      const agent = createLibrarianAgent(TEST_MODEL)
+      const agent = createIntelAgent(TEST_MODEL)
 
       // when
       const permission = agent.permission as Record<string, string>
@@ -110,10 +110,10 @@ describe("read-only agent tool restrictions", () => {
     })
   })
 
-  describe("Explore", () => {
+  describe("Scout", () => {
     test("denies all file-writing tools", () => {
       // given
-      const agent = createExploreAgent(TEST_MODEL)
+      const agent = createScoutAgent(TEST_MODEL)
 
       // when
       const permission = agent.permission as Record<string, string>
@@ -125,38 +125,10 @@ describe("read-only agent tool restrictions", () => {
     })
   })
 
-  describe("Momus", () => {
+  describe("Sentinel", () => {
     test("denies all file-writing tools", () => {
       // given
-      const agent = createMomusAgent(TEST_MODEL)
-
-      // when
-      const permission = agent.permission as Record<string, string>
-
-      // then
-      for (const tool of FILE_WRITE_TOOLS) {
-        expect(permission[tool]).toBe("deny")
-      }
-    })
-
-    test("allows task delegation while remaining ineligible for team membership", () => {
-      // given
-      const agent = createMomusAgent(TEST_MODEL)
-
-      // when
-      const permission = agent.permission as Record<string, string>
-      const sessionRestrictions = getAgentToolRestrictions("momus")
-
-      // then
-      expect(permission["task"]).toBeUndefined()
-      expect(sessionRestrictions["task"]).toBeUndefined()
-    })
-  })
-
-  describe("Metis", () => {
-    test("denies all file-writing tools", () => {
-      // given
-      const agent = createMetisAgent(TEST_MODEL)
+      const agent = createSentinelAgent(TEST_MODEL)
 
       // when
       const permission = agent.permission as Record<string, string>
@@ -169,11 +141,11 @@ describe("read-only agent tool restrictions", () => {
 
     test("allows task delegation while remaining ineligible for team membership", () => {
       // given
-      const agent = createMetisAgent(TEST_MODEL)
+      const agent = createSentinelAgent(TEST_MODEL)
 
       // when
       const permission = agent.permission as Record<string, string>
-      const sessionRestrictions = getAgentToolRestrictions("metis")
+      const sessionRestrictions = getAgentToolRestrictions("sentinel")
 
       // then
       expect(permission["task"]).toBeUndefined()
@@ -181,10 +153,38 @@ describe("read-only agent tool restrictions", () => {
     })
   })
 
-  describe("Atlas", () => {
+  describe("Vanguard", () => {
+    test("denies all file-writing tools", () => {
+      // given
+      const agent = createVanguardAgent(TEST_MODEL)
+
+      // when
+      const permission = agent.permission as Record<string, string>
+
+      // then
+      for (const tool of FILE_WRITE_TOOLS) {
+        expect(permission[tool]).toBe("deny")
+      }
+    })
+
+    test("allows task delegation while remaining ineligible for team membership", () => {
+      // given
+      const agent = createVanguardAgent(TEST_MODEL)
+
+      // when
+      const permission = agent.permission as Record<string, string>
+      const sessionRestrictions = getAgentToolRestrictions("vanguard")
+
+      // then
+      expect(permission["task"]).toBeUndefined()
+      expect(sessionRestrictions["task"]).toBeUndefined()
+    })
+  })
+
+  describe("Argus", () => {
     test("allows delegation tools for orchestration", () => {
       // given
-      const agent = createAtlasAgent({ model: TEST_MODEL })
+      const agent = createArgusAgent({ model: TEST_MODEL })
 
       // when
       const permission = (agent.permission ?? {}) as Record<string, string>
@@ -195,12 +195,12 @@ describe("read-only agent tool restrictions", () => {
     })
   })
 
-  describe("Sisyphus GPT variants", () => {
+  describe("Cerberus GPT variants", () => {
     test("does not force-deny apply_patch for GPT or Claude models", () => {
       // given
-      const gpt54Agent = createSisyphusAgent("openai/gpt-5.4")
-      const gptGenericAgent = createSisyphusAgent("openai/gpt-5.5")
-      const claudeAgent = createSisyphusAgent(TEST_MODEL)
+      const gpt54Agent = createCerberusAgent("openai/gpt-5.4")
+      const gptGenericAgent = createCerberusAgent("openai/gpt-5.5")
+      const claudeAgent = createCerberusAgent(TEST_MODEL)
 
       // when
       const gpt54Permission = (gpt54Agent.permission ?? {}) as Record<string, string>
@@ -214,14 +214,14 @@ describe("read-only agent tool restrictions", () => {
     })
   })
 
-  describe("Sisyphus and Hephaestus frontier tool schema restrictions", () => {
+  describe("Cerberus and Scylla frontier tool schema restrictions", () => {
     test("deny grep and glob for Opus 4.7 and GPT 5.5 models", () => {
       // given
       const frontierAgents = [
-        createSisyphusAgent("anthropic/claude-opus-4-7"),
-        createSisyphusAgent("anthropic/claude-opus-4.7"),
-        createSisyphusAgent("openai/gpt-5.5"),
-        createHephaestusAgent("openai/gpt-5.5"),
+        createCerberusAgent("anthropic/claude-opus-4-7"),
+        createCerberusAgent("anthropic/claude-opus-4.7"),
+        createCerberusAgent("openai/gpt-5.5"),
+        createScyllaAgent("openai/gpt-5.5"),
       ]
 
       // when
@@ -239,9 +239,9 @@ describe("read-only agent tool restrictions", () => {
     test("keeps grep and glob available for other models", () => {
       // given
       const otherAgents = [
-        createSisyphusAgent("anthropic/claude-sonnet-4-5"),
-        createSisyphusAgent("openai/gpt-5.4"),
-        createHephaestusAgent("openai/gpt-5.4"),
+        createCerberusAgent("anthropic/claude-sonnet-4-5"),
+        createCerberusAgent("openai/gpt-5.4"),
+        createScyllaAgent("openai/gpt-5.4"),
       ]
 
       // when

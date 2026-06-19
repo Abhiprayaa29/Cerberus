@@ -1,4 +1,4 @@
-export {
+﻿export {
   OhMyOpenCodeConfigSchema,
 } from "./schema"
 
@@ -12,15 +12,15 @@ export type {
   HookName,
   BuiltinCommandName,
   CodegraphConfig,
-  SisyphusAgentConfig,
+  CerberusAgentConfig,
   ExperimentalConfig,
   DynamicContextPruningConfig,
   DefaultModeConfig,
   RalphLoopConfig,
   TmuxConfig,
   TmuxLayout,
-  SisyphusConfig,
-  SisyphusTasksConfig,
+  CerberusConfig,
+  CerberusTasksConfig,
   RuntimeFallbackConfig,
   ModelCapabilitiesConfig,
   FallbackModels,

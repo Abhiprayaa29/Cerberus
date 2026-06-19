@@ -1,4 +1,4 @@
-import { execFile } from "node:child_process";
+﻿import { execFile } from "node:child_process";
 import { copyFile, mkdir, readdir, rm, stat } from "node:fs/promises";
 import { join } from "node:path";
 import { promisify } from "node:util";
@@ -21,7 +21,7 @@ import type { CodexAgentConfig, GitBashResolution } from "../../../../src/instal
 import { appendBootstrapLog, BOOTSTRAP_DOCTOR_HINT } from "./worker.ts";
 import type { BootstrapDegradedEntry, BootstrapStepOutcome } from "./worker.ts";
 
-export const SETUP_MARKETPLACE_NAME = "sisyphuslabs";
+export const SETUP_MARKETPLACE_NAME = "cerberuslabs";
 export const SETUP_PLUGIN_NAME = "omo";
 export const GIT_BASH_INSTALL_HINT = "winget install --id Git.Git -e --source winget";
 
@@ -235,7 +235,7 @@ async function linkRuntimeWrapperStep(
 			reason: "marketplace payload has no dist/cli",
 		});
 		await appendBootstrapLog(options.pluginData, options.now ?? Date.now(), "omo-cli-degraded", {
-			warning: `Warning: skipped the omo runtime wrapper because ${cliPath} is missing; omo sparkshell/ulw-loop commands will be unavailable until a package shipping dist/cli is installed`,
+			warning: `Warning: skipped the omo runtime wrapper because ${cliPath} is missing; omo sparkshell/pentest-loop commands will be unavailable until a package shipping dist/cli is installed`,
 		});
 	} catch (error) {
 		degraded.push({

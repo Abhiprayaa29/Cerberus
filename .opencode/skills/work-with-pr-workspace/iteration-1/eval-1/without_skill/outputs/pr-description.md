@@ -1,4 +1,4 @@
-# PR Description
+﻿# PR Description
 
 **Title:** feat: add `maxBackgroundAgents` config to limit total simultaneous background agents
 
@@ -17,7 +17,7 @@ Currently, concurrency is only limited per model/provider key (default 5 per key
 ## Changes
 
 ### Schema (`src/config/schema/background-task.ts`)
-- Added `maxBackgroundAgents: z.number().int().min(1).optional()` to `BackgroundTaskConfigSchema`
+- Added `maxBackgroundAgents: z.number().int().min(.).optional()` to `BackgroundTaskConfigSchema`
 - Grouped with existing limit fields (`maxDepth`, `maxDescendants`)
 
 ### ConcurrencyManager (`src/features/background-agent/concurrency.ts`)

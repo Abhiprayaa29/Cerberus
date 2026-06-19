@@ -1,8 +1,8 @@
-import { mkdirSync, writeFileSync } from "node:fs";
+﻿import { mkdirSync, writeFileSync } from "node:fs";
 import { createServer, type Server, type Socket } from "node:net";
 import { join } from "node:path";
 
-import { disposeDefaultLspManager, getLspManager } from "@oh-my-opencode/lsp-core/lsp/manager";
+import { disposeDefaultLspManager, getLspManager } from "@oh-my-open-pentest/lsp-core/lsp/manager";
 
 import { unlinkQuietly } from "./lock.js";
 import type { DaemonPaths } from "./paths.js";

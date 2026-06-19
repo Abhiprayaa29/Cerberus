@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, test } from "bun:test"
+﻿import { afterEach, beforeEach, describe, expect, test } from "bun:test"
 import { existsSync, mkdirSync, rmSync } from "node:fs"
 import { tmpdir } from "node:os"
 import { join } from "node:path"
@@ -17,8 +17,8 @@ type ToastCall = {
 	readonly variant: string
 }
 
-describe("ralph-loop no-progress stop", () => {
-	const testDirectory = join(tmpdir(), "ralph-loop-no-progress-" + Date.now())
+describe("pentest-loop no-progress stop", () => {
+	const testDirectory = join(tmpdir(), "pentest-loop-no-progress-" + Date.now())
 	let promptCalls: PromptCall[]
 	let toastCalls: ToastCall[]
 
@@ -80,7 +80,7 @@ describe("ralph-loop no-progress stop", () => {
 			},
 			directory: testDirectory,
 		}))
-		hook.startLoop("session-123", "Build API", { ultrawork: true })
+		hook.startLoop("session-123", "Build API", { fullscan: true })
 
 		await hook.event({
 			event: { type: "session.idle", properties: { sessionID: "session-123" } },

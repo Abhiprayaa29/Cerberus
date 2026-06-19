@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it } from "bun:test"
+﻿import { afterEach, beforeEach, describe, expect, it } from "bun:test"
 import { mkdirSync, mkdtempSync, realpathSync, rmSync, writeFileSync } from "node:fs"
 import { tmpdir } from "node:os"
 import { join, resolve } from "node:path"
@@ -32,7 +32,7 @@ function makeTempDir(label: string): string {
 }
 
 function writeLiveLoop(projectDir: string): void {
-  const filePath = join(projectDir, ".omo", "ulw-loop", "current", "goals.json")
+  const filePath = join(projectDir, ".omo", "pentest-loop", "current", "goals.json")
   mkdirSync(join(filePath, ".."), { recursive: true })
   writeFileSync(
     filePath,
@@ -52,7 +52,7 @@ function writeLiveLoop(projectDir: string): void {
 }
 
 function writeSensitiveLiveLoop(projectDir: string): void {
-  const filePath = join(projectDir, ".omo", "ulw-loop", "current", "goals.json")
+  const filePath = join(projectDir, ".omo", "pentest-loop", "current", "goals.json")
   mkdirSync(join(filePath, ".."), { recursive: true })
   writeFileSync(
     filePath,
@@ -89,9 +89,9 @@ function createBackgroundManager(tasks: readonly BackgroundTaskSnapshot[]): Fake
 const resolveTestSessionAgent: SessionAgentResolver = async (sessionID) => {
   switch (sessionID) {
     case "ses-main":
-      return "sisyphus"
+      return "cerberus"
     case "ses-sub":
-      return "atlas"
+      return "argus"
     default:
       return null
   }
@@ -123,11 +123,11 @@ describe("buildTuiRuntimeSnapshot", () => {
       }),
       backgroundManager: createBackgroundManager([
         {
-          title: "Explore runtime",
+          title: "Scout runtime",
           status: "running",
           toolCalls: 3,
           lastTool: "grep",
-          agent: "sisyphus",
+          agent: "cerberus",
         },
       ]),
       sessionAgentResolver: resolveTestSessionAgent,
@@ -137,11 +137,11 @@ describe("buildTuiRuntimeSnapshot", () => {
     expect(TuiRuntimeSnapshotSchema.safeParse(snapshot).success).toBe(true)
     expect(snapshot.projectDir).toBe(realpathSync.native(resolve(projectDir)))
     expect(snapshot.activeAgents).toEqual([
-      { name: "sisyphus", status: "busy" },
-      { name: "atlas", status: "retry" },
+      { name: "cerberus", status: "busy" },
+      { name: "argus", status: "retry" },
     ])
     expect(snapshot.jobBoard).toEqual([
-      { title: "Explore runtime", status: "running", toolCalls: 3, lastTool: "grep" },
+      { title: "Scout runtime", status: "running", toolCalls: 3, lastTool: "grep" },
     ])
     expect(snapshot.loop).toEqual({
       kind: "live",
@@ -187,11 +187,11 @@ describe("buildTuiRuntimeSnapshot", () => {
       client: createClient({}),
       backgroundManager: createBackgroundManager([
         {
-          title: "atlas background task",
+          title: "argus background task",
           status: "running",
           toolCalls: 1,
           lastTool: "read",
-          agent: "atlas",
+          agent: "argus",
         },
       ]),
       sessionAgentResolver: resolveTestSessionAgent,
@@ -200,7 +200,7 @@ describe("buildTuiRuntimeSnapshot", () => {
     // then
     expect(snapshot.loop?.activeGoal).toBeNull()
     expect(snapshot.jobBoard).toEqual([
-      { title: "atlas background task", status: "running", toolCalls: 1, lastTool: "read" },
+      { title: "argus background task", status: "running", toolCalls: 1, lastTool: "read" },
     ])
     expect(JSON.stringify(snapshot)).not.toContain("sk-live")
   })

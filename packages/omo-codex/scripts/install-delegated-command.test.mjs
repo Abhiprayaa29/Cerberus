@@ -1,4 +1,4 @@
-import assert from "node:assert/strict";
+﻿import assert from "node:assert/strict";
 import test from "node:test";
 
 import { buildDelegatedOmoInvocation, runDelegatedOmoCommand } from "./install-local.mjs";
@@ -74,5 +74,5 @@ test("#given a dry-run passthrough #when delegating #then logs the invocation wi
 
 	// then
 	assert.equal(ran, false);
-	assert.match(logged, /npx --yes --package oh-my-openagent omo doctor/);
+	assert.match(logged, /npx --yes --package oh-my-open-pentest omo doctor/);
 });

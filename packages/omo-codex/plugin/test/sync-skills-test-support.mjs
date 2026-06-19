@@ -1,4 +1,4 @@
-import assert from "node:assert/strict";
+﻿import assert from "node:assert/strict";
 import { readdir } from "node:fs/promises";
 import { join } from "node:path";
 
@@ -23,7 +23,7 @@ export const expectedSkills = [
 	"rules",
 	"start-work",
 	"ultraresearch",
-	"ulw-loop",
+	"pentest-loop",
 	"ulw-plan",
 	"visual-qa",
 ];
@@ -32,8 +32,8 @@ export const componentSkillSources = [
 	["comment-checker", "components/comment-checker/skills/comment-checker"],
 	["lsp", "components/lsp/skills/lsp"],
 	["rules", "components/rules/skills/rules"],
-	["ulw-loop", "components/ulw-loop/skills/ulw-loop"],
-	["ulw-plan", "components/ultrawork/skills/ulw-plan"],
+	["pentest-loop", "components/pentest-loop/skills/pentest-loop"],
+	["ulw-plan", "components/fullscan/skills/ulw-plan"],
 ];
 
 const codexCompatibilityEndMarkers = [

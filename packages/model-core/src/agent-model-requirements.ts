@@ -1,7 +1,7 @@
-import type { ModelRequirement } from "./model-requirement-types"
+﻿import type { ModelRequirement } from "./model-requirement-types"
 
 export const AGENT_MODEL_REQUIREMENTS: Record<string, ModelRequirement> = {
-  sisyphus: {
+  cerberus: {
     fallbackChain: [
       {
         providers: ["anthropic", "github-copilot", "opencode", "vercel"],
@@ -29,7 +29,7 @@ export const AGENT_MODEL_REQUIREMENTS: Record<string, ModelRequirement> = {
     ],
     requiresAnyModel: true,
   },
-  hephaestus: {
+  scylla: {
     fallbackChain: [
       {
         providers: ["openai", "github-copilot", "venice", "opencode", "vercel"],
@@ -60,7 +60,7 @@ export const AGENT_MODEL_REQUIREMENTS: Record<string, ModelRequirement> = {
       { providers: ["opencode-go", "vercel"], model: "glm-5.1" },
     ],
   },
-  librarian: {
+  intel: {
     fallbackChain: [
       { providers: ["openai"], model: "gpt-5.4-mini-fast" },
       { providers: ["opencode-go", "bailian-coding-plan"], model: "qwen3.5-plus" },
@@ -84,7 +84,7 @@ export const AGENT_MODEL_REQUIREMENTS: Record<string, ModelRequirement> = {
       { providers: ["openai", "vercel"], model: "gpt-5.4-nano" },
     ],
   },
-  "multimodal-looker": {
+  "lens": {
     fallbackChain: [
       { providers: ["openai", "opencode", "vercel"], model: "gpt-5.5", variant: "medium" },
       { providers: ["opencode-go", "vercel"], model: "kimi-k2.6" },
@@ -92,7 +92,7 @@ export const AGENT_MODEL_REQUIREMENTS: Record<string, ModelRequirement> = {
       { providers: ["openai", "github-copilot", "opencode", "vercel"], model: "gpt-5-nano" },
     ],
   },
-  prometheus: {
+  talos: {
     fallbackChain: [
       {
         providers: ["anthropic", "github-copilot", "opencode", "vercel"],
@@ -111,7 +111,7 @@ export const AGENT_MODEL_REQUIREMENTS: Record<string, ModelRequirement> = {
       },
     ],
   },
-  metis: {
+  vanguard: {
     fallbackChain: [
       {
         providers: ["anthropic", "github-copilot", "opencode", "vercel"],
@@ -131,7 +131,7 @@ export const AGENT_MODEL_REQUIREMENTS: Record<string, ModelRequirement> = {
       { providers: ["kimi-for-coding"], model: "k2p5" },
     ],
   },
-  momus: {
+  sentinel: {
     fallbackChain: [
       {
         providers: ["openai", "github-copilot", "opencode", "vercel"],
@@ -165,7 +165,7 @@ export const AGENT_MODEL_REQUIREMENTS: Record<string, ModelRequirement> = {
       { providers: ["opencode-go", "vercel"], model: "minimax-m2.7" },
     ],
   },
-  "sisyphus-junior": {
+  "cerberus-junior": {
     fallbackChain: [
       { providers: ["anthropic", "github-copilot", "opencode", "vercel"], model: "claude-sonnet-4-6" },
       { providers: ["opencode-go", "vercel"], model: "kimi-k2.6" },

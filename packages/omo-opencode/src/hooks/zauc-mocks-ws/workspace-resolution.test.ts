@@ -1,4 +1,4 @@
-import type { PluginInput } from "@opencode-ai/plugin"
+﻿import type { PluginInput } from "@opencode-ai/plugin"
 import { afterEach, beforeEach, describe, expect, it, mock } from "bun:test"
 import { existsSync, mkdirSync, rmSync, writeFileSync } from "node:fs"
 import { join } from "node:path"
@@ -54,7 +54,7 @@ async function createRunner() {
       configJson: join(TEST_CONFIG_DIR, "opencode.json"),
       configJsonc: join(TEST_CONFIG_DIR, "opencode.jsonc"),
       packageJson: join(TEST_CONFIG_DIR, "package.json"),
-      omoConfig: join(TEST_CONFIG_DIR, "oh-my-openagent.json"),
+      omoConfig: join(TEST_CONFIG_DIR, "oh-my-open-pentest.json"),
     }),
     invalidatePackage: mockInvalidatePackage as never,
     extractChannel: mockExtractChannel,

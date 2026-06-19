@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it } from "bun:test"
+﻿import { afterEach, describe, expect, it } from "bun:test"
 
 import {
   _resetForTesting,
@@ -45,7 +45,7 @@ function createMinimalEventHandler() {
       stopContinuationGuard: { event: async () => {}, isStopped: () => false },
       compactionTodoPreserver: { event: async () => {} },
       writeExistingFileGuard: { event: async () => {} },
-      atlasHook: { handler: async () => {} },
+      argusHook: { handler: async () => {} },
     } as never,
   })
 }

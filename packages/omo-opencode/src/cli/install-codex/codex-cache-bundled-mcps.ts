@@ -1,1 +1,1 @@
-export * from "@oh-my-opencode/omo-codex/install/codex-cache-bundled-mcps"
+﻿export * from "@oh-my-open-pentest/omo-codex/install/codex-cache-bundled-mcps"

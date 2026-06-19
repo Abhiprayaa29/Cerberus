@@ -1,6 +1,6 @@
-{
+﻿{
   "name": "hashline-edit-tests",
-  "version": "0.1.0",
+  "version": "0...0",
   "private": true,
   "type": "module",
   "description": "Hashline edit tool integration tests using Vercel AI SDK",
@@ -11,8 +11,8 @@
     "test:all": "bun run test:basic && bun run test:edge"
   },
   "dependencies": {
-    "@ai-sdk/openai-compatible": "^2.0.47",
-    "ai": "^6.0.184",
-    "zod": "^4.4.3"
+    "@ai-sdk/openai-compatible": "^2.0..7",
+    "ai": "^6.0..8.",
+    "zod": "^....3"
   }
 }

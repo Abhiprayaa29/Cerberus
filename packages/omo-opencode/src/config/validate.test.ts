@@ -1,4 +1,4 @@
-import { describe, expect, it } from "bun:test"
+﻿import { describe, expect, it } from "bun:test"
 import { existsSync, mkdirSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs"
 import { tmpdir } from "node:os"
 import { join } from "node:path"
@@ -88,7 +88,7 @@ describe("validatePluginConfig", () => {
   it("allows tui sidebar to be disabled by config", () => {
     withIsolatedConfig("disabled", (root) => {
       const project = join(root, "project")
-      writeJson(join(project, ".opencode", "oh-my-openagent.json"), {
+      writeJson(join(project, ".opencode", "oh-my-open-pentest.json"), {
         tui: { sidebar: { enabled: false } },
       })
 
@@ -104,14 +104,14 @@ describe("validatePluginConfig", () => {
       const project = join(root, "project")
       const child = join(project, "child", "deep")
       mkdirSync(child, { recursive: true })
-      writeJson(join(project, ".opencode", "oh-my-openagent.json"), {
-        agents: { sisyphus: { model: 123 } },
+      writeJson(join(project, ".opencode", "oh-my-open-pentest.json"), {
+        agents: { cerberus: { model: 123 } },
       })
 
       const result = validatePluginConfig(child)
 
       expect(result.valid).toBe(false)
-      expect(result.messages.some((message: string) => message.includes("agents.sisyphus.model"))).toBe(true)
+      expect(result.messages.some((message: string) => message.includes("agents.cerberus.model"))).toBe(true)
     })
   })
 
@@ -121,11 +121,11 @@ describe("validatePluginConfig", () => {
       const near = join(far, "near")
       const child = join(near, "child")
       mkdirSync(child, { recursive: true })
-      writeJson(join(far, ".opencode", "oh-my-openagent.json"), {
+      writeJson(join(far, ".opencode", "oh-my-open-pentest.json"), {
         tui: { sidebar: { enabled: false } },
         team_mode: { enabled: false },
       })
-      writeJson(join(near, ".opencode", "oh-my-openagent.json"), {
+      writeJson(join(near, ".opencode", "oh-my-open-pentest.json"), {
         tui: { sidebar: { enabled: true } },
         team_mode: { enabled: true },
       })
@@ -141,8 +141,8 @@ describe("validatePluginConfig", () => {
   it("keeps valid config sections from a partially invalid layer", () => {
     withIsolatedConfig("partial", (root) => {
       const project = join(root, "project")
-      writeJson(join(project, ".opencode", "oh-my-openagent.json"), {
-        agents: { sisyphus: { model: 123 } },
+      writeJson(join(project, ".opencode", "oh-my-open-pentest.json"), {
+        agents: { cerberus: { model: 123 } },
         tui: { sidebar: { enabled: false } },
       })
 
@@ -150,17 +150,17 @@ describe("validatePluginConfig", () => {
 
       expect(result.valid).toBe(false)
       expect(result.config.tui?.sidebar.enabled).toBe(false)
-      expect(result.messages.some((message: string) => message.includes("agents.sisyphus.model"))).toBe(true)
+      expect(result.messages.some((message: string) => message.includes("agents.cerberus.model"))).toBe(true)
     })
   })
 
   it("applies disabled provider substitutions like the runtime loader", () => {
     withIsolatedConfig("disabled-provider", (root) => {
       const project = join(root, "project")
-      writeJson(join(project, ".opencode", "oh-my-openagent.json"), {
+      writeJson(join(project, ".opencode", "oh-my-open-pentest.json"), {
         disabled_providers: ["blocked"],
         agents: {
-          sisyphus: {
+          cerberus: {
             model: "blocked/primary",
             fallback_models: ["allowed/fallback"],
           },
@@ -170,8 +170,8 @@ describe("validatePluginConfig", () => {
       const readonlyResult = validatePluginConfig(project)
       const runtimeConfig = loadPluginConfig(project, {})
 
-      expect(readonlyResult.config.agents?.sisyphus?.model).toBe("allowed/fallback")
-      expect(readonlyResult.config.agents?.sisyphus?.model).toBe(runtimeConfig.agents?.sisyphus?.model)
+      expect(readonlyResult.config.agents?.cerberus?.model).toBe("allowed/fallback")
+      expect(readonlyResult.config.agents?.cerberus?.model).toBe(runtimeConfig.agents?.cerberus?.model)
     })
   })
 
@@ -180,7 +180,7 @@ describe("validatePluginConfig", () => {
       const project = join(root, "project")
       const configDir = join(project, ".opencode")
       mkdirSync(configDir, { recursive: true })
-      writeJson(join(configDir, "oh-my-opencode.json"), {
+      writeJson(join(configDir, "oh-my-open-pentest.json"), {
         tui: { sidebar: { enabled: false } },
       })
       const before = snapshotFiles(configDir)
@@ -190,7 +190,7 @@ describe("validatePluginConfig", () => {
       expect(result.valid).toBe(true)
       expect(result.config.tui?.sidebar.enabled).toBe(false)
       expect(snapshotFiles(configDir)).toEqual(before)
-      expect(existsSync(join(configDir, "oh-my-openagent.json"))).toBe(false)
+      expect(existsSync(join(configDir, "oh-my-open-pentest.json"))).toBe(false)
     })
   })
 })

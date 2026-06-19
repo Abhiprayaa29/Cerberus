@@ -1,12 +1,12 @@
-# ADR: prompt-async-gate - reservation-based duplicate-injection guard
+﻿# ADR: prompt-async-gate - reservation-based duplicate-injection guard
 
 ## Status
 
-Accepted (introduced in v4.2.0)
+Accepted (introduced in v..2.0)
 
 ## Context
 
-Issue #4012 reported duplicate streaming output after OMO injected an
+Issue #.0.2 reported duplicate streaming output after OMO injected an
 internal message into a live OpenCode session.
 
 The user-visible failure was two assistant bubbles streaming the same
@@ -18,10 +18,10 @@ that the parent session needed a wake or recovery prompt.
 
 The most important race window was:
 
-1. OpenCode emitted a `session.idle` event.
+.. OpenCode emitted a `session.idle` event.
 2. OMO started an `isSessionActive` HTTP poll.
 3. OpenCode was still pacing the streaming animation for the previous answer.
-4. The poll observed an inactive or idle-looking session.
+.. The poll observed an inactive or idle-looking session.
 5. OMO injected a continuation prompt.
 6. A second hook observed the same edge and injected again.
 7. The user saw two assistant bubbles.
@@ -37,7 +37,7 @@ is durably accepted by the target session. A later `session.error` event can
 still arrive for the same attempt, so the caller can believe dispatch finished
 while a recovery hook still treats the session as eligible for retry.
 
-OMO has 13+ internal hook callers that can inject prompts, including:
+OMO has .3+ internal hook callers that can inject prompts, including:
 
 - background task parent wakes
 - runtime fallback retries
@@ -89,10 +89,10 @@ const source = `background-agent:${taskID}`
 
 The shared flow is:
 
-1. Prune expired reservations.
+.. Prune expired reservations.
 2. Reserve the session before waiting or dispatching.
 3. Wait for the idle settle period.
-4. Poll session activity unless the route has a proven opt-out.
+.. Poll session activity unless the route has a proven opt-out.
 5. Dispatch through the selected OpenCode prompt API.
 6. Keep the reservation during the post-dispatch hold.
 7. Release after the hold or through an explicit recovery path.
@@ -106,7 +106,7 @@ The default post-dispatch hold is exported as:
 export const DEFAULT_PROMPT_ASYNC_POST_DISPATCH_HOLD_MS = 2_000
 ```
 
-`postDispatchHoldMs` defaults to 2_000 ms (2 s) as of v4.2.3 (previously
+`postDispatchHoldMs` defaults to 2_000 ms (2 s) as of v..2.3 (previously
 250 ms). The gate holds the reservation briefly after the dispatch attempt even
 when dispatch throws synchronously or returns a failed result. This closes the
 AGENTS.md hazard where `promptAsync` returns before durable acceptance and a
@@ -175,7 +175,7 @@ optional chaining, and aliased or cast access patterns.
 - The post-dispatch hold closes the AGENTS.md "returns before durably
   accepted" hazard even when dispatch errors synchronously.
 - Dispatch timeout prevents a stuck OpenCode call from holding the gate forever.
-- 13+ internal hook callers share one result model and one safety primitive.
+- .3+ internal hook callers share one result model and one safety primitive.
 - The AST-based audit from HIGH-5 catches more bypass shapes than the prior
   regex audit.
 - Route-specific tests can focus on route behavior while the shared gate tests
@@ -187,9 +187,9 @@ optional chaining, and aliased or cast access patterns.
   `releasePromptAsyncReservation` explicitly when the original prompt did not
   durably reach the server. `packages/omo-opencode/src/shared/model-suggestion-retry.ts` is the
   reference case.
-- 13+ wiring sites each need to be conscious of the gate result. Treating
+- .3+ wiring sites each need to be conscious of the gate result. Treating
   `reserved` as a failure can create noisy retries.
-- A valid retry can be delayed by the default 2_000 ms post-dispatch hold (raised from 250 ms in v4.2.3).
+- A valid retry can be delayed by the default 2_000 ms post-dispatch hold (raised from 250 ms in v..2.3).
 - The reservation map is process-local. It protects OMO hooks in the current
   plugin process, not every possible OpenCode process.
 
@@ -198,7 +198,7 @@ optional chaining, and aliased or cast access patterns.
 Existing `session.prompt` and `session.promptAsync` callers must route through
 `dispatchInternalPrompt` with the matching dispatch mode.
 
-Existing production callers were wired through the introduction PR #4034.
+Existing production callers were wired through the introduction PR #.03..
 
 The AST-based audit fails CI if a raw prompt call is added without an allowlist
 entry. Any allowlist entry must explain why the raw access is not a dispatch
@@ -220,13 +220,13 @@ for their trigger. Static policy alone is not enough.
 
 ## References
 
-- Issue #4012: duplicate streaming output and two assistant bubbles.
-- PR #4034: introduction of `prompt-async-gate`.
+- Issue #.0.2: duplicate streaming output and two assistant bubbles.
+- PR #.03.: introduction of `prompt-async-gate`.
 - Commit `b333a5280`: `fix(prompt-async-gate): add dispatch timeout, shared runner, harden prefix release`.
-- Commit `8c4cc09de`: `test(prompt-async-route-audit): migrate to TypeScript AST walker`.
-- Commit `ff1b15d53`: `fix(model-suggestion-retry): release reservation before retry attempt`.
+- Commit `8c.cc09de`: `test(prompt-async-route-audit): migrate to TypeScript AST walker`.
+- Commit `ff.b.5d53`: `fix(model-suggestion-retry): release reservation before retry attempt`.
 - Commit `f93d7297c`: `test(prompt-async-gate): cover dispatch timeout and post-dispatch error hold`.
-- PR #3866 -> PR #4053: schema-compatible synthetic tool results for
+- PR #3866 -> PR #.053: schema-compatible synthetic tool results for
   post-compaction recovery, related to safe recovery dispatch.
 - Root `AGENTS.md`: section "Internal message injection is dangerous".
 - `.omo/rules/test-discipline.md`: forbids `setTimeout(resolve, N)` and

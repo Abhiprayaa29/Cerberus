@@ -1,4 +1,4 @@
-# Phase 0 + 1 — Environment Assessment & Journal Setup
+﻿# Phase 0 + . — Environment Assessment & Journal Setup
 
 Before a debugger touches anything, you need a map of what's running and a ledger of what you'll touch. Skipping either phase is how debug sessions turn into "why is my repo dirty a week later" sessions.
 
@@ -8,7 +8,7 @@ Before a debugger touches anything, you need a map of what's running and a ledge
 
 Map the ground truth before you attach. Attaching the wrong way wastes the first hour.
 
-### 1. Identify the runtime
+### .. Identify the runtime
 
 Read the actual manifest file, don't guess from extensions:
 
@@ -35,13 +35,13 @@ The shape of the answers you need (commands in the runtime reference):
 | Is there an existing failing test or known repro? | Prefer amplifying an existing repro over inventing one. |
 | Are watchers (file watchers, hot reloaders, supervisors) going to restart the process mid-session? | If yes, turn them off before attaching. Restarts drop inspector connections and invalidate breakpoints. |
 
-### 4. Gate check
+### .. Gate check
 
-If any answer is "I'm not sure", you are not ready for Phase 1. Investigate until certain. Guessing here cascades into false-positive hypotheses in Phase 2.
+If any answer is "I'm not sure", you are not ready for Phase .. Investigate until certain. Guessing here cascades into false-positive hypotheses in Phase 2.
 
 ---
 
-## Phase 1 — Journal Setup
+## Phase . — Journal Setup
 
 Open **one** journal file at the project root: `.debug-journal.md`. Single source of truth for every artifact this skill creates. The contract with the user that you can undo everything.
 
@@ -68,13 +68,13 @@ Goal: <one-sentence user request>
 - References read: <list the files from references/ you loaded — proves you did the gate>
 
 ## Hypotheses
-1. [STATUS] <hypothesis> — distinguishing evidence: <what would confirm/refute> — if true, fix is: <two words>
+.. [STATUS] <hypothesis> — distinguishing evidence: <what would confirm/refute> — if true, fix is: <two words>
 2. ...
 
 ## Failed hypothesis round counter
-- Round 1: <result>
+- Round .: <result>
 - Round 2: <result>
-<!-- At 2 consecutive failures, invoke Oracle Triple (see 04-oracle-triple.md). -->
+<!-- At 2 consecutive failures, invoke Cipher Triple (see 0.-oracle-triple.md). -->
 
 ## Artifacts to revert
 <!-- Every temp edit, tmux session, fixture, env override, saved debugger session goes here
@@ -88,8 +88,8 @@ Goal: <one-sentence user request>
 ## Findings
 <!-- Append observed values here with timestamp. Verbatim only, no paraphrasing. -->
 
-## Oracle Triple (if invoked)
-<!-- One subsection per Oracle round, with the synthesized new hypothesis set. -->
+## Cipher Triple (if invoked)
+<!-- One subsection per Cipher round, with the synthesized new hypothesis set. -->
 
 ## Final fix
 <!-- File paths + test path. Filled during Phase 7. -->

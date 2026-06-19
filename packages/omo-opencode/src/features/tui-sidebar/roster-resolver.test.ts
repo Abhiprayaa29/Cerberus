@@ -1,4 +1,4 @@
-import { describe, expect, it } from "bun:test"
+﻿import { describe, expect, it } from "bun:test"
 import { mkdirSync, rmSync, writeFileSync } from "node:fs"
 import { tmpdir } from "node:os"
 import { join } from "node:path"
@@ -61,7 +61,7 @@ describe("resolveRoster", () => {
 
       // then
       expect(rows.length).toBeGreaterThan(0)
-      expect(rows.some((row) => row.label === "sisyphus")).toBe(true)
+      expect(rows.some((row) => row.label === "cerberus")).toBe(true)
       expect(rows.some((row) => row.label === "deep")).toBe(true)
     })
   })
@@ -70,9 +70,9 @@ describe("resolveRoster", () => {
     withIsolatedConfig("overrides", (root) => {
       // given
       const project = join(root, "project")
-      writeJson(join(project, ".opencode", "oh-my-openagent.json"), {
+      writeJson(join(project, ".opencode", "oh-my-open-pentest.json"), {
         agents: {
-          sisyphus: { model: "provider/family/model-leaf" },
+          cerberus: { model: "provider/family/model-leaf" },
         },
         categories: {
           deep: { model: "simple-model" },
@@ -84,7 +84,7 @@ describe("resolveRoster", () => {
 
       // then
       expect(rows).toEqual([...rows].sort((left, right) => left.label.localeCompare(right.label)))
-      expect(rows).toContainEqual({ label: "sisyphus", model: "model-leaf" })
+      expect(rows).toContainEqual({ label: "cerberus", model: "model-leaf" })
       expect(rows).toContainEqual({ label: "deep", model: "simple-model" })
     })
   })
@@ -93,8 +93,8 @@ describe("resolveRoster", () => {
     withIsolatedConfig("malformed", (root) => {
       // given
       const project = join(root, "project")
-      writeJson(join(project, ".opencode", "oh-my-openagent.json"), {
-        agents: { sisyphus: { model: 123 } },
+      writeJson(join(project, ".opencode", "oh-my-open-pentest.json"), {
+        agents: { cerberus: { model: 123 } },
       })
 
       // when
@@ -102,7 +102,7 @@ describe("resolveRoster", () => {
 
       // then
       expect(rows.length).toBeGreaterThan(0)
-      expect(rows.some((row) => row.label === "sisyphus")).toBe(true)
+      expect(rows.some((row) => row.label === "cerberus")).toBe(true)
     })
   })
 })

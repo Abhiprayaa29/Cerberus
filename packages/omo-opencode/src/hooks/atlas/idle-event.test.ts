@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it, mock } from "bun:test"
+﻿import { afterEach, beforeEach, describe, expect, it, mock } from "bun:test"
 import type { PluginInput } from "@opencode-ai/plugin"
 import { randomUUID } from "node:crypto"
 import { existsSync, mkdirSync, rmSync, writeFileSync } from "node:fs"
@@ -11,22 +11,22 @@ import {
   releasePromptAsyncReservation,
 } from "../shared/prompt-async-gate"
 import { handleCompletedBoulderIdle } from "./idle-completion-nudge"
-import { handleAtlasSessionIdle } from "./idle-event"
+import { handleArgusSessionIdle } from "./idle-event"
 import type { SessionState } from "./types"
 import { unsafeTestValue } from "../../../../../test-support/unsafe-test-value"
 
-describe("handleAtlasSessionIdle completion nudge", () => {
+describe("handleArgusSessionIdle completion nudge", () => {
   const SESSION_ID = "session-main-1"
 
   let testDirectory = ""
 
   beforeEach(() => {
-    testDirectory = join(tmpdir(), `atlas-idle-complete-${randomUUID()}`)
+    testDirectory = join(tmpdir(), `argus-idle-complete-${randomUUID()}`)
     if (!existsSync(testDirectory)) {
       mkdirSync(testDirectory, { recursive: true })
     }
     _resetForTesting()
-    registerAgentName("atlas")
+    registerAgentName("argus")
   })
 
   afterEach(() => {
@@ -42,7 +42,7 @@ describe("handleAtlasSessionIdle completion nudge", () => {
     const planPath = join(testDirectory, "plan.md")
     writeFileSync(planPath, "## TODOs\n- [x] 1. Parse input\n- [x] 2. Save output\n")
 
-    const boulder = createBoulderState(planPath, SESSION_ID, "atlas")
+    const boulder = createBoulderState(planPath, SESSION_ID, "argus")
     const workId = boulder.active_work_id
     if (!workId) {
       throw new Error("Expected active_work_id")
@@ -121,13 +121,13 @@ describe("handleAtlasSessionIdle completion nudge", () => {
     }
 
     // when
-    await handleAtlasSessionIdle({
+    await handleArgusSessionIdle({
       ctx,
       sessionID: SESSION_ID,
       getState,
     })
 
-    await handleAtlasSessionIdle({
+    await handleArgusSessionIdle({
       ctx,
       sessionID: SESSION_ID,
       getState,
@@ -156,7 +156,7 @@ describe("handleAtlasSessionIdle completion nudge", () => {
     const planPath = join(testDirectory, "plan.md")
     writeFileSync(planPath, "## TODOs\n- [x] 1. Parse input\n")
 
-    const boulder = createBoulderState(planPath, SESSION_ID, "atlas")
+    const boulder = createBoulderState(planPath, SESSION_ID, "argus")
     const workId = boulder.active_work_id
     if (!workId) {
       throw new Error("Expected active_work_id")
@@ -192,15 +192,15 @@ describe("handleAtlasSessionIdle completion nudge", () => {
     }
 
     // when
-    await handleAtlasSessionIdle({
+    await handleArgusSessionIdle({
       ctx,
       sessionID: SESSION_ID,
       getState,
     })
     const released = releasePromptAsyncReservation(SESSION_ID, "test:simulate-expired-hold", {
-      reservedBy: "atlas",
+      reservedBy: "argus",
     })
-    await handleAtlasSessionIdle({
+    await handleArgusSessionIdle({
       ctx,
       sessionID: SESSION_ID,
       getState,
@@ -217,7 +217,7 @@ describe("handleAtlasSessionIdle completion nudge", () => {
     const planPath = join(testDirectory, "plan.md")
     writeFileSync(planPath, "## TODOs\n- [x] 1. Parse input\n")
 
-    const boulder = createBoulderState(planPath, SESSION_ID, "atlas")
+    const boulder = createBoulderState(planPath, SESSION_ID, "argus")
     const workId = boulder.active_work_id
     if (!workId) {
       throw new Error("Expected active_work_id")
@@ -247,7 +247,7 @@ describe("handleAtlasSessionIdle completion nudge", () => {
     }
 
     // when
-    await handleAtlasSessionIdle({
+    await handleArgusSessionIdle({
       ctx,
       sessionID: SESSION_ID,
       getState,
@@ -269,7 +269,7 @@ describe("handleAtlasSessionIdle completion nudge", () => {
     const planPath = join(testDirectory, "plan.md")
     writeFileSync(planPath, "## TODOs\n- [x] 1. Parse input\n")
 
-    const boulder = createBoulderState(planPath, SESSION_ID, "atlas")
+    const boulder = createBoulderState(planPath, SESSION_ID, "argus")
     const workId = boulder.active_work_id
     if (!workId) {
       throw new Error("Expected active_work_id")
@@ -400,7 +400,7 @@ describe("handleAtlasSessionIdle completion nudge", () => {
     const planPath = join(testDirectory, "plan.md")
     writeFileSync(planPath, "## TODOs\n- [ ] 1. Parse input\n")
 
-    const boulder = createBoulderState(planPath, SESSION_ID, "atlas")
+    const boulder = createBoulderState(planPath, SESSION_ID, "argus")
     writeBoulderState(testDirectory, boulder)
 
     const promptAsyncMock = mock(async () => ({ data: {} }))
@@ -424,13 +424,13 @@ describe("handleAtlasSessionIdle completion nudge", () => {
     }
 
     // when
-    await handleAtlasSessionIdle({
+    await handleArgusSessionIdle({
       ctx,
       sessionID: SESSION_ID,
       getState,
       options: {
         directory: testDirectory,
-        backgroundManager: unsafeTestValue<NonNullable<Parameters<typeof handleAtlasSessionIdle>[0]["options"]>["backgroundManager"]>({
+        backgroundManager: unsafeTestValue<NonNullable<Parameters<typeof handleArgusSessionIdle>[0]["options"]>["backgroundManager"]>({
           getTasksByParentSession: () => [{ status: "pending" }],
         }),
       },

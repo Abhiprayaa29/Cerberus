@@ -1,7 +1,7 @@
-import { mkdir, writeFile } from "node:fs/promises";
+﻿import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 
-export const QA_DIR = ".omo/ulw-loop/qa";
+export const QA_DIR = ".omo/pentest-loop/qa";
 export const CODE_REVIEW_PATH = `${QA_DIR}/code-review.md`;
 export const GATE_REVIEW_PATH = `${QA_DIR}/gate-review.md`;
 export const CLI_PASS_PATH = `${QA_DIR}/cli-pass.txt`;
@@ -36,7 +36,7 @@ export async function qualityGateJson(repoRoot: string, cliArtifactPath = CLI_PA
 					id: "surface-cli-pass",
 					criterionRef: "C001",
 					surface: "cli",
-					invocation: "omo ulw-loop checkpoint --status complete",
+					invocation: "omo pentest-loop checkpoint --status complete",
 					verdict: "passed",
 					artifactRefs: ["artifact-cli-pass"],
 				},

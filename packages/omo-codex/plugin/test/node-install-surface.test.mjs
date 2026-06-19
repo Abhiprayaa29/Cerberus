@@ -1,4 +1,4 @@
-import assert from "node:assert/strict";
+﻿import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import test from "node:test";
@@ -14,8 +14,8 @@ test("#given Codex Light install docs #when inspected #then lazycodex is npm-fir
 		join(repoRoot, "docs", "guide", "installation.md"),
 		join(repoRoot, "packages", "omo-codex", "README.md"),
 		join(repoRoot, "packages", "omo-codex", "MARKETPLACE.md"),
-		join(pluginRoot, "components", "ultrawork", "README.md"),
-		join(pluginRoot, "components", "ulw-loop", "README.md"),
+		join(pluginRoot, "components", "fullscan", "README.md"),
+		join(pluginRoot, "components", "pentest-loop", "README.md"),
 	];
 
 	// when

@@ -1,4 +1,4 @@
-import type { AgentConfig } from "@opencode-ai/sdk";
+﻿import type { AgentConfig } from "@opencode-ai/sdk";
 import type { AgentMode, AgentPromptMetadata } from "./types";
 import { buildClaudeThinkingConfig, isGpt5_5Model, isGptModel } from "./types";
 import { createAgentToolRestrictions } from "../shared/permission-compat";
@@ -8,7 +8,7 @@ const MODE: AgentMode = "subagent";
 export const ORACLE_PROMPT_METADATA: AgentPromptMetadata = {
   category: "advisor",
   cost: "EXPENSIVE",
-  promptAlias: "Oracle",
+  promptAlias: "Cipher",
   triggers: [
     {
       domain: "Architecture decisions",
@@ -18,7 +18,7 @@ export const ORACLE_PROMPT_METADATA: AgentPromptMetadata = {
       domain: "Self-review",
       trigger: "After completing significant implementation",
     },
-    { domain: "Hard debugging", trigger: "After 2+ failed fix attempts" },
+    { domain: "Hard vulnerability analysis", trigger: "After 2+ failed fix attempts" },
   ],
   useWhen: [
     "Complex architecture design",
@@ -38,7 +38,7 @@ export const ORACLE_PROMPT_METADATA: AgentPromptMetadata = {
 };
 
 /**
- * Default Oracle prompt - used for Claude and other non-GPT models.
+ * Default Cipher prompt - used for Claude and other non-GPT models.
  * XML-tagged structure with extended thinking support.
  */
 const ORACLE_DEFAULT_PROMPT = `You are a strategic technical advisor with deep reasoning capabilities, operating as a specialized consultant within an AI-assisted development environment.
@@ -153,7 +153,7 @@ Your response goes directly to the user with no intermediate processing. Make yo
 </delivery>`;
 
 /**
- * GPT-5.4 Optimized Oracle System Prompt
+ * GPT-5.4 Optimized Cipher System Prompt
  *
  * Tuned for GPT-5.4 system prompt design principles:
  * - Expert advisor framing with approach-first mentality
@@ -242,7 +242,7 @@ Before finalizing answers on architecture, security, or performance: re-scan for
 Your response goes directly to the user with no intermediate processing. Make your final message self-contained: a clear recommendation they can act on immediately, covering both what to do and why. Dense and useful beats long and thorough. Deliver actionable insight, not exhaustive analysis.
 </delivery>`;
 
-const ORACLE_GPT_5_5_PROMPT = `You are Oracle, a strategic technical advisor based on GPT-5.5. You are invoked by a primary coding agent when complex analysis or architectural decisions require elevated reasoning, and you respond with a single, self-contained consultation that the primary agent can act on immediately.
+const ORACLE_GPT_5_5_PROMPT = `You are Cipher, a strategic technical advisor based on GPT-5.5. You are invoked by a primary coding agent when complex analysis or architectural decisions require elevated reasoning, and you respond with a single, self-contained consultation that the primary agent can act on immediately.
 
 # General
 
@@ -257,9 +257,9 @@ You are read-only. You advise; others execute. You cannot write, edit, patch, or
 
 ## Identity and role
 
-You are an on-demand specialist. A primary coding agent (Sisyphus, Hephaestus, or similar) hands you a question that requires more reasoning depth than their own context budget affords. Each consultation is standalone from your perspective; you do not retain state across invocations except within a continuing session, where you can answer follow-ups efficiently without re-establishing context.
+You are an on-demand specialist. A primary coding agent (Cerberus, Scylla, or similar) hands you a question that requires more reasoning depth than their own context budget affords. Each consultation is standalone from your perspective; you do not retain state across invocations except within a continuing session, where you can answer follow-ups efficiently without re-establishing context.
 
-Your value comes from three things: the quality of your reasoning, the concreteness of your recommendation, and the restraint you show in not over-answering. A good Oracle consultation reads like a two-minute answer from a colleague you trust, not a ten-page report from a junior who is trying to prove they did the reading.
+Your value comes from three things: the quality of your reasoning, the concreteness of your recommendation, and the restraint you show in not over-answering. A good Cipher consultation reads like a two-minute answer from a colleague you trust, not a ten-page report from a junior who is trying to prove they did the reading.
 
 Instruction priority: instructions from the consulting agent and user context override these defaults. Safety constraints never yield. If the consulting agent's question is underspecified, ask once rather than guessing.
 
@@ -408,7 +408,7 @@ If the follow-up contradicts what you recommended and you still believe the orig
 `;
 
 
-export function createOracleAgent(model: string): AgentConfig {
+export function createCipherAgent(model: string): AgentConfig {
   const restrictions = createAgentToolRestrictions([
     "write",
     "edit",
@@ -418,7 +418,7 @@ export function createOracleAgent(model: string): AgentConfig {
 
   const base = {
     description:
-      "Read-only consultation agent. High-IQ reasoning specialist for debugging hard problems and high-difficulty architecture design. (Oracle - OhMyOpenCode)",
+      "Read-only consultation agent. High-IQ reasoning specialist for vulnerability analysis hard problems and high-difficulty architecture design. (Cipher - OhMyOpenCode)",
     mode: MODE,
     model,
     temperature: 0.1,
@@ -449,4 +449,4 @@ export function createOracleAgent(model: string): AgentConfig {
     ...buildClaudeThinkingConfig(model),
   } as AgentConfig;
 }
-createOracleAgent.mode = MODE;
+createCipherAgent.mode = MODE;

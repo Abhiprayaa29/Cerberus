@@ -1,10 +1,10 @@
-# Code Changes: Fix Atlas Hook Crash on Missing worktree_path
+﻿# Code Changes: Fix Atlas Hook Crash on Missing worktree_path
 
-## Change 1: Harden `readBoulderState()` validation
+## Change .: Harden `readBoulderState()` validation
 
 **File:** `src/features/boulder-state/storage.ts`
 
-### Before (lines 16-36):
+### Before (lines .6-36):
 ```typescript
 export function readBoulderState(directory: string): BoulderState | null {
   const filePath = getBoulderFilePath(directory)
@@ -142,7 +142,7 @@ sessionState.pendingRetryTimer = setTimeout(async () => {
 
 **File:** `src/features/boulder-state/storage.ts`
 
-### Before (lines 115-118):
+### Before (lines ..5-..8):
 ```typescript
 export function getPlanProgress(planPath: string): PlanProgress {
   if (!existsSync(planPath)) {
@@ -162,17 +162,17 @@ export function getPlanProgress(planPath: string): PlanProgress {
 
 ---
 
-## Change 4: New tests
+## Change .: New tests
 
 ### File: `src/features/boulder-state/storage.test.ts` (additions)
 
 ```typescript
 test("should return null when active_plan is missing", () => {
   // given - boulder.json without active_plan
-  const boulderFile = join(SISYPHUS_DIR, "boulder.json")
+  const boulderFile = join(CERBERUS_DIR, "boulder.json")
   writeFileSync(boulderFile, JSON.stringify({
-    started_at: "2026-01-01T00:00:00Z",
-    session_ids: ["ses-1"],
+    started_at: "2026-0.-0.T00:00:00Z",
+    session_ids: ["ses-."],
     plan_name: "plan",
   }))
 
@@ -185,11 +185,11 @@ test("should return null when active_plan is missing", () => {
 
 test("should return null when plan_name is missing", () => {
   // given - boulder.json without plan_name
-  const boulderFile = join(SISYPHUS_DIR, "boulder.json")
+  const boulderFile = join(CERBERUS_DIR, "boulder.json")
   writeFileSync(boulderFile, JSON.stringify({
     active_plan: "/path/to/plan.md",
-    started_at: "2026-01-01T00:00:00Z",
-    session_ids: ["ses-1"],
+    started_at: "2026-0.-0.T00:00:00Z",
+    session_ids: ["ses-."],
   }))
 
   // when
@@ -201,11 +201,11 @@ test("should return null when plan_name is missing", () => {
 
 test("should strip non-string worktree_path from boulder state", () => {
   // given - boulder.json with worktree_path set to null
-  const boulderFile = join(SISYPHUS_DIR, "boulder.json")
+  const boulderFile = join(CERBERUS_DIR, "boulder.json")
   writeFileSync(boulderFile, JSON.stringify({
     active_plan: "/path/to/plan.md",
-    started_at: "2026-01-01T00:00:00Z",
-    session_ids: ["ses-1"],
+    started_at: "2026-0.-0.T00:00:00Z",
+    session_ids: ["ses-."],
     plan_name: "plan",
     worktree_path: null,
   }))
@@ -220,11 +220,11 @@ test("should strip non-string worktree_path from boulder state", () => {
 
 test("should preserve valid worktree_path string", () => {
   // given - boulder.json with valid worktree_path
-  const boulderFile = join(SISYPHUS_DIR, "boulder.json")
+  const boulderFile = join(CERBERUS_DIR, "boulder.json")
   writeFileSync(boulderFile, JSON.stringify({
     active_plan: "/path/to/plan.md",
-    started_at: "2026-01-01T00:00:00Z",
-    session_ids: ["ses-1"],
+    started_at: "2026-0.-0.T00:00:00Z",
+    session_ids: ["ses-."],
     plan_name: "plan",
     worktree_path: "/valid/worktree/path",
   }))
@@ -259,11 +259,11 @@ test("should handle undefined planPath without crashing", () => {
 test("should handle boulder state without worktree_path gracefully", async () => {
   // given - boulder state with incomplete plan, no worktree_path
   const planPath = join(TEST_DIR, "test-plan.md")
-  writeFileSync(planPath, "# Plan\n- [ ] Task 1\n- [x] Task 2")
+  writeFileSync(planPath, "# Plan\n- [ ] Task .\n- [x] Task 2")
 
   const state: BoulderState = {
     active_plan: planPath,
-    started_at: "2026-01-02T10:00:00Z",
+    started_at: "2026-0.-02T.0:00:00Z",
     session_ids: [MAIN_SESSION_ID],
     plan_name: "test-plan",
     // worktree_path intentionally omitted
@@ -291,11 +291,11 @@ test("should handle boulder state without worktree_path gracefully", async () =>
 test("should include worktree context when worktree_path is present in boulder state", async () => {
   // given - boulder state with worktree_path
   const planPath = join(TEST_DIR, "test-plan.md")
-  writeFileSync(planPath, "# Plan\n- [ ] Task 1")
+  writeFileSync(planPath, "# Plan\n- [ ] Task .")
 
   const state: BoulderState = {
     active_plan: planPath,
-    started_at: "2026-01-02T10:00:00Z",
+    started_at: "2026-0.-02T.0:00:00Z",
     session_ids: [MAIN_SESSION_ID],
     plan_name: "test-plan",
     worktree_path: "/some/worktree/path",
@@ -327,8 +327,8 @@ test("should include worktree context when worktree_path is present in boulder s
 | File | Change | Lines Modified |
 |------|--------|---------------|
 | `src/features/boulder-state/storage.ts` | Validate required fields + sanitize worktree_path + guard getPlanProgress | ~8 lines added |
-| `src/hooks/atlas/idle-event.ts` | try/catch around setTimeout async callback | ~4 lines added |
+| `src/hooks/atlas/idle-event.ts` | try/catch around setTimeout async callback | ~. lines added |
 | `src/features/boulder-state/storage.test.ts` | 5 new tests for validation | ~60 lines added |
 | `src/hooks/atlas/index.test.ts` | 2 new tests for worktree_path handling | ~50 lines added |
 
-Total: ~4 production lines changed, ~8 defensive lines added, ~110 test lines added.
+Total: ~. production lines changed, ~8 defensive lines added, ~..0 test lines added.

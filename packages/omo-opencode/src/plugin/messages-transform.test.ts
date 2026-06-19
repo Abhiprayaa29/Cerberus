@@ -1,8 +1,8 @@
-import { describe, it, expect } from "bun:test"
+﻿import { describe, it, expect } from "bun:test"
 
 import { createMessagesTransformHandler } from "./messages-transform"
 import { createToolPairValidatorHook } from "../hooks/tool-pair-validator/hook"
-import { OMO_INTERNAL_INITIATOR_MARKER } from "../shared/internal-initiator-marker"
+import { OMOP_INTERNAL_INITIATOR_MARKER } from "../shared/internal-initiator-marker"
 import type { CreatedHooks } from "../create-hooks"
 
 type TestPart = {
@@ -240,12 +240,12 @@ describe("createMessagesTransformHandler", () => {
           id: "msg_user",
           role: "user",
           sessionID: "ses_opus47_prefill",
-          agent: "sisyphus",
+          agent: "cerberus",
           model: { providerID: "anthropic", modelID: "claude-opus-4-7" },
           system: "system-prompt",
           tools: { bash: true },
         },
-        parts: [{ type: "text", text: "finish the debugging report" }],
+        parts: [{ type: "text", text: "finish the vulnerability analysis report" }],
       },
       {
         info: {
@@ -265,7 +265,7 @@ describe("createMessagesTransformHandler", () => {
     expect(messages.at(-1)?.info).toMatchObject({
       role: "user",
       sessionID: "ses_opus47_prefill",
-      agent: "sisyphus",
+      agent: "cerberus",
       model: { providerID: "anthropic", modelID: "claude-opus-4-7" },
       system: "system-prompt",
       tools: { bash: true },
@@ -285,12 +285,12 @@ describe("createMessagesTransformHandler", () => {
           id: "msg_user_opus48",
           role: "user",
           sessionID: "ses_opus48_prefill",
-          agent: "sisyphus",
+          agent: "cerberus",
           model: { providerID: "anthropic", modelID: "claude-opus-4-8" },
           system: "system-prompt",
           tools: { bash: true },
         },
-        parts: [{ type: "text", text: "finish the debugging report" }],
+        parts: [{ type: "text", text: "finish the vulnerability analysis report" }],
       },
       {
         info: {
@@ -310,7 +310,7 @@ describe("createMessagesTransformHandler", () => {
     expect(messages.at(-1)?.info).toMatchObject({
       role: "user",
       sessionID: "ses_opus48_prefill",
-      agent: "sisyphus",
+      agent: "cerberus",
       model: { providerID: "anthropic", modelID: "claude-opus-4-8" },
       system: "system-prompt",
       tools: { bash: true },
@@ -330,7 +330,7 @@ describe("createMessagesTransformHandler", () => {
           id: "msg_user_assistant_model_fallback",
           role: "user",
           sessionID: "ses_assistant_model_fallback",
-          agent: "sisyphus",
+          agent: "cerberus",
           system: "system-prompt",
           tools: { bash: true },
         },
@@ -355,7 +355,7 @@ describe("createMessagesTransformHandler", () => {
     expect(messages.at(-1)?.info).toMatchObject({
       role: "user",
       sessionID: "ses_assistant_model_fallback",
-      agent: "sisyphus",
+      agent: "cerberus",
       model: { providerID: "internal", modelID: "assistant-prefill-guard" },
       system: "system-prompt",
       tools: { bash: true },
@@ -375,7 +375,7 @@ describe("createMessagesTransformHandler", () => {
           id: "msg_first_user",
           role: "user",
           sessionID: "ses_first_user",
-          agent: "atlas",
+          agent: "argus",
           model: { providerID: "openai", modelID: "gpt-5.4" },
           system: "old-system",
           tools: { read: true },
@@ -387,7 +387,7 @@ describe("createMessagesTransformHandler", () => {
           id: "msg_last_user",
           role: "user",
           sessionID: "ses_last_user",
-          agent: "sisyphus",
+          agent: "cerberus",
           model: { providerID: "anthropic", modelID: "claude-opus-4-8" },
           system: "new-system",
           tools: { bash: true },
@@ -412,7 +412,7 @@ describe("createMessagesTransformHandler", () => {
       id: "msg_tail_without_session_prefill_recovery",
       role: "user",
       sessionID: "ses_last_user",
-      agent: "sisyphus",
+      agent: "cerberus",
       model: { providerID: "anthropic", modelID: "claude-opus-4-8" },
       system: "new-system",
       tools: { bash: true },
@@ -433,7 +433,7 @@ describe("createMessagesTransformHandler", () => {
         info: { role: "user" },
         parts: [{
           type: "text",
-          text: `[session recovered - continuing previous task]\n${OMO_INTERNAL_INITIATOR_MARKER}`,
+          text: `[session recovered - continuing previous task]\n${OMOP_INTERNAL_INITIATOR_MARKER}`,
           synthetic: true,
           metadata: { compaction_continue: true },
         }],
@@ -459,7 +459,7 @@ describe("createMessagesTransformHandler", () => {
           id: "msg_user_recovery_timing",
           role: "user",
           sessionID: "ses_recovery_timing",
-          agent: "sisyphus",
+          agent: "cerberus",
           model: { providerID: "anthropic", modelID: "claude-opus-4-8" },
         },
         parts: [{ type: "text", text: "continue" }],
@@ -500,7 +500,7 @@ describe("createMessagesTransformHandler", () => {
           id: "msg_user_allowed_then_rejecting_assistant",
           role: "user",
           sessionID: "ses_allowed_then_rejecting_assistant",
-          agent: "sisyphus",
+          agent: "cerberus",
           model: { providerID: "openai", modelID: "gpt-5.4" },
         },
         parts: [{ type: "text", text: "continue" }],
@@ -524,7 +524,7 @@ describe("createMessagesTransformHandler", () => {
     expect(messages.at(-1)?.info).toMatchObject({
       role: "user",
       sessionID: "ses_allowed_then_rejecting_assistant",
-      agent: "sisyphus",
+      agent: "cerberus",
       model: { providerID: "openai", modelID: "gpt-5.4" },
     })
     expect(messages.at(-1)?.parts[0]).toMatchObject({
@@ -542,7 +542,7 @@ describe("createMessagesTransformHandler", () => {
           id: "msg_user_vertex_anthropic",
           role: "user",
           sessionID: "ses_vertex_anthropic",
-          agent: "sisyphus",
+          agent: "cerberus",
           model: { providerID: "google-vertex-anthropic", modelID: "claude-opus-4-7" },
         },
         parts: [{ type: "text", text: "continue" }],
@@ -565,7 +565,7 @@ describe("createMessagesTransformHandler", () => {
     expect(messages.at(-1)?.info).toMatchObject({
       role: "user",
       sessionID: "ses_vertex_anthropic",
-      agent: "sisyphus",
+      agent: "cerberus",
       model: { providerID: "google-vertex-anthropic", modelID: "claude-opus-4-7" },
     })
     expect(messages.at(-1)?.parts[0]).toMatchObject({
@@ -583,7 +583,7 @@ describe("createMessagesTransformHandler", () => {
           id: "msg_user_direct_model",
           role: "user",
           sessionID: "ses_direct_model",
-          agent: "sisyphus",
+          agent: "cerberus",
           providerID: "anthropic",
           modelID: "claude-sonnet-4.6",
           system: "system-prompt",
@@ -609,7 +609,7 @@ describe("createMessagesTransformHandler", () => {
     expect(messages.at(-1)?.info).toMatchObject({
       role: "user",
       sessionID: "ses_direct_model",
-      agent: "sisyphus",
+      agent: "cerberus",
       model: { providerID: "anthropic", modelID: "claude-sonnet-4.6" },
       system: "system-prompt",
       tools: { bash: true },
@@ -674,7 +674,7 @@ describe("createMessagesTransformHandler", () => {
         info: { role: "user" },
         parts: [{
           type: "text",
-          text: `[session recovered - continuing previous task]\n${OMO_INTERNAL_INITIATOR_MARKER}`,
+          text: `[session recovered - continuing previous task]\n${OMOP_INTERNAL_INITIATOR_MARKER}`,
           synthetic: true,
           metadata: { compaction_continue: true },
         }],
@@ -704,7 +704,7 @@ describe("createMessagesTransformHandler", () => {
         },
         parts: [{
           type: "text",
-          text: `[session recovered - continuing previous task]\n${OMO_INTERNAL_INITIATOR_MARKER}`,
+          text: `[session recovered - continuing previous task]\n${OMOP_INTERNAL_INITIATOR_MARKER}`,
           synthetic: true,
           metadata: { compaction_continue: true },
         }],

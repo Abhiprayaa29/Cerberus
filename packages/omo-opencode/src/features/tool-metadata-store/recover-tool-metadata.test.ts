@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, test } from "bun:test"
+﻿import { beforeEach, describe, expect, test } from "bun:test"
 
 import { recoverToolMetadata } from "./recover-tool-metadata"
 import { clearPendingStore, storeToolMetadata } from "./store"
@@ -47,12 +47,12 @@ describe("recoverToolMetadata", () => {
 
   test("#given metadata stored under a diverging session id #when recovering with the same call id #then the payload is recovered once", () => {
     // given
-    const payload = { title: "Background explore", metadata: { sessionId: "ses_child_explore" } }
-    storeToolMetadata("ses_child_explore", "call_abc123", payload)
+    const payload = { title: "Background scout", metadata: { sessionId: "ses_child_scout" } }
+    storeToolMetadata("ses_child_scout", "call_abc123", payload)
 
     // when
     const recovered = recoverToolMetadata("ses_parent_main", { callID: "call_abc123" })
-    const consumedAgain = recoverToolMetadata("ses_child_explore", { callID: "call_abc123" })
+    const consumedAgain = recoverToolMetadata("ses_child_scout", { callID: "call_abc123" })
 
     // then
     expect(recovered).toEqual(payload)

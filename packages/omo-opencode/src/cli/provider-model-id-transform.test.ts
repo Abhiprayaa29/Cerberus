@@ -1,9 +1,9 @@
-import { describe, expect, test } from "bun:test"
+﻿import { describe, expect, test } from "bun:test"
 
 import {
   transformModelForProvider as transformRuntimeModelForProvider,
   transformModelForProviderDisplay as transformModelForProvider,
-} from "@oh-my-opencode/model-core"
+} from "@oh-my-open-pentest/model-core"
 
 describe("transformModelForProvider", () => {
   describe("github-copilot provider", () => {

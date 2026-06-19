@@ -1,17 +1,17 @@
-import {
+﻿import {
   CLI_AGENT_MODEL_REQUIREMENTS,
   CLI_CATEGORY_MODEL_REQUIREMENTS,
 } from "./model-fallback-requirements"
 import type { FallbackModelObject } from "../config/schema/fallback-models"
 import type { FallbackEntry } from "../shared/model-requirements"
-import { getModelCapabilities, resolveCompatibleModelSettings } from "@oh-my-opencode/model-core"
+import { getModelCapabilities, resolveCompatibleModelSettings } from "@oh-my-open-pentest/model-core"
 import type { InstallConfig } from "./types"
 
 import type { AgentConfig, CategoryConfig, GeneratedOmoConfig } from "./model-fallback-types"
 import { applyOpenAiOnlyModelCatalog, isOpenAiOnlyAvailability } from "./openai-only-model-catalog"
 import { isProviderAvailable, toProviderAvailability } from "./provider-availability"
 import {
-	getSisyphusFallbackChain,
+	getCerberusFallbackChain,
 	isAnyFallbackEntryAvailable,
 	isRequiredModelAvailable,
 	isRequiredProviderAvailable,
@@ -22,7 +22,7 @@ import { transformModelForProvider } from "./provider-model-id-transform"
 export type { GeneratedOmoConfig } from "./model-fallback-types"
 
 export const ULTIMATE_FALLBACK = "opencode/gpt-5-nano"
-const SCHEMA_URL = "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/oh-my-opencode.schema.json"
+const SCHEMA_URL = "https://raw.githubusercontent.com/code-yeongyu/oh-my-open-pentest/dev/assets/oh-my-open-pentest.schema.json"
 
 type CompatibleFallbackSettings = {
   variant?: string
@@ -169,7 +169,7 @@ export function generateModelConfig(config: InstallConfig): GeneratedOmoConfig {
       $schema: SCHEMA_URL,
       agents: Object.fromEntries(
         Object.entries(CLI_AGENT_MODEL_REQUIREMENTS)
-          .filter(([role, req]) => !(role === "sisyphus" && req.requiresAnyModel))
+          .filter(([role, req]) => !(role === "cerberus" && req.requiresAnyModel))
           .map(([role]) => [role, { model: ULTIMATE_FALLBACK }])
       ),
       categories: Object.fromEntries(
@@ -182,7 +182,7 @@ export function generateModelConfig(config: InstallConfig): GeneratedOmoConfig {
   const categories: Record<string, CategoryConfig> = {}
 
   for (const [role, req] of Object.entries(CLI_AGENT_MODEL_REQUIREMENTS)) {
-    if (role === "librarian") {
+    if (role === "intel") {
       const resolved = resolveModelFromChain(req.fallbackChain, avail)
       if (resolved) {
         const agentConfig = toCompatibleModelConfig(resolved.model, { variant: resolved.variant })
@@ -191,7 +191,7 @@ export function generateModelConfig(config: InstallConfig): GeneratedOmoConfig {
       continue
     }
 
-    if (role === "explore") {
+    if (role === "scout") {
       let agentConfig: AgentConfig
       if (avail.native.openai) {
         agentConfig = { model: "openai/gpt-5.4-mini-fast" }
@@ -216,8 +216,8 @@ export function generateModelConfig(config: InstallConfig): GeneratedOmoConfig {
       continue
     }
 
-    if (role === "sisyphus") {
-      const fallbackChain = getSisyphusFallbackChain()
+    if (role === "cerberus") {
+      const fallbackChain = getCerberusFallbackChain()
       if (req.requiresAnyModel && !isAnyFallbackEntryAvailable(fallbackChain, avail)) {
         continue
       }

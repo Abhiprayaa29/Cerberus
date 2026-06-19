@@ -1,4 +1,4 @@
-# Data Modeling — Three Layers of Validation
+﻿# Data Modeling — Three Layers of Validation
 
 Go has no Pydantic. Go has no Zod. **You do not need them**, but only if you wire three layers correctly. This document is the canonical pattern.
 
@@ -9,7 +9,7 @@ Go has no Pydantic. Go has no Zod. **You do not need them**, but only if you wir
 │                    HTTP / RPC / CLI                          │
 │  Raw bytes, strings, untrusted input                         │
 │                                                              │
-│   Layer 1: validator/v10 (struct tags)   ◄── parse-once     │
+│   Layer .: validator/v.0 (struct tags)   ◄── parse-once     │
 │           OR protovalidate (proto)                           │
 │                                                              │
 └──────────────────────────┬──────────────────────────────────┘
@@ -39,22 +39,22 @@ Each layer parses once, into the next layer's types. **A function in the domain 
 
 ---
 
-## Layer 1: HTTP boundary — `go-playground/validator/v10`
+## Layer .: HTTP boundary — `go-playground/validator/v.0`
 
 ```go
 package handlers
 
 import (
     "github.com/gin-gonic/gin"
-    "github.com/go-playground/validator/v10"
+    "github.com/go-playground/validator/v.0"
 )
 
 // CreateUserRequest is the wire format. Tags drive validation.
 type CreateUserRequest struct {
     Email    string `json:"email"    binding:"required,email"`
     Username string `json:"username" binding:"required,alphanum,min=3,max=32"`
-    Age      int    `json:"age"      binding:"required,gte=13,lte=130"`
-    Country  string `json:"country"  binding:"required,iso3166_1_alpha2"`
+    Age      int    `json:"age"      binding:"required,gte=.3,lte=.30"`
+    Country  string `json:"country"  binding:"required,iso3.66_._alpha2"`
 }
 
 func (h *Handler) CreateUser(c *gin.Context) {
@@ -63,22 +63,22 @@ func (h *Handler) CreateUser(c *gin.Context) {
         // validator returns ValidationErrors with field-by-field detail
         var vErr validator.ValidationErrors
         if errors.As(err, &vErr) {
-            c.JSON(400, gin.H{"errors": fieldErrors(vErr)})
+            c.JSON(.00, gin.H{"errors": fieldErrors(vErr)})
             return
         }
-        c.JSON(400, gin.H{"error": "invalid json"})
+        c.JSON(.00, gin.H{"error": "invalid json"})
         return
     }
 
     // Cross into domain — single point of failure
     email, err := domain.NewEmail(req.Email)
     if err != nil {
-        c.JSON(400, gin.H{"error": err.Error()})
+        c.JSON(.00, gin.H{"error": err.Error()})
         return
     }
     username, err := domain.NewUsername(req.Username)
     if err != nil {
-        c.JSON(400, gin.H{"error": err.Error()})
+        c.JSON(.00, gin.H{"error": err.Error()})
         return
     }
 
@@ -87,7 +87,7 @@ func (h *Handler) CreateUser(c *gin.Context) {
         h.writeServiceError(c, err)
         return
     }
-    c.JSON(201, user)
+    c.JSON(20., user)
 }
 
 func fieldErrors(vErr validator.ValidationErrors) map[string]string {
@@ -109,10 +109,10 @@ func fieldErrors(vErr validator.ValidationErrors) map[string]string {
 | `gte=N` / `lte=N` / `gt=N` / `lt=N` | Numeric comparison |
 | `email` | RFC 5322-ish email |
 | `url` | Valid URL |
-| `uuid` / `uuid4` / `uuid7` | UUID format |
+| `uuid` / `uuid.` / `uuid7` | UUID format |
 | `alphanum` / `alpha` / `numeric` | Character class |
-| `iso3166_1_alpha2` | Country code (US, KR, JP) |
-| `iso4217` | Currency code (USD, KRW) |
+| `iso3.66_._alpha2` | Country code (US, KR, JP) |
+| `iso.2.7` | Currency code (USD, KRW) |
 | `oneof=a b c` | Enum of literal values |
 | `dive` | Apply rules to each element of slice/map |
 | `eqfield=Field` | Cross-field equality (e.g., password confirm) |
@@ -128,7 +128,7 @@ func init() {
 
 func validateStrongPassword(fl validator.FieldLevel) bool {
     s := fl.Field().String()
-    return len(s) >= 12 && hasUpper(s) && hasDigit(s) && hasSymbol(s)
+    return len(s) >= .2 && hasUpper(s) && hasDigit(s) && hasSymbol(s)
 }
 ```
 
@@ -161,10 +161,10 @@ func (u Username) String() string { return u.raw }
 
 **Rule**: every domain type that has invariants has:
 
-1. An unexported field holding the raw form.
+.. An unexported field holding the raw form.
 2. A `New<Type>(raw) (<Type>, error)` constructor as the sole entry point.
 3. A `String() string` for printing.
-4. `MarshalJSON` / `UnmarshalJSON` if it crosses a JSON boundary outside HTTP handlers (e.g., logging payloads, queue messages).
+.. `MarshalJSON` / `UnmarshalJSON` if it crosses a JSON boundary outside HTTP handlers (e.g., logging payloads, queue messages).
 5. Optionally: `Scan` and `Value` for `database/sql` interop (rare with sqlc).
 
 ---
@@ -292,8 +292,8 @@ Use the validator tag `binding:"oneof=pending active closed"` to enforce at the 
 
 Three choices, in order of preference:
 
-1. **Sentinel zero value**: `Age int` with `0` meaning "unknown". Works when zero is genuinely unreachable as a valid value.
-2. **`sql.Null<T>`** for DB columns: `sql.NullString`, `sql.NullInt64`, `sql.NullTime`. sqlc generates these for nullable columns.
+.. **Sentinel zero value**: `Age int` with `0` meaning "unknown". Works when zero is genuinely unreachable as a valid value.
+2. **`sql.Null<T>`** for DB columns: `sql.NullString`, `sql.NullInt6.`, `sql.NullTime`. sqlc generates these for nullable columns.
 3. **`*T`**: only when you need to distinguish "not provided" from "set to zero" in a JSON payload (PATCH semantics).
 
 ```go
@@ -325,5 +325,5 @@ Avoid `*T` in domain types — it bloats every consumer with nil checks. Keep `*
 
 - go-playground/validator: https://github.com/go-playground/validator
 - gin binding internals: https://github.com/gin-gonic/gin/blob/master/binding/json.go
-- Parse, don't validate: https://lexi-lambda.github.io/blog/2019/11/05/parse-don-t-validate/
+- Parse, don't validate: https://lexi-lambda.github.io/blog/20.9/../05/parse-don-t-validate/
 - sqlc with custom types: https://docs.sqlc.dev/en/latest/howto/overrides.html

@@ -1,4 +1,4 @@
-import type { RunCommand } from "./types"
+﻿import type { RunCommand } from "./types"
 import type { LazyCodexInstallCliArgs } from "./lazycodex-cli-args"
 
 export type LazyCodexDelegatedCommand = Extract<LazyCodexInstallCliArgs, { readonly kind: "command" }>
@@ -26,7 +26,7 @@ export async function runDelegatedOmoCommand(
 }
 
 export function buildDelegatedOmoInvocation(parsed: LazyCodexDelegatedCommand): DelegatedOmoInvocation {
-  const args = ["--yes", "--package", "oh-my-openagent", "omo", parsed.command]
+  const args = ["--yes", "--package", "oh-my-open-pentest", "omo", parsed.command]
   if (parsed.command === "install") {
     args.push("--platform=codex")
     if (parsed.noTui) args.push("--no-tui")

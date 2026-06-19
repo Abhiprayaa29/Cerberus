@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, test } from "bun:test"
+﻿import { afterEach, beforeEach, describe, expect, test } from "bun:test"
 import { tmpdir } from "node:os"
 
 import { _resetForTesting, subagentSessions } from "../claude-code-session-state"
@@ -26,7 +26,7 @@ function createTask(overrides: Partial<BackgroundTask> & { id: string; sessionId
     parentMessageId: "parent-message",
     description: "test task",
     prompt: "test prompt",
-    agent: "explore",
+    agent: "scout",
     status: "running",
     startedAt: new Date(),
     ...overrides,

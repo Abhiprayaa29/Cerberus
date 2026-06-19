@@ -1,7 +1,7 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 import { afterEach, beforeEach, describe, expect, test } from "bun:test"
 
-import { OMO_INTERNAL_INITIATOR_MARKER } from "../../shared/internal-initiator-marker"
+import { OMOP_INTERNAL_INITIATOR_MARKER } from "../../shared/internal-initiator-marker"
 import { handleNonIdleEvent } from "./non-idle-events"
 import { createSessionStateStore, type SessionStateStore } from "./session-state"
 
@@ -56,7 +56,7 @@ describe("handleNonIdleEvent", () => {
         sessionID,
         info: { role: "user" },
         parts: [
-          { type: "text", text: `internal wake\n${OMO_INTERNAL_INITIATOR_MARKER}` },
+          { type: "text", text: `internal wake\n${OMOP_INTERNAL_INITIATOR_MARKER}` },
         ],
       },
       sessionStateStore,
@@ -68,7 +68,7 @@ describe("handleNonIdleEvent", () => {
     expect(state.tokenLimitDetected).toBe(true)
   })
 
-  test("given ultrawork loop continuation user message update, cancels stale todo continuation countdown", () => {
+  test("given fullscan loop continuation user message update, cancels stale todo continuation countdown", () => {
     // given
     const sessionID = "ses_ulw_todo_overlap"
     const state = sessionStateStore.getState(sessionID)
@@ -85,7 +85,7 @@ describe("handleNonIdleEvent", () => {
         parts: [
           {
             type: "text",
-            text: `ultrawork [SYSTEM DIRECTIVE: OH-MY-OPENCODE - RALPH LOOP 2/500]\ncontinue\n${OMO_INTERNAL_INITIATOR_MARKER}`,
+            text: `fullscan [SYSTEM DIRECTIVE: OH-MY-OPENCODE - RALPH LOOP 2/500]\ncontinue\n${OMOP_INTERNAL_INITIATOR_MARKER}`,
             synthetic: true,
           },
         ],

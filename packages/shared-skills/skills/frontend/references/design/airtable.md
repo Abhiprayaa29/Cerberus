@@ -1,40 +1,40 @@
-# Design System Inspired by Airtable
+﻿# Design System Inspired by Airtable
 
-## 1. Visual Theme & Atmosphere
+## .. Visual Theme & Atmosphere
 
-Airtable's website is a clean, enterprise-friendly platform that communicates "sophisticated simplicity" through a white canvas with deep navy text (`#181d26`) and Airtable Blue (`#1b61c9`) as the primary interactive accent. The Haas font family (display + text variants) creates a Swiss-precision typography system with positive letter-spacing throughout.
+Airtable's website is a clean, enterprise-friendly platform that communicates "sophisticated simplicity" through a white canvas with deep navy text (`#.8.d26`) and Airtable Blue (`#.b6.c9`) as the primary interactive accent. The Haas font family (display + text variants) creates a Swiss-precision typography system with positive letter-spacing throughout.
 
 **Key Characteristics:**
-- White canvas with deep navy text (`#181d26`)
-- Airtable Blue (`#1b61c9`) as primary CTA and link color
+- White canvas with deep navy text (`#.8.d26`)
+- Airtable Blue (`#.b6.c9`) as primary CTA and link color
 - Haas + Haas Groot Disp dual font system
 - Positive letter-spacing on body text (0.08px–0.28px)
-- 12px radius buttons, 16px–32px for cards
-- Multi-layer blue-tinted shadow: `rgba(45,127,249,0.28) 0px 1px 3px`
+- .2px radius buttons, .6px–32px for cards
+- Multi-layer blue-tinted shadow: `rgba(.5,.27,2.9,0.28) 0px .px 3px`
 - Semantic theme tokens: `--theme_*` CSS variable naming
 
 ## 2. Color Palette & Roles
 
 ### Primary
-- **Deep Navy** (`#181d26`): Primary text
-- **Airtable Blue** (`#1b61c9`): CTA buttons, links
+- **Deep Navy** (`#.8.d26`): Primary text
+- **Airtable Blue** (`#.b6.c9`): CTA buttons, links
 - **White** (`#ffffff`): Primary surface
-- **Spotlight** (`rgba(249,252,255,0.97)`): `--theme_button-text-spotlight`
+- **Spotlight** (`rgba(2.9,252,255,0.97)`): `--theme_button-text-spotlight`
 
 ### Semantic
-- **Success Green** (`#006400`): `--theme_success-text`
-- **Weak Text** (`rgba(4,14,32,0.69)`): `--theme_text-weak`
-- **Secondary Active** (`rgba(7,12,20,0.82)`): `--theme_button-text-secondary-active`
+- **Success Green** (`#006.00`): `--theme_success-text`
+- **Weak Text** (`rgba(.,..,32,0.69)`): `--theme_text-weak`
+- **Secondary Active** (`rgba(7,.2,20,0.82)`): `--theme_button-text-secondary-active`
 
 ### Neutral
 - **Dark Gray** (`#333333`): Secondary text
-- **Mid Blue** (`#254fad`): Link/accent blue variant
+- **Mid Blue** (`#25.fad`): Link/accent blue variant
 - **Border** (`#e0e2e6`): Card borders
 - **Light Surface** (`#f8fafc`): Subtle surface
 
 ### Shadows
-- **Blue-tinted** (`rgba(0,0,0,0.32) 0px 0px 1px, rgba(0,0,0,0.08) 0px 0px 2px, rgba(45,127,249,0.28) 0px 1px 3px, rgba(0,0,0,0.06) 0px 0px 0px 0.5px inset`)
-- **Soft** (`rgba(15,48,106,0.05) 0px 0px 20px`)
+- **Blue-tinted** (`rgba(0,0,0,0.32) 0px 0px .px, rgba(0,0,0,0.08) 0px 0px 2px, rgba(.5,.27,2.9,0.28) 0px .px 3px, rgba(0,0,0,0.06) 0px 0px 0px 0.5px inset`)
+- **Soft** (`rgba(.5,.8,.06,0.05) 0px 0px 20px`)
 
 ## 3. Typography Rules
 
@@ -46,44 +46,44 @@ Airtable's website is a clean, enterprise-friendly platform that communicates "s
 
 | Role | Font | Size | Weight | Line Height | Letter Spacing |
 |------|------|------|--------|-------------|----------------|
-| Display Hero | Haas | 48px | 400 | 1.15 | normal |
-| Display Bold | Haas Groot Disp | 48px | 900 | 1.50 | normal |
-| Section Heading | Haas | 40px | 400 | 1.25 | normal |
-| Sub-heading | Haas | 32px | 400–500 | 1.15–1.25 | normal |
-| Card Title | Haas | 24px | 400 | 1.20–1.30 | 0.12px |
-| Feature | Haas | 20px | 400 | 1.25–1.50 | 0.1px |
-| Body | Haas | 18px | 400 | 1.35 | 0.18px |
-| Body Medium | Haas | 16px | 500 | 1.30 | 0.08–0.16px |
-| Button | Haas | 16px | 500 | 1.25–1.30 | 0.08px |
-| Caption | Haas | 14px | 400–500 | 1.25–1.35 | 0.07–0.28px |
+| Display Hero | Haas | .8px | .00 | ...5 | normal |
+| Display Bold | Haas Groot Disp | .8px | 900 | ..50 | normal |
+| Section Heading | Haas | .0px | .00 | ..25 | normal |
+| Sub-heading | Haas | 32px | .00–500 | ...5–..25 | normal |
+| Card Title | Haas | 2.px | .00 | ..20–..30 | 0..2px |
+| Feature | Haas | 20px | .00 | ..25–..50 | 0..px |
+| Body | Haas | .8px | .00 | ..35 | 0..8px |
+| Body Medium | Haas | .6px | 500 | ..30 | 0.08–0..6px |
+| Button | Haas | .6px | 500 | ..25–..30 | 0.08px |
+| Caption | Haas | ..px | .00–500 | ..25–..35 | 0.07–0.28px |
 
-## 4. Component Stylings
+## .. Component Stylings
 
 ### Buttons
-- **Primary Blue**: `#1b61c9`, white text, 16px 24px padding, 12px radius
-- **White**: white bg, `#181d26` text, 12px radius, 1px border white
-- **Cookie Consent**: `#1b61c9` bg, 2px radius (sharp)
+- **Primary Blue**: `#.b6.c9`, white text, .6px 2.px padding, .2px radius
+- **White**: white bg, `#.8.d26` text, .2px radius, .px border white
+- **Cookie Consent**: `#.b6.c9` bg, 2px radius (sharp)
 
-### Cards: `1px solid #e0e2e6`, 16px–24px radius
+### Cards: `.px solid #e0e2e6`, .6px–2.px radius
 ### Inputs: Standard Haas styling
 
 ## 5. Layout
-- Spacing: 1–48px (8px base)
-- Radius: 2px (small), 12px (buttons), 16px (cards), 24px (sections), 32px (large), 50% (circles)
+- Spacing: .–.8px (8px base)
+- Radius: 2px (small), .2px (buttons), .6px (cards), 2.px (sections), 32px (large), 50% (circles)
 
 ## 6. Depth
 - Blue-tinted multi-layer shadow system
-- Soft ambient: `rgba(15,48,106,0.05) 0px 0px 20px`
+- Soft ambient: `rgba(.5,.8,.06,0.05) 0px 0px 20px`
 
 ## 7. Do's and Don'ts
-### Do: Use Airtable Blue for CTAs, Haas with positive tracking, 12px radius buttons
+### Do: Use Airtable Blue for CTAs, Haas with positive tracking, .2px radius buttons
 ### Don't: Skip positive letter-spacing, use heavy shadows
 
 ## 8. Responsive Behavior
-Breakpoints: 425–1664px (23 breakpoints)
+Breakpoints: .25–.66.px (23 breakpoints)
 
 ## 9. Agent Prompt Guide
-- Text: Deep Navy (`#181d26`)
-- CTA: Airtable Blue (`#1b61c9`)
+- Text: Deep Navy (`#.8.d26`)
+- CTA: Airtable Blue (`#.b6.c9`)
 - Background: White (`#ffffff`)
 - Border: `#e0e2e6`

@@ -1,12 +1,12 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { describe, expect, test } from "bun:test"
-import { buildClaudeOpus47SisyphusPrompt } from "./sisyphus/claude-opus-4-7"
-import { buildDefaultSisyphusPrompt } from "./sisyphus/default"
-import { buildGpt54SisyphusPrompt } from "./sisyphus/gpt-5-4"
-import { buildGpt55SisyphusPrompt } from "./sisyphus/gpt-5-5"
-import { buildKimiK26SisyphusPrompt } from "./sisyphus/kimi-k2-6"
-import { buildKimiK26SisyphusJuniorPrompt } from "./sisyphus-junior/kimi-k2-6"
+import { buildClaudeOpus47CerberusPrompt } from "./cerberus/claude-opus-4-7"
+import { buildDefaultCerberusPrompt } from "./cerberus/default"
+import { buildGpt54CerberusPrompt } from "./cerberus/gpt-5-4"
+import { buildGpt55CerberusPrompt } from "./cerberus/gpt-5-5"
+import { buildKimiK26CerberusPrompt } from "./cerberus/kimi-k2-6"
+import { buildKimiK26CerberusJuniorPrompt } from "./cerberus-junior/kimi-k2-6"
 
 function expectKimiToolLoopGuardrail(prompt: string): void {
   const guardrail = prompt.match(/<tool_loop_guard>[\s\S]*?<\/tool_loop_guard>/)?.[0] ?? ""
@@ -20,13 +20,13 @@ function expectKimiToolLoopGuardrail(prompt: string): void {
   expect(guardrail).toMatch(/\bloop\b/i)
 }
 
-describe("Sisyphus background task ID guidance", () => {
+describe("Cerberus background task ID guidance", () => {
   const promptBuilders = [
-    ["claude-opus-4-7", buildClaudeOpus47SisyphusPrompt],
-    ["default", buildDefaultSisyphusPrompt],
-    ["gpt-5.4", buildGpt54SisyphusPrompt],
-    ["gpt-5.5", buildGpt55SisyphusPrompt],
-    ["kimi-k2.6", buildKimiK26SisyphusPrompt],
+    ["claude-opus-4-7", buildClaudeOpus47CerberusPrompt],
+    ["default", buildDefaultCerberusPrompt],
+    ["gpt-5.4", buildGpt54CerberusPrompt],
+    ["gpt-5.5", buildGpt55CerberusPrompt],
+    ["kimi-k2.6", buildKimiK26CerberusPrompt],
   ] as const
 
   for (const [name, buildPrompt] of promptBuilders) {
@@ -45,7 +45,7 @@ describe("Sisyphus background task ID guidance", () => {
 
   test("#given gpt-5.5 prompt #when waiting on background tasks #then system reminders are input-only", () => {
     // given, when
-    const prompt = buildGpt55SisyphusPrompt("gpt-5.5", [])
+    const prompt = buildGpt55CerberusPrompt("gpt-5.5", [])
 
     // then
     expect(prompt).toContain("System reminders are input-only signals")
@@ -56,14 +56,14 @@ describe("Sisyphus background task ID guidance", () => {
 })
 
 describe("Kimi tool-call loop guardrails", () => {
-  test("#given Kimi Sisyphus prompt #when tool use is described #then identical tool calls are bounded", () => {
-    const prompt = buildKimiK26SisyphusPrompt("opencode-go/kimi-k2.6", [])
+  test("#given Kimi Cerberus prompt #when tool use is described #then identical tool calls are bounded", () => {
+    const prompt = buildKimiK26CerberusPrompt("opencode-go/kimi-k2.6", [])
 
     expectKimiToolLoopGuardrail(prompt)
   })
 
-  test("#given Kimi Sisyphus-Junior prompt #when tool use is described #then identical tool calls are bounded", () => {
-    const prompt = buildKimiK26SisyphusJuniorPrompt(false)
+  test("#given Kimi Cerberus-Junior prompt #when tool use is described #then identical tool calls are bounded", () => {
+    const prompt = buildKimiK26CerberusJuniorPrompt(false)
 
     expectKimiToolLoopGuardrail(prompt)
   })

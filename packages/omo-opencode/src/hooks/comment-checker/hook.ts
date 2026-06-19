@@ -1,4 +1,4 @@
-import type { PendingCall } from "./types"
+﻿import type { PendingCall } from "./types"
 import type { CommentCheckerConfig } from "../../config/schema"
 
 import {
@@ -8,7 +8,7 @@ import {
   processWithCli,
   processApplyPatchEditsWithCli,
 } from "./cli-runner"
-import { extractApplyPatchEdits } from "@oh-my-opencode/comment-checker-core"
+import { extractApplyPatchEdits } from "@oh-my-open-pentest/comment-checker-core"
 import {
   registerPendingCall,
   startPendingCallCleanup,

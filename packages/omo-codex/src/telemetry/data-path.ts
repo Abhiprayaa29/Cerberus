@@ -1,7 +1,7 @@
-import {
+﻿import {
   resolveTelemetryStateDir,
-} from "@oh-my-opencode/telemetry-core"
-import type { XdgOsProvider } from "@oh-my-opencode/utils"
+} from "@oh-my-open-pentest/telemetry-core"
+import type { XdgOsProvider } from "@oh-my-open-pentest/utils"
 import { dirname } from "node:path"
 
 import { createCodexTelemetryProductConfig } from "./product-identity"

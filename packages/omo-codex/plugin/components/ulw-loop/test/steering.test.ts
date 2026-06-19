@@ -1,4 +1,4 @@
-import { mkdtemp, readFile } from "node:fs/promises";
+﻿import { mkdtemp, readFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
@@ -59,9 +59,9 @@ function plan(overrides: Partial<UlwLoopPlan> = {}): UlwLoopPlan {
 		version: 1,
 		createdAt: NOW,
 		updatedAt: NOW,
-		briefPath: ".omo/ulw-loop/brief.md",
-		goalsPath: ".omo/ulw-loop/goals.json",
-		ledgerPath: ".omo/ulw-loop/ledger.jsonl",
+		briefPath: ".omo/pentest-loop/brief.md",
+		goalsPath: ".omo/pentest-loop/goals.json",
+		ledgerPath: ".omo/pentest-loop/ledger.jsonl",
 		goals: [
 			goal(),
 			goal({ id: "G002", title: "Rate limit", objective: "Throttle login" }),
@@ -323,7 +323,7 @@ describe("steerUlwLoop", () => {
 });
 
 describe("parseUlwLoopSteeringDirective", () => {
-	it.each(["OMO_ULW_LOOP_STEER", "omo.ulw-loop.steer", "omo ulw-loop steer"])("parses %s pattern", (marker) => {
+	it.each(["OMO_ULW_LOOP_STEER", "omo.pentest-loop.steer", "omo pentest-loop steer"])("parses %s pattern", (marker) => {
 		expect(parseUlwLoopSteeringDirective(`${marker}: ${JSON.stringify(steering())}`)).toMatchObject({
 			kind: "add_subgoal",
 		});

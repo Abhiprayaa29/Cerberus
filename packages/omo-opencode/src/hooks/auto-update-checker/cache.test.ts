@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it } from "bun:test"
+﻿import { afterEach, describe, expect, it } from "bun:test"
 import { existsSync, mkdtempSync, rmSync, writeFileSync } from "node:fs"
 import { tmpdir } from "node:os"
 import { join } from "node:path"
@@ -27,10 +27,10 @@ describe("auto-update cache invalidation", () => {
     writeFileSync(join(cacheDir, "bun.lock"), "{not json", "utf-8")
 
     // when
-    const result = invalidatePackage("oh-my-openagent", {
-      acceptedPackageNames: ["oh-my-openagent"],
+    const result = invalidatePackage("oh-my-open-pentest", {
+      acceptedPackageNames: ["oh-my-open-pentest"],
       cacheDir,
-      defaultPackageName: "oh-my-openagent",
+      defaultPackageName: "oh-my-open-pentest",
       userConfigDir,
     })
 
@@ -47,10 +47,10 @@ describe("auto-update cache invalidation", () => {
     writeFileSync(lockPath, "binary", "utf-8")
 
     // when
-    const result = invalidatePackage("oh-my-openagent", {
-      acceptedPackageNames: ["oh-my-openagent"],
+    const result = invalidatePackage("oh-my-open-pentest", {
+      acceptedPackageNames: ["oh-my-open-pentest"],
       cacheDir,
-      defaultPackageName: "oh-my-openagent",
+      defaultPackageName: "oh-my-open-pentest",
       userConfigDir,
     })
 

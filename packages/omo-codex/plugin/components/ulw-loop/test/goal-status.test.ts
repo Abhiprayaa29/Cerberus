@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+﻿import { describe, expect, it } from "vitest";
 
 import {
 	aggregateCodexObjective,
@@ -47,9 +47,9 @@ function makePlan(overrides: Partial<UlwLoopPlan> = {}): UlwLoopPlan {
 		version: 1,
 		createdAt: NOW,
 		updatedAt: NOW,
-		briefPath: ".omo/ulw-loop/brief.md",
-		goalsPath: ".omo/ulw-loop/goals.json",
-		ledgerPath: ".omo/ulw-loop/ledger.jsonl",
+		briefPath: ".omo/pentest-loop/brief.md",
+		goalsPath: ".omo/pentest-loop/goals.json",
+		ledgerPath: ".omo/pentest-loop/ledger.jsonl",
 		goals: [],
 		...overrides,
 	};
@@ -353,10 +353,10 @@ describe("firstUnresolvedCriterion", () => {
 });
 
 describe("ULW_LOOP_AGGREGATE_CODEX_OBJECTIVE", () => {
-	it("references the .omo/ulw-loop path and excludes the legacy workspace", () => {
+	it("references the .omo/pentest-loop path and excludes the legacy workspace", () => {
 		const legacyWorkspace = [".", "om", "x"].join("");
 
-		expect(ULW_LOOP_AGGREGATE_CODEX_OBJECTIVE).toContain(".omo/ulw-loop");
+		expect(ULW_LOOP_AGGREGATE_CODEX_OBJECTIVE).toContain(".omo/pentest-loop");
 		expect(ULW_LOOP_AGGREGATE_CODEX_OBJECTIVE).not.toContain(legacyWorkspace);
 	});
 });

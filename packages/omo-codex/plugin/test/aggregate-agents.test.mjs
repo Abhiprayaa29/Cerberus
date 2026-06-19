@@ -1,4 +1,4 @@
-import assert from "node:assert/strict";
+﻿import assert from "node:assert/strict";
 import { readdir, readFile } from "node:fs/promises";
 import { join } from "node:path";
 import test from "node:test";
@@ -58,8 +58,8 @@ const externalSourceTokenPattern = new RegExp(
 	"i",
 );
 
-test("#given bundled Codex agents #when components/ultrawork/agents directory is scanned #then planner support TOMLs are present and match expected schema keys", async () => {
-	const agentsDir = join(root, "components", "ultrawork", "agents");
+test("#given bundled Codex agents #when components/fullscan/agents directory is scanned #then planner support TOMLs are present and match expected schema keys", async () => {
+	const agentsDir = join(root, "components", "fullscan", "agents");
 	const entries = (await readdir(agentsDir, { withFileTypes: true }))
 		.filter((entry) => entry.isFile() && entry.name.endsWith(".toml"))
 		.map((entry) => entry.name)
@@ -72,9 +72,9 @@ test("#given bundled Codex agents #when components/ultrawork/agents directory is
 		"lazycodex-executor.toml",
 		"lazycodex-gate-reviewer.toml",
 		"lazycodex-qa-executor.toml",
-		"librarian.toml",
-		"metis.toml",
-		"momus.toml",
+		"intel.toml",
+		"vanguard.toml",
+		"sentinel.toml",
 		"plan.toml",
 	]);
 
@@ -95,7 +95,7 @@ test("#given bundled Codex agents #when components/ultrawork/agents directory is
 });
 
 test("#given planner agent prompt #when inspected #then generated artifacts stay under .omo", async () => {
-	const prompt = await readFile(join(root, "components", "ultrawork", "agents", "plan.toml"), "utf8");
+	const prompt = await readFile(join(root, "components", "fullscan", "agents", "plan.toml"), "utf8");
 
 	assert.match(prompt, /\.omo\/plans\/<slug>\.md/);
 	assert.match(prompt, /\.omo\/evidence\/task-<N>-<slug>\.<ext>/);
@@ -104,7 +104,7 @@ test("#given planner agent prompt #when inspected #then generated artifacts stay
 });
 
 test("#given lazycodex agent prompts #when inspected #then each role pins model effort and evidence discipline", async () => {
-	const agentsDir = join(root, "components", "ultrawork", "agents");
+	const agentsDir = join(root, "components", "fullscan", "agents");
 
 	for (const [fileName, invariant] of lazycodexAgentInvariants) {
 		const prompt = await readFile(join(agentsDir, fileName), "utf8");
@@ -122,7 +122,7 @@ test("#given lazycodex agent prompts #when inspected #then each role pins model 
 });
 
 test("#given LazyCodex reviewer prompts #when inspected #then anti-slop review coverage is required", async () => {
-	const agentsDir = join(root, "components", "ultrawork", "agents");
+	const agentsDir = join(root, "components", "fullscan", "agents");
 	const codeReviewer = await readFile(join(agentsDir, "lazycodex-code-reviewer.toml"), "utf8");
 	const gateReviewer = await readFile(join(agentsDir, "lazycodex-gate-reviewer.toml"), "utf8");
 

@@ -1,6 +1,6 @@
-# src/features/tmux-subagent/ — Tmux Pane Management
+﻿# src/features/tmux-subagent/ — Tmux Pane Management
 
-**Generated:** 2026-05-15
+**Generated:** 2026-05-.5
 
 ## OVERVIEW
 
@@ -41,7 +41,7 @@ session.deleted → cleanup tracked session → close pane if empty
 ## LAYOUT CONSTRAINTS
 
 - `MIN_PANE_WIDTH`: 52 chars
-- `MIN_PANE_HEIGHT`: 11 lines
+- `MIN_PANE_HEIGHT`: .. lines
 - Main pane preserved (never split below minimum)
 - Agent panes split from remaining space
 

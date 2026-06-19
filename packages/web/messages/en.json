@@ -1,10 +1,10 @@
-{
+﻿{
   "metadata": {
-    "title": "Oh My OpenAgent",
-    "description": "The Best Agent Harness. Meet Sisyphus: The Batteries-Included Agent that codes like you."
+    "title": "Oh My Open Pentest",
+    "description": "The Best Agent Harness. Meet Cerberus: The Batteries-Included Agent that codes like you."
   },
   "nav": {
-    "brand": "Oh My OpenAgent",
+    "brand": "Oh My Open Pentest",
     "features": "Features",
     "agents": "Agents",
     "docs": "Docs",
@@ -12,8 +12,8 @@
     "starOnGitHub": "Star on GitHub"
   },
   "footer": {
-    "brand": "Oh My OpenAgent",
-    "copyright": "© {year} Oh My OpenAgent. Open source under SUL-1.0.",
+    "brand": "Oh My Open Pentest",
+    "copyright": "© {year} Oh My Open Pentest. Open source under SUL-..0.",
     "github": "GitHub",
     "discord": "Discord",
     "documentation": "Documentation",
@@ -29,7 +29,7 @@
       "totalDownloads": "{count} Total Downloads",
       "monthlyDownloads": "{count} Monthly Downloads",
       "lifecycleHooks": "{count} Lifecycle Hooks",
-      "installCommand": "bunx oh-my-openagent install",
+      "installCommand": "bunx oh-my-open-pentest install",
       "getStarted": "Get Started",
       "viewOnGitHub": "View on GitHub"
     },
@@ -42,23 +42,23 @@
       "deepResearch": "Deep Research",
       "selfCorrection": "Self-Correction",
       "parallelAgents": "Parallel Agents",
-      "terminalTitle": "sisyphus — -zsh — 80x24",
+      "terminalTitle": "cerberus — -zsh — 80x2.",
       "terminalInput": "ulw add authentication to the API",
       "steps": {
         "scanning": "Scanning codebase...",
         "context": "Launching 3 explore agents...",
         "planning": "Building execution plan...",
-        "delegating": "Deploying 4 parallel agents...",
+        "delegating": "Deploying . parallel agents...",
         "verifying": "Running verification suite...",
-        "complete": "Done. 847 lines changed, 0 issues."
+        "complete": "Done. 8.7 lines changed, 0 issues."
       },
       "tagline": "Zero intervention. Full autonomy. Just results."
     },
-    "sisyphus": {
+    "cerberus": {
       "badge": "Primary Orchestrator",
-      "title": "Sisyphus",
+      "title": "Cerberus",
       "headline": "The CTO Who Never Sleeps",
-      "description": "Named after the mythological figure rolling his boulder uphill forever. Sisyphus parses implicit requirements, adapts to your codebase's maturity, and delegates to specialists. Interrupted? The boulder system resumes exactly where you left off.",
+      "description": "Named after the mythological figure rolling his boulder uphill forever. Cerberus parses implicit requirements, adapts to your codebase's maturity, and delegates to specialists. Interrupted? The boulder system resumes exactly where you left off.",
       "phases": {
         "intent": {
           "title": "Intent Gate",
@@ -79,28 +79,28 @@
       },
       "boulderTitle": "Session Continuity",
       "boulderDescription": "Active work tracked in boulder.json. Power outage? System crash? Doesn't matter. Pick up exactly where you stopped.",
-      "model": "Claude Opus 4.7 Max"
+      "model": "Claude Opus ..7 Max"
     },
-    "prometheusAtlas": {
+    "talosAtlas": {
       "badge": "Orchestration Workflow",
       "title": "Think, Then Act",
       "headline": "Planning and Execution Are Different Jobs",
-      "prometheus": {
-        "name": "Prometheus",
+      "talos": {
+        "name": "Talos",
         "role": "Strategic Planner",
-        "model": "Claude Opus 4.7 Max",
-        "description": "The architect. Interviews you, explores your codebase, and creates detailed battle plans. Never writes code. Uses Metis and Momus as quality gates.",
+        "model": "Claude Opus ..7 Max",
+        "description": "The architect. Interviews you, explores your codebase, and creates detailed battle plans. Never writes code. Uses Vanguard and Sentinel as quality gates.",
         "features": [
           "Intelligent interview mode",
           "Multi-agent codebase exploration",
-          "Gap analysis with Metis",
-          "Ruthless review with Momus"
+          "Gap analysis with Vanguard",
+          "Ruthless review with Sentinel"
         ]
       },
       "atlas": {
         "name": "Atlas",
         "role": "Master Executor",
-        "model": "Claude Sonnet 4.6",
+        "model": "Claude Sonnet ..6",
         "description": "The builder. Reads verified plans, delegates to specialized agents via category+skills system. Tracks learnings across tasks. Verifies independently — never trusts subagent claims.",
         "features": [
           "Intent-based task routing",
@@ -109,26 +109,26 @@
           "Independent result verification"
         ]
       },
-      "metis": {
-        "name": "Metis",
+      "vanguard": {
+        "name": "Vanguard",
         "description": "Catches ambiguities before they become bugs."
       },
-      "momus": {
-        "name": "Momus",
+      "sentinel": {
+        "name": "Sentinel",
         "description": "Only says OKAY when the plan is actually perfect."
       },
       "workflow": {
-        "step1": "Describe your work to Prometheus",
-        "step2": "Metis analyzes for gaps",
-        "step3": "Momus validates ruthlessly",
-        "step4": "Atlas delegates to specialists",
+        "step.": "Describe your work to Talos",
+        "step2": "Vanguard analyzes for gaps",
+        "step3": "Sentinel validates ruthlessly",
+        "step.": "Atlas delegates to specialists",
         "step5": "Independent verification on everything"
       },
       "whyItWorks": "The planner doesn't code. The executor follows verified plans. Intelligence lives in the system, not individual agents."
     },
-    "hephaestus": {
+    "scylla": {
       "badge": "Deep Worker",
-      "title": "Hephaestus",
+      "title": "Scylla",
       "headline": "Give Him a Goal, Not a Recipe",
       "description": "Named after the Greek god of the forge. Methodical, thorough, obsessive. Fires 2-5 parallel explore agents before writing any code. Built for deep architectural reasoning, complex debugging, and cross-domain synthesis.",
       "loop": {
@@ -142,7 +142,7 @@
       "model": "GPT 5.5 Medium"
     },
     "teamMode": {
-      "badge": "NEW · v4.0",
+      "badge": "NEW · v..0",
       "title": "Team Mode",
       "headline": "Multiple Agents. Side-by-Side. In Parallel.",
       "description": "A lead agent orchestrates a team of category-specialized members, all running in parallel and communicating through dedicated tools. Watch every member work simultaneously in tmux. Opt-in — flip team_mode.enabled and restart.",
@@ -161,7 +161,7 @@
         },
         "tools": {
           "title": "team_* Tool Family",
-          "description": "12 dedicated tools (team_create, team_status, team_send_message, ...) gated behind team_mode.enabled."
+          "description": ".2 dedicated tools (team_create, team_status, team_send_message, ...) gated behind team_mode.enabled."
         }
       },
       "poweredBy": "Powered by Team Mode",
@@ -182,31 +182,31 @@
       "title": "Specialized Agents",
       "subtitle": "Five built-in agents for common workflows. Plus a dynamic system that assembles custom agents on demand.",
       "oracle": {
-        "name": "Oracle",
+        "name": "Cipher",
         "role": "Architecture Consultant",
         "model": "GPT 5.5 High",
         "description": "Complex debugging and architectural decisions. When the path forward isn't obvious."
       },
-      "librarian": {
-        "name": "Librarian",
+      "intel": {
+        "name": "Intel",
         "role": "Docs & Code Search",
-        "model": "GPT 5.4 Mini Fast",
+        "model": "GPT 5.. Mini Fast",
         "description": "Finds real GitHub examples and official docs. Evidence-based, with permalinks."
       },
       "explore": {
-        "name": "Explore",
+        "name": "Scout",
         "role": "Codebase Grep",
-        "model": "GPT 5.4 Mini Fast",
+        "model": "GPT 5.. Mini Fast",
         "description": "Blazing fast codebase search. Cheap, parallel, always background."
       },
-      "metis": {
-        "name": "Metis",
+      "vanguard": {
+        "name": "Vanguard",
         "role": "Plan Consultant",
-        "model": "Claude Sonnet 4.6",
+        "model": "Claude Sonnet ..6",
         "description": "Catches ambiguities in plans before they become production bugs."
       },
-      "momus": {
-        "name": "Momus",
+      "sentinel": {
+        "name": "Sentinel",
         "role": "Plan Reviewer",
         "model": "GPT 5.5 xHigh",
         "description": "Ruthless validation. Only approves when the plan is bulletproof."
@@ -249,20 +249,20 @@
     },
     "reviews": {
       "title": "What Devs Actually Say",
-      "review1": {
+      "review.": {
         "text": "It made me cancel my Cursor subscription. Unbelievable things are happening in the open source community.",
         "author": "Arthur Guiot"
       },
       "review2": {
-        "text": "If Claude Code does in 7 days what a human does in 3 months, Sisyphus does it in 1 hour.",
+        "text": "If Claude Code does in 7 days what a human does in 3 months, Cerberus does it in . hour.",
         "author": "B, Quant Researcher"
       },
       "review3": {
         "text": "Knocked out 8000 eslint warnings with Oh My Opencode, just in a day.",
         "author": "Jacob Ferrari"
       },
-      "review4": {
-        "text": "use oh-my-openagent, you will never go back",
+      "review.": {
+        "text": "use oh-my-open-pentest, you will never go back",
         "author": "d0t3ch"
       },
       "review5": {
@@ -270,158 +270,158 @@
         "author": "Henning Kilset"
       },
       "review6": {
-        "text": "Oh My OpenCode Is Actually Insane",
+        "text": "Oh My Open Pentest Is Actually Insane",
         "author": "Darren Builds AI (YouTube)"
       }
     },
     "cta": {
       "title": "Stop Writing Boilerplate",
-      "subtitle": "Install Oh My OpenAgent and let the agents handle it. Your first ulw command is 30 seconds away.",
-      "installCommand": "bunx oh-my-openagent install",
+      "subtitle": "Install Oh My Open Pentest and let the agents handle it. Your first ulw command is 30 seconds away.",
+      "installCommand": "bunx oh-my-open-pentest install",
       "installNow": "Install Now",
       "readTheDocs": "Read the Docs"
     }
   },
   "docs": {
-    "mobileHeader": "Oh My OpenAgent Docs",
+    "mobileHeader": "Oh My Open Pentest Docs",
     "searchPlaceholder": "Search docs..."
   },
   "manifesto": {
     "badge": "Manifesto",
     "hero": {
-      "title": "Ultrawork Manifesto",
-      "subtitle": "The Philosophy of High-Output Engineering"
+      "title": "Agentic Automation Pentest",
+      "subtitle": "The Philosophy of Autonomous Security Testing"
     },
     "bottleneck": "> HUMAN IN THE LOOP = BOTTLENECK",
-    "autonomousCar": "Imagine an autonomous car that requires you to grab the steering wheel every 30 seconds. Would you call that \"autonomous\"? No. You'd call it driver assist — barely better than cruise control.",
-    "whyDifferent": "Why is coding any different?",
-    "micromanagement": "We've accepted a paradigm where \"AI coding\" means a chatbot that writes 20 lines, then waits for you to fix it. That's not automation — that's micromanagement.",
+    "autonomousCar": "Imagine an autonomous red team that requires you to manually chain recon tools, copy-paste PoCs, and babysit every step. Would you call that \"automation\"? No. You'd call it a glorified script runner.",
+    "whyDifferent": "Why is pentesting any different from other automation domains?",
+    "micromanagement": "We've accepted a paradigm where \"AI security testing\" means a chatbot that runs a scan, then waits for you to validate findings. That's not automation — that's micromanagement.",
     "painPoints": {
-      "fixing": "Fixing AI's half-finished code",
-      "syntax": "Manually correcting syntax errors",
-      "copyPasting": "Copy-pasting context back and forth",
-      "reviewing": "Reviewing every single line for hallucinations"
+      "fixing": "Manually correlating subdomain enumeration results",
+      "syntax": "Copying curl commands from one tool to another",
+      "copyPasting": "Writing PoC scripts by hand for each finding",
+      "reviewing": "Double-checking scope boundaries for every target"
     },
-    "notCollaboration": "That's not \"human-AI collaboration\" — that's the AI failing to do its job.",
-    "premise": "{linkText} is built on the premise that the human should be the architect, not the spell-checker.",
-    "premiseLinkText": "Oh My OpenAgent",
+    "notCollaboration": "That's not \"human expertise\" — that's wasted cognitive bandwidth on mechanical work.",
+    "premise": "{linkText} is built on the premise that the human should define scope and rules of engagement, not babysit recon tools.",
+    "premiseLinkText": "oh-my-open-pentest",
     "indistinguishable": {
-      "title": "Indistinguishable Code",
-      "subtitle": "Agent-written code should be indistinguishable from code written by a senior engineer.",
+      "title": "Indistinguishable Findings",
+      "subtitle": "Findings submitted by the agent should be indistinguishable from those submitted by a top-tier bug bounty hunter.",
       "items": {
-        "patterns": "Follows existing codebase patterns and architecture",
-        "errorHandling": "Implements proper error handling and edge cases",
-        "tests": "Writes tests that actually test behavior, not just coverage",
-        "noSlop": "No 'AI slop' — clean, concise, maintainable code",
-        "comments": "Comments only when they add value — never stating the obvious"
+        "patterns": "Clear vulnerability description with root cause analysis",
+        "errorHandling": "Working Proof of Concept (reproducible, not theoretical)",
+        "tests": "Accurate CVSS scoring with proper vector strings",
+        "noSlop": "Impact statement that resonates with program owners",
+        "comments": "Remediation guidance that developers can actually implement"
       },
-      "quote": "\"If you can tell whether a commit was made by a human or an agent, the agent has failed.\""
+      "quote": "\"If a triager can tell whether a report was written by a human hunter or an agent, the agent has failed.\""
     },
     "tokenCost": {
-      "title": "Token Cost vs. Productivity",
-      "description": "We don't care about token usage. We care about output. If spending $5 on tokens saves an hour of engineering time, that's a 20x ROI.",
-      "parallelAgents": "Parallel agents exploring multiple solutions",
-      "completeWork": "Complete work without human intervention",
-      "selfVerification": "Thorough self-verification loops",
+      "title": "Token Cost vs. Coverage",
+      "description": "We don't care about token usage. We care about attack surface coverage and exploit depth. If spending tokens means finding P.s that manual testers miss, that's a worthwhile investment.",
+      "parallelAgents": "Enumerate broader attack surface in parallel",
+      "completeWork": "Chain multiple vulnerabilities into high-impact exploits",
+      "selfVerification": "Verify findings through multiple attack vectors",
       "however": "However...",
-      "optimizeDescription": "We optimize for efficiency where it counts. Not by crippling the model, but by:",
-      "cheaperModels": "Using cheaper models for routine tasks",
-      "avoidingRedundant": "Avoiding redundant exploration",
-      "intelligentCaching": "Intelligent caching of context",
-      "stoppingExactly": "Stopping exactly when sufficient"
+      "optimizeDescription": "We optimize for efficiency where it counts. Not by crippling coverage, but by:",
+      "cheaperModels": "Using lightweight scans for initial reconnaissance",
+      "avoidingRedundant": "Avoiding redundant enumeration of mapped assets",
+      "intelligentCaching": "Caching scope intelligence across engagements",
+      "stoppingExactly": "Stopping deep exploitation at scope boundaries"
     },
     "cognitiveLoad": {
       "title": "Minimize Human Cognitive Load",
-      "subtitle": "The human should only need to say what they want. Everything else is the agent's job.",
-      "ultrawork": {
-        "badge": "Approach 1",
-        "title": "Ultrawork",
-        "subtitle": "Just say \"ulw\" and walk away.",
+      "subtitle": "The human should only need to provide scope definition and program rules. Everything else is the agent's job.",
+      "fullscan": {
+        "badge": "Autonomous Mode",
+        "title": "Full Engagement",
+        "subtitle": "Define scope. Walk away. Get findings.",
         "steps": {
-          "analyze": "Analyzes codebase context",
-          "breakdown": "Breaks down task into atomic steps",
-          "execute": "Executes implementation",
-          "verify": "Verifies against requirements",
-          "commit": "Commits changes"
+          "analyze": "Parses and enforces scope boundaries",
+          "breakdown": "Conducts reconnaissance across attack surface",
+          "execute": "Identifies and validates vulnerabilities",
+          "verify": "Builds exploit chains where applicable",
+          "commit": "Generates submission-ready reports with PoCs"
         },
-        "footer": "Zero intervention. Full autonomy. Just results."
+        "footer": "You define the boundaries. The agent finds what's inside them."
       },
-      "prometheus": {
-        "badge": "Approach 2",
-        "title": "Prometheus + Atlas",
-        "subtitle": "When you want strategic control.",
-        "prometheusTitle": "Prometheus",
-        "prometheusDescription": "Conducts interview, researches context, and generates a detailed YAML plan.",
-        "atlasTitle": "Atlas",
-        "atlasDescription": "Executes the plan, delegates to sub-agents, manages waves, and tracks progress.",
-        "footer": "You architect. Agents execute. Full transparency."
+      "talos": {
+        "badge": "Scope Enforcement",
+        "title": "Agent-Enforced Boundaries",
+        "subtitle": "The agent polices itself.",
+        "talosTitle": "Talos (Scope Guard)",
+        "talosDescription": "Reads and parses program scope. Validates every target before active testing. Refuses out-of-scope assets even in attack paths.",
+        "atlasTitle": "Argus (Monitor)",
+        "atlasDescription": "Hundred-eyed observation of scope boundaries and engagement state. Logs scope decisions for audit trail. Alerts on ambiguity.",
+        "footer": "You don't police the agent. The agent polices itself."
       }
     },
     "principles": {
       "predictable": {
         "title": "Predictable",
-        "description": "Same inputs = consistent output. No random deviations or creative liberties unless requested."
+        "description": "Same scope + same RoE = consistent output. No random deviations or scope violations."
       },
       "continuous": {
         "title": "Continuous",
-        "description": "Survives interruptions. Tracks progress in real-time. Preserves context across sessions."
+        "description": "Survives interruptions. Engagement state preserved across sessions. No redundant re-testing."
       },
       "delegatable": {
         "title": "Delegatable",
-        "description": "Clear acceptance criteria. Self-correcting mechanisms. Escalation only when absolutely needed."
+        "description": "Clear scope verified and enforced. Self-correcting on unexpected responses. Escalation only on true ambiguity."
       }
     },
     "coreLoop": {
       "title": "The Core Loop",
       "features": {
-        "prometheus": {
-          "feature": "Prometheus",
-          "purpose": "Extract intent through intelligent interview"
+        "cerberus": {
+          "feature": "Cerberus",
+          "purpose": "Multi-headed orchestration across recon, exploit, and report agents"
         },
-        "metis": {
-          "feature": "Metis",
-          "purpose": "Catch ambiguities before they become bugs"
+        "hydra": {
+          "feature": "Hydra",
+          "purpose": "Parallel subdomain, port, service, and technology enumeration"
         },
-        "momus": {
-          "feature": "Momus",
-          "purpose": "Verify plans are complete before execution"
+        "argus": {
+          "feature": "Argus",
+          "purpose": "Hundred-eyed observation of scope boundaries and engagement state"
         },
-        "orchestrator": {
-          "feature": "Orchestrator",
-          "purpose": "Coordinate work without human micromanagement"
+        "scylla": {
+          "feature": "Scylla",
+          "purpose": "Multi-vector exploitation and chain building"
         },
-        "todoContinuation": {
-          "feature": "Todo Continuation",
-          "purpose": "Force completion, prevent \"I'm done\" lies"
+        "hermes": {
+          "feature": "Hermes",
+          "purpose": "Submission-ready report generation with PoCs"
         },
-        "categorySystem": {
-          "feature": "Category System",
-          "purpose": "Route to optimal model without human decision"
+        "talos": {
+          "feature": "Talos",
+          "purpose": "Autonomous scope enforcement and RoE compliance"
         },
-        "backgroundAgents": {
-          "feature": "Background Agents",
-          "purpose": "Parallel research without blocking user"
+        "engagementState": {
+          "feature": "Engagement State",
+          "purpose": "Persistent tracking across sessions, no redundant work"
         },
-        "wisdomAccumulation": {
-          "feature": "Wisdom Accumulation",
-          "purpose": "Learn from work, don't repeat mistakes"
+        "findingValidation": {
+          "feature": "Finding Validation",
+          "purpose": "Multi-vector verification before reporting"
         }
       }
     },
     "future": {
       "title": "The Future We're Building",
       "items": {
-        "focus": "Human developers focus on WHAT to build, not HOW to get AI to build it",
-        "quality": "Code quality independent of who wrote it",
-        "complexity": "Complex projects as easy as simple ones",
-        "promptEngineering": "\"Prompt engineering\" becomes obsolete"
+        "focus": "Human hunters focus on strategy, not mechanical recon",
+        "quality": "Finding quality independent of who (or what) found it",
+        "complexity": "Complex exploit chains as routine as simple XSS",
+        "promptEngineering": "\"Manual testing\" means strategic thinking, not running tools"
       },
-      "quote1": "\"The agent should be invisible. Like electricity, like running water.\"",
-      "quote2": "\"You flip the switch. The light turns on. You don't think about the power grid.\""
+      "quote.": "\"The agent should be invisible. Like a well-oiled pentest engagement.\"",
+      "quote2": "\"You define the scope. The findings arrive. You don't think about the recon.\""
     },
     "finalCta": {
-      "title": "just ulw ulw",
-      "button": "Get Oh My OpenAgent"
+      "title": "scope → findings",
+      "button": "Get oh-my-open-pentest"
     }
   }
 }

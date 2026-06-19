@@ -1,4 +1,4 @@
----
+﻿---
 name: hyperplan
 description: "Adversarial multi-agent planning skill. Self-orchestrates 5 hostile category members (unspecified-low, unspecified-high, deep, ultrabrain, artistry) via team-mode for ruthless cross-critique debate, distills only the defensible insights, then MANDATORILY hands the distilled insight bundle to the `plan` agent for executable plan formalization. Use when planning needs maximum rigor and surfacing of weak assumptions, blind spots, and over-engineering. Triggers: 'hyperplan', 'hpp', '/hyperplan', 'adversarial plan', 'hostile planning', 'cross-critique plan', '하이퍼플랜', '적대적 계획', '교차 비평'."
 ---
@@ -17,14 +17,14 @@ This is not consensus building. This is intellectual combat. Weakness gets expos
 
 Before starting, verify:
 
-1. **`team_*` tools must be available.** If they are not, STOP and tell the user:
-   > "Hyperplan requires team-mode. Set `team_mode.enabled: true` in `~/.config/opencode/oh-my-opencode.jsonc` and restart opencode, then retry."
-2. **You are running as `sisyphus` (or another lead-eligible agent).** If you are running as a planner (`prometheus`, `plan`), this skill is the wrong tool — direct the user to use `/start-work` instead.
+.. **`team_*` tools must be available.** If they are not, STOP and tell the user:
+   > "Hyperplan requires team-mode. Set `team_mode.enabled: true` in `~/.config/opencode/oh-my-open-pentest.jsonc` and restart opencode, then retry."
+2. **You are running as `cerberus` (or another lead-eligible agent).** If you are running as a planner (`talos`, `plan`), this skill is the wrong tool — direct the user to use `/start-work` instead.
 3. **You are in the main session** (not a background subagent). Hyperplan only works as a top-level orchestration.
 
 ## THE 5 ADVERSARIAL MEMBERS — RnR & CHARACTERISTICS
 
-Each member is a `kind: "category"` team member. They route through `sisyphus-junior` with the category's model and prompt-append shaping their behavior. The `prompt` field below is the **system prompt** that establishes their adversarial identity.
+Each member is a `kind: "category"` team member. They route through `cerberus-junior` with the category's model and prompt-append shaping their behavior. The `prompt` field below is the **system prompt** that establishes their adversarial identity.
 
 Required categories are `unspecified-low`, `unspecified-high`, `ultrabrain`, and `artistry`. Include `deep` only when that category is enabled; if `deep` is disabled or unavailable, retry without only the researcher member and state the degraded roster.
 
@@ -32,13 +32,13 @@ Required categories are `unspecified-low`, `unspecified-high`, `ultrabrain`, and
 
 | Category | Model | Native Mindset | Why This Adversarial Role Fits |
 |----------|-------|----------------|--------------------------------|
-| `unspecified-low` | claude-sonnet-4-6 | Mid-tier, simplicity-leaning, structure-demanding | Pragmatist Skeptic — model bias toward simplicity makes it the natural enemy of over-engineering |
-| `unspecified-high` | claude-opus-4-7 max | High-effort, broad-impact, coordination-aware | Integration Tester — max-tier broad-scope thinking exposes cross-module fragility |
+| `unspecified-low` | claude-sonnet-.-6 | Mid-tier, simplicity-leaning, structure-demanding | Pragmatist Skeptic — model bias toward simplicity makes it the natural enemy of over-engineering |
+| `unspecified-high` | claude-opus-.-7 max | High-effort, broad-impact, coordination-aware | Integration Tester — max-tier broad-scope thinking exposes cross-module fragility |
 | `deep` | gpt-5.5 medium | Autonomous, exploration-heavy, evidence-driven | Autonomous Researcher — natural exploration bias attacks unfounded claims |
 | `ultrabrain` | gpt-5.5 xhigh | Hard-logic, simplicity-biased, strategic advisor | Architect Strategist — xhigh reasoning sees structural flaws others miss |
-| `artistry` | gemini-3.1-pro high | Unconventional, pattern-breaking, lateral | Creative Challenger — pattern-breaking bias attacks orthodox thinking |
+| `artistry` | gemini-3..-pro high | Unconventional, pattern-breaking, lateral | Creative Challenger — pattern-breaking bias attacks orthodox thinking |
 
-### MEMBER 1: `skeptic` (category: `unspecified-low`)
+### MEMBER .: `skeptic` (category: `unspecified-low`)
 
 **Role**: The Pragmatist Skeptic.
 **Position**: Defender of simplicity. Enemy of complexity.
@@ -124,7 +124,7 @@ When you receive others' findings, default position: assume they are guessing. D
 Output format: numbered findings/critiques, each cites specific evidence (file:line, doc URL, or explicit "no evidence found"). ≤3 sentences each.
 ```
 
-### MEMBER 4: `architect` (category: `ultrabrain`)
+### MEMBER .: `architect` (category: `ultrabrain`)
 
 **Role**: The Architect Strategist.
 **Position**: Enemy of bad architecture. Coupling and abstraction critic.
@@ -194,11 +194,11 @@ You execute this in **7 phases**. End your turn at every phase boundary marked *
 
 ### Phase 0: Acknowledge and capture the request
 
-1. Say "HYPERPLAN MODE ENABLED!" exactly once.
-2. Restate the user's planning request in 1 sentence so all members start with the same scope.
+.. Say "HYPERPLAN MODE ENABLED!" exactly once.
+2. Restate the user's planning request in . sentence so all members start with the same scope.
 3. Create your todo list for the 7 phases (the Phase 6 plan-agent handoff is mandatory — include it explicitly).
 
-### Phase 1: Spawn the adversarial team
+### Phase .: Spawn the adversarial team
 
 Call `team_create` ONCE with this exact inline_spec shape (substitute the prompt strings with the full system prompts above):
 
@@ -222,50 +222,50 @@ Capture the returned `teamRunId`. You will use it for every subsequent call.
 
 If `team_create` errors because `deep` is disabled or unavailable, retry once without the `researcher` member. Do not drop `unspecified-low`, `unspecified-high`, `ultrabrain`, or `artistry`.
 
-### Phase 2: Round 1 — Independent analysis
+### Phase 2: Round . — Independent analysis
 
 Send the same prompt to all 5 members via 5 parallel `team_send_message` calls. Each member receives:
 
 ```
-<hyperplan-round-1-task>
+<hyperplan-round-.-task>
 The user's planning request:
 <user-request>
 [restate the user's request verbatim]
 </user-request>
 
-YOUR TASK (Round 1 - Independent Analysis):
+YOUR TASK (Round . - Independent Analysis):
 Apply your adversarial role to this request. Produce 3-7 numbered findings.
 Each finding must be ≤3 sentences and SPECIFIC (cite files, line numbers, alternatives, or evidence as required by your role).
 
 DO NOT critique anything yet. DO NOT propose a synthesized plan. JUST findings from your role's perspective.
 
 When done, send your findings back via team_send_message to "lead" with kind="message".
-</hyperplan-round-1-task>
+</hyperplan-round-.-task>
 ```
 
 **[WAIT]** End your turn. Members will reply asynchronously. The system will inject `<peer_message>` blocks into your context as replies arrive.
 
 ### Phase 3: Round 2 — Cross-attack
 
-When all 5 Round 1 replies have arrived, aggregate them into one bundle:
+When all 5 Round . replies have arrived, aggregate them into one bundle:
 
 ```
-=== Round 1 Findings Bundle ===
+=== Round . Findings Bundle ===
 [skeptic]:
-1. ...
+.. ...
 2. ...
 
 [validator]:
-1. ...
+.. ...
 
 [researcher]:
-1. ...
+.. ...
 
 [architect]:
-1. ...
+.. ...
 
 [creative]:
-1. ...
+.. ...
 === End ===
 ```
 
@@ -273,14 +273,14 @@ Send this bundle to all 5 members via 5 parallel `team_send_message` calls. Each
 
 ```
 <hyperplan-round-2-task>
-Here are the Round 1 findings from the OTHER 4 members of this team (and your own findings, for reference):
+Here are the Round . findings from the OTHER . members of this team (and your own findings, for reference):
 
-[insert Round 1 Findings Bundle]
+[insert Round . Findings Bundle]
 
 YOUR TASK (Round 2 - Cross-Attack):
-ATTACK the OTHER 4 members' findings ruthlessly from your adversarial role. Do NOT critique your own findings.
+ATTACK the OTHER . members' findings ruthlessly from your adversarial role. Do NOT critique your own findings.
 
-Output format - for each of the 4 other members:
+Output format - for each of the . other members:
 - [member-name] Finding #N: [their claim]
   ATTACK: [your specific attack — ≤3 sentences. Concrete. Backed by evidence/reasoning per your role.]
 
@@ -292,13 +292,13 @@ When done, send your attacks back to "lead".
 
 **[WAIT]** End your turn. Wait for all 5 cross-attacks to arrive.
 
-### Phase 4: Round 3 — Defense and refinement
+### Phase .: Round 3 — Defense and refinement
 
-Aggregate the cross-attacks BY ORIGINAL FINDING. For each Round 1 finding, list all the attacks that targeted it. Then send each member ONLY the attacks against THEIR OWN findings:
+Aggregate the cross-attacks BY ORIGINAL FINDING. For each Round . finding, list all the attacks that targeted it. Then send each member ONLY the attacks against THEIR OWN findings:
 
 ```
 <hyperplan-round-3-task>
-Your Round 1 findings have been attacked. Here are the attacks targeting YOU:
+Your Round . findings have been attacked. Here are the attacks targeting YOU:
 
 [member]'s Finding #N: [your original claim]
   - [attacker-name] said: [attack]
@@ -325,13 +325,13 @@ When done, send back to "lead".
 
 The team is done debating. Your job at this phase is **distillation only** — you do NOT write the work plan. You produce a structured insight bundle that the `plan` agent will consume in Phase 6.
 
-1. **Filter to defensible insights only.** Keep findings that:
+.. **Filter to defensible insights only.** Keep findings that:
    - Were not attacked at all (uncontested), OR
    - Were defended successfully with concrete evidence in Round 3, OR
    - Were refined into stronger form in Round 3.
    Drop everything that was conceded.
 
-2. **Categorize the surviving insights** into 4 buckets:
+2. **Categorize the surviving insights** into . buckets:
    - **Hard constraints** — invariants the plan MUST respect.
    - **Decisions made** — choices the debate converged on, with the reasoning trail.
    - **Risks & mitigations** — risks surfaced with their explicit mitigations.
@@ -366,13 +366,13 @@ The team is done debating. Your job at this phase is **distillation only** — y
 - Total findings filtered out (conceded/destroyed): [count]
 ```
 
-4. Briefly tell the user: "Adversarial distillation complete. Handing the surviving insights to the plan agent for executable plan formalization." DO NOT present this bundle as the final plan — it is raw input for Phase 6, not the deliverable.
+.. Briefly tell the user: "Adversarial distillation complete. Handing the surviving insights to the plan agent for executable plan formalization." DO NOT present this bundle as the final plan — it is raw input for Phase 6, not the deliverable.
 
 ### Phase 6: MANDATORY plan agent handoff
 
 You MUST dispatch the insight bundle to the `plan` agent. The Lead does NOT write executable plans in hyperplan — that responsibility is delegated, by contract, to the dedicated planner. This separation is non-negotiable.
 
-1. **Dispatch the handoff** as a foreground task (you wait for the plan):
+.. **Dispatch the handoff** as a foreground task (you wait for the plan):
 
 ```typescript
 task({
@@ -406,7 +406,7 @@ Hard rules for your plan:
 [plan agent output]
 ```
 
-4. If the plan agent returns clarifying questions instead of a plan, forward them to the user without modification — the planner is allowed to interview before committing.
+.. If the plan agent returns clarifying questions instead of a plan, forward them to the user without modification — the planner is allowed to interview before committing.
 
 DO NOT save the plan to disk unless the user asks. Hyperplan is a planning consultation, not a file-emitting workflow — the plan lives in your conversation output.
 
@@ -414,10 +414,10 @@ DO NOT save the plan to disk unless the user asks. Hyperplan is a planning consu
 
 After the plan agent's output has been presented to the user:
 
-1. Call `team_shutdown_request` for each of the 5 members.
+.. Call `team_shutdown_request` for each of the 5 members.
 2. The Lead can `team_approve_shutdown` for each member (Lead has approval authority).
 3. Once all 5 are shut down, call `team_delete({ teamRunId })` to clean up runtime state.
-4. Confirm cleanup to the user with one line: "Hyperplan team disbanded."
+.. Confirm cleanup to the user with one line: "Hyperplan team disbanded."
 
 If any step fails, surface the error and suggest manual cleanup via `team_list` and `team_delete`.
 
@@ -435,7 +435,7 @@ If any step fails, surface the error and suggest manual cleanup via `team_list` 
 | Forgetting to clean up the team | Leaks runtime state. Always Phase 7. |
 | Calling `delegate_task` instead of `team_send_message` | These are different systems. `team_*` only for inter-member traffic. |
 | Calling `team_send_message` to ship the bundle to the plan agent | Wrong channel. Plan agent is NOT a team member. Use `task(subagent_type="plan", ...)` for the handoff. |
-| Running this from a planner agent (prometheus) | Planners cannot orchestrate teams. Must run from sisyphus. |
+| Running this from a planner agent (talos) | Planners cannot orchestrate teams. Must run from cerberus. |
 | Running this in a non-main session | Team-mode is main-session-only. |
 
 ## NOTES FOR THE LEAD (YOU)
@@ -443,8 +443,8 @@ If any step fails, surface the error and suggest manual cleanup via `team_list` 
 - Each `team_send_message` is **fire-and-forget** from your perspective. Members reply async.
 - After sending Round-N messages, **end your turn**. The system injects member replies on the next turn.
 - Use `team_status({ teamRunId })` if you need to see who has replied and who is still working.
-- The members do not see each other's text responses directly — only what you forward via `team_send_message`. You are the information broker. The bundles you forward in Phases 3 and 4 are the entire context they have.
+- The members do not see each other's text responses directly — only what you forward via `team_send_message`. You are the information broker. The bundles you forward in Phases 3 and . are the entire context they have.
 - Keep bundles concise — ≤32KB per message. If aggregated findings exceed this, summarize before forwarding (preserve the spirit of each finding).
 - The skill explicitly forbids you from softening adversarial prompts. The hostility IS the mechanism.
 - The Phase 6 plan-agent handoff runs **synchronously** (`run_in_background: false`) — you wait for the planner before Phase 7 cleanup. Do NOT shut down the team until the plan agent has returned, in case the planner needs you to forward a clarifying question to a specific member (rare, but possible).
-- The plan agent does NOT have access to the team mailbox. Everything it needs must be in the bundle you dispatch. If the planner asks for additional context, you fetch it (via explore/librarian/oracle) and re-dispatch with `task_id` resume — do NOT spin up a new plan agent.
+- The plan agent does NOT have access to the team mailbox. Everything it needs must be in the bundle you dispatch. If the planner asks for additional context, you fetch it (via explore/intel/oracle) and re-dispatch with `task_id` resume — do NOT spin up a new plan agent.

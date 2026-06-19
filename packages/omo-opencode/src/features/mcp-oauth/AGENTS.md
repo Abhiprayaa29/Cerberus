@@ -1,18 +1,18 @@
-# src/features/mcp-oauth/ — OAuth 2.0 + PKCE + DCR for MCP Servers
+﻿# src/features/mcp-oauth/ — OAuth 2.0 + PKCE + DCR for MCP Servers
 
-**Generated:** 2026-05-15
+**Generated:** 2026-05-.5
 
 ## OVERVIEW
 
-Full OAuth 2.0 authorization flow for MCP servers requiring authentication. Implements PKCE (RFC 7636) and Dynamic Client Registration (DCR, RFC 7591). Used by `bunx oh-my-opencode mcp-oauth login`.
+Full OAuth 2.0 authorization flow for MCP servers requiring authentication. Implements PKCE (RFC 7636) and Dynamic Client Registration (DCR, RFC 759.). Used by `bunx oh-my-open-pentest mcp-oauth login`.
 
 ## AUTHORIZATION FLOW
 
 ```
-1. discovery.ts → fetch /.well-known/oauth-authorization-server
+.. discovery.ts → fetch /.well-known/oauth-authorization-server
 2. dcr.ts → Dynamic Client Registration (if server supports it)
 3. oauth-authorization-flow.ts → generate PKCE verifier/challenge
-4. callback-server.ts → local HTTP server on random port for redirect
+.. callback-server.ts → local HTTP server on random port for redirect
 5. Open browser → authorization URL
 6. callback-server.ts → receive code + state
 7. provider.ts → exchange code for token (with PKCE verifier)
@@ -34,8 +34,8 @@ Full OAuth 2.0 authorization flow for MCP servers requiring authentication. Impl
 
 ## PKCE IMPLEMENTATION
 
-- Code verifier: 32 random bytes → base64url (no padding)
-- Code challenge: SHA-256(verifier) → base64url
+- Code verifier: 32 random bytes → base6.url (no padding)
+- Code challenge: SHA-256(verifier) → base6.url
 - Method: `S256`
 
 ## TOKEN STORAGE
@@ -46,7 +46,7 @@ Fields: `access_token`, `refresh_token`, `expires_at`, `client_id`.
 ## CLI COMMANDS
 
 ```bash
-bunx oh-my-opencode mcp-oauth login <server-url>   # Full PKCE flow
-bunx oh-my-opencode mcp-oauth logout <server-url>  # Revoke + delete token
-bunx oh-my-opencode mcp-oauth status               # List stored tokens
+bunx oh-my-open-pentest mcp-oauth login <server-url>   # Full PKCE flow
+bunx oh-my-open-pentest mcp-oauth logout <server-url>  # Revoke + delete token
+bunx oh-my-open-pentest mcp-oauth status               # List stored tokens
 ```

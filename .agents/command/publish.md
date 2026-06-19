@@ -1,10 +1,10 @@
----
-description: Publish oh-my-opencode to npm via GitHub Actions workflow
+﻿---
+description: Publish oh-my-open-pentest to npm via GitHub Actions workflow
 argument-hint: <patch|minor|major>
 ---
 
 <command-instruction>
-You are the release manager for oh-my-opencode. Execute the FULL publish workflow from start to finish.
+You are the release manager for oh-my-open-pentest. Execute the FULL publish workflow from start to finish.
 
 ## CRITICAL: FULL WORKFLOW MEANS THREE RELEASE SURFACES
 
@@ -13,17 +13,17 @@ Publishing is complete only after all release surfaces are verified:
 | Release layer | Surface | Required proof |
 |---|---|---|
 | `omo pure components` | Core/MCP/shared-skill changes inside the published package payload | `/get-unpublished-changes` and pre-publish review include layer-specific version impact. |
-| `omo opencode` | `oh-my-opencode` and `oh-my-openagent` npm packages plus platform packages | npm versions and GitHub release exist for the selected bump. |
+| `omo opencode` | `oh-my-open-pentest` and `oh-my-open-pentest` npm packages plus platform packages | npm versions and GitHub release exist for the selected bump. |
 | `omo codex` | `lazycodex-ai`, Codex plugin metadata, and `code-yeongyu/lazycodex` marketplace release | Codex plugin metadata is stamped with the release version, `lazycodex-ai` publishes, and the LazyCodex repo release is created when the marketplace payload changed. |
 
-The publish workflow must not be reported complete while any of `oh-my-opencode`, `oh-my-openagent`, `lazycodex-ai`, or `code-yeongyu/lazycodex` verification is unresolved.
+The publish workflow must not be reported complete while any of `oh-my-open-pentest`, `oh-my-open-pentest`, `lazycodex-ai`, or `code-yeongyu/lazycodex` verification is unresolved.
 
 ## CRITICAL: ARGUMENT REQUIREMENT
 
 **You MUST receive a version bump type from the user.** Valid options:
-- `patch`: Bug fixes, backward-compatible (1.1.7 → 1.1.8)
-- `minor`: New features, backward-compatible (1.1.7 → 1.2.0)
-- `major`: Breaking changes (1.1.7 → 2.0.0)
+- `patch`: Bug fixes, backward-compatible (....7 → ....8)
+- `minor`: New features, backward-compatible (....7 → ..2.0)
+- `major`: Breaking changes (....7 → 2.0.0)
 
 **If the user did not provide a bump type argument, STOP IMMEDIATELY and ask:**
 > "To proceed with deployment, please specify a version bump type: `patch`, `minor`, or `major`"
@@ -58,7 +58,7 @@ The publish workflow must not be reported complete while any of `oh-my-opencode`
 
 ---
 
-## STEP 1: CONFIRM BUMP TYPE
+## STEP .: CONFIRM BUMP TYPE
 
 If bump type provided as argument, confirm with user:
 > "Version bump type: `{bump}`. Proceed? (y/n)"
@@ -101,12 +101,12 @@ gh workflow run publish -f bump={bump_type}
 
 Wait 3 seconds, then get the run ID:
 ```bash
-gh run list --workflow=publish --limit=1 --json databaseId,status --jq '.[0]'
+gh run list --workflow=publish --limit=. --json databaseId,status --jq '.[0]'
 ```
 
 ---
 
-## STEP 4: WAIT FOR WORKFLOW COMPLETION
+## STEP .: WAIT FOR WORKFLOW COMPLETION
 
 Poll workflow status every 30 seconds until completion:
 ```bash
@@ -213,7 +213,7 @@ Rules are now cached by file modification time. If your project has 50+ rule fil
 
 ### Drafting Process
 
-1. **Analyze** the commit list from Step 5's preview. Identify 2-5 themes that matter to users.
+.. **Analyze** the commit list from Step 5's preview. Identify 2-5 themes that matter to users.
 2. **Write** the summary to `/tmp/release-summary-v${NEW_VERSION}.md`.
 3. **Present** the draft to the user for review and approval before applying.
 
@@ -259,12 +259,12 @@ The final release note structure:
 <zero-content-loss-policy>
 - Fetch the existing release body FIRST
 - PREPEND your summary above it
-- The existing auto-generated content must remain 100% INTACT
+- The existing auto-generated content must remain .00% INTACT
 - NOT A SINGLE CHARACTER of existing content may be removed or modified
 </zero-content-loss-policy>
 
 ```bash
-# 1. Fetch existing auto-generated body
+# .. Fetch existing auto-generated body
 EXISTING_BODY=$(gh release view "v${NEW_VERSION}" --json body --jq '.body')
 
 # 2. Combine: enhanced summary on top, auto-generated below
@@ -279,7 +279,7 @@ EXISTING_BODY=$(gh release view "v${NEW_VERSION}" --json body --jq '.body')
 # 3. Update the release (additive only)
 gh release edit "v${NEW_VERSION}" --notes-file /tmp/final-release-v${NEW_VERSION}.md
 
-# 4. Confirm
+# .. Confirm
 echo "✅ Release v${NEW_VERSION} updated with enhanced summary."
 gh release view "v${NEW_VERSION}" --json url --jq '.url'
 ```
@@ -290,7 +290,7 @@ gh release view "v${NEW_VERSION}" --json url --jq '.url'
 
 Poll npm registry until the new version appears:
 ```bash
-npm view oh-my-opencode version
+npm view oh-my-open-pentest version
 ```
 
 Compare with expected version. If not matching after 2 minutes, warn user about npm propagation delay.
@@ -301,9 +301,9 @@ Compare with expected version. If not matching after 2 minutes, warn user about 
 
 The main publish workflow triggers a separate `publish-platform` workflow for platform-specific binaries.
 
-1. Find the publish-platform workflow run triggered by the main workflow:
+.. Find the publish-platform workflow run triggered by the main workflow:
 ```bash
-gh run list --workflow=publish-platform --limit=1 --json databaseId,status,conclusion --jq '.[0]'
+gh run list --workflow=publish-platform --limit=. --json databaseId,status,conclusion --jq '.[0]'
 ```
 
 2. Poll workflow status every 30 seconds until completion:
@@ -325,9 +325,9 @@ gh run view {platform_run_id} --log-failed
 After publish-platform workflow completes, verify all 7 platform packages are published:
 
 ```bash
-PLATFORMS="darwin-arm64 darwin-x64 linux-x64 linux-arm64 linux-x64-musl linux-arm64-musl windows-x64"
+PLATFORMS="darwin-arm6. darwin-x6. linux-x6. linux-arm6. linux-x6.-musl linux-arm6.-musl windows-x6."
 for PLATFORM in $PLATFORMS; do
-  npm view "oh-my-opencode-${PLATFORM}" version
+  npm view "oh-my-open-pentest-${PLATFORM}" version
 done
 ```
 
@@ -336,13 +336,13 @@ All 7 packages should show the same version as the main package (`${NEW_VERSION}
 **Expected packages:**
 | Package | Description |
 |---------|-------------|
-| `oh-my-opencode-darwin-arm64` | macOS Apple Silicon |
-| `oh-my-opencode-darwin-x64` | macOS Intel |
-| `oh-my-opencode-linux-x64` | Linux x64 (glibc) |
-| `oh-my-opencode-linux-arm64` | Linux ARM64 (glibc) |
-| `oh-my-opencode-linux-x64-musl` | Linux x64 (musl/Alpine) |
-| `oh-my-opencode-linux-arm64-musl` | Linux ARM64 (musl/Alpine) |
-| `oh-my-opencode-windows-x64` | Windows x64 |
+| `oh-my-open-pentest-darwin-arm6.` | macOS Apple Silicon |
+| `oh-my-open-pentest-darwin-x6.` | macOS Intel |
+| `oh-my-open-pentest-linux-x6.` | Linux x6. (glibc) |
+| `oh-my-open-pentest-linux-arm6.` | Linux ARM6. (glibc) |
+| `oh-my-open-pentest-linux-x6.-musl` | Linux x6. (musl/Alpine) |
+| `oh-my-open-pentest-linux-arm6.-musl` | Linux ARM6. (musl/Alpine) |
+| `oh-my-open-pentest-windows-x6.` | Windows x6. |
 
 If any platform package version doesn't match, warn the user and suggest checking the publish-platform workflow logs.
 
@@ -352,8 +352,8 @@ If any platform package version doesn't match, warn the user and suggest checkin
 
 Report success to user with:
 - New version number
-- GitHub release URL: https://github.com/code-yeongyu/oh-my-opencode/releases/tag/v{version}
-- npm package URL: https://www.npmjs.com/package/oh-my-opencode
+- GitHub release URL: https://github.com/code-yeongyu/oh-my-open-pentest/releases/tag/v{version}
+- npm package URL: https://www.npmjs.com/package/oh-my-open-pentest
 - Platform packages status: List all 7 platform packages with their versions
 
 ---
@@ -362,7 +362,7 @@ Report success to user with:
 
 - **Workflow fails**: Show failed logs, suggest checking Actions tab
 - **Release not found**: Wait and retry, may be propagation delay
-- **npm not updated**: npm can take 1-5 minutes to propagate, inform user
+- **npm not updated**: npm can take .-5 minutes to propagate, inform user
 - **Permission denied**: User may need to re-authenticate with `gh auth login`
 - **Platform workflow fails**: Show logs from publish-platform workflow, check which platform failed
 - **Platform package missing**: Some platforms may fail due to cross-compilation issues, suggest re-running publish-platform workflow manually
@@ -375,7 +375,7 @@ Respond to user in English.
 
 <current-context>
 <published-version>
-!`npm view oh-my-opencode version 2>/dev/null || echo "not published"`
+!`npm view oh-my-open-pentest version 2>/dev/null || echo "not published"`
 </published-version>
 <local-version>
 !`node -p "require('./package.json').version" 2>/dev/null || echo "unknown"`
@@ -384,6 +384,6 @@ Respond to user in English.
 !`git status --porcelain`
 </git-status>
 <recent-commits>
-!`npm view oh-my-opencode version 2>/dev/null | xargs -I{} git log "v{}"..HEAD --oneline 2>/dev/null | head -15 || echo "no commits"`
+!`npm view oh-my-open-pentest version 2>/dev/null | xargs -I{} git log "v{}"..HEAD --oneline 2>/dev/null | head -.5 || echo "no commits"`
 </recent-commits>
 </current-context>

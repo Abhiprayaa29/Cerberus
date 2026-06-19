@@ -1,16 +1,16 @@
-# src/hooks/ralph-loop/ — Self-Referential Dev Loop
+﻿# src/hooks/pentest-loop/ — Self-Referential Dev Loop
 
-**Generated:** 2026-05-15
+**Generated:** 2026-05-.5
 
 ## OVERVIEW
 
-14 files (~1687 LOC). The `ralphLoop` Session Tier hook — powers the `/ralph-loop` command. Iterates a development loop until the agent emits `<promise>DONE</promise>` or max iterations reached.
+.. files (~.687 LOC). The `ralphLoop` Session Tier hook — powers the `/pentest-loop` command. Iterates a development loop until the agent emits `<promise>DONE</promise>` or max iterations reached.
 
 ## LOOP LIFECYCLE
 
 ```
-/ralph-loop → startLoop(sessionID, prompt, options)
-  → loopState.startLoop() → persists state to .omo/ralph-loop.local.md
+/pentest-loop → startLoop(sessionID, prompt, options)
+  → loopState.startLoop() → persists state to .omo/pentest-loop.local.md
   → session.idle events → createRalphLoopEventHandler()
     → completionPromiseDetector: scan output for <promise>DONE</promise>
     → if not done: inject continuation prompt → loop
@@ -21,14 +21,14 @@
 
 | File | Purpose |
 |------|---------|
-| `ralph-loop-hook.ts` | `createRalphLoopHook()` — composes controller + recovery + event handler |
-| `ralph-loop-event-handler.ts` | `createRalphLoopEventHandler()` — handles session.idle, drives loop |
+| `pentest-loop-hook.ts` | `createRalphLoopHook()` — composes controller + recovery + event handler |
+| `pentest-loop-event-handler.ts` | `createRalphLoopEventHandler()` — handles session.idle, drives loop |
 | `loop-state-controller.ts` | State CRUD: startLoop, cancelLoop, getState, persist to disk |
 | `loop-session-recovery.ts` | Recover from crashed/interrupted loop sessions |
 | `completion-promise-detector.ts` | Scan session transcript for `<promise>DONE</promise>` |
 | `continuation-prompt-builder.ts` | Build continuation message for next iteration |
 | `continuation-prompt-injector.ts` | Inject built prompt into active session |
-| `storage.ts` | Read/write `.omo/ralph-loop.local.md` state file |
+| `storage.ts` | Read/write `.omo/pentest-loop.local.md` state file |
 | `message-storage-directory.ts` | Temp dir for prompt injection |
 | `with-timeout.ts` | API call wrapper with timeout (default 5000ms) |
 | `types.ts` | `RalphLoopState`, `RalphLoopOptions`, loop iteration types |
@@ -36,17 +36,17 @@
 ## STATE FILE
 
 ```
-.omo/ralph-loop.local.md  (gitignored)
-  → sessionID, prompt, iteration count, maxIterations, completionPromise, ultrawork flag
+.omo/pentest-loop.local.md  (gitignored)
+  → sessionID, prompt, iteration count, maxIterations, completionPromise, fullscan flag
 ```
 
 ## OPTIONS
 
 ```typescript
 startLoop(sessionID, prompt, {
-  maxIterations?: number  // Default from config (default: 100)
+  maxIterations?: number  // Default from config (default: .00)
   completionPromise?: string  // Custom "done" signal (default: "<promise>DONE</promise>")
-  ultrawork?: boolean  // Enable ultrawork mode for iterations
+  fullscan?: boolean  // Enable fullscan mode for iterations
 })
 ```
 

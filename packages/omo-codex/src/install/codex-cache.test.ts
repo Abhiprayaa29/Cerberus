@@ -1,4 +1,4 @@
-/// <reference path="../../../../bun-test.d.ts" />
+﻿/// <reference path="../../../../bun-test.d.ts" />
 /// <reference types="bun-types" />
 
 import { describe, expect, test } from "bun:test"
@@ -159,7 +159,7 @@ describe("codex-cache", () => {
     const sourceRoot = join(root, "plugin")
     await mkdir(sourceRoot, { recursive: true })
     await writeFile(join(sourceRoot, "package.json"), JSON.stringify({ name: "@scope/omo", version: "0.1.0" }))
-    const lockfile = '{"packages":{"components/ulw-loop":{}}}\n'
+    const lockfile = '{"packages":{"components/pentest-loop":{}}}\n'
     await writeFile(join(sourceRoot, "package-lock.json"), lockfile)
 
     // when
@@ -288,13 +288,13 @@ describe("codex-cache", () => {
     // given
     const root = await mkdtemp(join(tmpdir(), "omo-codex-cache-reserved-bin-"))
     const pluginRoot = join(root, "plugin")
-    const componentRoot = join(pluginRoot, "components", "ulw-loop")
+    const componentRoot = join(pluginRoot, "components", "pentest-loop")
     const binDir = join(root, "bin")
     await mkdir(join(componentRoot, "dist"), { recursive: true })
     await writeFile(join(pluginRoot, "package.json"), JSON.stringify({ name: "@scope/omo" }))
     await writeFile(
       join(componentRoot, "package.json"),
-      JSON.stringify({ name: "@scope/ulw-loop", bin: { omo: "dist/cli.js", "omo-ulw-loop": "dist/cli.js" } }),
+      JSON.stringify({ name: "@scope/pentest-loop", bin: { omo: "dist/cli.js", "omo-pentest-loop": "dist/cli.js" } }),
     )
     await writeFile(join(componentRoot, "dist", "cli.js"), "#!/usr/bin/env node\n")
 
@@ -302,20 +302,20 @@ describe("codex-cache", () => {
     const linked = await linkCachedPluginBins({ binDir, pluginRoot, platform: "linux" })
 
     // then
-    expect(linked).toEqual([{ name: "omo-ulw-loop", path: join(binDir, "omo-ulw-loop"), target: join(componentRoot, "dist", "cli.js") }])
+    expect(linked).toEqual([{ name: "omo-pentest-loop", path: join(binDir, "omo-pentest-loop"), target: join(componentRoot, "dist", "cli.js") }])
     await expect(readlink(join(binDir, "omo"))).rejects.toThrow()
-    expect(await readlink(join(binDir, "omo-ulw-loop"))).toBe(join(componentRoot, "dist", "cli.js"))
+    expect(await readlink(join(binDir, "omo-pentest-loop"))).toBe(join(componentRoot, "dist", "cli.js"))
   })
 
-  test("#given stale managed ulw-loop omo symlink #when linking cached plugin bins #then removes it", async () => {
+  test("#given stale managed pentest-loop omo symlink #when linking cached plugin bins #then removes it", async () => {
     // given
     const root = await mkdtemp(join(tmpdir(), "omo-codex-cache-stale-omo-bin-"))
     const pluginRoot = join(root, "plugin")
     const componentRoot = join(pluginRoot, "components", "rules")
     const binDir = join(root, "bin")
-    const oldTarget = join(root, "codex-home", "plugins", "cache", "sisyphuslabs", "omo", "0.1.0", "components", "ulw-loop", "dist", "cli.js")
+    const oldTarget = join(root, "codex-home", "plugins", "cache", "cerberuslabs", "omo", "0.1.0", "components", "pentest-loop", "dist", "cli.js")
     await mkdir(join(componentRoot, "dist"), { recursive: true })
-    await mkdir(join(root, "codex-home", "plugins", "cache", "sisyphuslabs", "omo", "0.1.0", "components", "ulw-loop", "dist"), {
+    await mkdir(join(root, "codex-home", "plugins", "cache", "cerberuslabs", "omo", "0.1.0", "components", "pentest-loop", "dist"), {
       recursive: true,
     })
     await mkdir(binDir, { recursive: true })
@@ -333,15 +333,15 @@ describe("codex-cache", () => {
     expect(await readlink(join(binDir, "omo-rules"))).toBe(join(componentRoot, "dist", "cli.js"))
   })
 
-  test("#given stale local-source ulw-loop omo symlink #when linking cached plugin bins #then removes it", async () => {
+  test("#given stale local-source pentest-loop omo symlink #when linking cached plugin bins #then removes it", async () => {
     // given
     const root = await mkdtemp(join(tmpdir(), "omo-codex-cache-source-omo-bin-"))
     const pluginRoot = join(root, "plugin")
     const componentRoot = join(pluginRoot, "components", "rules")
     const binDir = join(root, "bin")
-    const oldTarget = join(root, "repo", "packages", "omo-codex", "plugin", "components", "ulw-loop", "dist", "cli.js")
+    const oldTarget = join(root, "repo", "packages", "omo-codex", "plugin", "components", "pentest-loop", "dist", "cli.js")
     await mkdir(join(componentRoot, "dist"), { recursive: true })
-    await mkdir(join(root, "repo", "packages", "omo-codex", "plugin", "components", "ulw-loop", "dist"), { recursive: true })
+    await mkdir(join(root, "repo", "packages", "omo-codex", "plugin", "components", "pentest-loop", "dist"), { recursive: true })
     await mkdir(binDir, { recursive: true })
     await writeFile(join(pluginRoot, "package.json"), JSON.stringify({ name: "@scope/omo" }))
     await writeFile(join(componentRoot, "package.json"), JSON.stringify({ name: "@scope/rules", bin: { "omo-rules": "dist/cli.js" } }))

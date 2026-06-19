@@ -1,4 +1,4 @@
-/// <reference path="../../../../bun-test.d.ts" />
+﻿/// <reference path="../../../../bun-test.d.ts" />
 /// <reference types="bun-types" />
 
 import { afterEach, beforeEach, describe, expect, it, spyOn } from "bun:test"
@@ -21,7 +21,7 @@ function createMockSpinner(): ReturnType<typeof p.spinner> {
 }
 
 const codexResult: CodexInstallResult = {
-  marketplaceName: "sisyphuslabs",
+  marketplaceName: "cerberuslabs",
   installed: [],
   configPath: "/tmp/codex/config.toml",
   codexHome: "/tmp/codex",

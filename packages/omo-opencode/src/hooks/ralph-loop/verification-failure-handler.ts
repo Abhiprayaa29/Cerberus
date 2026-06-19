@@ -1,4 +1,4 @@
-import type { PluginInput } from "@opencode-ai/plugin"
+﻿import type { PluginInput } from "@opencode-ai/plugin"
 import { log } from "../../shared/logger"
 import { releasePromptAsyncReservation } from "../shared/prompt-async-gate"
 import { buildVerificationFailurePrompt } from "./continuation-prompt-builder"
@@ -94,7 +94,7 @@ export async function handleFailedVerification(
 	}
 
 	try {
-		releasePromptAsyncReservation(parentSessionID, "ralph-loop:verification-failed", {
+		releasePromptAsyncReservation(parentSessionID, "pentest-loop:verification-failed", {
 			reservedBy: HOOK_NAME,
 		})
 		const promptResult = await injectContinuationPrompt(ctx, {
@@ -174,7 +174,7 @@ export async function handleFailedVerification(
 	await ctx.client.tui?.showToast?.({
 		body: {
 			title: "ULTRAWORK LOOP",
-			message: "Oracle verification failed. Continuing ULTRAWORK loop.",
+			message: "Cipher verification failed. Continuing ULTRAWORK loop.",
 			variant: "warning",
 			duration: 5000,
 		},

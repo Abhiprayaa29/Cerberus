@@ -1,4 +1,4 @@
-import { unsafeTestValue } from "../../../../../test-support/unsafe-test-value"
+﻿import { unsafeTestValue } from "../../../../../test-support/unsafe-test-value"
 const { describe, expect, test } = require("bun:test")
 
 function requireFresh<T>(modulePath: string): T {
@@ -43,9 +43,9 @@ function createDelegateTask(...args: Parameters<typeof import("./tools").createD
 		//#then
 		expect(description).toContain("subagent_type: Use specific agent directly")
 		expect(description).toContain("task_id: Continuation session id")
-		expect(description).not.toContain("sisyphus")
-		expect(description).not.toContain("hephaestus")
-		expect(description).not.toContain("prometheus")
+		expect(description).not.toContain("cerberus")
+		expect(description).not.toContain("scylla")
+		expect(description).not.toContain("talos")
 	})
 
 	test("#given task schema #when describing async mode #then it names background task ids explicitly", () => {

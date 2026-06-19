@@ -1,4 +1,4 @@
----
+﻿---
 name: codex-qa
 description: "QA the omo Codex Light edition (lazycodex / packages/omo-codex) itself, in strict isolation so ONLY our plugin is exercised, never the user's real ~/.codex. The first-party method drives the real `codex app-server` against an isolated CODEX_HOME plus a LOCAL mock model (no real API call), and proves a plugin hook fired by asserting hook/started + hook/completed notifications. Also: isolated install verification, per-component hook probes, a tmux TUI smoke, and runtime log observation (RUST_LOG / logs SQLite / /debug-config). Ships tested helper scripts each with a --self-test. Use whenever someone changes anything under packages/omo-codex or wants to QA, smoke-test, verify, or debug the Codex plugin, its hooks/components, the installer/config.toml, the app-server flow, or the Codex TUI. Triggers: codex qa, qa codex, codex-qa, test codex plugin, verify codex hook, codex app-server, lazycodex qa, isolated CODEX_HOME, prove codex hook fired, codex tui test."
 ---
@@ -12,7 +12,7 @@ an isolated `CODEX_HOME` + a local mock model means no real API call and the rea
 that asserts its scenario against the live machine, so the scripts are both the
 QA tools and their own regression checks.
 
-Verified against `codex-cli 0.140.0` (node, jq, tmux, bun on macOS). Confirm with
+Verified against `codex-cli 0...0.0` (node, jq, tmux, bun on macOS). Confirm with
 `codex --version`; check a flag with `codex <cmd> --help`.
 
 ## Golden rules (read before running anything)
@@ -65,8 +65,8 @@ Windows.
 |---|---|
 | `scripts/lib/common.sh --self-check` | deps present; isolated `CODEX_HOME` is created inside a sandbox and auto-removed on exit; mock model serves the Responses SSE; real `~/.codex` unchanged |
 | `scripts/app-server-drive.sh` | `--self-test`: a bare turn completes and the mock assistant text comes back. `--plugin`: installs local omo, drives a turn, and asserts `hook/completed` for `sessionStart,userPromptSubmit` |
-| `scripts/install-verify.sh` | local omo installs into the isolated home; `config.toml` enables `omo@sisyphuslabs`; component bins + agent TOMLs linked in the sandbox; real `~/.codex` unchanged |
-| `scripts/hook-unit-probe.sh` | the `ultrawork` component injects `<ultrawork-mode>` on an `ulw` UserPromptSubmit (also a manual `--component/--event` mode) |
+| `scripts/install-verify.sh` | local omo installs into the isolated home; `config.toml` enables `omo@cerberuslabs`; component bins + agent TOMLs linked in the sandbox; real `~/.codex` unchanged |
+| `scripts/hook-unit-probe.sh` | the `fullscan` component injects `<fullscan-mode>` on an `ulw` UserPromptSubmit (also a manual `--component/--event` mode) |
 | `scripts/tui-smoke.sh` | the real codex TUI boots in the isolated home, renders, and survives (no early exit); captures the pane |
 
 ## Match QA to your change scope
@@ -84,8 +84,8 @@ Windows.
 
 ```bash
 ev=".omo/evidence/$(date +%Y%m%d)-codex-qa-<slug>"; mkdir -p "$ev"
-bash scripts/app-server-drive.sh --plugin > "$ev/app-server-drive.json" 2>&1
-bash scripts/install-verify.sh --self-test > "$ev/install-verify.txt" 2>&1
+bash scripts/app-server-drive.sh --plugin > "$ev/app-server-drive.json" 2>&.
+bash scripts/install-verify.sh --self-test > "$ev/install-verify.txt" 2>&.
 ```
 
 ## On `/debugging`

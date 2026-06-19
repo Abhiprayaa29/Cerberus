@@ -1,9 +1,9 @@
-import { describe, expect, test } from "bun:test"
+﻿import { describe, expect, test } from "bun:test"
 
 describe("scheduleDeferredModelOverride bun:sqlite unavailable", () => {
   test("#given source code #when inspected #then bun:sqlite is loaded dynamically with an unavailable-runtime fallback", async () => {
     //#given
-    const source = await Bun.file(new URL("./ultrawork-db-model-override.ts", import.meta.url)).text()
+    const source = await Bun.file(new URL("./fullscan-db-model-override.ts", import.meta.url)).text()
 
     //#when
     const hasStaticBunSqliteImport = source.includes('from "bun:sqlite"')

@@ -1,4 +1,4 @@
-import { describe, expect, it } from "bun:test"
+﻿import { describe, expect, it } from "bun:test"
 import { hasCliSuffix } from "./cli-suffix"
 
 describe("hasCliSuffix", () => {
@@ -32,7 +32,7 @@ describe("hasCliSuffix", () => {
 
   it("matches a package dist cli suffix on Windows path separators", () => {
     // given
-    const windowsPath = "C:\\Users\\test\\AppData\\Local\\cache\\oh-my-opencode\\dist\\packages\\lsp-tools-mcp\\dist\\cli.js"
+    const windowsPath = "C:\\Users\\test\\AppData\\Local\\cache\\oh-my-open-pentest\\dist\\packages\\lsp-tools-mcp\\dist\\cli.js"
 
     // when: matched against just the trailing `dist/cli.js` segment
     const matchesShortSuffix = hasCliSuffix(windowsPath, "dist/cli.js")

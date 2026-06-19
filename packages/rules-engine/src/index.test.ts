@@ -1,4 +1,4 @@
-import { mkdirSync, realpathSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
+﻿import { mkdirSync, realpathSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterEach, describe, expect, it } from "bun:test";
@@ -15,11 +15,11 @@ import {
   shouldApplyRule,
   type DirectoryScanEntry,
 } from "./index";
-import { _resetSisyphusRuleDeprecationWarningStateForTesting, _setSisyphusRuleDeprecationLoggerForTesting } from "./finder";
+import { _resetCerberusRuleDeprecationWarningStateForTesting, _setCerberusRuleDeprecationLoggerForTesting } from "./finder";
 
 let testRoot: string | null = null;
 
-const SISYPHUS_DEPRECATION_MESSAGE = "[rules] .sisyphus/rules is deprecated and will be removed in v4.3.0; migrate to .omo/rules";
+const CERBERUS_DEPRECATION_MESSAGE = "[rules] .cerberus/rules is deprecated and will be removed in v4.3.0; migrate to .omo/rules";
 
 function createTestRoot(name: string): string {
   testRoot = join(tmpdir(), `${name}-${Date.now()}-${Math.random()}`);
@@ -28,7 +28,7 @@ function createTestRoot(name: string): string {
 }
 
 afterEach(() => {
-  _resetSisyphusRuleDeprecationWarningStateForTesting();
+  _resetCerberusRuleDeprecationWarningStateForTesting();
   if (testRoot) {
     rmSync(testRoot, { recursive: true, force: true });
     testRoot = null;
@@ -42,14 +42,14 @@ describe("rules-core", () => {
     const root = createTestRoot("rules-core-order");
     mkdirSync(join(root, ".git"));
     mkdirSync(join(root, ".omo", "rules"), { recursive: true });
-    mkdirSync(join(root, ".sisyphus", "rules"), { recursive: true });
+    mkdirSync(join(root, ".cerberus", "rules"), { recursive: true });
     mkdirSync(join(root, ".claude", "rules"), { recursive: true });
     mkdirSync(join(root, ".cursor", "rules"), { recursive: true });
     mkdirSync(join(root, ".github", "instructions"), { recursive: true });
     mkdirSync(join(root, "src"), { recursive: true });
     writeFileSync(join(root, ".github", "copilot-instructions.md"), "copilot");
     writeFileSync(join(root, ".omo", "rules", "omo.md"), "omo");
-    writeFileSync(join(root, ".sisyphus", "rules", "sisyphus.md"), "sisyphus");
+    writeFileSync(join(root, ".cerberus", "rules", "cerberus.md"), "cerberus");
     writeFileSync(join(root, ".claude", "rules", "claude.md"), "claude");
     writeFileSync(join(root, ".cursor", "rules", "cursor.md"), "cursor");
     writeFileSync(join(root, ".github", "instructions", "github.instructions.md"), "github");
@@ -64,7 +64,7 @@ describe("rules-core", () => {
       ".claude/rules/claude.md",
       ".cursor/rules/cursor.md",
       ".github/instructions/github.instructions.md",
-      ".sisyphus/rules/sisyphus.md",
+      ".cerberus/rules/cerberus.md",
     ]);
   });
 
@@ -105,39 +105,39 @@ describe("rules-core", () => {
     expect(results.map((rule) => rule.path)).toEqual([instructionFile]);
   });
 
-  it("#given a workspace with .sisyphus/rules/*.md #when findRuleFiles is called #then those files are discovered with lowest priority among project sources", () => {
+  it("#given a workspace with .cerberus/rules/*.md #when findRuleFiles is called #then those files are discovered with lowest priority among project sources", () => {
     // given
-    const root = createTestRoot("rules-core-sisyphus-restored");
+    const root = createTestRoot("rules-core-cerberus-restored");
     mkdirSync(join(root, ".git"));
     mkdirSync(join(root, ".omo", "rules"), { recursive: true });
-    mkdirSync(join(root, ".sisyphus", "rules"), { recursive: true });
+    mkdirSync(join(root, ".cerberus", "rules"), { recursive: true });
     mkdirSync(join(root, "src"), { recursive: true });
     writeFileSync(join(root, ".omo", "rules", "shared.md"), "omo");
-    writeFileSync(join(root, ".sisyphus", "rules", "shared.md"), "legacy");
-    writeFileSync(join(root, ".sisyphus", "rules", "legacy.md"), "legacy");
+    writeFileSync(join(root, ".cerberus", "rules", "shared.md"), "legacy");
+    writeFileSync(join(root, ".cerberus", "rules", "legacy.md"), "legacy");
 
     // when
     const found = findRuleFiles(root, root, join(root, "src", "index.ts"));
     const relativePaths = found.map((rule) => rule.relativePath);
     const omoSharedIndex = relativePaths.indexOf(".omo/rules/shared.md");
-    const sisyphusSharedIndex = relativePaths.indexOf(".sisyphus/rules/shared.md");
+    const cerberusSharedIndex = relativePaths.indexOf(".cerberus/rules/shared.md");
 
     // then
-    expect(relativePaths).toContain(".sisyphus/rules/legacy.md");
+    expect(relativePaths).toContain(".cerberus/rules/legacy.md");
     expect(omoSharedIndex).toBeGreaterThanOrEqual(0);
-    expect(sisyphusSharedIndex).toBeGreaterThan(omoSharedIndex);
+    expect(cerberusSharedIndex).toBeGreaterThan(omoSharedIndex);
   });
 
-  it("#given .sisyphus/rules is discovered #when the finder runs #then a deprecation warning is logged exactly once", () => {
+  it("#given .cerberus/rules is discovered #when the finder runs #then a deprecation warning is logged exactly once", () => {
     // given
-    const root = createTestRoot("rules-core-sisyphus-warning");
-    const legacyRulePath = join(root, ".sisyphus", "rules", "legacy.md");
+    const root = createTestRoot("rules-core-cerberus-warning");
+    const legacyRulePath = join(root, ".cerberus", "rules", "legacy.md");
     mkdirSync(join(root, ".git"));
-    mkdirSync(join(root, ".sisyphus", "rules"), { recursive: true });
+    mkdirSync(join(root, ".cerberus", "rules"), { recursive: true });
     mkdirSync(join(root, "src"), { recursive: true });
     writeFileSync(legacyRulePath, "legacy");
     const warnings: Array<{ readonly message: string; readonly data: unknown }> = [];
-    _setSisyphusRuleDeprecationLoggerForTesting((message, data) => {
+    _setCerberusRuleDeprecationLoggerForTesting((message, data) => {
       warnings.push({ message, data });
     });
 
@@ -145,7 +145,7 @@ describe("rules-core", () => {
     findRuleFiles(root, root, join(root, "src", "index.ts"));
     findRuleFiles(root, root, join(root, "src", "index.ts"));
     const deprecationWarnings = warnings.filter(
-      ({ message, data }) => message === SISYPHUS_DEPRECATION_MESSAGE && isSisyphusDeprecationData(data, legacyRulePath),
+      ({ message, data }) => message === CERBERUS_DEPRECATION_MESSAGE && isCerberusDeprecationData(data, legacyRulePath),
     );
 
     // then
@@ -286,8 +286,8 @@ describe("rules-core", () => {
   });
 });
 
-function isSisyphusDeprecationData(data: unknown, path: string): boolean {
+function isCerberusDeprecationData(data: unknown, path: string): boolean {
   if (typeof data !== "object" || data === null) return false;
   if (!("event" in data) || !("path" in data)) return false;
-  return data.event === "rules-sisyphus-deprecated" && data.path === path;
+  return data.event === "rules-cerberus-deprecated" && data.path === path;
 }

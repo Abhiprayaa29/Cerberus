@@ -1,4 +1,4 @@
-import { mkdir, mkdtemp, writeFile } from "node:fs/promises"
+﻿import { mkdir, mkdtemp, writeFile } from "node:fs/promises"
 import { tmpdir } from "node:os"
 import { join } from "node:path"
 
@@ -10,8 +10,8 @@ export const EXPECTED_OMO_COMPONENT_BINS = [
   { name: "omo-rules", target: join("components", "rules", "dist", "cli.js") },
   { name: "omo-start-work-continuation", target: join("components", "start-work-continuation", "dist", "cli.js") },
   { name: "omo-telemetry", target: join("components", "telemetry", "dist", "cli.js") },
-  { name: "omo-ulw-loop", target: join("components", "ulw-loop", "dist", "cli.js") },
-  { name: "omo-ultrawork", target: join("components", "ultrawork", "dist", "cli.js") },
+  { name: "omo-pentest-loop", target: join("components", "pentest-loop", "dist", "cli.js") },
+  { name: "omo-fullscan", target: join("components", "fullscan", "dist", "cli.js") },
 ] as const
 
 export function expectedBinName(name: string): string {
@@ -31,10 +31,10 @@ export async function createRepoWithBuiltComponentBins(
   await mkdir(join(repoRoot, "src"), { recursive: true })
   await mkdir(codexPackageRoot, { recursive: true })
   await writeFile(join(repoRoot, "src", "index.ts"), "export {}\n")
-  await writeFile(join(repoRoot, "package.json"), JSON.stringify({ name: "oh-my-openagent", version: "4.7.5" }))
+  await writeFile(join(repoRoot, "package.json"), JSON.stringify({ name: "oh-my-open-pentest", version: "4.7.5" }))
   await writeFile(
     join(codexPackageRoot, "marketplace.json"),
-    JSON.stringify({ name: "sisyphuslabs", plugins: [{ name: "omo", source: "./plugins/omo" }] }),
+    JSON.stringify({ name: "cerberuslabs", plugins: [{ name: "omo", source: "./plugins/omo" }] }),
   )
 
   if (input.includeRootCliDist !== false) {
@@ -46,7 +46,7 @@ export async function createRepoWithBuiltComponentBins(
   const pluginManifest =
     input.includeBundledGitBashMcp === true ? { name: "omo", version: "0.1.0", hooks: "hooks/hooks.json" } : { name: "omo", version: "0.1.0" }
   await writeFile(join(pluginRoot, ".codex-plugin", "plugin.json"), JSON.stringify(pluginManifest))
-  await writeFile(join(pluginRoot, "package.json"), JSON.stringify({ name: "@sisyphuslabs/omo-codex-plugin", version: "0.1.0" }))
+  await writeFile(join(pluginRoot, "package.json"), JSON.stringify({ name: "@cerberuslabs/omo-codex-plugin", version: "0.1.0" }))
 
   if (input.includeBundledGitBashMcp === true) {
     await createBundledGitBashMcpFixture({ pluginRoot, repoRoot })
@@ -60,7 +60,7 @@ export async function createRepoWithBuiltComponentBins(
     await mkdir(join(componentRoot, "dist"), { recursive: true })
     await writeFile(
       join(componentRoot, "package.json"),
-      JSON.stringify({ name: `@sisyphuslabs/${componentName}`, bin: { [entry.name]: "./dist/cli.js" } }),
+      JSON.stringify({ name: `@cerberuslabs/${componentName}`, bin: { [entry.name]: "./dist/cli.js" } }),
     )
     await writeFile(join(componentRoot, "dist", "cli.js"), "#!/usr/bin/env node\n")
   }

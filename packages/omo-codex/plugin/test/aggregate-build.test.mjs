@@ -1,4 +1,4 @@
-import assert from "node:assert/strict";
+﻿import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import test from "node:test";
@@ -21,8 +21,8 @@ test("#given aggregate plugin build script #when inspected #then generated asset
 	);
 	assert.match(buildScript, /^node scripts\/sync-version\.mjs &&/);
 	assert.equal(testScript, "node --test test/*.test.mjs");
-	assert(packageJson.workspaces.includes("components/ultrawork"));
-	assert.doesNotMatch(packageText, /\bpython3?\b|ultrawork-detector\.py/);
+	assert(packageJson.workspaces.includes("components/fullscan"));
+	assert.doesNotMatch(packageText, /\bpython3?\b|fullscan-detector\.py/);
 });
 
 test("#given omo-codex package build script #when inspected #then delegates to the aggregate plugin package", async () => {

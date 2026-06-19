@@ -1,4 +1,4 @@
-import { spawn } from "node:child_process";
+﻿import { spawn } from "node:child_process";
 import { mkdtemp, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
@@ -52,7 +52,7 @@ beforeAll(async () => {
 }, 120_000);
 
 beforeEach(async () => {
-	workspace = await mkdtemp(join(tmpdir(), "ulw-loop-entrypoint-"));
+	workspace = await mkdtemp(join(tmpdir(), "pentest-loop-entrypoint-"));
 });
 
 afterEach(async () => {
@@ -60,20 +60,20 @@ afterEach(async () => {
 });
 
 describe("dist/cli.js entrypoint dispatch", () => {
-	it("#given no plan #when invoked with bare 'status --json' #then routes into ulw-loop instead of unknown command", async () => {
+	it("#given no plan #when invoked with bare 'status --json' #then routes into pentest-loop instead of unknown command", async () => {
 		const result = await runCli(["status", "--json"]);
 
 		const combined = `${result.stdout}${result.stderr}`;
-		expect(combined).toContain("No ulw-loop plan found");
+		expect(combined).toContain("No pentest-loop plan found");
 		expect(combined).not.toContain("[omo] unknown command");
 		expect(result.code).toBe(1);
 	});
 
-	it("#given no plan #when invoked with legacy 'ulw-loop status --json' #then still routes into ulw-loop", async () => {
-		const result = await runCli(["ulw-loop", "status", "--json"]);
+	it("#given no plan #when invoked with legacy 'pentest-loop status --json' #then still routes into pentest-loop", async () => {
+		const result = await runCli(["pentest-loop", "status", "--json"]);
 
 		const combined = `${result.stdout}${result.stderr}`;
-		expect(combined).toContain("No ulw-loop plan found");
+		expect(combined).toContain("No pentest-loop plan found");
 		expect(combined).not.toContain("[omo] unknown command");
 		expect(result.code).toBe(1);
 	});
@@ -83,10 +83,10 @@ describe("dist/cli.js entrypoint dispatch", () => {
 
 		expect(result.code).toBe(0);
 		expect(result.stdout).toContain("Usage:");
-		expect(result.stdout).toContain("omo ulw-loop <subcommand>");
+		expect(result.stdout).toContain("omo pentest-loop <subcommand>");
 	});
 
-	it("#given a command outside the ulw-loop vocabulary #when invoked with 'frobnicate' #then fails as unknown command", async () => {
+	it("#given a command outside the pentest-loop vocabulary #when invoked with 'frobnicate' #then fails as unknown command", async () => {
 		const result = await runCli(["frobnicate"]);
 
 		expect(result.code).toBe(1);

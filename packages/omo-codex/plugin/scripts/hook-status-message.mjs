@@ -1,10 +1,10 @@
-const PRODUCT_PREFIX = "(OmO)";
+﻿const PRODUCT_PREFIX = "(OmO)";
 
 const WORD_OVERRIDES = new Map([
 	["lazycodex", "LazyCodex"],
 	["lsp", "LSP"],
 	["mcp", "MCP"],
-	["ulw-loop", "Ulw-Loop"],
+	["pentest-loop", "Ulw-Loop"],
 ]);
 
 export function formatLazyCodexHookStatusMessage(version, label) {

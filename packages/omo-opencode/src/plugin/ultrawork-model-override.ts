@@ -1,14 +1,14 @@
-import type { OhMyOpenCodeConfig } from "../config"
+﻿import type { OhMyOpenCodeConfig } from "../config"
 import type { AgentOverrides } from "../config/schema/agent-overrides"
 import { getSessionAgent } from "../features/claude-code-session-state"
 import { log } from "../shared"
 import { getAgentConfigKey } from "../shared/agent-display-names"
-import { scheduleDeferredModelOverride } from "./ultrawork-db-model-override"
-import { resolveValidUltraworkVariant } from "./ultrawork-variant-availability"
+import { scheduleDeferredModelOverride } from "./fullscan-db-model-override"
+import { resolveValidUltraworkVariant } from "./fullscan-variant-availability"
 
 const CODE_BLOCK = /```[\s\S]*?```/g
 const INLINE_CODE = /`[^`]+`/g
-const ULTRAWORK_PATTERN = /\b(ultrawork|ulw)\b/i
+const ULTRAWORK_PATTERN = /\b(fullscan|ulw)\b/i
 
 export function detectUltrawork(text: string): boolean {
   const clean = text.replace(CODE_BLOCK, "").replace(INLINE_CODE, "")
@@ -77,20 +77,20 @@ export function resolveUltraworkOverride(
 
   const agentConfigKey = getAgentConfigKey(rawAgentName)
   const agentConfig = pluginConfig.agents[agentConfigKey as keyof AgentOverrides]
-  const ultraworkConfig = agentConfig?.ultrawork
-  if (!ultraworkConfig?.model && !ultraworkConfig?.variant) return null
+  const fullscanConfig = agentConfig?.fullscan
+  if (!fullscanConfig?.model && !fullscanConfig?.variant) return null
 
-  if (!ultraworkConfig.model) {
-    return { variant: ultraworkConfig.variant }
+  if (!fullscanConfig.model) {
+    return { variant: fullscanConfig.variant }
   }
 
-  const modelParts = ultraworkConfig.model.split("/")
+  const modelParts = fullscanConfig.model.split("/")
   if (modelParts.length < 2) return null
 
   return {
     providerID: modelParts[0],
     modelID: modelParts.slice(1).join("/"),
-    variant: ultraworkConfig.variant,
+    variant: fullscanConfig.variant,
   }
 }
 
@@ -114,14 +114,14 @@ function applyResolvedUltraworkOverride(args: {
   if (isSameModel(output.message.model, targetModel)) {
     if (validatedVariant && messageId) {
       scheduleDeferredModelOverride(messageId, targetModel, validatedVariant)
-      log(`[ultrawork-model-override] Persist validated variant for active model: ${override.modelID}`)
+      log(`[fullscan-model-override] Persist validated variant for active model: ${override.modelID}`)
       return
     }
-    log(`[ultrawork-model-override] Skip override; target model already active: ${override.modelID}`)
+    log(`[fullscan-model-override] Skip override; target model already active: ${override.modelID}`)
     return
   }
   if (!messageId) {
-    log("[ultrawork-model-override] No message ID found, falling back to direct mutation")
+    log("[fullscan-model-override] No message ID found, falling back to direct mutation")
     output.message.model = targetModel
     return
   }
@@ -134,7 +134,7 @@ function applyResolvedUltraworkOverride(args: {
 
   scheduleDeferredModelOverride(messageId, targetModel, validatedVariant)
 
-  log(`[ultrawork-model-override] ${fromModel} -> ${override.modelID} (deferred DB)`, {
+  log(`[fullscan-model-override] ${fromModel} -> ${override.modelID} (deferred DB)`, {
     agent: agentConfigKey,
   })
 
@@ -165,7 +165,7 @@ export function applyUltraworkModelOverrideOnMessage(
     : currentModel
 
   if (!client || typeof (client as { provider?: { list?: unknown } }).provider?.list !== "function") {
-    log("[ultrawork-model-override] SDK validation unavailable, skipping variant override", {
+    log("[fullscan-model-override] SDK validation unavailable, skipping variant override", {
       variant: override.variant,
     })
     applyResolvedUltraworkOverride({ override, validatedVariant: undefined, output, inputAgentName, tui })
@@ -175,7 +175,7 @@ export function applyUltraworkModelOverrideOnMessage(
   return resolveValidUltraworkVariant(client, variantTargetModel, override.variant)
     .then((validatedVariant) => {
       if (override.variant && !validatedVariant) {
-        log("[ultrawork-model-override] Skip invalid ultrawork variant override", {
+        log("[fullscan-model-override] Skip invalid fullscan variant override", {
           variant: override.variant,
           providerID: variantTargetModel?.providerID,
           modelID: variantTargetModel?.modelID,
@@ -185,7 +185,7 @@ export function applyUltraworkModelOverrideOnMessage(
       applyResolvedUltraworkOverride({ override, validatedVariant, output, inputAgentName, tui })
     })
     .catch((error) => {
-      log("[ultrawork-model-override] Failed to validate ultrawork variant via SDK", {
+      log("[fullscan-model-override] Failed to validate fullscan variant via SDK", {
         variant: override.variant,
         error: String(error),
         providerID: variantTargetModel?.providerID,

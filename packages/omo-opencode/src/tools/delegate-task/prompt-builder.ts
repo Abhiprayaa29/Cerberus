@@ -1,4 +1,4 @@
-import type { BuildSystemContentInput } from "./types"
+﻿import type { BuildSystemContentInput } from "./types"
 import type { AvailableSkill } from "../../agents/dynamic-agent-prompt-builder"
 import { buildPlanAgentSystemPrepend, isPlanAgent } from "./constants"
 import { buildSystemContentWithTokenLimit } from "./token-limiter"
@@ -9,7 +9,7 @@ const PLAN_AGENT_PROMPT_BASE = `
 Additional requirements for this planning request:
 - Answer in English.
 - Write the plan in English.
-- Plan well for ultrawork execution.
+- Plan well for fullscan execution.
 - Include a clear atomic commit strategy.`
 
 const TDD_LINE = "- Use TDD-oriented planning."

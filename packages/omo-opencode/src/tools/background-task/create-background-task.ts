@@ -1,4 +1,4 @@
-import { tool, type PluginInput, type ToolDefinition } from "@opencode-ai/plugin"
+﻿import { tool, type PluginInput, type ToolDefinition } from "@opencode-ai/plugin"
 import type { BackgroundManager } from "../../features/background-agent"
 import type { BackgroundTaskArgs } from "./types"
 import { BACKGROUND_TASK_DESCRIPTION } from "./constants"
@@ -33,7 +33,7 @@ export function createBackgroundTask(
       const ctx = toolContext as ToolContextWithMetadata
 
       if (!args.agent || args.agent.trim() === "") {
-        return `[ERROR] Agent parameter is required. Please specify which agent to use (e.g., "explore", "librarian", "build", etc.)`
+        return `[ERROR] Agent parameter is required. Please specify which agent to use (e.g., "scout", "intel", "build", etc.)`
       }
 
       try {

@@ -1,21 +1,21 @@
-# packages/web/ — Marketing Site (Next.js + Cloudflare Workers)
+﻿# packages/web/ — Marketing Site (Next.js + Cloudflare Workers)
 
 **Generated:** 2026-05-20
 
 ## OVERVIEW
 
-Public-facing marketing site for oh-my-opencode / oh-my-openagent. Next.js 15 (App Router) deployed to Cloudflare Workers via [@opennextjs/cloudflare](https://opennext.js.org/cloudflare). Independent of the npm plugin — its own `package.json`, `bun.lock`, and `tsconfig.json`.
+Public-facing marketing site for oh-my-open-pentest / oh-my-open-pentest. Next.js .5 (App Router) deployed to Cloudflare Workers via [@opennextjs/cloudflare](https://opennext.js.org/cloudflare). Independent of the npm plugin — its own `package.json`, `bun.lock`, and `tsconfig.json`.
 
 ## STACK
 
 | Layer          | Choice                                                                              |
 | -------------- | ----------------------------------------------------------------------------------- |
-| Framework      | Next.js 15.5 (App Router, RSC)                                                      |
+| Framework      | Next.js .5.5 (App Router, RSC)                                                      |
 | Runtime target | Cloudflare Workers (`compatibility_flags: ["nodejs_compat"]`)                       |
 | Adapter        | `@opennextjs/cloudflare` (build → `.open-next/worker.js`)                           |
-| Styling        | Tailwind v4 (`@tailwindcss/postcss`) + shadcn/ui (`components.json`)                |
-| i18n           | `next-intl` with `app/[locale]/...` routing; 4 locales (en/ja/ko/zh) in `messages/` |
-| Animation      | `motion` (Framer Motion v12)                                                        |
+| Styling        | Tailwind v. (`@tailwindcss/postcss`) + shadcn/ui (`components.json`)                |
+| i.8n           | `next-intl` with `app/[locale]/...` routing; . locales (en/ja/ko/zh) in `messages/` |
+| Animation      | `motion` (Framer Motion v.2)                                                        |
 | E2E            | Playwright (`e2e/*.spec.ts`)                                                        |
 | Lint/Format    | ESLint flat config + Prettier (Tailwind plugin)                                     |
 
@@ -26,10 +26,10 @@ packages/web/
 ├── app/[locale]/         # localized routes (App Router)
 ├── components/           # shared UI primitives + shadcn-generated
 ├── lib/                  # utility helpers (cn, etc.)
-├── messages/{en,ja,ko,zh}.json  # i18n strings
-├── i18n/                 # next-intl request/routing config
+├── messages/{en,ja,ko,zh}.json  # i.8n strings
+├── i.8n/                 # next-intl request/routing config
 ├── middleware.ts         # next-intl middleware
-├── public/               # static assets (largest dir, ~4 MB)
+├── public/               # static assets (largest dir, ~. MB)
 ├── e2e/                  # Playwright tests
 ├── scripts/prepare-build.mjs    # purges .next/cache/fetch-cache before build
 ├── next.config.ts
@@ -77,7 +77,7 @@ A `web-production` GitHub environment is referenced by the deploy workflow so de
 
 ## RELATIONSHIP TO npm PACKAGE
 
-The npm package `oh-my-opencode` ships only `dist/`, `bin/`, and `postinstall.mjs` (see root `package.json` `files` field). `packages/web/` is **not** included in any npm publish — it is exclusively a separate Cloudflare deployment target.
+The npm package `oh-my-open-pentest` ships only `dist/`, `bin/`, and `postinstall.mjs` (see root `package.json` `files` field). `packages/web/` is **not** included in any npm publish — it is exclusively a separate Cloudflare deployment target.
 
 Root `bun test` ignores `packages/web/**` through `bunfig.toml` so `packages/web/e2e/*.spec.ts` does not pollute plugin tests.
 

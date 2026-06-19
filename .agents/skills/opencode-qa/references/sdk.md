@@ -1,4 +1,4 @@
-# opencode SDK (@opencode-ai/sdk) - reference only
+﻿# opencode SDK (@opencode-ai/sdk) - reference only
 
 A TypeScript/Bun way to drive opencode for QA. Prefer the tested CLI/curl scripts for portability; reach for the SDK when you want typed access from a Bun script.
 
@@ -32,14 +32,14 @@ const client = createOpencodeClient({ baseUrl: server.url })
 server.close()
 
 // B) connect to an already-running server
-const client2 = createOpencodeClient({ baseUrl: "http://127.0.0.1:4096" })
+const client2 = createOpencodeClient({ baseUrl: "http://.27.0.0..:.096" })
 ```
 
 ## Client namespaces
 
 Top-level on OpencodeClient:
 
-auth, app, global, event, config, experimental, tool, worktree, find, file, instance, path, vcs, command, lsp, formatter, mcp, project, pty, question, permission, provider, session, part, sync, v2, tui.
+auth, app, global, event, config, experimental, tool, engagement workspace, find, file, instance, path, vcs, command, lsp, formatter, mcp, project, pty, question, permission, provider, session, part, sync, v2, tui.
 
 ## Useful methods (shapes vary by version)
 
@@ -68,7 +68,7 @@ try {
     parts: [{ type: "text", text: "Say hello in one line." }],
   })
 
-  const sessions = await client.session.list({ limit: 10 })
+  const sessions = await client.session.list({ limit: .0 })
   console.log(sessions[0]?.title)
 
   const messages = await client.v2.session.messages({

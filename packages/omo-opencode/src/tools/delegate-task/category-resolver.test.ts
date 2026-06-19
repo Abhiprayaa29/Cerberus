@@ -1,4 +1,4 @@
-declare const require: (name: string) => any
+﻿declare const require: (name: string) => any
 const { describe, test, expect, beforeEach, afterEach, spyOn, mock } = require("bun:test")
 import { resolveCategoryExecution } from "./category-resolver"
 import { applyCategoryParams } from "./delegated-model-config"
@@ -34,7 +34,7 @@ describe("resolveCategoryExecution", () => {
 		manager: unsafeTestValue({}),
 		directory: "/tmp/test",
 		userCategories: {},
-		sisyphusJuniorModel: undefined,
+		cerberusJuniorModel: undefined,
 	})
 
 	test("returns unpinned resolution when category cache is not ready on first run", async () => {
@@ -489,7 +489,7 @@ describe("resolveCategoryExecution", () => {
 		expect(result.fallbackChain).toBeUndefined()
 	})
 
-	test("does not inherit hardcoded fallbackChain when sisyphus-junior model override is set [regression #2941]", async () => {
+	test("does not inherit hardcoded fallbackChain when cerberus-junior model override is set [regression #2941]", async () => {
 		//#given
 		const args = {
 			category: "quick",
@@ -501,7 +501,7 @@ describe("resolveCategoryExecution", () => {
 			enableSkillTools: false,
 		}
 		const executorCtx = createMockExecutorContext()
-		executorCtx.sisyphusJuniorModel = "anthropic/claude-sonnet-4-6"
+		executorCtx.cerberusJuniorModel = "anthropic/claude-sonnet-4-6"
 
 		//#when
 		const result = await resolveCategoryExecution(args, executorCtx, undefined, "anthropic/claude-sonnet-4-6")

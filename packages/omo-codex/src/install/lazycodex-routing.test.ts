@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { afterEach, describe, expect, test } from "bun:test"
 import process from "node:process"
@@ -76,7 +76,7 @@ describe("lazycodex install routing", () => {
 
   test("leaves omo install unresolved so argsToConfig applies opencode default", () => {
     // given
-    process.env.OMO_INVOCATION_NAME = "oh-my-opencode"
+    process.env.OMO_INVOCATION_NAME = "oh-my-open-pentest"
 
     // when
     const args = resolveInstallArgs({

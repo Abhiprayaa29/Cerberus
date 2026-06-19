@@ -1,4 +1,4 @@
-import {
+﻿import {
 	codexGoalMode,
 	expectedCodexObjective,
 	isEssentialCriterion,
@@ -64,15 +64,15 @@ function modeConstraintLines(mode: UlwLoopCodexGoalMode, isFinal: boolean): read
 	if (mode === "per_story") {
 		return [
 			"- First call get_goal. If no active goal exists, call create_goal with the payload below.",
-			"- If a different active Codex goal exists, finish/checkpoint that goal before starting this ulw-loop.",
+			"- If a different active Codex goal exists, finish/checkpoint that goal before starting this pentest-loop.",
 			"- Work only this goal until its completion audit passes.",
 		];
 	}
 	return [
-		"- Codex goal = the whole omo ulw-loop run; OMO G001/G002/etc. = ledger stories.",
+		"- Codex goal = the whole omo pentest-loop run; OMO G001/G002/etc. = ledger stories.",
 		"- First call get_goal. If no active goal exists, call create_goal with the aggregate payload below.",
 		"- If get_goal reports the same aggregate objective as active, continue this OMO story without creating a new Codex goal.",
-		"- If a different active or incomplete Codex goal exists, finish/checkpoint that goal before starting this ulw-loop.",
+		"- If a different active or incomplete Codex goal exists, finish/checkpoint that goal before starting this pentest-loop.",
 		isFinal
 			? "- This is the final story; update_goal is allowed only after the mandatory quality gate passes."
 			: "- This is not the final story: do not call update_goal mid-aggregate; checkpoint this OMO ledger story and continue the remaining stories. update_goal is reserved for the final story after the mandatory quality gate passes.",
@@ -105,10 +105,10 @@ function formatCriterionLine(criterion: UlwLoopSuccessCriterion): string {
 
 function finalSection(plan: UlwLoopPlan, goal: UlwLoopItem, isFinal: boolean, aggregate: boolean): string {
 	if (!isFinal)
-		return "- This is not the final ulw-loop story; do not run the final reviewer/manual-QA/gate-review quality gate yet.";
+		return "- This is not the final pentest-loop story; do not run the final reviewer/manual-QA/gate-review quality gate yet.";
 	const option = sessionOption(plan);
-	const blockerCommand = `omo ulw-loop record-review-blockers${option} --goal-id ${goal.id} --title "Resolve final code-review blockers" --objective "<blocker-resolution objective>" --evidence "<review findings>" --codex-goal-json "<active get_goal JSON or path>"`;
-	const checkpointCommand = `omo ulw-loop checkpoint${option} --goal-id ${goal.id} --status complete --evidence "<targeted verification/manualQa/gateReview evidence>" --codex-goal-json "<fresh complete get_goal JSON or path>" --quality-gate-json "<quality gate JSON or path>"`;
+	const blockerCommand = `omo pentest-loop record-review-blockers${option} --goal-id ${goal.id} --title "Resolve final code-review blockers" --objective "<blocker-resolution objective>" --evidence "<review findings>" --codex-goal-json "<active get_goal JSON or path>"`;
+	const checkpointCommand = `omo pentest-loop checkpoint${option} --goal-id ${goal.id} --status complete --evidence "<targeted verification/manualQa/gateReview evidence>" --codex-goal-json "<fresh complete get_goal JSON or path>" --quality-gate-json "<quality gate JSON or path>"`;
 	return joinLines([
 		"Final story — run mandatory quality gate before update_goal:",
 		"- Run targeted verification for changed behavior.",
@@ -125,7 +125,7 @@ function finalSection(plan: UlwLoopPlan, goal: UlwLoopItem, isFinal: boolean, ag
 }
 
 function sessionOption(plan: UlwLoopPlan): string {
-	const prefix = ".omo/ulw-loop/";
+	const prefix = ".omo/pentest-loop/";
 	const suffix = "/goals.json";
 	if (!plan.goalsPath.startsWith(prefix) || !plan.goalsPath.endsWith(suffix)) return "";
 	const sessionId = plan.goalsPath.slice(prefix.length, -suffix.length);

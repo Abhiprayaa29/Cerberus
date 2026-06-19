@@ -1,6 +1,6 @@
-# src/features/claude-code-plugin-loader/ — Unified Claude Code Plugin Loader
+﻿# src/features/claude-code-plugin-loader/ — Unified Claude Code Plugin Loader
 
-**Generated:** 2026-05-15
+**Generated:** 2026-05-.5
 
 ## OVERVIEW
 
@@ -25,7 +25,7 @@ loadAllPluginComponents(ctx)
   → return LoadedPluginBundle
 ```
 
-Called from `src/plugin-handlers/plugin-components-loader.ts` during Phase 2 of config handler (10s timeout with error isolation — one broken plugin does not sink the plugin load).
+Called from `src/plugin-handlers/plugin-components-loader.ts` during Phase 2 of config handler (.0s timeout with error isolation — one broken plugin does not sink the plugin load).
 
 ## KEY FILES
 
@@ -47,7 +47,7 @@ Called from `src/plugin-handlers/plugin-components-loader.ts` during Phase 2 of 
 ```jsonc
 {
   "name": "my-plugin",
-  "version": "1.0.0",
+  "version": "..0.0",
   "description": "...",
   "commands": ["./commands"],       // or string[] of paths
   "agents": ["./agents"],
@@ -69,7 +69,7 @@ Called from `src/plugin-handlers/plugin-components-loader.ts` during Phase 2 of 
 
 ## ERROR ISOLATION
 
-Each plugin loads in isolation — if one fails (bad manifest, missing file, syntax error), others still load. Errors surface as warnings in `bunx oh-my-opencode doctor`.
+Each plugin loads in isolation — if one fails (bad manifest, missing file, syntax error), others still load. Errors surface as warnings in `bunx oh-my-open-pentest doctor`.
 
 ## RELATED
 

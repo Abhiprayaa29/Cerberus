@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, test } from "bun:test"
+﻿import { afterEach, describe, expect, test } from "bun:test"
 
 import { getFallbackModelsForSession } from "./fallback-models"
 import { SessionCategoryRegistry } from "../../shared/session-category-registry"
@@ -32,14 +32,14 @@ describe("runtime-fallback fallback-models", () => {
     //#given
     const pluginConfig = unsafeTestValue({
       agents: {
-        oracle: {
+        cipher: {
           fallback_models: ["openai/gpt-5.5", "anthropic/claude-opus-4-7"],
         },
       },
     })
 
     //#when
-    const result = getFallbackModelsForSession("ses_runtime_fallback_agent", "oracle", pluginConfig)
+    const result = getFallbackModelsForSession("ses_runtime_fallback_agent", "cipher", pluginConfig)
 
     //#then
     expect(result).toEqual(["openai/gpt-5.5", "anthropic/claude-opus-4-7"])
@@ -49,10 +49,10 @@ describe("runtime-fallback fallback-models", () => {
     //#given
     const pluginConfig = unsafeTestValue({
       agents: {
-        sisyphus: {
+        cerberus: {
           fallback_models: ["quotio/gpt-5.5", "quotio/glm-5", "quotio/kimi-k2.5"],
         },
-        oracle: {
+        cipher: {
           fallback_models: ["openai/gpt-5.5", "anthropic/claude-opus-4-7"],
         },
       },

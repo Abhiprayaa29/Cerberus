@@ -1,4 +1,4 @@
-# Changelog
+﻿# Changelog
 
 ## Unreleased
 
@@ -14,7 +14,7 @@
 - Cap child process stdout/stderr captured from the native checker.
 - Run CI on Windows in addition to Ubuntu and macOS.
 
-## [0.1.1] - 2026-05-15
+## [0....] - 2026-05-.5
 
 ### Changed
 
@@ -22,7 +22,7 @@
 - Remove the `comment_check` MCP tool and MCP server configuration.
 - Update plugin metadata, docs, and contributor guidance to describe hook-only behavior.
 
-## [0.1.0] - 2026-05-15
+## [0...0] - 2026-05-.5
 
 ### Added
 

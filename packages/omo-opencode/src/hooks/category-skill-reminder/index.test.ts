@@ -1,4 +1,4 @@
-import { describe, expect, test, beforeEach, afterEach, spyOn } from "bun:test"
+﻿import { describe, expect, test, beforeEach, afterEach, spyOn } from "bun:test"
 import { createCategorySkillReminderHook } from "./index"
 import { updateSessionAgent, clearSessionAgent, _resetForTesting } from "../../features/claude-code-session-state"
 import type { AvailableSkill } from "../../agents/dynamic-agent-prompt-builder"
@@ -36,11 +36,11 @@ describe("category-skill-reminder hook", () => {
   }
 
   describe("target agent detection", () => {
-    test("should inject reminder for sisyphus agent after 3 tool calls", async () => {
-      // given - sisyphus agent session with multiple tool calls
+    test("should inject reminder for cerberus agent after 3 tool calls", async () => {
+      // given - cerberus agent session with multiple tool calls
       const hook = createHook()
-      const sessionID = "sisyphus-session"
-      updateSessionAgent(sessionID, "Sisyphus")
+      const sessionID = "cerberus-session"
+      updateSessionAgent(sessionID, "Cerberus")
 
       const output = { title: "", output: "file content", metadata: {} }
 
@@ -56,11 +56,11 @@ describe("category-skill-reminder hook", () => {
       clearSessionAgent(sessionID)
     })
 
-    test("should inject reminder for atlas agent", async () => {
-      // given - atlas agent session
+    test("should inject reminder for argus agent", async () => {
+      // given - argus agent session
       const hook = createHook()
-      const sessionID = "atlas-session"
-      updateSessionAgent(sessionID, "Atlas")
+      const sessionID = "argus-session"
+      updateSessionAgent(sessionID, "Argus")
 
       const output = { title: "", output: "result", metadata: {} }
 
@@ -75,11 +75,11 @@ describe("category-skill-reminder hook", () => {
       clearSessionAgent(sessionID)
     })
 
-    test("should inject reminder for sisyphus-junior agent", async () => {
-      // given - sisyphus-junior agent session
+    test("should inject reminder for cerberus-junior agent", async () => {
+      // given - cerberus-junior agent session
       const hook = createHook()
       const sessionID = "junior-session"
-      updateSessionAgent(sessionID, "sisyphus-junior")
+      updateSessionAgent(sessionID, "cerberus-junior")
 
       const output = { title: "", output: "result", metadata: {} }
 
@@ -95,10 +95,10 @@ describe("category-skill-reminder hook", () => {
     })
 
     test("should NOT inject reminder for non-target agents", async () => {
-      // given - librarian agent session (not a target)
+      // given - intel agent session (not a target)
       const hook = createHook()
-      const sessionID = "librarian-session"
-      updateSessionAgent(sessionID, "librarian")
+      const sessionID = "intel-session"
+      updateSessionAgent(sessionID, "intel")
 
       const output = { title: "", output: "result", metadata: {} }
 
@@ -121,9 +121,9 @@ describe("category-skill-reminder hook", () => {
       const output = { title: "", output: "result", metadata: {} }
 
       // when - 3 tool calls with agent in input
-      await hook["tool.execute.after"]({ tool: "edit", sessionID, callID: "1", agent: "Sisyphus" }, output)
-      await hook["tool.execute.after"]({ tool: "edit", sessionID, callID: "2", agent: "Sisyphus" }, output)
-      await hook["tool.execute.after"]({ tool: "edit", sessionID, callID: "3", agent: "Sisyphus" }, output)
+      await hook["tool.execute.after"]({ tool: "edit", sessionID, callID: "1", agent: "Cerberus" }, output)
+      await hook["tool.execute.after"]({ tool: "edit", sessionID, callID: "2", agent: "Cerberus" }, output)
+      await hook["tool.execute.after"]({ tool: "edit", sessionID, callID: "3", agent: "Cerberus" }, output)
 
       // then - reminder should be injected
       expect(output.output).toContain("[Category+Skill Reminder]")
@@ -132,10 +132,10 @@ describe("category-skill-reminder hook", () => {
 
   describe("delegation tool tracking", () => {
     test("should NOT inject reminder if task is used", async () => {
-      // given - sisyphus agent that uses task
+      // given - cerberus agent that uses task
       const hook = createHook()
       const sessionID = "delegation-session"
-      updateSessionAgent(sessionID, "Sisyphus")
+      updateSessionAgent(sessionID, "Cerberus")
 
       const output = { title: "", output: "result", metadata: {} }
 
@@ -152,10 +152,10 @@ describe("category-skill-reminder hook", () => {
     })
 
     test("should NOT inject reminder if call_omo_agent is used", async () => {
-      // given - sisyphus agent that uses call_omo_agent
+      // given - cerberus agent that uses call_omo_agent
       const hook = createHook()
       const sessionID = "omo-agent-session"
-      updateSessionAgent(sessionID, "Sisyphus")
+      updateSessionAgent(sessionID, "Cerberus")
 
       const output = { title: "", output: "result", metadata: {} }
 
@@ -172,10 +172,10 @@ describe("category-skill-reminder hook", () => {
     })
 
     test("should NOT inject reminder if task tool is used", async () => {
-      // given - sisyphus agent that uses task tool
+      // given - cerberus agent that uses task tool
       const hook = createHook()
       const sessionID = "task-session"
-      updateSessionAgent(sessionID, "Sisyphus")
+      updateSessionAgent(sessionID, "Cerberus")
 
       const output = { title: "", output: "result", metadata: {} }
 
@@ -194,10 +194,10 @@ describe("category-skill-reminder hook", () => {
 
   describe("tool call counting", () => {
     test("should NOT inject reminder before 3 tool calls", async () => {
-      // given - sisyphus agent with only 2 tool calls
+      // given - cerberus agent with only 2 tool calls
       const hook = createHook()
       const sessionID = "few-calls-session"
-      updateSessionAgent(sessionID, "Sisyphus")
+      updateSessionAgent(sessionID, "Cerberus")
 
       const output = { title: "", output: "result", metadata: {} }
 
@@ -212,10 +212,10 @@ describe("category-skill-reminder hook", () => {
     })
 
     test("should only inject reminder once per session", async () => {
-      // given - sisyphus agent session
+      // given - cerberus agent session
       const hook = createHook()
       const sessionID = "once-session"
-      updateSessionAgent(sessionID, "Sisyphus")
+      updateSessionAgent(sessionID, "Cerberus")
 
       const output1 = { title: "", output: "result1", metadata: {} }
       const output2 = { title: "", output: "result2", metadata: {} }
@@ -236,10 +236,10 @@ describe("category-skill-reminder hook", () => {
     })
 
     test("should only count delegatable work tools", async () => {
-      // given - sisyphus agent with mixed tool calls
+      // given - cerberus agent with mixed tool calls
       const hook = createHook()
       const sessionID = "mixed-tools-session"
-      updateSessionAgent(sessionID, "Sisyphus")
+      updateSessionAgent(sessionID, "Cerberus")
 
       const output = { title: "", output: "result", metadata: {} }
 
@@ -257,10 +257,10 @@ describe("category-skill-reminder hook", () => {
 
   describe("event handling", () => {
     test("should reset state on session.deleted event", async () => {
-      // given - sisyphus agent with reminder already shown
+      // given - cerberus agent with reminder already shown
       const hook = createHook()
       const sessionID = "delete-session"
-      updateSessionAgent(sessionID, "Sisyphus")
+      updateSessionAgent(sessionID, "Cerberus")
 
       const output1 = { title: "", output: "result1", metadata: {} }
       await hook["tool.execute.after"]({ tool: "edit", sessionID, callID: "1" }, output1)
@@ -283,10 +283,10 @@ describe("category-skill-reminder hook", () => {
     })
 
     test("should preserve suppression state on session.compacted event", async () => {
-      // given - sisyphus agent with reminder already shown
+      // given - cerberus agent with reminder already shown
       const hook = createHook()
       const sessionID = "compact-session"
-      updateSessionAgent(sessionID, "Sisyphus")
+      updateSessionAgent(sessionID, "Cerberus")
 
       const output1 = { title: "", output: "result1", metadata: {} }
       await hook["tool.execute.after"]({ tool: "edit", sessionID, callID: "1" }, output1)
@@ -309,10 +309,10 @@ describe("category-skill-reminder hook", () => {
     })
 
     test("should preserve partial tool-call count across session.compacted", async () => {
-      // given - sisyphus agent with 2 delegatable tool calls
+      // given - cerberus agent with 2 delegatable tool calls
       const hook = createHook()
       const sessionID = "compact-partial-count-session"
-      updateSessionAgent(sessionID, "Sisyphus")
+      updateSessionAgent(sessionID, "Cerberus")
 
       const output = { title: "", output: "result", metadata: {} }
 
@@ -333,10 +333,10 @@ describe("category-skill-reminder hook", () => {
 
   describe("case insensitivity", () => {
     test("should handle tool names case-insensitively", async () => {
-      // given - sisyphus agent with mixed case tool names
+      // given - cerberus agent with mixed case tool names
       const hook = createHook()
       const sessionID = "case-session"
-      updateSessionAgent(sessionID, "Sisyphus")
+      updateSessionAgent(sessionID, "Cerberus")
 
       const output = { title: "", output: "result", metadata: {} }
 
@@ -352,10 +352,10 @@ describe("category-skill-reminder hook", () => {
     })
 
     test("should handle delegation tool names case-insensitively", async () => {
-      // given - sisyphus agent using TASK in uppercase
+      // given - cerberus agent using TASK in uppercase
       const hook = createHook()
       const sessionID = "case-delegate-session"
-      updateSessionAgent(sessionID, "Sisyphus")
+      updateSessionAgent(sessionID, "Cerberus")
 
       const output = { title: "", output: "result", metadata: {} }
 
@@ -382,7 +382,7 @@ describe("category-skill-reminder hook", () => {
       ]
       const hook = createHook(availableSkills)
       const sessionID = "builtins-only"
-      updateSessionAgent(sessionID, "Sisyphus")
+      updateSessionAgent(sessionID, "Cerberus")
       const output = { title: "", output: "result", metadata: {} }
 
       // when
@@ -406,7 +406,7 @@ describe("category-skill-reminder hook", () => {
       ]
       const hook = createHook(availableSkills)
       const sessionID = "user-skills"
-      updateSessionAgent(sessionID, "Atlas")
+      updateSessionAgent(sessionID, "Argus")
       const output = { title: "", output: "result", metadata: {} }
 
       // when
@@ -425,7 +425,7 @@ describe("category-skill-reminder hook", () => {
       // given
       const hook = createHook([])
       const sessionID = "no-skills"
-      updateSessionAgent(sessionID, "Sisyphus")
+      updateSessionAgent(sessionID, "Cerberus")
       const output = { title: "", output: "result", metadata: {} }
 
       // when

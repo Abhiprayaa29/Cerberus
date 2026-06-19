@@ -1,10 +1,10 @@
-export const OMO_INTERNAL_INITIATOR_MARKER = "<!-- OMO_INTERNAL_INITIATOR -->"
+﻿export const OMOP_INTERNAL_INITIATOR_MARKER = "<!-- OMOP_INTERNAL_INITIATOR -->"
 
 export const OMO_INTERNAL_NOREPLY_MARKER = "<!-- OMO_INTERNAL_NOREPLY -->"
 
-const INTERNAL_INITIATOR_MARKER_DETECT_PATTERN = /<!--\s*OMO_INTERNAL_INITIATOR\s*-->/
+const INTERNAL_INITIATOR_MARKER_DETECT_PATTERN = /<!--\s*OMOP_INTERNAL_INITIATOR\s*-->/
 const INTERNAL_NOREPLY_MARKER_DETECT_PATTERN = /<!--\s*OMO_INTERNAL_NOREPLY\s*-->/
-const INTERNAL_INITIATOR_MARKER_PATTERN = /\n*<!--\s*OMO_INTERNAL_INITIATOR\s*-->\s*/g
+const INTERNAL_INITIATOR_MARKER_PATTERN = /\n*<!--\s*OMOP_INTERNAL_INITIATOR\s*-->\s*/g
 const INTERNAL_NOREPLY_MARKER_PATTERN = /\n*<!--\s*OMO_INTERNAL_NOREPLY\s*-->\s*/g
 
 export type InternalInitiatorTextPartLike = {
@@ -98,7 +98,7 @@ export function createInternalAgentTextPart(text: string): {
   const cleanText = stripInternalInitiatorMarkers(text)
   return {
     type: "text",
-    text: `${cleanText}\n${OMO_INTERNAL_INITIATOR_MARKER}`,
+    text: `${cleanText}\n${OMOP_INTERNAL_INITIATOR_MARKER}`,
   }
 }
 

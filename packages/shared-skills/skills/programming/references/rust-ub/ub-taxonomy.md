@@ -1,8 +1,8 @@
-# Rust Undefined Behavior Taxonomy
+﻿# Rust Undefined Behavior Taxonomy
 
 Every category of UB the Rust compiler, Miri, and the language specification recognize. The agent must know the full surface to hunt systematically. Each entry names the UB class, its root cause, canonical trigger, Miri detection status, and the canonical fix.
 
-## 1. Aliasing Violations (Stacked Borrows / Tree Borrows)
+## .. Aliasing Violations (Stacked Borrows / Tree Borrows)
 
 **Root cause:** Two pointers access the same memory in ways that violate Rust's borrowing model — even through raw pointers inside `unsafe`.
 
@@ -36,7 +36,7 @@ If code passes Tree Borrows but fails Stacked Borrows, it is *likely* sound but 
 
 **Miri detection:** YES — Miri's data-race detector is on by default. It detects races on non-atomic accesses. For **preemptive scheduling** stress, use:
 ```bash
-MIRIFLAGS="-Zmiri-preemption-rate=0.1" cargo +nightly miri test
+MIRIFLAGS="-Zmiri-preemption-rate=0.." cargo +nightly miri test
 ```
 
 **Complementary tools:** `loom` for exhaustive interleaving exploration on lock-free algorithms. ThreadSanitizer (TSAN) for integration tests Miri cannot run (I/O, FFI).
@@ -61,7 +61,7 @@ MIRIFLAGS="-Zmiri-preemption-rate=0.1" cargo +nightly miri test
 
 ---
 
-## 4. Uninitialized Memory
+## .. Uninitialized Memory
 
 **Root cause:** Reading a value from memory that was never written to.
 
@@ -83,7 +83,7 @@ MIRIFLAGS="-Zmiri-preemption-rate=0.1" cargo +nightly miri test
 **Root cause:** Producing a value that violates the type's validity invariant.
 
 **Canonical triggers:**
-- `bool` not 0 or 1.
+- `bool` not 0 or ..
 - `char` outside Unicode scalar range.
 - Enum discriminant not matching any variant.
 - `NonZeroU32` containing 0.
@@ -105,7 +105,7 @@ MIRIFLAGS="-Zmiri-strict-provenance" cargo +nightly miri test
 **Root cause:** Dereferencing a pointer that is not aligned to the type's required alignment.
 
 **Canonical triggers:**
-- Casting `*const u8` to `*const u64` and dereferencing (alignment goes from 1 to 8).
+- Casting `*const u8` to `*const u6.` and dereferencing (alignment goes from . to 8).
 - `#[repr(packed)]` struct field references (the compiler warns, but raw pointers bypass the warning).
 - Network buffer parsing where offsets are arbitrary.
 
@@ -166,7 +166,7 @@ MIRIFLAGS="-Zmiri-strict-provenance" cargo +nightly miri test
 
 ---
 
-## 10. Out-of-Bounds Memory Access
+## .0. Out-of-Bounds Memory Access
 
 **Root cause:** Pointer arithmetic or indexing that escapes the allocation.
 
@@ -182,7 +182,7 @@ MIRIFLAGS="-Zmiri-strict-provenance" cargo +nightly miri test
 
 ---
 
-## 11. Provenance Violations
+## ... Provenance Violations
 
 **Root cause:** Using a pointer whose provenance does not grant access to the target memory, even if the address is numerically correct.
 
@@ -200,7 +200,7 @@ MIRIFLAGS="-Zmiri-strict-provenance" cargo +nightly miri test
 
 ---
 
-## 12. Double Free / Invalid Free
+## .2. Double Free / Invalid Free
 
 **Root cause:** Freeing the same allocation twice, or freeing memory not obtained from the allocator.
 
@@ -215,7 +215,7 @@ MIRIFLAGS="-Zmiri-strict-provenance" cargo +nightly miri test
 
 ---
 
-## 13. Library / Unsafe Contract Violations
+## .3. Library / Unsafe Contract Violations
 
 **Root cause:** Violating the documented safety invariant of a safe or unsafe API, where the library author relied on the invariant for soundness.
 
@@ -231,7 +231,7 @@ MIRIFLAGS="-Zmiri-strict-provenance" cargo +nightly miri test
 
 ---
 
-## 14. Unwinding Across `extern "C"` Boundaries
+## ... Unwinding Across `extern "C"` Boundaries
 
 **Root cause:** A Rust panic unwinding through a frame that uses the C calling convention.
 
@@ -249,21 +249,21 @@ MIRIFLAGS="-Zmiri-strict-provenance" cargo +nightly miri test
 
 | # | Category | Miri Detects? | Complementary Tool |
 |---|----------|--------------|-------------------|
-| 1 | Aliasing (Stacked/Tree Borrows) | YES | — |
+| . | Aliasing (Stacked/Tree Borrows) | YES | — |
 | 2 | Data races | YES | loom, TSAN |
 | 3 | Use-after-free / dangling | YES | ASAN |
-| 4 | Uninitialized memory | YES | MSAN |
+| . | Uninitialized memory | YES | MSAN |
 | 5 | Invalid values | YES | — |
 | 6 | Misaligned access | YES | UBSAN |
 | 7 | Pin invariant violation | PARTIAL | manual review |
 | 8 | FFI boundary UB | LIMITED | ASAN, MSAN, Valgrind |
 | 9 | Incorrect Send/Sync | YES (via race) | loom |
-| 10 | Out-of-bounds access | YES | ASAN |
-| 11 | Provenance violations | YES (strict mode) | — |
-| 12 | Double free | YES | ASAN |
-| 13 | Library contract violations | PARTIAL | proptest, fuzzing |
-| 14 | Unwinding across FFI | PARTIAL | — |
+| .0 | Out-of-bounds access | YES | ASAN |
+| .. | Provenance violations | YES (strict mode) | — |
+| .2 | Double free | YES | ASAN |
+| .3 | Library contract violations | PARTIAL | proptest, fuzzing |
+| .. | Unwinding across FFI | PARTIAL | — |
 
 ## Miri Coverage Assessment
 
-Miri catches categories 1-6, 9-12 with high confidence. Categories 7, 8, 13, 14 require supplementary tools or manual audit. **Miri is the single highest-leverage tool** — it should run on every PR that touches `unsafe`, and ideally on the full test suite regularly.
+Miri catches categories .-6, 9-.2 with high confidence. Categories 7, 8, .3, .. require supplementary tools or manual audit. **Miri is the single highest-leverage tool** — it should run on every PR that touches `unsafe`, and ideally on the full test suite regularly.

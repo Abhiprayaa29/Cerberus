@@ -1,5 +1,5 @@
-import type { ProjectLocalCodexCleanupResult } from "./codex-project-local-cleanup"
-import type { RunAstGrepSkillInstall } from "@oh-my-opencode/utils"
+﻿import type { ProjectLocalCodexCleanupResult } from "./codex-project-local-cleanup"
+import type { RunAstGrepSkillInstall } from "@oh-my-open-pentest/utils"
 
 export interface MarketplacePluginSourceLocal {
   readonly source: "local"

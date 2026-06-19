@@ -1,4 +1,4 @@
-import { describe, expect, test } from "bun:test"
+﻿import { describe, expect, test } from "bun:test"
 import type { PluginInput } from "@opencode-ai/plugin"
 import { unsafeTestValue } from "../../../../../test-support/unsafe-test-value"
 import { handleDetectedCompletion } from "./completion-handler"
@@ -24,7 +24,7 @@ function createState(overrides: Partial<RalphLoopState> = {}): RalphLoopState {
 	}
 }
 
-describe("ralph-loop catch fallbacks", () => {
+describe("pentest-loop catch fallbacks", () => {
 	test("#given session.messages throws a non-Error #when checking no-progress #then detector returns false", async () => {
 		// given
 		const ctx = unsafeTestValue<PluginInput>({
@@ -121,7 +121,7 @@ describe("ralph-loop catch fallbacks", () => {
 		const result = await handleFailedVerification(ctx, {
 			state: createState({
 				verification_pending: true,
-				verification_session_id: "ses_oracle",
+				verification_session_id: "ses_cipher",
 			}),
 			directory: "/tmp",
 			apiTimeoutMs: 100,
@@ -191,7 +191,7 @@ describe("ralph-loop catch fallbacks", () => {
 				clearVerificationState: () => createState(),
 				incrementIteration: () => createState({ iteration: 2 }),
 				clear: () => true,
-				setVerificationSessionID: () => createState({ verification_session_id: "ses_oracle" }),
+				setVerificationSessionID: () => createState({ verification_session_id: "ses_cipher" }),
 			},
 			directory: "/tmp",
 			apiTimeoutMs: 100,
@@ -213,10 +213,10 @@ describe("ralph-loop catch fallbacks", () => {
 							parts: [{
 								type: "text",
 								text: [
-									"Agent: Oracle",
+									"Agent: Cipher",
 									`<promise>${ULTRAWORK_VERIFICATION_PROMISE}</promise>`,
 									"<task_metadata>",
-									"session_id: ses_oracle",
+									"session_id: ses_cipher",
 									"</task_metadata>",
 								].join("\n"),
 							}],
@@ -248,7 +248,7 @@ describe("ralph-loop catch fallbacks", () => {
 					cleared = true
 					return true
 				},
-				setVerificationSessionID: () => createState({ verification_session_id: "ses_oracle" }),
+				setVerificationSessionID: () => createState({ verification_session_id: "ses_cipher" }),
 			},
 			directory: "/tmp",
 			apiTimeoutMs: 100,

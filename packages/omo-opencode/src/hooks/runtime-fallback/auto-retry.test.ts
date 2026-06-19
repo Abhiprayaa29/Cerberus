@@ -1,4 +1,4 @@
-import { describe, expect, test } from "bun:test"
+﻿import { describe, expect, test } from "bun:test"
 
 import { createAutoRetryHelpers } from "./auto-retry"
 import { createFallbackState } from "./fallback-state"
@@ -132,7 +132,7 @@ describe("createAutoRetryHelpers", () => {
     // hooks treat this as a real user prompt and the TUI shows a bare "continue"
     // that the user never typed (see #4085 / Discord report).
     expect(firstPart["synthetic"]).toBe(true)
-    expect(String(firstPart["text"] ?? "")).toContain("OMO_INTERNAL_INITIATOR")
+    expect(String(firstPart["text"] ?? "")).toContain("OMOP_INTERNAL_INITIATOR")
   })
 
   test("#given a persisted user message with id and part ids #when auto retry runs #then the fallback prompt reuses the original messageID and part ids", async () => {

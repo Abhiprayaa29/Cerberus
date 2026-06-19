@@ -1,9 +1,9 @@
-import { describe, expect, test } from "bun:test"
+﻿import { describe, expect, test } from "bun:test"
 
-import { createSisyphusAgent } from "./sisyphus"
-import { createHephaestusAgent, UnsupportedHephaestusModelError } from "./hephaestus"
-import { maybeCreateHephaestusConfig } from "./builtin-agents/hephaestus-agent"
-import { buildSisyphusJuniorPrompt } from "./sisyphus-junior"
+import { createCerberusAgent } from "./cerberus"
+import { createScyllaAgent, UnsupportedScyllaModelError } from "./scylla"
+import { maybeCreateScyllaConfig } from "./builtin-agents/scylla-agent"
+import { buildCerberusJuniorPrompt } from "./cerberus-junior"
 import type { AgentOverrides } from "./types"
 import type { CategoryConfig } from "../config/schema"
 
@@ -15,43 +15,43 @@ function countOccurrences(text: string, needle: string): number {
 }
 
 describe("GPT apply_patch prompt guidance", () => {
-  test("#given GPT-5.5 Sisyphus #when rendering the prompt #then apply_patch guidance appears once", () => {
+  test("#given GPT-5.5 Cerberus #when rendering the prompt #then apply_patch guidance appears once", () => {
     // given
     const model = "openai/gpt-5.5"
 
     // when
-    const agent = createSisyphusAgent(model)
+    const agent = createCerberusAgent(model)
 
     // then
     expect(countOccurrences(agent.prompt ?? "", GPT_APPLY_PATCH_PHRASE)).toBe(1)
     expect(agent.prompt).not.toContain(GPT_ONLY_FILE_TOOL_PHRASE)
   })
 
-  test("#given GPT-5.5 Sisyphus-Junior #when rendering the prompt #then apply_patch guidance appears once", () => {
+  test("#given GPT-5.5 Cerberus-Junior #when rendering the prompt #then apply_patch guidance appears once", () => {
     // given
     const model = "openai/gpt-5.5"
 
     // when
-    const prompt = buildSisyphusJuniorPrompt(model, false)
+    const prompt = buildCerberusJuniorPrompt(model, false)
 
     // then
     expect(countOccurrences(prompt, GPT_APPLY_PATCH_PHRASE)).toBe(1)
     expect(prompt).not.toContain(GPT_ONLY_FILE_TOOL_PHRASE)
   })
 
-  test("#given GPT-5.5 Hephaestus #when rendering the prompt #then apply_patch guidance appears once", () => {
+  test("#given GPT-5.5 Scylla #when rendering the prompt #then apply_patch guidance appears once", () => {
     // given
     const model = "openai/gpt-5.5"
 
     // when
-    const agent = createHephaestusAgent(model)
+    const agent = createScyllaAgent(model)
 
     // then
     expect(countOccurrences(agent.prompt ?? "", GPT_APPLY_PATCH_PHRASE)).toBe(1)
     expect(agent.prompt).not.toContain(GPT_ONLY_FILE_TOOL_PHRASE)
   })
 
-  test("#given non-GPT Sisyphus variants #when rendering prompts #then GPT-only apply_patch guidance is absent", () => {
+  test("#given non-GPT Cerberus variants #when rendering prompts #then GPT-only apply_patch guidance is absent", () => {
     // given
     const models = [
       "opencode-go/kimi-k2.7",
@@ -61,7 +61,7 @@ describe("GPT apply_patch prompt guidance", () => {
 
     for (const model of models) {
       // when
-      const agent = createSisyphusAgent(model)
+      const agent = createCerberusAgent(model)
 
       // then
       expect(agent.prompt).not.toContain(GPT_APPLY_PATCH_PHRASE)
@@ -69,7 +69,7 @@ describe("GPT apply_patch prompt guidance", () => {
     }
   })
 
-  test("#given non-GPT Hephaestus variants #when rendering prompts #then Hephaestus is rejected", () => {
+  test("#given non-GPT Scylla variants #when rendering prompts #then Scylla is rejected", () => {
     // given
     const models = [
       "opencode-go/qwen3.7-plus",
@@ -82,24 +82,24 @@ describe("GPT apply_patch prompt guidance", () => {
 
     for (const model of models) {
       // when
-      const createAgent = () => createHephaestusAgent(model)
+      const createAgent = () => createScyllaAgent(model)
 
       // then
-      expect(createAgent).toThrow(UnsupportedHephaestusModelError)
+      expect(createAgent).toThrow(UnsupportedScyllaModelError)
     }
   })
 
-  test("#given non-GPT Hephaestus override #when plugin config creates the agent #then Hephaestus is not registered", () => {
+  test("#given non-GPT Scylla override #when plugin config creates the agent #then Scylla is not registered", () => {
     // given
     const agentOverrides: AgentOverrides = {
-      hephaestus: {
+      scylla: {
         model: "opencode-go/qwen3.7PLUS",
       },
     }
     const mergedCategories: Record<string, CategoryConfig> = {}
 
     // when
-    const config = maybeCreateHephaestusConfig({
+    const config = maybeCreateScyllaConfig({
       disabledAgents: [],
       agentOverrides,
       availableModels: new Set(["opencode-go/qwen3.7PLUS"]),

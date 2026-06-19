@@ -1,4 +1,4 @@
-import type { PluginInput } from "@opencode-ai/plugin"
+﻿import type { PluginInput } from "@opencode-ai/plugin"
 import { resolveSessionEventID } from "../../shared/event-session-id"
 import { log } from "../../shared/logger"
 import { replaceToolArgs } from "../../shared/replace-tool-args"
@@ -15,7 +15,7 @@ type ToolExecuteBeforeInput = { tool: string; sessionID: string; callID: string 
 type ToolExecuteBeforeOutput = { args: Record<string, unknown> }
 
 const HOOK_NAME = "compaction-todo-preserver"
-const ATLAS_BOOTSTRAP_TODOS = [
+const ARGUS_BOOTSTRAP_TODOS = [
   {
     id: "orchestrate-plan",
     content: "Complete ALL implementation tasks",
@@ -37,18 +37,18 @@ function extractTodos(response: unknown): TodoSnapshot[] {
   return []
 }
 
-function isAtlasBootstrapTodo(todo: TodoSnapshot): boolean {
-  return ATLAS_BOOTSTRAP_TODOS.some((bootstrapTodo) =>
+function isArgusBootstrapTodo(todo: TodoSnapshot): boolean {
+  return ARGUS_BOOTSTRAP_TODOS.some((bootstrapTodo) =>
     todo.id === bootstrapTodo.id || todo.content === bootstrapTodo.content
   )
 }
 
 function hasDetailedTodos(todos: TodoSnapshot[]): boolean {
-  return todos.some((todo) => !isAtlasBootstrapTodo(todo))
+  return todos.some((todo) => !isArgusBootstrapTodo(todo))
 }
 
-function isAtlasBootstrapTodoList(todos: TodoSnapshot[]): boolean {
-  return todos.length > 0 && todos.every(isAtlasBootstrapTodo)
+function isArgusBootstrapTodoList(todos: TodoSnapshot[]): boolean {
+  return todos.length > 0 && todos.every(isArgusBootstrapTodo)
 }
 
 function shouldRestoreOverCurrentTodos(input: {
@@ -56,7 +56,7 @@ function shouldRestoreOverCurrentTodos(input: {
   currentTodos: TodoSnapshot[]
 }): boolean {
   if (input.currentTodos.length === 0) return true
-  if (!isAtlasBootstrapTodoList(input.currentTodos)) return false
+  if (!isArgusBootstrapTodoList(input.currentTodos)) return false
   return hasDetailedTodos(input.snapshot)
 }
 
@@ -229,13 +229,13 @@ export function createCompactionTodoPreserverHook(
       return
     }
 
-    if (!isAtlasBootstrapTodoList(requestedTodos)) {
+    if (!isArgusBootstrapTodoList(requestedTodos)) {
       protectedSnapshots.delete(input.sessionID)
       return
     }
 
     replaceToolArgs(output, { todos: snapshot })
-    log(`[${HOOK_NAME}] Replaced late Atlas bootstrap todowrite with restored snapshot`, {
+    log(`[${HOOK_NAME}] Replaced late Argus bootstrap todowrite with restored snapshot`, {
       sessionID: input.sessionID,
       count: snapshot.length,
     })

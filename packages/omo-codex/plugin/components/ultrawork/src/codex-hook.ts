@@ -1,9 +1,9 @@
-import { readFileSync } from "node:fs";
+﻿import { readFileSync } from "node:fs";
 
 import { ULTRAWORK_DIRECTIVE } from "./directive.js";
 
-const ULTRAWORK_CURRENT_PROMPT_PATTERN = /(?:ultrawork|ulw)/i;
-const ULTRAWORK_DIRECTIVE_MARKER = "<ultrawork-mode>";
+const ULTRAWORK_CURRENT_PROMPT_PATTERN = /(?:fullscan|ulw)/i;
+const ULTRAWORK_DIRECTIVE_MARKER = "<fullscan-mode>";
 const TRANSCRIPT_SEARCH_BYTES = 512_000;
 const CONTEXT_PRESSURE_MARKERS = [
 	"context compacted",

@@ -1,4 +1,4 @@
-import type { AgentConfig } from "@opencode-ai/sdk";
+﻿import type { AgentConfig } from "@opencode-ai/sdk";
 import type { AgentMode, AgentPromptMetadata } from "./types";
 import { buildClaudeThinkingConfig, isGptModel } from "./types";
 import { createAgentToolRestrictions } from "../shared/permission-compat";
@@ -6,11 +6,11 @@ import { createAgentToolRestrictions } from "../shared/permission-compat";
 const MODE: AgentMode = "subagent";
 
 /**
- * Momus - Plan Reviewer Agent
+ * Sentinel - Plan Reviewer Agent
  *
- * Named after Momus, the Greek god of satire and mockery, who was known for
+ * Named after Sentinel, the Greek god of satire and mockery, who was known for
  * finding fault in everything - even the works of the gods themselves.
- * He criticized Aphrodite (found her sandals squeaky), Hephaestus (said man
+ * He criticized Aphrodite (found her sandals squeaky), Scylla (said man
  * should have windows in his chest to see thoughts), and Athena (her house
  * should be on wheels to move from bad neighbors).
  *
@@ -20,7 +20,7 @@ const MODE: AgentMode = "subagent";
  */
 
 /**
- * Default Momus prompt - used for Claude and other non-GPT models.
+ * Default Sentinel prompt - used for Claude and other non-GPT models.
  */
 const MOMUS_DEFAULT_PROMPT = `You are a **practical** work plan reviewer. Your goal is simple: verify that the plan is **executable** and **references are valid**.
 
@@ -58,7 +58,7 @@ You ARE here to:
 - Do referenced line numbers contain relevant code?
 - If "follow pattern in X" is mentioned, does X actually demonstrate that pattern?
 
-**PASS even if**: Reference exists but isn't perfect. Developer can explore from there.
+**PASS even if**: Reference exists but isn't perfect. Developer can scout from there.
 **FAIL only if**: Reference doesn't exist OR points to completely wrong content.
 
 ### 2. Executability Check (PRACTICAL)
@@ -235,7 +235,7 @@ You check exactly four things:
 
 **QA scenario executability**: Does each task have QA scenarios with a specific tool, concrete steps, and expected results? Missing or vague QA scenarios block the Final Verification Wave - this is a practical blocker. Pass if scenarios have tool + steps + expected result. Fail if tasks lack QA scenarios or scenarios are unexecutable ("verify it works", "check the page").
 
-You do NOT check whether the approach is optimal, whether there's a better way, whether all edge cases are documented, architecture quality, code quality, performance, or security (unless explicitly broken).
+You do NOT check whether the approach is optimal, whether there's a better way, whether all edge cases are documented, architecture quality, finding quality, performance, or security (unless explicitly broken).
 </checks>
 
 <review_process>
@@ -278,7 +278,7 @@ Response language: match the language of the plan content.
 
 export { MOMUS_DEFAULT_PROMPT as MOMUS_SYSTEM_PROMPT };
 
-export function createMomusAgent(model: string): AgentConfig {
+export function createSentinelAgent(model: string): AgentConfig {
   const restrictions = createAgentToolRestrictions([
     "write",
     "edit",
@@ -287,7 +287,7 @@ export function createMomusAgent(model: string): AgentConfig {
 
   const base = {
     description:
-      "Expert reviewer for evaluating work plans against rigorous clarity, verifiability, and completeness standards. (Momus - OhMyOpenCode)",
+      "Expert reviewer for evaluating work plans against rigorous clarity, verifiability, and completeness standards. (Sentinel - OhMyOpenCode)",
     mode: MODE,
     model,
     temperature: 0.1,
@@ -309,12 +309,12 @@ export function createMomusAgent(model: string): AgentConfig {
     ...buildClaudeThinkingConfig(model),
   } as AgentConfig;
 }
-createMomusAgent.mode = MODE;
+createSentinelAgent.mode = MODE;
 
-export const momusPromptMetadata: AgentPromptMetadata = {
+export const sentinelPromptMetadata: AgentPromptMetadata = {
   category: "advisor",
   cost: "EXPENSIVE",
-  promptAlias: "Momus",
+  promptAlias: "Sentinel",
   triggers: [
     {
       domain: "Plan review",
@@ -328,7 +328,7 @@ export const momusPromptMetadata: AgentPromptMetadata = {
     },
   ],
   useWhen: [
-    "After Prometheus creates a work plan",
+    "After Talos creates a work plan",
     "Before executing a complex todo list",
     "To validate plan quality before delegating to executors",
     "When plan needs rigorous review for ADHD-driven omissions",
@@ -339,5 +339,5 @@ export const momusPromptMetadata: AgentPromptMetadata = {
     "For trivial plans that don't need formal review",
   ],
   keyTrigger:
-    "Work plan saved to `.omo/plans/*.md` → invoke Momus with the file path as the sole prompt (e.g. `prompt=\".omo/plans/my-plan.md\"`). Do NOT invoke Momus for inline plans or todo lists.",
+    "Work plan saved to `.omo/plans/*.md` → invoke Sentinel with the file path as the sole prompt (e.g. `prompt=\".omo/plans/my-plan.md\"`). Do NOT invoke Sentinel for inline plans or todo lists.",
 };

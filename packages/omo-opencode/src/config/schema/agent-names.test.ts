@@ -1,7 +1,7 @@
-/// <reference path="../../../../../bun-test.d.ts" />
+﻿/// <reference path="../../../../../bun-test.d.ts" />
 
 import { describe, expect, test } from "bun:test"
-import { OhMyOpenCodeConfigSchema } from "./oh-my-opencode-config"
+import { OhMyOpenCodeConfigSchema } from "./oh-my-open-pentest-config"
 
 describe("OhMyOpenCodeConfigSchema disabled_skills", () => {
   test("accepts review-work, shared aliases, and runtime security skills", () => {
@@ -13,7 +13,7 @@ describe("OhMyOpenCodeConfigSchema disabled_skills", () => {
         "init-deep",
         "security-research",
         "security-review",
-        "debugging",
+        "vulnerability analysis",
         "visual-qa",
         "shared/ulw-plan",
       ],
@@ -31,7 +31,7 @@ describe("OhMyOpenCodeConfigSchema disabled_skills", () => {
         "init-deep",
         "security-research",
         "security-review",
-        "debugging",
+        "vulnerability analysis",
         "visual-qa",
         "shared/ulw-plan",
       ])

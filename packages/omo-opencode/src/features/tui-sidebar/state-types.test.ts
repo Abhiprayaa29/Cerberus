@@ -1,4 +1,4 @@
-import { describe, expect, it } from "bun:test"
+﻿import { describe, expect, it } from "bun:test"
 
 import { assertNever } from "./state-types"
 import type {
@@ -112,7 +112,7 @@ describe("tui sidebar state types", () => {
       },
       agents: {
         kind: "list",
-        agents: [{ name: "sisyphus", status: "busy" }],
+        agents: [{ name: "cerberus", status: "busy" }],
       },
       jobs: {
         kind: "list",
@@ -133,7 +133,7 @@ describe("tui sidebar state types", () => {
     }
     const idle: SidebarView = {
       kind: "idle",
-      roster: { kind: "rows", rows: [{ label: "sisyphus", model: "gpt-5" }] },
+      roster: { kind: "rows", rows: [{ label: "cerberus", model: "gpt-5" }] },
     }
 
     // when
@@ -141,9 +141,9 @@ describe("tui sidebar state types", () => {
 
     // then
     expect(descriptions).toEqual([
-      "1/2|sisyphus:busy|Summarize:completed|invalid",
+      "1/2|cerberus:busy|Summarize:completed|invalid",
       "config invalid",
-      "sisyphus:gpt-5",
+      "cerberus:gpt-5",
     ])
     expect(describeConfigState({ kind: "valid" })).toBe("valid")
     expect(describeConfigState({ kind: "invalid", messages: ["bad"] })).toBe("bad")

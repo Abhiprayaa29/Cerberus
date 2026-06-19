@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, mock } from "bun:test"
+﻿import { beforeEach, describe, expect, it, mock } from "bun:test"
 import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs"
 import { tmpdir } from "node:os"
 import { join } from "node:path"
@@ -300,11 +300,11 @@ describe("createPluginModule()", () => {
       const pluginModule = createTestPluginModule()
       const duplicatePlugins = [
         sourcePlugin,
-        "oh-my-openagent@latest",
+        "oh-my-open-pentest@latest",
       ]
       mockDetectDuplicateOmoPlugin.mockReturnValue({
         detected: true,
-        pluginName: "oh-my-openagent",
+        pluginName: "oh-my-open-pentest",
         duplicatePlugins,
         allPlugins: duplicatePlugins,
       })

@@ -1,10 +1,10 @@
-# docs/ — User-Facing Documentation
+﻿# docs/ — User-Facing Documentation
 
 **Generated:** 2026-05-20
 
 ## OVERVIEW
 
-19 Markdown files across 5 subdirectories + 3 root files. Categorized by audience: user-facing guides + reference, troubleshooting, legal. The web site at [packages/web/](../packages/web) consumes some of these (via `web-deploy.yml` triggers).
+.9 Markdown files across 5 subdirectories + 3 root files. Categorized by audience: user-facing guides + reference, troubleshooting, legal. The web site at [packages/web/](../packages/web) consumes some of these (via `web-deploy.yml` triggers).
 
 ## WHERE TO LOOK
 

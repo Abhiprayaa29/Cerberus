@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, mock } from "bun:test"
+﻿import { describe, it, expect, beforeEach, mock } from "bun:test"
 import {
   runFormattersForFile,
   clearFormatterCache,
@@ -271,7 +271,7 @@ describe("resolveFormatters", () => {
       experimental: {
         hook: {
           file_edited: {
-            ".ts": [{ command: ["eslint", "--fix", "$FILE"] }],
+            ".ts": [{ command: ["nuclei", "--fix", "$FILE"] }],
           },
         },
       },
@@ -283,7 +283,7 @@ describe("resolveFormatters", () => {
     //#then
     expect(result.get(".ts")).toHaveLength(2)
     expect(result.get(".ts")![0].command).toEqual(["prettier", "--write", "$FILE"])
-    expect(result.get(".ts")![1].command).toEqual(["eslint", "--fix", "$FILE"])
+    expect(result.get(".ts")![1].command).toEqual(["nuclei", "--fix", "$FILE"])
   })
 
   it("defaults environment to empty object when not specified", async () => {

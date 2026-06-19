@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { afterAll, afterEach, beforeEach, describe, expect, it, mock, spyOn } from "bun:test"
 import { existsSync, mkdirSync, rmSync, writeFileSync } from "node:fs"
@@ -33,7 +33,7 @@ describe("createToolExecuteAfterHandler task timers", () => {
   let testDirectory = ""
 
   beforeEach(() => {
-    testDirectory = join(tmpdir(), `atlas-task-timers-${crypto.randomUUID()}`)
+    testDirectory = join(tmpdir(), `argus-task-timers-${crypto.randomUUID()}`)
     if (!existsSync(testDirectory)) {
       mkdirSync(testDirectory, { recursive: true })
     }
@@ -151,11 +151,11 @@ describe("createToolExecuteAfterHandler task timers", () => {
     await afterHandler(
       { tool: "task", sessionID: parentSessionID, callID: "call-task-timer-1" },
       {
-        title: "Sisyphus Task",
+        title: "Cerberus Task",
         output: "Task completed\n<task_metadata>\nsession_id: ses_child\n</task_metadata>",
         metadata: {
           sessionId: childSessionID,
-          agent: "sisyphus-junior",
+          agent: "cerberus-junior",
           category: "deep",
         },
       },
@@ -207,11 +207,11 @@ describe("createToolExecuteAfterHandler task timers", () => {
     await afterHandler(
       { tool: "task", sessionID: parentSessionID, callID: "call-task-timer-2" },
       {
-        title: "Sisyphus Task",
+        title: "Cerberus Task",
         output: "Task completed\n<task_metadata>\nsession_id: ses_child_2\n</task_metadata>",
         metadata: {
           sessionId: childSessionID,
-          agent: "sisyphus-junior",
+          agent: "cerberus-junior",
           category: "deep",
         },
       },
@@ -495,11 +495,11 @@ describe("createToolExecuteAfterHandler task timers", () => {
     await afterHandler(
       { tool: "task", sessionID: parentSessionID, callID: "call-task-parallel-2" },
       {
-        title: "Sisyphus Task",
+        title: "Cerberus Task",
         output: "Task completed\n<task_metadata>\nsession_id: ses_child_parallel_2\n</task_metadata>",
         metadata: {
           sessionId: "ses_child_parallel_2",
-          agent: "sisyphus-junior",
+          agent: "cerberus-junior",
           category: "deep",
         },
       },
@@ -507,11 +507,11 @@ describe("createToolExecuteAfterHandler task timers", () => {
     await afterHandler(
       { tool: "task", sessionID: parentSessionID, callID: "call-task-parallel-3" },
       {
-        title: "Sisyphus Task",
+        title: "Cerberus Task",
         output: "Task completed\n<task_metadata>\nsession_id: ses_child_parallel_3\n</task_metadata>",
         metadata: {
           sessionId: "ses_child_parallel_3",
-          agent: "sisyphus-junior",
+          agent: "cerberus-junior",
           category: "deep",
         },
       },
@@ -565,11 +565,11 @@ describe("createToolExecuteAfterHandler task timers", () => {
     await afterHandler(
       { tool: "task", sessionID: parentSessionID, callID: "call-task-fallback-1" },
       {
-        title: "Sisyphus Task",
+        title: "Cerberus Task",
         output: "Task completed\n<task_metadata>\nsession_id: ses_child_fallback\n</task_metadata>",
         metadata: {
           sessionId: childSessionID,
-          agent: "sisyphus-junior",
+          agent: "cerberus-junior",
           category: "deep",
         },
       },

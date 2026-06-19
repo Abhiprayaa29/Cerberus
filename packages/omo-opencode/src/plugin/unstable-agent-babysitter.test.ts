@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, test } from "bun:test"
+﻿import { afterEach, describe, expect, test } from "bun:test"
 import { createUnstableAgentBabysitter } from "./unstable-agent-babysitter"
 import type { BackgroundTask } from "../features/background-agent"
 import { _resetForTesting, setMainSession } from "../features/claude-code-session-state"
@@ -47,7 +47,7 @@ describe("createUnstableAgentBabysitter", () => {
                       info: {
                         role: "assistant",
                         finish: "end_turn",
-                        agent: "sisyphus",
+                        agent: "cerberus",
                         model: { providerID: "openai", modelID: "gpt-4" },
                       },
                     },

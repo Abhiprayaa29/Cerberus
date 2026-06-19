@@ -1,4 +1,4 @@
-/// <reference path="../../../../bun-test.d.ts" />
+﻿/// <reference path="../../../../bun-test.d.ts" />
 /// <reference types="bun-types" />
 
 import { expect, test } from "bun:test"
@@ -19,14 +19,14 @@ test("#given packaged lazycodex tarball layout #when installing Codex plugin #th
   const lspRuntimeRoot = join(repoRoot, "packages", "lsp-daemon")
   const commands: Array<readonly [string, string, string]> = []
 
-  await writeFile(join(repoRoot, "package.json"), JSON.stringify({ name: "oh-my-opencode", version: "4.5.12" }))
+  await writeFile(join(repoRoot, "package.json"), JSON.stringify({ name: "oh-my-open-pentest", version: "4.5.12" }))
   await mkdir(join(pluginRoot, ".codex-plugin"), { recursive: true })
   await mkdir(join(pluginRoot, "dist"), { recursive: true })
-  await mkdir(join(pluginRoot, "components", "ulw-loop", "hooks"), { recursive: true })
+  await mkdir(join(pluginRoot, "components", "pentest-loop", "hooks"), { recursive: true })
   await mkdir(join(lspRuntimeRoot, "dist"), { recursive: true })
   await writeFile(
     join(codexPackageRoot, "marketplace.json"),
-    JSON.stringify({ name: "sisyphuslabs", plugins: [{ name: "omo", source: "./plugin" }] }),
+    JSON.stringify({ name: "cerberuslabs", plugins: [{ name: "omo", source: "./plugin" }] }),
   )
   await writeFile(
     join(pluginRoot, ".codex-plugin", "plugin.json"),
@@ -35,15 +35,15 @@ test("#given packaged lazycodex tarball layout #when installing Codex plugin #th
   await writeFile(
     join(pluginRoot, "package.json"),
     JSON.stringify({
-      name: "@sisyphuslabs/omo-codex-plugin",
+      name: "@cerberuslabs/omo-codex-plugin",
       version: "0.1.0",
       bin: { omo: "dist/cli.js" },
       scripts: { build: "exit 42" },
     }),
   )
-  await writeFile(join(pluginRoot, "components", "ulw-loop", "package.json"), JSON.stringify({ name: "@code-yeongyu/codex-ulw-loop", version: "0.1.0" }))
+  await writeFile(join(pluginRoot, "components", "pentest-loop", "package.json"), JSON.stringify({ name: "@code-yeongyu/codex-pentest-loop", version: "0.1.0" }))
   await writeFile(
-    join(pluginRoot, "components", "ulw-loop", "hooks", "hooks.json"),
+    join(pluginRoot, "components", "pentest-loop", "hooks", "hooks.json"),
     JSON.stringify({
       hooks: {
         UserPromptSubmit: [
@@ -102,11 +102,11 @@ test("#given packaged lazycodex tarball layout #when installing Codex plugin #th
   const pluginPath = result.installed[0]?.path ?? ""
   const cachedManifest = JSON.parse(await readFile(join(pluginPath, ".codex-plugin", "plugin.json"), "utf8")) as { readonly version: string }
   const cachedPackage = JSON.parse(await readFile(join(pluginPath, "package.json"), "utf8")) as { readonly version: string }
-  const cachedComponentPackage = JSON.parse(await readFile(join(pluginPath, "components", "ulw-loop", "package.json"), "utf8")) as { readonly version: string }
+  const cachedComponentPackage = JSON.parse(await readFile(join(pluginPath, "components", "pentest-loop", "package.json"), "utf8")) as { readonly version: string }
   const cachedHooks = JSON.parse(await readFile(join(pluginPath, "hooks", "hooks.json"), "utf8")) as {
     readonly hooks: { readonly PostToolUse: readonly [{ readonly hooks: readonly [{ readonly statusMessage: string }] }] }
   }
-  const cachedComponentHooks = JSON.parse(await readFile(join(pluginPath, "components", "ulw-loop", "hooks", "hooks.json"), "utf8")) as {
+  const cachedComponentHooks = JSON.parse(await readFile(join(pluginPath, "components", "pentest-loop", "hooks", "hooks.json"), "utf8")) as {
     readonly hooks: { readonly UserPromptSubmit: readonly [{ readonly hooks: readonly [{ readonly statusMessage: string }] }] }
   }
   const cachedMcp = JSON.parse(await readFile(join(pluginPath, ".mcp.json"), "utf8")) as {
@@ -115,7 +115,7 @@ test("#given packaged lazycodex tarball layout #when installing Codex plugin #th
   const cachedLspCli = join(pluginPath, "components", "lsp-daemon", "dist", "cli.js")
 
   expect(result.installed.map((plugin) => `${plugin.name}@${plugin.version}`)).toEqual(["omo@4.5.12"])
-  expect(pluginPath).toBe(join(codexHome, "plugins", "cache", "sisyphuslabs", "omo", "4.5.12"))
+  expect(pluginPath).toBe(join(codexHome, "plugins", "cache", "cerberuslabs", "omo", "4.5.12"))
   expect(cachedManifest.version).toBe("4.5.12")
   expect(cachedPackage.version).toBe("4.5.12")
   expect(cachedComponentPackage.version).toBe("4.5.12")
@@ -126,7 +126,7 @@ test("#given packaged lazycodex tarball layout #when installing Codex plugin #th
   if (installCommand === undefined) throw new Error("missing cached plugin npm install command")
   expect(installCommand[0]).toBe("npm")
   expect(installCommand[1]).toBe("ci --omit=dev")
-  expect(installCommand[2].startsWith(join(codexHome, "plugins", "cache", "sisyphuslabs", "omo", ".tmp-4.5.12-"))).toBe(true)
+  expect(installCommand[2].startsWith(join(codexHome, "plugins", "cache", "cerberuslabs", "omo", ".tmp-4.5.12-"))).toBe(true)
   const sotCommand = commands.find((command) => command[1].includes("migrate-omo-sot.mjs"))
   if (sotCommand === undefined) throw new Error("missing OMO SOT migration command")
   expect(sotCommand[0]).toBe(process.execPath)
@@ -148,13 +148,13 @@ test("#given packaged lazycodex tarball layout #when simulating Windows install 
   const pluginRoot = join(codexPackageRoot, "plugin")
   const lspRuntimeRoot = join(repoRoot, "packages", "lsp-daemon")
 
-  await writeFile(join(repoRoot, "package.json"), JSON.stringify({ name: "oh-my-opencode", version: "4.5.12" }))
+  await writeFile(join(repoRoot, "package.json"), JSON.stringify({ name: "oh-my-open-pentest", version: "4.5.12" }))
   await mkdir(join(pluginRoot, ".codex-plugin"), { recursive: true })
   await mkdir(join(pluginRoot, "dist"), { recursive: true })
   await mkdir(join(lspRuntimeRoot, "dist"), { recursive: true })
   await writeFile(
     join(codexPackageRoot, "marketplace.json"),
-    JSON.stringify({ name: "sisyphuslabs", plugins: [{ name: "omo", source: "./plugin" }] }),
+    JSON.stringify({ name: "cerberuslabs", plugins: [{ name: "omo", source: "./plugin" }] }),
   )
   await writeFile(
     join(pluginRoot, ".codex-plugin", "plugin.json"),
@@ -163,7 +163,7 @@ test("#given packaged lazycodex tarball layout #when simulating Windows install 
   await writeFile(
     join(pluginRoot, "package.json"),
     JSON.stringify({
-      name: "@sisyphuslabs/omo-codex-plugin",
+      name: "@cerberuslabs/omo-codex-plugin",
       version: "0.1.0",
       bin: { omo: "dist/cli.js" },
     }),

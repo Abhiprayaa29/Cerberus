@@ -1,4 +1,4 @@
-import { describe, expect, it } from "bun:test"
+﻿import { describe, expect, it } from "bun:test"
 import type { ToolContext } from "@opencode-ai/plugin/tool"
 import { createMonitorList } from "./monitor-list"
 import type {
@@ -75,7 +75,7 @@ function createToolContext(sessionID: string): ToolContext {
   return unsafeTestValue<ToolContext>({
     sessionID,
     messageID: "message-1",
-    agent: "sisyphus",
+    agent: "cerberus",
     directory: "/tmp/project",
     worktree: "/tmp/project",
     abort: new AbortController().signal,

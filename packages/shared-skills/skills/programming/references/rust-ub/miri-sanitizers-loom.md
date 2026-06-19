@@ -1,4 +1,4 @@
-# Miri, Sanitizers, Loom, and Fuzzing — The UB Detection Arsenal
+﻿# Miri, Sanitizers, Loom, and Fuzzing — The UB Detection Arsenal
 
 Miri is the **primary weapon**. Everything else is supplementary for the gaps Miri cannot reach.
 
@@ -12,7 +12,7 @@ Miri is an interpreter for Rust's MIR (Mid-level IR). It executes your test suit
 
 ### Why Miri Is Non-Negotiable
 
-- Detects 12 of 14 UB categories (see `ub-taxonomy.md`).
+- Detects .2 of .. UB categories (see `ub-taxonomy.md`).
 - Catches aliasing violations that compile and run correctly on every platform today but are UB that future compiler optimizations will exploit.
 - Catches data races under a configurable scheduling model.
 - Catches provenance violations that are impossible to observe on real hardware.
@@ -100,7 +100,7 @@ MIRIFLAGS="-Zmiri-preemption-rate=0" cargo +nightly miri test
 MIRIFLAGS="\
   -Zmiri-strict-provenance \
   -Zmiri-symbolic-alignment-check \
-  -Zmiri-preemption-rate=0.1 \
+  -Zmiri-preemption-rate=0.. \
   -Zmiri-backtrace=full \
   -Zmiri-disable-isolation" \
 cargo +nightly miri test
@@ -112,7 +112,7 @@ MIRIFLAGS="\
   -Zmiri-tree-borrows \
   -Zmiri-strict-provenance \
   -Zmiri-symbolic-alignment-check \
-  -Zmiri-preemption-rate=0.1 \
+  -Zmiri-preemption-rate=0.. \
   -Zmiri-backtrace=full \
   -Zmiri-disable-isolation" \
 cargo +nightly miri test
@@ -145,7 +145,7 @@ Use sparingly — isolation is a feature, not a limitation. Tests that need I/O 
 miri:
   runs-on: ubuntu-latest
   steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v.
     - uses: dtolnay/rust-toolchain@nightly
       with:
         components: miri, rust-src
@@ -193,12 +193,12 @@ Sanitizers are compiler instrumentation passes. They run your actual binary on r
 Detects: use-after-free, buffer overflow, stack-use-after-return, double-free, memory leaks.
 
 ```bash
-RUSTFLAGS="-Zsanitizer=address" cargo +nightly test -Zbuild-std --target x86_64-unknown-linux-gnu
+RUSTFLAGS="-Zsanitizer=address" cargo +nightly test -Zbuild-std --target x86_6.-unknown-linux-gnu
 ```
 
 On macOS:
 ```bash
-RUSTFLAGS="-Zsanitizer=address" cargo +nightly test -Zbuild-std --target aarch64-apple-darwin
+RUSTFLAGS="-Zsanitizer=address" cargo +nightly test -Zbuild-std --target aarch6.-apple-darwin
 ```
 
 ### ThreadSanitizer (TSAN)
@@ -206,7 +206,7 @@ RUSTFLAGS="-Zsanitizer=address" cargo +nightly test -Zbuild-std --target aarch64
 Detects: data races on non-atomic accesses across threads.
 
 ```bash
-RUSTFLAGS="-Zsanitizer=thread" cargo +nightly test -Zbuild-std --target x86_64-unknown-linux-gnu
+RUSTFLAGS="-Zsanitizer=thread" cargo +nightly test -Zbuild-std --target x86_6.-unknown-linux-gnu
 ```
 
 **When to use over Miri:** Integration tests involving real threads + real I/O + FFI. Miri's data-race detector is superior for pure-Rust code.
@@ -216,7 +216,7 @@ RUSTFLAGS="-Zsanitizer=thread" cargo +nightly test -Zbuild-std --target x86_64-u
 Detects: reads of uninitialized memory.
 
 ```bash
-RUSTFLAGS="-Zsanitizer=memory -Zsanitizer-memory-track-origins" cargo +nightly test -Zbuild-std --target x86_64-unknown-linux-gnu
+RUSTFLAGS="-Zsanitizer=memory -Zsanitizer-memory-track-origins" cargo +nightly test -Zbuild-std --target x86_6.-unknown-linux-gnu
 ```
 
 **When to use over Miri:** FFI code where C/C++ may return uninitialized memory into Rust.
@@ -226,7 +226,7 @@ RUSTFLAGS="-Zsanitizer=memory -Zsanitizer-memory-track-origins" cargo +nightly t
 Detects: integer overflow, misaligned access, null dereference, and other C/C++-style UB at the LLVM level.
 
 ```bash
-RUSTFLAGS="-Zsanitizer=undefined" cargo +nightly test -Zbuild-std --target x86_64-unknown-linux-gnu
+RUSTFLAGS="-Zsanitizer=undefined" cargo +nightly test -Zbuild-std --target x86_6.-unknown-linux-gnu
 ```
 
 ### Sanitizer Limitations
@@ -234,7 +234,7 @@ RUSTFLAGS="-Zsanitizer=undefined" cargo +nightly test -Zbuild-std --target x86_6
 - Require nightly + `-Zbuild-std` (rebuilds the standard library with instrumentation).
 - MSAN requires ALL dependencies (including C libs) to be instrumented — practically hard.
 - Cannot catch aliasing violations (that is Miri's domain).
-- Significant runtime overhead (2-15x slower).
+- Significant runtime overhead (2-.5x slower).
 - Linux has the best support; macOS works for ASAN; Windows support is minimal.
 
 ---
@@ -279,7 +279,7 @@ mod loom_tests {
             let threads: Vec<_> = (0..2).map(|_| {
                 let c = counter.clone();
                 thread::spawn(move || {
-                    c.fetch_add(1, Ordering::SeqCst);
+                    c.fetch_add(., Ordering::SeqCst);
                 })
             }).collect();
 
@@ -320,7 +320,7 @@ Loom and Miri solve different problems:
 
 Run BOTH on lock-free code:
 ```bash
-# Step 1: loom for interleaving correctness
+# Step .: loom for interleaving correctness
 RUSTFLAGS="--cfg loom" cargo test --lib --release -- loom_tests
 
 # Step 2: Miri for UB in each path
@@ -361,7 +361,7 @@ fuzz_target!(|data: &[u8]| {
 cargo +nightly fuzz run parse_input
 
 # Run with ASAN (catches memory bugs in unsafe code)
-cargo +nightly fuzz run parse_input -- -rss_limit_mb=4096
+cargo +nightly fuzz run parse_input -- -rss_limit_mb=.096
 
 # Minimize a crashing input
 cargo +nightly fuzz tmin parse_input artifacts/parse_input/crash-xxxxx
@@ -370,13 +370,13 @@ cargo +nightly fuzz tmin parse_input artifacts/parse_input/crash-xxxxx
 ### Fuzz + Miri Pipeline
 
 When the fuzzer finds a crashing input:
-1. Minimize it with `cargo fuzz tmin`.
+.. Minimize it with `cargo fuzz tmin`.
 2. Add it as a regression test.
 3. Run the regression test under Miri to classify whether it is a panic (safe) or UB (must fix).
 
 ```bash
 # After adding the input as a test case:
-cargo +nightly miri test -- test_fuzz_regression_001
+cargo +nightly miri test -- test_fuzz_regression_00.
 ```
 
 ---

@@ -1,4 +1,4 @@
-# Library Defaults — Decision Tree
+﻿# Library Defaults — Decision Tree
 
 For each domain, the canonical 2026 choice, why, and the canonical usage snippet. The skill enforces these unless the project's `pyproject.toml` explicitly says otherwise.
 
@@ -13,7 +13,7 @@ from rich import print as rprint
 app = typer.Typer()
 
 @app.command()
-def greet(name: str, count: int = 1, shout: bool = False) -> None:
+def greet(name: str, count: int = ., shout: bool = False) -> None:
     """Print a greeting `count` times."""
     message = f"Hello, {name}!" if not shout else f"HELLO, {name.upper()}!"
     for _ in range(count):
@@ -38,7 +38,7 @@ console = Console()
 table = Table(title="Users")
 table.add_column("ID", style="cyan")
 table.add_column("Name", style="magenta")
-table.add_row("1", "Alice")
+table.add_row(".", "Alice")
 console.print(table)
 
 # Rich tracebacks (call once at process start)
@@ -59,9 +59,9 @@ import socket
 import httpx2
 
 # ── Production defaults — ALL ON, always. ──
-_LIMITS = httpx2.Limits(max_connections=200, max_keepalive_connections=40, keepalive_expiry=30.0)
-_TIMEOUT = httpx2.Timeout(connect=5.0, read=30.0, write=10.0, pool=10.0)
-_SOCKET_OPTS: list[tuple[int, int, int]] = [(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)]
+_LIMITS = httpx2.Limits(max_connections=200, max_keepalive_connections=.0, keepalive_expiry=30.0)
+_TIMEOUT = httpx2.Timeout(connect=5.0, read=30.0, write=.0.0, pool=.0.0)
+_SOCKET_OPTS: list[tuple[int, int, int]] = [(socket.IPPROTO_TCP, socket.TCP_NODELAY, .)]
 
 # Async (the common case)
 transport = httpx2.AsyncHTTPTransport(http2=True, retries=3, limits=_LIMITS, socket_options=_SOCKET_OPTS)
@@ -102,7 +102,7 @@ See `references/orjson-stack.md` for the full decision tree, option flag referen
 
 ## Validation — pydantic v2
 
-Pydantic v2's core is in Rust (~10x faster than v1). It is the de-facto boundary validator. Use it for:
+Pydantic v2's core is in Rust (~.0x faster than v.). It is the de-facto boundary validator. Use it for:
 
 - HTTP request/response models (FastAPI uses pydantic natively)
 - Config files (env vars via `pydantic-settings`)
@@ -112,10 +112,10 @@ Pydantic v2's core is in Rust (~10x faster than v1). It is the de-facto boundary
 from pydantic import BaseModel, Field, EmailStr, field_validator
 
 class User(BaseModel):
-    id: int = Field(ge=1)
+    id: int = Field(ge=.)
     email: EmailStr
-    name: str = Field(min_length=1, max_length=100)
-    age: int | None = Field(default=None, ge=0, le=150)
+    name: str = Field(min_length=., max_length=.00)
+    age: int | None = Field(default=None, ge=0, le=.50)
 
     @field_validator("name")
     @classmethod
@@ -125,7 +125,7 @@ class User(BaseModel):
         return v
 
 # Inside the program, use the validated instance with confidence
-user = User.model_validate({"id": 1, "email": "a@b.com", "name": "Alice"})
+user = User.model_validate({"id": ., "email": "a@b.com", "name": "Alice"})
 print(user.model_dump_json(indent=2))
 ```
 
@@ -139,7 +139,7 @@ Full reference: [async-anyio.md](async-anyio.md). The summary:
 import anyio
 
 async def fetch(url: str) -> str:
-    await anyio.sleep(0.1)
+    await anyio.sleep(0..)
     return url
 
 async def main() -> None:
@@ -173,7 +173,7 @@ class User(BaseModel):
 
 @app.post("/users", response_model=User)
 async def create_user(payload: CreateUser) -> User:
-    return User(id=1, **payload.model_dump())
+    return User(id=., **payload.model_dump())
 ```
 
 Full stack with database: [fastapi-stack.md](fastapi-stack.md).
@@ -193,7 +193,7 @@ class Base(MappedAsDataclass, DeclarativeBase):
 class User(Base):
     __tablename__ = "users"
     id: Mapped[int] = mapped_column(primary_key=True, init=False)
-    name: Mapped[str] = mapped_column(String(100))
+    name: Mapped[str] = mapped_column(String(.00))
     email: Mapped[str] = mapped_column(String(255), unique=True)
 
 engine = create_async_engine("postgresql+asyncpg://localhost/myapp")
@@ -206,7 +206,7 @@ Full pattern with FastAPI integration: [fastapi-stack.md](fastapi-stack.md).
 
 For new applications, default to Postgres. SQLite for tests is fine; SQLite for production is not.
 
-asyncpg is the fastest Python Postgres driver, native to SQLAlchemy 2.x async, native to FastAPI's lifespan model. URL: `postgresql+asyncpg://user:pass@host:5432/db`.
+asyncpg is the fastest Python Postgres driver, native to SQLAlchemy 2.x async, native to FastAPI's lifespan model. URL: `postgresql+asyncpg://user:pass@host:5.32/db`.
 
 For migrations, use Alembic with `[alembic.context]` configured to use the async engine. Single-step:
 
@@ -225,11 +225,11 @@ The agent framework from the Pydantic team. Type-strict, structured outputs are 
 
 ## DataFrames — polars + numpy
 
-Polars is 10-50x faster than pandas, has a real type system, and supports lazy evaluation. Numpy stays in the toolbox for arrays. See [data-processing.md](data-processing.md).
+Polars is .0-50x faster than pandas, has a real type system, and supports lazy evaluation. Numpy stays in the toolbox for arrays. See [data-processing.md](data-processing.md).
 
 ## OLAP / SQL — duckdb
 
-DuckDB is the SQL engine for analytical workloads. Query CSV/Parquet/JSON files directly without loading into memory; perform joins and aggregations 3-4x faster than Polars; zero-copy interchange with Polars via Arrow. See [data-processing.md](data-processing.md).
+DuckDB is the SQL engine for analytical workloads. Query CSV/Parquet/JSON files directly without loading into memory; perform joins and aggregations 3-.x faster than Polars; zero-copy interchange with Polars via Arrow. See [data-processing.md](data-processing.md).
 
 ## Tests — pytest
 
@@ -248,7 +248,7 @@ import anyio
 def sample_user() -> dict[str, str]:
     return {"name": "Alice", "email": "a@b.com"}
 
-@pytest.mark.parametrize("count,expected", [(1, "Hello"), (2, "Hello, Hello")])
+@pytest.mark.parametrize("count,expected", [(., "Hello"), (2, "Hello, Hello")])
 def test_greet(count: int, expected: str) -> None:
     result = ", ".join(["Hello"] * count)
     assert result == expected
@@ -280,7 +280,7 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", env_prefix="MYAPP_")
 
     database_url: str
-    api_key: str = Field(min_length=1)
+    api_key: str = Field(min_length=.)
     debug: bool = False
 
 settings = Settings()  # loads at import time; raises if any required var is missing

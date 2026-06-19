@@ -1,4 +1,4 @@
-import { z } from "zod"
+﻿import { z } from "zod"
 import { createParseMember } from "./member-parser"
 
 export const MESSAGE_KINDS = [
@@ -190,54 +190,54 @@ export const AGENT_ELIGIBILITY_REGISTRY: Readonly<Record<string, {
   verdict: "eligible" | "conditional" | "hard-reject"
   rejectionMessage?: string
 }>> = {
-  sisyphus: { verdict: "eligible" },
-  hephaestus: {
+  cerberus: { verdict: "eligible" },
+  scylla: {
     verdict: "conditional",
     rejectionMessage:
-      "Agent 'hephaestus' lacks teammate permission. Either apply D-36 (add teammate: \"allow\" in tool-config-handler.ts) or use subagent_type: \"sisyphus\" instead.",
+      "Agent 'scylla' lacks teammate permission. Either apply D-36 (add teammate: \"allow\" in tool-config-handler.ts) or use subagent_type: \"cerberus\" instead.",
   },
   oracle: {
     verdict: "hard-reject",
     rejectionMessage:
       "Agent 'oracle' is read-only (cannot write files). Team members must write to mailbox inbox files. Use delegate-task with subagent_type: 'oracle' for read-only analysis instead.",
   },
-  librarian: {
+  intel: {
     verdict: "hard-reject",
     rejectionMessage:
-      "Agent 'librarian' is read-only (write/edit denied). Cannot write to mailbox as team member. Use delegate-task for research queries instead.",
+      "Agent 'intel' is read-only (write/edit denied). Cannot write to mailbox as team member. Use delegate-task for research queries instead.",
   },
   explore: {
     verdict: "hard-reject",
     rejectionMessage:
       "Agent 'explore' is read-only (write/edit denied). Cannot write to mailbox as team member. Use delegate-task for codebase exploration instead.",
   },
-  "multimodal-looker": {
+  "lens": {
     verdict: "hard-reject",
     rejectionMessage:
-      "Agent 'multimodal-looker' has read-only tool access (only 'read' allowed). Cannot write to mailbox as team member.",
+      "Agent 'lens' has read-only tool access (only 'read' allowed). Cannot write to mailbox as team member.",
   },
-  metis: {
+  vanguard: {
     verdict: "hard-reject",
     rejectionMessage:
-      "Agent 'metis' is read-only (pre-planning consultant). Cannot write to mailbox as team member. Use delegate-task for pre-planning analysis instead.",
+      "Agent 'vanguard' is read-only (pre-planning consultant). Cannot write to mailbox as team member. Use delegate-task for pre-planning analysis instead.",
   },
-  momus: {
+  sentinel: {
     verdict: "hard-reject",
     rejectionMessage:
-      "Agent 'momus' is read-only (plan reviewer). Cannot write to mailbox as team member. Use delegate-task for plan review instead.",
+      "Agent 'sentinel' is read-only (plan reviewer). Cannot write to mailbox as team member. Use delegate-task for plan review instead.",
   },
   atlas: { verdict: "eligible" },
-  prometheus: {
+  talos: {
     verdict: "hard-reject",
     rejectionMessage:
-      "Agent 'prometheus' is plan-mode-only; can only write to .omo/*.md (enforced by prometheusMdOnly hook). Cannot write to team mailbox. Use delegate-task with subagent_type: 'plan' instead.",
+      "Agent 'talos' is plan-mode-only; can only write to .omo/*.md (enforced by talosMdOnly hook). Cannot write to team mailbox. Use delegate-task with subagent_type: 'plan' instead.",
   },
-  "sisyphus-junior": { verdict: "eligible" },
+  "cerberus-junior": { verdict: "eligible" },
 } as const
 
 /**
  * §V.3 member validation error messages live in member-parser.ts.
- * Includes: "Unknown subagent_type '<name>'. Available ELIGIBLE agents: sisyphus, atlas, sisyphus-junior, hephaestus (if D-36 applied). Use delegate-task for read-only agents like oracle, librarian, explore, metis, momus, multimodal-looker."
+ * Includes: "Unknown subagent_type '<name>'. Available ELIGIBLE agents: cerberus, atlas, cerberus-junior, scylla (if D-36 applied). Use delegate-task for read-only agents like oracle, intel, explore, vanguard, sentinel, lens."
  */
 
 const parseMemberBase = createParseMember(MemberSchema, AGENT_ELIGIBILITY_REGISTRY)

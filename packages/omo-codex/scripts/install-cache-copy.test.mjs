@@ -1,4 +1,4 @@
-import assert from "node:assert/strict";
+﻿import assert from "node:assert/strict";
 import { realpathSync } from "node:fs";
 import { mkdir, readdir, readFile, rename, stat, writeFile } from "node:fs/promises";
 import { basename, join, relative, sep } from "node:path";
@@ -14,7 +14,7 @@ test("#given source plugin has an npm lockfile #when caching plugin #then lockfi
 	const sourceRoot = join(root, "plugin");
 	await mkdir(sourceRoot, { recursive: true });
 	await writeFile(join(sourceRoot, "package.json"), JSON.stringify({ name: "@scope/omo", version: "0.1.0" }));
-	const lockfile = '{"packages":{"components/ulw-loop":{}}}\n';
+	const lockfile = '{"packages":{"components/pentest-loop":{}}}\n';
 	await writeFile(join(sourceRoot, "package-lock.json"), lockfile);
 
 	// when

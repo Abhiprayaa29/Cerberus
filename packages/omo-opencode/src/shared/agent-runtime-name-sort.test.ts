@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { afterEach, beforeAll, beforeEach, describe, expect, test } from "bun:test"
 
@@ -47,72 +47,72 @@ describe("OpenCode Agent.list() sort with runtime display names", () => {
 
   describe("#given the four core agents and a mix of non-core agents", () => {
     test("#when sorted using OpenCode-style ordering #then core agents come first in canonical order", () => {
-      const sisyphus = getAgentListDisplayName("sisyphus")
-      const hephaestus = getAgentListDisplayName("hephaestus")
-      const prometheus = getAgentListDisplayName("prometheus")
-      const atlas = getAgentListDisplayName("atlas")
+      const cerberus = getAgentListDisplayName("cerberus")
+      const scylla = getAgentListDisplayName("scylla")
+      const talos = getAgentListDisplayName("talos")
+      const argus = getAgentListDisplayName("argus")
 
       const allAgents = [
-        sisyphus,
-        hephaestus,
-        prometheus,
-        atlas,
+        cerberus,
+        scylla,
+        talos,
+        argus,
         "athena",
-        "explore",
-        "metis",
-        "oracle",
+        "scout",
+        "vanguard",
+        "cipher",
       ]
 
-      const sorted = simulateOpencodeSort(allAgents, sisyphus)
+      const sorted = simulateOpencodeSort(allAgents, cerberus)
       const orderedConfigKeys = sorted.map((name) => normalizeAgentForPromptKey(name))
 
       expect(orderedConfigKeys).toEqual([
-        "sisyphus",
-        "hephaestus",
-        "prometheus",
-        "atlas",
+        "cerberus",
+        "scylla",
+        "talos",
+        "argus",
         "athena",
-        "explore",
-        "metis",
-        "oracle",
+        "scout",
+        "vanguard",
+        "cipher",
       ])
     })
 
     test("#when default_agent is unset #then canonical core order still holds via the sort shim", () => {
-      const sisyphus = getAgentListDisplayName("sisyphus")
-      const hephaestus = getAgentListDisplayName("hephaestus")
-      const prometheus = getAgentListDisplayName("prometheus")
-      const atlas = getAgentListDisplayName("atlas")
+      const cerberus = getAgentListDisplayName("cerberus")
+      const scylla = getAgentListDisplayName("scylla")
+      const talos = getAgentListDisplayName("talos")
+      const argus = getAgentListDisplayName("argus")
 
-      const allAgents = [hephaestus, prometheus, atlas, sisyphus, "athena", "oracle"]
+      const allAgents = [scylla, talos, argus, cerberus, "athena", "cipher"]
 
       const sorted = simulateOpencodeSort(allAgents, "no-such-default-agent")
       const orderedConfigKeys = sorted.map((name) => normalizeAgentForPromptKey(name))
 
       expect(orderedConfigKeys.slice(0, 4)).toEqual([
-        "sisyphus",
-        "hephaestus",
-        "prometheus",
-        "atlas",
+        "cerberus",
+        "scylla",
+        "talos",
+        "argus",
       ])
     })
   })
 
   describe("#given runtime names containing only core agents", () => {
-    test("#when sorted #then sisyphus, hephaestus, prometheus, atlas in that order", () => {
-      const sisyphus = getAgentListDisplayName("sisyphus")
-      const hephaestus = getAgentListDisplayName("hephaestus")
-      const prometheus = getAgentListDisplayName("prometheus")
-      const atlas = getAgentListDisplayName("atlas")
+    test("#when sorted #then cerberus, scylla, talos, argus in that order", () => {
+      const cerberus = getAgentListDisplayName("cerberus")
+      const scylla = getAgentListDisplayName("scylla")
+      const talos = getAgentListDisplayName("talos")
+      const argus = getAgentListDisplayName("argus")
 
-      const sorted = simulateOpencodeSort([atlas, prometheus, hephaestus, sisyphus], sisyphus)
+      const sorted = simulateOpencodeSort([argus, talos, scylla, cerberus], cerberus)
       const orderedConfigKeys = sorted.map((name) => normalizeAgentForPromptKey(name))
 
       expect(orderedConfigKeys).toEqual([
-        "sisyphus",
-        "hephaestus",
-        "prometheus",
-        "atlas",
+        "cerberus",
+        "scylla",
+        "talos",
+        "argus",
       ])
     })
   })

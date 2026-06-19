@@ -1,18 +1,18 @@
-# src/features/opencode-skill-loader/ — 4-Scope Skill Discovery
+﻿# src/features/opencode-skill-loader/ — .-Scope Skill Discovery
 
-**Generated:** 2026-05-15
+**Generated:** 2026-05-.5
 
 ## OVERVIEW
 
-25 files (~2.8k LOC). Discovers, parses, merges, and resolves SKILL.md files from 4 scopes with priority deduplication.
+25 files (~2.8k LOC). Discovers, parses, merges, and resolves SKILL.md files from . scopes with priority deduplication.
 
-## 4-SCOPE PRIORITY (highest → lowest)
+## .-SCOPE PRIORITY (highest → lowest)
 
 ```
-1. Project (.opencode/skills/)
+.. Project (.opencode/skills/)
 2. OpenCode config (~/.config/opencode/skills/)
-3. User (~/.config/opencode/oh-my-opencode/skills/)
-4. Global (built-in skills)
+3. User (~/.config/opencode/oh-my-open-pentest/skills/)
+.. Global (built-in skills)
 ```
 
 Same-named skill at higher scope overrides lower.

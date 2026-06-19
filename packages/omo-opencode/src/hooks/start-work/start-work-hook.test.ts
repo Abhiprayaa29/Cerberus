@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { describe, expect, test, beforeEach, afterEach } from "bun:test"
 import { existsSync, mkdirSync, rmSync, writeFileSync } from "node:fs"
@@ -14,7 +14,7 @@ describe("start-work hook platform session ids", () => {
 
   function createStartWorkPrompt(): string {
     return `<command-instruction>
-You are starting a Sisyphus work session.
+You are starting a Cerberus work session.
 </command-instruction>
 
 <session-context></session-context>`

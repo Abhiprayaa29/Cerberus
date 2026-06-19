@@ -1,4 +1,4 @@
-import { describe, expect, test } from "bun:test"
+﻿import { describe, expect, test } from "bun:test"
 import type { PromptSource, VariantTable } from "./types"
 import { resolveVariant } from "./variant-resolver"
 
@@ -45,8 +45,8 @@ describe("resolveVariant", () => {
     expect(resolveVariant({ modelID: "glm-5-1", variants })).toBe("glm")
   })
 
-  test("#given Prometheus agent #then planner overrides model variant", () => {
-    expect(resolveVariant({ agentName: "prometheus", modelID: "gpt-5-5", variants })).toBe(
+  test("#given Talos agent #then planner overrides model variant", () => {
+    expect(resolveVariant({ agentName: "talos", modelID: "gpt-5-5", variants })).toBe(
       "planner"
     )
   })

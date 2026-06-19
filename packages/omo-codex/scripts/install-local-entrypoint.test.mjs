@@ -1,4 +1,4 @@
-import assert from "node:assert/strict";
+﻿import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
 import { mkdtempSync, readFileSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -69,7 +69,7 @@ test("#given dry-run install flags #when running the Node installer entrypoint #
 	).trim();
 
 	// then
-	assert.equal(output, "npx --yes --package oh-my-openagent omo install --platform=codex --no-tui --codex-autonomous");
+	assert.equal(output, "npx --yes --package oh-my-open-pentest omo install --platform=codex --no-tui --codex-autonomous");
 });
 
 test("#given dry-run install opt-out #when running the Node installer entrypoint #then preserves existing Codex permission settings", () => {
@@ -84,7 +84,7 @@ test("#given dry-run install opt-out #when running the Node installer entrypoint
 	).trim();
 
 	// then
-	assert.equal(output, "npx --yes --package oh-my-openagent omo install --platform=codex --no-tui --no-codex-autonomous");
+	assert.equal(output, "npx --yes --package oh-my-open-pentest omo install --platform=codex --no-tui --no-codex-autonomous");
 });
 
 test("#given dry-run doctor #when running the Node installer entrypoint #then prints delegated doctor command", () => {
@@ -97,7 +97,7 @@ test("#given dry-run doctor #when running the Node installer entrypoint #then pr
 	}).trim();
 
 	// then
-	assert.equal(output, "npx --yes --package oh-my-openagent omo doctor");
+	assert.equal(output, "npx --yes --package oh-my-open-pentest omo doctor");
 });
 
 test("#given dry-run cleanup #when running the Node installer entrypoint #then prints delegated codex cleanup command", () => {
@@ -112,7 +112,7 @@ test("#given dry-run cleanup #when running the Node installer entrypoint #then p
 	).trim();
 
 	// then
-	assert.equal(output, "npx --yes --package oh-my-openagent omo cleanup --platform=codex --project /tmp/lazycodex-qa");
+	assert.equal(output, "npx --yes --package oh-my-open-pentest omo cleanup --platform=codex --project /tmp/lazycodex-qa");
 });
 
 test("#given dry-run uninstall #when running the Node installer entrypoint #then prints delegated codex cleanup command", () => {
@@ -127,7 +127,7 @@ test("#given dry-run uninstall #when running the Node installer entrypoint #then
 	).trim();
 
 	// then
-	assert.equal(output, "npx --yes --package oh-my-openagent omo cleanup --platform=codex --project /tmp/lazycodex-qa");
+	assert.equal(output, "npx --yes --package oh-my-open-pentest omo cleanup --platform=codex --project /tmp/lazycodex-qa");
 });
 
 test("#given stale lazycodex version #when running update dry-run #then prints the latest installer command", () => {
@@ -166,17 +166,17 @@ test("#given current lazycodex version #when running update dry-run #then report
 	assert.equal(output, "lazycodex-ai 1.0.1 is already up to date.");
 });
 
-test("#given dry-run ulw-loop #when running the Node installer entrypoint #then prints delegated ulw-loop command", () => {
+test("#given dry-run pentest-loop #when running the Node installer entrypoint #then prints delegated pentest-loop command", () => {
 	// given
 	const scriptPath = fileURLToPath(new URL("./install-local.mjs", import.meta.url));
 
 	// when
-	const output = execFileSync(process.execPath, [scriptPath, "--dry-run", "ulw-loop", "help"], {
+	const output = execFileSync(process.execPath, [scriptPath, "--dry-run", "pentest-loop", "help"], {
 		encoding: "utf8",
 	}).trim();
 
 	// then
-	assert.equal(output, "npx --yes --package oh-my-openagent omo ulw-loop help");
+	assert.equal(output, "npx --yes --package oh-my-open-pentest omo pentest-loop help");
 });
 
 test("#given the invoking argv path disappears #when importing the Node installer module #then the entrypoint guard does not throw", () => {

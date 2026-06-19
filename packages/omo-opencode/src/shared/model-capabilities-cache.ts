@@ -1,10 +1,10 @@
-import * as dataPath from "./data-path"
+﻿import * as dataPath from "./data-path"
 import { createJsonFileCacheStore } from "./json-file-cache-store"
 import {
   MODELS_DEV_SOURCE_URL,
   buildModelCapabilitiesSnapshotFromModelsDev,
   fetchModelCapabilitiesSnapshot,
-} from "@oh-my-opencode/model-core"
+} from "@oh-my-open-pentest/model-core"
 import type { ModelCapabilitiesSnapshot } from "./model-capabilities"
 
 export {

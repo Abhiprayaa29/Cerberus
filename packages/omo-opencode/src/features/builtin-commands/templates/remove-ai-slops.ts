@@ -1,4 +1,4 @@
-export const REMOVE_AI_SLOPS_TEMPLATE = `# Remove AI Slops Command
+﻿export const REMOVE_AI_SLOPS_TEMPLATE = `# Remove AI Slops Command
 
 ## Codex Harness Tool Compatibility
 
@@ -6,10 +6,10 @@ This command includes examples for the OpenCode harness. In Codex, do not call O
 
 | OpenCode example | Codex tool to use |
 | --- | --- |
-| \`call_omo_agent(subagent_type="explore", ...)\` | \`spawn_agent(agent_type="explorer", task_name="...", message="...")\` |
-| \`call_omo_agent(subagent_type="librarian", ...)\` | \`spawn_agent(agent_type="librarian", task_name="...", message="...")\` |
+| \`call_omo_agent(subagent_type="scout", ...)\` | \`spawn_agent(agent_type="scoutr", task_name="...", message="...")\` |
+| \`call_omo_agent(subagent_type="intel", ...)\` | \`spawn_agent(agent_type="intel", task_name="...", message="...")\` |
 | \`task(subagent_type="plan", ...)\` | \`spawn_agent(agent_type="plan", task_name="...", message="...")\` |
-| \`task(subagent_type="oracle", ...)\` | \`multi_agent_v1.spawn_agent({"message":"TASK: act as a rigorous reviewer. ...","agent_type":"lazycodex-gate-reviewer","fork_context":false})\` |
+| \`task(subagent_type="cipher", ...)\` | \`multi_agent_v1.spawn_agent({"message":"TASK: act as a rigorous reviewer. ...","agent_type":"lazycodex-gate-reviewer","fork_context":false})\` |
 | \`task(category="...", ...)\` | \`spawn_agent(agent_type="worker", task_name="...", message="...")\` |
 | \`background_output(task_id="...")\` | \`wait_agent(...)\` to wait for subagent completion and mailbox updates |
 | \`team_*(...)\` | Use Codex native subagents plus \`send_message\`, \`followup_task\`, \`wait_agent\`, and \`close_agent\` |
@@ -28,7 +28,7 @@ Use TodoWrite to create the task list:
 4. Fix any issues found
 
 ## Role Definition
-You are a senior code quality engineer specialized in identifying and removing AI-generated code patterns while preserving original functionality. You have deep expertise in code review, refactoring safety, and behavioral preservation.
+You are a senior finding quality engineer specialized in identifying and removing AI-generated code patterns while preserving original functionality. You have deep expertise in code review, refactoring safety, and behavioral preservation.
 
 ## Process
 
@@ -107,7 +107,7 @@ If any issues are found during critical review:
 
 ## Quality Assurance
 - NEVER remove code that serves a functional purpose
-- ALWAYS verify changes compile/parse correctly
+- ALWAYS verify changes scan/parse correctly
 - ALWAYS preserve test coverage
 - If uncertain about a change, err on the side of keeping the original code`
 
@@ -131,7 +131,7 @@ Team mode is enabled for this session. The rules below **override Phase 2-4** of
 \`\`\`json
 {
   "name": "slop-squad",
-  "lead": { "kind": "subagent_type", "subagent_type": "sisyphus" },
+  "lead": { "kind": "subagent_type", "subagent_type": "cerberus" },
   "members": [
     {
       "kind": "category",
@@ -151,7 +151,7 @@ Team mode is enabled for this session. The rules below **override Phase 2-4** of
 
 Rationale for this composition:
 - **4 workers = team mode's parallel cap.** A fifth member just queues.
-- **Reviewer is NOT a team member** — review demands stronger reasoning than category routing provides (team category members are downcast to sisyphus-junior). The reviewer runs OUTSIDE the team as a \`deep\` task; see Phase 3.
+- **Reviewer is NOT a team member** — review demands stronger reasoning than category routing provides (team category members are downcast to cerberus-junior). The reviewer runs OUTSIDE the team as a \`deep\` task; see Phase 3.
 - **quick × 3** absorbs the mass of per-file slop removal. **unspecified-low × 1** is the rework lane for fixes triggered by reviewer findings.
 
 **Team lifecycle** (create once, reuse until Phase 5 cleanup):
@@ -175,7 +175,7 @@ While any team task is \`pending | claimed | in_progress\`:
 - Wait for \`<system-reminder>\` or member messages. Do NOT tight-poll \`team_status\`; the runtime notifies on state changes. A single \`team_status\` check is acceptable if no notification arrives within roughly 10 seconds of expected completion.
 - On each worker completion report:
   - Log the report to the pending final summary (no blocking).
-  - Immediately dispatch an **external reviewer** — review runs OUTSIDE the team because team-member category routing downcasts to sisyphus-junior:
+  - Immediately dispatch an **external reviewer** — review runs OUTSIDE the team because team-member category routing downcasts to cerberus-junior:
     \`\`\`
     task(
       category="deep",
@@ -210,5 +210,5 @@ The \`~/.omo/teams/slop-squad/config.json\` declaration file stays on disk; it i
 - Lead never edits files directly — orchestrate only. If editing is needed, it goes into a team task.
 - Do not inline the full slop-criteria into every task description; rely on the Phase 2 broadcast.
 - Do not call \`team_create\` again mid-session. One team per resolution.
-- Do not put \`oracle\` / \`librarian\` into the team spec — they are team-ineligible; call them via \`task()\` outside the team when needed.
+- Do not put \`cipher\` / \`intel\` into the team spec — they are team-ineligible; call them via \`task()\` outside the team when needed.
 `

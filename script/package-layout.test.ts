@@ -1,4 +1,4 @@
-import { describe, expect, setDefaultTimeout, test } from "bun:test"
+﻿import { describe, expect, setDefaultTimeout, test } from "bun:test"
 import { execFileSync } from "node:child_process"
 import { existsSync, readdirSync } from "node:fs"
 import { join, relative, sep } from "node:path"
@@ -14,8 +14,8 @@ const codexHookComponentRuntimePaths = [
   "packages/omo-codex/plugin/components/rules/dist/cli.js",
   "packages/omo-codex/plugin/components/start-work-continuation/dist/cli.js",
   "packages/omo-codex/plugin/components/telemetry/dist/cli.js",
-  "packages/omo-codex/plugin/components/ultrawork/dist/cli.js",
-  "packages/omo-codex/plugin/components/ulw-loop/dist/cli.js",
+  "packages/omo-codex/plugin/components/fullscan/dist/cli.js",
+  "packages/omo-codex/plugin/components/pentest-loop/dist/cli.js",
 ] as const
 const packageLayoutTestTimeoutMs = 60_000
 const packDryRunTimeoutMs = 15_000

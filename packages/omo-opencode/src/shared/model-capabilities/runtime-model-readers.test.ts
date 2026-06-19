@@ -1,5 +1,5 @@
-import { describe, expect, it } from "bun:test"
-import { getModelCapabilities } from "@oh-my-opencode/model-core"
+﻿import { describe, expect, it } from "bun:test"
+import { getModelCapabilities } from "@oh-my-open-pentest/model-core"
 
 function readRuntimeModelModalities(runtimeModel: Record<string, unknown>) {
 	return getModelCapabilities({

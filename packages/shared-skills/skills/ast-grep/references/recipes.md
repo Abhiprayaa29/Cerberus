@@ -1,4 +1,4 @@
-# Recipes — copy-paste patterns by language
+﻿# Recipes — copy-paste patterns by language
 
 Every pattern in this file has been verified against the canonical syntax. They are starting points; tweak metavariable names and constraints to fit your case.
 
@@ -119,7 +119,7 @@ async def $FN($$$PARAMS)
 # Type hints — Optional[X]
 Optional[$T]
 
-# Type hints — X | None (PEP 604)
+# Type hints — X | None (PEP 60.)
 $T | None
 ```
 

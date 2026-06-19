@@ -1,4 +1,4 @@
-# omo-codex components → events → observable proof
+﻿# omo-codex components → events → observable proof
 
 The plugin's hook wiring lives in
 `packages/omo-codex/plugin/hooks/hooks.json`. Each hook runs
@@ -15,8 +15,8 @@ Use this table to pick what to assert. Two proof tiers:
 | Component | Codex events | Observable proof it fired |
 |---|---|---|
 | `rules` | SessionStart; UserPromptSubmit; PostToolUse `apply_patch`; PostCompact | `hookSpecificOutput.additionalContext` (rule body) on stdout; session cache at `$PLUGIN_DATA/sessions/<id>.json` |
-| `ultrawork` | UserPromptSubmit | stdout `additionalContext` contains `<ultrawork-mode>` **only** when prompt matches `/ultrawork|ulw/i`; empty otherwise |
-| `ulw-loop` | UserPromptSubmit; PreToolUse `create_goal` | steer JSON on a steer prompt; `permissionDecision:"deny"` when `create_goal` carries keys beyond `objective` |
+| `fullscan` | UserPromptSubmit | stdout `additionalContext` contains `<fullscan-mode>` **only** when prompt matches `/fullscan|ulw/i`; empty otherwise |
+| `pentest-loop` | UserPromptSubmit; PreToolUse `create_goal` | steer JSON on a steer prompt; `permissionDecision:"deny"` when `create_goal` carries keys beyond `objective` |
 | `comment-checker` | PostToolUse (write/edit/apply_patch) | warning text on stdout when an edited file has banned comments; empty when clean |
 | `lsp` | PostToolUse (write/edit/apply_patch); PostCompact | LSP diagnostics as `additionalContext` for mutated files |
 | `start-work-continuation` | Stop; SubagentStop | `{"decision":"block","reason":...}` **only** when a continuation/boulder state exists for the session |
@@ -30,7 +30,7 @@ For a stable always-fires assertion, prefer:
 - Live: `sessionStart` and `userPromptSubmit` `hook/completed` (several components
   wire them, so the events always fire). `app-server-drive.sh --plugin` defaults
   to `--expect sessionStart,userPromptSubmit`.
-- Unit: `ultrawork` on an `ulw` prompt deterministically injects `<ultrawork-mode>`.
+- Unit: `fullscan` on an `ulw` prompt deterministically injects `<fullscan-mode>`.
 
 `hook/*` notification eventNames are camelCase (`sessionStart`,
 `userPromptSubmit`, `postToolUse`, `stop`, …); the hooks.json matchers use

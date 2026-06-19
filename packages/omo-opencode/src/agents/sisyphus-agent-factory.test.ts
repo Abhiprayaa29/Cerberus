@@ -1,24 +1,24 @@
-import { describe, expect, test } from "bun:test";
-import { createSisyphusAgent } from "./sisyphus";
+﻿import { describe, expect, test } from "bun:test";
+import { createCerberusAgent } from "./cerberus";
 
 function permissionValue(
-  permission: ReturnType<typeof createSisyphusAgent>["permission"],
+  permission: ReturnType<typeof createCerberusAgent>["permission"],
   key: string,
 ): unknown {
   return Object.entries(permission ?? {}).find(([permissionKey]) => permissionKey === key)?.[1];
 }
 
-describe("createSisyphusAgent", () => {
-  describe("#given any Sisyphus model", () => {
+describe("createCerberusAgent", () => {
+  describe("#given any Cerberus model", () => {
     test("#when creating the agent #then exposes the primary facade contract", () => {
       // given
       const model = "anthropic/claude-sonnet-4-6";
 
       // when
-      const agent = createSisyphusAgent(model);
+      const agent = createCerberusAgent(model);
 
       // then
-      expect(createSisyphusAgent.mode).toBe("primary");
+      expect(createCerberusAgent.mode).toBe("primary");
       expect(agent.mode).toBe("primary");
       expect(agent.model).toBe(model);
       expect(agent.maxTokens).toBe(64000);
@@ -66,7 +66,7 @@ describe("createSisyphusAgent", () => {
 
       for (const { model, promptAnchors } of cases) {
         // when
-        const agent = createSisyphusAgent(model);
+        const agent = createCerberusAgent(model);
 
         // then
         for (const promptAnchor of promptAnchors) {
@@ -79,8 +79,8 @@ describe("createSisyphusAgent", () => {
   describe("#given Kimi K2.7 vs K2.6 models", () => {
     test("#when creating agents #then K2.7 routes to its own restrained variant, not the K2.6 prompt", () => {
       // given
-      const k27Agent = createSisyphusAgent("opencode-go/kimi-k2.7");
-      const k26Agent = createSisyphusAgent("opencode-go/kimi-k2.6");
+      const k27Agent = createCerberusAgent("opencode-go/kimi-k2.7");
+      const k26Agent = createCerberusAgent("opencode-go/kimi-k2.6");
 
       // then
       expect(k27Agent.prompt).toContain("running on Kimi K2.7");
@@ -90,14 +90,14 @@ describe("createSisyphusAgent", () => {
     });
   });
 
-  describe("#given GPT-family Sisyphus models", () => {
+  describe("#given GPT-family Cerberus models", () => {
     test("#when creating agents #then preserves reasoning and leaves apply_patch available", () => {
       // given
       const models = ["openai/gpt-5.5", "openai/gpt-5.4"];
 
       for (const model of models) {
         // when
-        const agent = createSisyphusAgent(model);
+        const agent = createCerberusAgent(model);
 
         // then
         expect(agent.reasoningEffort).toBe("medium");
@@ -107,13 +107,13 @@ describe("createSisyphusAgent", () => {
     });
   });
 
-  describe("#given Claude-family Sisyphus models", () => {
+  describe("#given Claude-family Cerberus models", () => {
     test("#when creating agents #then preserves current thinking config split", () => {
       // given
-      const opus47Agent = createSisyphusAgent("anthropic/claude-opus-4-7");
-      const opus48Agent = createSisyphusAgent("anthropic/claude-opus-4-8");
-      const fable5Agent = createSisyphusAgent("anthropic/claude-fable-5");
-      const sonnetAgent = createSisyphusAgent("anthropic/claude-sonnet-4-6");
+      const opus47Agent = createCerberusAgent("anthropic/claude-opus-4-7");
+      const opus48Agent = createCerberusAgent("anthropic/claude-opus-4-8");
+      const fable5Agent = createCerberusAgent("anthropic/claude-fable-5");
+      const sonnetAgent = createCerberusAgent("anthropic/claude-sonnet-4-6");
 
       // then
       expect(opus47Agent.thinking).toBeUndefined();
@@ -126,13 +126,13 @@ describe("createSisyphusAgent", () => {
     });
   });
 
-  describe("#given a GLM Sisyphus model", () => {
+  describe("#given a GLM Cerberus model", () => {
     test("#when creating the agent #then uses the GLM-native prompt with bare config", () => {
       // given
       const model = "zai/glm-5.2";
 
       // when
-      const agent = createSisyphusAgent(model);
+      const agent = createCerberusAgent(model);
 
       // then
       expect(agent.prompt).toContain("running on GLM 5.2");
@@ -148,7 +148,7 @@ describe("createSisyphusAgent", () => {
       const model = "google/gemini-3.1-pro";
 
       // when
-      const agent = createSisyphusAgent(model);
+      const agent = createCerberusAgent(model);
       const prompt = agent.prompt ?? "";
 
       // then

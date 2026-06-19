@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { describe, expect, test } from "bun:test"
 import { readFileSync } from "node:fs"
@@ -55,8 +55,8 @@ describe("release skill layering", () => {
     const missingReleaseSurfaces = files.flatMap((file) => {
       const text = normalizedText(file)
       return [
-        "oh-my-opencode",
-        "oh-my-openagent",
+        "oh-my-open-pentest",
+        "oh-my-open-pentest",
         "lazycodex-ai",
         "code-yeongyu/lazycodex",
       ]

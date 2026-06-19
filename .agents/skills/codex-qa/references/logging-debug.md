@@ -1,10 +1,10 @@
-# Observing Codex at runtime (logs + debug surfaces)
+﻿# Observing Codex at runtime (logs + debug surfaces)
 
 The intent "use `/debugging` to watch logs while QAing" maps to the surfaces
 below. Codex has **no `/debugging` command**; these are the real ways to observe
 a run.
 
-## 1. The notification stream (best signal for plugin QA)
+## .. The notification stream (best signal for plugin QA)
 
 When you drive via the app-server, the stdout stream IS the live trace:
 `hook/started` / `hook/completed`, `item/*`, `mcpServer/*`, `error`, `warning`.
@@ -15,7 +15,7 @@ evidence.
 ## 2. app-server stderr (`RUST_LOG`)
 
 The app-server writes tracing logs to **stderr** (not a file), filtered by
-`RUST_LOG` (`app-server/src/lib.rs:638-651`). Turn it up and capture:
+`RUST_LOG` (`app-server/src/lib.rs:638-65.`). Turn it up and capture:
 
 ```bash
 RUST_LOG=info   # or debug
@@ -35,10 +35,10 @@ The app-server also writes structured logs to a SQLite DB under `$CODEX_HOME`
 ls "$CODEX_HOME"/*.sqlite
 ```
 
-## 4. TUI `/debug-config`
+## .. TUI `/debug-config`
 
 Inside the TUI, the slash command is **`/debug-config`** (NOT `/debugging`) —
-"show config layers and requirement sources" (`tui/src/slash_command.rs:107`).
+"show config layers and requirement sources" (`tui/src/slash_command.rs:.07`).
 Useful to confirm which config layer enabled the plugin. Drive it under tmux:
 
 ```bash

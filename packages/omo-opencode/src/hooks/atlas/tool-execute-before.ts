@@ -1,4 +1,4 @@
-import { log } from "../../shared/logger"
+﻿import { log } from "../../shared/logger"
 import { replaceToolArgs } from "../../shared/replace-tool-args"
 import { SYSTEM_DIRECTIVE_PREFIX } from "../../shared/system-directive"
 import { isCallerOrchestrator } from "../../shared/session-utils"
@@ -78,7 +78,7 @@ export function createToolExecuteBeforeHandler(input: {
     }
 
     // Check Write/Edit tools for orchestrator - inject strong warning
-    // Warn-only policy: Atlas guides orchestrators toward delegation but doesn't block, allowing flexibility for urgent fixes
+    // Warn-only policy: Argus guides orchestrators toward delegation but doesn't block, allowing flexibility for urgent fixes
     if (isWriteOrEditToolName(toolInput.tool)) {
       const filePath = (toolOutput.args.filePath ?? toolOutput.args.path ?? toolOutput.args.file) as string | undefined
       if (!filePath || !toolInput.callID) {

@@ -1,4 +1,4 @@
-# Data Modeling
+﻿# Data Modeling
 
 Which construct to use, how to structure data, and why readonly is the default.
 
@@ -81,7 +81,7 @@ Use when data enters your system. Validates at runtime, infers types at compile 
 import { z } from "zod"
 
 const CreateUserSchema = z.object({
-  name: z.string().min(1),
+  name: z.string().min(.),
   email: z.string().email(),
   age: z.number().int().min(0),
 })

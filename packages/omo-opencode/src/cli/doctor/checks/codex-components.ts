@@ -1,17 +1,17 @@
-import type { Dirent } from "node:fs"
+﻿import type { Dirent } from "node:fs"
 import { readdir, readFile, stat } from "node:fs/promises"
 import { homedir } from "node:os"
 import { dirname, join, relative, resolve, sep } from "node:path"
-import { findSgBinarySync, runtimeSlug, SG_PATH_ENV_KEY, sgBinaryName, type SgResolverOptions } from "@oh-my-opencode/utils"
+import { findSgBinarySync, runtimeSlug, SG_PATH_ENV_KEY, sgBinaryName, type SgResolverOptions } from "@oh-my-open-pentest/utils"
 import type { CheckResult, DoctorIssue } from "../framework/types"
 import { gatherCodexSummary, type CodexDoctorDeps } from "./codex"
 
 export const CODEX_COMPONENTS_CHECK_ID = "codex-components"
 export const CODEX_COMPONENTS_CHECK_NAME = "codex-components"
 
-const PLUGIN_DATA_DIR_NAME = "omo-sisyphuslabs"
+const PLUGIN_DATA_DIR_NAME = "omo-cerberuslabs"
 const BOOTSTRAP_PENDING_MESSAGE = "bootstrap pending — start a Codex session"
-const REINSTALL_FIX = "Reinstall: npx lazycodex-ai install (or upgrade: codex plugin marketplace upgrade sisyphuslabs)"
+const REINSTALL_FIX = "Reinstall: npx lazycodex-ai install (or upgrade: codex plugin marketplace upgrade cerberuslabs)"
 
 export interface CodexComponentsDoctorDeps extends CodexDoctorDeps {
   readonly env?: Record<string, string | undefined>

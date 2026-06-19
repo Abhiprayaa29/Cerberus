@@ -1,7 +1,7 @@
-import { afterEach, beforeEach, describe, expect, it, mock } from "bun:test"
+﻿import { afterEach, beforeEach, describe, expect, it, mock } from "bun:test"
 import { readFileSync } from "node:fs"
 import { join } from "node:path"
-import { DEFAULT_POSTHOG_API_KEY as TELEMETRY_CORE_DEFAULT_POSTHOG_API_KEY } from "@oh-my-opencode/telemetry-core"
+import { DEFAULT_POSTHOG_API_KEY as TELEMETRY_CORE_DEFAULT_POSTHOG_API_KEY } from "@oh-my-open-pentest/telemetry-core"
 
 type CapturedPostHogMessage = {
   readonly distinctId: string
@@ -16,10 +16,10 @@ async function importPostHogModule(): Promise<PostHogModule> {
 }
 
 function clearTelemetryEnv(): void {
-  delete process.env.OMO_DISABLE_POSTHOG
-  delete process.env.OMO_SEND_ANONYMOUS_TELEMETRY
-  delete process.env.OMO_CODEX_DISABLE_POSTHOG
-  delete process.env.OMO_CODEX_SEND_ANONYMOUS_TELEMETRY
+  delete process.env.OMOP_DISABLE_POSTHOG
+  delete process.env.OMOP_SEND_ANONYMOUS_TELEMETRY
+  delete process.env.OMOP_CODEX_DISABLE_POSTHOG
+  delete process.env.OMOP_CODEX_SEND_ANONYMOUS_TELEMETRY
   delete process.env.POSTHOG_API_KEY
   delete process.env.POSTHOG_HOST
 }
@@ -42,14 +42,14 @@ function setMatrix(
   codexDisable: string | undefined,
   codexAnonymous: string | undefined,
 ): void {
-  if (globalDisable === undefined) delete process.env.OMO_DISABLE_POSTHOG
-  else process.env.OMO_DISABLE_POSTHOG = globalDisable
-  if (globalAnonymous === undefined) delete process.env.OMO_SEND_ANONYMOUS_TELEMETRY
-  else process.env.OMO_SEND_ANONYMOUS_TELEMETRY = globalAnonymous
-  if (codexDisable === undefined) delete process.env.OMO_CODEX_DISABLE_POSTHOG
-  else process.env.OMO_CODEX_DISABLE_POSTHOG = codexDisable
-  if (codexAnonymous === undefined) delete process.env.OMO_CODEX_SEND_ANONYMOUS_TELEMETRY
-  else process.env.OMO_CODEX_SEND_ANONYMOUS_TELEMETRY = codexAnonymous
+  if (globalDisable === undefined) delete process.env.OMOP_DISABLE_POSTHOG
+  else process.env.OMOP_DISABLE_POSTHOG = globalDisable
+  if (globalAnonymous === undefined) delete process.env.OMOP_SEND_ANONYMOUS_TELEMETRY
+  else process.env.OMOP_SEND_ANONYMOUS_TELEMETRY = globalAnonymous
+  if (codexDisable === undefined) delete process.env.OMOP_CODEX_DISABLE_POSTHOG
+  else process.env.OMOP_CODEX_DISABLE_POSTHOG = codexDisable
+  if (codexAnonymous === undefined) delete process.env.OMOP_CODEX_SEND_ANONYMOUS_TELEMETRY
+  else process.env.OMOP_CODEX_SEND_ANONYMOUS_TELEMETRY = codexAnonymous
 }
 
 describe("omo-codex posthog telemetry", () => {
@@ -63,7 +63,7 @@ describe("omo-codex posthog telemetry", () => {
     clearTelemetryEnv()
   })
 
-  it("matrix row 1 disabled when OMO_DISABLE_POSTHOG=1", async () => {
+  it("matrix row 1 disabled when OMOP_DISABLE_POSTHOG=1", async () => {
     // given
     const capturedMessages: CapturedPostHogMessage[] = []
     mockPostHogNode(capturedMessages)
@@ -79,7 +79,7 @@ describe("omo-codex posthog telemetry", () => {
     expect(capturedMessages).toHaveLength(0)
   })
 
-  it("matrix row 2 disabled when OMO_SEND_ANONYMOUS_TELEMETRY=0", async () => {
+  it("matrix row 2 disabled when OMOP_SEND_ANONYMOUS_TELEMETRY=0", async () => {
     // given
     const capturedMessages: CapturedPostHogMessage[] = []
     mockPostHogNode(capturedMessages)
@@ -95,7 +95,7 @@ describe("omo-codex posthog telemetry", () => {
     expect(capturedMessages).toHaveLength(0)
   })
 
-  it("matrix row 3 disabled when OMO_CODEX_DISABLE_POSTHOG=1", async () => {
+  it("matrix row 3 disabled when OMOP_CODEX_DISABLE_POSTHOG=1", async () => {
     // given
     const capturedMessages: CapturedPostHogMessage[] = []
     mockPostHogNode(capturedMessages)
@@ -111,7 +111,7 @@ describe("omo-codex posthog telemetry", () => {
     expect(capturedMessages).toHaveLength(0)
   })
 
-  it("matrix row 4 disabled when OMO_CODEX_SEND_ANONYMOUS_TELEMETRY=0", async () => {
+  it("matrix row 4 disabled when OMOP_CODEX_SEND_ANONYMOUS_TELEMETRY=0", async () => {
     // given
     const capturedMessages: CapturedPostHogMessage[] = []
     mockPostHogNode(capturedMessages)

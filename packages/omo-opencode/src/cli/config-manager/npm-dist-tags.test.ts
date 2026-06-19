@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { afterEach, describe, expect, mock, test } from "bun:test"
 
@@ -22,7 +22,7 @@ describe("fetchNpmDistTags", () => {
     ))
 
     //#when
-    const result = await fetchNpmDistTags("oh-my-openagent")
+    const result = await fetchNpmDistTags("oh-my-open-pentest")
 
     //#then
     expect(result).toEqual({ latest: "3.13.1", beta: "3.14.0-beta.1" })
@@ -33,7 +33,7 @@ describe("fetchNpmDistTags", () => {
     globalThis.fetch = unsafeTestValue<typeof fetch>(mock(() => Promise.reject(new Error("Network error"))))
 
     //#when
-    const result = await fetchNpmDistTags("oh-my-openagent")
+    const result = await fetchNpmDistTags("oh-my-open-pentest")
 
     //#then
     expect(result).toBeNull()
@@ -44,7 +44,7 @@ describe("fetchNpmDistTags", () => {
     globalThis.fetch = unsafeTestValue<typeof fetch>(mock(() => Promise.reject("Network error")))
 
     //#when
-    const result = await fetchNpmDistTags("oh-my-openagent").then(
+    const result = await fetchNpmDistTags("oh-my-open-pentest").then(
       () => "resolved",
       (error: unknown) => error,
     )
@@ -63,7 +63,7 @@ describe("fetchNpmDistTags", () => {
     ))
 
     //#when
-    const result = await fetchNpmDistTags("oh-my-openagent")
+    const result = await fetchNpmDistTags("oh-my-open-pentest")
 
     //#then
     expect(result).toBeNull()

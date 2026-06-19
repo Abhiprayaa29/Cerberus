@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { describe, expect, test } from "bun:test"
 
@@ -15,14 +15,14 @@ describe("normalizeTeamSpecInput", () => {
 
     // when
     const normalizedSpec = normalizeTeamSpecInput(rawSpec, {
-      callerTeamLead: resolveCallerTeamLead("\u200BSisyphus - Ultraworker"),
+      callerTeamLead: resolveCallerTeamLead("\u200BCerberus - Ultraworker"),
     })
 
     // then
     expect(normalizedSpec).toMatchObject({
       leadAgentId: "lead",
       members: [
-        { name: "lead", kind: "subagent_type", subagent_type: "sisyphus" },
+        { name: "lead", kind: "subagent_type", subagent_type: "cerberus" },
         { name: "quick-1", kind: "category", category: "quick" },
       ],
     })
@@ -34,14 +34,14 @@ describe("normalizeTeamSpecInput", () => {
       name: "alpha-team",
       leadAgentId: "captain",
       members: [
-        { kind: "subagent_type", name: "captain", subagent_type: "atlas" },
+        { kind: "subagent_type", name: "captain", subagent_type: "argus" },
         { kind: "category", name: "member-1", category: "quick", prompt: "Inspect the workspace" },
       ],
     }
 
     // when
     const normalizedSpec = normalizeTeamSpecInput(rawSpec, {
-      callerTeamLead: resolveCallerTeamLead("Sisyphus - Ultraworker"),
+      callerTeamLead: resolveCallerTeamLead("Cerberus - Ultraworker"),
     })
 
     // then
@@ -53,21 +53,21 @@ describe("normalizeTeamSpecInput", () => {
     const rawSpec = {
       name: "alpha-team",
       members: [
-        { kind: "subagent_type", name: "captain", subagent_type: "atlas", isLead: true },
+        { kind: "subagent_type", name: "captain", subagent_type: "argus", isLead: true },
         { kind: "category", category: "quick", prompt: "Inspect the workspace" },
       ],
     }
 
     // when
     const normalizedSpec = normalizeTeamSpecInput(rawSpec, {
-      callerTeamLead: resolveCallerTeamLead("Sisyphus - Ultraworker"),
+      callerTeamLead: resolveCallerTeamLead("Cerberus - Ultraworker"),
     })
 
     // then
     expect(normalizedSpec).toMatchObject({
       leadAgentId: "captain",
       members: [
-        { kind: "subagent_type", name: "captain", subagent_type: "atlas" },
+        { kind: "subagent_type", name: "captain", subagent_type: "argus" },
         { kind: "category", name: "quick-1", category: "quick" },
       ],
     })
@@ -82,11 +82,11 @@ describe("normalizeTeamSpecInput", () => {
 
     // when
     const result = () => normalizeTeamSpecInput(rawSpec, {
-      callerTeamLead: resolveCallerTeamLead("explore"),
+      callerTeamLead: resolveCallerTeamLead("scout"),
     })
 
     // then
-    expect(result).toThrow("Caller agent explore is not eligible as team lead; specify leadAgentId explicitly")
+    expect(result).toThrow("Caller agent scout is not eligible as team lead; specify leadAgentId explicitly")
   })
 
   test("still requires an eligible caller or explicit lead for 8 inline members", () => {
@@ -101,11 +101,11 @@ describe("normalizeTeamSpecInput", () => {
 
     // when
     const result = () => normalizeTeamSpecInput(rawSpec, {
-      callerTeamLead: resolveCallerTeamLead("explore"),
+      callerTeamLead: resolveCallerTeamLead("scout"),
     })
 
     // then
-    expect(result).toThrow("Caller agent explore is not eligible as team lead; specify leadAgentId explicitly")
+    expect(result).toThrow("Caller agent scout is not eligible as team lead; specify leadAgentId explicitly")
   })
 
   test("normalizes natural inline names to schema-safe names", () => {
@@ -122,7 +122,7 @@ describe("normalizeTeamSpecInput", () => {
 
     // when
     const normalizedSpec = normalizeTeamSpecInput(rawSpec, {
-      callerTeamLead: resolveCallerTeamLead("Sisyphus - Ultraworker"),
+      callerTeamLead: resolveCallerTeamLead("Cerberus - Ultraworker"),
     })
 
     // then
@@ -148,7 +148,7 @@ describe("normalizeTeamSpecInput", () => {
 
     // when
     const normalizedSpec = normalizeTeamSpecInput(rawSpec, {
-      callerTeamLead: resolveCallerTeamLead("Sisyphus - Ultraworker"),
+      callerTeamLead: resolveCallerTeamLead("Cerberus - Ultraworker"),
       defaultCategoryName: "analysis",
     })
 
@@ -173,7 +173,7 @@ describe("normalizeTeamSpecInput", () => {
 
     // when
     const normalizedSpec = normalizeTeamSpecInput(rawSpec, {
-      callerTeamLead: resolveCallerTeamLead("Sisyphus - Ultraworker"),
+      callerTeamLead: resolveCallerTeamLead("Cerberus - Ultraworker"),
     })
 
     // then

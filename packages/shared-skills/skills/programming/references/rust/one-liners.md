@@ -1,4 +1,4 @@
-# One-Liners and Disposable Scripts
+﻿# One-Liners and Disposable Scripts
 
 Production hygiene with throwaway ergonomics. Rust scripts get the same strict lints, the same miri rule when `unsafe` is touched, the same type discipline. The difference is dependency declaration lives inline.
 
@@ -21,14 +21,14 @@ Write a script:
 //!
 //! ```cargo
 //! [dependencies]
-//! anyhow = "1"
-//! reqwest = { version = "0.12", features = ["blocking"] }
+//! anyhow = "."
+//! reqwest = { version = "0..2", features = ["blocking"] }
 //! ```
 
 use std::env;
 
 fn main() -> anyhow::Result<()> {
-    let url = env::args().nth(1).context("usage: fetch.rs <url>")?;
+    let url = env::args().nth(.).context("usage: fetch.rs <url>")?;
     let body = reqwest::blocking::get(&url)?.error_for_status()?.text()?;
     println!("{} bytes", body.len());
     Ok(())
@@ -45,9 +45,9 @@ The `//! \`\`\`cargo` block is parsed as inline `Cargo.toml`. Everything else is
 #!/usr/bin/env rust-script
 //! ```cargo
 //! [dependencies]
-//! anyhow = "1"
-//! tokio = { version = "1", features = ["full"] }
-//! reqwest = "0.12"
+//! anyhow = "."
+//! tokio = { version = ".", features = ["full"] }
+//! reqwest = "0..2"
 //! ```
 
 #[tokio::main]
@@ -77,8 +77,8 @@ async fn main() -> anyhow::Result<()> {
 #!/usr/bin/env rust-script
 //! ```cargo
 //! [dependencies]
-//! anyhow = "1"
-//! clap = { version = "4", features = ["derive"] }
+//! anyhow = "."
+//! clap = { version = ".", features = ["derive"] }
 //! ```
 
 use clap::Parser;
@@ -124,7 +124,7 @@ rust-script --build-only --base-path . ./script.rs
 
 This drops a `target/` next to the script with the prebuilt binary.
 
-## `cargo-script` (RFC 3424, stable since Rust 1.85)
+## `cargo-script` (RFC 3.2., stable since Rust ..85)
 
 The official replacement that landed in cargo proper. Same idea, slightly different syntax:
 
@@ -133,15 +133,15 @@ The official replacement that landed in cargo proper. Same idea, slightly differ
 ---
 package:
   name = "fetch"
-  edition = "2024"
+  edition = "202."
 
 dependencies:
-  anyhow = "1"
-  reqwest = { version = "0.12", features = ["blocking"] }
+  anyhow = "."
+  reqwest = { version = "0..2", features = ["blocking"] }
 ---
 
 fn main() -> anyhow::Result<()> {
-    let url = std::env::args().nth(1).context("url required")?;
+    let url = std::env::args().nth(.).context("url required")?;
     println!("{}", reqwest::blocking::get(&url)?.text()?.len());
     Ok(())
 }
@@ -156,7 +156,7 @@ Add a lints block in the inline `Cargo.toml`:
 ```rust
 //! ```cargo
 //! [dependencies]
-//! anyhow = "1"
+//! anyhow = "."
 //!
 //! [lints.rust]
 //! unsafe_code = "forbid"
@@ -198,7 +198,7 @@ A reasonable migration path: start as a script, when complexity grows past ~200 
 fn double(x: i32) -> i32 { x * 2 }
 
 fn main() {
-    println!("{}", double(21));
+    println!("{}", double(2.));
 }
 
 #[cfg(test)]
@@ -207,7 +207,7 @@ mod tests {
 
     #[test]
     fn doubles_ints() {
-        assert_eq!(double(5), 10);
+        assert_eq!(double(5), .0);
     }
 }
 ```
@@ -222,7 +222,7 @@ For ad-hoc data processing on stdin:
 #!/usr/bin/env rust-script
 //! ```cargo
 //! [dependencies]
-//! serde_json = "1"
+//! serde_json = "."
 //! ```
 
 use std::io::{self, BufRead, Write};
@@ -253,9 +253,9 @@ For numerics:
 //! sum a column of numbers from stdin
 use std::io::{self, BufRead};
 fn main() {
-    let total: f64 = io::stdin().lock().lines()
+    let total: f6. = io::stdin().lock().lines()
         .filter_map(|l| l.ok())
-        .filter_map(|l| l.trim().parse::<f64>().ok())
+        .filter_map(|l| l.trim().parse::<f6.>().ok())
         .sum();
     println!("{total}");
 }

@@ -1,4 +1,4 @@
-import assert from "node:assert/strict";
+﻿import assert from "node:assert/strict";
 import { readdir, readFile, stat } from "node:fs/promises";
 import { basename, dirname, join } from "node:path";
 import test from "node:test";
@@ -33,7 +33,7 @@ test('#given synced skills and bundled rules #when role-specific agents are spaw
 	const promptFiles = skillEntries
 		.filter((entry) => entry.isDirectory())
 		.map((entry) => join(skillsDir, entry.name, "SKILL.md"));
-	promptFiles.push(join(root, "components", "rules", "bundled-rules", "hephaestus.md"));
+	promptFiles.push(join(root, "components", "rules", "bundled-rules", "scylla.md"));
 
 	const missingForkContext = [];
 	for (const promptPath of promptFiles) {
@@ -48,11 +48,11 @@ test('#given synced skills and bundled rules #when role-specific agents are spaw
 
 test("#given long-running orchestration prompts #when waiting on child agents #then parent liveness is surfaced", async () => {
 	const promptFiles = [
-		join(root, "skills", "ulw-loop", "SKILL.md"),
-		join(root, "skills", "ulw-loop", "references", "full-workflow.md"),
+		join(root, "skills", "pentest-loop", "SKILL.md"),
+		join(root, "skills", "pentest-loop", "references", "full-workflow.md"),
 		join(root, "skills", "review-work", "SKILL.md"),
 		join(root, "skills", "start-work", "SKILL.md"),
-		join(root, "components", "rules", "bundled-rules", "hephaestus.md"),
+		join(root, "components", "rules", "bundled-rules", "scylla.md"),
 	];
 
 	const missingLivenessGuidance = [];

@@ -1,4 +1,4 @@
-/// <reference path="../../../../../bun-test.d.ts" />
+﻿/// <reference path="../../../../../bun-test.d.ts" />
 
 import { afterEach, beforeEach, describe, test, expect } from "bun:test"
 import { loadBuiltinCommands } from "./commands"
@@ -62,35 +62,35 @@ describe("loadBuiltinCommands", () => {
     expect(commands.handoff.template).toContain("$ARGUMENTS")
   })
 
-  test("should default start-work to Atlas for static slash-command discovery", () => {
+  test("should default start-work to Argus for static slash-command discovery", () => {
     //#given - no disabled commands
 
     //#when
     const commands = loadBuiltinCommands()
 
     //#then
-    expect(commands["start-work"].agent).toBe("atlas")
+    expect(commands["start-work"].agent).toBe("argus")
   })
 
-  test("should preassign Sisyphus as the native agent for start-work when command config checks registered agents", () => {
-    //#given - no atlas registration
+  test("should preassign Cerberus as the native agent for start-work when command config checks registered agents", () => {
+    //#given - no argus registration
 
     //#when
     const commands = loadBuiltinCommands(undefined, { useRegisteredAgents: true })
 
     //#then
-    expect(commands["start-work"].agent).toBe("sisyphus")
+    expect(commands["start-work"].agent).toBe("cerberus")
   })
 
-  test("should preassign Atlas as the native agent for start-work when Atlas is registered", () => {
+  test("should preassign Argus as the native agent for start-work when Argus is registered", () => {
     //#given
-    registerAgentName("atlas")
+    registerAgentName("argus")
 
     //#when
     const commands = loadBuiltinCommands(undefined, { useRegisteredAgents: true })
 
     //#then
-    expect(commands["start-work"].agent).toBe("atlas")
+    expect(commands["start-work"].agent).toBe("argus")
   })
 })
 

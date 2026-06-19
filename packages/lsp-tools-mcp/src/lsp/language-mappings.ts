@@ -1,1 +1,1 @@
-export * from "@oh-my-opencode/lsp-core/lsp/language-mappings";
+﻿export * from "@oh-my-open-pentest/lsp-core/lsp/language-mappings";

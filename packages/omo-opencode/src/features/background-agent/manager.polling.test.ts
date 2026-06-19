@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { describe, test, expect, mock } from "bun:test"
 import { tmpdir } from "node:os"
@@ -81,7 +81,7 @@ function createRunningTask(sessionId: string): BackgroundTask {
     parentMessageId: "parent-msg",
     description: "test task",
     prompt: "test",
-    agent: "explore",
+    agent: "scout",
     status: "running",
     startedAt: new Date(),
     progress: { toolCalls: 0, lastUpdate: new Date() },
@@ -355,7 +355,7 @@ describe("BackgroundManager pollRunningTasks", () => {
           todoCallCount += 1
           return {
             data: [
-              { content: "compile result", status: "completed", priority: "high" },
+              { content: "scan result", status: "completed", priority: "high" },
             ],
           }
         },
@@ -372,7 +372,7 @@ describe("BackgroundManager pollRunningTasks", () => {
         properties: {
           sessionID: "ses-idle-stale-todos",
           todos: [
-            { content: "compile result", status: "in_progress", priority: "high" },
+            { content: "scan result", status: "in_progress", priority: "high" },
           ],
         },
       })

@@ -1,29 +1,29 @@
-import { describe, test, expect } from "bun:test"
+﻿import { describe, test, expect } from "bun:test"
 import { buildPlanDemoteConfig } from "./plan-model-inheritance"
 
 describe("buildPlanDemoteConfig", () => {
-  test("returns only mode when prometheus and plan override are both undefined", () => {
+  test("returns only mode when talos and plan override are both undefined", () => {
     //#given
-    const prometheusConfig = undefined
+    const talosConfig = undefined
     const planOverride = undefined
 
     //#when
-    const result = buildPlanDemoteConfig(prometheusConfig, planOverride)
+    const result = buildPlanDemoteConfig(talosConfig, planOverride)
 
     //#then
     expect(result).toEqual({ mode: "subagent", hidden: true })
   })
 
-  test("extracts all model settings from prometheus config", () => {
+  test("extracts all model settings from talos config", () => {
     //#given
-    const prometheusConfig = {
-      name: "prometheus",
+    const talosConfig = {
+      name: "talos",
       model: "anthropic/claude-opus-4-7",
       variant: "max",
       mode: "primary",
-      prompt: "You are Prometheus...",
+      prompt: "You are Talos...",
       permission: { edit: "allow" },
-      description: "Plan agent (Prometheus)",
+      description: "Plan agent (Talos)",
       color: "#FF5722",
       temperature: 0.1,
       top_p: 0.95,
@@ -35,7 +35,7 @@ describe("buildPlanDemoteConfig", () => {
     }
 
     //#when
-    const result = buildPlanDemoteConfig(prometheusConfig, undefined)
+    const result = buildPlanDemoteConfig(talosConfig, undefined)
 
     //#then - picks model settings, NOT prompt/permission/description/color/name/mode
     expect(result.mode).toBe("subagent")
@@ -55,9 +55,9 @@ describe("buildPlanDemoteConfig", () => {
     expect(result.name).toBeUndefined()
   })
 
-  test("plan override takes priority over prometheus for all model settings", () => {
+  test("plan override takes priority over talos for all model settings", () => {
     //#given
-    const prometheusConfig = {
+    const talosConfig = {
       model: "anthropic/claude-opus-4-7",
       variant: "max",
       temperature: 0.1,
@@ -71,7 +71,7 @@ describe("buildPlanDemoteConfig", () => {
     }
 
     //#when
-    const result = buildPlanDemoteConfig(prometheusConfig, planOverride)
+    const result = buildPlanDemoteConfig(talosConfig, planOverride)
 
     //#then
     expect(result.model).toBe("openai/gpt-5.4")
@@ -80,9 +80,9 @@ describe("buildPlanDemoteConfig", () => {
     expect(result.reasoningEffort).toBe("low")
   })
 
-  test("falls back to prometheus when plan override has partial settings", () => {
+  test("falls back to talos when plan override has partial settings", () => {
     //#given
-    const prometheusConfig = {
+    const talosConfig = {
       model: "anthropic/claude-opus-4-7",
       variant: "max",
       temperature: 0.1,
@@ -93,9 +93,9 @@ describe("buildPlanDemoteConfig", () => {
     }
 
     //#when
-    const result = buildPlanDemoteConfig(prometheusConfig, planOverride)
+    const result = buildPlanDemoteConfig(talosConfig, planOverride)
 
-    //#then - plan model wins, rest inherits from prometheus
+    //#then - plan model wins, rest inherits from talos
     expect(result.model).toBe("openai/gpt-5.4")
     expect(result.variant).toBe("max")
     expect(result.temperature).toBe(0.1)
@@ -104,12 +104,12 @@ describe("buildPlanDemoteConfig", () => {
 
   test("skips undefined values from both sources", () => {
     //#given
-    const prometheusConfig = {
+    const talosConfig = {
       model: "anthropic/claude-opus-4-7",
     }
 
     //#when
-    const result = buildPlanDemoteConfig(prometheusConfig, undefined)
+    const result = buildPlanDemoteConfig(talosConfig, undefined)
 
     //#then
     expect(result).toEqual({ mode: "subagent", hidden: true, model: "anthropic/claude-opus-4-7" })

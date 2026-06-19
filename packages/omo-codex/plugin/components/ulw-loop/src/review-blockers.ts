@@ -1,4 +1,4 @@
-// biome-ignore-all format: compact port must stay within the requested pure LOC budget.
+﻿// biome-ignore-all format: compact port must stay within the requested pure LOC budget.
 
 import { readCodexGoalSnapshotInput, reconcileCodexGoalSnapshot } from "./codex-goal-snapshot.js";
 import { codexGoalMode, compatibleCodexObjectives, expectedCodexObjective, isFinalRunCompletionCandidate } from "./goal-status.js";
@@ -49,14 +49,14 @@ export async function recordFinalReviewBlockers(
 	return withUlwLoopMutationLock(repoRoot, scope, async () => {
 		const plan = await readUlwLoopPlan(repoRoot, scope);
 		const goal = plan.goals.find((candidate) => candidate.id === args.goalId);
-		if (goal === undefined) ulwLoopError(`Unknown ulw-loop id: ${args.goalId}`, "ulw_loop_goal_not_found");
-		if (goal.status !== "in_progress") ulwLoopError(`${goal.id} is ${goal.status}.`, "ulw_loop_goal_not_in_progress");
-		if (!isFinalRunCompletionCandidate(plan, goal)) ulwLoopError(`${goal.id} is not final.`, "ulw_loop_not_final_story");
+		if (goal === undefined) ulwLoopError(`Unknown pentest-loop id: ${args.goalId}`, "pentest_loop_goal_not_found");
+		if (goal.status !== "in_progress") ulwLoopError(`${goal.id} is ${goal.status}.`, "pentest_loop_goal_not_in_progress");
+		if (!isFinalRunCompletionCandidate(plan, goal)) ulwLoopError(`${goal.id} is not final.`, "pentest_loop_not_final_story");
 
 		const snapshot = await readCodexGoalSnapshotInput(args.codexGoalJson, repoRoot);
 		const aggregate = codexGoalMode(plan) === "aggregate";
 		const reconciliation = reconcileCodexGoalSnapshot(snapshot, { expectedObjective: expectedCodexObjective(plan, goal), ...(aggregate ? { acceptedObjectives: compatibleCodexObjectives(plan) } : {}), allowedStatuses: ["active"], requireSnapshot: true, requireComplete: false });
-		if (!reconciliation.ok) ulwLoopError(reconciliation.errors.join(" "), "ulw_loop_codex_snapshot_mismatch");
+		if (!reconciliation.ok) ulwLoopError(reconciliation.errors.join(" "), "pentest_loop_codex_snapshot_mismatch");
 
 		const now = iso();
 		for (const field of BLOCKER_FIELDS) Reflect.deleteProperty(goal, field);

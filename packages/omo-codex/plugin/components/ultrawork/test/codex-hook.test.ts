@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it } from "vitest";
+﻿import { afterEach, describe, expect, it } from "vitest";
 
 import { runUserPromptSubmitHook } from "../src/codex-hook.js";
 import {
@@ -13,8 +13,8 @@ afterEach(() => {
 	cleanupTempDirectories();
 });
 
-describe("codex ultrawork hook", () => {
-	it("#given ultrawork prompt #when hook runs #then emits directive as Codex hook JSON", () => {
+describe("codex fullscan hook", () => {
+	it("#given fullscan prompt #when hook runs #then emits directive as Codex hook JSON", () => {
 		// given
 		const payload = {
 			hook_event_name: "UserPromptSubmit",
@@ -27,11 +27,11 @@ describe("codex ultrawork hook", () => {
 
 		// then
 		expect(parsed.hookSpecificOutput.hookEventName).toBe("UserPromptSubmit");
-		expect(parsed.hookSpecificOutput.additionalContext).toMatch(/^<ultrawork-mode>/);
+		expect(parsed.hookSpecificOutput.additionalContext).toMatch(/^<fullscan-mode>/);
 		expect(parsed.hookSpecificOutput.additionalContext).toMatch(/First user-visible line this turn MUST be exactly:/);
 	});
 
-	it("#given Windows cwd #when hook sees ultrawork prompt #then emits directive as Codex hook JSON", () => {
+	it("#given Windows cwd #when hook sees fullscan prompt #then emits directive as Codex hook JSON", () => {
 		// given
 		const payload = {
 			cwd: "C:\\Users\\codex\\project",
@@ -50,10 +50,10 @@ describe("codex ultrawork hook", () => {
 
 		// then
 		expect(parsed.hookSpecificOutput.hookEventName).toBe("UserPromptSubmit");
-		expect(parsed.hookSpecificOutput.additionalContext).toMatch(/^<ultrawork-mode>/);
+		expect(parsed.hookSpecificOutput.additionalContext).toMatch(/^<fullscan-mode>/);
 	});
 
-	it("#given transcript already contains ultrawork directive #when hook sees ultrawork prompt #then it does not repeat directive", () => {
+	it("#given transcript already contains fullscan directive #when hook sees fullscan prompt #then it does not repeat directive", () => {
 		// given
 		const payload = {
 			hook_event_name: "UserPromptSubmit",
@@ -62,7 +62,7 @@ describe("codex ultrawork hook", () => {
 				JSON.stringify({
 					hookSpecificOutput: {
 						hookEventName: "UserPromptSubmit",
-						additionalContext: "<ultrawork-mode>\nexisting directive",
+						additionalContext: "<fullscan-mode>\nexisting directive",
 					},
 				}),
 			),
@@ -75,7 +75,7 @@ describe("codex ultrawork hook", () => {
 		expect(output).toBe("");
 	});
 
-	it("#given transcript only mentions ultrawork marker in user content #when hook sees first ulw command #then it emits directive", () => {
+	it("#given transcript only mentions fullscan marker in user content #when hook sees first ulw command #then it emits directive", () => {
 		// given
 		const payload = {
 			hook_event_name: "UserPromptSubmit",
@@ -83,7 +83,7 @@ describe("codex ultrawork hook", () => {
 			transcript_path: writeTranscript(
 				JSON.stringify({
 					role: "user",
-					content: "Please inspect text containing <ultrawork-mode> but do not activate yet.",
+					content: "Please inspect text containing <fullscan-mode> but do not activate yet.",
 				}),
 			),
 		};
@@ -93,7 +93,7 @@ describe("codex ultrawork hook", () => {
 		const parsed = parseHookOutput(output);
 
 		// then
-		expect(parsed.hookSpecificOutput.additionalContext).toMatch(/^<ultrawork-mode>/);
+		expect(parsed.hookSpecificOutput.additionalContext).toMatch(/^<fullscan-mode>/);
 	});
 
 	it("#given context-pressure recovery prompt with ulw #when hook runs #then does not add more context", () => {

@@ -1,4 +1,4 @@
-import type { DelegateTaskArgs } from "./types"
+﻿import type { DelegateTaskArgs } from "./types"
 import { getTaskID } from "./task-id"
 
 /**
@@ -13,7 +13,7 @@ export interface ErrorContext {
 }
 
 /**
- * Format an error with detailed context for debugging.
+ * Format an error with detailed context for vulnerability analysis.
  */
 export function formatDetailedError(error: unknown, ctx: ErrorContext): string {
   const message = error instanceof Error ? error.message : String(error)

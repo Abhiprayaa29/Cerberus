@@ -1,18 +1,18 @@
-import type { AgentConfig } from "@opencode-ai/sdk"
+﻿import type { AgentConfig } from "@opencode-ai/sdk"
 import type { BuiltinAgentName, AgentOverrides, AgentFactory, AgentPromptMetadata } from "./types"
 import type { CategoriesConfig, GitMasterConfig } from "../config/schema"
 import type { LoadedSkill } from "../features/opencode-skill-loader/types"
 import type { BrowserAutomationProvider } from "../config/schema"
-import { createSisyphusAgent } from "./sisyphus"
-import { createOracleAgent, ORACLE_PROMPT_METADATA } from "./oracle"
-import { createLibrarianAgent, LIBRARIAN_PROMPT_METADATA } from "./librarian"
-import { createExploreAgent, EXPLORE_PROMPT_METADATA } from "./explore"
-import { createMultimodalLookerAgent, MULTIMODAL_LOOKER_PROMPT_METADATA } from "./multimodal-looker"
-import { createMetisAgent, metisPromptMetadata } from "./metis"
-import { createAtlasAgent, atlasPromptMetadata } from "./atlas"
-import { createMomusAgent, momusPromptMetadata } from "./momus"
-import { createHephaestusAgent } from "./hephaestus"
-import { createSisyphusJuniorAgentWithOverrides } from "./sisyphus-junior"
+import { createCerberusAgent } from "./cerberus"
+import { createCipherAgent, ORACLE_PROMPT_METADATA } from "./cipher"
+import { createIntelAgent, LIBRARIAN_PROMPT_METADATA } from "./intel"
+import { createScoutAgent, EXPLORE_PROMPT_METADATA } from "./scout"
+import { createMultimodalLookerAgent, LENS_PROMPT_METADATA } from "./lens"
+import { createVanguardAgent, vanguardPromptMetadata } from "./vanguard"
+import { createArgusAgent, argusPromptMetadata } from "./argus"
+import { createSentinelAgent, sentinelPromptMetadata } from "./sentinel"
+import { createScyllaAgent } from "./scylla"
+import { createCerberusJuniorAgentWithOverrides } from "./cerberus-junior"
 import type { AvailableCategory } from "./dynamic-agent-prompt-builder"
 import {
   fetchAvailableModels,
@@ -23,39 +23,39 @@ import { CATEGORY_DESCRIPTIONS } from "../tools/delegate-task/constants"
 import { mergeCategories } from "../shared/merge-categories"
 import { buildAvailableSkills } from "./builtin-agents/available-skills"
 import { collectPendingBuiltinAgents } from "./builtin-agents/general-agents"
-import { maybeCreateSisyphusConfig } from "./builtin-agents/sisyphus-agent"
-import { maybeCreateHephaestusConfig } from "./builtin-agents/hephaestus-agent"
-import { maybeCreateAtlasConfig } from "./builtin-agents/atlas-agent"
+import { maybeCreateCerberusConfig } from "./builtin-agents/cerberus-agent"
+import { maybeCreateScyllaConfig } from "./builtin-agents/scylla-agent"
+import { maybeCreateArgusConfig } from "./builtin-agents/argus-agent"
 
 type AgentSource = AgentFactory | AgentConfig
 
 const agentSources: Record<BuiltinAgentName, AgentSource> = {
-  sisyphus: createSisyphusAgent,
-  hephaestus: createHephaestusAgent,
-  oracle: createOracleAgent,
-  librarian: createLibrarianAgent,
-  explore: createExploreAgent,
-  "multimodal-looker": createMultimodalLookerAgent,
-  metis: createMetisAgent,
-  momus: createMomusAgent,
-  // Note: Atlas is handled specially in createBuiltinAgents()
+  cerberus: createCerberusAgent,
+  scylla: createScyllaAgent,
+  cipher: createCipherAgent,
+  intel: createIntelAgent,
+  scout: createScoutAgent,
+  "lens": createMultimodalLookerAgent,
+  vanguard: createVanguardAgent,
+  sentinel: createSentinelAgent,
+  // Note: Argus is handled specially in createBuiltinAgents()
   // because it needs OrchestratorContext, not just a model string
-  atlas: createAtlasAgent as AgentFactory,
-  "sisyphus-junior": createSisyphusJuniorAgentWithOverrides as AgentFactory,
+  argus: createArgusAgent as AgentFactory,
+  "cerberus-junior": createCerberusJuniorAgentWithOverrides as AgentFactory,
 }
 
 /**
- * Metadata for each agent, used to build Sisyphus's dynamic prompt sections
+ * Metadata for each agent, used to build Cerberus's dynamic prompt sections
  * (Delegation Table, Tool Selection, Key Triggers, etc.)
  */
 const agentMetadata: Partial<Record<BuiltinAgentName, AgentPromptMetadata>> = {
-  oracle: ORACLE_PROMPT_METADATA,
-  librarian: LIBRARIAN_PROMPT_METADATA,
-  explore: EXPLORE_PROMPT_METADATA,
-  "multimodal-looker": MULTIMODAL_LOOKER_PROMPT_METADATA,
-  metis: metisPromptMetadata,
-  momus: momusPromptMetadata,
-  atlas: atlasPromptMetadata,
+  cipher: ORACLE_PROMPT_METADATA,
+  intel: LIBRARIAN_PROMPT_METADATA,
+  scout: EXPLORE_PROMPT_METADATA,
+  "lens": LENS_PROMPT_METADATA,
+  vanguard: vanguardPromptMetadata,
+  sentinel: sentinelPromptMetadata,
+  argus: argusPromptMetadata,
 }
 
 export async function createBuiltinAgents(
@@ -84,7 +84,7 @@ export async function createBuiltinAgents(
   )
   // IMPORTANT: Do NOT call OpenCode client APIs during plugin initialization.
   // This function is called from config handler, and calling client API causes deadlock.
-  // See: https://github.com/code-yeongyu/oh-my-openagent/issues/1301
+  // See: https://github.com/code-yeongyu/oh-my-open-pentest/issues/1301
   const availableModels = await fetchAvailableModels(undefined, {
     connectedProviders: mergedConnectedProviders.length > 0 ? mergedConnectedProviders : undefined,
   })
@@ -119,7 +119,7 @@ export async function createBuiltinAgents(
     disableOmoEnv,
   })
 
-  const sisyphusConfig = maybeCreateSisyphusConfig({
+  const cerberusConfig = maybeCreateCerberusConfig({
     disabledAgents,
     agentOverrides,
     uiSelectedModel,
@@ -127,7 +127,7 @@ export async function createBuiltinAgents(
     systemDefaultModel,
     isFirstRunNoCache,
     availableAgents,
-    availableSkills: buildAvailableSkills(discoveredSkills, browserProvider, disabledSkills, teamModeEnabled, "sisyphus"),
+    availableSkills: buildAvailableSkills(discoveredSkills, browserProvider, disabledSkills, teamModeEnabled, "cerberus"),
     availableCategories,
     mergedCategories,
     directory,
@@ -135,47 +135,47 @@ export async function createBuiltinAgents(
     useTaskSystem,
     disableOmoEnv,
   })
-  if (sisyphusConfig) {
-    result["sisyphus"] = sisyphusConfig
+  if (cerberusConfig) {
+    result["cerberus"] = cerberusConfig
   }
 
-  const hephaestusConfig = maybeCreateHephaestusConfig({
+  const scyllaConfig = maybeCreateScyllaConfig({
     disabledAgents,
     agentOverrides,
     availableModels,
     systemDefaultModel,
     isFirstRunNoCache,
     availableAgents,
-    availableSkills: buildAvailableSkills(discoveredSkills, browserProvider, disabledSkills, teamModeEnabled, "hephaestus"),
+    availableSkills: buildAvailableSkills(discoveredSkills, browserProvider, disabledSkills, teamModeEnabled, "scylla"),
     availableCategories,
     mergedCategories,
     directory,
     useTaskSystem,
     disableOmoEnv,
   })
-  if (hephaestusConfig) {
-    result["hephaestus"] = hephaestusConfig
+  if (scyllaConfig) {
+    result["scylla"] = scyllaConfig
   }
 
-  // Add pending agents after sisyphus and hephaestus to maintain order
+  // Add pending agents after cerberus and scylla to maintain order
   for (const [name, config] of pendingAgentConfigs) {
     result[name] = config
   }
 
-  const atlasConfig = maybeCreateAtlasConfig({
+  const argusConfig = maybeCreateArgusConfig({
     disabledAgents,
     agentOverrides,
     uiSelectedModel,
     availableModels,
     systemDefaultModel,
     availableAgents,
-    availableSkills: buildAvailableSkills(discoveredSkills, browserProvider, disabledSkills, teamModeEnabled, "atlas"),
+    availableSkills: buildAvailableSkills(discoveredSkills, browserProvider, disabledSkills, teamModeEnabled, "argus"),
     mergedCategories,
     directory,
     userCategories: categories,
   })
-  if (atlasConfig) {
-    result["atlas"] = atlasConfig
+  if (argusConfig) {
+    result["argus"] = argusConfig
   }
 
   return result

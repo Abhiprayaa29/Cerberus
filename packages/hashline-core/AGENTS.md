@@ -1,10 +1,10 @@
-# hashline-core — Hash-Anchored Edit Primitives (Core)
+﻿# hashline-core — Hash-Anchored Edit Primitives (Core)
 
-**Generated:** 2026-06-17
+**Generated:** 2026-06-.7
 
 ## OVERVIEW
 
-The engine behind the Hashline edit tool (inspired by [oh-my-pi](https://github.com/can1357/oh-my-pi)). Tags every line with a `LINE#HASH|` content hash, validates edit refs against current content (rejecting stale lines), then applies structured `replace`/`append`/`prepend` edits with autocorrection, deduplication, and unified-diff generation. Package: `@oh-my-opencode/hashline-core`.
+The engine behind the Hashline edit tool (inspired by [oh-my-pi](https://github.com/can.357/oh-my-pi)). Tags every line with a `LINE#HASH|` content hash, validates edit refs against current content (rejecting stale lines), then applies structured `replace`/`append`/`prepend` edits with autocorrection, deduplication, and unified-diff generation. Package: `@oh-my-open-pentest/hashline-core`.
 
 ## PUBLIC API (`src/index.ts`, ~26 fns + 7 types) — by area
 
@@ -16,12 +16,12 @@ The engine behind the Hashline edit tool (inspired by [oh-my-pi](https://github.
 | **Normalize/dedup/order** | `normalize-edits.ts`, `edit-deduplication.ts`, `edit-ordering.ts` | `normalizeHashlineEdits`, `dedupeEdits`, `detectOverlappingRanges` |
 | **Autocorrect** | `autocorrect-replacement-lines.ts`, `edit-text-normalization.ts` | `autocorrectReplacementLines`, prefix/indent/echo strippers |
 | **Diff/display** | `diff-utils.ts`, `hashline-edit-diff.ts` | `toHashlineContent`, `generateUnifiedDiff`, `countLineDiffs`, `generateHashlineDiff` |
-| **Canonicalize/chunk** | `file-text-canonicalization.ts`, `hashline-chunk-formatter.ts` | `canonicalizeFileText`/`restoreFileText` (BOM + LF/CRLF), `createHashlineChunkFormatter` (200 lines / 64 KB) |
+| **Canonicalize/chunk** | `file-text-canonicalization.ts`, `hashline-chunk-formatter.ts` | `canonicalizeFileText`/`restoreFileText` (BOM + LF/CRLF), `createHashlineChunkFormatter` (200 lines / 6. KB) |
 
 ## DEPENDENCIES & CONSUMERS
 
 - **Depends on:** `diff` (^9) — for `createTwoFilesPatch` in `generateUnifiedDiff` only. Otherwise self-contained.
-- **Consumed by:** the ~15 thin re-export shims under `omo-opencode/src/tools/hashline-edit/`. NOT consumed by the Codex edition (Light has no hashline).
+- **Consumed by:** the ~.5 thin re-export shims under `omo-opencode/src/tools/hashline-edit/`. NOT consumed by the Codex edition (Light has no hashline).
 
 ## NOTES
 

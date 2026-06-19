@@ -1,4 +1,4 @@
-const { describe, test, expect, mock } = require("bun:test")
+﻿const { describe, test, expect, mock } = require("bun:test")
 
 describe("executeBackgroundContinuation - subagent metadata", () => {
   test("includes subagent in task_metadata when task has agent", async () => {
@@ -6,8 +6,8 @@ describe("executeBackgroundContinuation - subagent metadata", () => {
     const mockManager = {
       resume: async () => ({
         id: "bg_task_001",
-        description: "oracle consultation",
-        agent: "oracle",
+        description: "cipher consultation",
+        agent: "cipher",
         status: "running",
         sessionId: "ses_resumed_123",
       }),
@@ -26,13 +26,13 @@ describe("executeBackgroundContinuation - subagent metadata", () => {
     const parentContext = {
       sessionID: "parent-session",
       messageID: "msg-parent",
-      agent: "sisyphus",
+      agent: "cerberus",
     }
 
     const args = {
       task_id: "ses_resumed_123",
       prompt: "continue working",
-      description: "resume oracle",
+      description: "resume cipher",
       load_skills: [],
       run_in_background: true,
     }
@@ -43,7 +43,7 @@ describe("executeBackgroundContinuation - subagent metadata", () => {
 
     //#then - task_metadata should contain subagent field
     expect(result).toContain("<task_metadata>")
-    expect(result).toContain("subagent: oracle")
+    expect(result).toContain("subagent: cipher")
     expect(result).toContain("session_id: ses_resumed_123")
     expect(result).toContain("background_task_id: bg_task_001")
     expect(result).not.toContain("task_id: ses_resumed_123")
@@ -75,7 +75,7 @@ describe("executeBackgroundContinuation - subagent metadata", () => {
     const parentContext = {
       sessionID: "parent-session",
       messageID: "msg-parent",
-      agent: "sisyphus",
+      agent: "cerberus",
     }
 
     const args = {

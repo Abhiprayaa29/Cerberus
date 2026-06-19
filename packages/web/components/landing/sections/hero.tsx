@@ -1,4 +1,4 @@
-import type { JSX } from "react"
+﻿import type { JSX } from "react"
 import { getTranslations } from "next-intl/server"
 import { getStats, formatStats } from "@/lib/stats"
 import { HeroStats } from "@/components/landing/hero-stats"
@@ -81,7 +81,7 @@ export async function HeroSection(): Promise<JSX.Element> {
             </Button>
           </Link>
           <Link
-            href="https://github.com/code-yeongyu/oh-my-openagent"
+            href="https://github.com/code-yeongyu/oh-my-open-pentest"
             target="_blank"
             rel="noopener noreferrer"
           >

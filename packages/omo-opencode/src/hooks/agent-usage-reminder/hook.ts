@@ -1,4 +1,4 @@
-import type { PluginInput } from "@opencode-ai/plugin";
+﻿import type { PluginInput } from "@opencode-ai/plugin";
 import {
   loadAgentUsageState,
   saveAgentUsageState,
@@ -31,15 +31,15 @@ interface EventInput {
 
 /**
  * Only orchestrator agents should receive usage reminders.
- * Subagents (explore, librarian, oracle, etc.) are the targets of delegation,
+ * Subagents (scout, intel, cipher, etc.) are the targets of delegation,
  * so reminding them to delegate to themselves is counterproductive.
  */
 const ORCHESTRATOR_AGENTS = new Set([
-  "sisyphus",
-  "sisyphus-junior",
-  "atlas",
-  "hephaestus",
-  "prometheus",
+  "cerberus",
+  "cerberus-junior",
+  "argus",
+  "scylla",
+  "talos",
 ]);
 
 const MAX_REMINDERS = 3;

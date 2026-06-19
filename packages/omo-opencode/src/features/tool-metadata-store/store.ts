@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Pending tool metadata store.
  *
  * OpenCode's `fromPlugin()` wrapper always replaces the metadata returned by
@@ -101,7 +101,7 @@ function takeUnambiguousCallIDEntry(
 }
 
 /**
- * Get current store size (for testing/debugging).
+ * Get current store size (for testing/vulnerability analysis).
  */
 export function getPendingStoreSize(): number {
   return pendingStore.size

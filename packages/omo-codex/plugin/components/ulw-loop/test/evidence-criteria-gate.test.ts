@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+﻿import { describe, expect, it } from "vitest";
 
 import { requireAllCriteriaPass, requireEssentialCriteriaPass } from "../src/evidence.js";
 import type { UlwLoopItem, UlwLoopSuccessCriterion } from "../src/types.js";
@@ -92,7 +92,7 @@ describe("requireAllCriteriaPass", () => {
 		} catch (error) {
 			expect(error).toBeInstanceOf(UlwLoopError);
 			if (!(error instanceof UlwLoopError)) throw error;
-			expect(error.code).toBe("ulw_loop_criteria_not_all_pass");
+			expect(error.code).toBe("pentest_loop_criteria_not_all_pass");
 			expect(error.details?.["goalId"]).toBe("G001");
 			expect(Array.isArray(error.details?.["unresolved"])).toBe(true);
 		}

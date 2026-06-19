@@ -1,4 +1,4 @@
-import { mkdir, mkdtemp, readFile } from "node:fs/promises";
+﻿import { mkdir, mkdtemp, readFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
@@ -24,7 +24,7 @@ async function bootstrapRepo(plan: UlwLoopPlan): Promise<string> {
 }
 
 async function readLastLedgerEntry(repo: string): Promise<UlwLoopLedgerEntry> {
-	const lines = (await readFile(join(repo, ".omo/ulw-loop/ledger.jsonl"), "utf8")).trim().split("\n");
+	const lines = (await readFile(join(repo, ".omo/pentest-loop/ledger.jsonl"), "utf8")).trim().split("\n");
 	const last = lines.at(-1);
 	if (last === undefined) throw new Error("expected ledger entry");
 	return JSON.parse(last);
@@ -71,11 +71,11 @@ function makePlan(overrides: Partial<UlwLoopPlan> = {}): UlwLoopPlan {
 		version: 1,
 		createdAt: NOW,
 		updatedAt: NOW,
-		briefPath: ".omo/ulw-loop/brief.md",
-		goalsPath: ".omo/ulw-loop/goals.json",
-		ledgerPath: ".omo/ulw-loop/ledger.jsonl",
+		briefPath: ".omo/pentest-loop/brief.md",
+		goalsPath: ".omo/pentest-loop/goals.json",
+		ledgerPath: ".omo/pentest-loop/ledger.jsonl",
 		codexGoalMode: "aggregate",
-		codexObjective: "Complete the durable ulw-loop plan in .omo/ulw-loop/goals.json",
+		codexObjective: "Complete the durable pentest-loop plan in .omo/pentest-loop/goals.json",
 		codexObjectiveAliases: [],
 		goals: [makeGoal()],
 		...overrides,

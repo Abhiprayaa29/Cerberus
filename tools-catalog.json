@@ -1,0 +1,1143 @@
+﻿{
+  "$schema": "tools-catalog-v.",
+  "version": "..0.0",
+  "categories": ["recon", "enumeration", "exploitation", "reporting", "utility"],
+
+  "tools": [
+    {
+      "tools_name": "subfinder",
+      "description": "Passive subdomain discovery tool. Finds valid subdomains using online sources like crt.sh, SecurityTrails, and more.",
+      "category": "recon",
+      "command": {
+        "base": "subfinder",
+        "flags": [
+          { "name": "-d", "type": "string", "description": "Domain to find subdomains for", "required": true },
+          { "name": "-o", "type": "path", "description": "Output file", "required": false },
+          { "name": "-oJ", "type": "path", "description": "JSON output file", "required": false },
+          { "name": "-silent", "type": "boolean", "description": "Show only results", "default": false },
+          { "name": "-all", "type": "boolean", "description": "Use all sources", "default": false },
+          { "name": "-nW", "type": "boolean", "description": "Exclude wildcard subdomains", "default": false }
+        ],
+        "positional": [],
+        "pipes": ["httpx", "anew", "sort"]
+      },
+      "installation": {
+        "linux": { "command": "go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest", "manager": "go" },
+        "darwin": { "command": "go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest", "manager": "go" },
+        "win32": { "command": "go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest", "manager": "go" }
+      },
+      "check_installed": {
+        "command": "subfinder -version",
+        "exit_code": 0,
+        "parse_version": "Current Version: ([\\d.]+)"
+      },
+      "skills_loader": "subfinder-recon",
+      "phase": ["recon"],
+      "tags": ["subdomain", "passive", "osint"],
+      "requires_root": false,
+      "output_format": ["text", "json"],
+      "homepage": "https://github.com/projectdiscovery/subfinder",
+      "alternatives": ["amass", "assetfinder"]
+    },
+
+    {
+      "tools_name": "amass",
+      "description": "In-depth attack surface mapping. OWASP tool for network asset discovery using OSINT and active techniques.",
+      "category": "recon",
+      "command": {
+        "base": "amass",
+        "flags": [
+          { "name": "enum", "type": "boolean", "description": "Run enumeration mode", "default": true },
+          { "name": "-d", "type": "string", "description": "Domain to enumerate", "required": true },
+          { "name": "-o", "type": "path", "description": "Output file", "required": false },
+          { "name": "-json", "type": "path", "description": "JSON output file", "required": false },
+          { "name": "-passive", "type": "boolean", "description": "Passive mode only", "default": false },
+          { "name": "-active", "type": "boolean", "description": "Active enumeration", "default": false },
+          { "name": "-brute", "type": "boolean", "description": "Enable DNS brute forcing", "default": false },
+          { "name": "-timeout", "type": "number", "description": "Timeout in minutes", "required": false }
+        ],
+        "positional": [],
+        "pipes": ["httpx", "anew"]
+      },
+      "installation": {
+        "linux": { "command": "go install -v github.com/owasp-amass/amass/v./...@master", "manager": "go" },
+        "darwin": { "command": "go install -v github.com/owasp-amass/amass/v./...@master", "manager": "go" },
+        "win32": { "command": "go install -v github.com/owasp-amass/amass/v./...@master", "manager": "go" }
+      },
+      "check_installed": {
+        "command": "amass -version",
+        "exit_code": 0,
+        "parse_version": "v([\\d.]+)"
+      },
+      "skills_loader": "amass-recon",
+      "phase": ["recon"],
+      "tags": ["subdomain", "osint", "active", "owasp"],
+      "requires_root": false,
+      "output_format": ["text", "json", "graph"],
+      "homepage": "https://github.com/owasp-amass/amass",
+      "alternatives": ["subfinder", "assetfinder"]
+    },
+
+    {
+      "tools_name": "assetfinder",
+      "description": "Fast subdomain finder from Tomnomnom. Finds domains related to a target from various sources.",
+      "category": "recon",
+      "command": {
+        "base": "assetfinder",
+        "flags": [
+          { "name": "--subs-only", "type": "boolean", "description": "Only return subdomains", "default": false }
+        ],
+        "positional": [
+          { "name": "domain", "type": "string", "description": "Target domain", "required": true }
+        ],
+        "pipes": ["httpx", "anew", "sort"]
+      },
+      "installation": {
+        "linux": { "command": "go install github.com/tomnomnom/assetfinder@latest", "manager": "go" },
+        "darwin": { "command": "go install github.com/tomnomnom/assetfinder@latest", "manager": "go" },
+        "win32": { "command": "go install github.com/tomnomnom/assetfinder@latest", "manager": "go" }
+      },
+      "check_installed": {
+        "command": "assetfinder -h",
+        "exit_code": 0
+      },
+      "skills_loader": "assetfinder-recon",
+      "phase": ["recon"],
+      "tags": ["subdomain", "fast", "passive"],
+      "requires_root": false,
+      "output_format": ["text"],
+      "homepage": "https://github.com/tomnomnom/assetfinder",
+      "alternatives": ["subfinder", "amass"]
+    },
+
+    {
+      "tools_name": "httpx",
+      "description": "Fast and multi-purpose HTTP toolkit. Probes for alive hosts, tech stack, status codes, and more.",
+      "category": "recon",
+      "command": {
+        "base": "httpx",
+        "flags": [
+          { "name": "-l", "type": "path", "description": "Input file with hosts", "required": false },
+          { "name": "-u", "type": "string", "description": "Single URL to probe", "required": false },
+          { "name": "-o", "type": "path", "description": "Output file", "required": false },
+          { "name": "-json", "type": "boolean", "description": "JSON output", "default": false },
+          { "name": "-sc", "type": "boolean", "description": "Display status code", "default": true },
+          { "name": "-td", "type": "boolean", "description": "Display tech detection", "default": false },
+          { "name": "-title", "type": "boolean", "description": "Display page title", "default": false },
+          { "name": "-cl", "type": "boolean", "description": "Display content length", "default": false },
+          { "name": "-mc", "type": "string", "description": "Match status codes (comma-separated)", "required": false },
+          { "name": "-fc", "type": "string", "description": "Filter status codes", "required": false },
+          { "name": "-threads", "type": "number", "description": "Number of threads", "default": 50 },
+          { "name": "-timeout", "type": "number", "description": "Timeout in seconds", "default": .0 },
+          { "name": "-silent", "type": "boolean", "description": "Silent mode", "default": false }
+        ],
+        "positional": [],
+        "pipes": ["nuclei", "anew", "jq"]
+      },
+      "installation": {
+        "linux": { "command": "go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest", "manager": "go" },
+        "darwin": { "command": "go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest", "manager": "go" },
+        "win32": { "command": "go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest", "manager": "go" }
+      },
+      "check_installed": {
+        "command": "httpx -version",
+        "exit_code": 0,
+        "parse_version": "Current Version: ([\\d.]+)"
+      },
+      "skills_loader": "httpx-probe",
+      "phase": ["recon", "enumeration"],
+      "tags": ["http", "probe", "alive", "tech-detection"],
+      "requires_root": false,
+      "output_format": ["text", "json"],
+      "homepage": "https://github.com/projectdiscovery/httpx",
+      "alternatives": []
+    },
+
+    {
+      "tools_name": "naabu",
+      "description": "Fast port scanner written in Go. Designed for reliability and speed with SYN/TCP/CONNECT scan modes.",
+      "category": "recon",
+      "command": {
+        "base": "naabu",
+        "flags": [
+          { "name": "-host", "type": "string", "description": "Target host(s)", "required": false },
+          { "name": "-list", "type": "path", "description": "File with hosts", "required": false },
+          { "name": "-p", "type": "string", "description": "Ports to scan (e.g., '80,..3' or 'top.00' or '-')", "required": false },
+          { "name": "-o", "type": "path", "description": "Output file", "required": false },
+          { "name": "-json", "type": "boolean", "description": "JSON output", "default": false },
+          { "name": "-scan-type", "type": "choice", "description": "Scan type", "choices": ["s", "c", "syn"], "default": "c" },
+          { "name": "-rate", "type": "number", "description": "Packets per second", "default": .000 },
+          { "name": "-timeout", "type": "number", "description": "Timeout in milliseconds", "default": .000 },
+          { "name": "-silent", "type": "boolean", "description": "Silent mode", "default": false }
+        ],
+        "positional": [],
+        "pipes": ["httpx", "nmap", "anew"]
+      },
+      "installation": {
+        "linux": { "command": "go install -v github.com/projectdiscovery/naabu/v2/cmd/naabu@latest", "manager": "go" },
+        "darwin": { "command": "go install -v github.com/projectdiscovery/naabu/v2/cmd/naabu@latest", "manager": "go" },
+        "win32": { "command": "go install -v github.com/projectdiscovery/naabu/v2/cmd/naabu@latest", "manager": "go" }
+      },
+      "check_installed": {
+        "command": "naabu -version",
+        "exit_code": 0,
+        "parse_version": "Current Version: ([\\d.]+)"
+      },
+      "skills_loader": "naabu-ports",
+      "phase": ["recon", "enumeration"],
+      "tags": ["port-scan", "fast", "network"],
+      "requires_root": true,
+      "output_format": ["text", "json"],
+      "homepage": "https://github.com/projectdiscovery/naabu",
+      "alternatives": ["nmap", "masscan"]
+    },
+
+    {
+      "tools_name": "massdns",
+      "description": "High-performance DNS stub resolver. Resolves millions of domains per second for bulk operations.",
+      "category": "recon",
+      "command": {
+        "base": "massdns",
+        "flags": [
+          { "name": "-r", "type": "path", "description": "Resolver list file", "required": true },
+          { "name": "-t", "type": "choice", "description": "Record type", "choices": ["A", "AAAA", "CNAME", "MX", "NS", "TXT"], "default": "A" },
+          { "name": "-o", "type": "choice", "description": "Output format", "choices": ["S", "J", "L"], "default": "S" },
+          { "name": "-s", "type": "number", "description": "Hashmap size (concurrent lookups)", "default": .0000 },
+          { "name": "--quiet", "type": "boolean", "description": "Quiet mode", "default": false }
+        ],
+        "positional": [
+          { "name": "input", "type": "path", "description": "Input file with domains", "required": false }
+        ],
+        "pipes": ["jq", "anew"]
+      },
+      "installation": {
+        "linux": { "command": "git clone https://github.com/blechschmidt/massdns.git && cd massdns && make && sudo cp bin/massdns /usr/local/bin/", "manager": "make" },
+        "darwin": { "command": "brew install massdns", "manager": "brew" },
+        "win32": { "command": "git clone https://github.com/blechschmidt/massdns.git && cd massdns && make", "manager": "make" }
+      },
+      "check_installed": {
+        "command": "massdns --version",
+        "exit_code": 0
+      },
+      "skills_loader": "massdns-resolver",
+      "phase": ["recon"],
+      "tags": ["dns", "resolver", "bulk"],
+      "requires_root": false,
+      "output_format": ["text", "json", "ndjson"],
+      "homepage": "https://github.com/blechschmidt/massdns",
+      "alternatives": ["puredns", "shuffledns"]
+    },
+
+    {
+      "tools_name": "nmap",
+      "description": "Network exploration and security auditing utility. Port scanning, service detection, OS fingerprinting, and NSE scripts.",
+      "category": "enumeration",
+      "command": {
+        "base": "nmap",
+        "flags": [
+          { "name": "-sV", "type": "boolean", "description": "Service version detection", "default": false },
+          { "name": "-sC", "type": "boolean", "description": "Default NSE script scan", "default": false },
+          { "name": "-sS", "type": "boolean", "description": "TCP SYN scan (stealth)", "default": false },
+          { "name": "-sT", "type": "boolean", "description": "TCP connect scan", "default": false },
+          { "name": "-sU", "type": "boolean", "description": "UDP scan", "default": false },
+          { "name": "-O", "type": "boolean", "description": "OS detection", "default": false },
+          { "name": "-A", "type": "boolean", "description": "Aggressive scan (OS+version+scripts+traceroute)", "default": false },
+          { "name": "-p", "type": "string", "description": "Port specification (e.g., '80,..3' or '.-.000' or '-')", "required": false },
+          { "name": "-T", "type": "number", "description": "Timing template (0-5)", "default": 3 },
+          { "name": "-oN", "type": "path", "description": "Normal output file", "required": false },
+          { "name": "-oX", "type": "path", "description": "XML output file", "required": false },
+          { "name": "-oG", "type": "path", "description": "Grepable output file", "required": false },
+          { "name": "-oA", "type": "path", "description": "All output formats", "required": false },
+          { "name": "-v", "type": "boolean", "description": "Verbose output", "default": false },
+          { "name": "--script", "type": "string", "description": "NSE script(s) to run", "required": false },
+          { "name": "-iL", "type": "path", "description": "Input file with targets", "required": false }
+        ],
+        "positional": [
+          { "name": "target", "type": "string", "description": "Target host(s), CIDR, or range", "required": false }
+        ],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "sudo apt-get install -y nmap", "manager": "apt" },
+        "darwin": { "command": "brew install nmap", "manager": "brew" },
+        "win32": { "command": "winget install nmap", "manager": "winget" }
+      },
+      "check_installed": {
+        "command": "nmap --version",
+        "exit_code": 0,
+        "parse_version": "Nmap version ([\\d.]+)"
+      },
+      "skills_loader": "nmap-scan",
+      "phase": ["recon", "enumeration"],
+      "tags": ["port-scan", "service-detection", "os-detection", "nse"],
+      "requires_root": false,
+      "output_format": ["text", "xml", "grepable"],
+      "homepage": "https://nmap.org",
+      "alternatives": ["naabu", "masscan"]
+    },
+
+    {
+      "tools_name": "nuclei",
+      "description": "Fast and customizable vulnerability scanner based on YAML templates. Community-driven template library.",
+      "category": "enumeration",
+      "command": {
+        "base": "nuclei",
+        "flags": [
+          { "name": "-u", "type": "string", "description": "Target URL", "required": false },
+          { "name": "-l", "type": "path", "description": "File with target URLs", "required": false },
+          { "name": "-t", "type": "path", "description": "Template file or directory", "required": false },
+          { "name": "-tags", "type": "string", "description": "Template tags (comma-separated)", "required": false },
+          { "name": "-severity", "type": "choice", "description": "Severity filter", "choices": ["info", "low", "medium", "high", "critical"], "required": false },
+          { "name": "-o", "type": "path", "description": "Output file", "required": false },
+          { "name": "-json", "type": "boolean", "description": "JSON output", "default": false },
+          { "name": "-silent", "type": "boolean", "description": "Silent mode", "default": false },
+          { "name": "-rate-limit", "type": "number", "description": "Requests per second", "default": .50 },
+          { "name": "-c", "type": "number", "description": "Concurrency", "default": 25 },
+          { "name": "-timeout", "type": "number", "description": "Request timeout (seconds)", "default": .0 },
+          { "name": "-retries", "type": "number", "description": "Number of retries", "default": . },
+          { "name": "-update-templates", "type": "boolean", "description": "Update templates", "default": false },
+          { "name": "-as", "type": "boolean", "description": "Automatic scan (no template selection needed)", "default": false }
+        ],
+        "positional": [],
+        "pipes": ["jq", "anew"]
+      },
+      "installation": {
+        "linux": { "command": "go install -v github.com/projectdiscovery/nuclei/v3/cmd/nuclei@latest", "manager": "go" },
+        "darwin": { "command": "go install -v github.com/projectdiscovery/nuclei/v3/cmd/nuclei@latest", "manager": "go" },
+        "win32": { "command": "go install -v github.com/projectdiscovery/nuclei/v3/cmd/nuclei@latest", "manager": "go" }
+      },
+      "check_installed": {
+        "command": "nuclei -version",
+        "exit_code": 0,
+        "parse_version": "Current Version: ([\\d.]+)"
+      },
+      "skills_loader": "nuclei-scan",
+      "phase": ["enumeration"],
+      "tags": ["vuln-scan", "templates", "yaml", "cve"],
+      "requires_root": false,
+      "output_format": ["text", "json", "markdown", "sarif"],
+      "homepage": "https://github.com/projectdiscovery/nuclei",
+      "alternatives": ["nikto", "burpsuite"]
+    },
+
+    {
+      "tools_name": "ffuf",
+      "description": "Fast web fuzzer written in Go. Directory/file discovery, vhost discovery, and parameter fuzzing.",
+      "category": "enumeration",
+      "command": {
+        "base": "ffuf",
+        "flags": [
+          { "name": "-u", "type": "string", "description": "Target URL with FUZZ keyword", "required": true },
+          { "name": "-w", "type": "path", "description": "Wordlist file", "required": true },
+          { "name": "-mc", "type": "string", "description": "Match status codes", "required": false },
+          { "name": "-fc", "type": "string", "description": "Filter status codes", "required": false },
+          { "name": "-fw", "type": "string", "description": "Filter by word count", "required": false },
+          { "name": "-fs", "type": "string", "description": "Filter by response size", "required": false },
+          { "name": "-ft", "type": "string", "description": "Filter by content type", "required": false },
+          { "name": "-t", "type": "number", "description": "Number of threads", "default": .0 },
+          { "name": "-timeout", "type": "number", "description": "Request timeout (seconds)", "default": .0 },
+          { "name": "-o", "type": "path", "description": "Output file", "required": false },
+          { "name": "-of", "type": "choice", "description": "Output format", "choices": ["json", "csv", "ejson", "html", "md"], "default": "json" },
+          { "name": "-H", "type": "repeat", "description": "Custom headers", "required": false },
+          { "name": "-X", "type": "choice", "description": "HTTP method", "choices": ["GET", "POST", "PUT", "DELETE", "PATCH"], "default": "GET" },
+          { "name": "-d", "type": "string", "description": "POST data", "required": false },
+          { "name": "-ic", "type": "boolean", "description": "Ignore comments in wordlist", "default": true },
+          { "name": "-s", "type": "boolean", "description": "Silent mode (no progress)", "default": false },
+          { "name": "-recursion", "type": "boolean", "description": "Enable recursion", "default": false },
+          { "name": "-recursion-depth", "type": "number", "description": "Recursion depth", "default": 0 }
+        ],
+        "positional": [],
+        "pipes": ["jq", "anew"]
+      },
+      "installation": {
+        "linux": { "command": "go install github.com/ffuf/ffuf/v2@latest", "manager": "go" },
+        "darwin": { "command": "go install github.com/ffuf/ffuf/v2@latest", "manager": "go" },
+        "win32": { "command": "go install github.com/ffuf/ffuf/v2@latest", "manager": "go" }
+      },
+      "check_installed": {
+        "command": "ffuf -V",
+        "exit_code": 0,
+        "parse_version": "ffuf version: ([\\d.]+)"
+      },
+      "skills_loader": "ffuf-fuzz",
+      "phase": ["enumeration"],
+      "tags": ["fuzzer", "directory", "vhost", "parameter"],
+      "requires_root": false,
+      "output_format": ["text", "json", "csv", "html"],
+      "homepage": "https://github.com/ffuf/ffuf",
+      "alternatives": ["gobuster", "dirsearch", "feroxbuster"]
+    },
+
+    {
+      "tools_name": "dirsearch",
+      "description": "Web path brute-force scanner. Python-based directory and file enumeration tool.",
+      "category": "enumeration",
+      "command": {
+        "base": "dirsearch",
+        "flags": [
+          { "name": "-u", "type": "string", "description": "Target URL", "required": true },
+          { "name": "-w", "type": "path", "description": "Wordlist file", "required": false },
+          { "name": "-e", "type": "string", "description": "Extensions (comma-separated)", "required": false },
+          { "name": "-o", "type": "path", "description": "Output file", "required": false },
+          { "name": "--format", "type": "choice", "description": "Output format", "choices": ["plain", "json", "xml", "csv", "html", "markdown"], "default": "plain" },
+          { "name": "-t", "type": "number", "description": "Number of threads", "default": 30 },
+          { "name": "--timeout", "type": "number", "description": "Request timeout (seconds)", "default": .0 },
+          { "name": "-i", "type": "string", "description": "Include status codes", "required": false },
+          { "name": "-x", "type": "string", "description": "Exclude status codes", "required": false },
+          { "name": "--recursive", "type": "boolean", "description": "Recursive scan", "default": false },
+          { "name": "--deep-recursive", "type": "boolean", "description": "Deep recursive scan", "default": false },
+          { "name": "--random-agent", "type": "boolean", "description": "Random user-agent", "default": true }
+        ],
+        "positional": [],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "git clone https://github.com/maurosoria/dirsearch.git && cd dirsearch && pip3 install -r requirements.txt", "manager": "git+pip" },
+        "darwin": { "command": "git clone https://github.com/maurosoria/dirsearch.git && cd dirsearch && pip3 install -r requirements.txt", "manager": "git+pip" },
+        "win32": { "command": "git clone https://github.com/maurosoria/dirsearch.git && cd dirsearch && pip3 install -r requirements.txt", "manager": "git+pip" }
+      },
+      "check_installed": {
+        "command": "dirsearch --version",
+        "exit_code": 0,
+        "parse_version": "([\\d.]+)"
+      },
+      "skills_loader": "dirsearch-enum",
+      "phase": ["enumeration"],
+      "tags": ["directory", "brute-force", "python"],
+      "requires_root": false,
+      "output_format": ["text", "json", "xml", "csv", "html"],
+      "homepage": "https://github.com/maurosoria/dirsearch",
+      "alternatives": ["ffuf", "gobuster", "feroxbuster"]
+    },
+
+    {
+      "tools_name": "gobuster",
+      "description": "Directory/file, DNS, and vhost brute-forcing tool written in Go.",
+      "category": "enumeration",
+      "command": {
+        "base": "gobuster",
+        "flags": [
+          { "name": "dir", "type": "boolean", "description": "Directory/file brute-force mode", "default": false },
+          { "name": "dns", "type": "boolean", "description": "DNS subdomain brute-force mode", "default": false },
+          { "name": "vhost", "type": "boolean", "description": "Virtual host brute-force mode", "default": false },
+          { "name": "-u", "type": "string", "description": "Target URL or domain", "required": true },
+          { "name": "-w", "type": "path", "description": "Wordlist file", "required": true },
+          { "name": "-o", "type": "path", "description": "Output file", "required": false },
+          { "name": "-t", "type": "number", "description": "Number of threads", "default": .0 },
+          { "name": "-x", "type": "string", "description": "File extensions", "required": false },
+          { "name": "-s", "type": "string", "description": "Status codes to show", "required": false },
+          { "name": "-k", "type": "boolean", "description": "Skip TLS certificate verification", "default": false },
+          { "name": "-q", "type": "boolean", "description": "Quiet mode", "default": false }
+        ],
+        "positional": [],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "go install github.com/OJ/gobuster/v3@latest", "manager": "go" },
+        "darwin": { "command": "go install github.com/OJ/gobuster/v3@latest", "manager": "go" },
+        "win32": { "command": "go install github.com/OJ/gobuster/v3@latest", "manager": "go" }
+      },
+      "check_installed": {
+        "command": "gobuster version",
+        "exit_code": 0
+      },
+      "skills_loader": "gobuster-enum",
+      "phase": ["enumeration"],
+      "tags": ["directory", "dns", "vhost", "brute-force"],
+      "requires_root": false,
+      "output_format": ["text"],
+      "homepage": "https://github.com/OJ/gobuster",
+      "alternatives": ["ffuf", "dirsearch", "feroxbuster"]
+    },
+
+    {
+      "tools_name": "feroxbuster",
+      "description": "Fast, simple, recursive content discovery tool written in Rust.",
+      "category": "enumeration",
+      "command": {
+        "base": "feroxbuster",
+        "flags": [
+          { "name": "-u", "type": "string", "description": "Target URL", "required": true },
+          { "name": "-w", "type": "path", "description": "Wordlist file", "required": false },
+          { "name": "-o", "type": "path", "description": "Output file", "required": false },
+          { "name": "-d", "type": "number", "description": "Recursion depth", "default": . },
+          { "name": "-t", "type": "number", "description": "Number of threads", "default": 50 },
+          { "name": "-s", "type": "string", "description": "Status codes to filter", "required": false },
+          { "name": "-x", "type": "string", "description": "File extensions", "required": false },
+          { "name": "-C", "type": "boolean", "description": "Auto-calibrate filtering", "default": false },
+          { "name": "-n", "type": "boolean", "description": "Don't recurse", "default": false },
+          { "name": "-q", "type": "boolean", "description": "Quiet mode", "default": false },
+          { "name": "--json", "type": "boolean", "description": "JSON output", "default": false }
+        ],
+        "positional": [],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "curl -sL https://raw.githubusercontent.com/epi052/feroxbuster/main/install-nix.sh | bash && sudo mv feroxbuster /usr/local/bin/", "manager": "curl" },
+        "darwin": { "command": "brew install feroxbuster", "manager": "brew" },
+        "win32": { "command": "cargo install feroxbuster", "manager": "cargo" }
+      },
+      "check_installed": {
+        "command": "feroxbuster --version",
+        "exit_code": 0,
+        "parse_version": "v([\\d.]+)"
+      },
+      "skills_loader": "feroxbuster-enum",
+      "phase": ["enumeration"],
+      "tags": ["directory", "recursive", "rust", "fast"],
+      "requires_root": false,
+      "output_format": ["text", "json"],
+      "homepage": "https://github.com/epi052/feroxbuster",
+      "alternatives": ["ffuf", "gobuster", "dirsearch"]
+    },
+
+    {
+      "tools_name": "whatweb",
+      "description": "Web technology fingerprinting tool. Identifies CMS, web servers, JavaScript frameworks, and more.",
+      "category": "enumeration",
+      "command": {
+        "base": "whatweb",
+        "flags": [
+          { "name": "-v", "type": "boolean", "description": "Verbose output", "default": false },
+          { "name": "-a", "type": "number", "description": "Aggression level (.-.)", "default": . },
+          { "name": "--log-json", "type": "path", "description": "JSON log file", "required": false },
+          { "name": "--log-xml", "type": "path", "description": "XML log file", "required": false },
+          { "name": "-i", "type": "path", "description": "Input file with URLs", "required": false },
+          { "name": "--user-agent", "type": "string", "description": "Custom user-agent", "required": false }
+        ],
+        "positional": [
+          { "name": "target", "type": "string", "description": "Target URL(s)", "required": false }
+        ],
+        "pipes": ["jq"]
+      },
+      "installation": {
+        "linux": { "command": "sudo apt-get install -y whatweb", "manager": "apt" },
+        "darwin": { "command": "brew install whatweb", "manager": "brew" },
+        "win32": { "command": "git clone https://github.com/urbanadventurer/WhatWeb.git && cd WhatWeb && gem install bundler && bundle install", "manager": "git+gem" }
+      },
+      "check_installed": {
+        "command": "whatweb --version",
+        "exit_code": 0,
+        "parse_version": "WhatWeb ([\\d.]+)"
+      },
+      "skills_loader": "whatweb-tech",
+      "phase": ["enumeration"],
+      "tags": ["tech-detection", "fingerprinting", "cms"],
+      "requires_root": false,
+      "output_format": ["text", "json", "xml"],
+      "homepage": "https://github.com/urbanadventurer/WhatWeb",
+      "alternatives": ["wappalyzer"]
+    },
+
+    {
+      "tools_name": "wafw00f",
+      "description": "Web Application Firewall detection tool. Identifies WAF products protecting a target.",
+      "category": "enumeration",
+      "command": {
+        "base": "wafw00f",
+        "flags": [
+          { "name": "-a", "type": "boolean", "description": "Find all WAFs (don't stop at first)", "default": false },
+          { "name": "-o", "type": "path", "description": "Output file", "required": false },
+          { "name": "--format", "type": "choice", "description": "Output format", "choices": ["text", "json", "csv"], "default": "text" },
+          { "name": "-i", "type": "path", "description": "Input file with URLs", "required": false },
+          { "name": "-v", "type": "boolean", "description": "Verbose output", "default": false }
+        ],
+        "positional": [
+          { "name": "url", "type": "string", "description": "Target URL", "required": false }
+        ],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "pip3 install wafw00f", "manager": "pip" },
+        "darwin": { "command": "pip3 install wafw00f", "manager": "pip" },
+        "win32": { "command": "pip3 install wafw00f", "manager": "pip" }
+      },
+      "check_installed": {
+        "command": "wafw00f --version",
+        "exit_code": 0
+      },
+      "skills_loader": "wafw00f-detect",
+      "phase": ["enumeration"],
+      "tags": ["waf", "detection", "firewall"],
+      "requires_root": false,
+      "output_format": ["text", "json", "csv"],
+      "homepage": "https://github.com/EnableSecurity/wafw00f",
+      "alternatives": []
+    },
+
+    {
+      "tools_name": "sqlmap",
+      "description": "Automatic SQL injection and database takeover tool. Detects and exploits SQL injection flaws.",
+      "category": "exploitation",
+      "command": {
+        "base": "sqlmap",
+        "flags": [
+          { "name": "-u", "type": "string", "description": "Target URL with injectable parameter", "required": false },
+          { "name": "-r", "type": "path", "description": "HTTP request file", "required": false },
+          { "name": "-p", "type": "string", "description": "Parameter to test", "required": false },
+          { "name": "--dbs", "type": "boolean", "description": "Enumerate databases", "default": false },
+          { "name": "--tables", "type": "boolean", "description": "Enumerate tables", "default": false },
+          { "name": "--columns", "type": "boolean", "description": "Enumerate columns", "default": false },
+          { "name": "--dump", "type": "boolean", "description": "Dump table contents", "default": false },
+          { "name": "--batch", "type": "boolean", "description": "Non-interactive mode", "default": false },
+          { "name": "--level", "type": "number", "description": "Test level (.-5)", "default": . },
+          { "name": "--risk", "type": "number", "description": "Risk level (.-3)", "default": . },
+          { "name": "--technique", "type": "string", "description": "Techniques to use (BEUSTQ)", "required": false },
+          { "name": "--tamper", "type": "string", "description": "Tamper scripts (comma-separated)", "required": false },
+          { "name": "--random-agent", "type": "boolean", "description": "Random user-agent", "default": false },
+          { "name": "--output-dir", "type": "path", "description": "Custom output directory", "required": false }
+        ],
+        "positional": [],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "sudo apt-get install -y sqlmap", "manager": "apt" },
+        "darwin": { "command": "brew install sqlmap", "manager": "brew" },
+        "win32": { "command": "git clone https://github.com/sqlmapproject/sqlmap.git", "manager": "git" }
+      },
+      "check_installed": {
+        "command": "sqlmap --version",
+        "exit_code": 0,
+        "parse_version": "([\\d.]+)"
+      },
+      "skills_loader": "sqlmap-exploit",
+      "phase": ["exploitation"],
+      "tags": ["sqli", "injection", "database", "owasp-top.0"],
+      "requires_root": false,
+      "output_format": ["text", "log"],
+      "homepage": "https://sqlmap.org",
+      "alternatives": []
+    },
+
+    {
+      "tools_name": "commix",
+      "description": "Automated OS command injection and exploitation tool.",
+      "category": "exploitation",
+      "command": {
+        "base": "commix",
+        "flags": [
+          { "name": "-u", "type": "string", "description": "Target URL", "required": false },
+          { "name": "-r", "type": "path", "description": "HTTP request file", "required": false },
+          { "name": "-p", "type": "string", "description": "Parameter to test", "required": false },
+          { "name": "--os-cmd", "type": "string", "description": "Execute OS command", "required": false },
+          { "name": "--os-shell", "type": "boolean", "description": "Interactive OS shell", "default": false },
+          { "name": "--batch", "type": "boolean", "description": "Non-interactive mode", "default": false },
+          { "name": "--level", "type": "number", "description": "Test level (.-5)", "default": . },
+          { "name": "--technique", "type": "string", "description": "Techniques (CTEF)", "required": false }
+        ],
+        "positional": [],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "git clone https://github.com/commixproject/commix.git && cd commix && pip3 install -r requirements.txt", "manager": "git+pip" },
+        "darwin": { "command": "git clone https://github.com/commixproject/commix.git && cd commix && pip3 install -r requirements.txt", "manager": "git+pip" },
+        "win32": { "command": "git clone https://github.com/commixproject/commix.git && cd commix && pip3 install -r requirements.txt", "manager": "git+pip" }
+      },
+      "check_installed": {
+        "command": "commix --version",
+        "exit_code": 0
+      },
+      "skills_loader": "commix-exploit",
+      "phase": ["exploitation"],
+      "tags": ["command-injection", "rce", "os-command"],
+      "requires_root": false,
+      "output_format": ["text", "log"],
+      "homepage": "https://github.com/commixproject/commix",
+      "alternatives": ["sqlmap"]
+    },
+
+    {
+      "tools_name": "nikto",
+      "description": "Web server vulnerability scanner. Tests for dangerous files, outdated software, and server misconfigurations.",
+      "category": "exploitation",
+      "command": {
+        "base": "nikto",
+        "flags": [
+          { "name": "-h", "type": "string", "description": "Target host", "required": true },
+          { "name": "-p", "type": "string", "description": "Port(s) to scan", "required": false },
+          { "name": "-o", "type": "path", "description": "Output file", "required": false },
+          { "name": "-Format", "type": "choice", "description": "Output format", "choices": ["csv", "htm", "xml", "txt", "json"], "required": false },
+          { "name": "-Tuning", "type": "string", "description": "Scan tuning (0-9)", "required": false },
+          { "name": "-evasion", "type": "string", "description": "IDS evasion techniques", "required": false },
+          { "name": "-ssl", "type": "boolean", "description": "Force SSL", "default": false },
+          { "name": "-no.0.", "type": "boolean", "description": "Disable .0. guessing", "default": false }
+        ],
+        "positional": [],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "sudo apt-get install -y nikto", "manager": "apt" },
+        "darwin": { "command": "brew install nikto", "manager": "brew" },
+        "win32": { "command": "git clone https://github.com/sullo/nikto.git", "manager": "git" }
+      },
+      "check_installed": {
+        "command": "nikto -Version",
+        "exit_code": 0
+      },
+      "skills_loader": "nikto-scan",
+      "phase": ["enumeration", "exploitation"],
+      "tags": ["web-scan", "misconfiguration", "cgi", "server"],
+      "requires_root": false,
+      "output_format": ["text", "csv", "html", "xml", "json"],
+      "homepage": "https://cirt.net/Nikto2",
+      "alternatives": ["nuclei"]
+    },
+
+    {
+      "tools_name": "hydra",
+      "description": "Fast and flexible online password brute-forcing tool. Supports numerous protocols.",
+      "category": "exploitation",
+      "command": {
+        "base": "hydra",
+        "flags": [
+          { "name": "-l", "type": "string", "description": "Username or username list", "required": true },
+          { "name": "-L", "type": "path", "description": "Username list file", "required": false },
+          { "name": "-p", "type": "string", "description": "Password", "required": false },
+          { "name": "-P", "type": "path", "description": "Password list file", "required": true },
+          { "name": "-t", "type": "number", "description": "Number of threads", "default": .6 },
+          { "name": "-s", "type": "number", "description": "Port (if non-default)", "required": false },
+          { "name": "-S", "type": "boolean", "description": "Connect via SSL", "default": false },
+          { "name": "-f", "type": "boolean", "description": "Exit after first found pair", "default": false },
+          { "name": "-V", "type": "boolean", "description": "Verbose output", "default": false },
+          { "name": "-o", "type": "path", "description": "Output file", "required": false }
+        ],
+        "positional": [
+          { "name": "target", "type": "string", "description": "Target host", "required": true },
+          { "name": "service", "type": "choice", "description": "Service to attack", "choices": ["ssh", "ftp", "http-get", "http-post", "https-get", "https-post", "smtp", "mysql", "rdp", "vnc"], "required": true }
+        ],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "sudo apt-get install -y hydra", "manager": "apt" },
+        "darwin": { "command": "brew install hydra", "manager": "brew" },
+        "win32": { "command": "Not natively supported. Use WSL or Docker.", "manager": "wsl" }
+      },
+      "check_installed": {
+        "command": "hydra -h",
+        "exit_code": 0
+      },
+      "skills_loader": "hydra-brute",
+      "phase": ["exploitation"],
+      "tags": ["brute-force", "password", "login", "credentials"],
+      "requires_root": false,
+      "output_format": ["text"],
+      "homepage": "https://github.com/vanhauser-thc/thc-hydra",
+      "alternatives": ["medusa", "ncrack"]
+    },
+
+    {
+      "tools_name": "hashcat",
+      "description": "Advanced password recovery tool. GPU-accelerated hash cracking with support for 300+ hash types.",
+      "category": "exploitation",
+      "command": {
+        "base": "hashcat",
+        "flags": [
+          { "name": "-m", "type": "number", "description": "Hash type (e.g., 0=MD5, .00=SHA., .000=NTLM, .800=sha5.2crypt)", "required": true },
+          { "name": "-a", "type": "number", "description": "Attack mode (0=dict, .=combinator, 3=brute, 6=hybrid)", "required": true },
+          { "name": "-o", "type": "path", "description": "Output file", "required": false },
+          { "name": "--force", "type": "boolean", "description": "Force GPU usage", "default": false },
+          { "name": "-w", "type": "number", "description": "Workload profile (.-.)", "default": 2 },
+          { "name": "--status", "type": "boolean", "description": "Show status screen", "default": false },
+          { "name": "--show", "type": "boolean", "description": "Show cracked hashes", "default": false },
+          { "name": "--left", "type": "boolean", "description": "Show uncracked hashes", "default": false }
+        ],
+        "positional": [
+          { "name": "hashfile", "type": "path", "description": "Hash file or hash string", "required": true },
+          { "name": "wordlist", "type": "path", "description": "Wordlist (for dict attacks)", "required": false }
+        ],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "sudo apt-get install -y hashcat", "manager": "apt" },
+        "darwin": { "command": "brew install hashcat", "manager": "brew" },
+        "win32": { "command": "Download from https://hashcat.net/hashcat/", "manager": "manual" }
+      },
+      "check_installed": {
+        "command": "hashcat --version",
+        "exit_code": 0,
+        "parse_version": "v([\\d.]+)"
+      },
+      "skills_loader": "hashcat-crack",
+      "phase": ["exploitation"],
+      "tags": ["hash", "password", "cracking", "gpu"],
+      "requires_root": false,
+      "output_format": ["text"],
+      "homepage": "https://hashcat.net/hashcat/",
+      "alternatives": ["john"]
+    },
+
+    {
+      "tools_name": "john",
+      "description": "John the Ripper password cracker. Supports many hash formats and attack modes.",
+      "category": "exploitation",
+      "command": {
+        "base": "john",
+        "flags": [
+          { "name": "--format", "type": "string", "description": "Hash format type", "required": false },
+          { "name": "--wordlist", "type": "path", "description": "Wordlist file", "required": false },
+          { "name": "--rules", "type": "string", "description": "Wordlist rules", "required": false },
+          { "name": "--show", "type": "boolean", "description": "Show cracked passwords", "default": false },
+          { "name": "--incremental", "type": "boolean", "description": "Incremental mode", "default": false },
+          { "name": "--fork", "type": "number", "description": "Number of processes", "required": false }
+        ],
+        "positional": [
+          { "name": "hashfile", "type": "path", "description": "File with hashes", "required": true }
+        ],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "sudo apt-get install -y john", "manager": "apt" },
+        "darwin": { "command": "brew install john-jumbo", "manager": "brew" },
+        "win32": { "command": "Download from https://www.openwall.com/john/", "manager": "manual" }
+      },
+      "check_installed": {
+        "command": "john --version",
+        "exit_code": 0
+      },
+      "skills_loader": "john-crack",
+      "phase": ["exploitation"],
+      "tags": ["hash", "password", "cracking", "offline"],
+      "requires_root": false,
+      "output_format": ["text"],
+      "homepage": "https://www.openwall.com/john/",
+      "alternatives": ["hashcat"]
+    },
+
+    {
+      "tools_name": "curl",
+      "description": "Command-line tool for transferring data with URL syntax. Essential for HTTP testing and API interaction.",
+      "category": "utility",
+      "command": {
+        "base": "curl",
+        "flags": [
+          { "name": "-X", "type": "choice", "description": "HTTP method", "choices": ["GET", "POST", "PUT", "DELETE", "PATCH", "HEAD", "OPTIONS"], "default": "GET" },
+          { "name": "-H", "type": "repeat", "description": "Custom headers", "required": false },
+          { "name": "-d", "type": "string", "description": "POST data", "required": false },
+          { "name": "-F", "type": "repeat", "description": "Form data (multipart)", "required": false },
+          { "name": "-o", "type": "path", "description": "Output file", "required": false },
+          { "name": "-O", "type": "boolean", "description": "Save with remote filename", "default": false },
+          { "name": "-i", "type": "boolean", "description": "Include response headers", "default": false },
+          { "name": "-I", "type": "boolean", "description": "HEAD request only", "default": false },
+          { "name": "-v", "type": "boolean", "description": "Verbose output", "default": false },
+          { "name": "-s", "type": "boolean", "description": "Silent mode", "default": false },
+          { "name": "-k", "type": "boolean", "description": "Skip SSL verification", "default": false },
+          { "name": "-L", "type": "boolean", "description": "Follow redirects", "default": false },
+          { "name": "-x", "type": "string", "description": "Proxy (host:port)", "required": false },
+          { "name": "-b", "type": "string", "description": "Cookies", "required": false },
+          { "name": "-c", "type": "path", "description": "Cookie jar file", "required": false },
+          { "name": "--connect-timeout", "type": "number", "description": "Connection timeout (seconds)", "required": false },
+          { "name": "--max-time", "type": "number", "description": "Maximum time (seconds)", "required": false },
+          { "name": "-A", "type": "string", "description": "User-Agent string", "required": false }
+        ],
+        "positional": [
+          { "name": "url", "type": "string", "description": "Target URL", "required": true }
+        ],
+        "pipes": ["jq", "grep"]
+      },
+      "installation": {
+        "linux": { "command": "sudo apt-get install -y curl", "manager": "apt" },
+        "darwin": { "command": "Pre-installed on macOS", "manager": "system" },
+        "win32": { "command": "Pre-installed on Windows .0+", "manager": "system" }
+      },
+      "check_installed": {
+        "command": "curl --version",
+        "exit_code": 0,
+        "parse_version": "curl ([\\d.]+)"
+      },
+      "skills_loader": "curl-http",
+      "phase": ["utility"],
+      "tags": ["http", "api", "transfer", "essential"],
+      "requires_root": false,
+      "output_format": ["text", "binary"],
+      "homepage": "https://curl.se",
+      "alternatives": ["wget", "httpie"]
+    },
+
+    {
+      "tools_name": "jq",
+      "description": "Command-line JSON processor. Essential for parsing JSON output from security tools.",
+      "category": "utility",
+      "command": {
+        "base": "jq",
+        "flags": [
+          { "name": "-r", "type": "boolean", "description": "Raw output (no quotes)", "default": false },
+          { "name": "-c", "type": "boolean", "description": "Compact output", "default": false },
+          { "name": "-s", "type": "boolean", "description": "Slurp (read entire input as array)", "default": false },
+          { "name": "-R", "type": "boolean", "description": "Raw input (each line as string)", "default": false }
+        ],
+        "positional": [
+          { "name": "filter", "type": "string", "description": "jq filter expression", "required": true }
+        ],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "sudo apt-get install -y jq", "manager": "apt" },
+        "darwin": { "command": "brew install jq", "manager": "brew" },
+        "win32": { "command": "winget install jq", "manager": "winget" }
+      },
+      "check_installed": {
+        "command": "jq --version",
+        "exit_code": 0,
+        "parse_version": "jq-([\\d.]+)"
+      },
+      "skills_loader": "jq-parse",
+      "phase": ["utility"],
+      "tags": ["json", "parser", "essential"],
+      "requires_root": false,
+      "output_format": ["json", "text"],
+      "homepage": "https://stedolan.github.io/jq/",
+      "alternatives": ["yq"]
+    },
+
+    {
+      "tools_name": "anew",
+      "description": "Append lines to a file only if they don't already exist. Perfect for deduplication in pipelines.",
+      "category": "utility",
+      "command": {
+        "base": "anew",
+        "flags": [
+          { "name": "-q", "type": "boolean", "description": "Quiet mode (no output)", "default": false }
+        ],
+        "positional": [
+          { "name": "file", "type": "path", "description": "File to append to", "required": true }
+        ],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "go install github.com/tomnomnom/anew@latest", "manager": "go" },
+        "darwin": { "command": "go install github.com/tomnomnom/anew@latest", "manager": "go" },
+        "win32": { "command": "go install github.com/tomnomnom/anew@latest", "manager": "go" }
+      },
+      "check_installed": {
+        "command": "anew -h",
+        "exit_code": 0
+      },
+      "skills_loader": "anew-dedup",
+      "phase": ["utility"],
+      "tags": ["dedup", "pipeline", "append"],
+      "requires_root": false,
+      "output_format": ["text"],
+      "homepage": "https://github.com/tomnomnom/anew",
+      "alternatives": ["sort -u"]
+    },
+
+    {
+      "tools_name": "notify",
+      "description": "Send notifications to multiple platforms (Discord, Slack, Telegram, etc.) from pipelines.",
+      "category": "utility",
+      "command": {
+        "base": "notify",
+        "flags": [
+          { "name": "-silent", "type": "boolean", "description": "Silent mode", "default": false },
+          { "name": "-id", "type": "string", "description": "Notification ID", "required": false },
+          { "name": "-data", "type": "path", "description": "File with data to send", "required": false },
+          { "name": "-bulk", "type": "boolean", "description": "Bulk mode", "default": false },
+          { "name": "-provider-config", "type": "path", "description": "Custom provider config", "required": false }
+        ],
+        "positional": [],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "go install -v github.com/projectdiscovery/notify/cmd/notify@latest", "manager": "go" },
+        "darwin": { "command": "go install -v github.com/projectdiscovery/notify/cmd/notify@latest", "manager": "go" },
+        "win32": { "command": "go install -v github.com/projectdiscovery/notify/cmd/notify@latest", "manager": "go" }
+      },
+      "check_installed": {
+        "command": "notify -version",
+        "exit_code": 0,
+        "parse_version": "Current Version: ([\\d.]+)"
+      },
+      "skills_loader": "notify-alert",
+      "phase": ["utility", "reporting"],
+      "tags": ["notification", "alert", "discord", "slack", "telegram"],
+      "requires_root": false,
+      "output_format": ["text"],
+      "homepage": "https://github.com/projectdiscovery/notify",
+      "alternatives": []
+    },
+
+    {
+      "tools_name": "grep",
+      "description": "Pattern matching utility. Essential for filtering and searching output from security tools.",
+      "category": "utility",
+      "command": {
+        "base": "grep",
+        "flags": [
+          { "name": "-i", "type": "boolean", "description": "Case insensitive", "default": false },
+          { "name": "-v", "type": "boolean", "description": "Invert match", "default": false },
+          { "name": "-E", "type": "boolean", "description": "Extended regex", "default": false },
+          { "name": "-o", "type": "boolean", "description": "Only matching part", "default": false },
+          { "name": "-n", "type": "boolean", "description": "Line numbers", "default": false },
+          { "name": "-c", "type": "boolean", "description": "Count matches", "default": false },
+          { "name": "-r", "type": "boolean", "description": "Recursive", "default": false },
+          { "name": "-l", "type": "boolean", "description": "List files with matches", "default": false }
+        ],
+        "positional": [
+          { "name": "pattern", "type": "string", "description": "Search pattern", "required": true },
+          { "name": "file", "type": "path", "description": "File(s) to search", "required": false }
+        ],
+        "pipes": ["sort", "uniq", "anew"]
+      },
+      "installation": {
+        "linux": { "command": "Pre-installed on Linux", "manager": "system" },
+        "darwin": { "command": "Pre-installed on macOS", "manager": "system" },
+        "win32": { "command": "Use Git Bash or WSL", "manager": "git-bash" }
+      },
+      "check_installed": {
+        "command": "grep --version",
+        "exit_code": 0
+      },
+      "skills_loader": "grep-search",
+      "phase": ["utility"],
+      "tags": ["search", "filter", "regex", "essential"],
+      "requires_root": false,
+      "output_format": ["text"],
+      "homepage": "https://www.gnu.org/software/grep/",
+      "alternatives": ["rg"]
+    },
+
+    {
+      "tools_name": "sort",
+      "description": "Sort lines of text. Essential for organizing output from security tools.",
+      "category": "utility",
+      "command": {
+        "base": "sort",
+        "flags": [
+          { "name": "-u", "type": "boolean", "description": "Unique (remove duplicates)", "default": false },
+          { "name": "-r", "type": "boolean", "description": "Reverse order", "default": false },
+          { "name": "-n", "type": "boolean", "description": "Numeric sort", "default": false },
+          { "name": "-R", "type": "boolean", "description": "Random shuffle", "default": false },
+          { "name": "-o", "type": "path", "description": "Output file", "required": false },
+          { "name": "-k", "type": "string", "description": "Sort by key (field)", "required": false },
+          { "name": "-t", "type": "string", "description": "Field separator", "required": false }
+        ],
+        "positional": [
+          { "name": "file", "type": "path", "description": "File to sort", "required": false }
+        ],
+        "pipes": ["uniq", "head", "tail"]
+      },
+      "installation": {
+        "linux": { "command": "Pre-installed on Linux", "manager": "system" },
+        "darwin": { "command": "Pre-installed on macOS", "manager": "system" },
+        "win32": { "command": "Use Git Bash or WSL", "manager": "git-bash" }
+      },
+      "check_installed": {
+        "command": "sort --version",
+        "exit_code": 0
+      },
+      "skills_loader": "sort-util",
+      "phase": ["utility"],
+      "tags": ["sort", "unique", "essential"],
+      "requires_root": false,
+      "output_format": ["text"],
+      "homepage": "https://www.gnu.org/software/coreutils/",
+      "alternatives": []
+    },
+
+    {
+      "tools_name": "uniq",
+      "description": "Remove duplicate adjacent lines. Usually used after sort for deduplication.",
+      "category": "utility",
+      "command": {
+        "base": "uniq",
+        "flags": [
+          { "name": "-c", "type": "boolean", "description": "Count occurrences", "default": false },
+          { "name": "-d", "type": "boolean", "description": "Only show duplicates", "default": false },
+          { "name": "-u", "type": "boolean", "description": "Only show unique lines", "default": false },
+          { "name": "-i", "type": "boolean", "description": "Case insensitive", "default": false }
+        ],
+        "positional": [
+          { "name": "input", "type": "path", "description": "Input file", "required": false },
+          { "name": "output", "type": "path", "description": "Output file", "required": false }
+        ],
+        "pipes": ["grep", "sort"]
+      },
+      "installation": {
+        "linux": { "command": "Pre-installed on Linux", "manager": "system" },
+        "darwin": { "command": "Pre-installed on macOS", "manager": "system" },
+        "win32": { "command": "Use Git Bash or WSL", "manager": "git-bash" }
+      },
+      "check_installed": {
+        "command": "uniq --version",
+        "exit_code": 0
+      },
+      "skills_loader": "uniq-dedup",
+      "phase": ["utility"],
+      "tags": ["dedup", "unique", "essential"],
+      "requires_root": false,
+      "output_format": ["text"],
+      "homepage": "https://www.gnu.org/software/coreutils/",
+      "alternatives": ["sort -u"]
+    },
+
+    {
+      "tools_name": "burpsuite",
+      "description": "Web application security testing platform. Proxy, scanner, intruder, repeater, and more.",
+      "category": "exploitation",
+      "command": {
+        "base": "burpsuite",
+        "flags": [
+          { "name": "--headless", "type": "boolean", "description": "Run in headless mode", "default": false },
+          { "name": "--project-file", "type": "path", "description": "Project file", "required": false },
+          { "name": "--config-file", "type": "path", "description": "Config file", "required": false }
+        ],
+        "positional": [],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "Download from https://portswigger.net/burp/download", "manager": "manual" },
+        "darwin": { "command": "brew install --cask burp-suite", "manager": "brew" },
+        "win32": { "command": "Download from https://portswigger.net/burp/download", "manager": "manual" }
+      },
+      "check_installed": {
+        "command": "which burpsuite || echo 'not found'",
+        "exit_code": 0
+      },
+      "skills_loader": "burpsuite-web",
+      "phase": ["enumeration", "exploitation"],
+      "tags": ["proxy", "scanner", "web", "professional"],
+      "requires_root": false,
+      "output_format": ["xml", "json", "html"],
+      "homepage": "https://portswigger.net/burp",
+      "alternatives": ["owasp-zap", "nuclei"]
+    },
+
+    {
+      "tools_name": "owasp-zap",
+      "description": "OWASP Zed Attack Proxy. Free, open-source web application security scanner.",
+      "category": "exploitation",
+      "command": {
+        "base": "zap-cli",
+        "flags": [
+          { "name": "--api-key", "type": "string", "description": "ZAP API key", "required": false },
+          { "name": "quick-scan", "type": "boolean", "description": "Run quick scan", "default": false },
+          { "name": "full-scan", "type": "boolean", "description": "Run full scan", "default": false },
+          { "name": "--spider", "type": "boolean", "description": "Enable spidering", "default": true },
+          { "name": "--ajax", "type": "boolean", "description": "Enable AJAX spider", "default": false },
+          { "name": "-r", "type": "path", "description": "Report file", "required": false },
+          { "name": "-f", "type": "choice", "description": "Report format", "choices": ["html", "xml", "json", "md"], "default": "html" }
+        ],
+        "positional": [
+          { "name": "url", "type": "string", "description": "Target URL", "required": true }
+        ],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "sudo apt-get install -y zaproxy && pip3 install zapcli", "manager": "apt+pip" },
+        "darwin": { "command": "brew install --cask owasp-zap && pip3 install zapcli", "manager": "brew+pip" },
+        "win32": { "command": "Download from https://www.zaproxy.org/download/", "manager": "manual" }
+      },
+      "check_installed": {
+        "command": "zap-cli --version",
+        "exit_code": 0
+      },
+      "skills_loader": "zap-scan",
+      "phase": ["enumeration", "exploitation"],
+      "tags": ["proxy", "scanner", "web", "owasp", "free"],
+      "requires_root": false,
+      "output_format": ["html", "xml", "json", "markdown"],
+      "homepage": "https://www.zaproxy.org",
+      "alternatives": ["burpsuite", "nuclei"]
+    }
+  ]
+}

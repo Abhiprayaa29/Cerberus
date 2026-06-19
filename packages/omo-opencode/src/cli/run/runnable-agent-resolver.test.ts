@@ -1,4 +1,4 @@
-import { describe, expect, it, mock } from "bun:test"
+﻿import { describe, expect, it, mock } from "bun:test"
 import { unsafeTestValue } from "../../../../../test-support/unsafe-test-value"
 import { resolveRunnableRunAgent, type RunAgentListClient } from "./runnable-agent-resolver"
 
@@ -15,20 +15,20 @@ function createClient(agentNames: readonly string[]): RunAgentListClient {
 }
 
 describe("resolveRunnableRunAgent", () => {
-  it("#given server exposes Sisyphus by display name #when run agent is config key #then returns registered display name", async () => {
+  it("#given server exposes Cerberus by display name #when run agent is config key #then returns registered display name", async () => {
     // given
-    const client = createClient(["Sisyphus - ultraworker", "general"])
+    const client = createClient(["Cerberus - fullscaner", "general"])
 
     // when
-    const agent = await resolveRunnableRunAgent(client, "sisyphus")
+    const agent = await resolveRunnableRunAgent(client, "cerberus")
 
     // then
-    expect(agent).toBe("Sisyphus - ultraworker")
+    expect(agent).toBe("Cerberus - fullscaner")
   })
 
   it("#given requested custom agent exists exactly #when resolving runnable agent #then preserves custom name", async () => {
     // given
-    const client = createClient(["custom-agent", "Sisyphus - ultraworker"])
+    const client = createClient(["custom-agent", "Cerberus - fullscaner"])
 
     // when
     const agent = await resolveRunnableRunAgent(client, "custom-agent")
@@ -39,13 +39,13 @@ describe("resolveRunnableRunAgent", () => {
 
   it("#given known display-name input #when resolving runnable agent #then returns server registered casing", async () => {
     // given
-    const client = createClient(["Sisyphus - ultraworker"])
+    const client = createClient(["Cerberus - fullscaner"])
 
     // when
-    const agent = await resolveRunnableRunAgent(client, "Sisyphus - Ultraworker")
+    const agent = await resolveRunnableRunAgent(client, "Cerberus - Ultraworker")
 
     // then
-    expect(agent).toBe("Sisyphus - ultraworker")
+    expect(agent).toBe("Cerberus - fullscaner")
   })
 
   it("#given built-in agent has configured display name #when resolving config key #then returns configured server name", async () => {
@@ -53,9 +53,9 @@ describe("resolveRunnableRunAgent", () => {
     const client = createClient(["总指挥"])
 
     // when
-    const agent = await resolveRunnableRunAgent(client, "sisyphus", {
+    const agent = await resolveRunnableRunAgent(client, "cerberus", {
       agents: {
-        sisyphus: {
+        cerberus: {
           displayName: "总指挥",
         },
       },
@@ -74,9 +74,9 @@ describe("resolveRunnableRunAgent", () => {
     })
 
     // when
-    const agent = await resolveRunnableRunAgent(client, "sisyphus")
+    const agent = await resolveRunnableRunAgent(client, "cerberus")
 
     // then
-    expect(agent).toBe("sisyphus")
+    expect(agent).toBe("cerberus")
   })
 })

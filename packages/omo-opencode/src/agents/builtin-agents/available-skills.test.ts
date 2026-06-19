@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 import { describe, expect, it, test } from "bun:test"
 import type { LoadedSkill, SkillScope } from "../../features/opencode-skill-loader/types"
 import { buildAvailableSkills } from "./available-skills"
@@ -51,35 +51,35 @@ describe("buildAvailableSkills", () => {
 describe("buildAvailableSkills - agentName filtering", () => {
   it("includes agent-restricted skill when agentName is not provided (backward compat)", () => {
     // given
-    const skills = [makeSkill("oracle-only", { agent: "oracle" })]
+    const skills = [makeSkill("cipher-only", { agent: "cipher" })]
 
     // when
     const result = buildAvailableSkills(skills, undefined, undefined, undefined, undefined)
 
     // then: no agentName → no filtering, skill is included
-    expect(result.map((s) => s.name)).toContain("oracle-only")
+    expect(result.map((s) => s.name)).toContain("cipher-only")
   })
 
   it("includes skill when agentName matches the skill's agent field", () => {
     // given
-    const skills = [makeSkill("sisyphus-only", { agent: "sisyphus" })]
+    const skills = [makeSkill("cerberus-only", { agent: "cerberus" })]
 
     // when
-    const result = buildAvailableSkills(skills, undefined, undefined, undefined, "sisyphus")
+    const result = buildAvailableSkills(skills, undefined, undefined, undefined, "cerberus")
 
     // then: matching agent → included
-    expect(result.map((s) => s.name)).toContain("sisyphus-only")
+    expect(result.map((s) => s.name)).toContain("cerberus-only")
   })
 
   it("excludes skill when agentName does not match the skill's agent field", () => {
     // given
-    const skills = [makeSkill("sisyphus-only", { agent: "sisyphus" })]
+    const skills = [makeSkill("cerberus-only", { agent: "cerberus" })]
 
     // when
-    const result = buildAvailableSkills(skills, undefined, undefined, undefined, "oracle")
+    const result = buildAvailableSkills(skills, undefined, undefined, undefined, "cipher")
 
     // then: wrong agent → excluded
-    expect(result.map((s) => s.name)).not.toContain("sisyphus-only")
+    expect(result.map((s) => s.name)).not.toContain("cerberus-only")
   })
 
   it("includes skill with no agent field regardless of agentName", () => {
@@ -87,7 +87,7 @@ describe("buildAvailableSkills - agentName filtering", () => {
     const skills = [makeSkill("public-skill")]
 
     // when
-    const result = buildAvailableSkills(skills, undefined, undefined, undefined, "sisyphus")
+    const result = buildAvailableSkills(skills, undefined, undefined, undefined, "cerberus")
 
     // then: no agent restriction → always included
     expect(result.map((s) => s.name)).toContain("public-skill")
@@ -97,18 +97,18 @@ describe("buildAvailableSkills - agentName filtering", () => {
     // given
     const skills = [
       makeSkill("public-skill"),
-      makeSkill("sisyphus-only", { agent: "sisyphus" }),
-      makeSkill("oracle-only", { agent: "oracle" }),
+      makeSkill("cerberus-only", { agent: "cerberus" }),
+      makeSkill("cipher-only", { agent: "cipher" }),
     ]
 
     // when
-    const result = buildAvailableSkills(skills, undefined, undefined, undefined, "sisyphus")
+    const result = buildAvailableSkills(skills, undefined, undefined, undefined, "cerberus")
 
     // then
     const names = result.map((s) => s.name)
     expect(names).toContain("public-skill")
-    expect(names).toContain("sisyphus-only")
-    expect(names).not.toContain("oracle-only")
+    expect(names).toContain("cerberus-only")
+    expect(names).not.toContain("cipher-only")
   })
 
   it("deduplicates skills with discovered taking priority over builtin", () => {
@@ -143,7 +143,7 @@ describe("buildAvailableSkills - agentName filtering", () => {
     const disabledSkills = new Set(["blocked-skill"])
 
     // when
-    const result = buildAvailableSkills(skills, undefined, disabledSkills, undefined, "sisyphus")
+    const result = buildAvailableSkills(skills, undefined, disabledSkills, undefined, "cerberus")
 
     // then
     expect(result.map((s) => s.name)).not.toContain("Blocked-Skill")
@@ -168,7 +168,7 @@ describe("buildAvailableSkills - agentName filtering", () => {
         scope: "project",
       }),
     ]
-    const coreAgents = ["sisyphus", "hephaestus", "atlas"]
+    const coreAgents = ["cerberus", "scylla", "argus"]
 
     for (const agentName of coreAgents) {
       // when
@@ -195,7 +195,7 @@ describe("buildAvailableSkills - agentName filtering", () => {
     ]
 
     // when
-    const result = buildAvailableSkills(skills, undefined, undefined, undefined, "sisyphus")
+    const result = buildAvailableSkills(skills, undefined, undefined, undefined, "cerberus")
 
     // then
     expect(result.map((s) => s.description)).toContain(customDescription)

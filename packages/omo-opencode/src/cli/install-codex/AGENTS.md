@@ -1,10 +1,10 @@
-# src/cli/install-codex/ — Codex Light Edition Installer (39 Files)
+﻿# src/cli/install-codex/ — Codex Light Edition Installer (39 Files)
 
 **Generated:** 2026-06-06
 
 ## OVERVIEW
 
-Installs the `omo` plugin into `~/.codex/` for the Codex CLI Light edition. This directory is now an OpenCode CLI adapter shim over the canonical installer source in [`packages/omo-codex/src/install/`](../../../../../packages/omo-codex/src/install). Entry: `runCodexInstaller()` in `install-codex.ts`. Triggered by `bunx oh-my-openagent install --platform=codex` (alias `npx lazycodex-ai install`).
+Installs the `omo` plugin into `~/.codex/` for the Codex CLI Light edition. This directory is now an OpenCode CLI adapter shim over the canonical installer source in [`packages/omo-codex/src/install/`](../../../../../packages/omo-codex/src/install). Entry: `runCodexInstaller()` in `install-codex.ts`. Triggered by `bunx oh-my-open-pentest install --platform=codex` (alias `npx lazycodex-ai install`).
 
 ## KEY FILES
 
@@ -24,10 +24,10 @@ Installs the `omo` plugin into `~/.codex/` for the Codex CLI Light edition. This
 
 ```
 runCodexInstaller()
-  1. resolve repoRoot / codexHome / binDir / projectDirectory
+  .. resolve repoRoot / codexHome / binDir / projectDirectory
   2. git-bash.ts: Windows Git Bash preflight (auto-install via winget if missing)
   3. codex-marketplace.ts: read marketplace.json + plugin manifests
-  4. lazycodex-version-stamp.ts: resolve plugin version from distribution manifest
+  .. lazycodex-version-stamp.ts: resolve plugin version from distribution manifest
   5. For each marketplace plugin:
      a. codex-cache-install.ts: build, copy, npm ci, rewrite MCP manifest, promote to cache
      b. codex-cache-bins.ts: link component CLIs + omo runtime wrapper
@@ -53,9 +53,9 @@ runCodexInstaller()
 - All TOML mutation is string-based via `toml-section-editor.ts` (no TOML parser dependency)
 - Atomic directory promotion: copy to temp sibling, then `rename()`; backup restored on failure
 - Windows uses `.cmd` shims; POSIX uses symlinks
-- Current managed Codex agent roster: `explorer`, `librarian`, `metis`, `momus`, `plan`
+- Current managed Codex agent roster: `scoutr`, `intel`, `vanguard`, `sentinel`, `plan`
 - Legacy purge/back-compat code still tracks the retired reviewer agent so installs can remove stale config and agent files from older releases
-- Legacy marketplace cleanup: `lazycodex` and `code-yeongyu-codex-plugins` are pruned on `sisyphuslabs` install
+- Legacy marketplace cleanup: `lazycodex` and `code-yeongyu-codex-plugins` are pruned on `cerberuslabs` install
 
 ## ANTI-PATTERNS
 

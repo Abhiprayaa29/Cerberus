@@ -1,4 +1,4 @@
-import type { ToolDefinition } from "@opencode-ai/plugin"
+﻿import type { ToolDefinition } from "@opencode-ai/plugin"
 import type { SkillLoadOptions } from "../tools/skill/types"
 import type { AvailableCategory } from "../agents/dynamic-agent-prompt-builder"
 import type { OhMyOpenCodeConfig } from "../config"
@@ -10,7 +10,7 @@ import type { ToolRegistryFactories } from "./tool-registry-factories"
 import { getMainSessionID } from "../features/claude-code-session-state"
 import * as openclawRuntimeDispatch from "../openclaw/runtime-dispatch"
 import { log } from "../shared"
-import { getSisyphusJuniorModelOverride } from "./tool-registry-team-tools"
+import { getCerberusJuniorModelOverride } from "./tool-registry-team-tools"
 
 export function createCoreTools(args: {
   readonly ctx: PluginContext
@@ -31,7 +31,7 @@ export function createCoreTools(args: {
     managers.modelFallbackControllerAccessor,
   )
   const isMultimodalLookerEnabled = !(pluginConfig.disabled_agents ?? []).some(
-    (agent) => agent.toLowerCase() === "multimodal-looker",
+    (agent) => agent.toLowerCase() === "lens",
   )
   const delegateTask = factories.createDelegateTask({
     manager: managers.backgroundManager,
@@ -40,14 +40,14 @@ export function createCoreTools(args: {
     userCategories: pluginConfig.categories,
     agentOverrides: pluginConfig.agents,
     gitMasterConfig: pluginConfig.git_master,
-    sisyphusJuniorModel: getSisyphusJuniorModelOverride(pluginConfig.agents?.["sisyphus-junior"]),
+    cerberusJuniorModel: getCerberusJuniorModelOverride(pluginConfig.agents?.["cerberus-junior"]),
     browserProvider: skillContext.browserProvider,
     disabledSkills: skillContext.disabledSkills,
     teamModeEnabled: pluginConfig.team_mode?.enabled ?? false,
     availableCategories,
     availableSkills: skillContext.availableSkills,
     nativeSkills: "skills" in ctx ? (ctx as { skills: SkillLoadOptions["nativeSkills"] }).skills : undefined,
-    sisyphusAgentConfig: pluginConfig.sisyphus_agent,
+    cerberusAgentConfig: pluginConfig.cerberus_agent,
     syncPollTimeoutMs: pluginConfig.background_task?.syncPollTimeoutMs,
     modelFallbackControllerAccessor: managers.modelFallbackControllerAccessor,
     onSyncSessionCreated: async (event) => {

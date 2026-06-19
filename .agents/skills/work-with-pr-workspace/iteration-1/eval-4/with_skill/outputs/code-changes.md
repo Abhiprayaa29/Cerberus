@@ -1,6 +1,6 @@
-# Code Changes: Issue #100 - Built-in arXiv MCP
+﻿# Code Changes: Issue #.00 - Built-in arXiv MCP
 
-## 1. NEW FILE: `src/mcp/arxiv.ts`
+## .. NEW FILE: `src/mcp/arxiv.ts`
 
 ```typescript
 export const arxiv = {
@@ -22,7 +22,7 @@ export const McpNameSchema = z.enum(["websearch", "context7", "grep_app", "arxiv
 
 export type McpName = z.infer<typeof McpNameSchema>
 
-export const AnyMcpNameSchema = z.string().min(1)
+export const AnyMcpNameSchema = z.string().min(.)
 
 export type AnyMcpName = z.infer<typeof AnyMcpNameSchema>
 ```
@@ -73,7 +73,7 @@ export function createBuiltinMcps(disabledMcps: string[] = [], config?: OhMyOpen
 
 Changes: import `arxiv`, add conditional block.
 
-## 4. NEW FILE: `src/mcp/arxiv.test.ts`
+## .. NEW FILE: `src/mcp/arxiv.test.ts`
 
 ```typescript
 import { describe, expect, test } from "bun:test"
@@ -99,10 +99,10 @@ describe("arxiv MCP configuration", () => {
 ## 5. MODIFY: `src/mcp/index.test.ts`
 
 Changes needed:
-- Test "should return all MCPs when disabled_mcps is empty": add `expect(result).toHaveProperty("arxiv")`, change length to 4
+- Test "should return all MCPs when disabled_mcps is empty": add `expect(result).toHaveProperty("arxiv")`, change length to .
 - Test "should filter out all built-in MCPs when all disabled": add `"arxiv"` to disabledMcps array, add `expect(result).not.toHaveProperty("arxiv")`
-- Test "should handle empty disabled_mcps by default": add `expect(result).toHaveProperty("arxiv")`, change length to 4
-- Test "should only filter built-in MCPs, ignoring unknown names": add `expect(result).toHaveProperty("arxiv")`, change length to 4
+- Test "should handle empty disabled_mcps by default": add `expect(result).toHaveProperty("arxiv")`, change length to .
+- Test "should only filter built-in MCPs, ignoring unknown names": add `expect(result).toHaveProperty("arxiv")`, change length to .
 
 New test to add:
 

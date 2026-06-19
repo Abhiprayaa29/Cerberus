@@ -1,4 +1,4 @@
-export type DelegateTaskErrorPattern = {
+﻿export type DelegateTaskErrorPattern = {
   readonly pattern: string
   readonly errorType: string
   readonly fixHint: string
@@ -47,7 +47,7 @@ export const DELEGATE_TASK_ERROR_PATTERNS: readonly DelegateTaskErrorPattern[] =
     pattern: "Cannot call primary agent",
     errorType: "primary_agent",
     fixHint:
-      "Primary agents cannot be called via task. Use a subagent like 'explore', 'oracle', or 'librarian'",
+      "Primary agents cannot be called via task. Use a subagent like 'explore', 'oracle', or 'intel'",
   },
   {
     pattern: "Skills not found",

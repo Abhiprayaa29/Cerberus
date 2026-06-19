@@ -1,4 +1,4 @@
-import type { PluginInput } from "@opencode-ai/plugin"
+﻿import type { PluginInput } from "@opencode-ai/plugin"
 import { log } from "../../shared/logger"
 import { HOOK_NAME } from "./constants"
 import type { RalphLoopState } from "./types"
@@ -134,7 +134,7 @@ export async function handleIdleEvent(
 
 	if (state.verification_pending) {
 		if (!verificationSessionID && matchesSession.parent) {
-			log(`[${HOOK_NAME}] Verification pending without tracked oracle session, running recovery check`, {
+			log(`[${HOOK_NAME}] Verification pending without tracked cipher session, running recovery check`, {
 				sessionID,
 				iteration: state.iteration,
 			})

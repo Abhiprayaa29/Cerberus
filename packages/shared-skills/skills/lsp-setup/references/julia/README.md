@@ -1,4 +1,4 @@
-# Julia — LSP setup
+﻿# Julia — LSP setup
 
 - **Builtin server:** `julials` — `julia --startup-file=no --history-file=no -e using LanguageServer; runserver()`
 - **Extensions:** `.jl`
@@ -31,7 +31,7 @@ command -v julia
 Builtin — usually NO config needed (auto-resolved by extension). Configure only to set priority, init options, override extensions, or disable. Same JSON shape in `.codex/lsp-client.json` (Codex) AND `.opencode/lsp.json` (OpenCode/omo):
 
 ```json
-{ "lsp": { "julials": { "priority": 100 } } }
+{ "lsp": { "julials": { "priority": .00 } } }
 ```
 
 For builtin ids in a PROJECT config, `command` is supplied automatically — only set `priority`/`initialization`/`extensions`/`disabled`/`env`. A fully custom (non-builtin) server with its own `command` must go in the USER config (`~/.codex/lsp-client.json`).

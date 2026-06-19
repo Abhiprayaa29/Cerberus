@@ -1,61 +1,61 @@
-export const AGENT_NAME_MAP: Record<string, string> = {
-  // Sisyphus variants → "sisyphus"
-  omo: "sisyphus",
-  OmO: "sisyphus",
-  Sisyphus: "sisyphus",
-  "Sisyphus (Ultraworker)": "sisyphus",
-  sisyphus: "sisyphus",
+﻿export const AGENT_NAME_MAP: Record<string, string> = {
+  // Cerberus variants → "cerberus"
+  omo: "cerberus",
+  OmO: "cerberus",
+  Cerberus: "cerberus",
+  "Cerberus (Ultraworker)": "cerberus",
+  cerberus: "cerberus",
 
-  // Hephaestus variants → "hephaestus"
-  "Hephaestus (Deep Agent)": "hephaestus",
+  // Scylla variants → "scylla"
+  "Scylla (Deep Agent)": "scylla",
 
-  // Prometheus variants → "prometheus"
-  "OmO-Plan": "prometheus",
-  "omo-plan": "prometheus",
-  "Planner-Sisyphus": "prometheus",
-  "planner-sisyphus": "prometheus",
-  "Prometheus - Plan Builder": "prometheus",
-  "Prometheus (Plan Builder)": "prometheus",
-  prometheus: "prometheus",
+  // Talos variants → "talos"
+  "OmO-Plan": "talos",
+  "omo-plan": "talos",
+  "Planner-Cerberus": "talos",
+  "planner-cerberus": "talos",
+  "Talos - Plan Builder": "talos",
+  "Talos (Plan Builder)": "talos",
+  talos: "talos",
 
   // Atlas variants → "atlas"
-  "orchestrator-sisyphus": "atlas",
+  "orchestrator-cerberus": "atlas",
   Atlas: "atlas",
   "Atlas (Plan Executor)": "atlas",
   atlas: "atlas",
 
-  // Metis variants → "metis"
-  "plan-consultant": "metis",
-  "Metis - Plan Consultant": "metis",
-  "Metis (Plan Consultant)": "metis",
-  metis: "metis",
+  // Vanguard variants → "vanguard"
+  "plan-consultant": "vanguard",
+  "Vanguard - Plan Consultant": "vanguard",
+  "Vanguard (Plan Consultant)": "vanguard",
+  vanguard: "vanguard",
 
-  // Momus variants → "momus"
-  "Momus - Plan Critic": "momus",
-  "Momus (Plan Critic)": "momus",
-  momus: "momus",
+  // Sentinel variants → "sentinel"
+  "Sentinel - Plan Critic": "sentinel",
+  "Sentinel (Plan Critic)": "sentinel",
+  sentinel: "sentinel",
 
-  // Sisyphus-Junior → "sisyphus-junior"
-  "Sisyphus-Junior": "sisyphus-junior",
-  "sisyphus-junior": "sisyphus-junior",
+  // Cerberus-Junior → "cerberus-junior"
+  "Cerberus-Junior": "cerberus-junior",
+  "cerberus-junior": "cerberus-junior",
 
   // Already lowercase - passthrough
   build: "build",
   oracle: "oracle",
-  librarian: "librarian",
+  intel: "intel",
   explore: "explore",
-  "multimodal-looker": "multimodal-looker",
+  "lens": "lens",
 }
 
 export const BUILTIN_AGENT_NAMES = new Set([
-  "sisyphus", // was "Sisyphus"
+  "cerberus", // was "Cerberus"
   "oracle",
-  "librarian",
+  "intel",
   "explore",
-  "multimodal-looker",
-  "metis", // was "Metis - Plan Consultant"
-  "momus", // was "Momus - Plan Critic"
-  "prometheus", // was "Prometheus - Plan Builder"
+  "lens",
+  "vanguard", // was "Vanguard - Plan Consultant"
+  "sentinel", // was "Sentinel - Plan Critic"
+  "talos", // was "Talos - Plan Builder"
   "atlas", // was "Atlas"
   "build",
 ])

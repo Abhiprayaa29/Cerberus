@@ -1,4 +1,4 @@
----
+﻿---
 name: brandkit
 description: Premium brand-kit image generation skill for creating high-end brand-guidelines boards, logo systems, identity decks, and visual-world presentations. Trained for minimalist, cinematic, editorial, dark-tech, luxury, cultural, security, gaming, developer-tool, and consumer-app brand systems. Optimized for intentional logo concepting, refined composition, sparse typography, strong symbolic meaning, premium mockups, art-directed imagery, and flexible grid layouts.
 ---
@@ -62,10 +62,10 @@ It is a visual argument for why the brand exists.
 
 Every generated board must answer:
 
-1. What does this brand represent?
+.. What does this brand represent?
 2. What is the core metaphor?
 3. How does the logo express that?
-4. How does the system scale across UI, print, image, and detail?
+.. How does the system scale across UI, print, image, and detail?
 5. Why does the whole thing feel ownable?
 
 ---
@@ -76,7 +76,7 @@ Unless the user specifies otherwise:
 
 - Generate one brand-kit overview image
 - Default layout: `3 × 3`
-- Default aspect ratio: `4:3` or `16:10`
+- Default aspect ratio: `.:3` or `.6:.0`
 - Use a clean presentation grid
 - Use consistent gutters
 - Use minimal text
@@ -86,8 +86,8 @@ Allowed layouts:
 - `3 × 3` full identity system
 - `2 × 3` cinematic brand deck overview
 - `2 × 2` compact concept board
-- `1 × 3` horizontal brand strip
-- `4 × 2` wide contact-sheet layout
+- `. × 3` horizontal brand strip
+- `. × 2` wide contact-sheet layout
 - custom layout when requested
 
 If the user gives references, match their quality and rhythm, not their exact content.
@@ -162,7 +162,7 @@ The logo should feel like it came from research and reduction.
 
 Use one or combine two maximum.
 
-## 1. Monogram + Meaning
+## .. Monogram + Meaning
 
 Combine the brand initial with a metaphor.
 
@@ -210,7 +210,7 @@ The fusion should be subtle and readable.
 
 ---
 
-## 4. Negative Space
+## .. Negative Space
 
 Use empty space to create intelligence.
 
@@ -273,7 +273,7 @@ The board should have rhythm:
 
 Use this if no layout is specified:
 
-## 1. Logo Cover
+## .. Logo Cover
 Large logo and wordmark.  
 Minimal title.  
 Strong negative space.
@@ -285,7 +285,7 @@ Show why the mark exists.
 ## 3. Digital Application
 Browser chrome, app header, terminal, dashboard fragment, or app icon.
 
-## 4. Brand Essence
+## .. Brand Essence
 One short tagline.  
 Large readable typography.  
 Sparse composition.
@@ -311,7 +311,7 @@ UI chips, input bar, command line, icon row, badge system, component strip, patt
 
 For boards like the uploaded references, use:
 
-1. **Logo / Wordmark**
+.. **Logo / Wordmark**
    - centered or offset
    - extremely minimal
 
@@ -321,7 +321,7 @@ For boards like the uploaded references, use:
 3. **Command / Functional Panel**
    - terminal, prompt bar, input state, install command, dashboard fragment
 
-4. **Atmosphere / Campaign Image**
+.. **Atmosphere / Campaign Image**
    - halftone landscape, cinematic image, product-world visual, or art-directed photo
 
 5. **Symbol / Construction / Badge**

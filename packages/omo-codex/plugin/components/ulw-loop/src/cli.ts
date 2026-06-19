@@ -1,9 +1,9 @@
-#!/usr/bin/env node
+﻿#!/usr/bin/env node
 import { isUlwLoopSubcommand, ulwLoopCommand } from "./cli-commands.js";
 import { runPreToolUseGoalBudgetGuardCli, runUlwLoopHookCli } from "./codex-hook.js";
 
 const TOP_LEVEL_HELP =
-	"Usage:\n  omo ulw-loop <subcommand> [args]\n  omo hook user-prompt-submit         (Codex UserPromptSubmit hook)\n  omo help | --help | -h              (this message)\n\nRun `omo ulw-loop help` for ulw-loop subcommands.\n";
+	"Usage:\n  omo pentest-loop <subcommand> [args]\n  omo hook user-prompt-submit         (Codex UserPromptSubmit hook)\n  omo help | --help | -h              (this message)\n\nRun `omo pentest-loop help` for pentest-loop subcommands.\n";
 
 async function main(): Promise<number> {
 	const argv = process.argv.slice(2);
@@ -12,7 +12,7 @@ async function main(): Promise<number> {
 		process.stdout.write(TOP_LEVEL_HELP);
 		return 0;
 	}
-	if (command === "ulw-loop") return ulwLoopCommand(argv.slice(1));
+	if (command === "pentest-loop") return ulwLoopCommand(argv.slice(1));
 	if (command === "hook") {
 		const sub = argv[1];
 		if (sub === "user-prompt-submit") {

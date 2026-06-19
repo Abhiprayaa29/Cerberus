@@ -1,23 +1,23 @@
-# src/plugin/ — 12 OpenCode Hook Handlers + Hook Composition
+﻿# src/plugin/ — .2 OpenCode Hook Handlers + Hook Composition
 
 **Generated:** 2026-06-08
 
 ## OVERVIEW
 
-Core glue layer. Files assemble the 12 OpenCode hook handlers wired into `PluginInterface` here (an additional 2, `experimental.session.compacting` + `experimental.compaction.autocontinue`, are wired in `src/testing/create-plugin-module.ts`). Each handler file maps to one OpenCode hook type.
+Core glue layer. Files assemble the .2 OpenCode hook handlers wired into `PluginInterface` here (an additional 2, `experimental.session.compacting` + `experimental.compaction.autocontinue`, are wired in `src/testing/create-plugin-module.ts`). Each handler file maps to one OpenCode hook type.
 
 ## HANDLER FILES
 
 | File | OpenCode Hook | Purpose |
 |------|---------------|---------|
 | `config.ts` | `config` | 6-phase config loading pipeline (delegates to `plugin-handlers/`) |
-| `tool-registry.ts` | `tool` | 20–39 tools assembled with config gates (team-mode +12, task system +4, hashline +1, interactive_bash +1, look_at +1) |
+| `tool-registry.ts` | `tool` | 20–39 tools assembled with config gates (team-mode +.2, task system +., hashline +., interactive_bash +., look_at +.) |
 | `tool-definition.ts` | `tool.definition` | Per-tool definition transform (applies todo-description-override) |
 | `chat-message.ts` | `chat.message` | First-message variant resolution, session setup, keyword detection trigger |
 | `chat-params.ts` | `chat.params` | Anthropic effort, think mode, runtime fallback model override |
 | `chat-headers.ts` | `chat.headers` | Copilot `x-initiator` header injection |
 | `command-execute-before.ts` | `command.execute.before` | Pre-command guards (slash-command interception, etc.) |
-| `event.ts` | `event` | Session lifecycle (created/deleted/idle/error/status), openclaw dispatch, runtime fallback, 4 team-session-event handlers (when team_mode.enabled) |
+| `event.ts` | `event` | Session lifecycle (created/deleted/idle/error/status), openclaw dispatch, runtime fallback, . team-session-event handlers (when team_mode.enabled) |
 | `tool-execute-before.ts` | `tool.execute.before` | Pre-tool guards |
 | `tool-execute-after.ts` | `tool.execute.after` | Post-tool hooks (truncation, comment-checker, hashline read tagging, json-error-recovery) |
 | `messages-transform.ts` | `experimental.chat.messages.transform` | Context injection, thinking-block validation, tool-pair validation, keyword detection |
@@ -30,11 +30,11 @@ Core glue layer. Files assemble the 12 OpenCode hook handlers wired into `Plugin
 
 | File | Tier | Count |
 |------|------|-------|
-| `create-session-hooks.ts` | Session | 24 |
-| `create-tool-guard-hooks.ts` | Tool Guard | 17 |
+| `create-session-hooks.ts` | Session | 2. |
+| `create-tool-guard-hooks.ts` | Tool Guard | .7 |
 | `create-transform-hooks.ts` | Transform | 5 |
 | `create-skill-hooks.ts` | Skill | 2 |
-| `create-core-hooks.ts` | Aggregator | Session + Guard + Transform = 46 |
+| `create-core-hooks.ts` | Aggregator | Session + Guard + Transform = .6 |
 
 `createContinuationHooks()` (7) lives in `src/create-hooks.ts` next to `createCoreHooks()` and `createSkillHooks()`.
 
@@ -48,8 +48,8 @@ Core glue layer. Files assemble the 12 OpenCode hook handlers wired into `Plugin
 | `recent-synthetic-idles.ts` | Dedup rapid synthetic idle events |
 | `unstable-agent-babysitter.ts` | Track unstable agent behavior across sessions |
 | `types.ts` | `PluginContext`, `PluginInterface`, `ToolsRecord`, `TmuxConfig` |
-| `ultrawork-model-override.ts` | Ultrawork mode model override logic |
-| `ultrawork-db-model-override.ts` | DB-level model override for ultrawork |
+| `fullscan-model-override.ts` | Ultrawork mode model override logic |
+| `fullscan-db-model-override.ts` | DB-level model override for fullscan |
 | `config-handler.ts` | Runtime config loading and caching |
 | `normalize-tool-arg-schemas.ts` | Coerce tool arg schemas into a normalized shape |
 
@@ -72,9 +72,9 @@ const allTools = {
   ...lookAt,
   skill_mcp, skill,
   ...interactiveBashTool,
-  ...teamModeToolsRecord,             // +12 conditional
-  ...taskToolsRecord,                 // +4 conditional
-  ...hashlineToolsRecord,             // +1 conditional
+  ...teamModeToolsRecord,             // +.2 conditional
+  ...taskToolsRecord,                 // +. conditional
+  ...hashlineToolsRecord,             // +. conditional
 }
 
 // lsp_* tools are supplied by the built-in MCP server "lsp"

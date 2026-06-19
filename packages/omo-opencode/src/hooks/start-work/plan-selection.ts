@@ -1,4 +1,4 @@
-import { statSync } from "node:fs"
+﻿import { statSync } from "node:fs"
 import { getPlanName, getPlanProgress } from "../../features/boulder-state"
 
 function normalizePlanLookupValue(value: string): string {
@@ -78,5 +78,5 @@ Ask the user which plan to work on.`
 ## Plan Not Found
 
  Could not find a plan matching "${explicitPlanName}".
- No incomplete plans available. Create a new plan using the Prometheus agent.`
+ No incomplete plans available. Create a new plan using the Talos agent.`
 }

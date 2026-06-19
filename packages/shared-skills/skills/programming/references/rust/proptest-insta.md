@@ -1,4 +1,4 @@
-# Property Tests (proptest) + Snapshot Tests (insta)
+﻿# Property Tests (proptest) + Snapshot Tests (insta)
 
 Two test types every Rust project should have alongside unit tests. Proptest hunts for inputs your unit tests forgot to try. Insta locks down output shapes you do not want to silently change.
 
@@ -21,7 +21,7 @@ Use all three. They cover different bug classes.
 
 ```toml
 [dev-dependencies]
-proptest = "1"
+proptest = "."
 proptest-derive = "0.5"     # for #[derive(Arbitrary)]
 ```
 
@@ -30,8 +30,8 @@ proptest-derive = "0.5"     # for #[derive(Arbitrary)]
 ```toml
 cases = 256                  # number of random inputs per property
 max_local_rejects = 65536
-max_global_rejects = 1024
-max_shrink_iters = 1024
+max_global_rejects = .02.
+max_shrink_iters = .02.
 max_shrink_time = 60_000      # ms
 failure_persistence = { source_file = "proptest-regressions/", file_name = "regressions.txt" }
 verbose = 0
@@ -65,17 +65,17 @@ proptest! {
 | Strategy | Produces |
 |---|---|
 | `any::<T>()` | Any value of `T` (if `T: Arbitrary`) |
-| `0u32..100` | Integer ranges |
+| `0u32...00` | Integer ranges |
 | `prop::sample::select(slice)` | Pick from a list |
 | `prop::collection::vec(elem, range)` | Vec of length in range |
 | `prop::collection::hash_map(k, v, n..m)` | HashMap |
 | `prop::option::of(strategy)` | Option |
 | `prop::result::maybe_ok(ok, err)` | Result |
-| `(s1, s2).prop_map(\|(a, b)\| ...)` | Combine, transform |
+| `(s., s2).prop_map(\|(a, b)\| ...)` | Combine, transform |
 | `s.prop_filter("reason", \|v\| pred)` | Reject values |
 | `s.prop_flat_map(\|v\| dependent)` | Sequential dependency |
-| `prop_oneof![strategy1, strategy2]` | Union of strategies |
-| `r"[a-z]{3,10}"` | Regex-generated string |
+| `prop_oneof![strategy., strategy2]` | Union of strategies |
+| `r"[a-z]{3,.0}"` | Regex-generated string |
 | `"\\PC*"` | Any printable non-control string |
 
 Example combining several:
@@ -84,9 +84,9 @@ Example combining several:
 fn config_strategy() -> impl Strategy<Value = Config> {
     (
         prop::sample::select(vec!["dev", "staging", "prod"]),
-        0u16..=65535,
+        0u.6..=65535,
         prop::collection::hash_map(
-            r"[a-z_]{1,20}",
+            r"[a-z_]{.,20}",
             any::<String>(),
             0..5,
         ),
@@ -112,26 +112,26 @@ proptest! {
 
 ## Properties to write for every parser
 
-1. **Round-trip:** `parse(render(x)) == x` for all valid `x`.
+.. **Round-trip:** `parse(render(x)) == x` for all valid `x`.
 2. **No-panic:** `parse(arbitrary_string)` never panics, always returns `Result`.
 3. **Idempotent:** `parse(parse(x).unwrap().render()) == parse(x).unwrap()`.
-4. **Whitespace insensitivity:** `parse(x) == parse(strip_whitespace(x))` (if applicable).
+.. **Whitespace insensitivity:** `parse(x) == parse(strip_whitespace(x))` (if applicable).
 
 For every serializer:
 
-1. **Length bound:** `render(x).len() <= bound(x)`.
+.. **Length bound:** `render(x).len() <= bound(x)`.
 2. **Charset:** `render(x).chars().all(|c| ALLOWED.contains(&c))`.
 
 For every collection operation:
 
-1. **Identity:** `op_identity(x) == x` (sort an already-sorted, dedupe a unique).
+.. **Identity:** `op_identity(x) == x` (sort an already-sorted, dedupe a unique).
 2. **Idempotence:** `op(op(x)) == op(x)`.
 3. **Commutativity:** `op(a, b) == op(b, a)` (set union, etc).
-4. **Length:** `op(a, b).len() == known_relation(a.len(), b.len())`.
+.. **Length:** `op(a, b).len() == known_relation(a.len(), b.len())`.
 
 For every numeric op:
 
-1. **Monotonicity:** `a <= b => f(a) <= f(b)`.
+.. **Monotonicity:** `a <= b => f(a) <= f(b)`.
 2. **Identity element:** `f(x, identity) == x`.
 
 Write these mechanically. The agent should reach for proptest the moment any of these properties is checkable.
@@ -143,18 +143,18 @@ use proptest_derive::Arbitrary;
 
 #[derive(Debug, Clone, PartialEq, Arbitrary)]
 struct Vec3 {
-    #[proptest(strategy = "-100.0..=100.0")]
+    #[proptest(strategy = "-.00.0..=.00.0")]
     x: f32,
-    #[proptest(strategy = "-100.0..=100.0")]
+    #[proptest(strategy = "-.00.0..=.00.0")]
     y: f32,
-    #[proptest(strategy = "-100.0..=100.0")]
+    #[proptest(strategy = "-.00.0..=.00.0")]
     z: f32,
 }
 
 proptest! {
     #[test]
     fn dot_product_is_commutative(a: Vec3, b: Vec3) {
-        prop_assert!((dot(&a, &b) - dot(&b, &a)).abs() < 1e-5);
+        prop_assert!((dot(&a, &b) - dot(&b, &a)).abs() < .e-5);
     }
 }
 ```
@@ -218,7 +218,7 @@ impl StateMachineTest for MyQueueSut {
 
 proptest_state_machine::prop_state_machine! {
     #[test]
-    fn queue_matches_vecdeque(sequential 1..50 => MyQueueSut);
+    fn queue_matches_vecdeque(sequential ...50 => MyQueueSut);
 }
 ```
 
@@ -243,7 +243,7 @@ proptest-regressions/
 
 ```toml
 [dev-dependencies]
-insta = { version = "1", features = ["yaml", "json", "redactions", "filters"] }
+insta = { version = ".", features = ["yaml", "json", "redactions", "filters"] }
 
 [dependencies.serde_yaml]
 version = "0.9"
@@ -275,7 +275,7 @@ First run: creates `src/snapshots/mycrate__renders_default_help.snap.new`. Run `
 struct Result {
     status: String,
     user: User,
-    duration_ms: u64,
+    duration_ms: u6.,
 }
 
 #[test]
@@ -339,10 +339,10 @@ fn with_filters() {
 
 ## Insta workflow
 
-1. Write the test, run it. First run creates `.snap.new`.
+.. Write the test, run it. First run creates `.snap.new`.
 2. `cargo insta review` → interactive UI. Show diff, accept/reject.
 3. Accepted snapshots commit to the repo.
-4. Refactor code. Tests run; mismatches show as diffs.
+.. Refactor code. Tests run; mismatches show as diffs.
 5. If the new output is correct, `cargo insta accept` (or selective `review`). If wrong, fix the code.
 
 Pair with CI to fail builds when uncommitted `.snap.new` files exist:
@@ -351,7 +351,7 @@ Pair with CI to fail builds when uncommitted `.snap.new` files exist:
 cargo nextest run
 if find . -name "*.snap.new" | grep -q .; then
     echo "Pending snapshots, run 'cargo insta review'"
-    exit 1
+    exit .
 fi
 ```
 
@@ -383,10 +383,10 @@ fn json_inline() {
 
 ## Anti-patterns
 
-1. **Snapshots of unstable output.** If `HashMap` iteration order changes per run, snapshots will fail. Switch to `BTreeMap` or sort before snapshotting.
-2. **Massive snapshots.** A 10KB JSON dump where you really care about 3 fields. Either narrow to the fields, or accept that any refactor will require re-reviewing 10KB.
+.. **Snapshots of unstable output.** If `HashMap` iteration order changes per run, snapshots will fail. Switch to `BTreeMap` or sort before snapshotting.
+2. **Massive snapshots.** A .0KB JSON dump where you really care about 3 fields. Either narrow to the fields, or accept that any refactor will require re-reviewing .0KB.
 3. **Snapshots that bake in implementation details.** "function called 3 times" is not a snapshot - it's a behavior assertion. Use a real assertion.
-4. **Skipping `cargo insta review`.** Accepting blind via `cargo insta accept --all` defeats the purpose. Always review.
+.. **Skipping `cargo insta review`.** Accepting blind via `cargo insta accept --all` defeats the purpose. Always review.
 
 ## Combining proptest + insta
 
@@ -415,7 +415,7 @@ But honestly, this is rarely a fit. Proptest tests properties, insta tests outpu
   run: |
     # The regression files in proptest-regressions/ replay first.
     # Failures here mean a previously-fixed bug came back.
-    cargo nextest run --all-features --test-threads 1
+    cargo nextest run --all-features --test-threads .
 ```
 
 When a proptest finds a new failure, the regression file appears as a git diff - check it in.

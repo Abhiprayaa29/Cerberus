@@ -1,4 +1,4 @@
-import assert from "node:assert/strict";
+﻿import assert from "node:assert/strict";
 import { readdir, readFile } from "node:fs/promises";
 import { join } from "node:path";
 import test from "node:test";
@@ -24,7 +24,7 @@ test("#given aggregate plugin manifest #when inspected #then it owns the omo nam
 	assert.equal(mcpPath, "./.mcp.json");
 });
 
-test("#given aggregate plugin metadata #when inspected #then ulw-loop is the public loop name", async () => {
+test("#given aggregate plugin metadata #when inspected #then pentest-loop is the public loop name", async () => {
 	// given
 	const manifestText = await readFile(join(root, ".codex-plugin", "plugin.json"), "utf8");
 	const manifest = JSON.parse(manifestText);
@@ -33,7 +33,7 @@ test("#given aggregate plugin metadata #when inspected #then ulw-loop is the pub
 	const longDescription = String(manifest.interface?.longDescription ?? "");
 
 	// then
-	assert.match(longDescription, /ulw-loop/);
+	assert.match(longDescription, /pentest-loop/);
 });
 
 test("#given component directories #when scanned #then only intentional resource roots declare plugin manifests", async () => {
@@ -61,8 +61,8 @@ test("#given component directories #when scanned #then only intentional resource
 		"rules",
 		"start-work-continuation",
 		"telemetry",
-		"ultrawork",
-		"ulw-loop",
+		"fullscan",
+		"pentest-loop",
 	]);
 	for (const name of componentNames) {
 		const expectedManifest = expectedComponentManifests.get(name);

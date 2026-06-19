@@ -1,10 +1,10 @@
-/// <reference path="../../../../../bun-test.d.ts" />
+﻿/// <reference path="../../../../../bun-test.d.ts" />
 
 import { describe, expect, test } from "bun:test"
-import { createRalphLoopEventHandler } from "./ralph-loop-event-handler"
+import { createRalphLoopEventHandler } from "./pentest-loop-event-handler"
 import type { IterationCommitExpectation, RalphLoopState } from "./types"
 
-describe("ralph-loop iteration commit ownership", () => {
+describe("pentest-loop iteration commit ownership", () => {
 	test("#given reset strategy creates a new session #when dispatch commits #then CAS expects the new owner", async () => {
 		// given
 		const commitExpectations: IterationCommitExpectation[] = []
@@ -19,7 +19,7 @@ describe("ralph-loop iteration commit ownership", () => {
 			strategy: "reset",
 		}
 		const handler = createRalphLoopEventHandler({
-			directory: "/tmp/ralph-loop-iteration-commit-ownership",
+			directory: "/tmp/pentest-loop-iteration-commit-ownership",
 			client: {
 				session: {
 					messages: async () => ({ data: [] }),
@@ -32,7 +32,7 @@ describe("ralph-loop iteration commit ownership", () => {
 				},
 			},
 		} as never, {
-			directory: "/tmp/ralph-loop-iteration-commit-ownership",
+			directory: "/tmp/pentest-loop-iteration-commit-ownership",
 			apiTimeoutMs: 5000,
 			idleSettleMs: 0,
 			getTranscriptPath: () => undefined,

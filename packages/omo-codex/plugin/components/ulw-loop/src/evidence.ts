@@ -1,4 +1,4 @@
-import { essentialCriteriaOf, hasAllCriteriaPass, hasEssentialCriteriaPass } from "./goal-status.js";
+﻿import { essentialCriteriaOf, hasAllCriteriaPass, hasEssentialCriteriaPass } from "./goal-status.js";
 import type { UlwLoopScope } from "./paths.js";
 import { appendLedger, readUlwLoopPlan, withUlwLoopMutationLock, writePlan } from "./plan-io.js";
 import type { UlwLoopItem, UlwLoopLedgerEntry, UlwLoopPlan, UlwLoopSuccessCriterion } from "./types.js";
@@ -188,7 +188,7 @@ export function unresolvedEssentialCriteriaOf(goal: UlwLoopItem): readonly UlwLo
 
 export function requireAllCriteriaPass(goal: UlwLoopItem): void {
 	if (hasAllCriteriaPass(goal)) return;
-	throw new UlwLoopError(`Goal ${goal.id} has unresolved success criteria.`, "ulw_loop_criteria_not_all_pass", {
+	throw new UlwLoopError(`Goal ${goal.id} has unresolved success criteria.`, "pentest_loop_criteria_not_all_pass", {
 		details: {
 			goalId: goal.id,
 			unresolved: unresolvedCriteriaOf(goal).map((criterion) => ({ id: criterion.id, status: criterion.status })),
@@ -205,7 +205,7 @@ export function requireAllPlanCriteriaPass(plan: UlwLoopPlan): void {
 		})),
 	);
 	if (unresolved.length === 0) return;
-	throw new UlwLoopError("Ulw-loop aggregate has unresolved success criteria.", "ulw_loop_criteria_not_all_pass", {
+	throw new UlwLoopError("Ulw-loop aggregate has unresolved success criteria.", "pentest_loop_criteria_not_all_pass", {
 		details: { unresolved },
 	});
 }
@@ -214,7 +214,7 @@ export function requireEssentialCriteriaPass(goal: UlwLoopItem): void {
 	if (hasEssentialCriteriaPass(goal)) return;
 	throw new UlwLoopError(
 		`Goal ${goal.id} has unresolved essential success criteria.`,
-		"ulw_loop_criteria_not_all_pass",
+		"pentest_loop_criteria_not_all_pass",
 		{
 			details: {
 				goalId: goal.id,

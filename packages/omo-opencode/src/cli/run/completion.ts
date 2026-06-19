@@ -1,4 +1,4 @@
-import pc from "picocolors"
+﻿import pc from "picocolors"
 import type { RunContext, Todo, ChildSession, SessionStatus } from "./types"
 import { normalizeSDKResponse } from "../../shared"
 import {
@@ -50,7 +50,7 @@ function areContinuationHooksIdle(
   }
 
   if (continuationState.hasActiveRalphLoop) {
-    logWaiting(ctx, "ralph-loop continuation is active")
+    logWaiting(ctx, "pentest-loop continuation is active")
     return false
   }
 

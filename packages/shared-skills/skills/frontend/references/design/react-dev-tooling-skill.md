@@ -1,4 +1,4 @@
-# React Dev Tooling Defaults
+﻿# React Dev Tooling Defaults
 
 When setting up or working on a React project, install three dev-only tools by default unless the user explicitly opts out. They make every coding agent's frontend work measurably faster and the resulting code measurably better.
 
@@ -7,8 +7,8 @@ When setting up or working on a React project, install three dev-only tools by d
 | Tool | What it does | Why it's a default |
 |---|---|---|
 | **react-grab** | Cmd/Ctrl+C on any UI element copies its source location + nearby code + component stack into the clipboard, formatted for an AI agent to act on. | Cuts agent edit time **~2×** because the agent receives the actual source coordinates instead of guessing from a screenshot. From the author of Million.dev. |
-| **react-scan** | Visually highlights every component render in dev. Detects unnecessary re-renders, slow renders, and tracks render causes. Has a headless `react-scan/lite` mode for automated perf measurement. | Catches re-render regressions the moment they happen, before they ship. Pairs with the perfection ruleset (`../perfection/README.md`) for Lighthouse 100 work. |
-| **react-doctor** | Static scanner that finds bad React patterns across state & effects, perf, architecture, security, a11y. One-shot `npx react-doctor@latest` audit + CI GitHub Action + agent-skill installer. | Catches AI-generated React anti-patterns deterministically. Run before commit and in CI. Installs itself as a Claude Code / OpenCode / Cursor / Codex skill so the agent learns from each scan. |
+| **react-scan** | Visually highlights every component render in dev. Detects unnecessary re-renders, slow renders, and tracks render causes. Has a headless `react-scan/lite` mode for automated perf measurement. | Catches re-render regressions the moment they happen, before they ship. Pairs with the perfection ruleset (`../perfection/README.md`) for Lighthouse .00 work. |
+| **react-doctor** | Static scanner that finds bad React patterns across state & effects, perf, architecture, security, a..y. One-shot `npx react-doctor@latest` audit + CI GitHub Action + agent-skill installer. | Catches AI-generated React anti-patterns deterministically. Run before commit and in CI. Installs itself as a Claude Code / OpenCode / Cursor / Codex skill so the agent learns from each scan. |
 
 All three are **dev-only** (`process.env.NODE_ENV === 'development'` or `import.meta.env.DEV`). None ship to production.
 
@@ -17,7 +17,7 @@ All three are **dev-only** (`process.env.NODE_ENV === 'development'` or `import.
 Run from project root. This is the canonical setup. Skip ONLY if the user says "no extra dev tools" or the project README explicitly forbids them.
 
 ```bash
-# 1. react-grab — adds itself to package.json + entry file with dev gate
+# .. react-grab — adds itself to package.json + entry file with dev gate
 npx grab@latest init
 
 # 2. react-doctor — first audit + agent-skill install
@@ -143,7 +143,7 @@ const isDev = import.meta.env.DEV;
 
 react-doctor is a one-shot CLI plus a CI action, NOT a runtime injection. Wire it in three places:
 
-1. **As an agent skill** so your coding agent learns from each scan and avoids the issues next time:
+.. **As an agent skill** so your coding agent learns from each scan and avoids the issues next time:
 
    ```bash
    npx react-doctor@latest install
@@ -171,7 +171,7 @@ react-doctor is a one-shot CLI plus a CI action, NOT a runtime injection. Wire i
      audit:
        runs-on: ubuntu-latest
        steps:
-         - uses: actions/checkout@v4
+         - uses: actions/checkout@v.
          - uses: millionco/react-doctor@main
    ```
 
@@ -183,7 +183,7 @@ The `NODE_ENV === "development"` gate already keeps these out of production. For
 // entry file
 const enableDevTools =
   process.env.NODE_ENV === "development" &&
-  process.env.NEXT_PUBLIC_DISABLE_REACT_DEVTOOLS !== "1";
+  process.env.NEXT_PUBLIC_DISABLE_REACT_DEVTOOLS !== ".";
 
 if (enableDevTools) {
   void import("react-grab");
@@ -191,7 +191,7 @@ if (enableDevTools) {
 }
 ```
 
-Then `NEXT_PUBLIC_DISABLE_REACT_DEVTOOLS=1 npm run dev` skips both without re-editing code.
+Then `NEXT_PUBLIC_DISABLE_REACT_DEVTOOLS=. npm run dev` skips both without re-editing code.
 
 For Vite use `VITE_DISABLE_REACT_DEVTOOLS`, for CRA use `REACT_APP_DISABLE_REACT_DEVTOOLS`. The variable name MUST start with the framework's required prefix or it won't reach the bundle.
 
@@ -199,7 +199,7 @@ For Vite use `VITE_DISABLE_REACT_DEVTOOLS`, for CRA use `REACT_APP_DISABLE_REACT
 
 - **The project is not React.** None of these apply to Solid, Svelte, Vue, Qwik, or any non-React framework. Skip silently.
 - **The user explicitly said "no extra dev dependencies"** or the README forbids them. Respect that.
-- **The project ships React 16 or earlier.** react-scan and react-doctor target modern React (17+, often 18+). Check `package.json` first; if the project is on legacy React, skip the runtime tools and only run react-doctor's static scan (it's framework-tolerant).
+- **The project ships React .6 or earlier.** react-scan and react-doctor target modern React (.7+, often .8+). Check `package.json` first; if the project is on legacy React, skip the runtime tools and only run react-doctor's static scan (it's framework-tolerant).
 - **The project is a library, not an app.** Libraries have no entry file to inject into; only consumers (apps) should run the runtime tools. The static scan still applies.
 
 ## Verification
@@ -207,7 +207,7 @@ For Vite use `VITE_DISABLE_REACT_DEVTOOLS`, for CRA use `REACT_APP_DISABLE_REACT
 After install, sanity-check that the tools are loaded ONLY in dev:
 
 ```bash
-# 1. Build for production
+# .. Build for production
 npm run build && npm run start  # or vite build && vite preview, etc.
 
 # 2. Open the production URL and verify
@@ -221,7 +221,7 @@ If any of those leak into production, the dev gate is broken. Fix the gate befor
 
 ## Cross-skill references
 
-- For **render performance / Lighthouse 100** work, see `../perfection/react-perf-tooling.md` — Playwright + `react-scan/lite` integration used during automated audits.
+- For **render performance / Lighthouse .00** work, see `../perfection/react-perf-tooling.md` — Playwright + `react-scan/lite` integration used during automated audits.
 - For **debugging an in-flight React bug**, see `../../debugging/references/tools/react-devtools.md` — runtime/static use during a bug hunt rather than initial setup.
 - The Phase 0 Design System Gate (in `README.md`) and this React Dev Tooling Gate are both pre-implementation gates. Run Phase 0 first (design system must exist), then this gate (dev tooling must be installed).
 

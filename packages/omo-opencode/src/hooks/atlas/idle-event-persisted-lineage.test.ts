@@ -1,4 +1,4 @@
-declare const require: (name: string) => any
+﻿declare const require: (name: string) => any
 const { afterEach, beforeEach, describe, expect, mock, test, afterAll } = require("bun:test")
 import { existsSync, mkdirSync, rmSync, writeFileSync } from "node:fs"
 import { tmpdir } from "node:os"
@@ -10,7 +10,7 @@ import { _resetForTesting, registerAgentName, setSessionAgent } from "../../feat
 import type { BoulderState } from "../../features/boulder-state"
 import { unsafeTestValue } from "../../../../../test-support/unsafe-test-value"
 
-const TEST_STORAGE_ROOT = join(tmpdir(), `atlas-persisted-lineage-storage-${randomUUID()}`)
+const TEST_STORAGE_ROOT = join(tmpdir(), `argus-persisted-lineage-storage-${randomUUID()}`)
 const TEST_MESSAGE_STORAGE = join(TEST_STORAGE_ROOT, "message")
 const TEST_PART_STORAGE = join(TEST_STORAGE_ROOT, "part")
 
@@ -33,9 +33,9 @@ mock.module("../../shared/opencode-storage-detection", () => ({
 
 afterAll(() => { mock.restore() })
 
-const { createAtlasHook } = await import("./index")
+const { createArgusHook } = await import("./index")
 
-describe("atlas hook idle-event persisted lineage", () => {
+describe("argus hook idle-event persisted lineage", () => {
   const MAIN_SESSION_ID = "ses_main_session"
   let testDirectory = ""
   let promptCalls: Array<unknown> = []
@@ -59,7 +59,7 @@ describe("atlas hook idle-event persisted lineage", () => {
     parentSessionIDs?: Record<string, string | undefined>,
     messagesBySession?: Record<string, Array<{ info: { agent: string; providerID: string; modelID: string } }>>,
   ) {
-    return createAtlasHook(unsafeTestValue<Parameters<typeof createAtlasHook>[0]>({
+    return createArgusHook(unsafeTestValue<Parameters<typeof createArgusHook>[0]>({
       directory: testDirectory,
       client: {
         session: {
@@ -84,13 +84,13 @@ describe("atlas hook idle-event persisted lineage", () => {
   }
 
   beforeEach(() => {
-    testDirectory = join(tmpdir(), `atlas-persisted-lineage-${randomUUID()}`)
+    testDirectory = join(tmpdir(), `argus-persisted-lineage-${randomUUID()}`)
     mkdirSync(testDirectory, { recursive: true })
     promptCalls = []
     clearBoulderState(testDirectory)
     _resetForTesting()
-    registerAgentName("atlas")
-    registerAgentName("sisyphus")
+    registerAgentName("argus")
+    registerAgentName("cerberus")
   })
 
   afterEach(() => {
@@ -102,7 +102,7 @@ describe("atlas hook idle-event persisted lineage", () => {
   test("does not inject continuation for untracked persisted descendant session without in-memory subagent state", async () => {
     // given
     const descendantSessionID = "ses_persisted_descendant"
-    writeIncompleteBoulder({ agent: "atlas" })
+    writeIncompleteBoulder({ agent: "argus" })
 
     const hook = createHook(
       {
@@ -110,7 +110,7 @@ describe("atlas hook idle-event persisted lineage", () => {
       },
       {
         [descendantSessionID]: [
-          { info: { agent: "atlas", providerID: "openai", modelID: "gpt-5.4" } },
+          { info: { agent: "argus", providerID: "openai", modelID: "gpt-5.4" } },
         ],
       },
     )
@@ -132,21 +132,21 @@ describe("atlas hook idle-event persisted lineage", () => {
     // given
     const descendantSessionID = "ses_persisted_mismatch"
     writeIncompleteBoulder({
-      agent: "atlas",
+      agent: "argus",
       session_ids: [MAIN_SESSION_ID, descendantSessionID],
       session_origins: {
         [MAIN_SESSION_ID]: "direct",
         [descendantSessionID]: "appended",
       },
     })
-    setSessionAgent(descendantSessionID, "sisyphus-junior")
+    setSessionAgent(descendantSessionID, "cerberus-junior")
     const hook = createHook(
       {
         [descendantSessionID]: MAIN_SESSION_ID,
       },
       {
         [descendantSessionID]: [
-          { info: { agent: "sisyphus-junior", providerID: "openai", modelID: "gpt-5.4" } },
+          { info: { agent: "cerberus-junior", providerID: "openai", modelID: "gpt-5.4" } },
         ],
       },
     )
@@ -167,7 +167,7 @@ describe("atlas hook idle-event persisted lineage", () => {
     // given
     const descendantSessionID = "ses_unresolved_descendant"
     writeIncompleteBoulder({
-      agent: "atlas",
+      agent: "argus",
       session_ids: [MAIN_SESSION_ID, descendantSessionID],
       session_origins: {
         [MAIN_SESSION_ID]: "direct",
@@ -175,7 +175,7 @@ describe("atlas hook idle-event persisted lineage", () => {
       },
     })
 
-    const hook = createAtlasHook(unsafeTestValue<Parameters<typeof createAtlasHook>[0]>({
+    const hook = createArgusHook(unsafeTestValue<Parameters<typeof createArgusHook>[0]>({
       directory: testDirectory,
       client: {
         session: {
@@ -183,7 +183,7 @@ describe("atlas hook idle-event persisted lineage", () => {
             throw new Error("session lookup failed")
           },
           messages: async () => ({
-            data: [{ info: { agent: "atlas", providerID: "openai", modelID: "gpt-5.4" } }],
+            data: [{ info: { agent: "argus", providerID: "openai", modelID: "gpt-5.4" } }],
           }),
           prompt: async (input: unknown) => {
             promptCalls.push(input)
@@ -209,18 +209,18 @@ describe("atlas hook idle-event persisted lineage", () => {
     expect(promptCalls.length).toBe(0)
   })
 
-  test("#given appended descendant lineage and matching agent #when descendant idles #then atlas injects continuation", async () => {
+  test("#given appended descendant lineage and matching agent #when descendant idles #then argus injects continuation", async () => {
     // given
     const descendantSessionID = "ses_appended_descendant_match"
     writeIncompleteBoulder({
-      agent: "atlas",
+      agent: "argus",
       session_ids: [MAIN_SESSION_ID, descendantSessionID],
       session_origins: {
         [MAIN_SESSION_ID]: "direct",
         [descendantSessionID]: "appended",
       },
     })
-    setSessionAgent(descendantSessionID, "atlas")
+    setSessionAgent(descendantSessionID, "argus")
 
     const hook = createHook(
       {
@@ -228,7 +228,7 @@ describe("atlas hook idle-event persisted lineage", () => {
       },
       {
         [descendantSessionID]: [
-          { info: { agent: "atlas", providerID: "openai", modelID: "gpt-5.4" } },
+          { info: { agent: "argus", providerID: "openai", modelID: "gpt-5.4" } },
         ],
       },
     )
@@ -245,18 +245,18 @@ describe("atlas hook idle-event persisted lineage", () => {
     expect(promptCalls.length).toBe(1)
   })
 
-  test("#given appended descendant lineage with sisyphus agent #when atlas owns boulder #then atlas still injects continuation", async () => {
+  test("#given appended descendant lineage with cerberus agent #when argus owns boulder #then argus still injects continuation", async () => {
     // given
-    const descendantSessionID = "ses_appended_descendant_sisyphus"
+    const descendantSessionID = "ses_appended_descendant_cerberus"
     writeIncompleteBoulder({
-      agent: "atlas",
+      agent: "argus",
       session_ids: [MAIN_SESSION_ID, descendantSessionID],
       session_origins: {
         [MAIN_SESSION_ID]: "direct",
         [descendantSessionID]: "appended",
       },
     })
-    setSessionAgent(descendantSessionID, "sisyphus")
+    setSessionAgent(descendantSessionID, "cerberus")
 
     const hook = createHook(
       {
@@ -264,7 +264,7 @@ describe("atlas hook idle-event persisted lineage", () => {
       },
       {
         [descendantSessionID]: [
-          { info: { agent: "sisyphus", providerID: "openai", modelID: "gpt-5.4" } },
+          { info: { agent: "cerberus", providerID: "openai", modelID: "gpt-5.4" } },
         ],
       },
     )
@@ -285,7 +285,7 @@ describe("atlas hook idle-event persisted lineage", () => {
     // given
     const descendantSessionID = "ses_direct_child_tracked"
     writeIncompleteBoulder({
-      agent: "atlas",
+      agent: "argus",
       session_ids: [MAIN_SESSION_ID, descendantSessionID],
       session_origins: {
         [MAIN_SESSION_ID]: "direct",
@@ -299,7 +299,7 @@ describe("atlas hook idle-event persisted lineage", () => {
       },
       {
         [descendantSessionID]: [
-          { info: { agent: "sisyphus-junior", providerID: "openai", modelID: "gpt-5.4" } },
+          { info: { agent: "cerberus-junior", providerID: "openai", modelID: "gpt-5.4" } },
         ],
       },
     )

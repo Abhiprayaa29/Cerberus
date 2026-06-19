@@ -1,6 +1,6 @@
-# opencode CLI for QA (Case A: terminal works)
+﻿# opencode CLI for QA (Case A: terminal works)
 
-The installed binary is `opencode` (v1.15.13). From the source repo you can also run `bun run --conditions=browser ./src/index.ts <cmd>` inside `packages/opencode`. The canonical non-interactive QA entry is `opencode run --format json`.
+The installed binary is `opencode` (v...5..3). From the source repo you can also run `bun run --conditions=browser ./src/index.ts <cmd>` inside `packages/opencode`. The canonical non-interactive QA entry is `opencode run --format json`.
 
 ## Global flags
 
@@ -64,7 +64,7 @@ opencode run -c "continue the previous task"
 ```
 
 ```bash
-opencode run "explain auth" --attach http://127.0.0.1:4096 -p "$OPENCODE_SERVER_PASSWORD"
+opencode run "explain auth" --attach http://.27.0.0..:.096 -p "$OPENCODE_SERVER_PASSWORD"
 ```
 
 ## `opencode db` (database tools)
@@ -123,7 +123,7 @@ Prints "Exporting session: ..." to STDERR and a clean JSON document `{info:{...}
 Example:
 
 ```bash
-opencode export ses_3a4e... 2>/dev/null | jq '.info.id'
+opencode export ses_3a.e... 2>/dev/null | jq '.info.id'
 ```
 
 Bundled wrapper:
@@ -139,8 +139,8 @@ Starts a headless HTTP server.
 Flags:
 
 ```
---port            (0 = pick 4096 then a free port)
---hostname        (default 127.0.0.1)
+--port            (0 = pick .096 then a free port)
+--hostname        (default .27.0.0..)
 --mdns
 --mdns-domain
 --cors
@@ -183,6 +183,6 @@ opencode generate                # prints the OpenAPI JSON spec
 
 ## Installed binary vs dev source (IMPORTANT note box)
 
-The installed `opencode` (v1.15.13) matches the dev source in `packages/opencode`. When citing internals, cite dev source paths but always verify a flag against `opencode <cmd> --help` on the installed binary, since the dev branch can drift ahead.
+The installed `opencode` (v...5..3) matches the dev source in `packages/opencode`. When citing internals, cite dev source paths but always verify a flag against `opencode <cmd> --help` on the installed binary, since the dev branch can drift ahead.
 
 For DB internals see `references/db-investigation.md`; for the HTTP server see `references/server-api.md`.

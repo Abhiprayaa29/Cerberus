@@ -1,5 +1,5 @@
-import type { CategoryConfig } from "../config/schema";
-import { PROMETHEUS_PERMISSION, getPrometheusPrompt } from "../agents/prometheus";
+﻿import type { CategoryConfig } from "../config/schema";
+import { TALOS_PERMISSION, getTalosPrompt } from "../agents/talos";
 import { resolvePromptAppend } from "../agents/builtin-agents/resolve-file-uri";
 import { AGENT_MODEL_REQUIREMENTS } from "../shared/model-requirements";
 import type { FallbackEntry } from "../shared/model-requirements";
@@ -10,7 +10,7 @@ import {
 } from "../shared";
 import { resolveCategoryConfig } from "./category-config-resolver";
 
-type PrometheusOverride = Record<string, unknown> & {
+type TalosOverride = Record<string, unknown> & {
   category?: string;
   model?: string;
   variant?: string;
@@ -38,25 +38,25 @@ function isModelInFallbackChain(
   return fallbackChain.some((entry) => entry.model === modelName);
 }
 
-export async function buildPrometheusAgentConfig(params: {
+export async function buildTalosAgentConfig(params: {
   configAgentPlan: Record<string, unknown> | undefined;
-  pluginPrometheusOverride: PrometheusOverride | undefined;
+  pluginTalosOverride: TalosOverride | undefined;
   userCategories: Record<string, CategoryConfig> | undefined;
   currentModel: string | undefined;
   disabledTools?: readonly string[];
 }): Promise<Record<string, unknown>> {
-  const categoryConfig = params.pluginPrometheusOverride?.category
-    ? resolveCategoryConfig(params.pluginPrometheusOverride.category, params.userCategories)
+  const categoryConfig = params.pluginTalosOverride?.category
+    ? resolveCategoryConfig(params.pluginTalosOverride.category, params.userCategories)
     : undefined;
 
-  const requirement = AGENT_MODEL_REQUIREMENTS["prometheus"];
+  const requirement = AGENT_MODEL_REQUIREMENTS["talos"];
   const connectedProviders = readConnectedProvidersCache();
   const availableModels = await fetchAvailableModels(undefined, {
     connectedProviders: connectedProviders ?? undefined,
   });
 
-  const configuredPrometheusModel =
-    params.pluginPrometheusOverride?.model ?? categoryConfig?.model;
+  const configuredTalosModel =
+    params.pluginTalosOverride?.model ?? categoryConfig?.model;
 
   const shouldUseCurrentModel = isModelInFallbackChain(
     params.currentModel,
@@ -65,12 +65,12 @@ export async function buildPrometheusAgentConfig(params: {
 
   const modelResolution = resolveModelPipeline({
     intent: {
-      uiSelectedModel: configuredPrometheusModel
+      uiSelectedModel: configuredTalosModel
         ? undefined
         : shouldUseCurrentModel
           ? params.currentModel
           : undefined,
-      userModel: params.pluginPrometheusOverride?.model,
+      userModel: params.pluginTalosOverride?.model,
       categoryDefaultModel: categoryConfig?.model,
     },
     constraints: { availableModels },
@@ -83,25 +83,25 @@ export async function buildPrometheusAgentConfig(params: {
   const resolvedModel = modelResolution?.model;
   const resolvedVariant = modelResolution?.variant;
 
-  const variantToUse = params.pluginPrometheusOverride?.variant ?? resolvedVariant;
+  const variantToUse = params.pluginTalosOverride?.variant ?? resolvedVariant;
   const reasoningEffortToUse =
-    params.pluginPrometheusOverride?.reasoningEffort ?? categoryConfig?.reasoningEffort;
+    params.pluginTalosOverride?.reasoningEffort ?? categoryConfig?.reasoningEffort;
   const textVerbosityToUse =
-    params.pluginPrometheusOverride?.textVerbosity ?? categoryConfig?.textVerbosity;
-  const thinkingToUse = params.pluginPrometheusOverride?.thinking ?? categoryConfig?.thinking;
+    params.pluginTalosOverride?.textVerbosity ?? categoryConfig?.textVerbosity;
+  const thinkingToUse = params.pluginTalosOverride?.thinking ?? categoryConfig?.thinking;
   const temperatureToUse =
-    params.pluginPrometheusOverride?.temperature ?? categoryConfig?.temperature;
-  const topPToUse = params.pluginPrometheusOverride?.top_p ?? categoryConfig?.top_p;
+    params.pluginTalosOverride?.temperature ?? categoryConfig?.temperature;
+  const topPToUse = params.pluginTalosOverride?.top_p ?? categoryConfig?.top_p;
   const maxTokensToUse =
-    params.pluginPrometheusOverride?.maxTokens ?? categoryConfig?.maxTokens;
+    params.pluginTalosOverride?.maxTokens ?? categoryConfig?.maxTokens;
 
   const base: Record<string, unknown> = {
     ...(resolvedModel ? { model: resolvedModel } : {}),
     ...(variantToUse ? { variant: variantToUse } : {}),
     mode: "primary",
-    prompt: getPrometheusPrompt(resolvedModel, params.disabledTools),
-    permission: PROMETHEUS_PERMISSION,
-    description: `${(params.configAgentPlan?.description as string) ?? "Plan agent"} (Prometheus - OhMyOpenCode)`,
+    prompt: getTalosPrompt(resolvedModel, params.disabledTools),
+    permission: TALOS_PERMISSION,
+    description: `${(params.configAgentPlan?.description as string) ?? "Plan agent"} (Talos - OhMyOpenCode)`,
     color: (params.configAgentPlan?.color as string) ?? "#FF5722",
     ...(temperatureToUse !== undefined ? { temperature: temperatureToUse } : {}),
     ...(topPToUse !== undefined ? { top_p: topPToUse } : {}),
@@ -116,7 +116,7 @@ export async function buildPrometheusAgentConfig(params: {
       : {}),
   };
 
-  const override = params.pluginPrometheusOverride;
+  const override = params.pluginTalosOverride;
   if (!override) return base;
 
   const { prompt, prompt_append, ...restOverride } = override;

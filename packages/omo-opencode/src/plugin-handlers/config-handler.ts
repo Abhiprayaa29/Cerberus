@@ -1,4 +1,4 @@
-import type { OhMyOpenCodeConfig } from "../config";
+﻿import type { OhMyOpenCodeConfig } from "../config";
 import { applyRuntimeSkillSourceConfig } from "../features/opencode-runtime-skills"
 import { setAdditionalAllowedMcpEnvVars } from "../features/claude-code-mcp-loader";
 import type { ModelCacheState } from "../plugin-state";
@@ -18,7 +18,7 @@ function collectTrustedVisionCapableModels(
   pluginConfig: OhMyOpenCodeConfig,
 ): string[] {
   const trusted: string[] = []
-  const multimodalLookerOverride = pluginConfig.agents?.["multimodal-looker"]
+  const multimodalLookerOverride = pluginConfig.agents?.["lens"]
   const configuredModel = multimodalLookerOverride?.model
   if (typeof configuredModel === "string" && configuredModel.includes("/")) {
     trusted.push(configuredModel)

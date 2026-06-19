@@ -1,4 +1,4 @@
-import type { TaskToastManager } from "../../features/task-toast-manager/manager"
+﻿import type { TaskToastManager } from "../../features/task-toast-manager/manager"
 import type { ModelFallbackInfo } from "../../features/task-toast-manager/types"
 import type { ModelFallbackState } from "../../hooks/model-fallback/hook"
 import type { FallbackEntry } from "../../shared/model-requirements"
@@ -80,7 +80,7 @@ export async function runSyncTaskLoop(input: SyncTaskRunnerInput): Promise<strin
     cleanupRetrySession,
     setSyncSessionID,
   } = input
-  const { client, directory, sisyphusAgentConfig } = executorCtx
+  const { client, directory, cerberusAgentConfig } = executorCtx
   const hasActiveChildBackgroundTasks = executorCtx.manager?.hasActiveChildTasks?.bind(executorCtx.manager)
   const hasPendingParentWake = executorCtx.manager?.hasPendingParentWake?.bind(executorCtx.manager)
   const deliverableTag = getDeliverableTag(agentToUse)
@@ -105,7 +105,7 @@ export async function runSyncTaskLoop(input: SyncTaskRunnerInput): Promise<strin
       directory,
       toastManager,
       taskId,
-      sisyphusAgentConfig,
+      cerberusAgentConfig,
       categoryModel: effectiveCategoryModel,
     })
     if (promptError) {
@@ -123,7 +123,7 @@ export async function runSyncTaskLoop(input: SyncTaskRunnerInput): Promise<strin
             directory,
             toastManager,
             taskId,
-            sisyphusAgentConfig,
+            cerberusAgentConfig,
             categoryModel: fallbackModel,
           })
         },

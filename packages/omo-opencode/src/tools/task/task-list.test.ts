@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, afterEach } from "bun:test"
+﻿import { describe, it, expect, beforeEach, afterEach } from "bun:test"
 import { createTaskList } from "./task-list"
 import { writeJsonAtomic } from "../../features/claude-tasks/storage"
 import type { TaskObject } from "./types"
@@ -26,7 +26,7 @@ describe("createTaskList", () => {
   it("returns empty array when no tasks exist", async () => {
     //#given
     const config = {
-      sisyphus: {
+      cerberus: {
         tasks: {
           storage_path: join(testProjectDir, ".omo/tasks"),
           claude_code_compat: false,
@@ -68,7 +68,7 @@ describe("createTaskList", () => {
     writeJsonAtomic(join(testProjectDir, ".omo/tasks", "T-2.json"), task2)
 
     const config = {
-      sisyphus: {
+      cerberus: {
         tasks: {
           storage_path: join(testProjectDir, ".omo/tasks"),
           claude_code_compat: false,
@@ -111,7 +111,7 @@ describe("createTaskList", () => {
     writeJsonAtomic(join(testProjectDir, ".omo/tasks", "T-2.json"), task2)
 
      const config = {
-       sisyphus: {
+       cerberus: {
          tasks: {
            storage_path: join(testProjectDir, ".omo/tasks"),
            claude_code_compat: false,
@@ -136,7 +136,7 @@ describe("createTaskList", () => {
       subject: "Test task",
       description: "This is a long description that should not be included",
       status: "in_progress",
-      owner: "sisyphus",
+      owner: "cerberus",
       blocks: [],
       blockedBy: ["T-2"],
       threadID: "test-session",
@@ -145,7 +145,7 @@ describe("createTaskList", () => {
     writeJsonAtomic(join(testProjectDir, ".omo/tasks", "T-1.json"), task)
 
      const config = {
-       sisyphus: {
+       cerberus: {
          tasks: {
            storage_path: join(testProjectDir, ".omo/tasks"),
            claude_code_compat: false,
@@ -170,7 +170,7 @@ describe("createTaskList", () => {
     expect(summary.id).toBe("T-1")
     expect(summary.subject).toBe("Test task")
     expect(summary.status).toBe("in_progress")
-    expect(summary.owner).toBe("sisyphus")
+    expect(summary.owner).toBe("cerberus")
     expect(summary.blockedBy).toEqual(["T-2"])
   })
 
@@ -209,7 +209,7 @@ describe("createTaskList", () => {
     writeJsonAtomic(join(testProjectDir, ".omo/tasks", "T-main.json"), mainTask)
 
      const config = {
-       sisyphus: {
+       cerberus: {
          tasks: {
            storage_path: join(testProjectDir, ".omo/tasks"),
            claude_code_compat: false,
@@ -252,7 +252,7 @@ describe("createTaskList", () => {
      writeJsonAtomic(join(testProjectDir, ".omo/tasks", "T-2.json"), task2)
 
      const config = {
-       sisyphus: {
+       cerberus: {
          tasks: {
            storage_path: join(testProjectDir, ".omo/tasks"),
            claude_code_compat: false,
@@ -284,7 +284,7 @@ describe("createTaskList", () => {
      writeJsonAtomic(join(testProjectDir, ".omo/tasks", "T-1.json"), task)
 
      const config = {
-       sisyphus: {
+       cerberus: {
          tasks: {
            storage_path: join(testProjectDir, ".omo/tasks"),
            claude_code_compat: false,
@@ -316,7 +316,7 @@ describe("createTaskList", () => {
      writeJsonAtomic(join(testProjectDir, ".omo/tasks", "T-1.json"), task)
 
      const config = {
-       sisyphus: {
+       cerberus: {
          tasks: {
            storage_path: join(testProjectDir, ".omo/tasks"),
            claude_code_compat: false,

@@ -1,4 +1,4 @@
-import assert from "node:assert/strict";
+﻿import assert from "node:assert/strict";
 import { join } from "node:path";
 
 export function componentHookContractCases(tempRoot) {
@@ -19,7 +19,7 @@ export function componentHookContractCases(tempRoot) {
 			assertOutput(stdout) {
 				const output = JSON.parse(stdout);
 				assert.equal(output.hookSpecificOutput.hookEventName, "SessionStart");
-				assert.match(output.hookSpecificOutput.additionalContext, /Hephaestus/);
+				assert.match(output.hookSpecificOutput.additionalContext, /Scylla/);
 			},
 		},
 		{
@@ -40,8 +40,8 @@ export function componentHookContractCases(tempRoot) {
 			},
 		},
 		{
-			name: "ultrawork user-prompt-submit trigger",
-			component: "ultrawork",
+			name: "fullscan user-prompt-submit trigger",
+			component: "fullscan",
 			event: "user-prompt-submit",
 			payload: {
 				hook_event_name: "UserPromptSubmit",
@@ -61,13 +61,13 @@ export function componentHookContractCases(tempRoot) {
 				);
 				assert.match(
 					output.hookSpecificOutput.additionalContext,
-					/<ultrawork-mode>/,
+					/<fullscan-mode>/,
 				);
 			},
 		},
 		{
-			name: "ulw-loop pre-tool-use budget guard",
-			component: "ulw-loop",
+			name: "pentest-loop pre-tool-use budget guard",
+			component: "pentest-loop",
 			event: "pre-tool-use",
 			payload: {
 				hook_event_name: "PreToolUse",

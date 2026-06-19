@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, test, mock } from "bun:test"
+﻿import { afterEach, describe, expect, test, mock } from "bun:test"
 import type { ToolContext } from "@opencode-ai/plugin/tool"
 import { mkdtempSync, rmSync, writeFileSync } from "node:fs"
 import { tmpdir } from "node:os"
@@ -15,7 +15,7 @@ function createToolContext(): ToolContext {
   return {
     sessionID: "parent-session",
     messageID: "parent-message",
-    agent: "sisyphus",
+    agent: "cerberus",
     directory: "/project",
     worktree: "/project",
     abort: new AbortController().signal,
@@ -215,7 +215,7 @@ describe("look-at tool", () => {
       const toolContext: ToolContext = {
         sessionID: "parent-session",
         messageID: "parent-message",
-        agent: "sisyphus",
+        agent: "cerberus",
         directory: "/project",
         worktree: "/project",
         abort: new AbortController().signal,
@@ -228,7 +228,7 @@ describe("look-at tool", () => {
         toolContext,
       )
       expect(result).toContain("Error")
-      expect(result).toContain("multimodal-looker")
+      expect(result).toContain("lens")
     })
 
     // given sync prompt succeeds
@@ -252,7 +252,7 @@ describe("look-at tool", () => {
       const toolContext: ToolContext = {
         sessionID: "parent-session",
         messageID: "parent-message",
-        agent: "sisyphus",
+        agent: "cerberus",
         directory: "/project",
         worktree: "/project",
         abort: new AbortController().signal,
@@ -265,7 +265,7 @@ describe("look-at tool", () => {
         toolContext,
       )
       expect(result).toContain("Error")
-      expect(result).toContain("multimodal-looker")
+      expect(result).toContain("lens")
     })
 
     // given session creation fails
@@ -289,7 +289,7 @@ describe("look-at tool", () => {
       const toolContext: ToolContext = {
         sessionID: "parent-session",
         messageID: "parent-message",
-        agent: "sisyphus",
+        agent: "cerberus",
         directory: "/project",
         worktree: "/project",
         abort: new AbortController().signal,
@@ -307,10 +307,10 @@ describe("look-at tool", () => {
   })
 
   describe("createLookAt model passthrough", () => {
-    // given multimodal-looker agent has resolved model info
+    // given lens agent has resolved model info
     // when LookAt tool executed
     // then model info should be passed to sync prompt
-    test("passes multimodal-looker model to sync prompt when available", async () => {
+    test("passes lens model to sync prompt when available", async () => {
       setVisionCapableModelsCache(new Map([["google/gemini-3-flash", { providerID: "google", modelID: "gemini-3-flash" }]]))
 
       let promptBody!: LookAtPromptBody
@@ -320,7 +320,7 @@ describe("look-at tool", () => {
           agents: async () => ({
             data: [
               {
-                name: "multimodal-looker",
+                name: "lens",
                 mode: "subagent",
                 model: { providerID: "google", modelID: "gemini-3-flash" },
               },
@@ -350,7 +350,7 @@ describe("look-at tool", () => {
       const toolContext: ToolContext = {
         sessionID: "parent-session",
         messageID: "parent-message",
-        agent: "sisyphus",
+        agent: "cerberus",
         directory: "/project",
         worktree: "/project",
         abort: new AbortController().signal,
@@ -405,7 +405,7 @@ describe("look-at tool", () => {
       const toolContext: ToolContext = {
         sessionID: "parent-session",
         messageID: "parent-message",
-        agent: "sisyphus",
+        agent: "cerberus",
         directory: "/project",
         worktree: "/project",
         abort: new AbortController().signal,
@@ -462,7 +462,7 @@ describe("look-at tool", () => {
       const toolContext: ToolContext = {
         sessionID: "parent-session",
         messageID: "parent-message",
-        agent: "sisyphus",
+        agent: "cerberus",
         directory: "/project",
         worktree: "/project",
         abort: new AbortController().signal,
@@ -505,7 +505,7 @@ describe("look-at tool", () => {
       const toolContext: ToolContext = {
         sessionID: "parent-session",
         messageID: "parent-message",
-        agent: "sisyphus",
+        agent: "cerberus",
         directory: "/project",
         worktree: "/project",
         abort: new AbortController().signal,
@@ -519,7 +519,7 @@ describe("look-at tool", () => {
       )
 
       expect(result).toContain("Error")
-      expect(result).toContain("multimodal-looker")
+      expect(result).toContain("lens")
     })
   })
 
@@ -527,7 +527,7 @@ describe("look-at tool", () => {
     const createToolContext = (): ToolContext => ({
       sessionID: "parent-session",
       messageID: "parent-message",
-      agent: "sisyphus",
+      agent: "cerberus",
       directory: "/project",
       worktree: "/project",
       abort: new AbortController().signal,
@@ -698,7 +698,7 @@ describe("look-at tool", () => {
       const toolContext: ToolContext = {
         sessionID: "parent-session",
         messageID: "parent-message",
-        agent: "sisyphus",
+        agent: "cerberus",
         directory: "/project",
         worktree: "/project",
         abort: new AbortController().signal,
@@ -751,7 +751,7 @@ describe("look-at tool", () => {
       const toolContext: ToolContext = {
         sessionID: "parent-session",
         messageID: "parent-message",
-        agent: "sisyphus",
+        agent: "cerberus",
         directory: "/project",
         worktree: "/project",
         abort: new AbortController().signal,
@@ -798,7 +798,7 @@ describe("look-at tool", () => {
     const buildToolContext = (): ToolContext => ({
       sessionID: "parent-session",
       messageID: "parent-message",
-      agent: "sisyphus",
+      agent: "cerberus",
       directory: "/project",
       worktree: "/project",
       abort: new AbortController().signal,
@@ -807,7 +807,7 @@ describe("look-at tool", () => {
     })
 
     // given file_path mode where Read tool is disabled in invocation
-    // when LookAt tool sends prompt to multimodal-looker
+    // when LookAt tool sends prompt to lens
     // then prompt instructs agent to analyze the attached file directly without using Read
     test("instructs agent to analyze attached file when Read is disabled (file_path mode)", async () => {
       const { mockClient, captured } = captureLastPromptBody()
@@ -832,7 +832,7 @@ describe("look-at tool", () => {
     })
 
     // given image_data mode where no file path exists and Read is disabled
-    // when LookAt tool sends prompt to multimodal-looker
+    // when LookAt tool sends prompt to lens
     // then prompt instructs agent to analyze the attached image directly without referencing Read or file path
     test("instructs agent to analyze attached image when image_data is provided", async () => {
       const { mockClient, captured } = captureLastPromptBody()

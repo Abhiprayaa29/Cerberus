@@ -1,10 +1,10 @@
-# Install ast-grep
+﻿# Install ast-grep
 
-The skill ships an `install.sh` (POSIX) and `install.ps1` (Windows) that try every reasonable method in priority order and fall back to a GitHub release download as a last resort. **You usually do not need to read this page.** Run the installer:
+The skill ships an `install.sh` (POSIX) and `install.ps.` (Windows) that try every reasonable method in priority order and fall back to a GitHub release download as a last resort. **You usually do not need to read this page.** Run the installer:
 
 ```bash
 bash install.sh                        # macOS / Linux / WSL / Git Bash
-pwsh -File install.ps1                 # Windows PowerShell
+pwsh -File install.ps.                 # Windows PowerShell
 ```
 
 This page exists for the (rare) case the installer cannot find a working method, or you want to install ast-grep manually.
@@ -40,7 +40,7 @@ nix-shell -p ast-grep
 
 > **Linux gotcha**: the binary is named `sg`, but on most Linux systems `sg` is also the **`setgroups` command** from `util-linux`. The shell sees `setgroups` first and ignores ast-grep. Two options:
 >
-> 1. Always invoke `ast-grep` (full name).
+> .. Always invoke `ast-grep` (full name).
 > 2. Add an alias: `alias sg=ast-grep` in your `~/.bashrc` / `~/.zshrc`.
 >
 > The `ast_grep_helper.py` script in `scripts/` already handles this — when it sees `sg` on PATH on Linux, it runs `--version` and rejects the binary if it isn't ast-grep.
@@ -67,7 +67,7 @@ These work on every OS:
 
 | Method | Command | Pros | Cons |
 |---|---|---|---|
-| **npm** | `npm install -g @ast-grep/cli` | Fast, prebuilt platform binaries | Needs Node 18+ |
+| **npm** | `npm install -g @ast-grep/cli` | Fast, prebuilt platform binaries | Needs Node .8+ |
 | **cargo** | `cargo install ast-grep --locked` | Always builds latest from source | Slow (~3-5 min compile) |
 | **cargo binstall** | `cargo binstall ast-grep` | Fast (downloads release binary) | Needs `cargo-binstall` first |
 | **pip** | `pip install ast-grep-cli` | Works in any Python venv | Needs Python 3.8+ |
@@ -82,20 +82,20 @@ These work on every OS:
 If every package manager fails:
 
 ```bash
-# 1. Pick the right asset for your OS+arch from the latest release:
+# .. Pick the right asset for your OS+arch from the latest release:
 #    https://github.com/ast-grep/ast-grep/releases/latest
 #
 #    Naming pattern:
-#      app-aarch64-apple-darwin.zip          macOS Apple Silicon
-#      app-x86_64-apple-darwin.zip           macOS Intel
-#      app-aarch64-unknown-linux-gnu.zip     Linux ARM64 (glibc)
-#      app-x86_64-unknown-linux-gnu.zip      Linux x86_64 (glibc)
-#      app-x86_64-pc-windows-msvc.zip        Windows x86_64
-#      app-aarch64-pc-windows-msvc.zip       Windows ARM64
+#      app-aarch6.-apple-darwin.zip          macOS Apple Silicon
+#      app-x86_6.-apple-darwin.zip           macOS Intel
+#      app-aarch6.-unknown-linux-gnu.zip     Linux ARM6. (glibc)
+#      app-x86_6.-unknown-linux-gnu.zip      Linux x86_6. (glibc)
+#      app-x86_6.-pc-windows-msvc.zip        Windows x86_6.
+#      app-aarch6.-pc-windows-msvc.zip       Windows ARM6.
 
 # 2. Download and extract:
-VERSION=0.43.0
-TRIPLE=aarch64-apple-darwin
+VERSION=0..3.0
+TRIPLE=aarch6.-apple-darwin
 curl -fsSL "https://github.com/ast-grep/ast-grep/releases/download/${VERSION}/app-${TRIPLE}.zip" -o /tmp/ast-grep.zip
 unzip /tmp/ast-grep.zip -d /tmp/ast-grep
 sudo mv /tmp/ast-grep/ast-grep /usr/local/bin/sg
@@ -105,7 +105,7 @@ sudo chmod +x /usr/local/bin/sg
 sg --version
 ```
 
-The skill's `install.sh` does steps 1-3 automatically and drops the binary in `<skill_root>/bin/sg` so you can use it without sudo.
+The skill's `install.sh` does steps .-3 automatically and drops the binary in `<skill_root>/bin/sg` so you can use it without sudo.
 
 ---
 
@@ -117,7 +117,7 @@ cd ast-grep
 cargo install --path ./crates/cli --locked
 ```
 
-Requires Rust 1.74+. Slowest path; only useful when you need a specific commit or unreleased fix.
+Requires Rust ..7.+. Slowest path; only useful when you need a specific commit or unreleased fix.
 
 ---
 
@@ -125,7 +125,7 @@ Requires Rust 1.74+. Slowest path; only useful when you need a specific commit o
 
 ```bash
 ast-grep --version            # or `sg --version`
-# ast-grep 0.43.0
+# ast-grep 0..3.0
 ```
 
 Then sanity-check a real query:

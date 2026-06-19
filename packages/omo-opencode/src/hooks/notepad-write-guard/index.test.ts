@@ -1,4 +1,4 @@
-import { describe, expect, test } from "bun:test"
+﻿import { describe, expect, test } from "bun:test"
 import { createNotepadWriteGuardHook } from "./index"
 
 const REFUSED_PREFIX = "Refused: Write to"
@@ -33,12 +33,12 @@ async function expectWriteBlocked(hook: Hook, filePath: string): Promise<void> {
 describe("createNotepadWriteGuardHook", () => {
   test("#given notepad decisions.md #when write executes #then rejects with actionable error", async () => {
     const hook = createNotepadWriteGuardHook()
-    await expectWriteBlocked(hook, ".sisyphus/notepads/foo/decisions.md")
+    await expectWriteBlocked(hook, ".cerberus/notepads/foo/decisions.md")
   })
 
   test("#given notepad state.json #when write executes #then rejects (entire notepad subtree blocked)", async () => {
     const hook = createNotepadWriteGuardHook()
-    await expectWriteBlocked(hook, ".sisyphus/notepads/foo/state.json")
+    await expectWriteBlocked(hook, ".cerberus/notepads/foo/state.json")
   })
 
   test("#given current omo notepad file #when write executes #then rejects", async () => {
@@ -58,26 +58,26 @@ describe("createNotepadWriteGuardHook", () => {
     const hook = createNotepadWriteGuardHook()
     await invoke(hook, {
       tool: "read",
-      filePath: ".sisyphus/notepads/foo/decisions.md",
+      filePath: ".cerberus/notepads/foo/decisions.md",
     })
   })
 
-  test("#given sisyphus plans file (not notepads) #when write executes #then allows", async () => {
+  test("#given cerberus plans file (not notepads) #when write executes #then allows", async () => {
     const hook = createNotepadWriteGuardHook()
     await invoke(hook, {
       tool: "write",
-      filePath: ".sisyphus/plans/my-plan.md",
+      filePath: ".cerberus/plans/my-plan.md",
     })
   })
 
   test("#given absolute notepad path #when write executes #then rejects", async () => {
     const hook = createNotepadWriteGuardHook()
-    await expectWriteBlocked(hook, "/home/user/project/.sisyphus/notepads/plan/decisions.md")
+    await expectWriteBlocked(hook, "/home/user/project/.cerberus/notepads/plan/decisions.md")
   })
 
   test("#given error message #when rejected #then message names the file and gives guidance", async () => {
     const hook = createNotepadWriteGuardHook()
-    const filePath = ".sisyphus/notepads/foo/decisions.md"
+    const filePath = ".cerberus/notepads/foo/decisions.md"
     let caughtMessage = ""
     try {
       await invoke(hook, { tool: "write", filePath })

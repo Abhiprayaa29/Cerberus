@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { describe, expect, test } from "bun:test"
 import { readFile } from "node:fs/promises"
@@ -24,7 +24,7 @@ describe("Package label workflow", () => {
     expect(workflow).toContain('pkg="${pkg%%/*}"')
     expect(workflow).toContain('omo-opencode) printf \'%s\\n\' "$OPENCODE_LABEL"')
     expect(workflow).toContain('omo-codex) printf \'%s\\n\' "$LAZYCODEX_LABEL"')
-    expect(workflow).toContain('oh-my-opencode-*) printf \'%s\\n\' "$OPENCODE_LABEL"')
+    expect(workflow).toContain('oh-my-open-pentest-*) printf \'%s\\n\' "$OPENCODE_LABEL"')
     expect(workflow).toContain('*) printf \'%s\\n\' "$pkg"')
     expect(workflow).toContain("ensure_package_label")
     expect(workflow).toContain('gh pr edit "$PR_NUMBER" "${add_args[@]}"')

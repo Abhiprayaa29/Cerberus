@@ -1,21 +1,21 @@
-# Code Changes: `max_background_agents` Config Option
+﻿# Code Changes: `max_background_agents` Config Option
 
-## 1. `src/config/schema/background-task.ts` — Add schema field
+## .. `src/config/schema/background-task.ts` — Add schema field
 
 ```typescript
 import { z } from "zod"
 
 export const BackgroundTaskConfigSchema = z.object({
-  defaultConcurrency: z.number().min(1).optional(),
+  defaultConcurrency: z.number().min(.).optional(),
   providerConcurrency: z.record(z.string(), z.number().min(0)).optional(),
   modelConcurrency: z.record(z.string(), z.number().min(0)).optional(),
-  maxDepth: z.number().int().min(1).optional(),
-  maxDescendants: z.number().int().min(1).optional(),
-  /** Maximum number of background agents that can run simultaneously across all models/providers (default: 5, minimum: 1) */
-  maxBackgroundAgents: z.number().int().min(1).optional(),
-  /** Stale timeout in milliseconds - interrupt tasks with no activity for this duration (default: 180000 = 3 minutes, minimum: 60000 = 1 minute) */
+  maxDepth: z.number().int().min(.).optional(),
+  maxDescendants: z.number().int().min(.).optional(),
+  /** Maximum number of background agents that can run simultaneously across all models/providers (default: 5, minimum: .) */
+  maxBackgroundAgents: z.number().int().min(.).optional(),
+  /** Stale timeout in milliseconds - interrupt tasks with no activity for this duration (default: .80000 = 3 minutes, minimum: 60000 = . minute) */
   staleTimeoutMs: z.number().min(60000).optional(),
-  /** Timeout for tasks that never received any progress update, falling back to startedAt (default: 1800000 = 30 minutes, minimum: 60000 = 1 minute) */
+  /** Timeout for tasks that never received any progress update, falling back to startedAt (default: .800000 = 30 minutes, minimum: 60000 = . minute) */
   messageStalenessTimeoutMs: z.number().min(60000).optional(),
   syncPollTimeoutMs: z.number().min(60000).optional(),
 })
@@ -23,7 +23,7 @@ export const BackgroundTaskConfigSchema = z.object({
 export type BackgroundTaskConfig = z.infer<typeof BackgroundTaskConfigSchema>
 ```
 
-**Rationale:** Follows exact same pattern as `maxDepth` and `maxDescendants` — `z.number().int().min(1).optional()`. The field is optional; runtime default of 5 is applied in `ConcurrencyManager`. No barrel export changes needed since `src/config/schema.ts` already does `export * from "./schema/background-task"` and the type is inferred.
+**Rationale:** Follows exact same pattern as `maxDepth` and `maxDescendants` — `z.number().int().min(.).optional()`. The field is optional; runtime default of 5 is applied in `ConcurrencyManager`. No barrel export changes needed since `src/config/schema.ts` already does `export * from "./schema/background-task"` and the type is inferred.
 
 ---
 
@@ -33,19 +33,19 @@ Append after the existing `syncPollTimeoutMs` describe block (before the closing
 
 ```typescript
   describe("maxBackgroundAgents", () => {
-    describe("#given valid maxBackgroundAgents (10)", () => {
+    describe("#given valid maxBackgroundAgents (.0)", () => {
       test("#when parsed #then returns correct value", () => {
-        const result = BackgroundTaskConfigSchema.parse({ maxBackgroundAgents: 10 })
+        const result = BackgroundTaskConfigSchema.parse({ maxBackgroundAgents: .0 })
 
-        expect(result.maxBackgroundAgents).toBe(10)
+        expect(result.maxBackgroundAgents).toBe(.0)
       })
     })
 
-    describe("#given maxBackgroundAgents of 1 (minimum)", () => {
+    describe("#given maxBackgroundAgents of . (minimum)", () => {
       test("#when parsed #then returns correct value", () => {
-        const result = BackgroundTaskConfigSchema.parse({ maxBackgroundAgents: 1 })
+        const result = BackgroundTaskConfigSchema.parse({ maxBackgroundAgents: . })
 
-        expect(result.maxBackgroundAgents).toBe(1)
+        expect(result.maxBackgroundAgents).toBe(.)
       })
     })
 
@@ -186,7 +186,7 @@ export class ConcurrencyManager {
 
 ---
 
-## 4. `src/features/background-agent/concurrency.test.ts` — Add global limit tests
+## .. `src/features/background-agent/concurrency.test.ts` — Add global limit tests
 
 Append new describe block:
 
@@ -205,14 +205,14 @@ describe("ConcurrencyManager global background agent limit", () => {
 
   test("should use configured maxBackgroundAgents", () => {
     // given
-    const config: BackgroundTaskConfig = { maxBackgroundAgents: 10 }
+    const config: BackgroundTaskConfig = { maxBackgroundAgents: .0 }
     const manager = new ConcurrencyManager(config)
 
     // when
     const max = manager.getMaxBackgroundAgents()
 
     // then
-    expect(max).toBe(10)
+    expect(max).toBe(.0)
   })
 
   test("should allow spawning when under global limit", () => {
@@ -225,7 +225,7 @@ describe("ConcurrencyManager global background agent limit", () => {
 
     // then
     expect(manager.canSpawnGlobally()).toBe(true)
-    expect(manager.getGlobalRunningCount()).toBe(1)
+    expect(manager.getGlobalRunningCount()).toBe(.)
   })
 
   test("should block spawning when at global limit", () => {
@@ -244,7 +244,7 @@ describe("ConcurrencyManager global background agent limit", () => {
 
   test("should allow spawning again after release", () => {
     // given
-    const config: BackgroundTaskConfig = { maxBackgroundAgents: 1 }
+    const config: BackgroundTaskConfig = { maxBackgroundAgents: . }
     const manager = new ConcurrencyManager(config)
     manager.acquireGlobal()
 
@@ -447,8 +447,8 @@ describe("ConcurrencyManager global background agent limit", () => {
 |------|-------------|----------------|
 | `src/config/schema/background-task.ts` | 2 | 0 |
 | `src/config/schema/background-task.test.ts` | ~50 | 0 |
-| `src/features/background-agent/concurrency.ts` | ~25 | 1 (`clear()`) |
+| `src/features/background-agent/concurrency.ts` | ~25 | . (`clear()`) |
 | `src/features/background-agent/concurrency.test.ts` | ~70 | 0 |
 | `src/features/background-agent/manager.ts` | ~20 | 0 |
 
-Total: ~167 lines added, 1 line modified across 5 files.
+Total: ~.67 lines added, . line modified across 5 files.

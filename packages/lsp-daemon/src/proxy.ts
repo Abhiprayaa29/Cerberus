@@ -1,7 +1,7 @@
-import type { Readable, Writable } from "node:stream";
-import { jsonRpcId, runJsonRpcStdioServer, successResponse } from "@oh-my-opencode/mcp-stdio-core";
-import { isPlainRecord } from "@oh-my-opencode/mcp-stdio-core/record";
-import { handleLspMcpRequest, type JsonRpcId, type JsonRpcResponse } from "@oh-my-opencode/lsp-core/mcp";
+﻿import type { Readable, Writable } from "node:stream";
+import { jsonRpcId, runJsonRpcStdioServer, successResponse } from "@oh-my-open-pentest/mcp-stdio-core";
+import { isPlainRecord } from "@oh-my-open-pentest/mcp-stdio-core/record";
+import { handleLspMcpRequest, type JsonRpcId, type JsonRpcResponse } from "@oh-my-open-pentest/lsp-core/mcp";
 
 import {
 	type CallToolOptions,

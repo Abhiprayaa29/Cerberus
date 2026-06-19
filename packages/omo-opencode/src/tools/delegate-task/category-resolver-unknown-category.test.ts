@@ -1,4 +1,4 @@
-declare const require: (name: string) => any
+﻿declare const require: (name: string) => any
 const { afterEach, beforeEach, describe, expect, mock, spyOn, test } = require("bun:test")
 import { resolveCategoryExecution } from "./category-resolver"
 import type { ExecutorContext } from "./executor-types"
@@ -21,7 +21,7 @@ describe("resolveCategoryExecution unknown category handling", () => {
 			manager: {} as ExecutorContext["manager"],
 			directory: "/tmp/test",
 			userCategories: {},
-			sisyphusJuniorModel: undefined,
+			cerberusJuniorModel: undefined,
 		}
 		const args = {
 			category: "backend-engineer",

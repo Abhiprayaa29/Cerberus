@@ -1,4 +1,4 @@
-import { hasFlag, readValue } from "./cli-arg-parser.js";
+﻿import { hasFlag, readValue } from "./cli-arg-parser.js";
 import { printJsonError, ULW_LOOP_HELP } from "./cli-output.js";
 import {
 	addGoal,
@@ -44,7 +44,7 @@ export async function ulwLoopCommand(argv: readonly string[]): Promise<number> {
 		if (!isUlwLoopSubcommand(command)) {
 			if (json) {
 				printJsonError(
-					new UlwLoopError(`Unknown ulw-loop subcommand: ${command}.`, "ULW_LOOP_SUBCOMMAND_UNKNOWN", {
+					new UlwLoopError(`Unknown pentest-loop subcommand: ${command}.`, "ULW_LOOP_SUBCOMMAND_UNKNOWN", {
 						details: { command },
 					}),
 				);
@@ -83,15 +83,15 @@ export async function ulwLoopCommand(argv: readonly string[]): Promise<number> {
 			printJsonError(error);
 			return 1;
 		}
-		if (error instanceof UlwLoopError) process.stderr.write(`[ulw-loop] ${error.message}\n`);
-		else if (error instanceof Error) process.stderr.write(`[ulw-loop] unexpected: ${error.message}\n`);
-		else process.stderr.write("[ulw-loop] unknown error\n");
+		if (error instanceof UlwLoopError) process.stderr.write(`[pentest-loop] ${error.message}\n`);
+		else if (error instanceof Error) process.stderr.write(`[pentest-loop] unexpected: ${error.message}\n`);
+		else process.stderr.write("[pentest-loop] unknown error\n");
 		return 1;
 	}
 }
 
 function unhandledSubcommand(command: never): never {
-	throw new UlwLoopError(`Unhandled ulw-loop subcommand: ${String(command)}.`, "ULW_LOOP_SUBCOMMAND_UNHANDLED");
+	throw new UlwLoopError(`Unhandled pentest-loop subcommand: ${String(command)}.`, "ULW_LOOP_SUBCOMMAND_UNHANDLED");
 }
 
 function commandScope(argv: readonly string[]): UlwLoopScope | undefined {

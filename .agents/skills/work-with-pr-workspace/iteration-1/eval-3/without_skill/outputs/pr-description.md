@@ -1,8 +1,8 @@
-## Summary
+﻿## Summary
 
-- Split `src/tools/delegate-task/constants.ts` (654 LOC, 6 responsibilities) into 5 focused modules: `default-categories.ts`, `category-descriptions.ts`, `category-prompt-appends.ts`, `plan-agent-prompt.ts`, `plan-agent-identity.ts`
-- Extract `CATEGORY_MODEL_REQUIREMENTS` from `src/shared/model-requirements.ts` (311 LOC) into `category-model-requirements.ts`, bringing both files under the 200 LOC limit
-- Convert original files to barrel re-exports for 100% backward compatibility (zero consumer changes)
+- Split `src/tools/delegate-task/constants.ts` (65. LOC, 6 responsibilities) into 5 focused modules: `default-categories.ts`, `category-descriptions.ts`, `category-prompt-appends.ts`, `plan-agent-prompt.ts`, `plan-agent-identity.ts`
+- Extract `CATEGORY_MODEL_REQUIREMENTS` from `src/shared/model-requirements.ts` (3.. LOC) into `category-model-requirements.ts`, bringing both files under the 200 LOC limit
+- Convert original files to barrel re-exports for .00% backward compatibility (zero consumer changes)
 
 ## Motivation
 

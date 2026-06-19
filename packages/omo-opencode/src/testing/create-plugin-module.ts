@@ -1,4 +1,4 @@
-import type { Hooks, Plugin, PluginModule } from "@opencode-ai/plugin"
+﻿import type { Hooks, Plugin, PluginModule } from "@opencode-ai/plugin"
 import type { HookName } from "../config"
 import { initConfigContext } from "../cli/config-manager/config-context"
 import { ensureTuiPluginEntry } from "../cli/config-manager/add-tui-plugin-to-tui-config"
@@ -108,7 +108,7 @@ export function createPluginModule(overrides: Partial<PluginModuleDeps> = {}): P
   const serverPlugin: Plugin = async (input, _options): Promise<Hooks> => {
     deps.installAgentSortShim()
     deps.initConfigContext("opencode", null)
-    deps.log("[oh-my-openagent] ENTRY - plugin loading", {
+    deps.log("[oh-my-open-pentest] ENTRY - plugin loading", {
       directory: input.directory,
     })
     deps.logLegacyPluginStartupWarning()
@@ -251,7 +251,7 @@ export function createPluginModule(overrides: Partial<PluginModuleDeps> = {}): P
   }
 
   return {
-    id: "oh-my-openagent",
+    id: "oh-my-open-pentest",
     server: serverPlugin,
   }
 }

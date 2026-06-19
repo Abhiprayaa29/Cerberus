@@ -1,5 +1,5 @@
-import type { CreatedHooks } from "../create-hooks"
-import { isRalphLoopResumeArgument, parseRalphLoopArguments } from "../hooks/ralph-loop/command-arguments"
+﻿import type { CreatedHooks } from "../create-hooks"
+import { isRalphLoopResumeArgument, parseRalphLoopArguments } from "../hooks/pentest-loop/command-arguments"
 import { log } from "../shared/logger"
 
 type CommandExecuteBeforeInput = {
@@ -36,13 +36,13 @@ export function createCommandExecuteBeforeHandler(args: {
     const normalizedCommand = input.command.toLowerCase()
     const sessionID = input.sessionID
     if (hooks.ralphLoop && sessionID) {
-      if (normalizedCommand === "ralph-loop" || normalizedCommand === "ulw-loop") {
+      if (normalizedCommand === "pentest-loop" || normalizedCommand === "pentest-loop") {
         const parsedArguments = parseRalphLoopArguments(input.arguments || "")
         const resumed = isRalphLoopResumeArgument(input.arguments || "")
           && hooks.ralphLoop.resumeLoop?.(sessionID) === true
         if (!resumed) {
           hooks.ralphLoop.startLoop(sessionID, parsedArguments.prompt, {
-            ultrawork: normalizedCommand === "ulw-loop",
+            fullscan: normalizedCommand === "pentest-loop",
             maxIterations: parsedArguments.maxIterations,
             completionPromise: parsedArguments.completionPromise,
             strategy: parsedArguments.strategy,

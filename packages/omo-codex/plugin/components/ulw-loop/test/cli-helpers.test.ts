@@ -1,4 +1,4 @@
-import { mkdtemp, rm, writeFile } from "node:fs/promises";
+﻿import { mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
@@ -54,9 +54,9 @@ function plan(overrides: Partial<UlwLoopPlan> = {}): UlwLoopPlan {
 		version: 1,
 		createdAt: NOW,
 		updatedAt: NOW,
-		briefPath: ".omo/ulw-loop/brief.md",
-		goalsPath: ".omo/ulw-loop/goals.json",
-		ledgerPath: ".omo/ulw-loop/ledger.jsonl",
+		briefPath: ".omo/pentest-loop/brief.md",
+		goalsPath: ".omo/pentest-loop/goals.json",
+		ledgerPath: ".omo/pentest-loop/ledger.jsonl",
 		activeGoalId: "G001",
 		goals: [goal()],
 		...overrides,
@@ -198,8 +198,8 @@ describe("parseRecordEvidenceArgs", () => {
 });
 
 describe("ULW_LOOP_HELP", () => {
-	it("mentions omo ulw-loop + every subcommand", () => {
-		expect(ULW_LOOP_HELP).toContain("omo ulw-loop");
+	it("mentions omo pentest-loop + every subcommand", () => {
+		expect(ULW_LOOP_HELP).toContain("omo pentest-loop");
 		expect(ULW_LOOP_HELP).toContain("create-goals");
 		expect(ULW_LOOP_HELP).toContain("complete-goals");
 		expect(ULW_LOOP_HELP).toContain("status");

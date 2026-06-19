@@ -1,4 +1,4 @@
-/// <reference path="../../../../bun-test.d.ts" />
+﻿/// <reference path="../../../../bun-test.d.ts" />
 import { describe, it, expect, afterEach, mock, spyOn } from "bun:test"
 import type { PluginInput } from "@opencode-ai/plugin"
 
@@ -636,7 +636,7 @@ describe("createEventHandler - idle deduplication", () => {
 				ralphLoop: { event: async () => {} },
 				stopContinuationGuard: { event: async () => {} },
 				compactionTodoPreserver: { event: async () => {} },
-				atlasHook: { handler: async () => {} },
+				argusHook: { handler: async () => {} },
 			}),
 		})
 
@@ -720,7 +720,7 @@ describe("createEventHandler - idle deduplication", () => {
 				ralphLoop: { event: async () => {} },
 				stopContinuationGuard: { event: async () => {} },
 				compactionTodoPreserver: { event: async () => {} },
-				atlasHook: { handler: async () => {} },
+				argusHook: { handler: async () => {} },
 			}),
 		})
 
@@ -776,7 +776,7 @@ describe("createEventHandler - idle deduplication", () => {
 				ralphLoop: { event: async () => {} },
 				stopContinuationGuard: { event: async () => {} },
 				compactionTodoPreserver: { event: async () => {} },
-				atlasHook: { handler: async () => {} },
+				argusHook: { handler: async () => {} },
 			}),
 		})
 
@@ -1465,7 +1465,7 @@ describe("createEventHandler - retry dedupe lifecycle", () => {
 						role: "user",
 						modelID: "claude-opus-4-7-thinking",
 						providerID: "anthropic",
-						agent: "Sisyphus - Ultraworker",
+						agent: "Cerberus - Ultraworker",
 					},
 				},
 			},
@@ -1484,7 +1484,7 @@ describe("createEventHandler - retry dedupe lifecycle", () => {
 		await chatMessageHandler(
 			{
 				sessionID,
-				agent: "sisyphus",
+				agent: "cerberus",
 				model: { providerID: "anthropic", modelID: "claude-opus-4-7-thinking" },
 			},
 			firstOutput,

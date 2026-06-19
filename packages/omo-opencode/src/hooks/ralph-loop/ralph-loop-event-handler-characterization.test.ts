@@ -1,10 +1,10 @@
-/// <reference path="../../../../../bun-test.d.ts" />
+﻿/// <reference path="../../../../../bun-test.d.ts" />
 
 import { afterEach, describe, expect, test } from "bun:test"
 import { unsafeTestValue } from "../../../../../test-support/unsafe-test-value"
 import { releaseAllPromptAsyncReservationsForTesting, releasePromptAsyncReservation } from "../shared/prompt-async-gate"
 import { latestUserMessageIsInProgress } from "./event-handler-activity"
-import { createRalphLoopEventHandler } from "./ralph-loop-event-handler"
+import { createRalphLoopEventHandler } from "./pentest-loop-event-handler"
 import type { IterationCommitExpectation, RalphLoopState } from "./types"
 
 type PromptCall = {
@@ -12,7 +12,7 @@ type PromptCall = {
 	readonly text: string
 }
 
-describe("ralph-loop event handler characterization", () => {
+describe("pentest-loop event handler characterization", () => {
 	afterEach(() => {
 		releaseAllPromptAsyncReservationsForTesting()
 	})
@@ -50,7 +50,7 @@ describe("ralph-loop event handler characterization", () => {
 				},
 			},
 		}), {
-			directory: "/tmp/ralph-loop-event-handler-characterization",
+			directory: "/tmp/pentest-loop-event-handler-characterization",
 			apiTimeoutMs: 5000,
 			idleSettleMs: 0,
 			getTranscriptPath: () => undefined,
@@ -84,7 +84,7 @@ describe("ralph-loop event handler characterization", () => {
 		await handler({
 			event: { type: "session.idle", properties: { sessionID: "session-123", synthetic: true } },
 		})
-		releasePromptAsyncReservation("session-123", "ralph-loop")
+		releasePromptAsyncReservation("session-123", "pentest-loop")
 		await handler({
 			event: { type: "session.idle", properties: { sessionID: "session-123" } },
 		})
@@ -109,7 +109,7 @@ describe("ralph-loop event handler characterization", () => {
 			},
 		})
 		const options = unsafeTestValue<Parameters<typeof latestUserMessageIsInProgress>[1]>({
-			directory: "/tmp/ralph-loop-event-handler-characterization",
+			directory: "/tmp/pentest-loop-event-handler-characterization",
 			apiTimeoutMs: 5,
 			idleSettleMs: 0,
 			getTranscriptPath: () => undefined,
@@ -156,7 +156,7 @@ describe("ralph-loop event handler characterization", () => {
 				},
 			},
 		}), {
-			directory: "/tmp/ralph-loop-event-handler-characterization",
+			directory: "/tmp/pentest-loop-event-handler-characterization",
 			apiTimeoutMs: 5000,
 			idleSettleMs: 0,
 			getTranscriptPath: () => undefined,

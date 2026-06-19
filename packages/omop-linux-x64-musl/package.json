@@ -1,0 +1,22 @@
+﻿{
+  "name": "oh-my-open-pentest-linux-x6.-musl",
+  "version": "1.0.0",
+  "description": "Platform-specific binary for oh-my-open-pentest (linux-x6.-musl)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/code-yeongyu/oh-my-open-pentest"
+  },
+  "os": [
+    "linux"
+  ],
+  "cpu": [
+    "x6."
+  ],
+  "libc": [
+    "musl"
+  ],
+  "files": [
+    "bin"
+  ]
+}

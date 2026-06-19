@@ -1,4 +1,4 @@
-import type { DoctorOptions } from "./framework/types"
+﻿import type { DoctorOptions } from "./framework/types"
 import { runDoctor } from "./runner"
 import { PUBLISHED_PACKAGE_NAME } from "../../shared"
 import { EXIT_CODES } from "./framework/constants"
@@ -21,7 +21,7 @@ export function formatDoctorFailure(error: unknown): string[] {
   if (error instanceof Error && error.stack) {
     lines.push(error.stack)
   }
-  lines.push(`Try: OMO_DISABLE_POSTHOG=1 bunx ${PUBLISHED_PACKAGE_NAME} doctor --verbose\n`)
+  lines.push(`Try: OMOP_DISABLE_POSTHOG=1 bunx ${PUBLISHED_PACKAGE_NAME} doctor --verbose\n`)
   return lines
 }
 

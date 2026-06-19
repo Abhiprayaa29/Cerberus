@@ -1,4 +1,4 @@
-import { mkdir, mkdtemp, readFile, rm, symlink, writeFile } from "node:fs/promises"
+﻿import { mkdir, mkdtemp, readFile, rm, symlink, writeFile } from "node:fs/promises"
 import { tmpdir } from "node:os"
 import { join } from "node:path"
 import { describe, expect, test } from "bun:test"
@@ -18,9 +18,9 @@ async function createInstalledCodexHome(): Promise<{ readonly codexHome: string;
   const root = await mkdtemp(join(tmpdir(), "omo-codex-doctor-"))
   const codexHome = join(root, ".codex")
   const binDir = join(root, "bin")
-  const pluginRoot = join(codexHome, "plugins", "cache", "sisyphuslabs", "omo", "0.1.0")
+  const pluginRoot = join(codexHome, "plugins", "cache", "cerberuslabs", "omo", "0.1.0")
   await mkdir(join(pluginRoot, ".codex-plugin"), { recursive: true })
-  await mkdir(join(codexHome, ".tmp", "marketplaces", "sisyphuslabs", "plugins", "omo"), { recursive: true })
+  await mkdir(join(codexHome, ".tmp", "marketplaces", "cerberuslabs", "plugins", "omo"), { recursive: true })
   await mkdir(join(codexHome, "agents"), { recursive: true })
   await mkdir(binDir, { recursive: true })
   await writeFile(join(pluginRoot, ".codex-plugin", "plugin.json"), JSON.stringify({ name: "omo", version: "4.7.5" }))
@@ -32,10 +32,10 @@ async function createInstalledCodexHome(): Promise<{ readonly codexHome: string;
       "plugins = true",
       "plugin_hooks = true",
       "",
-      "[marketplaces.sisyphuslabs]",
-      `source = "${join(codexHome, "plugins", "cache", "sisyphuslabs")}"`,
+      "[marketplaces.cerberuslabs]",
+      `source = "${join(codexHome, "plugins", "cache", "cerberuslabs")}"`,
       "",
-      '[plugins."omo@sisyphuslabs"]',
+      '[plugins."omo@cerberuslabs"]',
       "enabled = true",
       "",
       "[agents.plan]",
@@ -63,7 +63,7 @@ describe("codex doctor checks", () => {
 
     // then
     expect(summary.codexPath).toBe("/usr/local/bin/codex")
-    expect(summary.marketplaceName).toBe("sisyphuslabs")
+    expect(summary.marketplaceName).toBe("cerberuslabs")
     expect(summary.pluginName).toBe("omo")
     expect(summary.pluginVersion).toBe("4.7.5")
     expect(summary.pluginVersionStamped).toBe(true)
@@ -106,10 +106,10 @@ describe("codex doctor checks", () => {
         "plugins = true",
         "plugin_hooks = true",
         "",
-        "[marketplaces.sisyphuslabs]",
-        `source = "${join(codexHome, "plugins", "cache", "sisyphuslabs")}"`,
+        "[marketplaces.cerberuslabs]",
+        `source = "${join(codexHome, "plugins", "cache", "cerberuslabs")}"`,
         "",
-        '[plugins."omo@sisyphuslabs"]',
+        '[plugins."omo@cerberuslabs"]',
         "enabled = false",
         "",
         '[plugins."other@example"]',
@@ -139,7 +139,7 @@ describe("codex doctor checks", () => {
         "plugins = true",
         "plugin_hooks = true",
         "",
-        '[plugins."omo@sisyphuslabs"]',
+        '[plugins."omo@cerberuslabs"]',
         "enabled = true",
       ].join("\n"),
     )
@@ -212,10 +212,10 @@ describe("codex doctor checks", () => {
     // then
     expect(result.status).toBe("pass")
     expect(result.details).toContain("Codex: /usr/local/bin/codex")
-    expect(result.details).toContain("Marketplace: sisyphuslabs")
+    expect(result.details).toContain("Marketplace: cerberuslabs")
     expect(result.details).toContain("Plugin: omo@4.7.5")
     expect(result.details).toContain("Distribution: lazycodex-ai@4.7.5")
-    expect(result.details).toContain("Enabled plugin: omo@sisyphuslabs")
+    expect(result.details).toContain("Enabled plugin: omo@cerberuslabs")
     expect(result.details).toContain("Linked bins: omo, omo-rules")
     expect(result.details).toContain("Agents: plan")
   })
@@ -256,7 +256,7 @@ describe("codex doctor checks", () => {
     const stampIssue = result.issues.find((issue) => issue.title === "Codex plugin bundle is not version-stamped")
     expect(stampIssue).toBeDefined()
     expect(stampIssue?.severity).toBe("warning")
-    expect(stampIssue?.description).toContain("oh-my-openagent 4.8.1")
+    expect(stampIssue?.description).toContain("oh-my-open-pentest 4.8.1")
     expect(stampIssue?.fix).toContain("npx lazycodex-ai install")
   })
 
@@ -285,6 +285,6 @@ describe("codex doctor checks", () => {
     const content = await readFile(join(codexHome, "config.toml"), "utf8")
 
     // then
-    expect(content).toContain('[plugins."omo@sisyphuslabs"]')
+    expect(content).toContain('[plugins."omo@cerberuslabs"]')
   })
 })

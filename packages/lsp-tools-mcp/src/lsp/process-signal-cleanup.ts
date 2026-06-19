@@ -1,1 +1,1 @@
-export * from "@oh-my-opencode/lsp-core/lsp/process-signal-cleanup";
+﻿export * from "@oh-my-open-pentest/lsp-core/lsp/process-signal-cleanup";

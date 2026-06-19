@@ -1,4 +1,4 @@
-// biome-ignore-all format: smoke test pulls verbatim JSON for structural assertion.
+﻿// biome-ignore-all format: smoke test pulls verbatim JSON for structural assertion.
 import { spawn } from "node:child_process";
 import { chmod, mkdir, mkdtemp, readFile, rm, stat, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
@@ -59,10 +59,10 @@ describe("package.json", () => {
 		expect((pkg["engines"] as Record<string, unknown>)["node"]).toBe(">=20.0.0");
 	});
 
-	it("#given package metadata #when bin is inspected #then exposes the omo-ulw-loop binary pointing at dist/cli.js", async () => {
+	it("#given package metadata #when bin is inspected #then exposes the omo-pentest-loop binary pointing at dist/cli.js", async () => {
 		const pkg = await readJson("package.json") as Record<string, unknown>;
 		const bin = pkg["bin"] as Record<string, string>;
-		expect(bin["omo-ulw-loop"]).toBe("./dist/cli.js");
+		expect(bin["omo-pentest-loop"]).toBe("./dist/cli.js");
 	});
 
 	it("ships the expected files for npm publish", async () => {
@@ -92,7 +92,7 @@ describe("hooks/hooks.json", () => {
 		expect(command).toContain("hook user-prompt-submit");
 	});
 
-	it("#given ulw-loop component is enabled #when hooks are inspected #then create_goal PreToolUse guard is registered", async () => {
+	it("#given pentest-loop component is enabled #when hooks are inspected #then create_goal PreToolUse guard is registered", async () => {
 		const text = await readText("hooks/hooks.json");
 
 		expect(text).toContain('"PreToolUse"');
@@ -108,55 +108,55 @@ describe("src/cli.ts", () => {
 	});
 });
 
-describe("skills/ulw-loop/SKILL.md", () => {
+describe("skills/pentest-loop/SKILL.md", () => {
 	it("exists", async () => {
-		const info = await stat(join(repoRoot, "skills/ulw-loop/SKILL.md"));
+		const info = await stat(join(repoRoot, "skills/pentest-loop/SKILL.md"));
 		expect(info.isFile()).toBe(true);
 	});
 
-	it("#given Codex skill hinting #when ulw-loop skill metadata is inspected #then ulw-loop is the primary mention name", async () => {
-		const text = await readText("skills/ulw-loop/SKILL.md");
+	it("#given Codex skill hinting #when pentest-loop skill metadata is inspected #then pentest-loop is the primary mention name", async () => {
+		const text = await readText("skills/pentest-loop/SKILL.md");
 
-		expect(text).toMatch(/^---\nname: ulw-loop\n/m);
+		expect(text).toMatch(/^---\nname: pentest-loop\n/m);
 	});
 
-	it("#given Codex dollar hinting #when querying ulw-loop #then ulw-loop surfaces the ulw-loop alias", async () => {
-		const text = await readText("skills/ulw-loop/agents/openai.yaml");
+	it("#given Codex dollar hinting #when querying pentest-loop #then pentest-loop surfaces the pentest-loop alias", async () => {
+		const text = await readText("skills/pentest-loop/agents/openai.yaml");
 
-		expect(text).toContain('display_name: "(OmO) ulw-loop"');
-		expect(text).not.toContain("ulw-loop / ulw-loop");
-		expect(text).toContain('short_description: "Goal-like ultrawork loop for systematic decomposition"');
-		expect(text).toContain("Use $ulw-loop");
+		expect(text).toContain('display_name: "(OmO) pentest-loop"');
+		expect(text).not.toContain("pentest-loop / pentest-loop");
+		expect(text).toContain('short_description: "Goal-like fullscan loop for systematic decomposition"');
+		expect(text).toContain("Use $pentest-loop");
 	});
 
-	it("#given Codex dollar hinting #when querying ulw-loop #then ulw-loop remains discoverable as an alias", async () => {
-		const text = await readText("skills/ulw-loop/agents/openai.yaml");
+	it("#given Codex dollar hinting #when querying pentest-loop #then pentest-loop remains discoverable as an alias", async () => {
+		const text = await readText("skills/pentest-loop/agents/openai.yaml");
 
 		expect(text).toContain("search_terms:");
-		expect(text).toContain('- "ulw-loop"');
+		expect(text).toContain('- "pentest-loop"');
 	});
 
-	it("#given PATH omo lacks ulw-loop #when bootstrap runs #then falls back to cached ulw-loop CLI", async () => {
-		const text = await readText("skills/ulw-loop/references/full-workflow.md");
+	it("#given PATH omo lacks pentest-loop #when bootstrap runs #then falls back to cached pentest-loop CLI", async () => {
+		const text = await readText("skills/pentest-loop/references/full-workflow.md");
 		const bootstrap = bootstrapScriptFrom(text);
-		const root = await mkdtemp(join(tmpdir(), "omo-ulw-loop-bootstrap-"));
+		const root = await mkdtemp(join(tmpdir(), "omo-pentest-loop-bootstrap-"));
 		try {
 			const badBin = join(root, "bad-bin");
 			const home = join(root, "home");
 			const codexHome = join(home, ".codex");
-			const cachedCli = join(codexHome, "plugins", "cache", "sisyphuslabs", "omo", "0.1.0", "components", "ulw-loop", "dist", "cli.js");
+			const cachedCli = join(codexHome, "plugins", "cache", "cerberuslabs", "omo", "0.1.0", "components", "pentest-loop", "dist", "cli.js");
 			await mkdir(badBin, { recursive: true });
 			await mkdir(dirname(cachedCli), { recursive: true });
-			await writeFile(join(badBin, "omo"), "#!/bin/sh\nprintf '%s\\n' \"error: unknown command 'ulw-loop'\" >&2\nexit 1\n");
+			await writeFile(join(badBin, "omo"), "#!/bin/sh\nprintf '%s\\n' \"error: unknown command 'pentest-loop'\" >&2\nexit 1\n");
 			await chmod(join(badBin, "omo"), 0o755);
 			await writeFile(
 				cachedCli,
 				[
 					"#!/usr/bin/env node",
 					"const args = process.argv.slice(2);",
-					"if (args[0] === 'ulw-loop' && args[1] === 'help') process.exit(0);",
-					"if (args[0] === 'ulw-loop' && args[1] === 'status' && args.includes('--json')) {",
-					"  console.log(JSON.stringify({ ok: true, source: 'cached-ulw-loop' }));",
+					"if (args[0] === 'pentest-loop' && args[1] === 'help') process.exit(0);",
+					"if (args[0] === 'pentest-loop' && args[1] === 'status' && args.includes('--json')) {",
+					"  console.log(JSON.stringify({ ok: true, source: 'cached-pentest-loop' }));",
 					"  process.exit(0);",
 					"}",
 					"console.error('unexpected args: ' + args.join(' '));",
@@ -165,7 +165,7 @@ describe("skills/ulw-loop/SKILL.md", () => {
 				].join("\n"),
 			);
 
-			const result = await runShell(`${bootstrap}\nomo ulw-loop status --json`, {
+			const result = await runShell(`${bootstrap}\nomo pentest-loop status --json`, {
 				...process.env,
 				CODEX_HOME: codexHome,
 				HOME: home,
@@ -173,7 +173,7 @@ describe("skills/ulw-loop/SKILL.md", () => {
 			});
 
 			expect(result.code).toBe(0);
-			expect(result.stdout).toContain('"source":"cached-ulw-loop"');
+			expect(result.stdout).toContain('"source":"cached-pentest-loop"');
 			expect(result.stderr).not.toContain("unknown command");
 		} finally {
 			await rm(root, { recursive: true, force: true });

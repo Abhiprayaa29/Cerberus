@@ -1,5 +1,5 @@
-import type { DelegateTaskArgs, ToolContextWithMetadata } from "./types"
-import { SISYPHUS_JUNIOR_AGENT } from "./sisyphus-junior-agent"
+﻿import type { DelegateTaskArgs, ToolContextWithMetadata } from "./types"
+import { CERBERUS_JUNIOR_AGENT } from "./cerberus-junior-agent"
 import { log } from "../../shared/logger"
 
 export async function prepareDelegateTaskArgs(args: Record<string, unknown>, ctx: ToolContextWithMetadata): Promise<DelegateTaskArgs> {
@@ -8,15 +8,15 @@ export async function prepareDelegateTaskArgs(args: Record<string, unknown>, ctx
   const originalSubagentType = typeof args.subagent_type === "string" ? args.subagent_type : undefined
   let subagentType = originalSubagentType
 
-  if (category && subagentType && subagentType !== SISYPHUS_JUNIOR_AGENT) {
-    log("[task] category provided - overriding subagent_type to sisyphus-junior", {
+  if (category && subagentType && subagentType !== CERBERUS_JUNIOR_AGENT) {
+    log("[task] category provided - overriding subagent_type to cerberus-junior", {
       category,
       subagent_type: subagentType,
     })
   }
 
   if (category) {
-    subagentType = SISYPHUS_JUNIOR_AGENT
+    subagentType = CERBERUS_JUNIOR_AGENT
   }
 
   let description = typeof args.description === "string" ? args.description : undefined
@@ -58,7 +58,7 @@ export async function prepareDelegateTaskArgs(args: Record<string, unknown>, ctx
   if (loadSkills === undefined) {
     // Default to no skills when the field is OMITTED. Callers that don't
     // pass the field implicitly mean "no skill content needed". This is
-    // what fixes the #4119 retry loop when Sisyphus / Claude Code Agent
+    // what fixes the #4119 retry loop when Cerberus / Claude Code Agent
     // SDK forget the argument.
     loadSkills = []
     log("[task] load_skills omitted; defaulting to []", {
@@ -70,7 +70,7 @@ export async function prepareDelegateTaskArgs(args: Record<string, unknown>, ctx
   if (loadSkills === null) {
     // Explicit `null` is REJECTED loudly. The "omitted -> default, explicit
     // invalid -> throw" contract was the closing rationale of PR #1663
-    // (which reverted PR #1493) and the maintainer's Oracle review on PR
+    // (which reverted PR #1493) and the maintainer's Cipher review on PR
     // #4121 explicitly requested we preserve it. `null` strongly signals
     // "I tried to pass something and it was wrong" - silently coercing
     // hides bugs upstream.

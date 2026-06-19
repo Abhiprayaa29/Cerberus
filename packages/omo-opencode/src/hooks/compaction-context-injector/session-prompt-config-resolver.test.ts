@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it } from "bun:test"
+﻿import { afterEach, describe, expect, it } from "bun:test"
 
 import { _resetForTesting } from "../../features/claude-code-session-state"
 import { clearSessionModel, setSessionModel } from "../../shared/session-model-state"
@@ -48,7 +48,7 @@ describe("session prompt config resolver", () => {
     const ctx = createMockContext([
       {
         info: {
-          agent: "atlas",
+          agent: "argus",
           model: { providerID: "openai", modelID: "gpt-5" },
           tools: { bash: "allow" },
         },
@@ -66,7 +66,7 @@ describe("session prompt config resolver", () => {
 
     // then
     expect(promptConfig).toEqual({
-      agent: "atlas",
+      agent: "argus",
       model: { providerID: "openai", modelID: "gpt-5" },
       tools: { bash: true },
     })
@@ -77,7 +77,7 @@ describe("session prompt config resolver", () => {
     const ctx = createMockContext([
       {
         info: {
-          agent: "atlas",
+          agent: "argus",
           model: { providerID: "openai", modelID: "gpt-5" },
         },
       },

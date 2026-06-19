@@ -1,4 +1,4 @@
-const { beforeEach, describe, test, expect, mock } = require("bun:test")
+﻿const { beforeEach, describe, test, expect, mock } = require("bun:test")
 const { createCallOmoAgent } = require("./tools")
 const { clearCallableAgentsCache } = require("./agent-resolver")
 
@@ -34,8 +34,8 @@ function createFailingMockCtx(error: Error = new Error("API unavailable")): Plug
 }
 
 const DEFAULT_AGENTS = [
-  { name: "explore", mode: "subagent" },
-  { name: "librarian", mode: "subagent" },
+  { name: "scout", mode: "subagent" },
+  { name: "intel", mode: "subagent" },
 ]
 
 const assertCanSpawnMock = mock(() => Promise.resolve(undefined))
@@ -80,11 +80,11 @@ describe("createCallOmoAgent", () => {
   describe("disabled_agents validation", () => {
     test("should reject agent in disabled_agents list", async () => {
       const mockCtx = createMockCtx(DEFAULT_AGENTS)
-      const toolDef = createCallOmoAgent(mockCtx, mockBackgroundManager, ["explore"])
+      const toolDef = createCallOmoAgent(mockCtx, mockBackgroundManager, ["scout"])
       const executeFunc = toolDef.execute as Function
 
       const result = await executeFunc(
-        { description: "Test", prompt: "Test prompt", subagent_type: "explore", run_in_background: true },
+        { description: "Test", prompt: "Test prompt", subagent_type: "scout", run_in_background: true },
         toolCtx
       )
 
@@ -93,11 +93,11 @@ describe("createCallOmoAgent", () => {
 
     test("should reject agent in disabled_agents list with case-insensitive matching", async () => {
       const mockCtx = createMockCtx(DEFAULT_AGENTS)
-      const toolDef = createCallOmoAgent(mockCtx, mockBackgroundManager, ["Explore"])
+      const toolDef = createCallOmoAgent(mockCtx, mockBackgroundManager, ["Scout"])
       const executeFunc = toolDef.execute as Function
 
       const result = await executeFunc(
-        { description: "Test", prompt: "Test prompt", subagent_type: "explore", run_in_background: true },
+        { description: "Test", prompt: "Test prompt", subagent_type: "scout", run_in_background: true },
         toolCtx
       )
 
@@ -106,11 +106,11 @@ describe("createCallOmoAgent", () => {
 
     test("should allow agent not in disabled_agents list", async () => {
       const mockCtx = createMockCtx(DEFAULT_AGENTS)
-      const toolDef = createCallOmoAgent(mockCtx, mockBackgroundManager, ["librarian"])
+      const toolDef = createCallOmoAgent(mockCtx, mockBackgroundManager, ["intel"])
       const executeFunc = toolDef.execute as Function
 
       const result = await executeFunc(
-        { description: "Test", prompt: "Test prompt", subagent_type: "explore", run_in_background: true },
+        { description: "Test", prompt: "Test prompt", subagent_type: "scout", run_in_background: true },
         toolCtx
       )
 
@@ -123,7 +123,7 @@ describe("createCallOmoAgent", () => {
       const executeFunc = toolDef.execute as Function
 
       const result = await executeFunc(
-        { description: "Test", prompt: "Test prompt", subagent_type: "explore", run_in_background: true },
+        { description: "Test", prompt: "Test prompt", subagent_type: "scout", run_in_background: true },
         toolCtx
       )
 
@@ -157,7 +157,7 @@ describe("createCallOmoAgent", () => {
       )
 
       expect(result).toContain("Invalid agent type")
-      expect(result).toContain("Only explore, librarian are allowed")
+      expect(result).toContain("Only scout, intel are allowed")
     })
 
     test("should reject unknown non-allowed agents", async () => {
@@ -179,7 +179,7 @@ describe("createCallOmoAgent", () => {
       const executeFunc = toolDef.execute as Function
 
       const result = await executeFunc(
-        { description: "Test", prompt: "Explore", subagent_type: "EXPLORE", run_in_background: true },
+        { description: "Test", prompt: "Scout", subagent_type: "EXPLORE", run_in_background: true },
         toolCtx
       )
 
@@ -189,14 +189,14 @@ describe("createCallOmoAgent", () => {
     test("should exclude primary-mode agents from callable list", async () => {
       const agents = [
         ...DEFAULT_AGENTS,
-        { name: "sisyphus", mode: "primary" },
+        { name: "cerberus", mode: "primary" },
       ]
       const mockCtx = createMockCtx(agents)
       const toolDef = createCallOmoAgent(mockCtx, mockBackgroundManager, [])
       const executeFunc = toolDef.execute as Function
 
       const result = await executeFunc(
-        { description: "Test", prompt: "Orchestrate", subagent_type: "sisyphus", run_in_background: true },
+        { description: "Test", prompt: "Orchestrate", subagent_type: "cerberus", run_in_background: true },
         toolCtx
       )
 
@@ -209,7 +209,7 @@ describe("createCallOmoAgent", () => {
       const executeFunc = toolDef.execute as Function
 
       const result = await executeFunc(
-        { description: "Test", prompt: "Explore codebase", subagent_type: "explore", run_in_background: true },
+        { description: "Test", prompt: "Scout codebase", subagent_type: "scout", run_in_background: true },
         toolCtx
       )
 
@@ -251,7 +251,7 @@ describe("createCallOmoAgent", () => {
       id: "task-fallback",
       sessionId: "sub-session",
       description: "Test task",
-      agent: "explore",
+      agent: "scout",
       status: "pending",
     }))
     const managerWithLaunch = {
@@ -264,7 +264,7 @@ describe("createCallOmoAgent", () => {
       managerWithLaunch,
       [],
       {
-        explore: {
+        scout: {
           fallback_models: ["quotio/kimi-k2.5", "openai/gpt-5.5(high)"],
         },
       },
@@ -276,7 +276,7 @@ describe("createCallOmoAgent", () => {
       {
         description: "Test fallback",
         prompt: "Test prompt",
-        subagent_type: "explore",
+        subagent_type: "scout",
         run_in_background: true,
       },
       { sessionID: "test", messageID: "msg", agent: "test", abort: new AbortController().signal }
@@ -301,7 +301,7 @@ describe("createCallOmoAgent", () => {
       id: "task-model",
       sessionId: "sub-session",
       description: "Test task",
-      agent: "explore",
+      agent: "scout",
       status: "pending",
     }))
     const managerWithLaunch = {
@@ -313,7 +313,7 @@ describe("createCallOmoAgent", () => {
       managerWithLaunch,
       [],
       {
-        explore: {
+        scout: {
           model: "aws/anthropic/claude-sonnet-4",
         },
       },
@@ -325,7 +325,7 @@ describe("createCallOmoAgent", () => {
       {
         description: "Test model override",
         prompt: "Test prompt",
-        subagent_type: "explore",
+        subagent_type: "scout",
         run_in_background: true,
       },
       { sessionID: "test", messageID: "msg", agent: "test", abort: new AbortController().signal }
@@ -350,7 +350,7 @@ describe("createCallOmoAgent", () => {
       id: "task-variant",
       sessionId: "sub-session",
       description: "Test task",
-      agent: "explore",
+      agent: "scout",
       status: "pending",
     }))
     const managerWithLaunch = {
@@ -362,7 +362,7 @@ describe("createCallOmoAgent", () => {
       managerWithLaunch,
       [],
       {
-        explore: {
+        scout: {
           model: "openai/gpt-5.4",
           variant: "high",
         },
@@ -375,7 +375,7 @@ describe("createCallOmoAgent", () => {
       {
         description: "Test variant",
         prompt: "Test prompt",
-        subagent_type: "explore",
+        subagent_type: "scout",
         run_in_background: true,
       },
       { sessionID: "test", messageID: "msg", agent: "test", abort: new AbortController().signal }
@@ -401,7 +401,7 @@ describe("createCallOmoAgent", () => {
       id: "task-inline-variant",
       sessionId: "sub-session",
       description: "Test task",
-      agent: "explore",
+      agent: "scout",
       status: "pending",
     }))
     const managerWithLaunch = {
@@ -413,7 +413,7 @@ describe("createCallOmoAgent", () => {
       managerWithLaunch,
       [],
       {
-        explore: {
+        scout: {
           model: "openai/gpt-5.4 high",
         },
       },
@@ -425,7 +425,7 @@ describe("createCallOmoAgent", () => {
       {
         description: "Test inline variant",
         prompt: "Test prompt",
-        subagent_type: "explore",
+        subagent_type: "scout",
         run_in_background: true,
       },
       { sessionID: "test", messageID: "msg", agent: "test", abort: new AbortController().signal }
@@ -451,7 +451,7 @@ describe("createCallOmoAgent", () => {
       id: "task-category-model",
       sessionId: "sub-session",
       description: "Test task",
-      agent: "explore",
+      agent: "scout",
       status: "pending",
     }))
     const managerWithLaunch = {
@@ -463,7 +463,7 @@ describe("createCallOmoAgent", () => {
       managerWithLaunch,
       [],
       {
-        explore: {
+        scout: {
           category: "research",
         },
       },
@@ -480,7 +480,7 @@ describe("createCallOmoAgent", () => {
       {
         description: "Test category model override",
         prompt: "Test prompt",
-        subagent_type: "explore",
+        subagent_type: "scout",
         run_in_background: true,
       },
       { sessionID: "test", messageID: "msg", agent: "test", abort: new AbortController().signal }
@@ -511,7 +511,7 @@ describe("createCallOmoAgent", () => {
       {
         description: "Test",
         prompt: "Test prompt",
-        subagent_type: "explore",
+        subagent_type: "scout",
         run_in_background: false,
       },
       { sessionID: "test", messageID: "msg", agent: "test", abort: new AbortController().signal },

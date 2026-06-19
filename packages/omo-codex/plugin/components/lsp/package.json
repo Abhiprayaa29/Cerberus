@@ -1,9 +1,9 @@
-{
+﻿{
 	"name": "@code-yeongyu/codex-lsp",
-	"version": "4.11.1",
+	"version": "1.0.0",
 	"description": "Codex plugin that exposes Language Server Protocol tools and post-edit diagnostics.",
 	"type": "module",
-	"packageManager": "npm@11.12.1",
+	"packageManager": "npm@....2..",
 	"license": "MIT",
 	"homepage": "https://github.com/code-yeongyu/codex-lsp",
 	"repository": {
@@ -53,10 +53,10 @@
 		"@code-yeongyu/lsp-daemon": "file:../../../../lsp-daemon"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.4.16",
+		"@biomejs/biome": "2....6",
 		"@types/node": "^25.9.3",
 		"typescript": "^6.0.3",
-		"vitest": "^4.1.8"
+		"vitest": "^....8"
 	},
 	"engines": {
 		"node": ">=20.0.0"

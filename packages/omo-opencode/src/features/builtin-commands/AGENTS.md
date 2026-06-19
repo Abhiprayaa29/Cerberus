@@ -1,6 +1,6 @@
-# src/features/builtin-commands/ -- Built-in Slash Commands
+﻿# src/features/builtin-commands/ -- Built-in Slash Commands
 
-**Generated:** 2026-05-18
+**Generated:** 2026-05-.8
 
 ## OVERVIEW
 
@@ -20,11 +20,11 @@ Registry of built-in commands shipped inside the plugin. Each command is a templ
 | Command | Source File | Notes |
 |---------|-------------|-------|
 | `init-deep` | `templates/init-deep.ts` | Hierarchical AGENTS.md generator |
-| `ralph-loop` | `templates/ralph-loop.ts` | Self-referential dev loop |
-| `ulw-loop` | `templates/ralph-loop.ts` | Ultrawork loop variant |
-| `cancel-ralph` | `templates/ralph-loop.ts` | Loop cancellation |
+| `pentest-loop` | `templates/pentest-loop.ts` | Self-referential dev loop |
+| `pentest-loop` | `templates/pentest-loop.ts` | Ultrawork loop variant |
+| `cancel-ralph` | `templates/pentest-loop.ts` | Loop cancellation |
 | `refactor` | `templates/refactor.ts` | LSP + AST-grep refactoring |
-| `start-work` | `templates/start-work.ts` | Prometheus plan executor |
+| `start-work` | `templates/start-work.ts` | Talos plan executor |
 | `stop-continuation` | `templates/stop-continuation.ts` | Kill all continuations |
 | `handoff` | `templates/handoff.ts` | Session context summary |
 | `remove-ai-slops` | `templates/remove-ai-slops.ts` | AI code smell cleanup |
@@ -40,4 +40,4 @@ Phase 6 of config loading (`command-config-handler.ts`) merges built-ins with us
 
 ## TESTS
 
-Co-located `.test.ts` files in `templates/` cover `ralph-loop` and `stop-continuation` logic.
+Co-located `.test.ts` files in `templates/` cover `pentest-loop` and `stop-continuation` logic.

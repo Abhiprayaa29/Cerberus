@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it } from "bun:test"
+﻿import { afterEach, beforeEach, describe, expect, it } from "bun:test"
 import { mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs"
 import { tmpdir } from "node:os"
 import { join } from "node:path"
@@ -55,7 +55,7 @@ describe("writeOmoConfig", () => {
     // given
     const existingConfig = {
       agents: {
-        sisyphus: {
+        cerberus: {
           model: "custom/provider-model",
         },
       },
@@ -73,8 +73,8 @@ describe("writeOmoConfig", () => {
 
     const savedConfig = parseJsonc<Record<string, unknown>>(readFileSync(testConfigPath, "utf-8"))
     const savedAgents = getRecord(savedConfig.agents)
-    const savedSisyphus = getRecord(savedAgents.sisyphus)
-    expect(savedSisyphus.model).toBe("custom/provider-model")
+    const savedCerberus = getRecord(savedAgents.cerberus)
+    expect(savedCerberus.model).toBe("custom/provider-model")
     expect(savedConfig.disabled_hooks).toEqual(["comment-checker"])
 
     for (const defaultKey of Object.keys(generatedDefaults)) {

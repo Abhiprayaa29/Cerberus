@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, test } from "bun:test"
+﻿import { afterEach, describe, expect, test } from "bun:test"
 
 import {
   _setPromptGateMessagesFetchTimeoutMsForTesting,
@@ -894,7 +894,7 @@ describe("dispatchInternalPrompt shared gate behavior", () => {
             },
             {
               info: { id: "msg_internal_user", role: "user" },
-              parts: [{ type: "text", text: "wake\n<!-- OMO_INTERNAL_INITIATOR -->" }],
+              parts: [{ type: "text", text: "wake\n<!-- OMOP_INTERNAL_INITIATOR -->" }],
             },
           ],
         }),
@@ -983,7 +983,7 @@ describe("dispatchInternalPrompt shared gate behavior", () => {
             {
               info: { id: "msg_mixed_user", role: "user" },
               parts: [
-                { type: "text", text: "wake\n<!-- OMO_INTERNAL_INITIATOR -->" },
+                { type: "text", text: "wake\n<!-- OMOP_INTERNAL_INITIATOR -->" },
                 { type: "text", text: "real user follow-up" },
               ],
             },
@@ -1117,7 +1117,7 @@ describe("dispatchInternalPrompt shared gate behavior", () => {
       source: "team-live-delivery",
       settleMs: 0,
     })
-    releasePromptAsyncReservation("ses_release_scope", "ralph-loop:activity")
+    releasePromptAsyncReservation("ses_release_scope", "pentest-loop:activity")
     const second = await dispatchInternalPrompt({
       mode: "async",
       client,

@@ -1,9 +1,9 @@
-{
-  "name": "@oh-my-opencode/telemetry-core",
-  "version": "0.1.0",
+﻿{
+  "name": "@oh-my-open-pentest/telemetry-core",
+  "version": "0...0",
   "type": "module",
   "private": true,
-  "description": "Harness-neutral telemetry primitives for oh-my-opencode products.",
+  "description": "Harness-neutral telemetry primitives for oh-my-open-pentest products.",
   "exports": {
     ".": {
       "types": "./index.d.ts",
@@ -16,7 +16,7 @@
     "test": "bun test src/*.test.ts"
   },
   "dependencies": {
-    "@oh-my-opencode/utils": "workspace:*",
-    "posthog-node": "^5.34.3"
+    "@oh-my-open-pentest/utils": "workspace:*",
+    "posthog-node": "^5.3..3"
   }
 }

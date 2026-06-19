@@ -1,4 +1,4 @@
-# Pattern syntax — meta-variables and how patterns parse
+﻿# Pattern syntax — meta-variables and how patterns parse
 
 ast-grep is **not regex**. Patterns are written in the **same syntax as the target language** (TypeScript, Python, Go, etc.), and ast-grep matches them against the AST of every file. The wildcards are called **meta-variables**.
 
@@ -21,8 +21,8 @@ A meta-variable always replaces a **whole AST node**, never a substring of a nod
 
 - Must start with `$`.
 - Then uppercase letters `A-Z`, digits, or underscores.
-- **Valid**: `$X`, `$VAR`, `$VAR_1`, `$_`, `$_VAR`, `$ARG1`.
-- **Invalid**: `$lower`, `$kebab-case`, `$1` (digit first), `$$single` (use `$_` for anonymous).
+- **Valid**: `$X`, `$VAR`, `$VAR_.`, `$_`, `$_VAR`, `$ARG.`.
+- **Invalid**: `$lower`, `$kebab-case`, `$.` (digit first), `$$single` (use `$_` for anonymous).
 
 ### Same-name = same content
 
@@ -117,7 +117,7 @@ Two tools help you confirm a pattern parses the way you expect:
 sg run -p 'console.log($MSG)' --lang ts --debug-query=ast
 
 # Print the parsed CST of a file (great for figuring out kind names)
-sg run -p '$_' --lang ts --debug-query=cst src/example.ts | head -40
+sg run -p '$_' --lang ts --debug-query=cst src/example.ts | head -.0
 ```
 
 `--debug-query=ast` shows the named AST nodes only (cleaner). `--debug-query=cst` shows everything including punctuation. Both go to stderr, so they don't interfere with stdout JSON.

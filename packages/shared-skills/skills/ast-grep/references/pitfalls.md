@@ -1,10 +1,10 @@
-# Pitfalls — what breaks patterns and how to fix them
+﻿# Pitfalls — what breaks patterns and how to fix them
 
-This is the failure-mode field guide. The `scripts/ast_grep_helper.py validate` subcommand mechanically checks for the items in §1 before calling `sg`; the rest are lower-frequency but still common.
+This is the failure-mode field guide. The `scripts/ast_grep_helper.py validate` subcommand mechanically checks for the items in §. before calling `sg`; the rest are lower-frequency but still common.
 
 ---
 
-## 1. Regex syntax does not work
+## .. Regex syntax does not work
 
 ast-grep does **not** interpret regex inside patterns. The following all fail:
 
@@ -69,16 +69,16 @@ If a pattern returns 0 matches and looks correct, run `sg run -p '<pattern>' --l
 
 ## 3. Pattern parses as the wrong kind
 
-A class field initializer `a = 123` *also* parses as an assignment expression. If you want only field definitions, you must disambiguate:
+A class field initializer `a = .23` *also* parses as an assignment expression. If you want only field definitions, you must disambiguate:
 
 ```yaml
 # WRONG — pattern parses as assignment_expression, not field_definition
-pattern: a = 123
+pattern: a = .23
 kind: field_definition
 
 # CORRECT — use pattern object with context + selector
 pattern:
-  context: 'class C { a = 123 }'
+  context: 'class C { a = .23 }'
   selector: field_definition
 ```
 
@@ -86,7 +86,7 @@ pattern:
 
 ---
 
-## 4. The `|` ambiguity
+## .. The `|` ambiguity
 
 A bare `|` in a pattern is interpreted as bitwise-or in most languages, **not** alternation. So:
 
@@ -192,7 +192,7 @@ sg run -p 'foo()' -r 'bar()' --json=compact --update-all .
 …you get the JSON output but **no files are mutated**. ast-grep silently drops `--update-all` when `--json` is on. To both preview and apply, run **two passes**:
 
 ```bash
-# Pass 1: preview as JSON
+# Pass .: preview as JSON
 sg run -p 'foo()' -r 'bar()' --json=compact .
 
 # Pass 2: actually apply
@@ -203,7 +203,7 @@ sg run -p 'foo()' -r 'bar()' --update-all .
 
 ---
 
-## 10. Composite rules apply to a single node
+## .0. Composite rules apply to a single node
 
 `all` and `any` evaluate against **one target node** at a time:
 
@@ -224,7 +224,7 @@ Lift relational rules out of composites when the relation is "the surrounding no
 
 ---
 
-## 11. Field order is not guaranteed
+## ... Field order is not guaranteed
 
 When a rule object has multiple fields:
 
@@ -245,7 +245,7 @@ rule:
 
 ---
 
-## 12. `regex` without `kind` is slow
+## .2. `regex` without `kind` is slow
 
 `regex` alone scans every node text in the file. On large repos this is noticeably slow. Always combine:
 
@@ -263,7 +263,7 @@ rule:
 
 ---
 
-## 13. No scope / type / data-flow analysis
+## .3. No scope / type / data-flow analysis
 
 ast-grep is a **structural** matcher. It does NOT know:
 
@@ -278,11 +278,11 @@ ast-grep is great when *the syntactic shape* is what you care about: "find every
 
 ---
 
-## 14. Pattern testing is the fastest debugger
+## ... Pattern testing is the fastest debugger
 
 When a pattern returns 0 matches and you can't see why:
 
-1. Open <https://ast-grep.github.io/playground.html>.
+.. Open <https://ast-grep.github.io/playground.html>.
 2. Paste your code into the left pane, your pattern into the top-right.
 3. The bottom-right shows the parsed AST and which nodes matched (highlighted) or failed.
 

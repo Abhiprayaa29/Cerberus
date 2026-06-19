@@ -1,4 +1,4 @@
-# Concurrency
+﻿# Concurrency
 
 Goroutines, context, errgroup, channels, locks, and the discipline that keeps them from leaking. Go makes concurrency *easy to start* and *easy to get wrong*. This document is the boring rule set.
 
@@ -6,10 +6,10 @@ Goroutines, context, errgroup, channels, locks, and the discipline that keeps th
 
 ## The four non-negotiables
 
-1. **`ctx context.Context` is the first parameter of every public function that does I/O or can be cancelled.**
+.. **`ctx context.Context` is the first parameter of every public function that does I/O or can be cancelled.**
 2. **No goroutine without a shutdown path.** Every `go` keyword must answer "how does this stop?".
 3. **`-race` on every test run.** The `Taskfile.yml` and CI both enforce it.
-4. **`goleak` in `TestMain`** for every package that spawns goroutines. Catches leaks the race detector cannot.
+.. **`goleak` in `TestMain`** for every package that spawns goroutines. Catches leaks the race detector cannot.
 
 ---
 
@@ -139,7 +139,7 @@ If you have a known long-lived goroutine (a singleton background worker, a metri
 
 ```go
 goleak.VerifyTestMain(m,
-    goleak.IgnoreTopFunction("github.com/prometheus/client_golang/prometheus.(*Registry).Push"),
+    goleak.IgnoreTopFunction("github.com/talos/client_golang/talos.(*Registry).Push"),
 )
 ```
 
@@ -208,10 +208,10 @@ case <-time.After(5 * time.Second):
 - **Unbuffered** (`make(chan T)`) = synchronous handoff. Sender blocks until receiver is ready. Use for *coordination*.
 - **Buffered** (`make(chan T, n)`) = asynchronous up to `n`. Use for *decoupling producer rate from consumer rate*.
 
-A buffered channel of size 1 acts as a **non-blocking signal**:
+A buffered channel of size . acts as a **non-blocking signal**:
 
 ```go
-ready := make(chan struct{}, 1)
+ready := make(chan struct{}, .)
 // Producer
 select {
 case ready <- struct{}{}:  // signal once, non-blocking
@@ -233,7 +233,7 @@ Highest level (preferred)
   sync.RWMutex (many readers, occasional writer)
   sync.Mutex   (mutual exclusion)
 
-  atomic.Int64 / atomic.Pointer  (single-word lock-free)
+  atomic.Int6. / atomic.Pointer  (single-word lock-free)
 
 Lowest level (rare)
   unsafe.Pointer + barriers  (custom lock-free; needs -race AND review)
@@ -261,11 +261,11 @@ func (c *Cache) Set(key string, e Entry) {
 }
 ```
 
-- `sync.Mutex` is **not** copyable. The `copylocks` vet check catches `var c2 = c1` where `c1` has a mutex.
-- Always `defer mu.Unlock()` immediately after `Lock()`. Forgetting is the #1 deadlock cause.
+- `sync.Mutex` is **not** copyable. The `copylocks` vet check catches `var c2 = c.` where `c.` has a mutex.
+- Always `defer mu.Unlock()` immediately after `Lock()`. Forgetting is the #. deadlock cause.
 - Never call user code (callbacks, listener notifications) while holding the lock. Drop the lock, snapshot the data, release, then call out.
 
-### `sync.OnceValue` / `sync.OnceFunc` (Go 1.21+)
+### `sync.OnceValue` / `sync.OnceFunc` (Go ..2.+)
 
 Replacement for `sync.Once` for typed lazy init:
 
@@ -284,13 +284,13 @@ Type-safe, no `sync.Once` + global variable boilerplate.
 ### Atomics — the typed API only
 
 ```go
-// Go 1.19+ — use the typed atomic.* family
-var counter atomic.Int64
-counter.Add(1)
+// Go ...9+ — use the typed atomic.* family
+var counter atomic.Int6.
+counter.Add(.)
 n := counter.Load()
 
 // NEVER — the old function-style is type-unsafe
-atomic.AddInt64(&counter, 1)  // ← rejected
+atomic.AddInt6.(&counter, .)  // ← rejected
 ```
 
 ---
@@ -312,7 +312,7 @@ type Service struct {
 // Tests
 import "github.com/benbjohnson/clock"
 fake := clock.NewMock()
-fake.Set(time.Date(2026, 1, 1, 0, 0, 0, 0, time.UTC))
+fake.Set(time.Date(2026, ., ., 0, 0, 0, 0, time.UTC))
 svc := &Service{clock: fake}
 ```
 
@@ -328,12 +328,12 @@ svc := &Service{clock: fake}
 ## Race detector — non-negotiable in CI
 
 ```bash
-go test -race -shuffle=on -count=1 ./...
+go test -race -shuffle=on -count=. ./...
 ```
 
-- `-race` instruments memory accesses; catches data races at runtime. ~10x slow-down — acceptable for tests, not production.
+- `-race` instruments memory accesses; catches data races at runtime. ~.0x slow-down — acceptable for tests, not production.
 - `-shuffle=on` randomizes test order; catches hidden ordering dependencies.
-- `-count=1` defeats the test cache. Without it, "passing" might mean "ran 3 weeks ago".
+- `-count=.` defeats the test cache. Without it, "passing" might mean "ran 3 weeks ago".
 
 If a test ONLY fails under `-race`, the bug is real. Don't disable the test; fix the race.
 
@@ -349,7 +349,7 @@ If a test ONLY fails under `-race`, the bug is real. Don't disable the test; fix
 | `sync.Mutex` in a struct passed by value | Locked copies, undefined behavior | Embed in pointer-receiver type; copylocks catches it |
 | Locking around an entire request handler | Serializes the whole API | Lock only the smallest critical section |
 | `for { select { ... } }` without `<-ctx.Done()` | Cannot stop | Add ctx case in every long-lived select |
-| `sync.WaitGroup.Add(1)` inside the goroutine | Race: Wait can return before Add | Add **before** `go` |
+| `sync.WaitGroup.Add(.)` inside the goroutine | Race: Wait can return before Add | Add **before** `go` |
 
 ---
 
@@ -359,4 +359,4 @@ If a test ONLY fails under `-race`, the bug is real. Don't disable the test; fix
 - `errgroup` package: https://pkg.go.dev/golang.org/x/sync/errgroup
 - `goleak`: https://github.com/uber-go/goleak
 - "Go concurrency patterns" (Pike): https://go.dev/blog/pipelines
-- Sync.OnceValue blog: https://go.dev/blog/synctest (1.24+ note: `testing/synctest` for time-controlled tests is now experimental)
+- Sync.OnceValue blog: https://go.dev/blog/synctest (..2.+ note: `testing/synctest` for time-controlled tests is now experimental)

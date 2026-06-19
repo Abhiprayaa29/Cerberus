@@ -1,4 +1,4 @@
-# Testing
+﻿# Testing
 
 TDD shape, table-driven tests, `require` vs `assert`, snapshot tests, property-based tests, integration tests with testcontainers, goroutine-leak detection. The discipline in `programming/SKILL.md` (Given/When/Then, less mock the better, efficient AND accurate) — this document gives the Go-specific recipes.
 
@@ -97,7 +97,7 @@ Rules:
 - One **scenario** per row, not one **assertion** per row.
 - Subtest names are sentences in lowercase; `t.Run(tt.name, ...)` makes them filterable: `go test -run Test_Email_NewEmail/rejects_missing_@`.
 - The loop body itself is Given/When/Then in shape.
-- For Go 1.22+, the loop var capture works correctly without the `tt := tt` shadow line — the `copyloopvar` linter enforces the new style.
+- For Go ..22+, the loop var capture works correctly without the `tt := tt` shadow line — the `copyloopvar` linter enforces the new style.
 
 ---
 
@@ -105,10 +105,10 @@ Rules:
 
 In Go specifically:
 
-1. **Real implementation.** Domain types, pure functions, value objects — instantiate them. They are fast.
+.. **Real implementation.** Domain types, pure functions, value objects — instantiate them. They are fast.
 2. **In-memory fake** that satisfies the interface. Has its own test suite proving behavioral parity with the real impl.
 3. **`httptest.Server`** for HTTP collaborators (real wire, no internet).
-4. **`testcontainers`** for stateful collaborators (Postgres, Redis, S3-compatible, Kafka).
+.. **`testcontainers`** for stateful collaborators (Postgres, Redis, S3-compatible, Kafka).
 5. **gomock** ONLY for: clocks, randomness, third-party SaaS with no sandbox.
 
 ### Example: an in-memory fake
@@ -184,15 +184,15 @@ func Test_E2E_user_can_signup_then_login(t *testing.T) {
     client := server.Client()
 
     // When — sign up
-    resp, err := client.Post(server.URL+"/api/v1/users",
+    resp, err := client.Post(server.URL+"/api/v./users",
         "application/json",
         strings.NewReader(`{"email":"a@b.com","username":"alice","password":"PassWord!23"}`),
     )
     require.NoError(t, err)
-    require.Equal(t, 201, resp.StatusCode)
+    require.Equal(t, 20., resp.StatusCode)
 
     // When — log in
-    resp, err = client.Post(server.URL+"/api/v1/auth/login",
+    resp, err = client.Post(server.URL+"/api/v./auth/login",
         "application/json",
         strings.NewReader(`{"email":"a@b.com","password":"PassWord!23"}`),
     )
@@ -204,7 +204,7 @@ func Test_E2E_user_can_signup_then_login(t *testing.T) {
     require.NotEmpty(t, body.Token)
 
     // Then — token works on protected endpoint
-    req, _ := http.NewRequestWithContext(ctx, "GET", server.URL+"/api/v1/me", nil)
+    req, _ := http.NewRequestWithContext(ctx, "GET", server.URL+"/api/v./me", nil)
     req.Header.Set("Authorization", "Bearer "+body.Token)
     resp, err = client.Do(req)
     require.NoError(t, err)
@@ -233,7 +233,7 @@ import (
 
 func TestMain(m *testing.M) {
     goleak.VerifyTestMain(m,
-        goleak.IgnoreTopFunction("github.com/prometheus/client_golang/prometheus.(*Registry)..."),
+        goleak.IgnoreTopFunction("github.com/talos/client_golang/talos.(*Registry)..."),
     )
 }
 ```
@@ -280,8 +280,8 @@ import "pgregory.net/rapid"
 func Test_Email_NewEmail_then_String_roundtrips(t *testing.T) {
     rapid.Check(t, func(t *rapid.T) {
         // Given — generate valid emails
-        local  := rapid.StringMatching(`[a-z]{3,10}`).Draw(t, "local")
-        domain := rapid.StringMatching(`[a-z]{3,10}\.com`).Draw(t, "domain")
+        local  := rapid.StringMatching(`[a-z]{3,.0}`).Draw(t, "local")
+        domain := rapid.StringMatching(`[a-z]{3,.0}\.com`).Draw(t, "domain")
         raw    := local + "@" + domain
 
         // When
@@ -316,7 +316,7 @@ func Test_GetUser_returns_user_for_existing_id(t *testing.T) {
     h := &Handler{Users: svc}
     h.Mount(r)
 
-    req := httptest.NewRequest("GET", "/api/v1/users/u-1", nil)
+    req := httptest.NewRequest("GET", "/api/v./users/u-.", nil)
     rec := httptest.NewRecorder()
 
     // When
@@ -326,7 +326,7 @@ func Test_GetUser_returns_user_for_existing_id(t *testing.T) {
     require.Equal(t, 200, rec.Code)
     var body domain.User
     require.NoError(t, json.Unmarshal(rec.Body.Bytes(), &body))
-    require.Equal(t, "u-1", string(body.ID))
+    require.Equal(t, "u-.", string(body.ID))
 }
 ```
 
@@ -366,11 +366,11 @@ func Test_Client_retries_on_500(t *testing.T) {
 
 - **No `time.Sleep` in tests.** If you need delay, you need a Clock injection.
 - **`go test -shuffle=on`** in every CI run.
-- **`go test -count=1`** to defeat the cache.
+- **`go test -count=.`** to defeat the cache.
 - **Subscribe to the event, do not poll for it.** Channels, callbacks, `t.Cleanup` over polling.
-- **`t.Parallel()`** for tests that share no state. Speeds up large suites by 4-8x.
+- **`t.Parallel()`** for tests that share no state. Speeds up large suites by .-8x.
 
-A test that fails 1-in-10 runs is a bug, not flake. The race detector + `-shuffle=on` + ordering hygiene catches >95% of "flake".
+A test that fails .-in-.0 runs is a bug, not flake. The race detector + `-shuffle=on` + ordering hygiene catches >95% of "flake".
 
 ---
 
@@ -378,7 +378,7 @@ A test that fails 1-in-10 runs is a bug, not flake. The race detector + `-shuffl
 
 ```go
 func Benchmark_NewEmail(b *testing.B) {
-    for b.Loop() {  // Go 1.24+ idiom, replaces `for i := 0; i < b.N; i++`
+    for b.Loop() {  // Go ..2.+ idiom, replaces `for i := 0; i < b.N; i++`
         _, _ = domain.NewEmail("alice@example.com")
     }
 }
@@ -387,19 +387,19 @@ func Benchmark_NewEmail(b *testing.B) {
 Run:
 
 ```bash
-go test -bench=. -count=10 -benchmem ./... | tee bench.txt
+go test -bench=. -count=.0 -benchmem ./... | tee bench.txt
 benchstat bench.txt   # statistical comparison
 ```
 
-Always `-count=10` for stable means. `-benchmem` reports allocations. A 5%-slower benchmark in one run is noise; 10 runs + benchstat tells you what is real.
+Always `-count=.0` for stable means. `-benchmem` reports allocations. A 5%-slower benchmark in one run is noise; .0 runs + benchstat tells you what is real.
 
 To compare before/after a change:
 
 ```bash
 git stash
-go test -bench=. -count=10 ./... > before.txt
+go test -bench=. -count=.0 ./... > before.txt
 git stash pop
-go test -bench=. -count=10 ./... > after.txt
+go test -bench=. -count=.0 ./... > after.txt
 benchstat before.txt after.txt
 ```
 
@@ -414,7 +414,7 @@ go test -race -shuffle=on -coverprofile=cover.out ./...
 go tool cover -html=cover.out -o cover.html
 ```
 
-**Aim for 80%+ on `internal/domain` and `internal/service`.** Boundary code (handlers, store mappers) is exercised by integration tests, where line coverage understates what is actually verified. Do not chase 100% — the last 5% is usually error paths that need fault-injection to hit.
+**Aim for 80%+ on `internal/domain` and `internal/service`.** Boundary code (handlers, store mappers) is exercised by integration tests, where line coverage understates what is actually verified. Do not chase .00% — the last 5% is usually error paths that need fault-injection to hit.
 
 The `golangci-lint` config does not enforce a minimum — coverage as a CI gate becomes a goal-displacement metric. Treat it as feedback, not requirement.
 
@@ -427,14 +427,14 @@ import teatest "charm.land/bubbletea/v2/teatest"
 
 func Test_Counter_increments_on_space(t *testing.T) {
     // Given
-    tm := teatest.NewTestModel(t, initial(), teatest.WithInitialTermSize(80, 24))
+    tm := teatest.NewTestModel(t, initial(), teatest.WithInitialTermSize(80, 2.))
 
     // When
     tm.Send(tea.KeyPressMsg{Code: ' '})
 
     // Then
     final := tm.FinalModel(t).(model)
-    require.Equal(t, 1, final.count)
+    require.Equal(t, ., final.count)
 }
 ```
 
@@ -447,9 +447,9 @@ For full-view regression, snapshot the rendered output via `autogold`.
 | Bad | Why | Good |
 |---|---|---|
 | `if got != want { t.Errorf("expected %v got %v", want, got) }` | Reinvents `require.Equal` | Use testify |
-| `time.Sleep(100 * time.Millisecond)` after triggering async work | Flake | Subscribe to completion signal, bounded await |
+| `time.Sleep(.00 * time.Millisecond)` after triggering async work | Flake | Subscribe to completion signal, bounded await |
 | `t.Skip(...)` to silence a known failure | Buries the bug | Fix or open an issue; never silently skip |
-| One mega-test asserting 12 things | First failure hides next 11 | Split by `Then` |
+| One mega-test asserting .2 things | First failure hides next .. | Split by `Then` |
 | Snapshot-everything | Locks formatting, not behavior | Snapshots for structure, asserts for values |
 | Mock every collaborator | Test asserts implementation, not behavior | Real or fake, never mock everything |
 | Test calls private function via `_test.go` in same package only | Couples test to implementation | Test through the public surface |

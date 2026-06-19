@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 declare const require: NodeJS.Require
 
@@ -182,9 +182,9 @@ describe("skill tool - agent restriction", () => {
 
   it("allows skill when agent matches restriction", async () => {
     // given
-    const loadedSkills = [createMockSkill("restricted-skill", { agent: "sisyphus" })]
+    const loadedSkills = [createMockSkill("restricted-skill", { agent: "cerberus" })]
     const tool = createSkillTool({ skills: loadedSkills })
-    const context = { ...mockContext, agent: "sisyphus" }
+    const context = { ...mockContext, agent: "cerberus" }
 
     // when
     const result = await tool.execute({ name: "restricted-skill" }, context)
@@ -195,25 +195,25 @@ describe("skill tool - agent restriction", () => {
 
   it("throws error when agent does not match restriction", async () => {
     // given
-    const loadedSkills = [createMockSkill("sisyphus-only-skill", { agent: "sisyphus" })]
+    const loadedSkills = [createMockSkill("cerberus-only-skill", { agent: "cerberus" })]
     const tool = createSkillTool({ skills: loadedSkills })
-    const context = { ...mockContext, agent: "oracle" }
+    const context = { ...mockContext, agent: "cipher" }
 
     // when / #then
-    return expect(tool.execute({ name: "sisyphus-only-skill" }, context)).rejects.toThrow(
-      'Skill "sisyphus-only-skill" is restricted to agent "sisyphus"'
+    return expect(tool.execute({ name: "cerberus-only-skill" }, context)).rejects.toThrow(
+      'Skill "cerberus-only-skill" is restricted to agent "cerberus"'
     )
   })
 
   it("throws error when context agent is undefined for restricted skill", async () => {
     // given
-    const loadedSkills = [createMockSkill("sisyphus-only-skill", { agent: "sisyphus" })]
+    const loadedSkills = [createMockSkill("cerberus-only-skill", { agent: "cerberus" })]
     const tool = createSkillTool({ skills: loadedSkills })
     const contextWithoutAgent = { ...mockContext, agent: unsafeTestValue<string>(undefined) }
 
     // when / #then
-    return expect(tool.execute({ name: "sisyphus-only-skill" }, contextWithoutAgent)).rejects.toThrow(
-      'Skill "sisyphus-only-skill" is restricted to agent "sisyphus"'
+    return expect(tool.execute({ name: "cerberus-only-skill" }, contextWithoutAgent)).rejects.toThrow(
+      'Skill "cerberus-only-skill" is restricted to agent "cerberus"'
     )
   })
 
@@ -635,10 +635,10 @@ describe("skill tool - dynamic discovery", () => {
 })
 describe("skill tool - agent-restricted skill visibility in description", () => {
   it("excludes agent-restricted skill from description <available_items>", () => {
-    // given: a skill restricted to oracle, and a public skill
+    // given: a skill restricted to cipher, and a public skill
     const loadedSkills = [
       createMockSkill("public-skill"),
-      createMockSkill("oracle-only-skill", { agent: "oracle" }),
+      createMockSkill("cipher-only-skill", { agent: "cipher" }),
     ]
 
     // when: tool is created with these skills (as tool-registry would inject them)
@@ -647,9 +647,9 @@ describe("skill tool - agent-restricted skill visibility in description", () => 
       includeSkillsInDescription: true,
     })
 
-    // then: oracle-only skill must NOT appear in the description
+    // then: cipher-only skill must NOT appear in the description
     expect(tool.description).toContain("public-skill")
-    expect(tool.description).not.toContain("oracle-only-skill")
+    expect(tool.description).not.toContain("cipher-only-skill")
   })
 
   it("includes public skill (no agent field) in description regardless of context", () => {
@@ -671,15 +671,15 @@ describe("skill tool - agent-restricted skill visibility in description", () => 
     // but the full skill list is available for execute via getSkills()
     // (simulating what tool-registry does: description uses filtered list,
     //  but execute discovers from disk / full list)
-    const restrictedSkill = createMockSkill("oracle-only-skill", { agent: "oracle" })
+    const restrictedSkill = createMockSkill("cipher-only-skill", { agent: "cipher" })
     const tool = createSkillTool({ skills: [restrictedSkill] })
-    const oracleContext = { ...mockContext, agent: "oracle" }
+    const cipherContext = { ...mockContext, agent: "cipher" }
 
-    // when: oracle agent explicitly calls the skill
-    const result = await tool.execute({ name: "oracle-only-skill" }, oracleContext)
+    // when: cipher agent explicitly calls the skill
+    const result = await tool.execute({ name: "cipher-only-skill" }, cipherContext)
 
     // then: execution succeeds
-    expect(result).toContain("oracle-only-skill")
+    expect(result).toContain("cipher-only-skill")
   })
 })
 
@@ -896,54 +896,54 @@ describe("skill tool - bundled security skills", () => {
 describe("skill tool - short name resolution", () => {
   it("resolves namespaced skill by short name when unambiguous", async () => {
     // given
-    const loadedSkills = [createMockSkill("toolkit/systematic-debugging")]
+    const loadedSkills = [createMockSkill("toolkit/systematic-vulnerability analysis")]
     const tool = createSkillTool({ skills: loadedSkills })
 
     // when
-    const result = await tool.execute({ name: "systematic-debugging" }, mockContext)
+    const result = await tool.execute({ name: "systematic-vulnerability analysis" }, mockContext)
 
     // then
-    expect(result).toContain("toolkit/systematic-debugging")
+    expect(result).toContain("toolkit/systematic-vulnerability analysis")
   })
 
   it("still resolves by exact full name", async () => {
     // given
-    const loadedSkills = [createMockSkill("toolkit/systematic-debugging")]
+    const loadedSkills = [createMockSkill("toolkit/systematic-vulnerability analysis")]
     const tool = createSkillTool({ skills: loadedSkills })
 
     // when
-    const result = await tool.execute({ name: "toolkit/systematic-debugging" }, mockContext)
+    const result = await tool.execute({ name: "toolkit/systematic-vulnerability analysis" }, mockContext)
 
     // then
-    expect(result).toContain("toolkit/systematic-debugging")
+    expect(result).toContain("toolkit/systematic-vulnerability analysis")
   })
 
   it("does not resolve short name when ambiguous (multiple matches)", async () => {
     // given
     const loadedSkills = [
-      createMockSkill("toolkit/debugging"),
-      createMockSkill("utils/debugging"),
+      createMockSkill("toolkit/vulnerability analysis"),
+      createMockSkill("utils/vulnerability analysis"),
     ]
     const tool = createSkillTool({ skills: loadedSkills })
 
     // when / then, should not resolve (ambiguous), should suggest both
-    return expect(tool.execute({ name: "debugging" }, mockContext)).rejects.toThrow(
+    return expect(tool.execute({ name: "vulnerability analysis" }, mockContext)).rejects.toThrow(
       "not found"
     )
   })
 
   it("prefers exact match over short name match", async () => {
-    // given, "debugging" exists as both exact and as part of a namespace
+    // given, "vulnerability analysis" exists as both exact and as part of a namespace
     const loadedSkills = [
-      createMockSkill("debugging"),
-      createMockSkill("toolkit/debugging"),
+      createMockSkill("vulnerability analysis"),
+      createMockSkill("toolkit/vulnerability analysis"),
     ]
     const tool = createSkillTool({ skills: loadedSkills })
 
     // when
-    const result = await tool.execute({ name: "debugging" }, mockContext)
+    const result = await tool.execute({ name: "vulnerability analysis" }, mockContext)
 
-    // then, should match "debugging" exactly, not "toolkit/debugging"
-    expect(result).toContain("## Skill: debugging")
+    // then, should match "vulnerability analysis" exactly, not "toolkit/vulnerability analysis"
+    expect(result).toContain("## Skill: vulnerability analysis")
   })
 })

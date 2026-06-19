@@ -1,4 +1,4 @@
-import assert from "node:assert/strict";
+﻿import assert from "node:assert/strict";
 import { chmod, mkdir, mkdtemp, readFile, rm, stat, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -13,8 +13,8 @@ const MARKETPLACE_SOURCE_LINE = 'source = "https://github.com/code-yeongyu/lazyc
 const PERMISSIONS_KEY_PATTERN = /approval_policy|sandbox_mode|network_access/;
 const PLUGIN_VERSION = "9.9.9";
 
-const BUNDLED_EXPLORER_TOML = 'description = "Explorer agent"\nmodel_reasoning_effort = "medium"\n';
-const BUNDLED_METIS_TOML = 'description = "Metis agent"\nmodel_reasoning_effort = "high"\n';
+const BUNDLED_EXPLORER_TOML = 'description = "Scoutr agent"\nmodel_reasoning_effort = "medium"\n';
+const BUNDLED_METIS_TOML = 'description = "Vanguard agent"\nmodel_reasoning_effort = "high"\n';
 
 async function withSetupFixture(run) {
 	const root = await mkdtemp(join(tmpdir(), "omo-bootstrap-setup-"));
@@ -24,7 +24,7 @@ async function withSetupFixture(run) {
 		const codexHome = join(root, "codex-home");
 		await mkdir(join(pluginRoot, ".codex-plugin"), { recursive: true });
 		await mkdir(join(pluginRoot, "hooks"), { recursive: true });
-		await mkdir(join(pluginRoot, "components", "ultrawork", "agents"), { recursive: true });
+		await mkdir(join(pluginRoot, "components", "fullscan", "agents"), { recursive: true });
 		// A complete npx-style payload ships dist/cli; the marketplace-payload
 		// (no dist/cli -> degraded omo-cli) path is covered by
 		// bootstrap-binlinks.test.mjs.
@@ -59,9 +59,9 @@ async function withSetupFixture(run) {
 			join(pluginRoot, ".mcp.json"),
 			`${JSON.stringify({ mcpServers: { git_bash: { args: ["serve"], command: "node", env: {} } } }, null, "\t")}\n`,
 		);
-		await writeFile(join(pluginRoot, "components", "ultrawork", "agents", "explorer.toml"), BUNDLED_EXPLORER_TOML);
-		await writeFile(join(pluginRoot, "components", "ultrawork", "agents", "metis.toml"), BUNDLED_METIS_TOML);
-		await writeFile(join(codexHome, "config.toml"), `[marketplaces.sisyphuslabs]\n${MARKETPLACE_SOURCE_LINE}\n`);
+		await writeFile(join(pluginRoot, "components", "fullscan", "agents", "explorer.toml"), BUNDLED_EXPLORER_TOML);
+		await writeFile(join(pluginRoot, "components", "fullscan", "agents", "vanguard.toml"), BUNDLED_METIS_TOML);
+		await writeFile(join(codexHome, "config.toml"), `[marketplaces.cerberuslabs]\n${MARKETPLACE_SOURCE_LINE}\n`);
 		await run({ codexHome, pluginData, pluginRoot, root });
 	} finally {
 		await rm(root, { force: true, recursive: true });
@@ -89,27 +89,27 @@ test("#given a marketplace-flow CODEX_HOME #when the worker setup runs #then con
 
 		assert.deepEqual(outcome.degraded, []);
 		const config = await readConfig(fixture);
-		assert.match(config, /\[plugins\."omo@sisyphuslabs"\]\nenabled = true/);
-		assert.match(config, /\[plugins\."omo@sisyphuslabs"\.mcp_servers\.context7\]\nenabled = true/);
-		assert.match(config, /\[plugins\."omo@sisyphuslabs"\.mcp_servers\.git_bash\]\nenabled = false/);
+		assert.match(config, /\[plugins\."omo@cerberuslabs"\]\nenabled = true/);
+		assert.match(config, /\[plugins\."omo@cerberuslabs"\.mcp_servers\.context7\]\nenabled = true/);
+		assert.match(config, /\[plugins\."omo@cerberuslabs"\.mcp_servers\.git_bash\]\nenabled = false/);
 		assert.match(
 			config,
-			/\[hooks\.state\."omo@sisyphuslabs:hooks\/hooks\.json:session_start:0:0"\]\ntrusted_hash = "sha256:[0-9a-f]{64}"/,
+			/\[hooks\.state\."omo@cerberuslabs:hooks\/hooks\.json:session_start:0:0"\]\ntrusted_hash = "sha256:[0-9a-f]{64}"/,
 		);
 		assert.match(config, /\[agents\.explorer\]\nconfig_file = "\.\/agents\/explorer\.toml"/);
-		assert.match(config, /\[agents\.metis\]\nconfig_file = "\.\/agents\/metis\.toml"/);
+		assert.match(config, /\[agents\.vanguard\]\nconfig_file = "\.\/agents\/vanguard\.toml"/);
 		assert.doesNotMatch(config, PERMISSIONS_KEY_PATTERN);
 		assert.equal(await readFile(join(fixture.codexHome, "agents", "explorer.toml"), "utf8"), BUNDLED_EXPLORER_TOML);
-		assert.equal(await readFile(join(fixture.codexHome, "agents", "metis.toml"), "utf8"), BUNDLED_METIS_TOML);
+		assert.equal(await readFile(join(fixture.codexHome, "agents", "vanguard.toml"), "utf8"), BUNDLED_METIS_TOML);
 	});
 });
 
-test("#given an existing git marketplace source #when the worker setup runs #then the [marketplaces.sisyphuslabs] block stays byte-identical", async () => {
+test("#given an existing git marketplace source #when the worker setup runs #then the [marketplaces.cerberuslabs] block stays byte-identical", async () => {
 	await withSetupFixture(async (fixture) => {
 		await runWorkerSetup(setupOptions(fixture));
 
 		const config = await readConfig(fixture);
-		assert.ok(config.includes(`[marketplaces.sisyphuslabs]\n${MARKETPLACE_SOURCE_LINE}`), "git source line must stay verbatim");
+		assert.ok(config.includes(`[marketplaces.cerberuslabs]\n${MARKETPLACE_SOURCE_LINE}`), "git source line must stay verbatim");
 		assert.doesNotMatch(config, /source_type/);
 		assert.doesNotMatch(config, /last_updated/);
 	});
@@ -175,7 +175,7 @@ test("#given user-tuned reasoning and service tier on an installed agent #when a
 		await mkdir(join(fixture.codexHome, "agents"), { recursive: true });
 		await writeFile(
 			join(fixture.codexHome, "agents", "explorer.toml"),
-			'description = "Explorer agent"\nmodel_reasoning_effort = "low"\nservice_tier = "flex"\n',
+			'description = "Scoutr agent"\nmodel_reasoning_effort = "low"\nservice_tier = "flex"\n',
 		);
 
 		await runWorkerSetup(setupOptions(fixture));
@@ -223,8 +223,8 @@ test("#given win32 without Git Bash and auto-install skipped #when the worker se
 		const gitBashEntries = outcome.degraded.filter((entry) => entry.component === "git-bash");
 		assert.equal(gitBashEntries.length, 1);
 		const config = await readConfig(fixture);
-		assert.match(config, /\[plugins\."omo@sisyphuslabs"\.mcp_servers\.git_bash\]\nenabled = false/);
-		assert.match(config, /\[plugins\."omo@sisyphuslabs"\]\nenabled = true/, "setup must continue past a missing Git Bash");
+		assert.match(config, /\[plugins\."omo@cerberuslabs"\.mcp_servers\.git_bash\]\nenabled = false/);
+		assert.match(config, /\[plugins\."omo@cerberuslabs"\]\nenabled = true/, "setup must continue past a missing Git Bash");
 	});
 });
 
@@ -241,7 +241,7 @@ test("#given win32 with Git Bash and OMO_CODEX_GIT_BASH_PATH #when the worker se
 
 		assert.deepEqual(outcome.degraded, []);
 		const config = await readConfig(fixture);
-		assert.match(config, /\[plugins\."omo@sisyphuslabs"\.mcp_servers\.git_bash\]\nenabled = true/);
+		assert.match(config, /\[plugins\."omo@cerberuslabs"\.mcp_servers\.git_bash\]\nenabled = true/);
 		const manifest = JSON.parse(await readFile(join(fixture.pluginRoot, ".mcp.json"), "utf8"));
 		assert.equal(manifest.mcpServers.git_bash.env.OMO_CODEX_GIT_BASH_PATH, bashPath);
 	});
@@ -274,7 +274,7 @@ test("#given the default worker step list #when the worker runs end to end #then
 		assert.equal(state.completedForVersion, PLUGIN_VERSION);
 		assert.equal(state.lastStatus, "success");
 		const config = await readConfig(fixture);
-		assert.match(config, /\[plugins\."omo@sisyphuslabs"\]\nenabled = true/);
-		assert.ok(config.includes(`[marketplaces.sisyphuslabs]\n${MARKETPLACE_SOURCE_LINE}`));
+		assert.match(config, /\[plugins\."omo@cerberuslabs"\]\nenabled = true/);
+		assert.ok(config.includes(`[marketplaces.cerberuslabs]\n${MARKETPLACE_SOURCE_LINE}`));
 	});
 });

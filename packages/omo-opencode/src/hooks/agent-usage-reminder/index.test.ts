@@ -1,4 +1,4 @@
-import type { PluginInput } from "@opencode-ai/plugin";
+﻿import type { PluginInput } from "@opencode-ai/plugin";
 import { afterEach, beforeEach, describe, expect, mock, spyOn, test } from "bun:test";
 import { createAgentUsageReminderHook } from "./index";
 import { clearSessionAgent, updateSessionAgent, _resetForTesting } from "../../features/claude-code-session-state";
@@ -31,7 +31,7 @@ describe("agent-usage-reminder hook", () => {
     // given - an orchestrator session has already hit the reminder cap
     const hook = createHook();
     const sessionID = "agent-usage-compact-session";
-    updateSessionAgent(sessionID, "Sisyphus");
+    updateSessionAgent(sessionID, "Cerberus");
 
     const output1 = { title: "", output: "result-1", metadata: {} };
     const output2 = { title: "", output: "result-2", metadata: {} };
@@ -61,7 +61,7 @@ describe("agent-usage-reminder hook", () => {
     // given - an orchestrator session has reminder state
     const hook = createHook();
     const sessionID = "agent-usage-delete-session";
-    updateSessionAgent(sessionID, "Sisyphus");
+    updateSessionAgent(sessionID, "Cerberus");
 
     const output1 = { title: "", output: "result-1", metadata: {} };
     const output2 = { title: "", output: "result-2", metadata: {} };
@@ -93,7 +93,7 @@ describe("agent-usage-reminder hook", () => {
     // given - an orchestrator session already delegated through task
     const hook = createHook();
     const sessionID = "agent-usage-delegated-session";
-    updateSessionAgent(sessionID, "Sisyphus");
+    updateSessionAgent(sessionID, "Cerberus");
 
     const output = { title: "", output: "result", metadata: {} };
 

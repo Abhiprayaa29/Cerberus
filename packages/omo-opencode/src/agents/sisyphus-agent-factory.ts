@@ -1,4 +1,4 @@
-import type { AgentConfig } from "@opencode-ai/sdk";
+﻿import type { AgentConfig } from "@opencode-ai/sdk";
 import { categorizeTools } from "./dynamic-agent-prompt-builder";
 import type {
   AvailableAgent,
@@ -6,19 +6,19 @@ import type {
   AvailableSkill,
 } from "./dynamic-agent-prompt-builder";
 import {
-  buildClaudeSisyphusAgentConfig,
-  buildGlmSisyphusAgentConfig,
-  buildGptSisyphusAgentConfig,
-} from "./sisyphus-agent-config";
-import { buildFallbackSisyphusPrompt } from "./sisyphus-dynamic-prompt";
-import { buildClaudeFable5SisyphusPrompt } from "./sisyphus/claude-fable-5";
-import { buildClaudeOpus47SisyphusPrompt } from "./sisyphus/claude-opus-4-7";
-import { buildClaudeOpus48SisyphusPrompt } from "./sisyphus/claude-opus-4-8";
-import { buildGlm52SisyphusPrompt } from "./sisyphus/glm-5-2";
-import { buildGpt54SisyphusPrompt } from "./sisyphus/gpt-5-4";
-import { buildGpt55SisyphusPrompt } from "./sisyphus/gpt-5-5";
-import { buildKimiK26SisyphusPrompt } from "./sisyphus/kimi-k2-6";
-import { buildKimiK27SisyphusPrompt } from "./sisyphus/kimi-k2-7";
+  buildClaudeCerberusAgentConfig,
+  buildGlmCerberusAgentConfig,
+  buildGptCerberusAgentConfig,
+} from "./cerberus-agent-config";
+import { buildFallbackCerberusPrompt } from "./cerberus-dynamic-prompt";
+import { buildClaudeFable5CerberusPrompt } from "./cerberus/claude-fable-5";
+import { buildClaudeOpus47CerberusPrompt } from "./cerberus/claude-opus-4-7";
+import { buildClaudeOpus48CerberusPrompt } from "./cerberus/claude-opus-4-8";
+import { buildGlm52CerberusPrompt } from "./cerberus/glm-5-2";
+import { buildGpt54CerberusPrompt } from "./cerberus/gpt-5-4";
+import { buildGpt55CerberusPrompt } from "./cerberus/gpt-5-5";
+import { buildKimiK26CerberusPrompt } from "./cerberus/kimi-k2-6";
+import { buildKimiK27CerberusPrompt } from "./cerberus/kimi-k2-7";
 import type { AgentMode } from "./types";
 import {
   isClaudeFable5Model,
@@ -27,14 +27,14 @@ import {
   isGlmModel,
   isGpt5_5Model,
   isGptModel,
-  isGptNativeSisyphusModel,
+  isGptNativeCerberusModel,
   isKimiK2Model,
   isKimiK27Model,
 } from "./types";
 
 const MODE: AgentMode = "primary";
 
-export function createSisyphusAgent(
+export function createCerberusAgent(
   model: string,
   availableAgents?: AvailableAgent[],
   availableToolNames?: string[],
@@ -48,70 +48,70 @@ export function createSisyphusAgent(
   const agents = availableAgents ?? [];
 
   if (isKimiK27Model(model)) {
-    return buildGptSisyphusAgentConfig(
+    return buildGptCerberusAgentConfig(
       MODE,
       model,
-      buildKimiK27SisyphusPrompt(model, agents, tools, skills, categories, useTaskSystem),
+      buildKimiK27CerberusPrompt(model, agents, tools, skills, categories, useTaskSystem),
     );
   }
 
   if (isKimiK2Model(model)) {
-    return buildGptSisyphusAgentConfig(
+    return buildGptCerberusAgentConfig(
       MODE,
       model,
-      buildKimiK26SisyphusPrompt(model, agents, tools, skills, categories, useTaskSystem),
+      buildKimiK26CerberusPrompt(model, agents, tools, skills, categories, useTaskSystem),
     );
   }
 
   if (isGpt5_5Model(model)) {
-    return buildGptSisyphusAgentConfig(
+    return buildGptCerberusAgentConfig(
       MODE,
       model,
-      buildGpt55SisyphusPrompt(model, agents, tools, skills, categories, useTaskSystem),
+      buildGpt55CerberusPrompt(model, agents, tools, skills, categories, useTaskSystem),
     );
   }
 
-  if (isGptNativeSisyphusModel(model)) {
-    return buildGptSisyphusAgentConfig(
+  if (isGptNativeCerberusModel(model)) {
+    return buildGptCerberusAgentConfig(
       MODE,
       model,
-      buildGpt54SisyphusPrompt(model, agents, tools, skills, categories, useTaskSystem),
+      buildGpt54CerberusPrompt(model, agents, tools, skills, categories, useTaskSystem),
     );
   }
 
   if (isClaudeFable5Model(model)) {
-    return buildClaudeSisyphusAgentConfig(
+    return buildClaudeCerberusAgentConfig(
       MODE,
       model,
-      buildClaudeFable5SisyphusPrompt(model, agents, tools, skills, categories, useTaskSystem),
+      buildClaudeFable5CerberusPrompt(model, agents, tools, skills, categories, useTaskSystem),
     );
   }
 
   if (isClaudeOpus48Model(model)) {
-    return buildClaudeSisyphusAgentConfig(
+    return buildClaudeCerberusAgentConfig(
       MODE,
       model,
-      buildClaudeOpus48SisyphusPrompt(model, agents, tools, skills, categories, useTaskSystem),
+      buildClaudeOpus48CerberusPrompt(model, agents, tools, skills, categories, useTaskSystem),
     );
   }
 
   if (isClaudeOpus47Model(model)) {
-    return buildClaudeSisyphusAgentConfig(
+    return buildClaudeCerberusAgentConfig(
       MODE,
       model,
-      buildClaudeOpus47SisyphusPrompt(model, agents, tools, skills, categories, useTaskSystem),
+      buildClaudeOpus47CerberusPrompt(model, agents, tools, skills, categories, useTaskSystem),
     );
   }
 
   if (isGlmModel(model)) {
-    return buildGlmSisyphusAgentConfig(
+    return buildGlmCerberusAgentConfig(
       MODE,
       model,
-      buildGlm52SisyphusPrompt(model, agents, tools, skills, categories, useTaskSystem),
+      buildGlm52CerberusPrompt(model, agents, tools, skills, categories, useTaskSystem),
     );
   }
 
-  const prompt = buildFallbackSisyphusPrompt(
+  const prompt = buildFallbackCerberusPrompt(
     model,
     agents,
     tools,
@@ -121,9 +121,9 @@ export function createSisyphusAgent(
   );
 
   if (isGptModel(model)) {
-    return buildGptSisyphusAgentConfig(MODE, model, prompt);
+    return buildGptCerberusAgentConfig(MODE, model, prompt);
   }
 
-  return buildClaudeSisyphusAgentConfig(MODE, model, prompt);
+  return buildClaudeCerberusAgentConfig(MODE, model, prompt);
 }
-createSisyphusAgent.mode = MODE;
+createCerberusAgent.mode = MODE;

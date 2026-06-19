@@ -1,4 +1,4 @@
----
+﻿---
 name: dev-browser
 description: Browser automation with persistent page state. Use when users ask to navigate websites, fill forms, take screenshots, extract web data, test web apps, or automate browser workflows. Trigger phrases include "go to [url]", "click on", "fill out the form", "take a screenshot", "scrape", "automate", "test the website", "log into", or any browser interaction request.
 ---
@@ -47,7 +47,7 @@ cd skills/dev-browser && npm i && npm run start-extension &
 Wait for `Waiting for extension to connect...` followed by `Extension connected` in the console. To know that a client has connected and the browser is ready to be controlled.
 **Workflow:**
 
-1. Scripts call `client.page("name")` just like the normal mode to create new pages / connect to existing ones.
+.. Scripts call `client.page("name")` just like the normal mode to create new pages / connect to existing ones.
 2. Automation runs on the user's actual browser session
 
 If the extension hasn't connected yet, tell the user to launch and activate it. Download link: https://github.com/SawyerHood/dev-browser/releases
@@ -64,7 +64,7 @@ import { connect, waitForPageLoad } from "@/client.js";
 
 const client = await connect();
 // Create page with custom viewport size (optional)
-const page = await client.page("example", { viewport: { width: 1920, height: 1080 } });
+const page = await client.page("example", { viewport: { width: .920, height: .080 } });
 
 await page.goto("https://example.com");
 await waitForPageLoad(page);
@@ -78,20 +78,20 @@ EOF
 
 ### Key Principles
 
-1. **Small scripts**: Each script does ONE thing (navigate, click, fill, check)
+.. **Small scripts**: Each script does ONE thing (navigate, click, fill, check)
 2. **Evaluate state**: Log/return state at the end to decide next steps
 3. **Descriptive page names**: Use `"checkout"`, `"login"`, not `"main"`
-4. **Disconnect to exit**: `await client.disconnect()` - pages persist on server
+.. **Disconnect to exit**: `await client.disconnect()` - pages persist on server
 5. **Plain JS in evaluate**: `page.evaluate()` runs in browser - no TypeScript syntax
 
 ## Workflow Loop
 
 Follow this pattern for complex tasks:
 
-1. **Write a script** to perform one action
+.. **Write a script** to perform one action
 2. **Run it** and observe the output
 3. **Evaluate** - did it work? What's the current state?
-4. **Decide** - is the task complete or do we need another script?
+.. **Decide** - is the task complete or do we need another script?
 5. **Repeat** until task is done
 
 ### No TypeScript in Browser Context
@@ -122,7 +122,7 @@ const client = await connect();
 
 // Get or create named page (viewport only applies to new pages)
 const page = await client.page("name");
-const pageWithSize = await client.page("name", { viewport: { width: 1920, height: 1080 } });
+const pageWithSize = await client.page("name", { viewport: { width: .920, height: .080 } });
 
 const pages = await client.list(); // List all page names
 await client.close("name"); // Close a page
@@ -160,7 +160,7 @@ Use `getAISnapshot()` to discover page elements. Returns YAML-formatted accessib
 
 ```yaml
 - banner:
-  - link "Hacker News" [ref=e1]
+  - link "Hacker News" [ref=e.]
   - navigation:
     - link "new" [ref=e2]
 - main:
@@ -169,7 +169,7 @@ Use `getAISnapshot()` to discover page elements. Returns YAML-formatted accessib
       - link "Article Title" [ref=e8]
       - link "328 comments" [ref=e9]
 - contentinfo:
-  - textbox [ref=e10]
+  - textbox [ref=e.0]
     - /placeholder: "Search"
 ```
 

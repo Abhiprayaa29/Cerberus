@@ -1,4 +1,4 @@
-import { mkdtemp, rm, writeFile } from "node:fs/promises";
+﻿import { mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
@@ -30,9 +30,9 @@ function plan(): UlwLoopPlan {
 		version: 1,
 		createdAt: NOW,
 		updatedAt: NOW,
-		briefPath: ".omo/ulw-loop/brief.md",
-		goalsPath: ".omo/ulw-loop/goals.json",
-		ledgerPath: ".omo/ulw-loop/ledger.jsonl",
+		briefPath: ".omo/pentest-loop/brief.md",
+		goalsPath: ".omo/pentest-loop/goals.json",
+		ledgerPath: ".omo/pentest-loop/ledger.jsonl",
 		goals: [],
 	};
 }
@@ -357,7 +357,7 @@ describe("printSteerResult", () => {
 	it("prints human-readable when json=false", () => {
 		const output = captureStdout(() => printSteerResult(steerResult(), false));
 
-		expect(output).toContain("ulw-loop steer: accepted add_subgoal");
-		expect(output).toContain("ulw-loop status");
+		expect(output).toContain("pentest-loop steer: accepted add_subgoal");
+		expect(output).toContain("pentest-loop status");
 	});
 });

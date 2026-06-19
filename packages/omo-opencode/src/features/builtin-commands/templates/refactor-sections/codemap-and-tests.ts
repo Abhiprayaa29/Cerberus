@@ -1,4 +1,4 @@
-export const REFACTOR_CODEMAP_AND_TESTS = `# PHASE 2: BUILD CODEMAP (DEPENDENCY MAPPING)
+﻿export const REFACTOR_CODEMAP_AND_TESTS = `# PHASE 2: BUILD CODEMAP (DEPENDENCY MAPPING)
 
 **Mark phase-2 as in_progress.**
 
@@ -74,7 +74,7 @@ ls -la *_test.go
 \`\`\`
 // Find all tests related to target
 call_omo_agent(
-  subagent_type="explore",
+  subagent_type="scout",
   run_in_background=false,  // Need this synchronously
   prompt="Analyze test coverage for [TARGET]:
   1. Which test files cover this code?

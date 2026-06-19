@@ -1,4 +1,4 @@
-import { join, resolve } from "node:path"
+﻿import { join, resolve } from "node:path"
 import { existsSync } from "node:fs"
 import { homedir } from "node:os"
 import { installCachedPlugin, linkCachedPluginBins, linkRootRuntimeBin, pruneMarketplaceCache, pruneMarketplacePluginCaches } from "./codex-cache"
@@ -20,7 +20,7 @@ import { installAstGrepForCodex } from "./install-ast-grep-sg"
 import { trackCodexInstallTelemetry } from "./codex-install-telemetry"
 import type { CodexInstallOptions, CodexInstallResult, CodexMarketplaceSource, InstalledPlugin, MarketplaceManifest } from "./types"
 
-const SISYPHUS_LEGACY_CACHE_MARKETPLACES = ["lazycodex", "code-yeongyu-codex-plugins"] as const
+const CERBERUS_LEGACY_CACHE_MARKETPLACES = ["lazycodex", "code-yeongyu-codex-plugins"] as const
 
 export async function runCodexInstaller(options: CodexInstallOptions = {}): Promise<CodexInstallResult> {
   const env = options.env ?? process.env
@@ -82,7 +82,7 @@ export async function runCodexInstaller(options: CodexInstallOptions = {}): Prom
       sourcePath,
       version,
     })
-    if (marketplace.name === "sisyphuslabs" && plugin.name === "omo") {
+    if (marketplace.name === "cerberuslabs" && plugin.name === "omo") {
       await stampLazyCodexPluginVersion({ pluginRoot: plugin.path, version })
       await writeLazyCodexInstallSnapshot({ pluginRoot: plugin.path, distributionManifest })
     }
@@ -91,12 +91,12 @@ export async function runCodexInstaller(options: CodexInstallOptions = {}): Prom
     for (const link of links) {
       log(`Linked ${link.name} -> ${link.target}`)
     }
-    if (marketplace.name === "sisyphuslabs" && plugin.name === "omo") {
+    if (marketplace.name === "cerberuslabs" && plugin.name === "omo") {
       const runtimeLink = await linkRootRuntimeBin({ binDir, codexHome, repoRoot, platform })
       if (runtimeLink !== null) log(`Linked ${runtimeLink.name} -> ${runtimeLink.target}`)
       else
         log(
-          `Warning: skipped the omo runtime wrapper because ${join(repoRoot, "dist", "cli", "index.js")} is missing; omo sparkshell/ulw-loop commands will be unavailable until a package shipping dist/cli is installed`,
+          `Warning: skipped the omo runtime wrapper because ${join(repoRoot, "dist", "cli", "index.js")} is missing; omo sparkshell/pentest-loop commands will be unavailable until a package shipping dist/cli is installed`,
         )
     }
     pluginSources.push({ name: entry.name, sourcePath })
@@ -221,7 +221,7 @@ async function agentSourceRootsForInstall(input: {
   readonly installed: readonly InstalledPlugin[]
   readonly pluginSources: readonly MarketplaceSnapshotPluginSource[]
 }): Promise<ReadonlyMap<string, string>> {
-  if (input.marketplace.name !== "sisyphuslabs") {
+  if (input.marketplace.name !== "cerberuslabs") {
     return new Map(input.installed.map((plugin) => [plugin.name, plugin.path]))
   }
   const snapshotPlugins = await writeInstalledMarketplaceSnapshot({
@@ -233,20 +233,20 @@ async function agentSourceRootsForInstall(input: {
 }
 
 function legacyCacheMarketplaces(marketplaceName: string): readonly string[] {
-  return marketplaceName === "sisyphuslabs" ? SISYPHUS_LEGACY_CACHE_MARKETPLACES : []
+  return marketplaceName === "cerberuslabs" ? CERBERUS_LEGACY_CACHE_MARKETPLACES : []
 }
 
 export function findRepoRootFromImporter(importerDir: string): string {
   let current = importerDir
   for (let depth = 0; depth <= 7; depth += 1) {
     if (isRepoRootWithCodexPlugin(current)) return current
-    for (const wrapperPackageRoot of [join(current, "node_modules", "oh-my-openagent"), join(current, "oh-my-openagent")]) {
+    for (const wrapperPackageRoot of [join(current, "node_modules", "oh-my-open-pentest"), join(current, "oh-my-open-pentest")]) {
       if (isRepoRootWithCodexPlugin(wrapperPackageRoot)) return wrapperPackageRoot
     }
     current = resolve(current, "..")
   }
   throw new Error(
-    "Unable to locate vendored Codex plugin: expected packages/omo-codex/plugin/.codex-plugin/plugin.json in this package or sibling oh-my-openagent package within 7 parent levels",
+    "Unable to locate vendored Codex plugin: expected packages/omo-codex/plugin/.codex-plugin/plugin.json in this package or sibling oh-my-open-pentest package within 7 parent levels",
   )
 }
 

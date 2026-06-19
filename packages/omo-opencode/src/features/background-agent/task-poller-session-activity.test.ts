@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, mock, spyOn, test } from "bun:test"
+﻿import { afterEach, describe, expect, mock, spyOn, test } from "bun:test"
 import { unsafeTestValue } from "../../../../../test-support/unsafe-test-value"
 import { checkAndInterruptStaleTasks } from "./task-poller"
 import type { BackgroundTask } from "./types"
@@ -11,7 +11,7 @@ function createRunningTask(overrides: Partial<BackgroundTask> = {}): BackgroundT
     parentMessageId: "msg-1",
     description: "test",
     prompt: "test",
-    agent: "explore",
+    agent: "scout",
     status: "running",
     startedAt: new Date(Date.now() - 120_000),
     ...overrides,

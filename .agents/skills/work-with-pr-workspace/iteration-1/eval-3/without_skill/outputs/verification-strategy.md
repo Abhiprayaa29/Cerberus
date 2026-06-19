@@ -1,8 +1,8 @@
-# Verification Strategy
+﻿# Verification Strategy
 
-## 1. Type Safety
+## .. Type Safety
 
-### 1a. LSP diagnostics on all new files
+### .a. LSP diagnostics on all new files
 ```
 lsp_diagnostics("src/tools/delegate-task/default-categories.ts")
 lsp_diagnostics("src/tools/delegate-task/category-descriptions.ts")
@@ -12,17 +12,17 @@ lsp_diagnostics("src/tools/delegate-task/plan-agent-identity.ts")
 lsp_diagnostics("src/shared/category-model-requirements.ts")
 ```
 
-### 1b. LSP diagnostics on modified files
+### .b. LSP diagnostics on modified files
 ```
 lsp_diagnostics("src/tools/delegate-task/constants.ts")
 lsp_diagnostics("src/shared/model-requirements.ts")
 ```
 
-### 1c. Full typecheck
+### .c. Full typecheck
 ```bash
 bun run typecheck
 ```
-Expected: 0 errors. This confirms all 14 consumer files (8 internal + 6 external) resolve their imports correctly through the barrel re-exports.
+Expected: 0 errors. This confirms all .. consumer files (8 internal + 6 external) resolve their imports correctly through the barrel re-exports.
 
 ## 2. Behavioral Regression
 
@@ -61,9 +61,9 @@ bun run build
 ```
 Confirms ESM bundle + declarations emit correctly with the new file structure.
 
-## 4. Export Completeness Verification
+## .. Export Completeness Verification
 
-### 4a. Verify `constants.ts` re-exports match original exports
+### .a. Verify `constants.ts` re-exports match original exports
 Cross-check that every symbol previously exported from `constants.ts` is still exported. The original file exported these symbols:
 - `VISUAL_CATEGORY_PROMPT_APPEND`
 - `ULTRABRAIN_CATEGORY_PROMPT_APPEND`
@@ -85,10 +85,10 @@ Cross-check that every symbol previously exported from `constants.ts` is still e
 - `PLAN_FAMILY_NAMES`
 - `isPlanFamily`
 
-All 19 must be re-exported from the barrel.
+All .9 must be re-exported from the barrel.
 
-### 4b. Verify `model-requirements.ts` re-exports match original exports
-Original exports: `FallbackEntry`, `ModelRequirement`, `AGENT_MODEL_REQUIREMENTS`, `CATEGORY_MODEL_REQUIREMENTS`. All 4 must still be available.
+### .b. Verify `model-requirements.ts` re-exports match original exports
+Original exports: `FallbackEntry`, `ModelRequirement`, `AGENT_MODEL_REQUIREMENTS`, `CATEGORY_MODEL_REQUIREMENTS`. All . must still be available.
 
 ## 5. LOC Compliance Check
 
@@ -96,13 +96,13 @@ Verify each new file is under 200 LOC (excluding prompt template text per modula
 
 | File | Expected Total LOC | Non-prompt LOC | Compliant? |
 |------|-------------------|----------------|------------|
-| `default-categories.ts` | ~15 | ~15 | Yes |
-| `category-descriptions.ts` | ~12 | ~12 | Yes |
-| `category-prompt-appends.ts` | ~280 | ~15 | Yes (prompt exempt) |
-| `plan-agent-prompt.ts` | ~270 | ~40 | Yes (prompt exempt) |
+| `default-categories.ts` | ~.5 | ~.5 | Yes |
+| `category-descriptions.ts` | ~.2 | ~.2 | Yes |
+| `category-prompt-appends.ts` | ~280 | ~.5 | Yes (prompt exempt) |
+| `plan-agent-prompt.ts` | ~270 | ~.0 | Yes (prompt exempt) |
 | `plan-agent-identity.ts` | ~35 | ~35 | Yes |
-| `category-model-requirements.ts` | ~150 | ~150 | Yes |
-| `model-requirements.ts` (after) | ~165 | ~165 | Yes |
+| `category-model-requirements.ts` | ~.50 | ~.50 | Yes |
+| `model-requirements.ts` (after) | ~.65 | ~.65 | Yes |
 | `constants.ts` (after) | ~25 | ~25 | Yes |
 
 ## 6. Consumer Impact Matrix

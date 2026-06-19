@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import type { PluginInput } from "@opencode-ai/plugin"
 import type { ToolContext } from "@opencode-ai/plugin/tool"
@@ -8,7 +8,7 @@ import { clearPendingStore, consumeToolMetadata } from "../../features/tool-meta
 import { createBackgroundTask } from "./create-background-task"
 import { unsafeTestValue } from "../../../../../test-support/unsafe-test-value"
 
-const projectDir = "/Users/yeongyu/local-workspaces/oh-my-opencode"
+const projectDir = "/Users/yeongyu/local-workspaces/oh-my-open-pentest"
 
 type ToolContextWithCallID = ToolContext & {
   callID: string

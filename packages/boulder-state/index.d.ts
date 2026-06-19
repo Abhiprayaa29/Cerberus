@@ -1,9 +1,9 @@
-export declare const BOULDER_DIR: ".omo"
+﻿export declare const BOULDER_DIR: ".omo"
 export declare const BOULDER_FILE: "boulder.json"
 export declare const BOULDER_STATE_PATH: ".omo/boulder.json"
 export declare const NOTEPAD_DIR: "notepads"
 export declare const NOTEPAD_BASE_PATH: ".omo/notepads"
-export declare const PROMETHEUS_PLANS_DIR: ".omo/plans"
+export declare const TALOS_PLANS_DIR: ".omo/plans"
 
 export type BoulderSessionOrigin = "direct" | "appended"
 export type BoulderWorkStatus = "active" | "completed" | "paused" | "abandoned"
@@ -142,7 +142,7 @@ export declare function endTaskTimer(
   taskKey: string,
   endedAt?: string,
 ): BoulderState | null
-export declare function findPrometheusPlans(directory: string): string[]
+export declare function findTalosPlans(directory: string): string[]
 export declare function generateWorkId(planName: string): string
 export declare function getActiveWorks(directory: string): BoulderWorkState[]
 export declare function getBoulderFilePath(directory: string): string

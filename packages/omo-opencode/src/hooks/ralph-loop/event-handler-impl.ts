@@ -1,4 +1,4 @@
-import type { PluginInput } from "@opencode-ai/plugin"
+﻿import type { PluginInput } from "@opencode-ai/plugin"
 import { resolveSessionEventID } from "../../shared/event-session-id"
 import { log } from "../../shared/logger"
 import { isRecord } from "../../shared/record-type-guard"
@@ -33,7 +33,7 @@ export function createRalphLoopEventHandlerImpl(
 		const runtimeRetryActivitySessionID = getRuntimeRetryActivitySessionID(event.type, props)
 		if (runtimeRetryActivitySessionID) {
 			runtime.runtimeErrorRetriedSessions.delete(runtimeRetryActivitySessionID)
-			releasePromptAsyncReservation(runtimeRetryActivitySessionID, "ralph-loop")
+			releasePromptAsyncReservation(runtimeRetryActivitySessionID, "pentest-loop")
 			runtime.recentHandledSyntheticIdleAt.delete(runtimeRetryActivitySessionID)
 		}
 

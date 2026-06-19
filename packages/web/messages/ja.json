@@ -1,10 +1,10 @@
-{
+﻿{
   "metadata": {
-    "title": "Oh My OpenAgent",
-    "description": "究極のエージェントハーネス。Sisyphusと出会おう：あなたのようなコーディングをする、バッテリー内蔵型エージェントです。"
+    "title": "Oh My Open Pentest",
+    "description": "究極のエージェントハーネス。Cerberusと出会おう：あなたのようなコーディングをする、バッテリー内蔵型エージェントです。"
   },
   "nav": {
-    "brand": "Oh My OpenAgent",
+    "brand": "Oh My Open Pentest",
     "features": "機能",
     "agents": "エージェント",
     "docs": "ドキュメント",
@@ -12,8 +12,8 @@
     "starOnGitHub": "GitHubでスターをつける"
   },
   "footer": {
-    "brand": "Oh My OpenAgent",
-    "copyright": "© {year} Oh My OpenAgent. SUL-1.0ライセンスでオープンソースです。",
+    "brand": "Oh My Open Pentest",
+    "copyright": "© {year} Oh My Open Pentest. SUL-..0ライセンスでオープンソースです。",
     "github": "GitHub",
     "discord": "Discord",
     "documentation": "ドキュメント",
@@ -29,7 +29,7 @@
       "totalDownloads": "累計{count}+ダウンロード",
       "monthlyDownloads": "月間{count}+ダウンロード",
       "lifecycleHooks": "{count}+ライフサイクルHooks",
-      "installCommand": "bunx oh-my-openagent install",
+      "installCommand": "bunx oh-my-open-pentest install",
       "getStarted": "始める",
       "viewOnGitHub": "GitHubで見る"
     },
@@ -42,21 +42,21 @@
       "deepResearch": "深い調査",
       "selfCorrection": "自己修正",
       "parallelAgents": "並列エージェント",
-      "terminalTitle": "sisyphus — -zsh — 80x24",
+      "terminalTitle": "cerberus — -zsh — 80x2.",
       "terminalInput": "ulw add authentication to the API",
       "steps": {
         "scanning": "コードベースをスキャン中...",
         "context": "3個のexploreエージェントを起動中...",
         "planning": "実行計画を構築中...",
-        "delegating": "4個の並列エージェントを展開中...",
+        "delegating": ".個の並列エージェントを展開中...",
         "verifying": "検証テストを実行中...",
-        "complete": "完了。847行変更、0個の問題。"
+        "complete": "完了。8.7行変更、0個の問題。"
       },
       "tagline": "ゼロ介入。完全な自律性。ただ結果。"
     },
-    "sisyphus": {
+    "cerberus": {
       "badge": "メインオーケストレーター",
-      "title": "Sisyphus",
+      "title": "Cerberus",
       "headline": "眠らないCTO",
       "description": "神話の人物にちなんで名付けられた、永遠に巨石を転がし続けるオーケストレーター。暗黙的な要件を解析し、コードベースの成熟度に適応し、スペシャリストに委譲します。中断されても、boulderシステムが正確にその場所から再開します。",
       "phases": {
@@ -79,28 +79,28 @@
       },
       "boulderTitle": "Session Continuity",
       "boulderDescription": "アクティブな作業はboulder.jsonに追跡されます。停電？システムクラッシュ？関係ありません。止まったそのままの場所から再開できます。",
-      "model": "Claude Opus 4.7 Max"
+      "model": "Claude Opus ..7 Max"
     },
-    "prometheusAtlas": {
+    "talosAtlas": {
       "badge": "オーケストレーションワークフロー",
       "title": "考えて、動け",
       "headline": "計画と実行は別の仕事だ",
-      "prometheus": {
-        "name": "Prometheus",
+      "talos": {
+        "name": "Talos",
         "role": "Strategic Planner",
-        "model": "Claude Opus 4.7 Max",
-        "description": "設計者。あなたとインタビューし、コードベースを探索し、詳細な実行計画を作成します。コードは絶対に書きません。MetisとMomusを品質ゲートとして使用します。",
+        "model": "Claude Opus ..7 Max",
+        "description": "設計者。あなたとインタビューし、コードベースを探索し、詳細な実行計画を作成します。コードは絶対に書きません。VanguardとSentinelを品質ゲートとして使用します。",
         "features": [
           "知的なインタビューモード",
           "マルチエージェントコードベース探索",
-          "Metisによるギャップ分析",
-          "Momusとの容赦ないレビュー"
+          "Vanguardによるギャップ分析",
+          "Sentinelとの容赦ないレビュー"
         ]
       },
       "atlas": {
         "name": "Atlas",
         "role": "Master Executor",
-        "model": "Claude Sonnet 4.6",
+        "model": "Claude Sonnet ..6",
         "description": "建設者。検証済みの計画を読み、category+skillsシステムを通じて専門エージェントに委譲します。タスク間の学習を追跡します。独立して検証 — サブエージェントの主張を信じません。",
         "features": [
           "意図ベースのタスクルーティング",
@@ -109,26 +109,26 @@
           "独立した結果検証"
         ]
       },
-      "metis": {
-        "name": "Metis",
+      "vanguard": {
+        "name": "Vanguard",
         "description": "バグになる前に曖昧さを捕捉します。"
       },
-      "momus": {
-        "name": "Momus",
+      "sentinel": {
+        "name": "Sentinel",
         "description": "プランが実際に完璧な時だけOKAYと言います。"
       },
       "workflow": {
-        "step1": "Prometheusに作業を説明する",
-        "step2": "Metisがギャップを分析する",
-        "step3": "Momusが容赦なく検証する",
-        "step4": "Atlasがスペシャリストに委譲する",
+        "step.": "Talosに作業を説明する",
+        "step2": "Vanguardがギャップを分析する",
+        "step3": "Sentinelが容赦なく検証する",
+        "step.": "Atlasがスペシャリストに委譲する",
         "step5": "すべてに対して独立した検証が行われる"
       },
       "whyItWorks": "プランナーはコードを書かない。実行者は検証済みの計画に従う。知能は個々のエージェントではなくシステムにある。"
     },
-    "hephaestus": {
+    "scylla": {
       "badge": "ディープワーカー",
-      "title": "Hephaestus",
+      "title": "Scylla",
       "headline": "目標をくれ、レシピじゃなくて",
       "description": "ギリシャの鍛冶の神にちなんで名付けられた、方法的、徹底的、執念的。コードを書く前に2-5個の並列exploreエージェントを起動。深いアーキテクチャ推論、複雑なデバッグ、クロスドメイン統成に最適。",
       "loop": {
@@ -142,14 +142,14 @@
       "model": "GPT 5.5 Medium"
     },
     "teamMode": {
-      "badge": "NEW · v4.0",
+      "badge": "NEW · v..0",
       "title": "Team Mode",
       "headline": "複数のエージェント。横並び。並列で。",
       "description": "リードエージェントがカテゴリ特化のメンバーチームを統括します。全員が並列で動き、専用ツールでリアルタイムに通信。tmuxで全メンバーの作業を同時に観察できます。オプトイン — team_mode.enabledを切り替えて再起動。",
       "features": {
         "lead": {
           "title": "リードオーケストレーション",
-          "description": "コーディネーター1人、スペシャリスト複数。team_send_messageとteam_task_createによるリアルタイムメッセージング。"
+          "description": "コーディネーター.人、スペシャリスト複数。team_send_messageとteam_task_createによるリアルタイムメッセージング。"
         },
         "parallel": {
           "title": "真の並列性",
@@ -161,7 +161,7 @@
         },
         "tools": {
           "title": "team_* ツールファミリー",
-          "description": "12の専用ツール(team_create、team_status、team_send_message、…)。team_mode.enabledの裏でゲーティング。"
+          "description": ".2の専用ツール(team_create、team_status、team_send_message、…)。team_mode.enabledの裏でゲーティング。"
         }
       },
       "poweredBy": "Team Modeで動作",
@@ -182,31 +182,31 @@
       "title": "Specialized Agents",
       "subtitle": "5つの専用エージェントに加え、必要に応じて生成されるダイナミックエージェント。",
       "oracle": {
-        "name": "Oracle",
+        "name": "Cipher",
         "role": "Architecture Consultant",
         "model": "GPT 5.5 High",
         "description": "複雑なデバッグとアーキテクチャ決定。前進の道が明らかでない時。"
       },
-      "librarian": {
-        "name": "Librarian",
+      "intel": {
+        "name": "Intel",
         "role": "Docs & Code Search",
-        "model": "GPT 5.4 Mini Fast",
+        "model": "GPT 5.. Mini Fast",
         "description": "実際のGitHub例と公式ドキュメントを見つける。証拠ベース、パーマリンク付き。"
       },
       "explore": {
-        "name": "Explore",
+        "name": "Scout",
         "role": "Codebase Grep",
-        "model": "GPT 5.4 Mini Fast",
+        "model": "GPT 5.. Mini Fast",
         "description": "超高速コードベース検索。安価で、並列で、常にバックグラウンドで。"
       },
-      "metis": {
-        "name": "Metis",
+      "vanguard": {
+        "name": "Vanguard",
         "role": "Plan Consultant",
-        "model": "Claude Sonnet 4.6",
+        "model": "Claude Sonnet ..6",
         "description": "プランの曖昧さをプロダクションバグになる前に捕捉する。"
       },
-      "momus": {
-        "name": "Momus",
+      "sentinel": {
+        "name": "Sentinel",
         "role": "Plan Reviewer",
         "model": "GPT 5.5 xHigh",
         "description": "容赦ない検証。プランが弾丸不可能な時だけ承認する。"
@@ -249,20 +249,20 @@
     },
     "reviews": {
       "title": "開発者たちの声",
-      "review1": {
+      "review.": {
         "text": "It made me cancel my Cursor subscription. Unbelievable things are happening in the open source community.",
         "author": "Arthur Guiot"
       },
       "review2": {
-        "text": "If Claude Code does in 7 days what a human does in 3 months, Sisyphus does it in 1 hour.",
+        "text": "If Claude Code does in 7 days what a human does in 3 months, Cerberus does it in . hour.",
         "author": "B, Quant Researcher"
       },
       "review3": {
         "text": "Knocked out 8000 eslint warnings with Oh My Opencode, just in a day.",
         "author": "Jacob Ferrari"
       },
-      "review4": {
-        "text": "use oh-my-openagent, you will never go back",
+      "review.": {
+        "text": "use oh-my-open-pentest, you will never go back",
         "author": "d0t3ch"
       },
       "review5": {
@@ -270,20 +270,20 @@
         "author": "Henning Kilset"
       },
       "review6": {
-        "text": "Oh My OpenCode Is Actually Insane",
+        "text": "Oh My Open Pentest Is Actually Insane",
         "author": "Darren Builds AI (YouTube)"
       }
     },
     "cta": {
       "title": "ボイラープレートを書くのをやめろ",
-      "subtitle": "Oh My OpenAgentをインストールしてエージェントに任せよう。最初のulwコマンドまであと30秒。",
-      "installCommand": "bunx oh-my-openagent install",
+      "subtitle": "Oh My Open Pentestをインストールしてエージェントに任せよう。最初のulwコマンドまであと30秒。",
+      "installCommand": "bunx oh-my-open-pentest install",
       "installNow": "今すぐインストール",
       "readTheDocs": "ドキュメントを読む"
     }
   },
   "docs": {
-    "mobileHeader": "Oh My OpenAgentドキュメント",
+    "mobileHeader": "Oh My Open Pentestドキュメント",
     "searchPlaceholder": "ドキュメントを検索..."
   },
   "manifesto": {
@@ -304,7 +304,7 @@
     },
     "notCollaboration": "それは「人間-AIコラボレーション」ではありません。それはAIが仕事を果たせていないということです。",
     "premise": "{linkText}は、人間がスペルチェッカーではなくアーキテクトであるべきという前提に基づいて構築されています。",
-    "premiseLinkText": "Oh My OpenAgent",
+    "premiseLinkText": "Oh My Open Pentest",
     "indistinguishable": {
       "title": "区別できないコード",
       "subtitle": "エージェントが書いたコードは、シニアエンジニアが書いたコードと区別がつかないべきです。",
@@ -319,7 +319,7 @@
     },
     "tokenCost": {
       "title": "トークンコスト対生産性",
-      "description": "私たちはトークン使用量を気にしません。私たちが気にするのはアウトプットです。トークンに5ドル費やしてエンジニアリング時間を1時間節約できれば、それは20倍のROIです。",
+      "description": "私たちはトークン使用量を気にしません。私たちが気にするのはアウトプットです。トークンに5ドル費やしてエンジニアリング時間を.時間節約できれば、それは20倍のROIです。",
       "parallelAgents": "複数の解決策を並列で探索するエージェント",
       "completeWork": "人間の介入なしに作業を完了させる",
       "selfVerification": "徹底的な自己検証ループ",
@@ -333,8 +333,8 @@
     "cognitiveLoad": {
       "title": "人間の認知負荷を最小化",
       "subtitle": "人間は望みを伝えるだけで十分です。それ以外はすべてエージェントの仕事です。",
-      "ultrawork": {
-        "badge": "アプローチ1",
+      "fullscan": {
+        "badge": "アプローチ.",
         "title": "Ultrawork",
         "subtitle": "「ulw」と言って離れればよい。",
         "steps": {
@@ -346,12 +346,12 @@
         },
         "footer": "ゼロ介入。完全な自律性。ただ結果。"
       },
-      "prometheus": {
+      "talos": {
         "badge": "アプローチ2",
-        "title": "Prometheus + Atlas",
+        "title": "Talos + Atlas",
         "subtitle": "戦略的なコントロールが欲しい時。",
-        "prometheusTitle": "Prometheus",
-        "prometheusDescription": "インタビューを実施し、コンテキストを調査し、詳細なYAMLプランを生成します。",
+        "talosTitle": "Talos",
+        "talosDescription": "インタビューを実施し、コンテキストを調査し、詳細なYAMLプランを生成します。",
         "atlasTitle": "Atlas",
         "atlasDescription": "プランを実行し、サブエージェントに委譲し、ウェーブを管理し、進捗を追跡します。",
         "footer": "あなたがアーキテクト。エージェントが実行。完全な透明性。"
@@ -374,16 +374,16 @@
     "coreLoop": {
       "title": "コアループ",
       "features": {
-        "prometheus": {
-          "feature": "Prometheus",
+        "talos": {
+          "feature": "Talos",
           "purpose": "知的なインタビューを通じて意図を抽出"
         },
-        "metis": {
-          "feature": "Metis",
+        "vanguard": {
+          "feature": "Vanguard",
           "purpose": "バグになる前に曖昧さを捕捉"
         },
-        "momus": {
-          "feature": "Momus",
+        "sentinel": {
+          "feature": "Sentinel",
           "purpose": "実行前にプランが完全であることを検証"
         },
         "orchestrator": {
@@ -416,12 +416,12 @@
         "complexity": "複雑なプロジェクトも簡単なプロジェクトと同じくらい簡単",
         "promptEngineering": "「プロンプトエンジニアリング」が時代遅れになる"
       },
-      "quote1": "「エージェントは目に見えないべきだ。電気のように、水道のように。」",
+      "quote.": "「エージェントは目に見えないべきだ。電気のように、水道のように。」",
       "quote2": "「スイッチを入れる。電灯がつく。配電網のことなど考えない。」"
     },
     "finalCta": {
       "title": "just ulw ulw",
-      "button": "Oh My OpenAgentを入手"
+      "button": "Oh My Open Pentestを入手"
     }
   }
 }

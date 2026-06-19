@@ -1,1 +1,1 @@
-export * from "@oh-my-opencode/omo-codex/install/toml-section-editor"
+﻿export * from "@oh-my-open-pentest/omo-codex/install/toml-section-editor"

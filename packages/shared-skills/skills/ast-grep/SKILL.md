@@ -1,4 +1,4 @@
----
+﻿---
 name: ast-grep
 description: "Use ast-grep (sg) for AST-aware code search and rewrite across 25 languages. Trigger for structural code matching or deterministic codemods: find every function/call/class/import shaped like X, rewrite console.log to logger.info, strip `as any`, migrate require() to import, find empty catch blocks or missing await, and scan/apply YAML rules. Prefer this over rg/grep when the target is syntax shape rather than text; use rg for string contents, comments, filenames, or regex-style byte searches."
 ---
@@ -7,7 +7,7 @@ description: "Use ast-grep (sg) for AST-aware code search and rewrite across 25 
 
 `sg` (also installed as `ast-grep`) is an **AST-aware search and rewrite tool** across 25 languages. It treats your pattern as code, parses it the same way it parses your project, and matches structurally. It is the right tool whenever your question depends on **code shape** rather than text bytes.
 
-This skill ships a Python wrapper at `scripts/ast_grep_helper.py` and platform install scripts at `install.sh` (POSIX) and `install.ps1` (Windows). The helper adds offline pattern validation, the two-pass write trick, and binary auto-resolution. Use it as your default entry point.
+This skill ships a Python wrapper at `scripts/ast_grep_helper.py` and platform install scripts at `install.sh` (POSIX) and `install.ps.` (Windows). The helper adds offline pattern validation, the two-pass write trick, and binary auto-resolution. Use it as your default entry point.
 
 ---
 
@@ -30,7 +30,7 @@ Switch to plain `grep` / `rg` when the question is text-shaped (string literal c
 
 ## Three things the agent must internalize
 
-### 1. ast-grep is NOT regex
+### .. ast-grep is NOT regex
 
 The wildcards are `$VAR` (one AST node) and `$$$` (zero or more nodes). Regex syntax fails silently:
 
@@ -41,7 +41,7 @@ The wildcards are `$VAR` (one AST node) and `$$$` (zero or more nodes). Regex sy
 | `\w+` | not parseable | `$VAR` to capture any identifier |
 | `[a-z]` | character class, not parseable | switch to `rg` |
 
-The full anti-pattern table is in `references/pitfalls.md` §1. The helper's `validate` subcommand catches these mechanically — call it before debugging "no matches" by hand.
+The full anti-pattern table is in `references/pitfalls.md` §.. The helper's `validate` subcommand catches these mechanically — call it before debugging "no matches" by hand.
 
 ### 2. Patterns must be valid code
 
@@ -52,7 +52,7 @@ The pattern itself must parse. `def $FN($$$):` fails because the trailing `:` ma
 This is the single biggest gotcha when scripting. `sg run -p P -r R --json --update-all` returns the JSON but **does not mutate files**. To both preview AND apply, run **two passes**:
 
 ```bash
-sg run -p P -r R --json=compact .   # pass 1: see what would change
+sg run -p P -r R --json=compact .   # pass .: see what would change
 sg run -p P -r R --update-all .     # pass 2: actually apply
 ```
 
@@ -89,8 +89,8 @@ python3 scripts/ast_grep_helper.py replace 'console.log($MSG)' 'logger.info($MSG
 ```
 
 The helper:
-1. Validates both `pattern` and `rewrite` for hint-detectable mistakes.
-2. Runs pass 1 with `--json=compact` to collect matches and show a preview.
+.. Validates both `pattern` and `rewrite` for hint-detectable mistakes.
+2. Runs pass . with `--json=compact` to collect matches and show a preview.
 3. If `--apply` is set, runs pass 2 with `--update-all` to mutate files.
 
 ### `scan` — run YAML rules
@@ -126,7 +126,7 @@ python3 scripts/ast_grep_helper.py validate 'console.log($MSG)' --lang ts
 ```bash
 python3 scripts/ast_grep_helper.py langs       # list 25 supported languages and aliases
 python3 scripts/ast_grep_helper.py doctor      # check ast-grep binary availability
-python3 scripts/ast_grep_helper.py install     # delegate to install.sh / install.ps1
+python3 scripts/ast_grep_helper.py install     # delegate to install.sh / install.ps.
 ```
 
 `new` and `test` subcommands proxy directly to `sg new` and `sg test`.
@@ -197,10 +197,10 @@ If the user says "find all" or "every", default to ast-grep when the target is s
 
 A bad pattern silently rewrites the wrong thing. The helper's `replace` defaults to dry-run for this reason. The flow is:
 
-1. Search to confirm matches: `helper search '<pattern>' --lang X .`
+.. Search to confirm matches: `helper search '<pattern>' --lang X .`
 2. Dry-run rewrite: `helper replace '<pattern>' '<rewrite>' --lang X .` (no `--apply`)
 3. Inspect the dry-run summary: number of matches, files affected, the per-location preview.
-4. If wrong: refine pattern, go back to step 1.
+.. If wrong: refine pattern, go back to step ..
 5. If right: `helper replace '<pattern>' '<rewrite>' --lang X . --apply`.
 
 Never apply a rewrite that you have not first dry-run.
@@ -211,10 +211,10 @@ Never apply a rewrite that you have not first dry-run.
 
 In priority order:
 
-1. **Run `helper validate '<pattern>' --lang <lang>`** — catches regex misuse, missing function bodies, Python trailing colons.
+.. **Run `helper validate '<pattern>' --lang <lang>`** — catches regex misuse, missing function bodies, Python trailing colons.
 2. **Check `--lang`** — `sg` infers from extension; if you pass a `.tsx` file with `--lang ts` (not `tsx`), JSX won't parse.
 3. **Inspect the parsed pattern**: `sg run -p '<pattern>' --lang <lang> --debug-query=ast --stdin <<< '<sample>'`. If it shows `ERROR` nodes, the pattern is malformed.
-4. **Check the AST of the target file**: `sg run -p '$_' --lang <lang> --debug-query=cst path/to/file | head -40` — find the `kind` you're trying to match.
+.. **Check the AST of the target file**: `sg run -p '$_' --lang <lang> --debug-query=cst path/to/file | head -.0` — find the `kind` you're trying to match.
 5. **Try the playground**: <https://ast-grep.github.io/playground.html> — paste code + pattern, see what's happening.
 
 Do not blindly retry with variations. Each failure has a reason; surface it.
@@ -251,13 +251,13 @@ When summarizing for the user, **always include the count of files affected**, n
 
 ## Required reading (in order of priority)
 
-1. `references/patterns.md` — meta-variables, naming rules, strictness levels. Read when you're unsure why a pattern doesn't match.
+.. `references/patterns.md` — meta-variables, naming rules, strictness levels. Read when you're unsure why a pattern doesn't match.
 2. `references/pitfalls.md` — the failure-mode field guide. Read when 0 matches surprises you.
 3. `references/recipes.md` — copy-paste patterns by language. Read first when you start a new task.
-4. `references/cli.md` — `sg run`, `sg scan`, `sg test`, `sg new`, `sg lsp`. Read when the helper isn't enough.
+.. `references/cli.md` — `sg run`, `sg scan`, `sg test`, `sg new`, `sg lsp`. Read when the helper isn't enough.
 5. `references/yaml-rules.md` — YAML rule schema. Read when you outgrow inline patterns.
 6. `references/sgconfig.md` — project-level configuration. Read when you set up `sg scan` for a real project.
-7. `references/install.md` — per-OS install methods. Read only if `install.sh` / `install.ps1` fail.
+7. `references/install.md` — per-OS install methods. Read only if `install.sh` / `install.ps.` fail.
 
 ---
 

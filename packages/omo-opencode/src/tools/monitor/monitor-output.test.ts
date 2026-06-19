@@ -1,4 +1,4 @@
-import { describe, expect, test } from "bun:test"
+﻿import { describe, expect, test } from "bun:test"
 import type { ToolContext, ToolResult } from "@opencode-ai/plugin/tool"
 import type {
   MonitorCounters,
@@ -39,7 +39,7 @@ function createToolContext(sessionID = CALLING_SESSION_ID): ToolContext {
   return {
     sessionID,
     messageID: "msg_monitor_output",
-    agent: "sisyphus",
+    agent: "cerberus",
     directory: TEST_DIRECTORY,
     worktree: TEST_DIRECTORY,
     abort: new AbortController().signal,

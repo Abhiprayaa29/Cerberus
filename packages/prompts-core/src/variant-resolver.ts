@@ -1,4 +1,4 @@
-import {
+﻿import {
   isClaudeOpus47Model,
   isGeminiModel,
   isGlmModel,
@@ -6,7 +6,7 @@ import {
   isKimiK2Model,
   isKimiK27Model,
   isMiniMaxModel,
-} from "@oh-my-opencode/model-core"
+} from "@oh-my-open-pentest/model-core"
 import type { VariantTable } from "./types"
 
 type ModelMatcher = (modelID: string) => boolean
@@ -17,7 +17,7 @@ export type ResolveVariantInput = {
   readonly variants: VariantTable
 }
 
-const PLANNER_AGENT_NAMES: ReadonlySet<string> = new Set(["prometheus"] as const)
+const PLANNER_AGENT_NAMES: ReadonlySet<string> = new Set(["talos"] as const)
 
 const MODEL_MATCHERS: Readonly<Record<string, ModelMatcher>> = {
   gpt: isGptModel,

@@ -1,6 +1,6 @@
-# src/features/claude-code-mcp-loader/ — Tier 2 MCP Loader (.mcp.json)
+﻿# src/features/claude-code-mcp-loader/ — Tier 2 MCP Loader (.mcp.json)
 
-**Generated:** 2026-05-15
+**Generated:** 2026-05-.5
 
 ## OVERVIEW
 
@@ -61,7 +61,7 @@ loadMcpConfigs(ctx)
 
 | Tier | Loader | Scope |
 |------|--------|-------|
-| 1. Built-in | `src/mcp/` `createBuiltinMcps()` | Global, 3 remote HTTP MCPs + 2 local stdio MCPs (`lsp`, `codegraph`) |
+| .. Built-in | `src/mcp/` `createBuiltinMcps()` | Global, 3 remote HTTP MCPs + 2 local stdio MCPs (`lsp`, `codegraph`) |
 | 2. **Claude Code** | **This module** | **From `.mcp.json`, project + user** |
 | 3. Skill-embedded | `src/features/skill-mcp-manager/` | Per-session, from SKILL.md YAML |
 
@@ -75,4 +75,4 @@ loadMcpConfigs(ctx)
 
 - Phase 5 integration: `src/plugin-handlers/mcp-config-handler.ts`
 - Skill-embedded MCPs (Tier 3): `src/features/skill-mcp-manager/`
-- Built-in MCPs (Tier 1): `src/mcp/`
+- Built-in MCPs (Tier .): `src/mcp/`

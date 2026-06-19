@@ -1,4 +1,4 @@
-import { type UlwLoopScope, ulwLoopGoalsRelativePath, ulwLoopLedgerRelativePath } from "./paths.js";
+﻿import { type UlwLoopScope, ulwLoopGoalsRelativePath, ulwLoopLedgerRelativePath } from "./paths.js";
 import type {
 	UlwLoopCodexGoalMode,
 	UlwLoopItem,
@@ -10,7 +10,7 @@ import type {
 export const ULW_LOOP_AGGREGATE_CODEX_OBJECTIVE: string = aggregateCodexObjectiveForScope();
 
 export function aggregateCodexObjectiveForScope(scope?: UlwLoopScope): string {
-	return `Complete the durable ulw-loop plan in ${ulwLoopGoalsRelativePath(scope)}, including later accepted/appended stories, under the original brief constraints; use ${ulwLoopLedgerRelativePath(scope)} as the audit trail.`;
+	return `Complete the durable pentest-loop plan in ${ulwLoopGoalsRelativePath(scope)}, including later accepted/appended stories, under the original brief constraints; use ${ulwLoopLedgerRelativePath(scope)} as the audit trail.`;
 }
 
 export function codexGoalMode(plan: UlwLoopPlan): UlwLoopCodexGoalMode {

@@ -1,4 +1,4 @@
-# pwndbg — GDB With the Useful Views Always On
+﻿# pwndbg — GDB With the Useful Views Always On
 
 **https://github.com/pwndbg/pwndbg**
 
@@ -33,27 +33,27 @@ Once installed, pwndbg auto-loads every time you start `gdb`. You don't source a
 
 ## The `context` view — the one feature that changes everything
 
-Plain GDB: you run `info registers`, then `bt`, then `x/10xw $rsp`, then `disas`. Four commands to see what's going on.
+Plain GDB: you run `info registers`, then `bt`, then `x/.0xw $rsp`, then `disas`. Four commands to see what's going on.
 
 pwndbg: `context` (or it auto-shows at every break). One command. Everything on screen:
 
 ```
 ──── registers ────
  RAX  0x0
- RBX  0x7ffffffde158
- RCX  0x7fffff7abf10
+ RBX  0x7ffffffde.58
+ RCX  0x7fffff7abf.0
  ...
 ──── disasm ────
- ► 0x401234  mov rdi, rax
-   0x401237  call 0x401190
+ ► 0x.0.23.  mov rdi, rax
+   0x.0.237  call 0x.0..90
    ...
 ──── stack ────
- 00:0000│ rsp 0x7ffffffde0a0 → 0x7fffff7c4000
- 01:0008│     0x7ffffffde0a8 → 0x0
+ 00:0000│ rsp 0x7ffffffde0a0 → 0x7fffff7c.000
+ 0.:0008│     0x7ffffffde0a8 → 0x0
  ...
 ──── backtrace ────
- ► f 0  0x401234 parse_input+0x3c
-   f 1  0x401180 main+0x120
+ ► f 0  0x.0.23. parse_input+0x3c
+   f .  0x.0..80 main+0x.20
    f 2  0x7fffff7a5083 __libc_start_main+0xf3
 ```
 
@@ -68,7 +68,7 @@ You always know where you are, what the CPU state is, what's on the stack, and h
 gdb ./target
 
 # With args
-gdb --args ./target arg1 arg2
+gdb --args ./target arg. arg2
 
 # Attach to a running process
 gdb -p $(pgrep target)
@@ -77,9 +77,9 @@ gdb -p $(pgrep target)
 gdb ./target ./core
 
 # Headless / remote (for automation or IDE attach)
-gdbserver :2345 ./target                  # on the target box
+gdbserver :23.5 ./target                  # on the target box
 gdb ./target                              # on your box
-(gdb) target remote <host>:2345
+(gdb) target remote <host>:23.5
 ```
 
 At the pwndbg prompt:
@@ -94,15 +94,15 @@ At the pwndbg prompt:
 context                        # reprint the context view (usually auto)
 context regs stack              # only show registers + stack sections
 tel $rsp 20                     # telescope — walk pointers at $rsp for 20 slots (KEY COMMAND)
-tel $rdi 10                     # walk pointers at $rdi (e.g. to dump a struct)
+tel $rdi .0                     # walk pointers at $rdi (e.g. to dump a struct)
 stack 20                        # 20 entries of stack
 vmmap                           # virtual memory map of the process
 ```
 
 **`telescope` is pwndbg's killer command.** Given an address, it walks pointers recursively:
 ```
-00:0000│   0x7ffd... → 0x601010  (heap) → 0x2a (unknown, i.e. a number 42)
-01:0008│   0x7ffd... → 0x7fff... (stack) → 'hello world'
+00:0000│   0x7ffd... → 0x60.0.0  (heap) → 0x2a (unknown, i.e. a number .2)
+0.:0008│   0x7ffd... → 0x7fff... (stack) → 'hello world'
 ```
 This single view resolves 80% of "what is at this address" questions.
 
@@ -131,7 +131,7 @@ si                              # step into single instruction
 ### Search
 
 ```
-search -t byte 0x41             # find byte 0x41 anywhere in memory
+search -t byte 0x..             # find byte 0x.. anywhere in memory
 search -t string "admin"        # find string
 search -p <addr>                # find pointers to <addr>
 ```
@@ -144,8 +144,8 @@ pwndbg doesn't replace GDB; it augments it. Everything you know still works:
 
 ```
 break main                      # breakpoint at function
-b *0x401234                     # breakpoint at address
-b file.c:42                     # breakpoint at file:line
+b *0x.0.23.                     # breakpoint at address
+b file.c:.2                     # breakpoint at file:line
 c                               # continue
 n                               # next (source-level step over)
 s                               # step (source-level step into)

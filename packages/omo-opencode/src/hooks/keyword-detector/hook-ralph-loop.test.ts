@@ -1,4 +1,4 @@
-import { describe, expect, test, beforeEach, afterEach } from "bun:test"
+﻿import { describe, expect, test, beforeEach, afterEach } from "bun:test"
 import { createKeywordDetectorHook } from "./index"
 import { _resetForTesting, setMainSession } from "../../features/claude-code-session-state"
 import { unsafeTestValue } from "../../../../../test-support/unsafe-test-value"
@@ -36,7 +36,7 @@ function createMockRalphLoop(startLoopCalls: StartLoopCall[], cancelLoopCalls: C
   }
 }
 
-describe("keyword-detector ultrawork routing", () => {
+describe("keyword-detector fullscan routing", () => {
   beforeEach(() => {
     _resetForTesting()
   })
@@ -45,7 +45,7 @@ describe("keyword-detector ultrawork routing", () => {
     _resetForTesting()
   })
 
-  test("#given ulw keyword in main session #when chat.message fires #then ultrawork prompt is injected without starting ralph loop", async () => {
+  test("#given ulw keyword in main session #when chat.message fires #then fullscan prompt is injected without starting ralph loop", async () => {
     // given
     setMainSession("main-session")
     const startLoopCalls: StartLoopCall[] = []
@@ -57,7 +57,7 @@ describe("keyword-detector ultrawork routing", () => {
     }
 
     // when
-    await hook["chat.message"]({ sessionID: "main-session", agent: "sisyphus" }, output)
+    await hook["chat.message"]({ sessionID: "main-session", agent: "cerberus" }, output)
 
     // then
     expect(startLoopCalls).toHaveLength(0)
@@ -65,7 +65,7 @@ describe("keyword-detector ultrawork routing", () => {
     expect(output.parts[0]?.text).toContain("ulw build a multi-agent backend architecture")
   })
 
-  test("#given ultrawork keyword in main session #when chat.message fires #then ultrawork prompt is injected without starting ralph loop", async () => {
+  test("#given fullscan keyword in main session #when chat.message fires #then fullscan prompt is injected without starting ralph loop", async () => {
     // given
     setMainSession("main-session")
     const startLoopCalls: StartLoopCall[] = []
@@ -73,19 +73,19 @@ describe("keyword-detector ultrawork routing", () => {
     const hook = createKeywordDetectorHook(createMockPluginInput(), undefined, ralphLoop)
     const output = {
       message: {} as Record<string, unknown>,
-      parts: [{ type: "text", text: "ultrawork ship the dashboard" }],
+      parts: [{ type: "text", text: "fullscan ship the dashboard" }],
     }
 
     // when
-    await hook["chat.message"]({ sessionID: "main-session", agent: "sisyphus" }, output)
+    await hook["chat.message"]({ sessionID: "main-session", agent: "cerberus" }, output)
 
     // then
     expect(startLoopCalls).toHaveLength(0)
     expect(output.parts[0]?.text).toContain("YOU MUST LEVERAGE ALL AVAILABLE AGENTS")
-    expect(output.parts[0]?.text).toContain("ultrawork ship the dashboard")
+    expect(output.parts[0]?.text).toContain("fullscan ship the dashboard")
   })
 
-  test("#given ulw mentioned mid-sentence #when chat.message fires #then ultrawork prompt is injected without starting ralph loop", async () => {
+  test("#given ulw mentioned mid-sentence #when chat.message fires #then fullscan prompt is injected without starting ralph loop", async () => {
     // given
     setMainSession("main-session")
     const startLoopCalls: StartLoopCall[] = []
@@ -97,14 +97,14 @@ describe("keyword-detector ultrawork routing", () => {
     }
 
     // when
-    await hook["chat.message"]({ sessionID: "main-session", agent: "sisyphus" }, output)
+    await hook["chat.message"]({ sessionID: "main-session", agent: "cerberus" }, output)
 
     // then
     expect(startLoopCalls).toHaveLength(0)
     expect(output.parts[0]?.text).toContain("please ulw fix the flaky keyword tests")
   })
 
-  test("#given question about ultrawork #when chat.message fires #then ultrawork prompt is injected without starting ralph loop", async () => {
+  test("#given question about fullscan #when chat.message fires #then fullscan prompt is injected without starting ralph loop", async () => {
     // given
     setMainSession("main-session")
     const startLoopCalls: StartLoopCall[] = []
@@ -112,18 +112,18 @@ describe("keyword-detector ultrawork routing", () => {
     const hook = createKeywordDetectorHook(createMockPluginInput(), undefined, ralphLoop)
     const output = {
       message: {} as Record<string, unknown>,
-      parts: [{ type: "text", text: "what is ultrawork?" }],
+      parts: [{ type: "text", text: "what is fullscan?" }],
     }
 
     // when
-    await hook["chat.message"]({ sessionID: "main-session", agent: "sisyphus" }, output)
+    await hook["chat.message"]({ sessionID: "main-session", agent: "cerberus" }, output)
 
     // then
     expect(startLoopCalls).toHaveLength(0)
-    expect(output.parts[0]?.text).toContain("what is ultrawork?")
+    expect(output.parts[0]?.text).toContain("what is fullscan?")
   })
 
-  test("#given non-ulw message #when chat.message fires #then ralph-loop startLoop is not invoked", async () => {
+  test("#given non-ulw message #when chat.message fires #then pentest-loop startLoop is not invoked", async () => {
     // given
     setMainSession("main-session")
     const startLoopCalls: StartLoopCall[] = []
@@ -135,13 +135,13 @@ describe("keyword-detector ultrawork routing", () => {
     }
 
     // when
-    await hook["chat.message"]({ sessionID: "main-session", agent: "sisyphus" }, output)
+    await hook["chat.message"]({ sessionID: "main-session", agent: "cerberus" }, output)
 
     // then
     expect(startLoopCalls).toHaveLength(0)
   })
 
-  test("#given ulw keyword with planner agent #when chat.message fires #then ralph-loop startLoop is not invoked", async () => {
+  test("#given ulw keyword with planner agent #when chat.message fires #then pentest-loop startLoop is not invoked", async () => {
     // given
     setMainSession("main-session")
     const startLoopCalls: StartLoopCall[] = []
@@ -153,13 +153,13 @@ describe("keyword-detector ultrawork routing", () => {
     }
 
     // when
-    await hook["chat.message"]({ sessionID: "main-session", agent: "prometheus" }, output)
+    await hook["chat.message"]({ sessionID: "main-session", agent: "talos" }, output)
 
     // then
     expect(startLoopCalls).toHaveLength(0)
   })
 
-  test("#given ulw keyword with non-OMO agent #when chat.message fires #then ralph-loop startLoop is not invoked", async () => {
+  test("#given ulw keyword with non-OMO agent #when chat.message fires #then pentest-loop startLoop is not invoked", async () => {
     // given
     setMainSession("main-session")
     const startLoopCalls: StartLoopCall[] = []
@@ -187,7 +187,7 @@ describe("keyword-detector ultrawork routing", () => {
     }
 
     // when
-    await hook["chat.message"]({ sessionID: "main-session", agent: "sisyphus" }, output)
+    await hook["chat.message"]({ sessionID: "main-session", agent: "cerberus" }, output)
 
     // then
     const text = output.parts.find((p) => p.type === "text")?.text
@@ -195,7 +195,7 @@ describe("keyword-detector ultrawork routing", () => {
     expect(text).toContain("do this")
   })
 
-  test("#given partial 'ulw' substring in StatefulWidget #when chat.message fires #then ralph-loop startLoop is not invoked", async () => {
+  test("#given partial 'ulw' substring in StatefulWidget #when chat.message fires #then pentest-loop startLoop is not invoked", async () => {
     // given
     _resetForTesting()
     const startLoopCalls: StartLoopCall[] = []
@@ -207,13 +207,13 @@ describe("keyword-detector ultrawork routing", () => {
     }
 
     // when
-    await hook["chat.message"]({ sessionID: "any-session", agent: "sisyphus" }, output)
+    await hook["chat.message"]({ sessionID: "any-session", agent: "cerberus" }, output)
 
     // then
     expect(startLoopCalls).toHaveLength(0)
   })
 
-  test("#given ulw keyword inside system-reminder block #when chat.message fires #then ralph-loop startLoop is not invoked", async () => {
+  test("#given ulw keyword inside system-reminder block #when chat.message fires #then pentest-loop startLoop is not invoked", async () => {
     // given
     setMainSession("main-session")
     const startLoopCalls: StartLoopCall[] = []
@@ -230,7 +230,7 @@ The system mentions ulw mode in passing.
     }
 
     // when
-    await hook["chat.message"]({ sessionID: "main-session", agent: "sisyphus" }, output)
+    await hook["chat.message"]({ sessionID: "main-session", agent: "cerberus" }, output)
 
     // then
     expect(startLoopCalls).toHaveLength(0)
@@ -248,7 +248,7 @@ The system mentions ulw mode in passing.
     }
 
     // when
-    await hook["chat.message"]({ sessionID: "main-session", agent: "sisyphus" }, output)
+    await hook["chat.message"]({ sessionID: "main-session", agent: "cerberus" }, output)
 
     // then
     const text = output.parts.find((p) => p.type === "text")?.text

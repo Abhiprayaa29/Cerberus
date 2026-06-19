@@ -1,8 +1,8 @@
-import {
+﻿import {
   areRuntimeFallbackModelsEquivalent,
   stringifyRuntimeFallbackModel,
   stringifyRuntimeFallbackModelWithVariant,
-} from "@oh-my-opencode/model-core"
+} from "@oh-my-open-pentest/model-core"
 import type { FallbackState, FallbackResult } from "./types"
 import { HOOK_NAME } from "./constants"
 import { log } from "../../shared/logger"

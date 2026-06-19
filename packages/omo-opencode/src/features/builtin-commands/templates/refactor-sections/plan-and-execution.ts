@@ -1,4 +1,4 @@
-export const REFACTOR_PLAN_AND_EXECUTION = `# PHASE 4: PLAN GENERATION (PLAN AGENT)
+﻿export const REFACTOR_PLAN_AND_EXECUTION = `# PHASE 4: PLAN GENERATION (PLAN AGENT)
 
 **Mark phase-4 as in_progress.**
 
@@ -125,7 +125,7 @@ If ANY verification fails:
 4. **OPTIONS**:
    - Fix the issue and retry
    - Skip this step (if optional)
-   - Consult oracle agent for help
+   - Consult cipher agent for help
    - Ask user for guidance
 
 **NEVER proceed to next step with broken tests.**

@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { afterEach, beforeEach, describe, expect, test } from "bun:test"
 import * as fs from "fs"
@@ -7,7 +7,7 @@ import * as path from "path"
 
 import { _flushForTesting, _resetLoggerForTesting, _setLoggerForTesting, getLogFilePath, log } from "./logger"
 
-const TEST_PREFIX = "oh-my-opencode-logger-path-pin"
+const TEST_PREFIX = "oh-my-open-pentest-logger-path-pin"
 
 describe("#given the OpenCode logger shim defaults", () => {
   let tempDir: string
@@ -24,7 +24,7 @@ describe("#given the OpenCode logger shim defaults", () => {
 
   test("#when the logger is reset #then the default path is byte-identical to the historical temp path", () => {
     // given
-    const expectedPath = path.join(os.tmpdir(), "oh-my-opencode.log")
+    const expectedPath = path.join(os.tmpdir(), "oh-my-open-pentest.log")
 
     // when
     const actualPath = getLogFilePath()

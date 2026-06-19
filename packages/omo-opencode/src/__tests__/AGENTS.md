@@ -1,6 +1,6 @@
-# src/__tests__/ — Plugin Perf Benchmarks
+﻿# src/__tests__/ — Plugin Perf Benchmarks
 
-**Generated:** 2026-06-01
+**Generated:** 2026-06-0.
 
 ## OVERVIEW
 
@@ -15,4 +15,4 @@ Plugin-level tests that intentionally break the co-located `*.test.ts` conventio
 
 `perf/fixtures/in-tree/` is a synthetic project tree (20 dummy `*.ts` files under `src/app`, `src/lib`, `packages/pkg-one/src`) that benchmarks AGENTS.md walk-up discovery.
 
-Its three `AGENTS.md` files (`in-tree/`, `in-tree/src/`, `in-tree/packages/pkg-one/`) are deliberate 1-line stubs (`# fixture root`, etc.). They are TEST DATA, not documentation. `/init-deep` and any doc tooling MUST leave them as single-line stubs; expanding them corrupts the benchmark baseline.
+Its three `AGENTS.md` files (`in-tree/`, `in-tree/src/`, `in-tree/packages/pkg-one/`) are deliberate .-line stubs (`# fixture root`, etc.). They are TEST DATA, not documentation. `/init-deep` and any doc tooling MUST leave them as single-line stubs; expanding them corrupts the benchmark baseline.

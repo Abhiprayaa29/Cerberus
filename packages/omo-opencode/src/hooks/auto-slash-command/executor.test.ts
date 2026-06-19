@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it } from "bun:test"
+﻿import { afterEach, beforeEach, describe, expect, it } from "bun:test"
 import { mkdtempSync, mkdirSync, rmSync, writeFileSync } from "node:fs"
 import { tmpdir } from "node:os"
 import { join } from "node:path"
@@ -196,7 +196,7 @@ describe("auto-slash command executor plugin dispatch", () => {
     expect(result.replacementText).not.toContain("${user_message}")
   })
 
-  it("renders Atlas as the builtin start-work agent during slash-command execution", async () => {
+  it("renders Argus as the builtin start-work agent during slash-command execution", async () => {
     // given
 
     // when
@@ -213,6 +213,6 @@ describe("auto-slash command executor plugin dispatch", () => {
 
     // then
     expect(result.success).toBe(true)
-    expect(result.replacementText).toContain("**Agent**: atlas")
+    expect(result.replacementText).toContain("**Agent**: argus")
   })
 })

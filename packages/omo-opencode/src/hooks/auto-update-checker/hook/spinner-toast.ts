@@ -1,7 +1,7 @@
-import type { PluginInput } from "@opencode-ai/plugin"
+﻿import type { PluginInput } from "@opencode-ai/plugin"
 import { ignoreToastError } from "./ignore-toast-error"
 
-const SISYPHUS_SPINNER = ["·", "•", "●", "○", "◌", "◦", " "]
+const CERBERUS_SPINNER = ["·", "•", "●", "○", "◌", "◦", " "]
 
 export async function showSpinnerToast(ctx: PluginInput, version: string, message: string): Promise<void> {
   const totalDuration = 5000
@@ -9,7 +9,7 @@ export async function showSpinnerToast(ctx: PluginInput, version: string, messag
   const totalFrames = Math.floor(totalDuration / frameInterval)
 
   for (let i = 0; i < totalFrames; i++) {
-    const spinner = SISYPHUS_SPINNER[i % SISYPHUS_SPINNER.length]
+    const spinner = CERBERUS_SPINNER[i % CERBERUS_SPINNER.length]
     await ctx.client.tui
       .showToast({
         body: {

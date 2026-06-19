@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, it } from "bun:test"
+﻿import { afterEach, beforeEach, describe, it } from "bun:test"
 import assert from "node:assert/strict"
 import { randomUUID } from "node:crypto"
 import { existsSync, mkdirSync, rmSync, writeFileSync } from "node:fs"
@@ -9,9 +9,9 @@ import type { BoulderState } from "../../features/boulder-state"
 import { _resetForTesting, registerAgentName, setSessionAgent, subagentSessions } from "../../features/claude-code-session-state"
 import { unsafeTestValue } from "../../../../../test-support/unsafe-test-value"
 
-const { createAtlasHook } = await import("./index")
+const { createArgusHook } = await import("./index")
 
-describe("atlas hook idle-event session lineage", () => {
+describe("argus hook idle-event session lineage", () => {
   const MAIN_SESSION_ID = "main-session-123"
 
   let testDirectory = ""
@@ -33,7 +33,7 @@ describe("atlas hook idle-event session lineage", () => {
   }
 
   function createHook(parentSessionIDs?: Record<string, string | undefined>) {
-    return createAtlasHook(unsafeTestValue<Parameters<typeof createAtlasHook>[0]>({
+    return createArgusHook(unsafeTestValue<Parameters<typeof createArgusHook>[0]>({
       directory: testDirectory,
       client: {
         session: {
@@ -57,7 +57,7 @@ describe("atlas hook idle-event session lineage", () => {
   }
 
   beforeEach(() => {
-    testDirectory = join(tmpdir(), `atlas-idle-lineage-${randomUUID()}`)
+    testDirectory = join(tmpdir(), `argus-idle-lineage-${randomUUID()}`)
     if (!existsSync(testDirectory)) {
       mkdirSync(testDirectory, { recursive: true })
     }
@@ -65,8 +65,8 @@ describe("atlas hook idle-event session lineage", () => {
     promptCalls = []
     clearBoulderState(testDirectory)
     _resetForTesting()
-    registerAgentName("atlas")
-    registerAgentName("sisyphus")
+    registerAgentName("argus")
+    registerAgentName("cerberus")
     subagentSessions.clear()
   })
 
@@ -107,7 +107,7 @@ describe("atlas hook idle-event session lineage", () => {
 
     writeIncompleteBoulder()
     subagentSessions.add(subagentSessionID)
-    setSessionAgent(subagentSessionID, "atlas")
+    setSessionAgent(subagentSessionID, "argus")
 
     const hook = createHook({
       [subagentSessionID]: intermediateParentSessionID,
@@ -128,9 +128,9 @@ describe("atlas hook idle-event session lineage", () => {
   it("does not inject continuation for lineage-only subagent with non-matching agent", async () => {
     const subagentSessionID = "subagent-session-agent-mismatch"
 
-    writeIncompleteBoulder({ agent: "atlas" })
+    writeIncompleteBoulder({ agent: "argus" })
     subagentSessions.add(subagentSessionID)
-    setSessionAgent(subagentSessionID, "sisyphus-junior")
+    setSessionAgent(subagentSessionID, "cerberus-junior")
 
     const hook = createHook({
       [subagentSessionID]: MAIN_SESSION_ID,
@@ -150,9 +150,9 @@ describe("atlas hook idle-event session lineage", () => {
   it("does not inject continuation for lineage-only subagent with matching agent until explicitly tracked", async () => {
     const subagentSessionID = "subagent-session-agent-match"
 
-    writeIncompleteBoulder({ agent: "atlas" })
+    writeIncompleteBoulder({ agent: "argus" })
     subagentSessions.add(subagentSessionID)
-    setSessionAgent(subagentSessionID, "atlas")
+    setSessionAgent(subagentSessionID, "argus")
 
     const hook = createHook({
       [subagentSessionID]: MAIN_SESSION_ID,
@@ -170,8 +170,8 @@ describe("atlas hook idle-event session lineage", () => {
   })
 
   it("injects continuation for explicitly tracked boulder session regardless of agent", async () => {
-    writeIncompleteBoulder({ agent: "atlas" })
-    setSessionAgent(MAIN_SESSION_ID, "hephaestus")
+    writeIncompleteBoulder({ agent: "argus" })
+    setSessionAgent(MAIN_SESSION_ID, "scylla")
 
     const hook = createHook()
 

@@ -1,4 +1,4 @@
-export type {
+﻿export type {
   BoulderSessionOrigin,
   BoulderState,
   BoulderTaskStatus,
@@ -8,4 +8,4 @@ export type {
   PlanProgress,
   TaskSessionState,
   TopLevelTaskRef,
-} from "@oh-my-opencode/boulder-state"
+} from "@oh-my-open-pentest/boulder-state"

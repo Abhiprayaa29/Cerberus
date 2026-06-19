@@ -1,4 +1,4 @@
-declare const require: (name: string) => any
+﻿declare const require: (name: string) => any
 const { afterEach, describe, expect, spyOn, test } = require("bun:test")
 
 import { createEventHandler } from "./event"
@@ -128,7 +128,7 @@ describe("createEventHandler - model-fallback auto-continuation pins agent/model
             parentID: "msg_user_pin_1",
             modelID: "claude-opus-4-7-thinking",
             providerID: "anthropic",
-            agent: "Sisyphus - Ultraworker",
+            agent: "Cerberus - Ultraworker",
           },
         },
       },
@@ -138,7 +138,7 @@ describe("createEventHandler - model-fallback auto-continuation pins agent/model
     expect(promptAsyncBodies.length).toBe(1)
     const body = promptAsyncBodies[0]!.body
     expect(body.agent).toBeDefined()
-    expect(body.agent).toContain("Sisyphus")
+    expect(body.agent).toContain("Cerberus")
     expect(body.model).toEqual({
       providerID: "anthropic",
       modelID: "claude-opus-4-7",
@@ -179,7 +179,7 @@ describe("createEventHandler - model-fallback auto-continuation pins agent/model
     expect(promptAsyncBodies.length).toBe(1)
     const body = promptAsyncBodies[0]!.body
     expect(body.agent).toBeDefined()
-    expect(body.agent?.toLowerCase()).toContain("sisyphus")
+    expect(body.agent?.toLowerCase()).toContain("cerberus")
     expect(body.model).toEqual({
       providerID: "anthropic",
       modelID: "claude-opus-4-7",
@@ -208,7 +208,7 @@ describe("createEventHandler - model-fallback auto-continuation pins agent/model
             role: "user",
             modelID: "claude-opus-4-7-thinking",
             providerID: "anthropic",
-            agent: "Sisyphus - Ultraworker",
+            agent: "Cerberus - Ultraworker",
           },
         },
       },
@@ -236,7 +236,7 @@ describe("createEventHandler - model-fallback auto-continuation pins agent/model
     expect(promptBodies.length).toBe(1)
     const body = promptBodies[0]!.body
     expect(body.agent).toBeDefined()
-    expect(body.agent).toContain("Sisyphus")
+    expect(body.agent).toContain("Cerberus")
     expect(body.model).toEqual({
       providerID: "anthropic",
       modelID: "claude-opus-4-7",
@@ -252,7 +252,7 @@ describe("createEventHandler - model-fallback auto-continuation pins agent/model
     clearPendingModelFallback(modelFallback, sessionID)
     const pluginConfig = {
       agents: {
-        sisyphus: {
+        cerberus: {
           variant: "thinking",
         },
       },

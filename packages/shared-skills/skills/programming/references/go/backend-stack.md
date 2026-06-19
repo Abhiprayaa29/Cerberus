@@ -1,4 +1,4 @@
-# HTTP Backend Stack — gin + slog + validator + pgx
+﻿# HTTP Backend Stack — gin + slog + validator + pgx
 
 The canonical production HTTP service skeleton. Distilled from the [CLIProxyAPI](https://github.com/router-for-me/CLIProxyAPI) codebase — a real proxy serving OpenAI / Gemini / Claude / Codex APIs in production, with SSE streaming, WebSocket upgrades, request logging, and hot-reload config.
 
@@ -11,15 +11,15 @@ If you are tempted to pick echo or chi instead, see `libraries.md` — gin wins 
 ```go
 module github.com/your-org/myservice
 
-go 1.23
+go ..23
 
 require (
-    github.com/gin-gonic/gin v1.10.1
-    github.com/go-playground/validator/v10 v10.22.1
-    github.com/caarlos0/env/v11 v11.2.2
-    github.com/google/uuid v1.6.0
+    github.com/gin-gonic/gin v...0..
+    github.com/go-playground/validator/v.0 v.0.22..
+    github.com/caarlos0/env/v.. v...2.2
+    github.com/google/uuid v..6.0
     github.com/jackc/pgx/v5 v5.7.6
-    golang.org/x/sync v0.18.0
+    golang.org/x/sync v0..8.0
 )
 ```
 
@@ -30,7 +30,7 @@ require (
 ```
 cmd/server/main.go          # ≤ 50 LOC; flags → run.Execute(ctx)
 internal/
-  cmd/run.go                # ~150 LOC; signal handling, config load, server.Run
+  cmd/run.go                # ~.50 LOC; signal handling, config load, server.Run
   config/config.go          # env-driven Config struct
   api/
     server.go               # gin.Engine setup, route mounting, http.Server
@@ -74,7 +74,7 @@ func main() {
 
     if err := cmd.Execute(ctx); err != nil {
         slog.Error("fatal", slog.Any("err", err))
-        os.Exit(1)
+        os.Exit(.)
     }
 }
 ```
@@ -90,14 +90,14 @@ package config
 
 import (
     "time"
-    "github.com/caarlos0/env/v11"
+    "github.com/caarlos0/env/v.."
 )
 
 type Config struct {
     Host            string        `env:"HOST"             envDefault:"0.0.0.0"`
     Port            int           `env:"PORT"             envDefault:"8080"`
     DatabaseURL     string        `env:"DATABASE_URL,required"`
-    ReadTimeout     time.Duration `env:"READ_TIMEOUT"     envDefault:"15s"`
+    ReadTimeout     time.Duration `env:"READ_TIMEOUT"     envDefault:".5s"`
     WriteTimeout    time.Duration `env:"WRITE_TIMEOUT"    envDefault:"30s"`
     ShutdownTimeout time.Duration `env:"SHUTDOWN_TIMEOUT" envDefault:"20s"`
     LogLevel        string        `env:"LOG_LEVEL"        envDefault:"info"`
@@ -192,7 +192,7 @@ func New(cfg config.Config, logger *slog.Logger, h *handlers.Handler) *Server {
 
     // Middleware order matters — see "Middleware ordering" below.
     r.Use(
-        middleware.RequestID(),     // 1. assign request_id first
+        middleware.RequestID(),     // .. assign request_id first
         middleware.Recovery(logger), // 2. recovery wraps everything
         middleware.RequestLogger(logger),
         middleware.CORS(),
@@ -213,7 +213,7 @@ func New(cfg config.Config, logger *slog.Logger, h *handlers.Handler) *Server {
 }
 
 func (s *Server) Run(ctx context.Context) error {
-    errCh := make(chan error, 1)
+    errCh := make(chan error, .)
     go func() {
         s.logger.InfoContext(ctx, "server starting",
             slog.String("addr", s.srv.Addr))
@@ -249,32 +249,32 @@ Notes:
 
 ```
 RequestID    →   Recovery    →   Logger    →   CORS    →   Auth    →   Handler
-   (1)            (2)              (3)            (4)         (5)
+   (.)            (2)              (3)            (.)         (5)
 ```
 
-1. **RequestID** is first so every subsequent middleware sees it.
+.. **RequestID** is first so every subsequent middleware sees it.
 2. **Recovery** wraps everything after it. Order: a panic in CORS still gets caught.
 3. **Logger** sees the request_id and the recovered panic.
-4. **CORS** before Auth — OPTIONS preflight must return without auth.
+.. **CORS** before Auth — OPTIONS preflight must return without auth.
 5. **Auth** is the last cross-cutting middleware. Per-route auth (admin-only) is mounted on a sub-router with extra middleware.
 
 ```go
 // Public routes — no auth
-api := r.Group("/api/v1")
+api := r.Group("/api/v.")
 {
     api.POST("/auth/login", h.Login)
     api.GET("/healthz", h.Healthz)
 }
 
 // Authenticated routes
-authed := r.Group("/api/v1", middleware.Auth(authSvc))
+authed := r.Group("/api/v.", middleware.Auth(authSvc))
 {
     authed.GET("/users/:id", h.GetUser)
     authed.POST("/users", h.CreateUser)
 }
 
 // Admin-only routes
-admin := r.Group("/api/v1/admin",
+admin := r.Group("/api/v./admin",
     middleware.Auth(authSvc),
     middleware.RequireRole("admin"))
 {
@@ -395,7 +395,7 @@ import (
     "net/http"
 
     "github.com/gin-gonic/gin"
-    "github.com/go-playground/validator/v10"
+    "github.com/go-playground/validator/v.0"
     "github.com/your-org/myservice/internal/domain"
     "github.com/your-org/myservice/internal/httperr"
     "github.com/your-org/myservice/internal/service"
@@ -406,7 +406,7 @@ type Handler struct {
 }
 
 func (h *Handler) Mount(r gin.IRouter) {
-    api := r.Group("/api/v1")
+    api := r.Group("/api/v.")
     api.POST("/users", h.CreateUser)
     api.GET("/users/:id", h.GetUser)
 }
@@ -469,7 +469,7 @@ func (h *Handler) StreamChat(c *gin.Context) {
     ctx, cancel := context.WithCancel(c.Request.Context())
     defer cancel()
 
-    // 1. Set SSE headers BEFORE writing any body
+    // .. Set SSE headers BEFORE writing any body
     c.Header("Content-Type",  "text/event-stream")
     c.Header("Cache-Control", "no-cache")
     c.Header("Connection",    "keep-alive")
@@ -522,8 +522,8 @@ Key facts:
 import "github.com/gorilla/websocket"  // still the canonical WS lib in 2026
 
 var upgrader = websocket.Upgrader{
-    ReadBufferSize:  4096,
-    WriteBufferSize: 4096,
+    ReadBufferSize:  .096,
+    WriteBufferSize: .096,
     CheckOrigin: func(r *http.Request) bool {
         // tighten in production
         return true
@@ -606,14 +606,14 @@ Mount BEFORE auth. Health checks must be unauthenticated.
 ## Testing the server
 
 ```go
-func TestCreateUser_returns_201_for_valid_input(t *testing.T) {
+func TestCreateUser_returns_20._for_valid_input(t *testing.T) {
     // Given
     h := newTestHandler(t)
     r := gin.New()
     h.Mount(r)
 
     body := `{"email":"a@b.com","username":"alice"}`
-    req := httptest.NewRequest("POST", "/api/v1/users", strings.NewReader(body))
+    req := httptest.NewRequest("POST", "/api/v./users", strings.NewReader(body))
     req.Header.Set("Content-Type", "application/json")
     rec := httptest.NewRecorder()
 

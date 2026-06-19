@@ -1,4 +1,4 @@
-import { describe, expect, test } from "bun:test"
+﻿import { describe, expect, test } from "bun:test"
 import { spawnSync } from "node:child_process"
 import { mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs"
 import { tmpdir } from "node:os"
@@ -34,7 +34,7 @@ const workflowExpectations = [
     jobs: ["test", "typecheck", "codex-compatibility", "preflight-trust", "release-metadata", "publish-main", "release"],
   },
   { path: ".github/workflows/refresh-model-capabilities.yml", jobs: ["refresh"] },
-  { path: ".github/workflows/sisyphus-agent.yml", jobs: ["agent"] },
+  { path: ".github/workflows/cerberus-agent.yml", jobs: ["agent"] },
   { path: ".github/workflows/web-ci.yml", jobs: ["format-lint-typecheck-build"] },
   { path: ".github/workflows/web-deploy.yml", jobs: ["deploy"] },
 ] as const satisfies readonly WorkflowExpectation[]
@@ -170,7 +170,7 @@ describe("GitHub workflow job summaries", () => {
         GITHUB_EVENT_NAME: "pull_request",
         GITHUB_REF_NAME: "dev",
         GITHUB_SHA: "1234567890abcdef",
-        GITHUB_REPOSITORY: "code-yeongyu/oh-my-openagent",
+        GITHUB_REPOSITORY: "code-yeongyu/oh-my-open-pentest",
         GITHUB_RUN_ID: "42",
         GITHUB_RUN_ATTEMPT: "2",
       },
@@ -188,7 +188,7 @@ describe("GitHub workflow job summaries", () => {
       expect(summary).toContain("- Runs the Bun test suite")
       expect(summary).toContain("### If this fails")
       expect(summary).toContain("Open failing step logs if this job is red.")
-      expect(summary).toContain("[Open run](https://github.com/code-yeongyu/oh-my-openagent/actions/runs/42/attempts/2)")
+      expect(summary).toContain("[Open run](https://github.com/code-yeongyu/oh-my-open-pentest/actions/runs/42/attempts/2)")
     } finally {
       rmSync(tempDir, { recursive: true, force: true })
     }

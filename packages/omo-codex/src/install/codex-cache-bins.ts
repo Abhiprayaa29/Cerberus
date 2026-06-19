@@ -1,4 +1,4 @@
-import { chmod, lstat, mkdir, readFile, readdir, readlink, rm, stat, symlink, writeFile } from "node:fs/promises"
+﻿import { chmod, lstat, mkdir, readFile, readdir, readlink, rm, stat, symlink, writeFile } from "node:fs/promises"
 import { basename, isAbsolute, join, relative, resolve, sep } from "node:path"
 import { COMMAND_SHIM_MARKER } from "./codex-cache-command-shim"
 import { isNodeErrorWithCode, isPlainRecord } from "./codex-cache-fs"
@@ -7,7 +7,7 @@ import { RUNTIME_WRAPPER_MARKER, posixRuntimeWrapper, windowsRuntimeWrapper } fr
 
 type LinkPlatform = NodeJS.Platform
 
-const RESERVED_NESTED_BIN_NAMES = new Set(["omo", "lazycodex", "lazycodex-ai", "oh-my-opencode", "oh-my-openagent"])
+const RESERVED_NESTED_BIN_NAMES = new Set(["omo", "lazycodex", "lazycodex-ai", "oh-my-open-pentest", "oh-my-open-pentest"])
 
 export async function linkCachedPluginBins(input: {
   readonly binDir: string

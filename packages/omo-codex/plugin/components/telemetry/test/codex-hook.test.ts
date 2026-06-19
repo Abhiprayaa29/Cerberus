@@ -1,4 +1,4 @@
-import { spawn } from "node:child_process";
+﻿import { spawn } from "node:child_process";
 import { cpSync, mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
@@ -149,14 +149,14 @@ describe("runSessionStartHook", () => {
 });
 
 describe("telemetry CLI session-start hook (subprocess)", () => {
-	describe("#given OMO_DISABLE_POSTHOG=1 set in environment", () => {
+	describe("#given OMOP_DISABLE_POSTHOG=1 set in environment", () => {
 		it("#when CLI receives valid SessionStart JSON #then exits 0 with no stdout output", async () => {
 			const payload = JSON.stringify(makeSessionStartInput());
 			const dataDir = mkdtempSync(path.join(tmpdir(), "codex-telemetry-data-"));
 			tempDirectories.push(dataDir);
 
 			const result = await runHookCli(payload, {
-				OMO_DISABLE_POSTHOG: "1",
+				OMOP_DISABLE_POSTHOG: "1",
 				XDG_DATA_HOME: dataDir,
 			});
 
@@ -174,7 +174,7 @@ describe("telemetry CLI session-start hook (subprocess)", () => {
 			});
 
 			const result = await runHookCliAt(path.join(snapshotRoot, "dist", "cli.js"), payload, {
-				OMO_DISABLE_POSTHOG: "1",
+				OMOP_DISABLE_POSTHOG: "1",
 				XDG_DATA_HOME: dataDir,
 			});
 
@@ -184,14 +184,14 @@ describe("telemetry CLI session-start hook (subprocess)", () => {
 		});
 	});
 
-	describe("#given OMO_CODEX_SEND_ANONYMOUS_TELEMETRY=0 set in environment", () => {
+	describe("#given OMOP_CODEX_SEND_ANONYMOUS_TELEMETRY=0 set in environment", () => {
 		it("#when CLI receives valid SessionStart JSON #then exits 0 with no stdout output", async () => {
 			const payload = JSON.stringify(makeSessionStartInput());
 			const dataDir = mkdtempSync(path.join(tmpdir(), "codex-telemetry-data-"));
 			tempDirectories.push(dataDir);
 
 			const result = await runHookCli(payload, {
-				OMO_CODEX_SEND_ANONYMOUS_TELEMETRY: "0",
+				OMOP_CODEX_SEND_ANONYMOUS_TELEMETRY: "0",
 				XDG_DATA_HOME: dataDir,
 			});
 
@@ -206,7 +206,7 @@ describe("telemetry CLI session-start hook (subprocess)", () => {
 			tempDirectories.push(dataDir);
 
 			const result = await runHookCli("not-a-json-object", {
-				OMO_DISABLE_POSTHOG: "1",
+				OMOP_DISABLE_POSTHOG: "1",
 				XDG_DATA_HOME: dataDir,
 			});
 
@@ -221,7 +221,7 @@ describe("telemetry CLI session-start hook (subprocess)", () => {
 			tempDirectories.push(dataDir);
 
 			const result = await runHookCli("", {
-				OMO_DISABLE_POSTHOG: "1",
+				OMOP_DISABLE_POSTHOG: "1",
 				XDG_DATA_HOME: dataDir,
 			});
 

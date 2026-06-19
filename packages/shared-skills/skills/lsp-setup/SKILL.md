@@ -1,4 +1,4 @@
----
+﻿---
 name: lsp-setup
 description: "Configure a Language Server (LSP) for a specific language so editor/agent tooling — diagnostics, go-to-definition, find-references, rename — works. Use when you need to: configure LSP, lsp setup, set up or install a language server, fix 'no LSP server configured' / 'server not installed', choose between servers (basedpyright vs pyright vs ty vs ruff), or wire .codex/lsp-client.json / .opencode/lsp.json. 언어서버 설정. Routes by file extension to references/<language>/README.md for the exact builtin server, per-OS install commands (macOS/Linux/Windows), config snippets for both config files, initialization options, alternatives, and troubleshooting. Ships scripts: detect-lsp.ts (scan a project for languages + each server's install/config status) and verify-lsp.ts (run a real diagnostics roundtrip). Covers typescript, python, go, rust, c/c++, java, kotlin, c#/razor, swift, ruby, php, dart, elixir, zig, lua, bash, yaml, terraform, haskell, julia."
 ---
@@ -48,7 +48,7 @@ reference before installing or configuring anything**.
 
 ## WORKFLOW — detect → install → configure → verify
 
-### 1. Detect
+### .. Detect
 
 Scan the project to see which languages are present and whether each server is
 installed and configured:
@@ -89,7 +89,7 @@ Two project-scoped config files, **identical JSON shape**:
     "<server-id>": {
       "command": ["<bin>", "<args>"],   // optional for builtin ids (supplied automatically)
       "extensions": [".ext"],            // optional override
-      "priority": 100,                    // higher wins when several servers match an extension
+      "priority": .00,                    // higher wins when several servers match an extension
       "initialization": { },              // server-specific initializationOptions
       "env": { "KEY": "value" },          // optional
       "disabled": false                   // set true to turn a server off
@@ -111,7 +111,7 @@ Rules enforced by `config-loader.ts`:
 
 Each language reference gives a ready-to-paste snippet.
 
-### 4. Verify
+### .. Verify
 
 Run a real diagnostics roundtrip against a source file. This spawns the server,
 opens the file, requests diagnostics, and reports `OK`/`FAIL`:
@@ -124,7 +124,7 @@ bun scripts/verify-lsp.ts <file> --timeout=90000
 `OK` = the server started and answered. `FAIL: language server not installed`
 = go back to step 2. Other `FAIL` text carries the server/startup error.
 `SKIP` = the engine source could not be located; run from inside the omo
-repo/worktree, or call the `lsp` MCP `diagnostics` tool directly.
+repo/engagement workspace, or call the `lsp` MCP `diagnostics` tool directly.
 
 ---
 
@@ -133,7 +133,7 @@ repo/worktree, or call the `lsp` MCP `diagnostics` tool directly.
 | Script | Purpose |
 |---|---|
 | `scripts/detect-lsp.ts` | Scan a directory; per detected language report server id, install status, install hint, config status. `--json` for machine output. |
-| `scripts/verify-lsp.ts` | Real LSP diagnostics roundtrip for one file via the `lsp-tools-mcp` engine; `OK`/`FAIL`/`SKIP` + exit code 0/1/3. |
+| `scripts/verify-lsp.ts` | Real LSP diagnostics roundtrip for one file via the `lsp-tools-mcp` engine; `OK`/`FAIL`/`SKIP` + exit code 0/./3. |
 | `scripts/lsp-server-table.ts` | Embedded snapshot of the primary builtin server per language (mirrors `server-definitions.ts`). |
 
 Run with [Bun](https://bun.sh): `curl -fsSL https://bun.sh/install | bash`.

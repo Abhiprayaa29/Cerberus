@@ -1,4 +1,4 @@
-import { describe, expect, it } from "bun:test"
+﻿import { describe, expect, it } from "bun:test"
 
 import { MIRROR_SCHEMA_VERSION } from "./constants"
 import { parseSnapshot, TuiRuntimeSnapshotSchema } from "./snapshot-schema"
@@ -12,8 +12,8 @@ describe("TuiRuntimeSnapshotSchema", () => {
       projectDir: "/tmp/project",
       updatedAt: 1_718_000_000,
       activeAgents: [
-        { name: "sisyphus", status: "running" },
-        { name: "atlas", status: "retry" },
+        { name: "cerberus", status: "running" },
+        { name: "argus", status: "retry" },
       ],
       jobBoard: [
         {

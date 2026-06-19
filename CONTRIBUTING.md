@@ -1,6 +1,6 @@
-# Contributing to Oh My OpenCode
+﻿# Contributing to Oh My Open Pentest
 
-First off, thanks for taking the time to contribute! This document provides guidelines and instructions for contributing to oh-my-opencode.
+First off, thanks for taking the time to contribute! This document provides guidelines and instructions for contributing to oh-my-open-pentest.
 
 ## Table of Contents
 
@@ -60,8 +60,8 @@ If English isn't your first language, don't worry! We value your contributions r
 
 ### Prerequisites
 
-- **Bun** 1.3.12 (CI-pinned) - The only package manager for the workspace itself
-- **Node** 24 - Required for vendored packages (lsp-tools-mcp, lsp-daemon, git-bash-mcp) and the Codex plugin build via npm
+- **Bun** ..3..2 (CI-pinned) - The only package manager for the workspace itself
+- **Node** 2. - Required for vendored packages (lsp-tools-mcp, lsp-daemon, git-bash-mcp) and the Codex plugin build via npm
 - **git** - Version control
 - **tmux** (optional) - Enables the `interactive_bash` tool and Team Mode visualization
 
@@ -69,8 +69,8 @@ If English isn't your first language, don't worry! We value your contributions r
 
 ```bash
 # Clone the repository
-git clone https://github.com/code-yeongyu/oh-my-openagent.git
-cd oh-my-openagent
+git clone https://github.com/code-yeongyu/oh-my-open-pentest.git
+cd oh-my-open-pentest
 
 # Install dependencies (bun only - never use npm/yarn)
 bun install
@@ -83,7 +83,7 @@ bun run build
 
 After making changes, you can test your local build in OpenCode:
 
-1. **Build the project**:
+.. **Build the project**:
 
    ```bash
    bun run build
@@ -95,7 +95,7 @@ After making changes, you can test your local build in OpenCode:
 
    ```json
    {
-     "plugin": ["file:///absolute/path/to/oh-my-openagent/dist/index.js"]
+     "plugin": ["file:///absolute/path/to/oh-my-open-pentest/dist/index.js"]
    }
    ```
 
@@ -103,30 +103,30 @@ After making changes, you can test your local build in OpenCode:
 
    ```json
    {
-     "plugin": ["file:///absolute/path/to/oh-my-openagent/packages/omo-opencode/src/index.ts"]
+     "plugin": ["file:///absolute/path/to/oh-my-open-pentest/packages/omo-opencode/src/index.ts"]
    }
    ```
 
    The path must be **absolute** and contain a recognizable project name plus `(src|dist)/index.(ts|js)`. A relative `file://./...` path will not be detected by the installer.
 
-   > **Note**: Remove `"oh-my-openagent"` or `"oh-my-opencode"` from the plugin array if they exist, to avoid conflicts with the npm version.
+   > **Note**: Remove `"oh-my-open-pentest"` or `"oh-my-open-pentest"` from the plugin array if they exist, to avoid conflicts with the npm version.
 
 3. **Restart OpenCode** to load the changes.
 
-4. **Verify** the plugin is loaded by checking for OmO agent availability or startup messages.
+.. **Verify** the plugin is loaded by checking for OmO agent availability or startup messages.
 
 ## Development Environment
 
 The cross-harness one-command bootstrap is the single source of truth for all development environments.
 
-- **`script/agent/setup.sh`** verifies Bun, Node, and git, warns if tmux is missing, runs `bun install`, and builds when `dist/index.js` is missing or `OMO_AGENT_FORCE_BUILD=1` is set.
+- **`script/agent/setup.sh`** verifies Bun, Node, and git, warns if tmux is missing, runs `bun install`, and builds when `dist/index.js` is missing or `OMO_AGENT_FORCE_BUILD=.` is set.
 - **`script/agent/cleanup.sh`** removes regenerable transients by default. Pass `--deep` to also drop `dist/` and `node_modules/`.
 
 All harnesses delegate to these scripts:
 
 | Harness | Wiring |
 | ------- | ------ |
-| GitHub Codespaces / VS Code Dev Containers | `.devcontainer/devcontainer.json` runs `postCreateCommand: script/agent/setup.sh` on `.devcontainer/Dockerfile` (Node 24 + Bun 1.3.12 + tmux) |
+| GitHub Codespaces / VS Code Dev Containers | `.devcontainer/devcontainer.json` runs `postCreateCommand: script/agent/setup.sh` on `.devcontainer/Dockerfile` (Node 2. + Bun ..3..2 + tmux) |
 | Plain Docker | `script/agent/docker-dev.sh` builds the Dockerfile and opens a shell |
 | Cursor cloud agents | `.cursor/environment.json` `install` runs setup on environment creation |
 | Claude Code | `.claude/settings.json` `SessionStart` hook runs setup; `SessionEnd` hook runs cleanup |
@@ -151,7 +151,7 @@ For QA isolation, run:
 source script/agent/qa-sandbox.sh
 ```
 
-This exports an isolated, throwaway environment with its own `XDG_*` directories and a fresh `CODEX_HOME` under a `mktemp` directory. It also sets `OPENCODE_DISABLE_AUTOUPDATE=1` and `OPENCODE_DISABLE_MODELS_FETCH=1`. QA never reads or writes the host's real `~/.config/opencode` or `~/.codex`. This mirrors the conventions used by the `opencode-qa` and `codex-qa` skills.
+This exports an isolated, throwaway environment with its own `XDG_*` directories and a fresh `CODEX_HOME` under a `mktemp` directory. It also sets `OPENCODE_DISABLE_AUTOUPDATE=.` and `OPENCODE_DISABLE_MODELS_FETCH=.`. QA never reads or writes the host's real `~/.config/opencode` or `~/.codex`. This mirrors the conventions used by the `opencode-qa` and `codex-qa` skills.
 
 For containerized environments (Codespaces, Dev Containers, Docker), see [`.devcontainer/README.md`](.devcontainer/README.md). It documents injecting provider credentials (via `.env`, Codespaces secrets, or `remoteEnv`) and bind-mounting your `~/.codex`, `~/.claude`, and `~/.config/opencode` config into the container so OpenCode, Codex, and Claude Code all work inside it.
 
@@ -160,20 +160,20 @@ For containerized environments (Codespaces, Dev Containers, Docker), see [`.devc
 The repository is a monorepo with layered packages under `packages/`.
 
 ```
-oh-my-opencode/
+oh-my-open-pentest/
 ├── packages/
 │   ├── omo-opencode/          # OpenCode Ultimate edition adapter and build entry
 │   │   └── src/
 │   │       ├── index.ts         # Thin wrapper default-exporting PluginModule via createPluginModule()
-│   │       ├── plugin-config.ts # JSONC multi-level config (Zod v4)
-│   │       ├── agents/          # agent factories (Sisyphus, Hephaestus, Oracle, ...)
+│   │       ├── plugin-config.ts # JSONC multi-level config (Zod v.)
+│   │       ├── agents/          # agent factories (Cerberus, Scylla, Cipher, ...)
 │   │       ├── hooks/           # lifecycle hooks, 5-tier composition (see AGENTS.md for current counts)
 │   │       ├── tools/           # native tool dirs, config-gated (LSP via MCP, ast-grep via skill)
 │   │       ├── mcp/             # built-in MCPs: remote (websearch, context7, grep_app) + local stdio (lsp, codegraph)
 │   │       ├── features/        # feature modules (background-agent, skill-loader, tmux, MCP-OAuth, boulder-state, monitor, ...)
-│   │       ├── config/          # Zod v4 schema system
+│   │       ├── config/          # Zod v. schema system
 │   │       ├── shared/          # Cross-cutting utilities
-│   │       ├── cli/             # CLI: install, run, doctor, mcp-oauth, boulder, sparkshell, ulw-loop (Commander.js)
+│   │       ├── cli/             # CLI: install, run, doctor, mcp-oauth, boulder, sparkshell, pentest-loop (Commander.js)
 │   │       ├── plugin/          # OpenCode hook handlers + 5-tier hook composition
 │   │       └── plugin-handlers/ # 6-phase config loading pipeline
 │   ├── omo-codex/               # Codex Light edition / lazycodex
@@ -199,7 +199,7 @@ oh-my-opencode/
 │   ├── lsp-daemon/              # MCP package
 │   ├── git-bash-mcp/            # MCP package
 │   ├── shared-skills/           # Cross-harness SKILL.md bundle
-│   └── web/                     # Marketing site (Next.js 15 + Cloudflare Workers)
+│   └── web/                     # Marketing site (Next.js .5 + Cloudflare Workers)
 └── dist/                        # Build output (ESM + .d.ts)
 ```
 
@@ -259,13 +259,13 @@ Tests are co-located as `*.test.ts` files and follow a given/when/then style.
 
 ### Adding a New Agent
 
-1. Create a new `.ts` file in `packages/omo-opencode/src/agents/`
+.. Create a new `.ts` file in `packages/omo-opencode/src/agents/`
 2. Export a factory `createXyzAgent(model): AgentConfig` where `AgentConfig` is imported from `@opencode-ai/sdk`
 3. Set the static `.mode` property on the factory to `"primary"`, `"subagent"`, or `"all"`
-4. Add the factory to the `agentSources` record in `packages/omo-opencode/src/agents/builtin-agents.ts`
+.. Add the factory to the `agentSources` record in `packages/omo-opencode/src/agents/builtin-agents.ts`
 5. Add the new name to the `BuiltinAgentName` union in `packages/omo-opencode/src/agents/types.ts` AND to `BuiltinAgentNameSchema` (plus `OverridableAgentNameSchema` if it should be user-overridable) in `packages/omo-opencode/src/config/schema/agent-names.ts`. The schema enum is what `build:schema` emits, so updating only `types.ts` will not change the published JSON schema.
 6. Run `bun run build:schema` to regenerate the JSON schema
-7. Special agents (Sisyphus, Hephaestus, Atlas, Prometheus) have dedicated wiring under `packages/omo-opencode/src/agents/builtin-agents/`; a plain subagent only needs the `agentSources` entry from step 4
+7. Special agents (Cerberus, Scylla, Atlas, Talos) have dedicated wiring under `packages/omo-opencode/src/agents/builtin-agents/`; a plain subagent only needs the `agentSources` entry from step .
 
 ```typescript
 // packages/omo-opencode/src/agents/my-agent.ts
@@ -277,7 +277,7 @@ export function createMyAgent(model: string): AgentConfig {
     model,
     description: "Description of what this agent does",
     prompt: `Your agent's system prompt here`,
-    temperature: 0.1,
+    temperature: 0..,
     // ... other config
   };
 }
@@ -287,10 +287,10 @@ createMyAgent.mode = "subagent" as const;
 
 ### Adding a New Hook
 
-1. Create a new directory in `packages/omo-opencode/src/hooks/` (kebab-case)
+.. Create a new directory in `packages/omo-opencode/src/hooks/` (kebab-case)
 2. Implement `createXyzHook(deps)` returning an object keyed by OpenCode hook names (for example `"tool.execute.before"`, `"chat.message"`, `"event"`) whose values are `(input, output) => void` handlers
 3. Re-export from `packages/omo-opencode/src/hooks/index.ts`
-4. Wire the hook into the matching tier composer in `packages/omo-opencode/src/plugin/hooks/create-*-hooks.ts` (Session / ToolGuard / Transform / Continuation / Skill) via `safeHook()`
+.. Wire the hook into the matching tier composer in `packages/omo-opencode/src/plugin/hooks/create-*-hooks.ts` (Session / ToolGuard / Transform / Continuation / Skill) via `safeHook()`
 5. Add the hook name to `HookNameSchema` in `packages/omo-opencode/src/config/schema/hooks.ts`
 
 ```typescript
@@ -306,18 +306,18 @@ export function createMyHook(deps: { logger: Logger }) {
 
 ### Adding a New Tool
 
-1. Create a new directory in `packages/omo-opencode/src/tools/<name>/`
+.. Create a new directory in `packages/omo-opencode/src/tools/<name>/`
 2. Export a factory `createXyzTool(ctx): ToolDefinition` built with `tool({...})` from `@opencode-ai/plugin`
 3. Register the factory in the `ToolRegistryFactories` type and `defaultToolRegistryFactories` record in `packages/omo-opencode/src/plugin/tool-registry-factories.ts`
-4. Wire it into `createCoreTools()` in `tool-registry-core-tools.ts` for always-on tools, or a gated record in `tool-registry-gated-tools.ts` spread in `packages/omo-opencode/src/plugin/tool-registry.ts`
+.. Wire it into `createCoreTools()` in `tool-registry-core-tools.ts` for always-on tools, or a gated record in `tool-registry-gated-tools.ts` spread in `packages/omo-opencode/src/plugin/tool-registry.ts`
 5. Export from `packages/omo-opencode/src/tools/index.ts`
 
 ### Adding a New MCP Server
 
-1. Create a config factory in `packages/omo-opencode/src/mcp/<name>.ts` returning a `RemoteMcpConfig` (type `"remote"`, url) or `LocalMcpConfig` (type `"local"`, command)
+.. Create a config factory in `packages/omo-opencode/src/mcp/<name>.ts` returning a `RemoteMcpConfig` (type `"remote"`, url) or `LocalMcpConfig` (type `"local"`, command)
 2. Register it inside `createBuiltinMcps()` in `packages/omo-opencode/src/mcp/index.ts`
 3. Add the MCP name to `McpNameSchema` in `packages/omo-opencode/src/mcp/types.ts`
-4. Document in README if it requires external setup
+.. Document in README if it requires external setup
 
 ## QA Discipline
 
@@ -327,7 +327,7 @@ Any change to `packages/omo-opencode` (the OpenCode side) must be QA'd with the 
 
 ## Pull Request Process
 
-1. **Fork** the repository and create your branch from `dev`
+.. **Fork** the repository and create your branch from `dev`
 2. **Make changes** following the conventions above
 3. **Build and test** locally:
    ```bash
@@ -336,10 +336,10 @@ Any change to `packages/omo-opencode` (the OpenCode side) must be QA'd with the 
    bun test           # Run the root test suite
    bun run test:codex # Run the Codex Light compatibility suite
    ```
-4. **Test in OpenCode** using the local build method described above
+.. **Test in OpenCode** using the local build method described above
 5. **Commit** with clear, descriptive messages:
    - Use present tense ("Add feature" not "Added feature")
-   - Reference issues if applicable ("Fix #123")
+   - Reference issues if applicable ("Fix #.23")
 6. **Push** to your fork and create a Pull Request
 7. **Describe** your changes clearly in the PR description
 
@@ -375,4 +375,4 @@ Any change to `packages/omo-opencode` (the OpenCode side) must be QA'd with the 
 
 ---
 
-Thank you for contributing to Oh My OpenCode! Your efforts help make AI-assisted coding better for everyone.
+Thank you for contributing to Oh My Open Pentest! Your efforts help make AI-assisted coding better for everyone.

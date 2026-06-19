@@ -1,4 +1,4 @@
-export {}
+﻿export {}
 const { describe, expect, test } = require("bun:test")
 
 const { getLastAgentFromSession } = await import("./session-last-agent")
@@ -10,9 +10,9 @@ describe("getLastAgentFromSession SQLite backend ordering", () => {
       session: {
         messages: async () => ({
           data: [
-            { id: "msg_0001", info: { agent: "atlas", time: { created: 100 } } },
+            { id: "msg_0001", info: { agent: "argus", time: { created: 100 } } },
             { id: "msg_0003", info: { agent: "compaction", time: { created: 200 } } },
-            { id: "msg_0002", info: { agent: "sisyphus-junior", time: { created: 100 } } },
+            { id: "msg_0002", info: { agent: "cerberus-junior", time: { created: 100 } } },
           ],
         }),
       },
@@ -24,7 +24,7 @@ describe("getLastAgentFromSession SQLite backend ordering", () => {
     })
 
     // then
-    expect(result).toBe("sisyphus-junior")
+    expect(result).toBe("cerberus-junior")
   })
 
   test("handles equal timestamps with random-looking ids deterministically", async () => {
@@ -33,9 +33,9 @@ describe("getLastAgentFromSession SQLite backend ordering", () => {
       session: {
         messages: async () => ({
           data: [
-            { id: "msg_a91f00ab", info: { agent: "atlas", time: { created: 100 } } },
+            { id: "msg_a91f00ab", info: { agent: "argus", time: { created: 100 } } },
             { id: "msg_f0e1d2c3", info: { agent: "compaction", time: { created: 200 } } },
-            { id: "msg_d4c3b2a1", info: { agent: "sisyphus-junior", time: { created: 100 } } },
+            { id: "msg_d4c3b2a1", info: { agent: "cerberus-junior", time: { created: 100 } } },
           ],
         }),
       },
@@ -47,7 +47,7 @@ describe("getLastAgentFromSession SQLite backend ordering", () => {
     })
 
     // then
-    expect(result).toBe("sisyphus-junior")
+    expect(result).toBe("cerberus-junior")
   })
 
   test("skips compaction marker user messages that retain the original agent", async () => {
@@ -56,10 +56,10 @@ describe("getLastAgentFromSession SQLite backend ordering", () => {
       session: {
         messages: async () => ({
           data: [
-            { id: "msg_real", info: { agent: "sisyphus", time: { created: 100 } } },
+            { id: "msg_real", info: { agent: "cerberus", time: { created: 100 } } },
             {
               id: "msg_compaction",
-              info: { agent: "atlas", time: { created: 200 } },
+              info: { agent: "argus", time: { created: 200 } },
               parts: [{ type: "compaction" }],
             },
           ],
@@ -73,7 +73,7 @@ describe("getLastAgentFromSession SQLite backend ordering", () => {
     })
 
     // then
-    expect(result).toBe("sisyphus")
+    expect(result).toBe("cerberus")
   })
 
   test("returns null instead of throwing when SQLite message lookup fails", async () => {

@@ -1,4 +1,4 @@
-import type { Metadata } from "next"
+﻿import type { Metadata } from "next"
 import type { JSX, ReactNode } from "react"
 import { GeistSans } from "geist/font/sans"
 import { GeistMono } from "geist/font/mono"
@@ -10,19 +10,19 @@ const primarySiteUrl = "https://omo.dev"
 export const metadata: Metadata = {
   metadataBase: new URL(primarySiteUrl),
   title: {
-    default: "Oh My OpenAgent — The Best Agent Harness",
-    template: "%s | Oh My OpenAgent",
+    default: "Oh My Open Pentest — The Best Agent Harness",
+    template: "%s | Oh My Open Pentest",
   },
   description:
-    "Meet Sisyphus: The batteries-included agent that codes like you. Multi-model orchestration, Team Mode, background agents, 54+ lifecycle hooks.",
+    "Meet Cerberus: The batteries-included agent that codes like you. Multi-model orchestration, Team Mode, background agents, 54+ lifecycle hooks.",
   keywords: [
     "opencode",
-    "oh-my-opencode",
+    "oh-my-open-pentest",
     "openagent",
-    "oh-my-openagent",
+    "oh-my-open-pentest",
     "ai agent",
     "code agent",
-    "sisyphus",
+    "cerberus",
     "multi-model",
     "team mode",
     "agent orchestration",
@@ -47,16 +47,16 @@ export const metadata: Metadata = {
     locale: "en_US",
     alternateLocale: ["ko_KR", "ja_JP", "zh_CN"],
     url: primarySiteUrl,
-    siteName: "Oh My OpenAgent",
-    title: "Oh My OpenAgent — The Best Agent Harness",
+    siteName: "Oh My Open Pentest",
+    title: "Oh My Open Pentest — The Best Agent Harness",
     description:
-      "Meet Sisyphus: The batteries-included agent that codes like you. Multi-model orchestration, Team Mode, background agents, 54+ lifecycle hooks.",
+      "Meet Cerberus: The batteries-included agent that codes like you. Multi-model orchestration, Team Mode, background agents, 54+ lifecycle hooks.",
     // og:image is supplied by app/opengraph-image.tsx via Next.js file-based metadata convention.
   },
   twitter: {
     card: "summary_large_image",
-    title: "Oh My OpenAgent — The Best Agent Harness",
-    description: "Meet Sisyphus: The batteries-included agent that codes like you.",
+    title: "Oh My Open Pentest — The Best Agent Harness",
+    description: "Meet Cerberus: The batteries-included agent that codes like you.",
     // twitter:image is supplied by app/twitter-image.tsx via the file-based convention.
   },
   robots: {
@@ -74,7 +74,7 @@ export const metadata: Metadata = {
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
-  name: "Oh My OpenAgent",
+  name: "Oh My Open Pentest",
   applicationCategory: "DeveloperApplication",
   operatingSystem: "macOS, Linux, Windows",
   url: primarySiteUrl,

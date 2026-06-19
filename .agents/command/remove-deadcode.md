@@ -1,5 +1,5 @@
----
-description: Remove unused code from this project with ultrawork mode, LSP-verified safety, atomic commits
+﻿---
+description: Remove unused code from this project with fullscan mode, LSP-verified safety, atomic commits
 ---
 
 <command-instruction>
@@ -24,7 +24,7 @@ NEVER mark as dead:
 
 ---
 
-## PHASE 1: SCAN — Find Dead Code Candidates
+## PHASE .: SCAN — Find Dead Code Candidates
 
 Run ALL of these in parallel:
 
@@ -32,11 +32,11 @@ Run ALL of these in parallel:
 
 **TypeScript strict mode (your primary scanner — run this FIRST):**
 ```bash
-bunx tsc --noEmit --noUnusedLocals --noUnusedParameters 2>&1
+bunx tsc --noEmit --noUnusedLocals --noUnusedParameters 2>&.
 ```
 This gives you the definitive list of unused locals, imports, parameters, and types with exact file:line locations.
 
-**Explore agents (fire ALL simultaneously as background):**
+**Scout agents (fire ALL simultaneously as background):**
 
 ```
 task(subagent_type="explore", run_in_background=true, load_skills=[],
@@ -56,12 +56,12 @@ Collect all results into a master candidate list.
 
 ## PHASE 2: VERIFY — LSP Confirmation (Zero False Positives)
 
-For EACH candidate from Phase 1:
+For EACH candidate from Phase .:
 
 ```typescript
 LspFindReferences(filePath, line, character, includeDeclaration=false)
 // 0 references → CONFIRMED dead
-// 1+ references → NOT dead, drop from list
+// .+ references → NOT dead, drop from list
 ```
 
 Also apply the false-positive-guards above. Produce a confirmed list:
@@ -69,8 +69,8 @@ Also apply the false-positive-guards above. Produce a confirmed list:
 ```
 | # | File | Symbol | Type | Action |
 |---|------|--------|------|--------|
-| 1 | src/foo.ts:42 | unusedFunc | function | REMOVE |
-| 2 | src/bar.ts:10 | OldType | type | REMOVE |
+| . | src/foo.ts:.2 | unusedFunc | function | REMOVE |
+| 2 | src/bar.ts:.0 | OldType | type | REMOVE |
 | 3 | src/baz.ts:7 | ctx | parameter | PREFIX _ |
 ```
 
@@ -88,16 +88,16 @@ If ZERO confirmed: report "No dead code found" and STOP.
 
 **Goal: maximize parallel agents with ZERO git conflicts.**
 
-1. Group confirmed dead code items by FILE PATH
+.. Group confirmed dead code items by FILE PATH
 2. All items in the SAME file go to the SAME batch (prevents two agents editing the same file)
 3. If a dead FILE (entire file deletion) exists, it's its own batch
-4. Target 5-15 batches. If fewer than 5 items total, use 1 batch per item.
+.. Target 5-.5 batches. If fewer than 5 items total, use . batch per item.
 
 **Example batching:**
 ```
 Batch A: [src/hooks/foo/hook.ts — 3 unused imports]
-Batch B: [src/features/bar/manager.ts — 2 unused constants, 1 dead function]
-Batch C: [src/tools/baz/tool.ts — 1 unused param, src/tools/baz/types.ts — 1 unused type]
+Batch B: [src/features/bar/manager.ts — 2 unused constants, . dead function]
+Batch C: [src/tools/baz/tool.ts — . unused param, src/tools/baz/types.ts — . unused type]
 Batch D: [src/dead-file.ts — entire file deletion]
 ```
 
@@ -107,7 +107,7 @@ Files in the same directory CAN be batched together (they won't conflict as long
 
 ---
 
-## PHASE 4: EXECUTE — Fire Parallel Deep Agents
+## PHASE .: EXECUTE — Fire Parallel Deep Agents
 
 For EACH batch, fire a deep agent:
 
@@ -139,7 +139,7 @@ Every deep agent gets this prompt structure (fill in the specifics per batch):
 
 ## PROTOCOL
 
-1. Read each file to understand exact syntax at the target lines
+.. Read each file to understand exact syntax at the target lines
 2. For each symbol, run LspFindReferences to RE-VERIFY it's still dead (another agent may have changed things)
 3. Apply the change:
    - Unused import (only symbol in line): remove entire import line
@@ -147,7 +147,7 @@ Every deep agent gets this prompt structure (fill in the specifics per batch):
    - Unused constant/function/type: remove the declaration. Clean up trailing blank lines.
    - Unused parameter: prefix with `_` (do NOT remove — required by signature)
    - Dead file: delete with `rm`
-4. After ALL edits in this batch, run: `bun run typecheck`
+.. After ALL edits in this batch, run: `bun run typecheck`
 5. If typecheck fails: `git checkout -- [files]` and report failure
 6. If typecheck passes: stage ONLY your files and commit:
    `git add [your-specific-files] && git commit -m "refactor: remove dead code from [brief file list]"`
@@ -183,7 +183,7 @@ Produce summary:
 ### Removed
 | # | Symbol | File | Type | Commit | Agent |
 |---|--------|------|------|--------|-------|
-| 1 | unusedFunc | src/foo.ts | function | abc1234 | Batch A |
+| . | unusedFunc | src/foo.ts | function | abc.23. | Batch A |
 
 ### Skipped (agent reported failure)
 | # | Symbol | File | Reason |

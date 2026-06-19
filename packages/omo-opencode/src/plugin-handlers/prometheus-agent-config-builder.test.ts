@@ -1,16 +1,16 @@
-import { describe, expect, test, spyOn, afterEach, beforeEach, mock } from "bun:test";
+﻿import { describe, expect, test, spyOn, afterEach, beforeEach, mock } from "bun:test";
 
 import * as shared from "../shared";
 import * as categoryResolver from "./category-config-resolver";
 import type { CategoryConfig } from "../config/schema";
 
-let buildPrometheusAgentConfig: (typeof import("./prometheus-agent-config-builder"))["buildPrometheusAgentConfig"]
+let buildTalosAgentConfig: (typeof import("./talos-agent-config-builder"))["buildTalosAgentConfig"]
 
-async function importFreshPrometheusAgentConfigBuilderModule(): Promise<typeof import("./prometheus-agent-config-builder")> {
-  return import(`./prometheus-agent-config-builder?test=${Date.now()}-${Math.random()}`)
+async function importFreshTalosAgentConfigBuilderModule(): Promise<typeof import("./talos-agent-config-builder")> {
+  return import(`./talos-agent-config-builder?test=${Date.now()}-${Math.random()}`)
 }
 
-describe("buildPrometheusAgentConfig", () => {
+describe("buildTalosAgentConfig", () => {
   let fetchAvailableModelsSpy: ReturnType<typeof spyOn>;
   let readConnectedProvidersCacheSpy: ReturnType<typeof spyOn>;
   let resolveCategoryConfigSpy: ReturnType<typeof spyOn>;
@@ -27,7 +27,7 @@ describe("buildPrometheusAgentConfig", () => {
       model: "anthropic/claude-opus-4-7",
       provenance: "provider-fallback",
     });
-    ;({ buildPrometheusAgentConfig } = await importFreshPrometheusAgentConfigBuilderModule())
+    ;({ buildTalosAgentConfig } = await importFreshTalosAgentConfigBuilderModule())
   });
 
   afterEach(() => {
@@ -38,17 +38,17 @@ describe("buildPrometheusAgentConfig", () => {
     mock.restore();
   });
 
-  describe("#given no explicit Prometheus model configured", () => {
-    describe("#when currentModel is NOT in Prometheus fallback chain", () => {
+  describe("#given no explicit Talos model configured", () => {
+    describe("#when currentModel is NOT in Talos fallback chain", () => {
       test("falls through to fallback chain instead of using currentModel as override", async () => {
-        // given - currentModel is a model NOT in Prometheus fallback chain
-        // Prometheus chain: claude-opus-4-7, gpt-5.4, glm-5, gemini-3.1-pro
-        const currentModel = "some-provider/not-prometheus-compatible";
+        // given - currentModel is a model NOT in Talos fallback chain
+        // Talos chain: claude-opus-4-7, gpt-5.4, glm-5, gemini-3.1-pro
+        const currentModel = "some-provider/not-talos-compatible";
 
         // when
-        const result = await buildPrometheusAgentConfig({
+        const result = await buildTalosAgentConfig({
           configAgentPlan: undefined,
-          pluginPrometheusOverride: undefined,
+          pluginTalosOverride: undefined,
           userCategories: undefined,
           currentModel,
         });
@@ -69,15 +69,15 @@ describe("buildPrometheusAgentConfig", () => {
       });
     });
 
-    describe("#when currentModel IS in Prometheus fallback chain", () => {
+    describe("#when currentModel IS in Talos fallback chain", () => {
       test("preserves currentModel as uiSelectedModel for claude-opus-4-7", async () => {
-        // given - currentModel matches a Prometheus fallback chain entry
+        // given - currentModel matches a Talos fallback chain entry
         const currentModel = "anthropic/claude-opus-4-7";
 
         // when - should not throw and should produce a valid config
-        const result = await buildPrometheusAgentConfig({
+        const result = await buildTalosAgentConfig({
           configAgentPlan: undefined,
-          pluginPrometheusOverride: undefined,
+          pluginTalosOverride: undefined,
           userCategories: undefined,
           currentModel,
         });
@@ -94,9 +94,9 @@ describe("buildPrometheusAgentConfig", () => {
       });
 
       test("accepts gpt-5.4 from fallback chain", async () => {
-        const result = await buildPrometheusAgentConfig({
+        const result = await buildTalosAgentConfig({
           configAgentPlan: undefined,
-          pluginPrometheusOverride: undefined,
+          pluginTalosOverride: undefined,
           userCategories: undefined,
           currentModel: "openai/gpt-5.4",
         });
@@ -104,9 +104,9 @@ describe("buildPrometheusAgentConfig", () => {
       });
 
       test("accepts glm-5.1 from fallback chain", async () => {
-        const result = await buildPrometheusAgentConfig({
+        const result = await buildTalosAgentConfig({
           configAgentPlan: undefined,
-          pluginPrometheusOverride: undefined,
+          pluginTalosOverride: undefined,
           userCategories: undefined,
           currentModel: "opencode-go/glm-5.1",
         });
@@ -114,9 +114,9 @@ describe("buildPrometheusAgentConfig", () => {
       });
 
       test("accepts gemini-3.1-pro from fallback chain", async () => {
-        const result = await buildPrometheusAgentConfig({
+        const result = await buildTalosAgentConfig({
           configAgentPlan: undefined,
-          pluginPrometheusOverride: undefined,
+          pluginTalosOverride: undefined,
           userCategories: undefined,
           currentModel: "google/gemini-3.1-pro",
         });
@@ -125,7 +125,7 @@ describe("buildPrometheusAgentConfig", () => {
     });
   });
 
-  describe("#given explicit Prometheus model configured via plugin override", () => {
+  describe("#given explicit Talos model configured via plugin override", () => {
       test("explicit config wins over currentModel and fallback chain", async () => {
       // given
       const currentModel = "anthropic/claude-opus-4-7";
@@ -138,9 +138,9 @@ describe("buildPrometheusAgentConfig", () => {
           provenance: "override",
         });
 
-        const result = await buildPrometheusAgentConfig({
+        const result = await buildTalosAgentConfig({
           configAgentPlan: undefined,
-          pluginPrometheusOverride: { model: explicitModel },
+          pluginTalosOverride: { model: explicitModel },
           userCategories: undefined,
           currentModel,
         });
@@ -176,9 +176,9 @@ describe("buildPrometheusAgentConfig", () => {
           provenance: "category-default",
         });
 
-        const result = await buildPrometheusAgentConfig({
+        const result = await buildTalosAgentConfig({
           configAgentPlan: undefined,
-          pluginPrometheusOverride: { category: "test-category" },
+          pluginTalosOverride: { category: "test-category" },
           userCategories: { "test-category": { model: categoryModel } },
           currentModel,
         });
@@ -214,9 +214,9 @@ describe("buildPrometheusAgentConfig", () => {
           provenance: "override",
         });
 
-        const result = await buildPrometheusAgentConfig({
+        const result = await buildTalosAgentConfig({
           configAgentPlan: undefined,
-          pluginPrometheusOverride: {
+          pluginTalosOverride: {
             category: "test-category",
           model: explicitModel,
         },
@@ -244,9 +244,9 @@ describe("buildPrometheusAgentConfig", () => {
       readConnectedProvidersCacheSpy.mockReturnValue(["anthropic"]);
 
       // when
-        const result = await buildPrometheusAgentConfig({
+        const result = await buildTalosAgentConfig({
           configAgentPlan: undefined,
-          pluginPrometheusOverride: undefined,
+          pluginTalosOverride: undefined,
           userCategories: undefined,
           currentModel: undefined,
         });
@@ -268,13 +268,13 @@ describe("buildPrometheusAgentConfig", () => {
       });
   });
 
-  test("returns Prometheus as a primary agent", async () => {
+  test("returns Talos as a primary agent", async () => {
     // given
 
     // when
-    const result = await buildPrometheusAgentConfig({
+    const result = await buildTalosAgentConfig({
       configAgentPlan: undefined,
-      pluginPrometheusOverride: undefined,
+      pluginTalosOverride: undefined,
       userCategories: undefined,
       currentModel: undefined,
     });
@@ -283,15 +283,15 @@ describe("buildPrometheusAgentConfig", () => {
     expect(result.mode).toBe("primary");
   });
 
-  describe("#given a Prometheus prompt override tries to replace the base prompt", () => {
+  describe("#given a Talos prompt override tries to replace the base prompt", () => {
     test("keeps the mandatory shared ulw-plan skill instruction when prompt is configured", async () => {
       // given
       const replacementOnlyPrompt = "OVERRIDE_PROMPT_NO_SHARED_SKILL";
 
       // when
-      const result = await buildPrometheusAgentConfig({
+      const result = await buildTalosAgentConfig({
         configAgentPlan: undefined,
-        pluginPrometheusOverride: { prompt: replacementOnlyPrompt },
+        pluginTalosOverride: { prompt: replacementOnlyPrompt },
         userCategories: undefined,
         currentModel: undefined,
       });

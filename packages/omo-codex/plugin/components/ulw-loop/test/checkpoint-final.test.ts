@@ -1,4 +1,4 @@
-import { writeFile } from "node:fs/promises";
+﻿import { writeFile } from "node:fs/promises";
 import { describe, expect, it } from "vitest";
 
 import { checkpointUlwLoop } from "../src/checkpoint.js";
@@ -62,7 +62,7 @@ describe("checkpointUlwLoop final story", () => {
 					codexGoalJson: snapshot("complete"),
 					qualityGateJson: gateJson,
 				}),
-			"ulw_loop_criteria_not_all_pass",
+			"pentest_loop_criteria_not_all_pass",
 		);
 	});
 
@@ -85,8 +85,8 @@ describe("checkpointUlwLoop final story", () => {
 		);
 	});
 
-	it("ACCEPTS complete when task-scoped completed Codex objective maps to the ulw-loop brief", async () => {
-		const taskObjective = "Fix ulw-loop objective mismatch and install local ulw";
+	it("ACCEPTS complete when task-scoped completed Codex objective maps to the pentest-loop brief", async () => {
+		const taskObjective = "Fix pentest-loop objective mismatch and install local ulw";
 		const repo = await repoWith(plan([passGoal("G001")], { activeGoalId: "G001" }));
 		await writeFile(ulwLoopBriefPath(repo), `${taskObjective}\n`, "utf8");
 
@@ -102,7 +102,7 @@ describe("checkpointUlwLoop final story", () => {
 		expect(result.ledgerEntry.kind).toBe("aggregate_completed");
 	});
 
-	it("ACCEPTS complete when active task-scoped Codex objective maps to the ulw-loop brief", async () => {
+	it("ACCEPTS complete when active task-scoped Codex objective maps to the pentest-loop brief", async () => {
 		const taskObjective = "Create only research artifacts with source evidence";
 		const repo = await repoWith(plan([passGoal("G001")], { activeGoalId: "G001" }));
 		await writeFile(ulwLoopBriefPath(repo), `${taskObjective}\n`, "utf8");
@@ -121,7 +121,7 @@ describe("checkpointUlwLoop final story", () => {
 
 	it("explains final task-scoped objective mapping when completed Codex objective is unrelated", async () => {
 		const repo = await repoWith(plan([passGoal("G001")], { activeGoalId: "G001" }));
-		await writeFile(ulwLoopBriefPath(repo), "Fix ulw-loop objective mismatch and install local ulw\n", "utf8");
+		await writeFile(ulwLoopBriefPath(repo), "Fix pentest-loop objective mismatch and install local ulw\n", "utf8");
 
 		await expect(
 			checkpointUlwLoop(repo, {
@@ -151,7 +151,7 @@ describe("checkpointUlwLoop final story", () => {
 		const result = await checkpointUlwLoop(repo, {
 			goalId: "G001",
 			status: "complete",
-			evidence: "G001 updated .omo/ulw-loop/goals.json after implementation completed and validation passed",
+			evidence: "G001 updated .omo/pentest-loop/goals.json after implementation completed and validation passed",
 			codexGoalJson: snapshot("complete", taskObjective),
 			qualityGateJson: await qualityGateJson(repo),
 		});
@@ -180,7 +180,7 @@ describe("checkpointUlwLoop final story", () => {
 					evidence: "per-story implementation complete and validation passed",
 					codexGoalJson: snapshot("complete", current.objective),
 				}),
-			"ulw_loop_criteria_not_all_pass",
+			"pentest_loop_criteria_not_all_pass",
 		);
 	});
 });

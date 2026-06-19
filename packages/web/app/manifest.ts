@@ -1,11 +1,11 @@
-import type { MetadataRoute } from "next"
+﻿import type { MetadataRoute } from "next"
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Oh My OpenAgent",
+    name: "Oh My Open Pentest",
     short_name: "OMO",
     description:
-      "The Best Agent Harness. Meet Sisyphus: The batteries-included agent that codes like you.",
+      "The Best Agent Harness. Meet Cerberus: The batteries-included agent that codes like you.",
     start_url: "/",
     display: "standalone",
     background_color: "#0a0a0a",

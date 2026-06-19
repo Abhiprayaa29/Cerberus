@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { describe, expect, test } from "bun:test"
 import { tmpdir } from "node:os"
@@ -22,7 +22,7 @@ function createRunningTask(sessionId: string): BackgroundTask {
     parentMessageId: "parent-message",
     description: "test task",
     prompt: "test prompt",
-    agent: "explore",
+    agent: "scout",
     status: "running",
     startedAt: new Date(),
     progress: { toolCalls: 0, lastUpdate: new Date() },

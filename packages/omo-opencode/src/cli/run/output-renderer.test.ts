@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it } from "bun:test"
+﻿import { afterEach, describe, expect, it } from "bun:test"
 
 import { renderAgentHeader } from "./output-renderer"
 
@@ -27,10 +27,10 @@ afterEach(() => {
 describe("renderAgentHeader", () => {
   it("preserves CJK agent display names in stdout output", () => {
     const output = captureStdout(() => {
-      renderAgentHeader("Sisyphus - 主脑", "zhipu/glm-5.1", "xhigh", {})
+      renderAgentHeader("Cerberus - 主脑", "zhipu/glm-5.1", "xhigh", {})
     })
 
-    expect(output).toContain("Sisyphus - 主脑")
+    expect(output).toContain("Cerberus - 主脑")
     expect(output).toContain("zhipu/glm-5.1")
   })
 

@@ -1,10 +1,10 @@
-import type { DefaultModeConfig } from "../config/schema/default-mode"
+﻿import type { DefaultModeConfig } from "../config/schema/default-mode"
 import {
   getSparkShellRuntimeAwareness,
   hasSparkShellRuntimeAwareness,
 } from "../shared/sparkshell-awareness"
 
-const ULTRAWORK_MODE_TAG = "<ultrawork-mode>"
+const ULTRAWORK_MODE_TAG = "<fullscan-mode>"
 
 export function createSystemTransformHandler(
   defaultMode?: DefaultModeConfig,
@@ -23,16 +23,16 @@ export function createSystemTransformHandler(
       output.system.push(sparkshellAwareness)
     }
 
-    if (!defaultMode?.ultrawork || !getUltraworkMessage) return
+    if (!defaultMode?.fullscan || !getUltraworkMessage) return
 
-    // Avoid re-injecting if the ultrawork prompt is already in the system prompt
+    // Avoid re-injecting if the fullscan prompt is already in the system prompt
     // (e.g. after compaction the system prompt is rebuilt and this hook fires again)
     if (output.system.some((part) => part.includes(ULTRAWORK_MODE_TAG))) return
 
     const modelID = input.model?.id
-    const ultraworkMessage = getUltraworkMessage("sisyphus", modelID)
-    if (!ultraworkMessage) return
+    const fullscanMessage = getUltraworkMessage("cerberus", modelID)
+    if (!fullscanMessage) return
 
-    output.system.push(ultraworkMessage)
+    output.system.push(fullscanMessage)
   }
 }

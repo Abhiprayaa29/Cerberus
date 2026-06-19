@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 import { afterEach, describe, expect, spyOn, test } from "bun:test"
 
 import { createEventHandler } from "./event"
@@ -129,8 +129,8 @@ describe("createEventHandler - model fallback", () => {
             parentID: "msg_user_1",
             modelID: "claude-opus-4-7-thinking",
             providerID: "anthropic",
-            mode: "Sisyphus - Ultraworker",
-            agent: "Sisyphus - Ultraworker",
+            mode: "Cerberus - Ultraworker",
+            agent: "Cerberus - Ultraworker",
             path: { cwd: "/tmp", root: "/tmp" },
             cost: 0,
             tokens: { input: 0, output: 0, reasoning: 0, cache: { read: 0, write: 0 } },
@@ -174,7 +174,7 @@ describe("createEventHandler - model fallback", () => {
             parentID: "msg_user_eof",
             modelID: "claude-opus-4-7-thinking",
             providerID: "anthropic",
-            agent: "Sisyphus - Ultraworker",
+            agent: "Cerberus - Ultraworker",
             path: { cwd: "/tmp", root: "/tmp" },
           },
         },
@@ -277,7 +277,7 @@ describe("createEventHandler - model fallback", () => {
             error: assistantError,
             modelID: "claude-opus-4-7-thinking",
             providerID: "anthropic",
-            agent: "Sisyphus - Ultraworker",
+            agent: "Cerberus - Ultraworker",
           },
         },
       },
@@ -341,7 +341,7 @@ describe("createEventHandler - model fallback", () => {
             error: assistantError,
             modelID: "claude-opus-4-7-thinking",
             providerID: "anthropic",
-            agent: "Sisyphus - Ultraworker",
+            agent: "Cerberus - Ultraworker",
           },
         },
       },
@@ -404,7 +404,7 @@ describe("createEventHandler - model fallback", () => {
             error: assistantError,
             modelID: "claude-opus-4-7-thinking",
             providerID: "anthropic",
-            agent: "Sisyphus - Ultraworker",
+            agent: "Cerberus - Ultraworker",
           },
         },
       },
@@ -453,7 +453,7 @@ describe("createEventHandler - model fallback", () => {
             error: assistantError,
             modelID: "claude-opus-4-7-thinking",
             providerID: "anthropic",
-            agent: "Sisyphus - Ultraworker",
+            agent: "Cerberus - Ultraworker",
           },
         },
       },
@@ -523,7 +523,7 @@ describe("createEventHandler - model fallback", () => {
             content: [],
             modelID: "claude-opus-4-7-thinking",
             providerID: "anthropic",
-            agent: "Sisyphus - Ultraworker",
+            agent: "Cerberus - Ultraworker",
             path: { cwd: "/tmp", root: "/tmp" },
           },
         },
@@ -551,7 +551,7 @@ describe("createEventHandler - model fallback", () => {
     await chatMessageHandler(
       {
         sessionID,
-        agent: "sisyphus",
+        agent: "cerberus",
         model: { providerID: "anthropic", modelID: "claude-opus-4-7-thinking" },
       },
       output,
@@ -585,7 +585,7 @@ describe("createEventHandler - model fallback", () => {
             role: "user",
             modelID: "claude-opus-4-7-thinking",
             providerID: "anthropic",
-            agent: "Sisyphus - Ultraworker",
+            agent: "Cerberus - Ultraworker",
           },
         },
       },
@@ -682,7 +682,7 @@ describe("createEventHandler - model fallback", () => {
             role: "user",
             modelID: "claude-opus-4-7-thinking",
             providerID: "anthropic",
-            agent: "Sisyphus - Ultraworker",
+            agent: "Cerberus - Ultraworker",
           },
         },
       },
@@ -693,7 +693,7 @@ describe("createEventHandler - model fallback", () => {
     await chatMessageHandler(
       {
         sessionID,
-        agent: "sisyphus",
+        agent: "cerberus",
         model: { providerID: "anthropic", modelID: "claude-opus-4-7-thinking" },
       },
       { message: {}, parts: [] },
@@ -760,7 +760,7 @@ describe("createEventHandler - model fallback", () => {
             },
             modelID: "claude-opus-4-7-thinking",
             providerID: "anthropic",
-            agent: "Sisyphus - Ultraworker",
+            agent: "Cerberus - Ultraworker",
           },
         },
       },
@@ -770,7 +770,7 @@ describe("createEventHandler - model fallback", () => {
     await chatMessageHandler(
       {
         sessionID,
-        agent: "sisyphus",
+        agent: "cerberus",
         model: { providerID: "anthropic", modelID: "claude-opus-4-7-thinking" },
       },
       output,
@@ -799,7 +799,7 @@ describe("createEventHandler - model fallback", () => {
     await chatMessageHandler(
       {
         sessionID,
-        agent: "sisyphus",
+        agent: "cerberus",
         model: { providerID: "opencode-go", modelID: "kimi-k2.6" },
       },
       staleOutput,
@@ -837,7 +837,7 @@ describe("createEventHandler - model fallback", () => {
             role: "user",
             modelID: "claude-opus-4-7",
             providerID: "quotio",
-            agent: "Sisyphus - Ultraworker",
+            agent: "Cerberus - Ultraworker",
           },
         },
       },
@@ -873,7 +873,7 @@ describe("createEventHandler - model fallback", () => {
     clearPendingModelFallback(modelFallback, sessionID)
     const pluginConfig = {
       agents: {
-        sisyphus: {
+        cerberus: {
           fallback_models: ["quotio/gpt-5.5", "quotio/kimi-k2.5"],
         },
       },
@@ -917,7 +917,7 @@ describe("createEventHandler - model fallback", () => {
             content: [],
             modelID: "claude-opus-4-7",
             providerID: "quotio",
-            agent: "Sisyphus - Ultraworker",
+            agent: "Cerberus - Ultraworker",
             path: { cwd: "/tmp", root: "/tmp" },
           },
         },
@@ -945,7 +945,7 @@ describe("createEventHandler - model fallback", () => {
     await chatMessageHandler(
       {
         sessionID,
-        agent: "sisyphus",
+        agent: "cerberus",
         model: { providerID: "quotio", modelID: "claude-opus-4-7" },
       },
       output,
@@ -1059,7 +1059,7 @@ describe("createEventHandler - model fallback", () => {
       await chatMessageHandler(
         {
           sessionID,
-          agent: "sisyphus",
+          agent: "cerberus",
           model: { providerID: "anthropic", modelID: "claude-opus-4-7-thinking" },
         },
         output,
@@ -1118,7 +1118,7 @@ describe("createEventHandler - model fallback", () => {
             parentID: "msg_user_disabled_1",
             modelID: "claude-opus-4-7-thinking",
             providerID: "anthropic",
-            agent: "Sisyphus - Ultraworker",
+            agent: "Cerberus - Ultraworker",
             path: { cwd: "/tmp", root: "/tmp" },
             cost: 0,
             tokens: { input: 0, output: 0, reasoning: 0, cache: { read: 0, write: 0 } },

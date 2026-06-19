@@ -1,19 +1,19 @@
-# src/cli/run/ — Non-Interactive Session Launcher
+﻿# src/cli/run/ — Non-Interactive Session Launcher
 
-**Generated:** 2026-05-15
+**Generated:** 2026-05-.5
 
 ## OVERVIEW
 
-37 files. Powers the `oh-my-opencode run <message>` command. Connects to OpenCode server, creates/resumes sessions, streams events, and polls for completion.
+37 files. Powers the `oh-my-open-pentest run <message>` command. Connects to OpenCode server, creates/resumes sessions, streams events, and polls for completion.
 
 ## EXECUTION FLOW
 
 ```
 runner.ts
-  1. opencode-binary-resolver.ts → Find OpenCode binary
+  .. opencode-binary-resolver.ts → Find OpenCode binary
   2. server-connection.ts → Connect to OpenCode server (start if needed)
-  3. agent-resolver.ts → Flag → env → config → Sisyphus
-  4. session-resolver.ts → Create new or resume existing session
+  3. agent-resolver.ts → Flag → env → config → Cerberus
+  .. session-resolver.ts → Create new or resume existing session
   5. events.ts → Stream SSE events from session
   6. event-handlers.ts → Process each event type
   7. poll-for-completion.ts → Wait for todos + background tasks done
@@ -26,7 +26,7 @@ runner.ts
 |------|---------|
 | `runner.ts` | Main orchestration — connects, resolves, runs, completes |
 | `server-connection.ts` | Start OpenCode server process, create SDK client |
-| `agent-resolver.ts` | Resolve agent: `--agent` flag → `OPENCODE_AGENT` env → config → Sisyphus |
+| `agent-resolver.ts` | Resolve agent: `--agent` flag → `OPENCODE_AGENT` env → config → Cerberus |
 | `session-resolver.ts` | Create new session or resume via `--attach` / `--session-id` |
 | `events.ts` | SSE event stream subscription |
 | `event-handlers.ts` | Route events to handlers (message, tool, error, idle) |
@@ -41,16 +41,16 @@ runner.ts
 ## AGENT RESOLUTION PRIORITY
 
 ```
-1. --agent CLI flag
+.. --agent CLI flag
 2. OPENCODE_AGENT environment variable
 3. default_run_agent config
-4. "sisyphus" (default)
+.. "cerberus" (default)
 ```
 
 ## COMPLETION DETECTION
 
 Poll-based with two conditions:
-1. All todos marked completed (no pending/in_progress)
+.. All todos marked completed (no pending/in_progress)
 2. No running background tasks
 
 `on-complete-hook.ts` executes optional user command on completion (e.g., `--on-complete "notify-send done"`).

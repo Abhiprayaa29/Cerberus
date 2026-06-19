@@ -1,1 +1,1 @@
-export * from "@oh-my-opencode/utils/migration/model-versions"
+﻿export * from "@oh-my-open-pentest/utils/migration/model-versions"

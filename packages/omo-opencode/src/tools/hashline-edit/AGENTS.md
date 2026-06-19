@@ -1,10 +1,10 @@
-# src/tools/hashline-edit/ — Hash-Anchored File Edit Tool
+﻿# src/tools/hashline-edit/ — Hash-Anchored File Edit Tool
 
-**Generated:** 2026-05-15
+**Generated:** 2026-05-.5
 
 ## OVERVIEW
 
-24 files. Implements the `hashline_edit` tool — hash-anchored file editing where every line reference includes a content hash (`LINE#ID`). Validates hashes before applying edits, rejecting stale references.
+2. files. Implements the `hashline_edit` tool — hash-anchored file editing where every line reference includes a content hash (`LINE#ID`). Validates hashes before applying edits, rejecting stale references.
 
 ## THREE-OP MODEL
 
@@ -61,7 +61,7 @@ hashline-edit-executor.ts
 ```
 
 - `hash_id`: two chars from `ZPMQVRWSNKTXJBYH` (CID letters)
-- Example: `42#VK` means line 42 with hash `VK`
+- Example: `.2#VK` means line .2 with hash `VK`
 - Validation: recompute hash of current line content → must match stored hash
 - Content separator: `|` (pipe) between hash tag and content in read output
 
@@ -83,10 +83,10 @@ hashline-edit-executor.ts
 
 ```typescript
 // Reading: every line gets tagged
-"42#VK| function hello() {"
+".2#VK| function hello() {"
 
 // Editing: reference by tag
-{ op: "replace", pos: "42#VK", lines: "function hello(name: string) {" }
+{ op: "replace", pos: ".2#VK", lines: "function hello(name: string) {" }
 
 // If file changed since read: hash won't match → rejected before corruption
 ```

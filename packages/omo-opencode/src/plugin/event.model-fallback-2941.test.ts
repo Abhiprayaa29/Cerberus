@@ -1,4 +1,4 @@
-declare const require: (name: string) => any
+﻿declare const require: (name: string) => any
 const { afterEach, describe, expect, spyOn, test } = require("bun:test")
 
 import { createEventHandler } from "./event"
@@ -86,7 +86,7 @@ describe("createEventHandler - category runtime fallback suppression", () => {
 
 		const modelFallback = createModelFallbackHook()
 		clearPendingModelFallback(modelFallback, sessionID)
-		setSessionAgent(sessionID, "sisyphus-junior")
+		setSessionAgent(sessionID, "cerberus-junior")
 		setSessionFallbackChain(modelFallback, sessionID, undefined)
 		const eventHandler = createEventHandler({
 			ctx: asEventHandlerContext({
@@ -151,7 +151,7 @@ describe("createEventHandler - category runtime fallback suppression", () => {
 		await chatMessageHandler(
 			{
 				sessionID,
-				agent: "sisyphus-junior",
+				agent: "cerberus-junior",
 				model: { providerID: "anthropic", modelID: "claude-sonnet-4-6" },
 			},
 			output,

@@ -1,4 +1,4 @@
-import { describe, expect, test } from "bun:test"
+﻿import { describe, expect, test } from "bun:test"
 import { tmpdir } from "node:os"
 
 import type { PluginInput } from "@opencode-ai/plugin"
@@ -27,7 +27,7 @@ describe("BackgroundManager session permission", () => {
     await manager.launch({
       description: "Test task",
       prompt: "Do something",
-      agent: "explore",
+      agent: "scout",
       parentSessionId: "ses_parent",
       parentMessageId: "msg_parent",
     })
@@ -60,7 +60,7 @@ describe("BackgroundManager session permission", () => {
     await manager.launch({
       description: "Test task",
       prompt: "Do something",
-      agent: "explore",
+      agent: "scout",
       parentSessionId: "ses_parent",
       parentMessageId: "msg_parent",
     })
@@ -101,7 +101,7 @@ describe("BackgroundManager session permission", () => {
     await manager.launch({
       description: "Test task",
       prompt: "Do something",
-      agent: "explore",
+      agent: "scout",
       parentSessionId: "ses_parent",
       parentMessageId: "msg_parent",
       sessionPermission: [
@@ -115,7 +115,7 @@ describe("BackgroundManager session permission", () => {
     expect(createCalls).toHaveLength(1)
     expect(createCalls[0]?.body).toEqual({
       parentID: "ses_parent",
-      title: "Test task (@explore subagent)",
+      title: "Test task (@scout subagent)",
       permission: [
         { permission: "question", action: "deny", pattern: "*" },
       ],

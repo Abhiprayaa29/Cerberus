@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 import { unsafeTestValue } from "../../../../../test-support/unsafe-test-value"
 
 import { beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
@@ -87,7 +87,7 @@ describe("resolveSession", () => {
     expect(result).toBe("new-session-id")
     expect(mockClient.session.create).toHaveBeenCalledWith({
       body: {
-        title: "oh-my-openagent run",
+        title: "oh-my-open-pentest run",
         permission: [
           { permission: "question", action: "deny", pattern: "*" },
         ],
@@ -114,7 +114,7 @@ describe("resolveSession", () => {
     expect(mockClient.session.create).toHaveBeenCalledTimes(2)
     expect(mockClient.session.create).toHaveBeenCalledWith({
       body: {
-        title: "oh-my-openagent run",
+        title: "oh-my-open-pentest run",
         permission: [
           { permission: "question", action: "deny", pattern: "*" },
         ],

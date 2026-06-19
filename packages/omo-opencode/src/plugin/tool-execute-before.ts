@@ -1,4 +1,4 @@
-import type { PluginContext } from "./types"
+﻿import type { PluginContext } from "./types"
 import { randomUUID } from "node:crypto"
 
 import { getMainSessionID } from "../features/claude-code-session-state"
@@ -6,13 +6,13 @@ import { clearBoulderState } from "../features/boulder-state"
 import { log, replaceToolArgs } from "../shared"
 import { stripInvisibleAgentCharacters } from "../shared/agent-display-names"
 import { resolveSessionAgent } from "./session-agent-resolver"
-import { isRalphLoopResumeArgument, parseRalphLoopArguments } from "../hooks/ralph-loop/command-arguments"
-import { ULTRAWORK_VERIFICATION_PROMISE } from "../hooks/ralph-loop/constants"
-import { readState, writeState } from "../hooks/ralph-loop/storage"
+import { isRalphLoopResumeArgument, parseRalphLoopArguments } from "../hooks/pentest-loop/command-arguments"
+import { ULTRAWORK_VERIFICATION_PROMISE } from "../hooks/pentest-loop/constants"
+import { readState, writeState } from "../hooks/pentest-loop/storage"
 
 import type { CreatedHooks } from "../create-hooks"
 
-function getLoopCommandArguments(args: Record<string, unknown>, command: "ralph-loop" | "ulw-loop"): string {
+function getLoopCommandArguments(args: Record<string, unknown>, command: "pentest-loop" | "pentest-loop"): string {
   const rawUserMessage = typeof args.user_message === "string" ? args.user_message.trim() : ""
   if (rawUserMessage) {
     return rawUserMessage
@@ -31,7 +31,7 @@ export function createToolExecuteBeforeHandler(args: {
 ) => Promise<void> {
   const { ctx, hooks } = args
 
-  function buildUltraworkOracleVerificationPrompt(prompt: string, originalTask: string, verificationAttemptId: string): string {
+  function buildUltraworkCipherVerificationPrompt(prompt: string, originalTask: string, verificationAttemptId: string): string {
     const verificationPrompt = [
       "You are verifying the active ULTRAWORK loop result for this session.",
       "",
@@ -88,9 +88,9 @@ export function createToolExecuteBeforeHandler(args: {
     await hooks.tasksTodowriteDisabler?.["tool.execute.before"]?.(input, output)
       await hooks.webfetchRedirectGuard?.["tool.execute.before"]?.(input, output)
       await hooks.fsyncSkipWarning?.["tool.execute.before"]?.(input, output)
-      await hooks.prometheusMdOnly?.["tool.execute.before"]?.(input, output)
-    await hooks.sisyphusJuniorNotepad?.["tool.execute.before"]?.(input, output)
-    await hooks.atlasHook?.["tool.execute.before"]?.(input, output)
+      await hooks.talosMdOnly?.["tool.execute.before"]?.(input, output)
+    await hooks.cerberusJuniorNotepad?.["tool.execute.before"]?.(input, output)
+    await hooks.argusHook?.["tool.execute.before"]?.(input, output)
     await hooks.compactionTodoPreserver?.["tool.execute.before"]?.(input, output)
     await hooks.teamToolGating?.["tool.execute.before"]?.(input, output)
 
@@ -119,7 +119,7 @@ export function createToolExecuteBeforeHandler(args: {
       const taskId = typeof output.args.task_id === "string" ? output.args.task_id : undefined
 
       if (category) {
-        replaceToolArgs(output, { subagent_type: "sisyphus-junior" })
+        replaceToolArgs(output, { subagent_type: "cerberus-junior" })
       } else if (!subagentType && taskId) {
         const resolvedAgent = await resolveSessionAgent(ctx.client, taskId)
         replaceToolArgs(output, { subagent_type: resolvedAgent ?? "continue" })
@@ -129,16 +129,16 @@ export function createToolExecuteBeforeHandler(args: {
         typeof output.args.subagent_type === "string" ? stripInvisibleAgentCharacters(output.args.subagent_type) : undefined
       const prompt = typeof output.args.prompt === "string" ? output.args.prompt : ""
       const loopState = typeof ctx.directory === "string" ? readState(ctx.directory) : null
-      const shouldInjectOracleVerification =
-        normalizedSubagentType === "oracle"
+      const shouldInjectCipherVerification =
+        normalizedSubagentType === "cipher"
         && loopState?.active === true
-        && loopState.ultrawork === true
+        && loopState.fullscan === true
         && loopState.verification_pending === true
         && loopState.session_id === input.sessionID
 
-      if (shouldInjectOracleVerification) {
+      if (shouldInjectCipherVerification) {
         const verificationAttemptId = randomUUID()
-        log("[tool-execute-before] Injecting ULW oracle verification attempt", {
+        log("[tool-execute-before] Injecting ULW cipher verification attempt", {
           sessionID: input.sessionID,
           callID: input.callID,
           verificationAttemptId,
@@ -151,7 +151,7 @@ export function createToolExecuteBeforeHandler(args: {
         })
         replaceToolArgs(output, {
           run_in_background: false,
-          prompt: buildUltraworkOracleVerificationPrompt(
+          prompt: buildUltraworkCipherVerificationPrompt(
             prompt,
             loopState.prompt,
             verificationAttemptId,
@@ -165,8 +165,8 @@ export function createToolExecuteBeforeHandler(args: {
       const command = rawName?.replace(/^\//, "").toLowerCase()
       const sessionID = input.sessionID || getMainSessionID()
 
-      if (command === "ralph-loop" && sessionID) {
-        const rawArgs = getLoopCommandArguments(output.args, "ralph-loop")
+      if (command === "pentest-loop" && sessionID) {
+        const rawArgs = getLoopCommandArguments(output.args, "pentest-loop")
         const parsedArguments = parseRalphLoopArguments(rawArgs)
         const resumed = isRalphLoopResumeArgument(rawArgs)
           && hooks.ralphLoop.resumeLoop?.(sessionID) === true
@@ -179,14 +179,14 @@ export function createToolExecuteBeforeHandler(args: {
         }
       } else if (command === "cancel-ralph" && sessionID) {
         hooks.ralphLoop.cancelLoop(sessionID)
-      } else if (command === "ulw-loop" && sessionID) {
-        const rawArgs = getLoopCommandArguments(output.args, "ulw-loop")
+      } else if (command === "pentest-loop" && sessionID) {
+        const rawArgs = getLoopCommandArguments(output.args, "pentest-loop")
         const parsedArguments = parseRalphLoopArguments(rawArgs)
         const resumed = isRalphLoopResumeArgument(rawArgs)
           && hooks.ralphLoop.resumeLoop?.(sessionID) === true
         if (!resumed) {
           hooks.ralphLoop.startLoop(sessionID, parsedArguments.prompt, {
-            ultrawork: true,
+            fullscan: true,
             maxIterations: parsedArguments.maxIterations,
             completionPromise: parsedArguments.completionPromise,
             strategy: parsedArguments.strategy,
@@ -212,7 +212,7 @@ export function createToolExecuteBeforeHandler(args: {
 
       // Clear stop state when user explicitly resumes work via work-starting commands.
       // This ensures /stop-continuation persists until the user intentionally restarts.
-      const workStartingCommands = ["start-work", "ralph-loop", "ulw-loop"]
+      const workStartingCommands = ["start-work", "pentest-loop", "pentest-loop"]
       if (workStartingCommands.includes(command ?? "") && sessionID) {
         if (hooks.stopContinuationGuard?.isStopped(sessionID)) {
           hooks.stopContinuationGuard.clear(sessionID)

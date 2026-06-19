@@ -1,4 +1,4 @@
-import type { PluginInput } from "@opencode-ai/plugin"
+﻿import type { PluginInput } from "@opencode-ai/plugin"
 import type { AvailableSkill } from "../../agents/dynamic-agent-prompt-builder"
 import { getSessionAgent } from "../../features/claude-code-session-state"
 import { log } from "../../shared"
@@ -11,9 +11,9 @@ import { buildReminderMessage } from "./formatter"
  * These are orchestrator agents that delegate work to specialized agents.
  */
 const TARGET_AGENTS = new Set([
-  "sisyphus",
-  "sisyphus-junior",
-  "atlas",
+  "cerberus",
+  "cerberus-junior",
+  "argus",
 ])
 
 /**
@@ -80,8 +80,8 @@ export function createCategorySkillReminderHook(
     const agentKey = getAgentConfigKey(agent)
     return (
       TARGET_AGENTS.has(agentKey) ||
-      agentKey.includes("sisyphus") ||
-      agentKey.includes("atlas")
+      agentKey.includes("cerberus") ||
+      agentKey.includes("argus")
     )
   }
 

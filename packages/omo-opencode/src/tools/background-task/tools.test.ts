@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { describe, test, expect } from "bun:test"
 import { createBackgroundCancel, createBackgroundOutput } from "./tools"
@@ -8,7 +8,7 @@ import type { BackgroundCancelClient, BackgroundOutputManager, BackgroundOutputC
 import { consumeToolMetadata, clearPendingStore } from "../../features/tool-metadata-store"
 import { unsafeTestValue } from "../../../../../test-support/unsafe-test-value"
 
-const projectDir = "/Users/yeongyu/local-workspaces/oh-my-opencode"
+const projectDir = "/Users/yeongyu/local-workspaces/oh-my-open-pentest"
 
 const mockContext: ToolContext = {
   sessionID: "test-session",
@@ -60,7 +60,7 @@ describe("background_output full_session", () => {
 
     const task = createTask({
       id: "task-1",
-      agent: "explore",
+      agent: "scout",
       description: "Find how task output is rendered",
       status: "running",
     })
@@ -77,16 +77,16 @@ describe("background_output full_session", () => {
 
     // #then
     const restored = consumeToolMetadata("test-session", "call-1")
-    expect(restored?.title).toBe("explore - Find how task output is rendered")
+    expect(restored?.title).toBe("scout - Find how task output is rendered")
   })
 
-  test("shows category instead of agent for sisyphus-junior", async () => {
+  test("shows category instead of agent for cerberus-junior", async () => {
     // #given
     clearPendingStore()
 
     const task = createTask({
       id: "task-1",
-      agent: "Sisyphus-Junior",
+      agent: "Cerberus-Junior",
       category: "quick",
       description: "Fix flaky test",
       status: "running",

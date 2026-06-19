@@ -1,4 +1,4 @@
-import { mkdir, mkdtemp, readFile } from "node:fs/promises";
+﻿import { mkdir, mkdtemp, readFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { Readable, Writable } from "node:stream";
@@ -32,9 +32,9 @@ function samplePlan(): UlwLoopPlan {
 		version: 1,
 		createdAt: NOW,
 		updatedAt: NOW,
-		briefPath: ".omo/ulw-loop/brief.md",
-		goalsPath: ".omo/ulw-loop/goals.json",
-		ledgerPath: ".omo/ulw-loop/ledger.jsonl",
+		briefPath: ".omo/pentest-loop/brief.md",
+		goalsPath: ".omo/pentest-loop/goals.json",
+		ledgerPath: ".omo/pentest-loop/ledger.jsonl",
 		goals: [
 			{
 				id: "G001",
@@ -139,22 +139,22 @@ describe("applyUserPromptUlwLoopSteering - OMO directive patterns", () => {
 		);
 	});
 
-	it("processes omo.ulw-loop.steer: pattern", async () => {
+	it("processes omo.pentest-loop.steer: pattern", async () => {
 		const repoRoot = await bootstrapPlanRepo();
 		const out = await applyUserPromptUlwLoopSteering(
 			payload(
-				'omo.ulw-loop.steer: {"kind":"annotate_ledger","source":"user_prompt_submit","evidence":"x","rationale":"y"}',
+				'omo.pentest-loop.steer: {"kind":"annotate_ledger","source":"user_prompt_submit","evidence":"x","rationale":"y"}',
 				repoRoot,
 			),
 		);
 		expect(out).toContain("accepted");
 	});
 
-	it("processes omo ulw-loop steer: pattern", async () => {
+	it("processes omo pentest-loop steer: pattern", async () => {
 		const repoRoot = await bootstrapPlanRepo();
 		const out = await applyUserPromptUlwLoopSteering(
 			payload(
-				'omo ulw-loop steer: {"kind":"annotate_ledger","source":"user_prompt_submit","evidence":"x","rationale":"y"}',
+				'omo pentest-loop steer: {"kind":"annotate_ledger","source":"user_prompt_submit","evidence":"x","rationale":"y"}',
 				repoRoot,
 			),
 		);

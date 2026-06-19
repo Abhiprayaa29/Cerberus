@@ -1,4 +1,4 @@
-/// <reference path="../../../../bun-test.d.ts" />
+﻿/// <reference path="../../../../bun-test.d.ts" />
 /// <reference types="bun-types" />
 
 import { describe, expect, test } from "bun:test"
@@ -15,12 +15,12 @@ describe("codex cleanup", () => {
     const projectDirectory = join(projectRoot, "nested")
     const configPath = join(codexHome, "config.toml")
     const projectConfigPath = join(projectRoot, ".codex", "config.toml")
-    const cacheRoot = join(codexHome, "plugins", "cache", "sisyphuslabs")
+    const cacheRoot = join(codexHome, "plugins", "cache", "cerberuslabs")
     const versionPluginRoot = join(cacheRoot, "omo", "0.1.0")
-    const snapshotPluginRoot = join(codexHome, ".tmp", "marketplaces", "sisyphuslabs", "plugins", "omo")
+    const snapshotPluginRoot = join(codexHome, ".tmp", "marketplaces", "cerberuslabs", "plugins", "omo")
     const managedAgentPath = join(codexHome, "agents", "explorer.toml")
     const userAgentPath = join(codexHome, "agents", "custom.toml")
-    const unsafeManifestAgentPath = join(projectRoot, "momus.toml")
+    const unsafeManifestAgentPath = join(projectRoot, "sentinel.toml")
 
     await mkdir(join(codexHome, "agents"), { recursive: true })
     await mkdir(versionPluginRoot, { recursive: true })
@@ -43,16 +43,16 @@ describe("codex cleanup", () => {
         "[features]",
         "plugins = true",
         "",
-        "[marketplaces.sisyphuslabs]",
+        "[marketplaces.cerberuslabs]",
         'source = "/old/cache"',
         "",
-        '[plugins."omo@sisyphuslabs"]',
+        '[plugins."omo@cerberuslabs"]',
         "enabled = true",
         "",
-        '[plugins."omo@sisyphuslabs".mcp_servers.lsp]',
+        '[plugins."omo@cerberuslabs".mcp_servers.lsp]',
         "enabled = true",
         "",
-        '[hooks.state."omo@sisyphuslabs:hooks/hooks.json:post_tool_use:0:0"]',
+        '[hooks.state."omo@cerberuslabs:hooks/hooks.json:post_tool_use:0:0"]',
         'trusted_hash = "sha256:old"',
         "",
         "[marketplaces.lazycodex]",
@@ -95,7 +95,7 @@ describe("codex cleanup", () => {
     expect(result.configChanged).toBe(true)
     expect(result.configBackupPath).toBe(`${configPath}.backup-2026-06-01T00-00-00-000Z`)
     expect(result.removedPaths).toContain(cacheRoot)
-    expect(result.removedPaths).toContain(join(codexHome, ".tmp", "marketplaces", "sisyphuslabs"))
+    expect(result.removedPaths).toContain(join(codexHome, ".tmp", "marketplaces", "cerberuslabs"))
     expect(result.removedAgentLinks).toEqual([managedAgentPath])
     expect(result.skippedAgentLinks).toEqual([unsafeManifestAgentPath])
     expect(await pathExists(cacheRoot)).toBe(false)
@@ -105,13 +105,13 @@ describe("codex cleanup", () => {
 
     const config = await readFile(configPath, "utf8")
     expect(config).toContain("[features]")
-    expect(config).not.toContain("[marketplaces.sisyphuslabs]")
-    expect(config).not.toContain('omo@sisyphuslabs')
+    expect(config).not.toContain("[marketplaces.cerberuslabs]")
+    expect(config).not.toContain('omo@cerberuslabs')
     expect(config).not.toContain("[marketplaces.lazycodex]")
     expect(config).not.toContain('omo@lazycodex')
     expect(config).not.toContain("[agents.explorer]")
     expect(config).toContain("[agents.custom]")
-    expect(await readFile(result.configBackupPath ?? "", "utf8")).toContain("[marketplaces.sisyphuslabs]")
+    expect(await readFile(result.configBackupPath ?? "", "utf8")).toContain("[marketplaces.cerberuslabs]")
 
     const projectConfig = await readFile(projectConfigPath, "utf8")
     expect(result.projectCleanup.changed).toBe(true)
@@ -129,10 +129,10 @@ describe("codex cleanup", () => {
     await writeFile(
       configPath,
       [
-        "[marketplaces.sisyphuslabs]",
+        "[marketplaces.cerberuslabs]",
         'source = "/old/cache"',
         "",
-        '[plugins."omo@sisyphuslabs"]',
+        '[plugins."omo@cerberuslabs"]',
         "enabled = true",
         "",
       ].join("\n"),
@@ -150,8 +150,8 @@ describe("codex cleanup", () => {
     expect(result.projectCleanup.projectRoot).toBeNull()
     expect(result.projectCleanup.configs).toEqual([])
     const config = await readFile(configPath, "utf8")
-    expect(config).not.toContain("[marketplaces.sisyphuslabs]")
-    expect(config).not.toContain('omo@sisyphuslabs')
+    expect(config).not.toContain("[marketplaces.cerberuslabs]")
+    expect(config).not.toContain('omo@cerberuslabs')
   })
 
   test("#given managed config and missing install manifests #when cleanup runs #then removes orphaned managed agent links", async () => {
@@ -164,10 +164,10 @@ describe("codex cleanup", () => {
     await writeFile(
       configPath,
       [
-        "[marketplaces.sisyphuslabs]",
+        "[marketplaces.cerberuslabs]",
         'source = "/old/cache"',
         "",
-        '[plugins."omo@sisyphuslabs"]',
+        '[plugins."omo@cerberuslabs"]',
         "enabled = true",
         "",
         "[agents.explorer]",
@@ -200,10 +200,10 @@ describe("codex cleanup", () => {
     await writeFile(
       configPath,
       [
-        "[marketplaces.sisyphuslabs]",
+        "[marketplaces.cerberuslabs]",
         'source = "/old/cache"',
         "",
-        '[plugins."omo@sisyphuslabs"]',
+        '[plugins."omo@cerberuslabs"]',
         "enabled = true",
         "",
       ].join("\n"),
@@ -221,8 +221,8 @@ describe("codex cleanup", () => {
     expect(result.projectCleanup.projectRoot).toBeNull()
     expect(result.projectCleanup.configs).toEqual([])
     const config = await readFile(configPath, "utf8")
-    expect(config).not.toContain("[marketplaces.sisyphuslabs]")
-    expect(config).not.toContain('omo@sisyphuslabs')
+    expect(config).not.toContain("[marketplaces.cerberuslabs]")
+    expect(config).not.toContain('omo@cerberuslabs')
   })
   test("#given provisioned runtime binaries and bootstrap plugin data #when cleanup runs #then removes only the managed subtrees", async () => {
     // given
@@ -230,12 +230,12 @@ describe("codex cleanup", () => {
     const astGrepRuntimeDir = join(codexHome, "runtime", "ast-grep")
     const nodeRuntimeDir = join(codexHome, "runtime", "node")
     const foreignRuntimeFile = join(codexHome, "runtime", "other-owner", "keep.bin")
-    const bootstrapDataDir = join(codexHome, "plugins", "data", "omo-sisyphuslabs", "bootstrap")
-    const autoUpdateStatePath = join(codexHome, "plugins", "data", "omo-sisyphuslabs", "auto-update.json")
-    const foreignBootstrapStatePath = join(codexHome, "plugins", "data", "widget-sisyphuslabs", "bootstrap", "state.json")
-    const driftedBootstrapDataDir = join(codexHome, "plugins", "legacy", "omo-next-sisyphuslabs", "bootstrap")
-    const cacheRoot = join(codexHome, "plugins", "cache", "sisyphuslabs")
-    const snapshotRoot = join(codexHome, ".tmp", "marketplaces", "sisyphuslabs")
+    const bootstrapDataDir = join(codexHome, "plugins", "data", "omo-cerberuslabs", "bootstrap")
+    const autoUpdateStatePath = join(codexHome, "plugins", "data", "omo-cerberuslabs", "auto-update.json")
+    const foreignBootstrapStatePath = join(codexHome, "plugins", "data", "widget-cerberuslabs", "bootstrap", "state.json")
+    const driftedBootstrapDataDir = join(codexHome, "plugins", "legacy", "omo-next-cerberuslabs", "bootstrap")
+    const cacheRoot = join(codexHome, "plugins", "cache", "cerberuslabs")
+    const snapshotRoot = join(codexHome, ".tmp", "marketplaces", "cerberuslabs")
 
     await writeFixtureFile(join(astGrepRuntimeDir, "darwin-arm64", "sg"), "sg binary\n")
     await writeFixtureFile(join(nodeRuntimeDir, "node-v22.14.0-win-x64", "node.exe"), "node binary\n")
@@ -331,7 +331,7 @@ describe("codex cleanup", () => {
   test("#given a mid-flight worker recreates bootstrap state between uninstall runs #when cleanup runs twice #then the second pass clears it without error", async () => {
     // given
     const codexHome = await mkdtemp(join(tmpdir(), "omo-codex-cleanup-two-pass-"))
-    const bootstrapDataDir = join(codexHome, "plugins", "data", "omo-sisyphuslabs", "bootstrap")
+    const bootstrapDataDir = join(codexHome, "plugins", "data", "omo-cerberuslabs", "bootstrap")
     const statePath = join(bootstrapDataDir, "state.json")
     await writeFixtureFile(statePath, "{}\n")
 
@@ -353,19 +353,19 @@ describe("codex cleanup", () => {
       "[features]",
       "plugins = true",
       "",
-      "[marketplaces.sisyphuslabs]",
+      "[marketplaces.cerberuslabs]",
       'source = "https://github.com/code-yeongyu/lazycodex.git"',
       "",
-      '[plugins."omo@sisyphuslabs"]',
+      '[plugins."omo@cerberuslabs"]',
       "enabled = true",
       "",
-      '[plugins."omo@sisyphuslabs".mcp_servers.lsp]',
+      '[plugins."omo@cerberuslabs".mcp_servers.lsp]',
       "enabled = true",
       "",
-      '[hooks.state."omo@sisyphuslabs:hooks/hooks.json:session_start:0:0"]',
+      '[hooks.state."omo@cerberuslabs:hooks/hooks.json:session_start:0:0"]',
       'trusted_hash = "sha256:bootstrap"',
       "",
-      '[hooks.state."omo@sisyphuslabs:hooks/hooks.json:post_tool_use:0:0"]',
+      '[hooks.state."omo@cerberuslabs:hooks/hooks.json:post_tool_use:0:0"]',
       'trusted_hash = "sha256:comment-checker"',
       "",
       "[agents.explorer]",
@@ -384,7 +384,7 @@ describe("codex cleanup", () => {
     // then
     expect(cleaned).toContain("[features]")
     expect(cleaned).toContain("[agents.custom]")
-    expect(cleaned).not.toContain("sisyphuslabs")
+    expect(cleaned).not.toContain("cerberuslabs")
     expect(cleaned).not.toContain("hooks.state")
     expect(cleaned).not.toContain("[agents.explorer]")
   })

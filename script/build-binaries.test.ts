@@ -1,4 +1,4 @@
-// script/build-binaries.test.ts
+﻿// script/build-binaries.test.ts
 // Tests for platform binary build configuration
 
 import { describe, expect, it } from "bun:test";
@@ -67,11 +67,11 @@ describe("build-binaries", () => {
 
       // then
       expect(packageDirs).toEqual(packageNames);
-      expect(packageDirs).toContain("oh-my-opencode-linux-x64-baseline");
-      expect(packageDirs).toContain("oh-my-opencode-linux-x64-musl-baseline");
-      expect(packageDirs).toContain("oh-my-opencode-darwin-x64-baseline");
-      expect(packageDirs).toContain("oh-my-opencode-windows-x64-baseline");
-      expect(packageDirs).toContain("oh-my-opencode-windows-arm64");
+      expect(packageDirs).toContain("oh-my-open-pentest-linux-x64-baseline");
+      expect(packageDirs).toContain("oh-my-open-pentest-linux-x64-musl-baseline");
+      expect(packageDirs).toContain("oh-my-open-pentest-darwin-x64-baseline");
+      expect(packageDirs).toContain("oh-my-open-pentest-windows-x64-baseline");
+      expect(packageDirs).toContain("oh-my-open-pentest-windows-arm64");
     });
 
     it("includes a windows-arm64 entry for Windows-on-ARM hosts", async () => {
@@ -83,8 +83,8 @@ describe("build-binaries", () => {
       const windowsArm64 = platforms.find((p) => p.platform === "windows-arm64");
 
       // then
-      expect(windowsArm64?.packageName).toBe("oh-my-opencode-windows-arm64");
-      expect(windowsArm64?.packageDir).toBe("oh-my-opencode-windows-arm64");
+      expect(windowsArm64?.packageName).toBe("oh-my-open-pentest-windows-arm64");
+      expect(windowsArm64?.packageDir).toBe("oh-my-open-pentest-windows-arm64");
     });
 
     it("uses JavaScript launcher names for baseline platforms", async () => {
@@ -97,8 +97,8 @@ describe("build-binaries", () => {
       const linuxBaseline = platforms.find((p) => p.target === "bun-linux-x64-baseline");
 
       // then
-      expect(windowsBaseline?.binary).toBe("oh-my-opencode.js");
-      expect(linuxBaseline?.binary).toBe("oh-my-opencode.js");
+      expect(windowsBaseline?.binary).toBe("oh-my-open-pentest.js");
+      expect(linuxBaseline?.binary).toBe("oh-my-open-pentest.js");
     });
 
     it("launcher routes lazycodex install through the Node installer before requiring Bun", async () => {
@@ -123,7 +123,7 @@ describe("build-binaries", () => {
       const createPlatformLauncherSource = (module as { createPlatformLauncherSource: () => string }).createPlatformLauncherSource;
       const root = fileURLToPath(new URL("..", import.meta.url));
       const tempDir = await mkdtemp(join(tmpdir(), "lazycodex-launcher-"));
-      const launcherPath = join(tempDir, "oh-my-opencode.js");
+      const launcherPath = join(tempDir, "oh-my-open-pentest.js");
       await writeFile(launcherPath, createPlatformLauncherSource());
       await chmod(launcherPath, 0o755);
 
@@ -149,7 +149,7 @@ describe("build-binaries", () => {
       const module = await import("./build-binaries.ts");
       const createPlatformLauncherSource = (module as { createPlatformLauncherSource: () => string }).createPlatformLauncherSource;
       const tempDir = await mkdtemp(join(tmpdir(), "omo-codex-only-launcher-"));
-      const launcherPath = join(tempDir, "oh-my-opencode.js");
+      const launcherPath = join(tempDir, "oh-my-open-pentest.js");
       const installerPath = join(tempDir, "packages", "omo-codex", "scripts", "install-local.mjs");
       await mkdir(join(tempDir, "packages", "omo-codex", "scripts"), { recursive: true });
       await writeFile(launcherPath, createPlatformLauncherSource());
@@ -186,7 +186,7 @@ describe("build-binaries", () => {
       const module = await import("./build-binaries.ts");
       const createPlatformLauncherSource = (module as { createPlatformLauncherSource: () => string }).createPlatformLauncherSource;
       const tempDir = await mkdtemp(join(tmpdir(), "lazycodex-both-launcher-"));
-      const launcherPath = join(tempDir, "oh-my-opencode.js");
+      const launcherPath = join(tempDir, "oh-my-open-pentest.js");
       const installerPath = join(tempDir, "packages", "omo-codex", "scripts", "install-local.mjs");
       await mkdir(join(tempDir, "packages", "omo-codex", "scripts"), { recursive: true });
       await writeFile(launcherPath, createPlatformLauncherSource());
@@ -218,7 +218,7 @@ describe("build-binaries", () => {
       const module = await import("./build-binaries.ts");
       const createPlatformLauncherSource = (module as { createPlatformLauncherSource: () => string }).createPlatformLauncherSource;
       const tempDir = await mkdtemp(join(tmpdir(), "lazycodex-sparkshell-launcher-"));
-      const launcherPath = join(tempDir, "oh-my-opencode.js");
+      const launcherPath = join(tempDir, "oh-my-open-pentest.js");
       await writeFile(launcherPath, createPlatformLauncherSource());
       await chmod(launcherPath, 0o755);
       await writeFakeCli(tempDir);
@@ -259,7 +259,7 @@ describe("build-binaries", () => {
       // given
       const packagesDir = new URL("../packages/", import.meta.url);
       const platformPackageNames = readdirSync(packagesDir)
-        .filter((entry) => entry.startsWith("oh-my-opencode-"))
+        .filter((entry) => entry.startsWith("oh-my-open-pentest-"))
         .sort();
 
       // when

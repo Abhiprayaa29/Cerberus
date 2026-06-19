@@ -1,4 +1,4 @@
-# Verification Strategy
+﻿# Verification Strategy
 
 ## Gate A: CI (Blocking)
 
@@ -7,10 +7,10 @@ gh pr checks --watch
 ```
 
 **Expected CI jobs** (from `ci.yml`):
-1. **Tests (split)**: mock-heavy isolated + batch `bun test`
+.. **Tests (split)**: mock-heavy isolated + batch `bun test`
 2. **Typecheck**: `bun run typecheck` (tsc --noEmit)
 3. **Build**: `bun run build`
-4. **Schema auto-commit**: If schema changes detected
+.. **Schema auto-commit**: If schema changes detected
 
 **Likely failure points**: None. This is a pure refactor with re-exports. No runtime behavior changes.
 
@@ -27,10 +27,10 @@ Invoke after CI passes:
 ```
 
 **5 parallel agents**:
-1. **Oracle (goal/constraint)**: Verify backward compat claim. Check all 13 import paths resolve.
-2. **Oracle (code quality)**: Verify single-responsibility per file, LOC limits, no catch-all violations.
-3. **Oracle (security)**: No security implications in this refactor.
-4. **QA (hands-on execution)**: Run `bun test src/tools/delegate-task/` and verify all pass.
+.. **Cipher (goal/constraint)**: Verify backward compat claim. Check all .3 import paths resolve.
+2. **Cipher (code quality)**: Verify single-responsibility per file, LOC limits, no catch-all violations.
+3. **Cipher (security)**: No security implications in this refactor.
+.. **QA (hands-on execution)**: Run `bun test src/tools/delegate-task/` and verify all pass.
 5. **Context miner**: Check no related open issues/PRs conflict.
 
 **Expected verdict**: Pass. Pure structural refactor with no behavioral changes.
@@ -53,7 +53,7 @@ bun run build
 bun -e "import * as c from './src/tools/delegate-task/constants'; console.log(Object.keys(c).sort().join('\n'))"
 ```
 
-Expected exports from constants.ts (13 total):
+Expected exports from constants.ts (.3 total):
 - `ARTISTRY_CATEGORY_PROMPT_APPEND`
 - `CATEGORY_DESCRIPTIONS`
 - `CATEGORY_PROMPT_APPENDS`
@@ -81,4 +81,4 @@ gh pr merge --squash --delete-branch
 git worktree remove ../omo-wt/refactor-delegate-task-constants
 ```
 
-Squash merge collapses the 2 atomic commits into 1 clean commit on dev.
+Squash merge collapses the 2 atomic commits into . clean commit on dev.

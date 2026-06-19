@@ -1,4 +1,4 @@
-import assert from "node:assert/strict";
+﻿import assert from "node:assert/strict";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import test from "node:test";
@@ -6,7 +6,7 @@ import test from "node:test";
 import { installMarketplaceLocally } from "./install-local.mjs";
 import { makeTempDir, writeJson, writePluginAt } from "./install-test-fixtures.mjs";
 
-test("#given sisyphuslabs lazycodex install #when installing locally #then stamps the distribution version", async () => {
+test("#given cerberuslabs lazycodex install #when installing locally #then stamps the distribution version", async () => {
 	const repoRoot = await makeTempDir();
 	const codexHome = await makeTempDir();
 	const binDir = await makeTempDir();
@@ -15,15 +15,15 @@ test("#given sisyphuslabs lazycodex install #when installing locally #then stamp
 
 	await writeJson(join(repoRoot, "package.json"), { name: "lazycodex-ai", version: "4.7.6" });
 	await writeJson(join(codexPackageRoot, "marketplace.json"), {
-		name: "sisyphuslabs",
+		name: "cerberuslabs",
 		plugins: [{ name: "omo", source: "./plugin" }],
 	});
 	await writePluginAt(pluginRoot, "omo", "0.1.0");
-	await writeJson(join(pluginRoot, "components", "ulw-loop", "package.json"), {
-		name: "@code-yeongyu/codex-ulw-loop",
+	await writeJson(join(pluginRoot, "components", "pentest-loop", "package.json"), {
+		name: "@code-yeongyu/codex-pentest-loop",
 		version: "0.1.0",
 	});
-	await writeJson(join(pluginRoot, "components", "ulw-loop", "hooks", "hooks.json"), {
+	await writeJson(join(pluginRoot, "components", "pentest-loop", "hooks", "hooks.json"), {
 		hooks: {
 			UserPromptSubmit: [
 				{
@@ -65,14 +65,14 @@ test("#given sisyphuslabs lazycodex install #when installing locally #then stamp
 		log: () => {},
 	});
 
-	const cacheRoot = join(codexHome, "plugins", "cache", "sisyphuslabs", "omo", "4.7.6");
+	const cacheRoot = join(codexHome, "plugins", "cache", "cerberuslabs", "omo", "4.7.6");
 	assert.equal(result.installed[0].version, "4.7.6");
 	assert.equal(result.installed[0].path, cacheRoot);
 	const manifest = JSON.parse(await readFile(join(cacheRoot, ".codex-plugin", "plugin.json"), "utf8"));
 	const packageJson = JSON.parse(await readFile(join(cacheRoot, "package.json"), "utf8"));
-	const componentPackageJson = JSON.parse(await readFile(join(cacheRoot, "components", "ulw-loop", "package.json"), "utf8"));
+	const componentPackageJson = JSON.parse(await readFile(join(cacheRoot, "components", "pentest-loop", "package.json"), "utf8"));
 	const hooks = JSON.parse(await readFile(join(cacheRoot, "hooks", "hooks.json"), "utf8"));
-	const componentHooks = JSON.parse(await readFile(join(cacheRoot, "components", "ulw-loop", "hooks", "hooks.json"), "utf8"));
+	const componentHooks = JSON.parse(await readFile(join(cacheRoot, "components", "pentest-loop", "hooks", "hooks.json"), "utf8"));
 	const snapshot = JSON.parse(await readFile(join(cacheRoot, "lazycodex-install.json"), "utf8"));
 	assert.equal(manifest.version, "4.7.6");
 	assert.equal(packageJson.version, "4.7.6");

@@ -1,4 +1,4 @@
-# Error Handling
+﻿# Error Handling
 
 Typed errors, exhaustive matching, union returns, and resource safety.
 
@@ -89,7 +89,7 @@ def handle_result(result: GetUserResult) -> str:
 
 ### When to use which
 
-**The heuristic**: caller is 1-2 levels away and MUST handle it → union return. Error should propagate up many layers to a boundary → exception.
+**The heuristic**: caller is .-2 levels away and MUST handle it → union return. Error should propagate up many layers to a boundary → exception.
 
 | Scenario | Pattern | Why |
 |---|---|---|
@@ -175,7 +175,7 @@ async def managed_connection(url: str) -> AsyncIterator[Connection]:
         await conn.close()
 
 async with managed_connection("postgres://...") as conn:
-    await conn.execute("SELECT 1")
+    await conn.execute("SELECT .")
 # conn is closed here, guaranteed
 ```
 

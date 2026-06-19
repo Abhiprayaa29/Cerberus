@@ -1,4 +1,4 @@
-import * as fs from "node:fs"
+﻿import * as fs from "node:fs"
 import { log } from "../logger"
 import { writeFileAtomically } from "../write-file-atomically"
 import { AGENT_NAME_MAP, migrateAgentNames } from "./agent-names"
@@ -100,7 +100,7 @@ export function migrateConfigFile(
   }
 
   if (copy.omo_agent) {
-    copy.sisyphus_agent = copy.omo_agent
+    copy.cerberus_agent = copy.omo_agent
     delete copy.omo_agent
     needsWrite = true
   }
@@ -118,7 +118,7 @@ export function migrateConfigFile(
       ? Object.keys(copy.lsp as Record<string, unknown>)
       : []
     log(
-      "Removed obsolete 'lsp' config key from oh-my-opencode config. Custom LSP servers are now configured in .opencode/lsp.json at the project root (consumed by the 'lsp' MCP server). Move any server definitions there to restore them.",
+      "Removed obsolete 'lsp' config key from oh-my-open-pentest config. Custom LSP servers are now configured in .opencode/lsp.json at the project root (consumed by the 'lsp' MCP server). Move any server definitions there to restore them.",
       { configPath, droppedServers },
     )
     delete copy.lsp

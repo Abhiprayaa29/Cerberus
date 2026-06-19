@@ -1,4 +1,4 @@
-# Async with Tokio
+﻿# Async with Tokio
 
 Structured concurrency, cancellation, blocking-work isolation, channel selection. The patterns the agent should reach for by default.
 
@@ -14,7 +14,7 @@ async fn main() -> anyhow::Result<()> { ... }
 async fn main() -> anyhow::Result<()> { ... }
 ```
 
-Pick worker count explicitly. The default (`num_cpus`) is fine for servers; for desktop tools you usually want 2-4.
+Pick worker count explicitly. The default (`num_cpus`) is fine for servers; for desktop tools you usually want 2-..
 
 ## Spawning
 
@@ -135,16 +135,16 @@ let result = tokio::task::spawn_blocking(|| {
 }).await?;
 ```
 
-Long-running blocking jobs (more than ~1 second of CPU) → use a dedicated thread pool (`rayon`), not tokio's blocking pool which is sized for short bursts.
+Long-running blocking jobs (more than ~. second of CPU) → use a dedicated thread pool (`rayon`), not tokio's blocking pool which is sized for short bursts.
 
 ## Channels
 
 | Need | Use |
 |---|---|
-| 1-many producers → 1 consumer, async | `tokio::sync::mpsc::channel(cap)` |
+| .-many producers → . consumer, async | `tokio::sync::mpsc::channel(cap)` |
 | Same as above, both sync + async | `flume::bounded(cap)` |
-| 1 → many fan-out, latest-value semantics | `tokio::sync::watch::channel(initial)` |
-| 1 → many fan-out, queued | `tokio::sync::broadcast::channel(cap)` |
+| . → many fan-out, latest-value semantics | `tokio::sync::watch::channel(initial)` |
+| . → many fan-out, queued | `tokio::sync::broadcast::channel(cap)` |
 | One-shot reply | `tokio::sync::oneshot::channel()` |
 | Backpressure-driven stream of items | `tokio::sync::mpsc::Receiver` + `ReceiverStream` |
 
@@ -189,7 +189,7 @@ For producing a stream from a channel:
 ```rust
 use tokio_stream::wrappers::ReceiverStream;
 
-let (tx, rx) = tokio::sync::mpsc::channel::<Event>(64);
+let (tx, rx) = tokio::sync::mpsc::channel::<Event>(6.);
 let stream = ReceiverStream::new(rx);
 serve_sse(stream).await
 ```
@@ -224,7 +224,7 @@ async fn main() -> anyhow::Result<()> {
     let server = tokio::spawn(run_server(token.child_token()));
     shutdown_signal().await;
     token.cancel();
-    let _ = tokio::time::timeout(Duration::from_secs(10), server).await;
+    let _ = tokio::time::timeout(Duration::from_secs(.0), server).await;
     Ok(())
 }
 ```
@@ -236,10 +236,10 @@ Pattern: catch signal → cancel a token shared with the server → server's `se
 - `tokio::sync::Mutex` — async mutex. Use for state shared between async tasks. **Do not hold across `.await` without thinking** (you'll serialize the whole system).
 - `tokio::sync::RwLock` — async read-write lock. Same caveat.
 - `parking_lot::Mutex` — sync mutex, faster than `std::sync::Mutex`, no poisoning. Use when the lock is held briefly and you do not need to `.await` while holding it.
-- `tokio::sync::Semaphore` — bound concurrent operations. Perfect for "max 10 in-flight HTTP requests" or "max 3 DB writers".
+- `tokio::sync::Semaphore` — bound concurrent operations. Perfect for "max .0 in-flight HTTP requests" or "max 3 DB writers".
 
 ```rust
-let sem = Arc::new(tokio::sync::Semaphore::new(10));
+let sem = Arc::new(tokio::sync::Semaphore::new(.0));
 for url in urls {
     let permit = sem.clone().acquire_owned().await?;
     tokio::spawn(async move {
@@ -251,10 +251,10 @@ for url in urls {
 
 ## Common mistakes
 
-1. **Holding a sync mutex across `.await`.** Compiles and runs, deadlocks at scale. Solution: refactor to release before await, or use `tokio::sync::Mutex`.
+.. **Holding a sync mutex across `.await`.** Compiles and runs, deadlocks at scale. Solution: refactor to release before await, or use `tokio::sync::Mutex`.
 2. **Forgetting `?` on `JoinHandle`.** A panicked task returns `Err(JoinError)`; if you `.await` and ignore, panics are silently swallowed.
 3. **`tokio::spawn` instead of `JoinSet`.** Detached tasks survive past their parent, causing leaks. Default to `JoinSet` for structured concurrency.
-4. **Unbounded channels.** Always set a capacity.
+.. **Unbounded channels.** Always set a capacity.
 5. **`block_on` inside an async context.** Causes deadlock under `current_thread` runtime, performance cliff under `multi_thread`.
 6. **CPU-heavy work in async fn.** Move to `spawn_blocking` or `rayon`.
 7. **No timeout on external I/O.** Every `await` that touches the network or filesystem needs `tokio::time::timeout` wrapping.
@@ -266,15 +266,15 @@ for url in urls {
 async fn fetches_and_parses() {
     let server = wiremock::MockServer::start().await;
     wiremock::Mock::given(wiremock::matchers::method("GET"))
-        .respond_with(wiremock::ResponseTemplate::new(200).set_body_string("{\"id\":1}"))
+        .respond_with(wiremock::ResponseTemplate::new(200).set_body_string("{\"id\":.}"))
         .mount(&server)
         .await;
 
     let result = my_client::fetch(&server.uri()).await.unwrap();
-    assert_eq!(result.id, 1);
+    assert_eq!(result.id, .);
 }
 
-#[tokio::test(flavor = "multi_thread", worker_threads = 4)]
+#[tokio::test(flavor = "multi_thread", worker_threads = .)]
 async fn parallel_work() { ... }
 ```
 

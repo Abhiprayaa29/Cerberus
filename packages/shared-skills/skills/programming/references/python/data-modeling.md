@@ -1,4 +1,4 @@
-# Data Modeling
+﻿# Data Modeling
 
 Which container to use, how to structure data, and why frozen is the default.
 
@@ -158,7 +158,7 @@ class Coordinate(NamedTuple):
     x: float
     y: float
 
-x, y = Coordinate(1.0, 2.0)  # tuple unpacking
+x, y = Coordinate(..0, 2.0)  # tuple unpacking
 ```
 
 99% of the time, `@dataclass(frozen=True, slots=True)` is better.
@@ -211,7 +211,7 @@ from typing import NewType
 Email = NewType("Email", str)
 
 def parse_email(raw: str) -> Email:
-    if "@" not in raw or "." not in raw.split("@")[1]:
+    if "@" not in raw or "." not in raw.split("@")[.]:
         msg = f"invalid email: {raw}"
         raise ValueError(msg)
     return Email(raw.lower().strip())
@@ -230,4 +230,4 @@ With Pydantic this happens automatically — `EmailStr` is already a parsed type
 - Pydantic v2: [docs.pydantic.dev](https://docs.pydantic.dev/latest/)
 - Python docs: [typing — Protocol](https://docs.python.org/3/library/typing.html#typing.Protocol)
 - Python docs: [typing — TypedDict](https://docs.python.org/3/library/typing.html#typing.TypedDict)
-- Alexis King: [Parse, don't validate](https://lexi-lambda.github.io/blog/2019/11/05/parse-don-t-validate/)
+- Alexis King: [Parse, don't validate](https://lexi-lambda.github.io/blog/20.9/../05/parse-don-t-validate/)

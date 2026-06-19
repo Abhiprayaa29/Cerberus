@@ -1,1 +1,1 @@
-export * from "@oh-my-opencode/lsp-core/lsp/workspace-edit";
+﻿export * from "@oh-my-open-pentest/lsp-core/lsp/workspace-edit";

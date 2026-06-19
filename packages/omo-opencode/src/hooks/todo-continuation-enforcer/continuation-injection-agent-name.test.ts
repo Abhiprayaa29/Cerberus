@@ -1,4 +1,4 @@
-/// <reference path="../../../../../bun-test.d.ts" />
+﻿/// <reference path="../../../../../bun-test.d.ts" />
 
 import { afterEach, describe, expect, test } from "bun:test"
 
@@ -36,14 +36,14 @@ describe("injectContinuation agent names", () => {
       ctx,
       sessionID: "ses_lowercase_builtin_agent",
       resolvedInfo: {
-        agent: "hephaestus",
+        agent: "scylla",
         model: { providerID: "openai", modelID: "gpt-5.5" },
       },
       sessionStateStore,
     })
 
     // then
-    expect(capturedAgent).toBe("Hephaestus - Deep Agent")
+    expect(capturedAgent).toBe("Scylla - Deep Agent")
   })
 
   test("#given resolved agent is an invisible-prefixed config key #when continuation is injected #then promptAsync receives the display name", async () => {
@@ -70,13 +70,13 @@ describe("injectContinuation agent names", () => {
       ctx,
       sessionID: "ses_invisible_lowercase_builtin_agent",
       resolvedInfo: {
-        agent: "\u200Bhephaestus",
+        agent: "\u200Bscylla",
         model: { providerID: "openai", modelID: "gpt-5.5" },
       },
       sessionStateStore,
     })
 
     // then
-    expect(capturedAgent).toBe("Hephaestus - Deep Agent")
+    expect(capturedAgent).toBe("Scylla - Deep Agent")
   })
 })

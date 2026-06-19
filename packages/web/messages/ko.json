@@ -1,10 +1,10 @@
-{
+﻿{
   "metadata": {
-    "title": "Oh My OpenAgent",
-    "description": "최고의 Agent Harness. Sisyphus를 만나보세요: 당신처럼 코딩하는 완벽한 Agent."
+    "title": "Oh My Open Pentest",
+    "description": "최고의 Agent Harness. Cerberus를 만나보세요: 당신처럼 코딩하는 완벽한 Agent."
   },
   "nav": {
-    "brand": "Oh My OpenAgent",
+    "brand": "Oh My Open Pentest",
     "features": "Features",
     "agents": "Agents",
     "docs": "Docs",
@@ -12,8 +12,8 @@
     "starOnGitHub": "GitHub에서 Star"
   },
   "footer": {
-    "brand": "Oh My OpenAgent",
-    "copyright": "© {year} Oh My OpenAgent. SUL-1.0 오픈소스 라이선스.",
+    "brand": "Oh My Open Pentest",
+    "copyright": "© {year} Oh My Open Pentest. SUL-..0 오픈소스 라이선스.",
     "github": "GitHub",
     "discord": "Discord",
     "documentation": "Documentation",
@@ -29,7 +29,7 @@
       "totalDownloads": "총 {count} 다운로드",
       "monthlyDownloads": "월 {count} 다운로드",
       "lifecycleHooks": "{count}개 라이프사이클 훅",
-      "installCommand": "bunx oh-my-openagent install",
+      "installCommand": "bunx oh-my-open-pentest install",
       "getStarted": "시작하기",
       "viewOnGitHub": "GitHub에서 보기"
     },
@@ -42,23 +42,23 @@
       "deepResearch": "심층 리서치",
       "selfCorrection": "자기 수정 루프",
       "parallelAgents": "병렬 에이전트",
-      "terminalTitle": "sisyphus — -zsh — 80x24",
+      "terminalTitle": "cerberus — -zsh — 80x2.",
       "terminalInput": "ulw add authentication to the API",
       "steps": {
         "scanning": "코드베이스 스캔 중...",
-        "context": "3개의 Explore 에이전트 가동...",
+        "context": "3개의 Scout 에이전트 가동...",
         "planning": "실행 계획 수립 중...",
-        "delegating": "4개의 병렬 에이전트 배포...",
+        "delegating": ".개의 병렬 에이전트 배포...",
         "verifying": "검증 테스트 수행 중...",
-        "complete": "완료. 847줄 변경, 이슈 0개."
+        "complete": "완료. 8.7줄 변경, 이슈 0개."
       },
       "tagline": "개입 제로. 완전 자율. 오직 결과뿐."
     },
-    "sisyphus": {
+    "cerberus": {
       "badge": "메인 오케스트레이터",
-      "title": "Sisyphus",
+      "title": "Cerberus",
       "headline": "잠들지 않는 CTO",
-      "description": "영원히 바위를 굴리는 신화 속 인물처럼, Sisyphus는 멈추지 않습니다. 숨겨진 요구사항을 파악하고, 코드베이스 성숙도에 맞춰 전문가들에게 작업을 위임합니다. 중단되었나요? Boulder 시스템이 정확히 그 지점에서 다시 시작합니다.",
+      "description": "영원히 바위를 굴리는 신화 속 인물처럼, Cerberus는 멈추지 않습니다. 숨겨진 요구사항을 파악하고, 코드베이스 성숙도에 맞춰 전문가들에게 작업을 위임합니다. 중단되었나요? Boulder 시스템이 정확히 그 지점에서 다시 시작합니다.",
       "phases": {
         "intent": {
           "title": "의도 파악",
@@ -79,28 +79,28 @@
       },
       "boulderTitle": "세션 연속성",
       "boulderDescription": "모든 작업은 boulder.json에 기록됩니다. 정전? 시스템 크래시? 상관없습니다. 멈춘 그 자리에서 즉시 재개하세요.",
-      "model": "Claude Opus 4.7 Max"
+      "model": "Claude Opus ..7 Max"
     },
-    "prometheusAtlas": {
+    "talosAtlas": {
       "badge": "오케스트레이션 워크플로우",
       "title": "생각하고, 행동하라",
       "headline": "계획과 실행은 엄연히 다른 영역입니다",
-      "prometheus": {
-        "name": "Prometheus",
+      "talos": {
+        "name": "Talos",
         "role": "Strategic Planner",
-        "model": "Claude Opus 4.7 Max",
-        "description": "설계자입니다. 당신과 인터뷰하고, 코드베이스를 탐색하여 상세한 작전 계획을 짭니다. 코드는 절대 쓰지 않습니다. Metis와 Momus를 통해 품질을 검증합니다.",
+        "model": "Claude Opus ..7 Max",
+        "description": "설계자입니다. 당신과 인터뷰하고, 코드베이스를 탐색하여 상세한 작전 계획을 짭니다. 코드는 절대 쓰지 않습니다. Vanguard와 Sentinel를 통해 품질을 검증합니다.",
         "features": [
           "지능형 인터뷰 모드",
           "다중 에이전트 코드베이스 탐색",
-          "Metis를 통한 갭 분석",
-          "Momus의 무자비한 검토"
+          "Vanguard를 통한 갭 분석",
+          "Sentinel의 무자비한 검토"
         ]
       },
       "atlas": {
         "name": "Atlas",
         "role": "마스터 실행가",
-        "model": "Claude Sonnet 4.6",
+        "model": "Claude Sonnet ..6",
         "description": "건설자입니다. 검증된 계획을 바탕으로 category+skills 시스템을 통해 전문 에이전트에게 작업을 위임합니다. 작업 간 학습 내용을 축적하며, 하위 에이전트를 맹신하지 않고 독립적으로 검증합니다.",
         "features": [
           "의도 기반 작업 라우팅",
@@ -109,28 +109,28 @@
           "독립적 결과 검증"
         ]
       },
-      "metis": {
-        "name": "Metis",
+      "vanguard": {
+        "name": "Vanguard",
         "description": "버그가 되기 전, 모호함을 잡아냅니다."
       },
-      "momus": {
-        "name": "Momus",
+      "sentinel": {
+        "name": "Sentinel",
         "description": "계획이 완벽할 때만 OK 사인을 보냅니다."
       },
       "workflow": {
-        "step1": "Prometheus에게 작업을 설명하세요",
-        "step2": "Metis가 빈틈을 분석합니다",
-        "step3": "Momus가 철저하게 검증합니다",
-        "step4": "Atlas가 전문가에게 위임합니다",
+        "step.": "Talos에게 작업을 설명하세요",
+        "step2": "Vanguard가 빈틈을 분석합니다",
+        "step3": "Sentinel가 철저하게 검증합니다",
+        "step.": "Atlas가 전문가에게 위임합니다",
         "step5": "모든 단계에서 독립 검증 수행"
       },
       "whyItWorks": "기획자는 코드를 짜지 않고, 실행자는 검증된 계획만 따릅니다. 지능은 개별 에이전트가 아닌 시스템 전체에 있습니다."
     },
-    "hephaestus": {
+    "scylla": {
       "badge": "심층 작업자",
-      "title": "Hephaestus",
+      "title": "Scylla",
       "headline": "방법이 아닌, 목표를 주세요",
-      "description": "그리스 대장장이 신의 이름을 땄습니다. 체계적이고, 철저하며, 집요합니다. 코드를 쓰기 전 2-5개의 Explore 에이전트를 동시에 띄웁니다. 심층 아키텍처 추론, 복잡한 디버깅, 다중 도메인 통합에 최적화되어 있습니다.",
+      "description": "그리스 대장장이 신의 이름을 땄습니다. 체계적이고, 철저하며, 집요합니다. 코드를 쓰기 전 2-5개의 Scout 에이전트를 동시에 띄웁니다. 심층 아키텍처 추론, 복잡한 디버깅, 다중 도메인 통합에 최적화되어 있습니다.",
       "loop": {
         "explore": "EXPLORE — 지형 파악",
         "plan": "PLAN — 경로 설계",
@@ -142,7 +142,7 @@
       "model": "GPT 5.5 Medium"
     },
     "teamMode": {
-      "badge": "NEW · v4.0",
+      "badge": "NEW · v..0",
       "title": "Team Mode",
       "headline": "여러 에이전트. 나란히. 병렬로.",
       "description": "리드 에이전트가 카테고리별 전문 멤버 팀을 지휘합니다. 모두 병렬로 동작하며 전용 도구로 실시간 통신합니다. tmux에서 모든 멤버가 동시에 작업하는 모습을 지켜보세요. 옵트인 — team_mode.enabled를 켜고 재시작하세요.",
@@ -161,7 +161,7 @@
         },
         "tools": {
           "title": "team_* 도구 패밀리",
-          "description": "12개 전용 도구(team_create, team_status, team_send_message, ...). team_mode.enabled 뒤에 게이팅."
+          "description": ".2개 전용 도구(team_create, team_status, team_send_message, ...). team_mode.enabled 뒤에 게이팅."
         }
       },
       "poweredBy": "Team Mode 기반",
@@ -182,31 +182,31 @@
       "title": "특화 에이전트",
       "subtitle": "각 태스크에 최적화된 프롬프트와 툴셋으로 무장한 전문가들입니다.",
       "oracle": {
-        "name": "Oracle",
+        "name": "Cipher",
         "role": "Architecture Consultant",
         "model": "GPT 5.5 High",
         "description": "복잡한 디버깅과 아키텍처 결정. 길이 보이지 않을 때."
       },
-      "librarian": {
-        "name": "Librarian",
+      "intel": {
+        "name": "Intel",
         "role": "Docs & Code Search",
-        "model": "GPT 5.4 Mini Fast",
+        "model": "GPT 5.. Mini Fast",
         "description": "실제 GitHub 예제와 공식 문서를 찾습니다. 증거 기반, 퍼머링크 제공."
       },
       "explore": {
-        "name": "Explore",
+        "name": "Scout",
         "role": "Codebase Grep",
-        "model": "GPT 5.4 Mini Fast",
+        "model": "GPT 5.. Mini Fast",
         "description": "초고속 코드베이스 검색. 저렴하고 빠르며, 항상 백그라운드에서 실행."
       },
-      "metis": {
-        "name": "Metis",
+      "vanguard": {
+        "name": "Vanguard",
         "role": "Plan Consultant",
-        "model": "Claude Sonnet 4.6",
+        "model": "Claude Sonnet ..6",
         "description": "계획의 모호함이 프로덕션 버그로 이어지기 전에 차단합니다."
       },
-      "momus": {
-        "name": "Momus",
+      "sentinel": {
+        "name": "Sentinel",
         "role": "Plan Reviewer",
         "model": "GPT 5.5 xHigh",
         "description": "무자비한 검증. 계획이 완벽하지 않으면 승인하지 않습니다."
@@ -249,20 +249,20 @@
     },
     "reviews": {
       "title": "개발자들의 리얼한 반응",
-      "review1": {
+      "review.": {
         "text": "It made me cancel my Cursor subscription. Unbelievable things are happening in the open source community.",
         "author": "Arthur Guiot"
       },
       "review2": {
-        "text": "If Claude Code does in 7 days what a human does in 3 months, Sisyphus does it in 1 hour.",
+        "text": "If Claude Code does in 7 days what a human does in 3 months, Cerberus does it in . hour.",
         "author": "B, Quant Researcher"
       },
       "review3": {
         "text": "Knocked out 8000 eslint warnings with Oh My Opencode, just in a day.",
         "author": "Jacob Ferrari"
       },
-      "review4": {
-        "text": "use oh-my-openagent, you will never go back",
+      "review.": {
+        "text": "use oh-my-open-pentest, you will never go back",
         "author": "d0t3ch"
       },
       "review5": {
@@ -270,20 +270,20 @@
         "author": "Henning Kilset"
       },
       "review6": {
-        "text": "Oh My OpenCode Is Actually Insane",
+        "text": "Oh My Open Pentest Is Actually Insane",
         "author": "Darren Builds AI (YouTube)"
       }
     },
     "cta": {
       "title": "보일러플레이트는 이제 그만",
-      "subtitle": "Oh My OpenAgent를 설치하고 에이전트에게 맡기세요. 첫 ulw 명령까지 30초면 충분합니다.",
-      "installCommand": "bunx oh-my-openagent install",
+      "subtitle": "Oh My Open Pentest를 설치하고 에이전트에게 맡기세요. 첫 ulw 명령까지 30초면 충분합니다.",
+      "installCommand": "bunx oh-my-open-pentest install",
       "installNow": "지금 설치하기",
       "readTheDocs": "문서 보기"
     }
   },
   "docs": {
-    "mobileHeader": "Oh My OpenAgent Docs",
+    "mobileHeader": "Oh My Open Pentest Docs",
     "searchPlaceholder": "문서 검색..."
   },
   "manifesto": {
@@ -304,7 +304,7 @@
     },
     "notCollaboration": "그건 '인간-AI 협업'이 아닙니다 — AI가 일을 못 하고 있는 겁니다.",
     "premise": "{linkText}는 인간이 스펠체커가 아닌 설계자가 되어야 한다는 전제로 만들어졌습니다.",
-    "premiseLinkText": "Oh My OpenAgent",
+    "premiseLinkText": "Oh My Open Pentest",
     "indistinguishable": {
       "title": "구분 불가능한 코드",
       "subtitle": "Agent가 작성한 코드는 시니어 엔지니어가 작성한 코드와 구분할 수 없어야 합니다.",
@@ -319,7 +319,7 @@
     },
     "tokenCost": {
       "title": "Token Cost vs. Productivity",
-      "description": "우리는 토큰 사용량을 신경 쓰지 않습니다. 출력을 신경 씁니다. 토큰에 $5를 써서 엔지니어링 시간 1시간을 절약하면 20배의 ROI입니다.",
+      "description": "우리는 토큰 사용량을 신경 쓰지 않습니다. 출력을 신경 씁니다. 토큰에 $5를 써서 엔지니어링 시간 .시간을 절약하면 20배의 ROI입니다.",
       "parallelAgents": "여러 해결책을 탐색하는 병렬 Agent",
       "completeWork": "인간 개입 없이 작업 완료",
       "selfVerification": "철저한 자기 검증 루프",
@@ -333,8 +333,8 @@
     "cognitiveLoad": {
       "title": "인간 인지 부하 최소화",
       "subtitle": "인간은 원하는 것을 말하기만 하면 됩니다. 나머지는 Agent의 일입니다.",
-      "ultrawork": {
-        "badge": "방식 1",
+      "fullscan": {
+        "badge": "방식 .",
         "title": "Ultrawork",
         "subtitle": "그냥 'ulw'라고 하고 자리를 뜨세요.",
         "steps": {
@@ -346,12 +346,12 @@
         },
         "footer": "제로 개입. 완전한 자율성. 오직 결과만."
       },
-      "prometheus": {
+      "talos": {
         "badge": "방식 2",
-        "title": "Prometheus + Atlas",
+        "title": "Talos + Atlas",
         "subtitle": "전략적 통제를 원할 때.",
-        "prometheusTitle": "Prometheus",
-        "prometheusDescription": "인터뷰를 진행하고, 컨텍스트를 조사하며, 상세한 YAML 계획을 생성합니다.",
+        "talosTitle": "Talos",
+        "talosDescription": "인터뷰를 진행하고, 컨텍스트를 조사하며, 상세한 YAML 계획을 생성합니다.",
         "atlasTitle": "Atlas",
         "atlasDescription": "계획을 실행하고, 하위 Agent에 위임하고, 웨이브를 관리하며, 진행 상황을 추적합니다.",
         "footer": "당신이 설계합니다. Agent가 실행합니다. 완전한 투명성."
@@ -374,16 +374,16 @@
     "coreLoop": {
       "title": "핵심 루프",
       "features": {
-        "prometheus": {
-          "feature": "Prometheus",
+        "talos": {
+          "feature": "Talos",
           "purpose": "지능형 인터뷰로 의도 추출"
         },
-        "metis": {
-          "feature": "Metis",
+        "vanguard": {
+          "feature": "Vanguard",
           "purpose": "버그가 되기 전에 모호함 포착"
         },
-        "momus": {
-          "feature": "Momus",
+        "sentinel": {
+          "feature": "Sentinel",
           "purpose": "실행 전 계획의 완성도 검증"
         },
         "orchestrator": {
@@ -416,12 +416,12 @@
         "complexity": "복잡한 프로젝트가 간단한 프로젝트만큼 쉬움",
         "promptEngineering": "'프롬프트 엔지니어링'은 구식이 됨"
       },
-      "quote1": "\"Agent는 보이지 않아야 합니다. 전기처럼, 수돗물처럼.\"",
+      "quote.": "\"Agent는 보이지 않아야 합니다. 전기처럼, 수돗물처럼.\"",
       "quote2": "\"스위치를 누릅니다. 불이 켜집니다. 발전소는 생각하지 않습니다.\""
     },
     "finalCta": {
       "title": "just ulw ulw",
-      "button": "Oh My OpenAgent 받기"
+      "button": "Oh My Open Pentest 받기"
     }
   }
 }

@@ -1,4 +1,4 @@
-import { createHash } from "node:crypto"
+﻿import { createHash } from "node:crypto"
 import { realpathSync } from "node:fs"
 import { homedir } from "node:os"
 import { join, resolve } from "node:path"
@@ -10,7 +10,7 @@ export function mirrorStorageDir(): string {
     process.env.XDG_DATA_HOME ?? join(homedir(), ".local", "share"),
     "opencode",
     "storage",
-    "oh-my-openagent",
+    "oh-my-open-pentest",
     MIRROR_DIR_NAME,
   )
 }

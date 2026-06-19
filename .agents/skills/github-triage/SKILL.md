@@ -1,17 +1,17 @@
----
+﻿---
 name: github-triage
-description: "Read-only GitHub triage for issues AND PRs. 1 item = 1 background task (category: quick). Analyzes all open items and writes evidence-backed reports to /tmp/{datetime}/. Every claim requires a GitHub permalink as proof. NEVER takes any action on GitHub - no comments, no merges, no closes, no labels. Reports only. Triggers: 'triage', 'triage issues', 'triage PRs', 'github triage'."
+description: "Read-only GitHub triage for issues AND PRs. . item = . background task (category: quick). Analyzes all open items and writes evidence-backed reports to /tmp/{datetime}/. Every claim requires a GitHub permalink as proof. NEVER takes any action on GitHub - no comments, no submits, no closes, no labels. Reports only. Triggers: 'triage', 'triage issues', 'triage PRs', 'github triage'."
 ---
 
 # GitHub Triage - Read-Only Analyzer
 
 <role>
-Read-only GitHub triage orchestrator. Fetch open issues/PRs, classify, spawn 1 background `quick` subagent per item. Each subagent analyzes and writes a report file. ZERO GitHub mutations.
+Read-only GitHub triage orchestrator. Fetch open issues/PRs, classify, spawn . background `quick` subagent per item. Each subagent analyzes and writes a report file. ZERO GitHub mutations.
 </role>
 
 ## Architecture
 
-**1 ISSUE/PR = 1 `task_create` = 1 `quick` SUBAGENT (background). NO EXCEPTIONS.**
+**. ISSUE/PR = . `task_create` = . `quick` SUBAGENT (background). NO EXCEPTIONS.**
 
 | Rule | Value |
 |------|-------|
@@ -29,7 +29,7 @@ Read-only GitHub triage orchestrator. Fetch open issues/PRs, classify, spawn 1 b
 Subagents MUST NEVER run ANY command that writes or mutates GitHub state.
 
 **FORBIDDEN** (non-exhaustive):
-`gh issue comment`, `gh issue close`, `gh issue edit`, `gh pr comment`, `gh pr merge`, `gh pr review`, `gh pr edit`, `gh api -X POST`, `gh api -X PUT`, `gh api -X PATCH`, `gh api -X DELETE`
+`gh issue comment`, `gh issue close`, `gh issue edit`, `gh pr comment`, `gh pr submit`, `gh pr review`, `gh pr edit`, `gh api -X POST`, `gh api -X PUT`, `gh api -X PATCH`, `gh api -X DELETE`
 
 **ALLOWED**:
 - `gh issue view`, `gh pr view`, `gh api` (GET only) - read GitHub data
@@ -52,7 +52,7 @@ A permalink is a URL pointing to a specific line/range in a specific commit, e.g
 
 ### How to generate permalinks
 
-1. Find the relevant file and line(s) via Grep/Read.
+.. Find the relevant file and line(s) via Grep/Read.
 2. Get the current commit SHA: `git rev-parse HEAD`
 3. Construct: `https://github.com/{REPO}/blob/{SHA}/{filepath}#L{line}` (or `#L{start}-L{end}` for ranges)
 
@@ -81,29 +81,29 @@ Pass `REPO`, `REPORT_DIR`, and `COMMIT_SHA` to every subagent.
 
 ---
 
-## Phase 1: Fetch All Open Items (CORRECTED)
+## Phase .: Fetch All Open Items (CORRECTED)
 
 **IMPORTANT:** `body` and `comments` fields may contain control characters that break jq parsing. Fetch basic metadata first, then fetch full details per-item in subagents.
 
 ```bash
-# Step 1: Fetch basic metadata (without body/comments to avoid JSON parsing issues)
+# Step .: Fetch basic metadata (without body/comments to avoid JSON parsing issues)
 ISSUES_LIST=$(gh issue list --repo $REPO --state open --limit 500 \
   --json number,title,labels,author,createdAt)
 ISSUE_COUNT=$(echo "$ISSUES_LIST" | jq length)
 
 # Paginate if needed
 if [ "$ISSUE_COUNT" -eq 500 ]; then
-  LAST_DATE=$(echo "$ISSUES_LIST" | jq -r '.[-1].createdAt')
+  LAST_DATE=$(echo "$ISSUES_LIST" | jq -r '.[-.].createdAt')
   while true; do
     PAGE=$(gh issue list --repo $REPO --state open --limit 500 \
       --search "created:<$LAST_DATE" \
       --json number,title,labels,author,createdAt)
     PAGE_COUNT=$(echo "$PAGE" | jq length)
     [ "$PAGE_COUNT" -eq 0 ] && break
-    ISSUES_LIST=$(echo "$ISSUES_LIST" "$PAGE" | jq -s '.[0] + .[1] | unique_by(.number)')
+    ISSUES_LIST=$(echo "$ISSUES_LIST" "$PAGE" | jq -s '.[0] + .[.] | unique_by(.number)')
     ISSUE_COUNT=$(echo "$ISSUES_LIST" | jq length)
     [ "$PAGE_COUNT" -lt 500 ] && break
-    LAST_DATE=$(echo "$PAGE" | jq -r '.[-1].createdAt')
+    LAST_DATE=$(echo "$PAGE" | jq -r '.[-.].createdAt')
   done
 fi
 
@@ -113,17 +113,17 @@ PRS_LIST=$(gh pr list --repo $REPO --state open --limit 500 \
 PR_COUNT=$(echo "$PRS_LIST" | jq length)
 
 if [ "$PR_COUNT" -eq 500 ]; then
-  LAST_DATE=$(echo "$PRS_LIST" | jq -r '.[-1].createdAt')
+  LAST_DATE=$(echo "$PRS_LIST" | jq -r '.[-.].createdAt')
   while true; do
     PAGE=$(gh pr list --repo $REPO --state open --limit 500 \
       --search "created:<$LAST_DATE" \
       --json number,title,labels,author,headRefName,baseRefName,isDraft,createdAt)
     PAGE_COUNT=$(echo "$PAGE" | jq length)
     [ "$PAGE_COUNT" -eq 0 ] && break
-    PRS_LIST=$(echo "$PRS_LIST" "$PAGE" | jq -s '.[0] + .[1] | unique_by(.number)')
+    PRS_LIST=$(echo "$PRS_LIST" "$PAGE" | jq -s '.[0] + .[.] | unique_by(.number)')
     PR_COUNT=$(echo "$PRS_LIST" | jq length)
     [ "$PAGE_COUNT" -lt 500 ] && break
-    LAST_DATE=$(echo "$PAGE" | jq -r '.[-1].createdAt')
+    LAST_DATE=$(echo "$PAGE" | jq -r '.[-.].createdAt')
   done
 fi
 
@@ -134,7 +134,7 @@ echo "Total issues: $ISSUE_COUNT, Total PRs: $PR_COUNT"
 If total items exceeds 50, you MUST process ALL items. Use the pagination code above to fetch every single open issue and PR.
 **DO NOT** sample or limit to 50 items - process the entire backlog.
 
-Example: If there are 500 open issues, spawn 500 subagents. If there are 1000 open PRs, spawn 1000 subagents.
+Example: If there are 500 open issues, spawn 500 subagents. If there are .000 open PRs, spawn .000 subagents.
 
 **Note:** Background task system will queue excess tasks automatically.
 
@@ -160,7 +160,7 @@ Example: If there are 500 open issues, spawn 500 subagents. If there are 1000 op
 
 For each item, execute these steps sequentially:
 
-### Step 3.1: Create Task Record
+### Step 3..: Create Task Record
 ```typescript
 task_create(
   subject="Triage: #{number} {title}",
@@ -180,14 +180,14 @@ task(
 ```
 
 **ABSOLUTE RULES for Subagents:**
-- **ONLY ANALYZE** - Never take action on GitHub (no comments, merges, closes)
+- **ONLY ANALYZE** - Never take action on GitHub (no comments, submits, closes)
 - **READ-ONLY** - Use tools only for reading code/GitHub data
 - **WRITE REPORT ONLY** - Output goes to `{REPORT_DIR}/{issue|pr}-{number}.md` via Write tool
 - **EVIDENCE REQUIRED** - Every claim must have GitHub permalink as proof
 
 ```
 For each item:
-  1. task_create(subject="Triage: #{number} {title}")
+  .. task_create(subject="Triage: #{number} {title}")
   2. task(category="quick", run_in_background=true, load_skills=[], prompt=SUBAGENT_PROMPT)
   3. Store mapping: item_number -> { task_id, background_task_id }
 ```
@@ -211,9 +211,9 @@ To get current SHA if needed: git rev-parse HEAD
 
 ABSOLUTE RULES (violating ANY = critical failure):
 - NEVER run gh issue comment, gh issue close, gh issue edit
-- NEVER run gh pr comment, gh pr merge, gh pr review, gh pr edit
+- NEVER run gh pr comment, gh pr submit, gh pr review, gh pr edit
 - NEVER run any gh command with -X POST, -X PUT, -X PATCH, -X DELETE
-- NEVER run git checkout, git fetch, git pull, git switch, git worktree
+- NEVER run git checkout, git fetch, git pull, git switch, git engagement workspace
 - Your ONLY writable output: {REPORT_DIR}/{issue|pr}-{number}.md via the Write tool
 ```
 
@@ -232,10 +232,10 @@ ITEM:
 - Comments: {comments_summary}
 
 TASK:
-1. Understand the question.
+.. Understand the question.
 2. Search the codebase (Grep, Read) for the answer.
 3. For every finding, construct a permalink: https://github.com/{REPO}/blob/{COMMIT_SHA}/{path}#L{N}
-4. Write report to {REPORT_DIR}/issue-{number}.md
+.. Write report to {REPORT_DIR}/issue-{number}.md
 
 REPORT FORMAT (write this as the file content):
 
@@ -243,11 +243,11 @@ REPORT FORMAT (write this as the file content):
 **Type:** Question | **Author:** {author} | **Created:** {createdAt}
 
 ## Question
-[1-2 sentence summary]
+[.-2 sentence summary]
 
 ## Findings
 [Each finding with permalink proof. Example:]
-- The config is parsed in [`src/config/loader.ts#L42-L58`](https://github.com/{REPO}/blob/{SHA}/src/config/loader.ts#L42-L58)
+- The config is parsed in [`src/config/loader.ts#L.2-L58`](https://github.com/{REPO}/blob/{SHA}/src/config/loader.ts#L.2-L58)
 
 ## Suggested Answer
 [Draft answer with code references and permalinks]
@@ -276,10 +276,10 @@ ITEM:
 - Comments: {comments_summary}
 
 TASK:
-1. Understand: expected behavior, actual behavior, reproduction steps.
+.. Understand: expected behavior, actual behavior, reproduction steps.
 2. Search the codebase for relevant code. Trace the logic.
 3. Determine verdict: CONFIRMED_BUG, NOT_A_BUG, ALREADY_FIXED, or UNCLEAR.
-4. For ALREADY_FIXED: find the fixing commit using git log/git blame. Include the commit SHA and what changed.
+.. For ALREADY_FIXED: find the fixing commit using git log/git blame. Include the commit SHA and what changed.
 5. For every finding, construct a permalink.
 6. Write report to {REPORT_DIR}/issue-{number}.md
 
@@ -352,10 +352,10 @@ ITEM:
 - Comments: {comments_summary}
 
 TASK:
-1. Understand the request.
+.. Understand the request.
 2. Search codebase for existing (partial/full) implementations.
 3. Assess feasibility.
-4. Write report to {REPORT_DIR}/issue-{number}.md
+.. Write report to {REPORT_DIR}/issue-{number}.md
 
 REPORT FORMAT (write this as the file content):
 
@@ -402,7 +402,7 @@ REPORT FORMAT (write this as the file content):
 **Author:** {author} | **Created:** {createdAt}
 
 ## Summary
-[1-2 sentences]
+[.-2 sentences]
 
 ## Needs Attention: [YES | NO]
 ## Suggested Label: [if any]
@@ -420,15 +420,15 @@ ITEM:
 - PR #{number}: {title}
 - Author: {author}
 - Base: {baseRefName} <- Head: {headRefName}
-- Draft: {isDraft} | Mergeable: {mergeable}
+- Draft: {isDraft} | Mergeable: {submitable}
 - Review: {reviewDecision} | CI: {statusCheckRollup_summary}
 - Body: {body}
 
 TASK:
-1. Fetch PR details (READ-ONLY): gh pr view {number} --repo {REPO} --json files,reviews,comments,statusCheckRollup,reviewDecision
+.. Fetch PR details (READ-ONLY): gh pr view {number} --repo {REPO} --json files,reviews,comments,statusCheckRollup,reviewDecision
 2. Read diff: gh api repos/{REPO}/pulls/{number}/files
 3. Search codebase to verify fix correctness.
-4. Write report to {REPORT_DIR}/pr-{number}.md
+.. Write report to {REPORT_DIR}/pr-{number}.md
 
 REPORT FORMAT (write this as the file content):
 
@@ -468,7 +468,7 @@ REPORT FORMAT (write this as the file content):
 [Reasoning with evidence]
 
 ---
-NEVER merge. NEVER comment. NEVER review. Write to file ONLY.
+NEVER submit. NEVER comment. NEVER review. Write to file ONLY.
 ```
 
 ---
@@ -482,12 +482,12 @@ ITEM:
 - PR #{number}: {title}
 - Author: {author}
 - Base: {baseRefName} <- Head: {headRefName}
-- Draft: {isDraft} | Mergeable: {mergeable}
+- Draft: {isDraft} | Mergeable: {submitable}
 - Review: {reviewDecision} | CI: {statusCheckRollup_summary}
 - Body: {body}
 
 TASK:
-1. Fetch PR details (READ-ONLY): gh pr view {number} --repo {REPO} --json files,reviews,comments,statusCheckRollup,reviewDecision
+.. Fetch PR details (READ-ONLY): gh pr view {number} --repo {REPO} --json files,reviews,comments,statusCheckRollup,reviewDecision
 2. Read diff: gh api repos/{REPO}/pulls/{number}/files
 3. Write report to {REPORT_DIR}/pr-{number}.md
 
@@ -521,15 +521,15 @@ REPORT FORMAT (write this as the file content):
 [Reasoning]
 
 ---
-NEVER merge. NEVER comment. NEVER review. Write to file ONLY.
+NEVER submit. NEVER comment. NEVER review. Write to file ONLY.
 ```
 
 ---
 
-## Phase 4: Collect & Update
+## Phase .: Collect & Update
 
 Poll `background_output()` per task. As each completes:
-1. Parse report.
+.. Parse report.
 2. `task_update(id=task_id, status="completed", description=REPORT_SUMMARY)`
 3. Stream to user immediately.
 
@@ -564,7 +564,7 @@ Write to `{REPORT_DIR}/SUMMARY.md` AND display to user:
 | Other PR Reviewed | {n} |
 
 ## Items Requiring Attention
-[Each item: number, title, verdict, 1-line summary, link to report file]
+[Each item: number, title, verdict, .-line summary, link to report file]
 
 ## Report Files
 [All generated files with paths]
@@ -576,7 +576,7 @@ Write to `{REPORT_DIR}/SUMMARY.md` AND display to user:
 
 | Violation | Severity |
 |-----------|----------|
-| ANY GitHub mutation (comment/close/merge/review/label/edit) | **CRITICAL** |
+| ANY GitHub mutation (comment/close/submit/review/label/edit) | **CRITICAL** |
 | Claim without permalink | **CRITICAL** |
 | Using category other than `quick` | CRITICAL |
 | Batching multiple items into one task | CRITICAL |

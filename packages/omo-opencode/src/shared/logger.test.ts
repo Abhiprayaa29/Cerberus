@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 // This test file mutates the logger module's singleton state. It must run in an
 // isolated CI batch so that other test files mocking `./shared` (the barrel that
@@ -14,7 +14,7 @@ import * as path from "path"
 
 type LoggerModule = typeof import("./logger")
 
-const TEST_PREFIX = "oh-my-opencode-logger-test"
+const TEST_PREFIX = "oh-my-open-pentest-logger-test"
 
 function makeTempDir(): string {
   return fs.mkdtempSync(path.join(os.tmpdir(), `${TEST_PREFIX}-`))

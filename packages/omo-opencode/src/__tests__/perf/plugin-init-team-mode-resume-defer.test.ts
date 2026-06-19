@@ -1,4 +1,4 @@
-import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs"
+﻿import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs"
 import { tmpdir } from "node:os"
 import { join } from "node:path"
 
@@ -87,7 +87,7 @@ function seedTeamModeConfig(configDir: string, omoBaseDir: string): void {
       base_dir: omoBaseDir,
     },
   }
-  writeFileSync(join(configDir, "oh-my-openagent.json"), JSON.stringify(config, null, 2))
+  writeFileSync(join(configDir, "oh-my-open-pentest.json"), JSON.stringify(config, null, 2))
 }
 
 describe("plugin init defers team-mode resume", () => {

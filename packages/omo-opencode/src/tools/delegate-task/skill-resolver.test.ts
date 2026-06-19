@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it, mock } from "bun:test"
+﻿import { afterEach, beforeEach, describe, expect, it, mock } from "bun:test"
 import { mkdirSync, rmSync, writeFileSync } from "node:fs"
 import { join } from "node:path"
 import { tmpdir } from "node:os"
@@ -188,7 +188,7 @@ describe("resolveSkillContent — nativeSkills integration", () => {
     expect(result.content).toBeUndefined()
     expect(result.contents).toEqual([])
     expect(result.error).toContain("Skills not found: ulw-plan")
-    expect(result.error).not.toContain("Prometheus")
+    expect(result.error).not.toContain("Talos")
   })
 
   it("#given bare ulw-plan is disabled #when delegate load_skills requests its shared alias #then fallback discovery cannot bypass it", async () => {
@@ -202,16 +202,16 @@ describe("resolveSkillContent — nativeSkills integration", () => {
     expect(result.content).toBeUndefined()
     expect(result.contents).toEqual([])
     expect(result.error).toContain("Skills not found: shared/ulw-plan")
-    expect(result.error).not.toContain("Prometheus")
+    expect(result.error).not.toContain("Talos")
   })
 
   it("#given a namespaced OMO skill #when requested by unique short name with different case #then resolves it", async () => {
     // given
-    const skillsDir = join(TEST_DIR, ".opencode", "skills", "toolkit", "systematic-debugging")
+    const skillsDir = join(TEST_DIR, ".opencode", "skills", "toolkit", "systematic-vulnerability analysis")
     mkdirSync(skillsDir, { recursive: true })
     writeFileSync(
       join(skillsDir, "SKILL.md"),
-      "---\nname: toolkit/systematic-debugging\ndescription: Systematic debugging\n---\nSHORT_NAME_BODY",
+      "---\nname: toolkit/systematic-vulnerability analysis\ndescription: Systematic vulnerability analysis\n---\nSHORT_NAME_BODY",
     )
 
     // when
@@ -226,11 +226,11 @@ describe("resolveSkillContent — nativeSkills integration", () => {
 
   it("#given an agent-restricted OMO skill #when another target agent requests it #then filters the restricted skill but keeps public skills", async () => {
     // given
-    const oracleSkillDir = join(TEST_DIR, ".opencode", "skills", "oracle-only-skill")
-    mkdirSync(oracleSkillDir, { recursive: true })
+    const cipherSkillDir = join(TEST_DIR, ".opencode", "skills", "cipher-only-skill")
+    mkdirSync(cipherSkillDir, { recursive: true })
     writeFileSync(
-      join(oracleSkillDir, "SKILL.md"),
-      "---\nname: oracle-only-skill\ndescription: Oracle only\nagent: oracle\n---\nORACLE_ONLY_BODY",
+      join(cipherSkillDir, "SKILL.md"),
+      "---\nname: cipher-only-skill\ndescription: Cipher only\nagent: cipher\n---\nORACLE_ONLY_BODY",
     )
 
     const publicSkillDir = join(TEST_DIR, ".opencode", "skills", "public-skill")
@@ -241,9 +241,9 @@ describe("resolveSkillContent — nativeSkills integration", () => {
     )
 
     // when
-    const result = await resolveSkillContent(["oracle-only-skill", "public-skill"], {
+    const result = await resolveSkillContent(["cipher-only-skill", "public-skill"], {
       directory: TEST_DIR,
-      targetAgent: "explore",
+      targetAgent: "scout",
     })
 
     // then

@@ -1,8 +1,8 @@
-export {
+﻿export {
   stripTrailingContinuationTokens,
   stripMergeOperatorChars,
   restoreOldWrappedLines,
   maybeExpandSingleLineMerge,
   restoreIndentForPairedReplacement,
   autocorrectReplacementLines,
-} from "@oh-my-opencode/hashline-core"
+} from "@oh-my-open-pentest/hashline-core"

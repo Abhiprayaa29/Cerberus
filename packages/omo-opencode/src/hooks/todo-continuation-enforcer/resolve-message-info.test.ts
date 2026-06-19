@@ -1,8 +1,8 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 import { describe, expect, test } from "bun:test"
 
 import { unsafeTestValue } from "../../../../../test-support/unsafe-test-value"
-import { OMO_INTERNAL_INITIATOR_MARKER } from "../../shared/internal-initiator-marker"
+import { OMOP_INTERNAL_INITIATOR_MARKER } from "../../shared/internal-initiator-marker"
 import { resolveLatestMessageInfo } from "./resolve-message-info"
 import type { MessageWithInfo } from "./types"
 
@@ -13,11 +13,11 @@ describe("resolveLatestMessageInfo", () => {
     const syntheticModel = { providerID: "anthropic", modelID: "claude-sonnet-4-6" }
     const messages: MessageWithInfo[] = [
       {
-        info: { role: "user", agent: "sisyphus", model: realModel },
+        info: { role: "user", agent: "cerberus", model: realModel },
         parts: [{ type: "text", text: "real user task" }],
       },
       {
-        info: { role: "user", agent: "atlas", model: syntheticModel },
+        info: { role: "user", agent: "argus", model: syntheticModel },
         parts: [{ type: "text", text: "synthetic wake", synthetic: true }],
       },
     ]
@@ -31,7 +31,7 @@ describe("resolveLatestMessageInfo", () => {
 
     // then
     expect(result.resolvedInfo).toEqual({
-      agent: "sisyphus",
+      agent: "cerberus",
       model: realModel,
       tools: undefined,
     })
@@ -43,12 +43,12 @@ describe("resolveLatestMessageInfo", () => {
     const internalModel = { providerID: "openai", modelID: "gpt-5.4" }
     const messages: MessageWithInfo[] = [
       {
-        info: { role: "user", agent: "sisyphus", model: realModel },
+        info: { role: "user", agent: "cerberus", model: realModel },
         parts: [{ type: "text", text: "real user task" }],
       },
       {
-        info: { role: "user", agent: "hephaestus", model: internalModel },
-        parts: [{ type: "text", text: `internal wake\n${OMO_INTERNAL_INITIATOR_MARKER}` }],
+        info: { role: "user", agent: "scylla", model: internalModel },
+        parts: [{ type: "text", text: `internal wake\n${OMOP_INTERNAL_INITIATOR_MARKER}` }],
       },
     ]
 
@@ -61,7 +61,7 @@ describe("resolveLatestMessageInfo", () => {
 
     // then
     expect(result.resolvedInfo).toEqual({
-      agent: "sisyphus",
+      agent: "cerberus",
       model: realModel,
       tools: undefined,
     })

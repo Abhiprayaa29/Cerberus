@@ -1,4 +1,4 @@
-export const HYPERPLAN_TEMPLATE = `You are running the \`/hyperplan\` command — adversarial multi-agent planning via team-mode.
+﻿export const HYPERPLAN_TEMPLATE = `You are running the \`/hyperplan\` command — adversarial multi-agent planning via team-mode.
 
 LOAD THE HYPERPLAN SKILL IMMEDIATELY:
 
@@ -14,4 +14,4 @@ Roster contract: call \`team_create\` with category members \`unspecified-low\`,
 $ARGUMENTS
 </user-request>
 
-If team-mode is unavailable (\`team_*\` tools missing), instruct the user to set \`team_mode.enabled: true\` in \`~/.config/opencode/oh-my-opencode.jsonc\` and restart opencode.`
+If team-mode is unavailable (\`team_*\` tools missing), instruct the user to set \`team_mode.enabled: true\` in \`~/.config/opencode/oh-my-open-pentest.jsonc\` and restart opencode.`

@@ -1,11 +1,11 @@
-import { NextResponse } from "next/server"
+﻿import { NextResponse } from "next/server"
 import { getStats } from "@/lib/stats"
 
 /**
  * Shields.io endpoint badge for combined NPM downloads.
  * Usage: https://img.shields.io/endpoint?url=https://omo.dev/api/npm-downloads
  *
- * Combines downloads from both oh-my-opencode and oh-my-openagent packages.
+ * Combines downloads from both oh-my-open-pentest and oh-my-open-pentest packages.
  */
 
 function formatDownloads(num: number): string {

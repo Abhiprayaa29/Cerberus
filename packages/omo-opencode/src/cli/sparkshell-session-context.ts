@@ -1,4 +1,4 @@
-import { isRecord } from "@oh-my-opencode/utils"
+﻿import { isRecord } from "@oh-my-open-pentest/utils"
 import { existsSync, readdirSync, readFileSync } from "node:fs"
 import { homedir } from "node:os"
 import { join } from "node:path"

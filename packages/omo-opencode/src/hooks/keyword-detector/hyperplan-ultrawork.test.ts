@@ -1,4 +1,4 @@
-import { describe, expect, test, beforeEach, afterEach, spyOn } from "bun:test"
+﻿import { describe, expect, test, beforeEach, afterEach, spyOn } from "bun:test"
 import type { PluginInput } from "@opencode-ai/plugin"
 import { createKeywordDetectorHook } from "./index"
 import { setMainSession, _resetForTesting } from "../../features/claude-code-session-state"
@@ -6,7 +6,7 @@ import * as sharedModule from "../../shared"
 import * as sessionState from "../../features/claude-code-session-state"
 import { unsafeTestValue } from "../../../../../test-support/unsafe-test-value"
 
-describe("keyword-detector hyperplan-ultrawork combo", () => {
+describe("keyword-detector hyperplan-fullscan combo", () => {
   let logSpy: ReturnType<typeof spyOn>
   let getMainSessionSpy: ReturnType<typeof spyOn>
 
@@ -56,10 +56,10 @@ describe("keyword-detector hyperplan-ultrawork combo", () => {
     // when - keyword detection runs
     await hook["chat.message"]({ sessionID }, output)
 
-    // then - combo banner and embedded ultrawork content both present
+    // then - combo banner and embedded fullscan content both present
     const text = textOf(output)
-    expect(text).toContain("<hyperplan-ultrawork-mode>")
-    expect(text).toContain("<ultrawork-mode>")
+    expect(text).toContain("<hyperplan-fullscan-mode>")
+    expect(text).toContain("<fullscan-mode>")
     expect(text).toContain("refactor the auth module")
   })
 
@@ -78,8 +78,8 @@ describe("keyword-detector hyperplan-ultrawork combo", () => {
 
     // then - combo fires identically regardless of word order
     const text = textOf(output)
-    expect(text).toContain("<hyperplan-ultrawork-mode>")
-    expect(text).toContain("<ultrawork-mode>")
+    expect(text).toContain("<hyperplan-fullscan-mode>")
+    expect(text).toContain("<fullscan-mode>")
     expect(text).toContain("ship this feature")
   })
 
@@ -98,9 +98,9 @@ describe("keyword-detector hyperplan-ultrawork combo", () => {
 
     // then - combo absent, both standalone banners injected separately
     const text = textOf(output)
-    expect(text).not.toContain("<hyperplan-ultrawork-mode>")
+    expect(text).not.toContain("<hyperplan-fullscan-mode>")
     expect(text).toContain("<hyperplan-mode>")
-    expect(text).toContain("<ultrawork-mode>")
+    expect(text).toContain("<fullscan-mode>")
   })
 
   test("should suppress standalone messages when combo fires (only ONE banner injected)", async () => {
@@ -116,12 +116,12 @@ describe("keyword-detector hyperplan-ultrawork combo", () => {
     // when - keyword detection runs
     await hook["chat.message"]({ sessionID }, output)
 
-    // then - only combo banner present, standalone hyperplan suppressed, ultrawork content appears once via embed
+    // then - only combo banner present, standalone hyperplan suppressed, fullscan content appears once via embed
     const text = textOf(output)
-    expect(text).toContain("<hyperplan-ultrawork-mode>")
+    expect(text).toContain("<hyperplan-fullscan-mode>")
     expect(text).not.toContain("<hyperplan-mode>")
-    const ultraworkMatches = text.match(/<ultrawork-mode>/g) ?? []
-    expect(ultraworkMatches).toHaveLength(1)
+    const fullscanMatches = text.match(/<fullscan-mode>/g) ?? []
+    expect(fullscanMatches).toHaveLength(1)
   })
 
   test("should fire combo toast and suppress standalone toasts", async () => {
@@ -144,7 +144,7 @@ describe("keyword-detector hyperplan-ultrawork combo", () => {
     expect(toastCalls).not.toContain("Hyperplan Mode Activated")
   })
 
-  test("should disable combo only when disabled_keywords includes 'hyperplan-ultrawork' (standalones still fire)", async () => {
+  test("should disable combo only when disabled_keywords includes 'hyperplan-fullscan' (standalones still fire)", async () => {
     // given - combo keyword disabled but standalones remain enabled
     const sessionID = "combo-disabled-session"
     getMainSessionSpy = spyOn(sessionState, "getMainSessionID").mockReturnValue(sessionID)
@@ -152,7 +152,7 @@ describe("keyword-detector hyperplan-ultrawork combo", () => {
       createMockPluginInput(),
       undefined,
       undefined,
-      { disabled_keywords: ["hyperplan-ultrawork"] },
+      { disabled_keywords: ["hyperplan-fullscan"] },
     )
     const output = {
       message: {} as Record<string, unknown>,
@@ -164,13 +164,13 @@ describe("keyword-detector hyperplan-ultrawork combo", () => {
 
     // then - combo absent, both individual standalones still match and inject
     const text = textOf(output)
-    expect(text).not.toContain("<hyperplan-ultrawork-mode>")
+    expect(text).not.toContain("<hyperplan-fullscan-mode>")
     expect(text).toContain("<hyperplan-mode>")
-    expect(text).toContain("<ultrawork-mode>")
+    expect(text).toContain("<fullscan-mode>")
   })
 
-  test("should block combo via intersection rule when disabled_keywords includes 'ultrawork'", async () => {
-    // given - ultrawork standalone disabled, intersection rule cascades to combo
+  test("should block combo via intersection rule when disabled_keywords includes 'fullscan'", async () => {
+    // given - fullscan standalone disabled, intersection rule cascades to combo
     const sessionID = "combo-intersection-session"
     getMainSessionSpy = spyOn(sessionState, "getMainSessionID").mockReturnValue(sessionID)
     const toastCalls: string[] = []
@@ -178,7 +178,7 @@ describe("keyword-detector hyperplan-ultrawork combo", () => {
       createMockPluginInput({ toastCalls }),
       undefined,
       undefined,
-      { disabled_keywords: ["ultrawork"] },
+      { disabled_keywords: ["fullscan"] },
     )
     const output = {
       message: {} as Record<string, unknown>,
@@ -188,16 +188,16 @@ describe("keyword-detector hyperplan-ultrawork combo", () => {
     // when - combo would match but is blocked via intersection
     await hook["chat.message"]({ sessionID }, output)
 
-    // then - no combo, no ultrawork content leaks; standalone hyperplan still fires
+    // then - no combo, no fullscan content leaks; standalone hyperplan still fires
     const text = textOf(output)
-    expect(text).not.toContain("<hyperplan-ultrawork-mode>")
-    expect(text).not.toContain("<ultrawork-mode>")
+    expect(text).not.toContain("<hyperplan-fullscan-mode>")
+    expect(text).not.toContain("<fullscan-mode>")
     expect(text).toContain("<hyperplan-mode>")
     expect(toastCalls).not.toContain("Hyperplan Ultrawork Mode Activated")
     expect(toastCalls).not.toContain("Ultrawork Mode Activated")
   })
 
-  test("should allow combo in non-main session (passes through like standalone ultrawork)", async () => {
+  test("should allow combo in non-main session (passes through like standalone fullscan)", async () => {
     // given - main session set, different (subagent) session triggers combo
     const mainSessionID = "main-combo"
     const subagentSessionID = "subagent-combo"
@@ -211,16 +211,16 @@ describe("keyword-detector hyperplan-ultrawork combo", () => {
     // when - subagent session triggers combo
     await hook["chat.message"]({ sessionID: subagentSessionID }, output)
 
-    // then - combo banner reaches non-main session (whitelisted alongside standalone ultrawork)
+    // then - combo banner reaches non-main session (whitelisted alongside standalone fullscan)
     const text = textOf(output)
-    expect(text).toContain("<hyperplan-ultrawork-mode>")
-    expect(text).toContain("<ultrawork-mode>")
+    expect(text).toContain("<hyperplan-fullscan-mode>")
+    expect(text).toContain("<fullscan-mode>")
     expect(text).toContain("run this")
   })
 
-  test("should filter combo when agent is prometheus (planner)", async () => {
+  test("should filter combo when agent is talos (planner)", async () => {
     // given - planner agent receives a combo prompt
-    const sessionID = "combo-prometheus-session"
+    const sessionID = "combo-talos-session"
     const hook = createKeywordDetectorHook(createMockPluginInput())
     const output = {
       message: {} as Record<string, unknown>,
@@ -228,18 +228,18 @@ describe("keyword-detector hyperplan-ultrawork combo", () => {
     }
 
     // when - planner-agent path filters all execution-mode keywords
-    await hook["chat.message"]({ sessionID, agent: "prometheus" }, output)
+    await hook["chat.message"]({ sessionID, agent: "talos" }, output)
 
-    // then - text untouched: combo, ultrawork, and hyperplan all filtered for planner
+    // then - text untouched: combo, fullscan, and hyperplan all filtered for planner
     const text = textOf(output)
     expect(text).toBe("hpp ulw plan stuff")
-    expect(text).not.toContain("<hyperplan-ultrawork-mode>")
-    expect(text).not.toContain("<ultrawork-mode>")
+    expect(text).not.toContain("<hyperplan-fullscan-mode>")
+    expect(text).not.toContain("<fullscan-mode>")
     expect(text).not.toContain("<hyperplan-mode>")
   })
 
-  test("should reuse ultrawork variant: combo with GPT model embeds GPT ultrawork content", async () => {
-    // given - GPT-5.4 model selects the GPT ultrawork variant inside the combo banner
+  test("should reuse fullscan variant: combo with GPT model embeds GPT fullscan content", async () => {
+    // given - GPT-5.4 model selects the GPT fullscan variant inside the combo banner
     const sessionID = "combo-gpt-variant-session"
     getMainSessionSpy = spyOn(sessionState, "getMainSessionID").mockReturnValue(sessionID)
     const hook = createKeywordDetectorHook(createMockPluginInput())
@@ -250,13 +250,13 @@ describe("keyword-detector hyperplan-ultrawork combo", () => {
 
     // when - combo fires with GPT model resolved
     await hook["chat.message"](
-      { sessionID, agent: "sisyphus", model: { providerID: "openai", modelID: "gpt-5.4" } },
+      { sessionID, agent: "cerberus", model: { providerID: "openai", modelID: "gpt-5.4" } },
       output,
     )
 
-    // then - combo banner present and GPT-variant ultrawork content embedded (output_verbosity_spec is GPT-only)
+    // then - combo banner present and GPT-variant fullscan content embedded (output_verbosity_spec is GPT-only)
     const text = textOf(output)
-    expect(text).toContain("<hyperplan-ultrawork-mode>")
+    expect(text).toContain("<hyperplan-fullscan-mode>")
     expect(text).toContain("<output_verbosity_spec>")
   })
 })

@@ -1,4 +1,4 @@
-import type { AgentConfig } from "@opencode-ai/sdk"
+﻿import type { AgentConfig } from "@opencode-ai/sdk"
 import type { BuiltinAgentName, AgentOverrides, AgentPromptMetadata } from "../types"
 import type { CategoryConfig, GitMasterConfig } from "../../config/schema"
 import type { BrowserAutomationProvider } from "../../config/schema"
@@ -53,10 +53,10 @@ export function collectPendingBuiltinAgents(input: {
   for (const [name, source] of Object.entries(agentSources)) {
     const agentName = name as BuiltinAgentName
 
-    if (agentName === "sisyphus") continue
-    if (agentName === "hephaestus") continue
-    if (agentName === "atlas") continue
-    if (agentName === "sisyphus-junior") continue
+    if (agentName === "cerberus") continue
+    if (agentName === "scylla") continue
+    if (agentName === "argus") continue
+    if (agentName === "cerberus-junior") continue
     if (disabledAgents.some((name) => name.toLowerCase() === agentName.toLowerCase())) continue
 
     const override = agentOverrides[agentName]
@@ -112,14 +112,14 @@ export function collectPendingBuiltinAgents(input: {
       config = { ...config, variant: resolvedVariant }
     }
 
-    if (agentName === "librarian") {
+    if (agentName === "intel") {
       config = applyEnvironmentContext(config, directory, { disableOmoEnv })
     }
 
     config = applyOverrides(config, override, mergedCategories, directory)
     config = resolveAgentSkills(config, { gitMasterConfig, browserProvider, disabledSkills, teamModeEnabled })
 
-    // Store for later - will be added after sisyphus and hephaestus
+    // Store for later - will be added after cerberus and scylla
     pendingAgentConfigs.set(name, config)
 
     const metadata = agentMetadata[agentName]

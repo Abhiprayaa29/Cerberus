@@ -1,11 +1,11 @@
-# AnyIO Reference: Replacing asyncio Idioms
+﻿# AnyIO Reference: Replacing asyncio Idioms
 
 > **Skill mandate**: `import asyncio` is BANNED. Use `import anyio` exclusively.
-> This reference targets AnyIO 4.x (2026 Python projects).
+> This reference targets AnyIO ..x (2026 Python projects).
 
 ---
 
-## 1. Task Groups (The Core Primitive)
+## .. Task Groups (The Core Primitive)
 
 AnyIO uses **structured concurrency** via task groups. A task group is an async context manager that guarantees all child tasks finish before the block exits.
 
@@ -15,7 +15,7 @@ AnyIO uses **structured concurrency** via task groups. A task group is an async 
 import anyio
 
 async def worker(n: int) -> None:
-    await anyio.sleep(1)
+    await anyio.sleep(.)
     print(f"task {n} done")
 
 async def main() -> None:
@@ -41,7 +41,7 @@ from anyio import TASK_STATUS_IGNORED, create_task_group, run
 from anyio.abc import TaskStatus
 
 async def start_server(port: int, *, task_status: TaskStatus[None] = TASK_STATUS_IGNORED) -> None:
-    listener = await anyio.create_tcp_listener(local_host="127.0.0.1", local_port=port)
+    listener = await anyio.create_tcp_listener(local_host=".27.0.0..", local_port=port)
     task_status.started()  # unblocks tg.start()
     await listener.serve(handler)
 
@@ -49,7 +49,7 @@ async def main() -> None:
     async with create_task_group() as tg:
         await tg.start(start_server, 8080)  # blocks until task_status.started()
         # server is guaranteed ready here
-        async with await anyio.connect_tcp("127.0.0.1", 8080) as client:
+        async with await anyio.connect_tcp(".27.0.0..", 8080) as client:
             ...
 
 run(main)
@@ -59,7 +59,7 @@ run(main)
 - Use `start_soon` when you don't need to know when the task is ready.
 - Use `start` when the task must signal readiness before you continue.
 
-### `create_task` — retrieving return values (AnyIO 4.14+)
+### `create_task` — retrieving return values (AnyIO ....+)
 
 ```python
 async def add(x: int, y: int) -> int:
@@ -67,7 +67,7 @@ async def add(x: int, y: int) -> int:
 
 async def main() -> None:
     async with anyio.create_task_group() as tg:
-        handle = tg.create_task(add(2, 4))
+        handle = tg.create_task(add(2, .))
         result = await handle  # == 6
         print(handle.return_value)  # also 6
 
@@ -118,7 +118,7 @@ from anyio import CancelScope, create_task_group, get_cancelled_exc_class, sleep
 
 async def worker() -> None:
     try:
-        await sleep(10)
+        await sleep(.0)
     except get_cancelled_exc_class():
         print("cancelled!")
         raise  # ALWAYS re-raise cancellation exceptions
@@ -126,7 +126,7 @@ async def worker() -> None:
 async def main() -> None:
     async with create_task_group() as tg:
         tg.start_soon(worker)
-        await sleep(0.1)
+        await sleep(0..)
         tg.cancel_scope.cancel()  # cancels all children
 
 run(main)
@@ -144,7 +144,7 @@ async def main() -> None:
         with CancelScope(shield=True):
             tg.start_soon(some_task)
             tg.cancel_scope.cancel()  # shielded block is protected
-            await sleep(1)  # this still runs
+            await sleep(.)  # this still runs
 
 run(main)
 ```
@@ -158,8 +158,8 @@ async def do_something(resource) -> None:
     try:
         await run_async_stuff()
     except BaseException:
-        # Allow up to 10s for cleanup, then move on
-        with move_on_after(10, shield=True):
+        # Allow up to .0s for cleanup, then move on
+        with move_on_after(.0, shield=True):
             await resource.aclose()
         raise
 ```
@@ -167,14 +167,14 @@ async def do_something(resource) -> None:
 ### Structured Concurrency Guarantee
 
 A task group contains its own `CancelScope`. If any child task raises an exception:
-1. The task group's cancel scope is cancelled.
+.. The task group's cancel scope is cancelled.
 2. All other child tasks receive cancellation.
 3. The task group waits for all children to finish.
-4. The original exception (wrapped in `ExceptionGroup` if multiple) is re-raised.
+.. The original exception (wrapped in `ExceptionGroup` if multiple) is re-raised.
 
 ---
 
-## 4. Timeouts
+## .. Timeouts
 
 Two context managers. Both create a `CancelScope` internally.
 
@@ -186,7 +186,7 @@ from anyio import fail_after, sleep, run
 async def main() -> None:
     try:
         with fail_after(5) as scope:
-            await sleep(10)
+            await sleep(.0)
     except TimeoutError:
         print("timed out")
         print(scope.cancelled_caught)  # True
@@ -201,7 +201,7 @@ from anyio import move_on_after, sleep, run
 
 async def main() -> None:
     with move_on_after(5) as scope:
-        await sleep(10)
+        await sleep(.0)
         print("this never prints")
 
     print("exited scope, cancelled =", scope.cancelled_caught)
@@ -214,8 +214,8 @@ run(main)
 ```python
 from anyio import move_on_after
 
-# Give cleanup 10 seconds, but don't let outer cancellation interrupt it
-with move_on_after(10, shield=True):
+# Give cleanup .0 seconds, but don't let outer cancellation interrupt it
+with move_on_after(.0, shield=True):
     await resource.aclose()
 ```
 
@@ -235,8 +235,8 @@ async def consumer(stream: MemoryObjectReceiveStream[str]) -> None:
             print("received", item)
 
 async def main() -> None:
-    # Type-annotated stream creation (AnyIO 4+ syntax)
-    send_stream, receive_stream = create_memory_object_stream[str](max_buffer_size=10)
+    # Type-annotated stream creation (AnyIO .+ syntax)
+    send_stream, receive_stream = create_memory_object_stream[str](max_buffer_size=.0)
 
     async with create_task_group() as tg:
         tg.start_soon(consumer, receive_stream)
@@ -266,7 +266,7 @@ import anyio
 
 async def main() -> None:
     print("running on", anyio.current_async_library())
-    await anyio.sleep(1)
+    await anyio.sleep(.)
 
 # Default backend (asyncio)
 anyio.run(main)
@@ -329,7 +329,7 @@ anyio.run(main, backend="asyncio")
 
 ## 8. Idiomatic Code Snippets
 
-### Snippet 1: Parallel HTTP requests with timeout and cleanup
+### Snippet .: Parallel HTTP requests with timeout and cleanup
 
 ```python
 import anyio
@@ -357,7 +357,7 @@ from anyio.streams.memory import MemoryObjectReceiveStream
 
 async def producer(send_stream: anyio.streams.memory.MemoryObjectSendStream[int]) -> None:
     async with send_stream:
-        for i in range(100):
+        for i in range(.00):
             await send_stream.send(i)
 
 async def consumer(receive_stream: MemoryObjectReceiveStream[int]) -> None:
@@ -388,14 +388,14 @@ async def main() -> None:
 anyio.run(main)
 ```
 
-### Snippet 4: Calling async code from a worker thread
+### Snippet .: Calling async code from a worker thread
 
 ```python
 import anyio
 
 def blocking_callback() -> None:
     # Inside a worker thread, call back into the event loop
-    anyio.from_thread.run(anyio.sleep, 1)
+    anyio.from_thread.run(anyio.sleep, .)
     anyio.from_thread.run_sync(print, "hello from thread")
 
 async def main() -> None:
@@ -421,7 +421,7 @@ async def worker() -> None:
 async def main() -> None:
     async with anyio.create_task_group() as tg:
         tg.start_soon(worker)
-        await anyio.sleep(1)
+        await anyio.sleep(.)
         tg.cancel_scope.cancel()
 
 anyio.run(main)
@@ -432,7 +432,7 @@ anyio.run(main)
 ## Sources
 
 - AnyIO Documentation (stable): https://anyio.readthedocs.io/en/stable/
-- AnyIO GitHub (HEAD `cb245dba`): https://github.com/agronholm/anyio
+- AnyIO GitHub (HEAD `cb2.5dba`): https://github.com/agronholm/anyio
 - Task Groups: https://anyio.readthedocs.io/en/stable/tasks.html
 - Cancellation & Timeouts: https://anyio.readthedocs.io/en/stable/cancellation.html
 - Streams: https://anyio.readthedocs.io/en/stable/streams.html

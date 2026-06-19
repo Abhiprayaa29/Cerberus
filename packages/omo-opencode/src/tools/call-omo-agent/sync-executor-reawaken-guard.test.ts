@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { afterEach, describe, expect, mock, test } from "bun:test"
 
@@ -21,7 +21,7 @@ function createToolContext() {
   return {
     sessionID: "parent-session",
     messageID: "msg-1",
-    agent: "sisyphus",
+    agent: "cerberus",
     abort: new AbortController().signal,
     metadata: mock(async () => {}),
   }
@@ -77,7 +77,7 @@ async function driveEnforcerIdle(sessionID: string): Promise<boolean> {
 }
 
 const args = {
-  subagent_type: "explore",
+  subagent_type: "scout",
   description: "test task",
   prompt: "find something",
   run_in_background: false,

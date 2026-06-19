@@ -1,4 +1,4 @@
-import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises"
+﻿import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises"
 import { tmpdir } from "node:os"
 import { join } from "node:path"
 import { describe, expect, test } from "bun:test"
@@ -11,7 +11,7 @@ import {
   createNodeSpawnSyncOptions,
   spawn,
   spawnSync,
-} from "@oh-my-opencode/utils/runtime"
+} from "@oh-my-open-pentest/utils/runtime"
 
 async function readProcessStream(stream: ReadableStream<Uint8Array> | null | undefined): Promise<string> {
   if (!stream) return ""

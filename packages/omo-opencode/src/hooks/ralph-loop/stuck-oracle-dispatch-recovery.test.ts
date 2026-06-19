@@ -1,4 +1,4 @@
-import type { PluginInput } from "@opencode-ai/plugin"
+﻿import type { PluginInput } from "@opencode-ai/plugin"
 import { afterEach, beforeEach, describe, expect, mock, test } from "bun:test"
 import { unsafeTestValue } from "../../../../../test-support/unsafe-test-value"
 import { releaseAllPromptAsyncReservationsForTesting } from "../shared/prompt-async-gate"
@@ -19,7 +19,7 @@ function createState(verificationAttemptStartedAt?: number): RalphLoopState {
 		started_at: "2026-01-01T00:00:00.000Z",
 		prompt: "Ship release blockers",
 		session_id: "session-123",
-		ultrawork: true,
+		fullscan: true,
 		verification_pending: true,
 		verification_attempt_id: "attempt-123",
 	}
@@ -49,7 +49,7 @@ function createPluginInput(promptCalls: string[]): PluginInput {
 				showToast: async () => ({}),
 			},
 		},
-		directory: "/tmp/ralph-loop-stuck-oracle-test",
+		directory: "/tmp/pentest-loop-stuck-cipher-test",
 	})
 }
 
@@ -74,12 +74,12 @@ async function runPendingVerification(state: RalphLoopState, loopState: LoopStat
 		matchesParentSession: true,
 		matchesVerificationSession: false,
 		loopState,
-		directory: "/tmp/ralph-loop-stuck-oracle-test",
+		directory: "/tmp/pentest-loop-stuck-cipher-test",
 		apiTimeoutMs: 100,
 	})
 }
 
-describe("ralph-loop stuck oracle dispatch recovery", () => {
+describe("pentest-loop stuck cipher dispatch recovery", () => {
 	const realDateNow = Date.now
 
 	beforeEach(() => {

@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, test } from "bun:test"
+﻿import { afterEach, beforeEach, describe, expect, test } from "bun:test"
 import { mkdirSync, rmSync, writeFileSync } from "node:fs"
 import { tmpdir } from "node:os"
 import { join } from "node:path"
@@ -23,8 +23,8 @@ describe("createPluginInterface - command.execute.before", () => {
     mkdirSync(join(testDir, ".omo", "plans"), { recursive: true })
     writeFileSync(join(testDir, ".omo", "plans", "worker-plan.md"), "# Plan\n- [ ] Task 1")
     _resetForTesting()
-    registerAgentName("prometheus")
-    registerAgentName("sisyphus")
+    registerAgentName("talos")
+    registerAgentName("cerberus")
   })
 
   afterEach(() => {
@@ -34,7 +34,7 @@ describe("createPluginInterface - command.execute.before", () => {
 
   test("executes start-work side effects for native command execution", async () => {
     // given
-    updateSessionAgent("ses-command-before", "prometheus")
+    updateSessionAgent("ses-command-before", "talos")
     const pluginInterface = createPluginInterface({
       ctx: {
         directory: testDir,
@@ -75,13 +75,13 @@ describe("createPluginInterface - command.execute.before", () => {
     expect(pluginInterface["command.execute.before"]).toBeDefined()
     expect(output.parts[0]?.text).toContain("Auto-Selected Plan")
     expect(output.parts[0]?.text).toContain("boulder.json has been created")
-    expect(getSessionAgent("ses-command-before")).toBe("sisyphus")
-    expect(readBoulderState(testDir)?.agent).toBe("sisyphus")
+    expect(getSessionAgent("ses-command-before")).toBe("cerberus")
+    expect(readBoulderState(testDir)?.agent).toBe("cerberus")
   })
 
   test("does not run start-work side effects for other native commands with session context", async () => {
     // given
-    updateSessionAgent("ses-handoff", "prometheus")
+    updateSessionAgent("ses-handoff", "talos")
     const pluginInterface = createPluginInterface({
       ctx: {
         directory: testDir,
@@ -121,13 +121,13 @@ describe("createPluginInterface - command.execute.before", () => {
     // then
     expect(output.parts[0]?.text).toContain("HANDOFF CONTEXT")
     expect(readBoulderState(testDir)).toBeNull()
-    expect(getSessionAgent("ses-handoff")).toBe("prometheus")
+    expect(getSessionAgent("ses-handoff")).toBe("talos")
   })
 
-  test("switches native start-work to Atlas when Atlas is registered in config", async () => {
+  test("switches native start-work to Argus when Argus is registered in config", async () => {
     // given
-    registerAgentName("atlas")
-    updateSessionAgent("ses-command-atlas", "prometheus")
+    registerAgentName("argus")
+    updateSessionAgent("ses-command-argus", "talos")
     const pluginInterface = createPluginInterface({
       ctx: {
         directory: testDir,
@@ -158,27 +158,27 @@ describe("createPluginInterface - command.execute.before", () => {
     // when
     await pluginInterface["chat.message"]?.(
       {
-        sessionID: "ses-command-atlas",
-        agent: "prometheus",
+        sessionID: "ses-command-argus",
+        agent: "talos",
       } as never,
       output as never
     )
 
     // then
-    expect(output.message.agent).toBe("atlas")
-    expect(getSessionAgent("ses-command-atlas")).toBe("atlas")
-    expect(readBoulderState(testDir)?.agent).toBe("atlas")
+    expect(output.message.agent).toBe("argus")
+    expect(getSessionAgent("ses-command-argus")).toBe("argus")
+    expect(readBoulderState(testDir)?.agent).toBe("argus")
   })
 })
 
-describe("createPluginInterface - ulw-loop native command smoke", () => {
+describe("createPluginInterface - pentest-loop native command smoke", () => {
   let testDir = ""
 
   beforeEach(() => {
-    testDir = join(tmpdir(), `plugin-interface-ulw-loop-${randomUUID()}`)
+    testDir = join(tmpdir(), `plugin-interface-pentest-loop-${randomUUID()}`)
     mkdirSync(testDir, { recursive: true })
     _resetForTesting()
-    registerAgentName("sisyphus")
+    registerAgentName("cerberus")
   })
 
   afterEach(() => {
@@ -186,7 +186,7 @@ describe("createPluginInterface - ulw-loop native command smoke", () => {
     rmSync(testDir, { recursive: true, force: true })
   })
 
-  test("starts the ultrawork loop from the native command flow with parsed arguments intact", async () => {
+  test("starts the fullscan loop from the native command flow with parsed arguments intact", async () => {
     // given
     const startLoopCalls: Array<{
       sessionID: string
@@ -227,7 +227,7 @@ describe("createPluginInterface - ulw-loop native command smoke", () => {
     // when
     await pluginInterface["command.execute.before"]?.(
       {
-        command: "ulw-loop",
+        command: "pentest-loop",
         sessionID: "ses-ulw-native",
         arguments: '"Ship feature" --strategy=continue',
       },
@@ -236,19 +236,19 @@ describe("createPluginInterface - ulw-loop native command smoke", () => {
     await pluginInterface["chat.message"]?.(
       {
         sessionID: "ses-ulw-native",
-        agent: "sisyphus",
+        agent: "cerberus",
       } as never,
       output as never,
     )
 
     // then
-    expect(output.parts[0]?.text).toContain("/ulw-loop Command")
+    expect(output.parts[0]?.text).toContain("/pentest-loop Command")
     expect(startLoopCalls).toEqual([
       {
         sessionID: "ses-ulw-native",
         prompt: "Ship feature",
         options: {
-          ultrawork: true,
+          fullscan: true,
           maxIterations: undefined,
           completionPromise: undefined,
           strategy: "continue",
@@ -261,7 +261,7 @@ describe("createPluginInterface - ulw-loop native command smoke", () => {
 describe("createPluginInterface - backward compatibility", () => {
   beforeEach(() => {
     _resetForTesting()
-    registerAgentName("hephaestus")
+    registerAgentName("scylla")
   })
 
   afterEach(() => {
@@ -295,13 +295,13 @@ describe("createPluginInterface - backward compatibility", () => {
     await pluginInterface["chat.message"]?.(
       {
         sessionID: "ses-legacy-zwsp",
-        agent: "\u200B\u200BHephaestus - Deep Agent",
+        agent: "\u200B\u200BScylla - Deep Agent",
       } as never,
       output as never,
     )
 
     // then
-    expect(getSessionAgent("ses-legacy-zwsp")).toBe("Hephaestus - Deep Agent")
+    expect(getSessionAgent("ses-legacy-zwsp")).toBe("Scylla - Deep Agent")
   })
 })
 
@@ -312,7 +312,7 @@ describe("createPluginInterface - chat.params variant injection", () => {
       ctx: { client: {} } as never,
       pluginConfig: {
         agents: {
-          sisyphus: { variant: "max" },
+          cerberus: { variant: "max" },
         },
       } as never,
       firstMessageVariantGate: {
@@ -327,7 +327,7 @@ describe("createPluginInterface - chat.params variant injection", () => {
     })
     const input = {
       sessionID: "ses-variant-inject",
-      agent: "sisyphus",
+      agent: "cerberus",
       model: { providerID: "anthropic", modelID: "claude-opus-4-6" },
       provider: { id: "anthropic" },
       message: {} as { variant?: string },
@@ -347,7 +347,7 @@ describe("createPluginInterface - chat.params variant injection", () => {
       ctx: { client: {} } as never,
       pluginConfig: {
         agents: {
-          sisyphus: { variant: "max" },
+          cerberus: { variant: "max" },
         },
       } as never,
       firstMessageVariantGate: {
@@ -362,7 +362,7 @@ describe("createPluginInterface - chat.params variant injection", () => {
     })
     const input = {
       sessionID: "ses-variant-keep",
-      agent: "sisyphus",
+      agent: "cerberus",
       model: { providerID: "anthropic", modelID: "claude-opus-4-6" },
       provider: { id: "anthropic" },
       message: { variant: "high" } as { variant?: string },

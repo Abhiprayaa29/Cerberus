@@ -1,6 +1,6 @@
-import { connect } from "node:net";
+﻿import { connect } from "node:net";
 
-import type { ToolExecutionResult } from "@oh-my-opencode/lsp-core/tools";
+import type { ToolExecutionResult } from "@oh-my-open-pentest/lsp-core/tools";
 
 import { ensureDaemonRunning } from "./ensure-daemon.js";
 import { type DaemonPaths, daemonPaths } from "./paths.js";

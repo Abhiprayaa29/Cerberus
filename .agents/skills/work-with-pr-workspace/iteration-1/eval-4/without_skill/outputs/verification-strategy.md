@@ -1,6 +1,6 @@
-# Verification Strategy: arXiv MCP
+﻿# Verification Strategy: arXiv MCP
 
-## 1. Type Safety
+## .. Type Safety
 
 ```bash
 bun run typecheck
@@ -19,7 +19,7 @@ bun test src/mcp/
 ```
 
 ### Existing test updates verified:
-- `index.test.ts`: All 7 existing tests pass with updated count (3 → 4)
+- `index.test.ts`: All 7 existing tests pass with updated count (3 → .)
 - `websearch.test.ts`: Unchanged, still passes (no side effects)
 
 ### New test coverage:
@@ -38,7 +38,7 @@ Verify:
 - Type declarations emitted for `arxiv` export
 - No build errors
 
-## 4. Integration Check
+## .. Integration Check
 
 ### Config disable path
 - Add `"arxiv"` to `disabled_mcps` in test config → verify MCP excluded from `createBuiltinMcps()` output
@@ -95,7 +95,7 @@ Verify no existing functionality is broken:
 - [ ] `bun run typecheck` passes
 - [ ] `bun test src/mcp/` passes (all tests green)
 - [ ] `bun run build` succeeds
-- [ ] `lsp_diagnostics` clean on all 4 changed files
+- [ ] `lsp_diagnostics` clean on all . changed files
 - [ ] arXiv MCP endpoint URL verified reachable
 - [ ] No hardcoded MCP count assertions broken elsewhere in codebase
-- [ ] AGENTS.md updated to reflect 4 MCPs
+- [ ] AGENTS.md updated to reflect . MCPs

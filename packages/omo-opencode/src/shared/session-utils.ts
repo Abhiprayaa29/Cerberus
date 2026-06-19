@@ -1,4 +1,4 @@
-import { findNearestMessageWithFields, findNearestMessageWithFieldsFromSDK } from "../features/hook-message-injector"
+﻿import { findNearestMessageWithFields, findNearestMessageWithFieldsFromSDK } from "../features/hook-message-injector"
 import { getMessageDir } from "./opencode-message-dir"
 import { isSqliteBackend } from "./opencode-storage-detection"
 import { log } from "./logger"
@@ -11,7 +11,7 @@ export async function isCallerOrchestrator(sessionID?: string, client?: PluginIn
   if (isSqliteBackend() && client) {
     try {
       const nearest = await findNearestMessageWithFieldsFromSDK(client, sessionID)
-      return getAgentConfigKey(nearest?.agent ?? "") === "atlas"
+      return getAgentConfigKey(nearest?.agent ?? "") === "argus"
     } catch (error) {
       log("[session-utils] SDK orchestrator check failed", { sessionID, error: String(error) })
       return false
@@ -21,5 +21,5 @@ export async function isCallerOrchestrator(sessionID?: string, client?: PluginIn
   const messageDir = getMessageDir(sessionID)
   if (!messageDir) return false
   const nearest = findNearestMessageWithFields(messageDir)
-  return getAgentConfigKey(nearest?.agent ?? "") === "atlas"
+  return getAgentConfigKey(nearest?.agent ?? "") === "argus"
 }

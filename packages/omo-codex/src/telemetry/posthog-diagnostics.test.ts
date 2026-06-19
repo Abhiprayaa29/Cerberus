@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it, mock } from "bun:test"
+﻿import { afterEach, beforeEach, describe, expect, it, mock } from "bun:test"
 import { mkdtempSync, readFileSync, rmSync } from "node:fs"
 import { tmpdir } from "node:os"
 import { join } from "node:path"
@@ -21,10 +21,10 @@ async function importPostHogModule(): Promise<PostHogModule> {
 }
 
 function clearTelemetryEnv(): void {
-  delete process.env.OMO_DISABLE_POSTHOG
-  delete process.env.OMO_SEND_ANONYMOUS_TELEMETRY
-  delete process.env.OMO_CODEX_DISABLE_POSTHOG
-  delete process.env.OMO_CODEX_SEND_ANONYMOUS_TELEMETRY
+  delete process.env.OMOP_DISABLE_POSTHOG
+  delete process.env.OMOP_SEND_ANONYMOUS_TELEMETRY
+  delete process.env.OMOP_CODEX_DISABLE_POSTHOG
+  delete process.env.OMOP_CODEX_SEND_ANONYMOUS_TELEMETRY
   delete process.env.POSTHOG_API_KEY
   delete process.env.POSTHOG_HOST
 }

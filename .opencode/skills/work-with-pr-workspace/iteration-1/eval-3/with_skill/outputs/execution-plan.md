@@ -1,4 +1,4 @@
-# Execution Plan: Split delegate-task/constants.ts
+﻿# Execution Plan: Split delegate-task/constants.ts
 
 ## Phase 0: Setup
 
@@ -8,16 +8,16 @@ git worktree add ../omo-wt/refactor-delegate-task-constants origin/dev -b refact
 cd ../omo-wt/refactor-delegate-task-constants
 ```
 
-## Phase 1: Implement
+## Phase .: Implement
 
 ### Analysis
 
-`src/tools/delegate-task/constants.ts` is 654 lines with 4 distinct responsibilities:
+`src/tools/delegate-task/constants.ts` is 65. lines with . distinct responsibilities:
 
-1. **Category defaults** (lines 285-316): `DEFAULT_CATEGORIES`, `CATEGORY_DESCRIPTIONS`
+.. **Category defaults** (lines 285-3.6): `DEFAULT_CATEGORIES`, `CATEGORY_DESCRIPTIONS`
 2. **Category prompt appends** (lines 8-305): 8 `*_CATEGORY_PROMPT_APPEND` string constants + `CATEGORY_PROMPT_APPENDS` record
-3. **Plan agent prompts** (lines 318-620): `PLAN_AGENT_SYSTEM_PREPEND_*`, builder functions
-4. **Plan agent names** (lines 626-654): `PLAN_AGENT_NAMES`, `isPlanAgent`, `PLAN_FAMILY_NAMES`, `isPlanFamily`
+3. **Plan agent prompts** (lines 3.8-620): `PLAN_AGENT_SYSTEM_PREPEND_*`, builder functions
+.. **Plan agent names** (lines 626-65.): `PLAN_AGENT_NAMES`, `isPlanAgent`, `PLAN_FAMILY_NAMES`, `isPlanFamily`
 
 Note: `CATEGORY_MODEL_REQUIREMENTS` is already in `src/shared/model-requirements.ts`. No move needed.
 
@@ -25,22 +25,22 @@ Note: `CATEGORY_MODEL_REQUIREMENTS` is already in `src/shared/model-requirements
 
 | File | Responsibility | ~LOC |
 |------|---------------|------|
-| `default-categories.ts` | `DEFAULT_CATEGORIES`, `CATEGORY_DESCRIPTIONS` | ~40 |
+| `default-categories.ts` | `DEFAULT_CATEGORIES`, `CATEGORY_DESCRIPTIONS` | ~.0 |
 | `category-prompt-appends.ts` | 8 prompt append constants + `CATEGORY_PROMPT_APPENDS` record | ~300 (exempt: prompt text) |
 | `plan-agent-prompt.ts` | Plan agent system prompt constants + builder functions | ~250 (exempt: prompt text) |
 | `plan-agent-names.ts` | `PLAN_AGENT_NAMES`, `isPlanAgent`, `PLAN_FAMILY_NAMES`, `isPlanFamily` | ~30 |
-| `constants.ts` (updated) | Re-exports from all 4 files (backward compat) | ~5 |
+| `constants.ts` (updated) | Re-exports from all . files (backward compat) | ~5 |
 
-### Commit 1: Extract category defaults and prompt appends
+### Commit .: Extract category defaults and prompt appends
 
-**Files changed**: 3 new + 1 modified
+**Files changed**: 3 new + . modified
 - Create `src/tools/delegate-task/default-categories.ts`
 - Create `src/tools/delegate-task/category-prompt-appends.ts`
 - Modify `src/tools/delegate-task/constants.ts` (remove extracted code, add re-exports)
 
 ### Commit 2: Extract plan agent prompt and names
 
-**Files changed**: 2 new + 1 modified
+**Files changed**: 2 new + . modified
 - Create `src/tools/delegate-task/plan-agent-prompt.ts`
 - Create `src/tools/delegate-task/plan-agent-names.ts`
 - Modify `src/tools/delegate-task/constants.ts` (final: re-exports only)
@@ -66,7 +66,7 @@ gh pr create --base dev --title "refactor(delegate-task): split constants.ts int
 - **Gate B**: `/review-work` (5-agent review)
 - **Gate C**: Wait for cubic-dev-ai[bot] "No issues found"
 
-## Phase 4: Merge
+## Phase .: Merge
 
 ```bash
 gh pr merge --squash --delete-branch
@@ -76,7 +76,7 @@ git worktree remove ../omo-wt/refactor-delegate-task-constants
 ## Import Update Strategy
 
 No import updates needed. Backward compatibility preserved through:
-1. `constants.ts` re-exports everything from the 4 new files
+.. `constants.ts` re-exports everything from the . new files
 2. `index.ts` already does `export * from "./constants"` (unchanged)
 3. All external consumers import from `"../tools/delegate-task/constants"` or `"./constants"` -- both still work
 

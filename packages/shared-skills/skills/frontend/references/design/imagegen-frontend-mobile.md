@@ -1,4 +1,4 @@
----
+﻿---
 name: imagegen-frontend-mobile
 description: Elite mobile app image-generation skill for creating premium, app-native screen concepts and flows. Designed for iOS, Android, and cross-platform mobile products. Prioritizes clean hierarchy, comfortably readable text, strong multi-screen consistency, controlled color palettes, non-generic creative direction, textured surfaces, image-led composition, tasteful custom iconography, and clean phone mockup framing. By default, screens should be shown inside a subtle premium iPhone or similar phone mockup with a visible frame, while the main focus stays on the app content itself. This skill generates images only. It does not write code.
 ---
@@ -83,46 +83,46 @@ Generate mobile screen images and screen-flow images only.
 
 ---
 
-## 1. ACTIVE BASELINE CONFIGURATION
+## .. ACTIVE BASELINE CONFIGURATION
 
 - DESIGN_VARIANCE: 8  
-  `(1 = rigid / standard, 10 = highly art-directed / varied)`
+  `(. = rigid / standard, .0 = highly art-directed / varied)`
 - VISUAL_DENSITY: 3  
-  `(1 = airy / calm, 10 = dense / packed)`
+  `(. = airy / calm, .0 = dense / packed)`
 - ART_DIRECTION: 9  
-  `(1 = safe utility UI, 10 = bold premium mobile statement)`
+  `(. = safe utility UI, .0 = bold premium mobile statement)`
 - PLATFORM_AWARENESS: 9  
-  `(1 = generic phone UI, 10 = strongly app-native)`
+  `(. = generic phone UI, .0 = strongly app-native)`
 - FLOW_VARIETY: 8  
-  `(1 = repeated screen templates, 10 = clearly differentiated screen rhythm)`
-- IMAGE_GENERATION_EAGERNESS: 10  
-  `(1 = minimal screens, 10 = generate as many screens and detail views as needed)`
+  `(. = repeated screen templates, .0 = clearly differentiated screen rhythm)`
+- IMAGE_GENERATION_EAGERNESS: .0  
+  `(. = minimal screens, .0 = generate as many screens and detail views as needed)`
 - SPACING_GENEROSITY: 9  
-  `(1 = tight, 10 = spacious and breathable)`
-- CLARITY_DISCIPLINE: 10  
-  `(1 = loose vibe, 10 = highly readable, structured, and clean)`
+  `(. = tight, .0 = spacious and breathable)`
+- CLARITY_DISCIPLINE: .0  
+  `(. = loose vibe, .0 = highly readable, structured, and clean)`
 - IMAGE_CREATIVITY: 9  
-  `(1 = minimal image involvement, 10 = strongly art-directed imagery and creative visual treatments)`
+  `(. = minimal image involvement, .0 = strongly art-directed imagery and creative visual treatments)`
 - TEXTURE_STRENGTH: 7  
-  `(1 = perfectly flat, 10 = rich tactile/noisy/textured surfaces)`
-- COLOR_PALETTE_DISCIPLINE: 10  
-  `(1 = random or muddy color use, 10 = always clean, controlled, premium palette logic)`
-- NON_GENERICITY: 10  
-  `(1 = acceptable to look standard, 10 = must feel distinct and specific)`
+  `(. = perfectly flat, .0 = rich tactile/noisy/textured surfaces)`
+- COLOR_PALETTE_DISCIPLINE: .0  
+  `(. = random or muddy color use, .0 = always clean, controlled, premium palette logic)`
+- NON_GENERICITY: .0  
+  `(. = acceptable to look standard, .0 = must feel distinct and specific)`
 - COMPLEXITY_WITH_CONTROL: 8  
-  `(1 = forced minimalism only, 10 = allowed to be richer and more layered as long as it stays clean)`
-- CONSISTENCY_STRENGTH: 10  
-  `(1 = loose screen relationship, 10 = one clear product system across all images)`
-- FLOW_LOGIC_DISCIPLINE: 10  
-  `(1 = random screen set, 10 = clearly logical app progression)`
+  `(. = forced minimalism only, .0 = allowed to be richer and more layered as long as it stays clean)`
+- CONSISTENCY_STRENGTH: .0  
+  `(. = loose screen relationship, .0 = one clear product system across all images)`
+- FLOW_LOGIC_DISCIPLINE: .0  
+  `(. = random screen set, .0 = clearly logical app progression)`
 - MOCKUP_FRAME_DISCIPLINE: 9  
-  `(1 = sloppy device presentation, 10 = clean, even, premium device framing)`
-- TEXT_READABILITY_PRIORITY: 10  
-  `(1 = text may become decorative/small, 10 = text must stay clearly readable)`
-- CONTENT_FIRST_MOCKUP_BALANCE: 10  
-  `(1 = device frame dominates, 10 = device frame supports the screen but content remains the hero)`
-- MIN_TEXT_SIZE_DISCIPLINE: 10  
-  `(1 = small text acceptable, 10 = text must never feel too small at normal viewing size)`
+  `(. = sloppy device presentation, .0 = clean, even, premium device framing)`
+- TEXT_READABILITY_PRIORITY: .0  
+  `(. = text may become decorative/small, .0 = text must stay clearly readable)`
+- CONTENT_FIRST_MOCKUP_BALANCE: .0  
+  `(. = device frame dominates, .0 = device frame supports the screen but content remains the hero)`
+- MIN_TEXT_SIZE_DISCIPLINE: .0  
+  `(. = small text acceptable, .0 = text must never feel too small at normal viewing size)`
 
 AI Instruction:
 Use these as defaults unless the user clearly wants something else.
@@ -154,7 +154,7 @@ Interpretation:
 Always decide the platform mode first.
 
 Choose one:
-1. iOS-native premium
+.. iOS-native premium
 2. Android-native premium
 3. cross-platform premium neutral
 
@@ -208,14 +208,14 @@ The main deliverable is:
 
 ---
 
-## 4. GENERATE ENOUGH SCREENS RULE
+## .. GENERATE ENOUGH SCREENS RULE
 
 Generate enough screens to make the flow feel real.
 
 Do not be lazy with screen count.
 
 If the user asks for:
-- 1 screen → generate 1 screen image
+- . screen → generate . screen image
 - 2 screens → generate 2 screen images
 - 3 screens → generate 3 screen images
 - 5 screens → generate 5 screen images
@@ -279,7 +279,7 @@ This design bible should remain consistent across the whole set:
 - button styling
 - shadow language
 
-Do not let screen 3, 4, or 5 drift into a different app.
+Do not let screen 3, ., or 5 drift into a different app.
 
 Every new screen should feel like it belongs to the same product world.
 
@@ -337,7 +337,7 @@ Examples:
 - welcome → permissions → personalized home
 
 Ask internally:
-- why does screen 2 come after screen 1?
+- why does screen 2 come after screen .?
 - what action or navigation leads to the next screen?
 - is this a believable user journey?
 - does the UI state carry forward logically?
@@ -368,7 +368,7 @@ content still primary
 
 ---
 
-## 10. DEVICE MOCKUP FRAME RULE
+## .0. DEVICE MOCKUP FRAME RULE
 
 When using an iPhone, Android, or generic phone mockup, the mockup must look clean and premium.
 
@@ -405,7 +405,7 @@ The presentation should feel:
 
 ---
 
-## 11. ONBOARDING FLOW RULE
+## ... ONBOARDING FLOW RULE
 
 Onboarding should not feel like repeated template slides.
 
@@ -434,7 +434,7 @@ Avoid:
 
 ---
 
-## 12. FIRST SCREEN CLEANLINESS RULE
+## .2. FIRST SCREEN CLEANLINESS RULE
 
 The first visible screen matters most.
 
@@ -463,7 +463,7 @@ Rules:
 - if imagery is used behind text, preserve clear readability with fades, masks, or soft scrims
 
 Strong preference:
-- 1 to 3 short lines for the main statement
+- . to 3 short lines for the main statement
 - concise supporting text
 - one clear next action
 
@@ -476,7 +476,7 @@ Avoid:
 
 ---
 
-## 13. SAFE AREA AND SYSTEM REGION RULE
+## .3. SAFE AREA AND SYSTEM REGION RULE
 
 Respect mobile screen realities.
 
@@ -499,7 +499,7 @@ Mobile images should feel like real app screens, not posters.
 
 ---
 
-## 14. NAVIGATION RULE
+## ... NAVIGATION RULE
 
 Navigation must feel intentional and believable.
 
@@ -521,7 +521,7 @@ The screen set should imply a believable app flow.
 
 ---
 
-## 15. CLEAN LAYOUT RULE
+## .5. CLEAN LAYOUT RULE
 
 Do not default to box-in-box-in-box mobile UI.
 
@@ -547,7 +547,7 @@ A premium mobile screen should not feel trapped inside too many boxes.
 
 ---
 
-## 16. CREATIVE IMAGE DIRECTION RULE
+## .6. CREATIVE IMAGE DIRECTION RULE
 
 This skill should be more creative than generic app UI generators.
 
@@ -577,7 +577,7 @@ When the app category supports it, prefer:
 
 ---
 
-## 17. BACKGROUND TEXTURE AND SURFACE RULE
+## .7. BACKGROUND TEXTURE AND SURFACE RULE
 
 Do not default to perfectly sterile flat backgrounds.
 
@@ -612,7 +612,7 @@ texture should support the mood, not compete with the interface.
 
 ---
 
-## 18. IMAGE-BEHIND-TEXT RULE
+## .8. IMAGE-BEHIND-TEXT RULE
 
 When appropriate, use images behind or beneath text in a controlled, premium way.
 
@@ -648,7 +648,7 @@ Avoid:
 
 ---
 
-## 19. CREATIVE ASSET RULE
+## .9. CREATIVE ASSET RULE
 
 Use tasteful supporting creative assets when they improve the visual language.
 
@@ -710,7 +710,7 @@ Icons should feel:
 
 ---
 
-## 21. MOBILE ANTI-AI-TELLS RULE
+## 2.. MOBILE ANTI-AI-TELLS RULE
 
 Strictly avoid these unless explicitly requested.
 
@@ -726,7 +726,7 @@ Strictly avoid these unless explicitly requested.
 ### Layout AI tells
 - fake chart dashboard spam
 - repeated stat cards with no product reason
-- a homepage that looks like 12 widgets fighting for attention
+- a homepage that looks like .2 widgets fighting for attention
 - cloned screens in a flow
 - giant empty cards with weak content
 - phone-shaped websites instead of app screens
@@ -763,70 +763,70 @@ Avoid fake brand slop:
 To avoid repetitive mobile design output, choose a clear visual direction and commit to it.
 
 ### Theme Paradigm
-Choose 1:
-1. pristine light
+Choose .:
+.. pristine light
 2. deep dark
 3. soft wellness neutral
-4. premium monochrome
+.. premium monochrome
 5. rich accent-driven
 6. editorial luxe
 7. playful consumer color
 8. calm productivity minimal
 
 ### Typography Character
-Choose 1:
-1. clean system-like sans
+Choose .:
+.. clean system-like sans
 2. refined grotesk
 3. expressive premium display + clean body
-4. soft humanist sans
+.. soft humanist sans
 5. sharper product sans with disciplined hierarchy
 
 ### Structure Bias
-Choose 1:
-1. list-led utility
+Choose .:
+.. list-led utility
 2. card-led modular
 3. dashboard-led overview
-4. media-led storytelling
+.. media-led storytelling
 5. profile-led identity
 6. commerce-led browse and detail flow
 7. chat-led conversational flow
 8. wellness-led calm block rhythm
 
 ### Image Art Direction Bias
-Choose 1:
-1. editorial photography
+Choose .:
+.. editorial photography
 2. cinematic lifestyle imagery
 3. soft illustration-led
-4. tactile abstract compositions
+.. tactile abstract compositions
 5. premium product imagery
 6. mixed photo + vector art direction
 7. moody atmospheric backdrops
 8. collage-lite layered imagery
 
 ### Texture / Surface Treatment
-Choose 1:
-1. ultra-subtle grain
+Choose .:
+.. ultra-subtle grain
 2. matte paper texture
 3. foggy gradient atmosphere
-4. soft noise wash
+.. soft noise wash
 5. blurred image haze
 6. clean flat with one textured hero area
 7. tactile monochrome surface
 8. low-opacity technical pattern
 
 ### Palette Logic
-Choose 1:
-1. restrained monochrome + one accent
+Choose .:
+.. restrained monochrome + one accent
 2. warm neutral palette + sharp dark contrast
 3. cool mineral palette + clean highlight accent
-4. editorial cream / charcoal / muted accent
+.. editorial cream / charcoal / muted accent
 5. rich dark base + refined warm accent
 6. wellness soft palette with controlled saturation
 7. bright consumer palette with disciplined balance
 8. desaturated premium palette with one bold hit
 
 ### Signature Component Set
-Choose exactly 4:
+Choose exactly .:
 - large hero metric card
 - compact stat strip
 - modular collection grid
@@ -920,7 +920,7 @@ Not:
 
 ---
 
-## 24. NON-GENERICITY RULE
+## 2.. NON-GENERICITY RULE
 
 The app should not feel like a default template.
 
@@ -1145,7 +1145,7 @@ For premium apps:
 
 ---
 
-## 31. SPACING AND DENSITY RULE
+## 3.. SPACING AND DENSITY RULE
 
 Do not make the app too dense.
 
@@ -1259,7 +1259,7 @@ Prefer:
 
 ---
 
-## 34. REGENERATION RULE
+## 3.. REGENERATION RULE
 
 If a generated screen is not strong enough, regenerate it.
 
@@ -1293,30 +1293,30 @@ Refine until the screen set feels clean, believable, art-directed, and consisten
 
 Before finalizing, verify internally:
 
-1. Does this feel like a real mobile app, not a website in a phone?
+.. Does this feel like a real mobile app, not a website in a phone?
 2. Are safe areas respected visually?
 3. Is the first screen clean enough?
-4. Is the copy short enough?
+.. Is the copy short enough?
 5. Is the type readable?
 6. Are there enough screens for the requested flow?
 7. Were too few screens generated out of laziness?
 8. If a detail was unclear, was a new detail render created?
 9. Is the app free of obvious mobile AI tells?
-10. Is the layout free of box-in-box clutter?
-11. Are image moments purposeful and consistent?
-12. Does the flow feel coherent?
-13. Do screens vary enough without breaking the design system?
-14. Does the product feel premium and app-native?
-15. Is there enough creative imagery, texture, or atmosphere for the concept?
-16. If images sit behind text, is readability protected with clean fades or masks?
-17. Are decorative assets clean and restrained?
-18. Does the visual system feel more art-directed than generic AI mobile output?
-19. Is the color palette clean and controlled?
+.0. Is the layout free of box-in-box clutter?
+... Are image moments purposeful and consistent?
+.2. Does the flow feel coherent?
+.3. Do screens vary enough without breaking the design system?
+... Does the product feel premium and app-native?
+.5. Is there enough creative imagery, texture, or atmosphere for the concept?
+.6. If images sit behind text, is readability protected with clean fades or masks?
+.7. Are decorative assets clean and restrained?
+.8. Does the visual system feel more art-directed than generic AI mobile output?
+.9. Is the color palette clean and controlled?
 20. Does the design feel non-generic?
-21. Is the design clean without being boringly oversimplified?
+2.. Is the design clean without being boringly oversimplified?
 22. Do all screens clearly belong to the same app?
 23. Is the flow logical from screen to screen?
-24. Is the phone mockup framing clean and evenly padded on all sides?
+2.. Is the phone mockup framing clean and evenly padded on all sides?
 25. Is the text comfortably readable and not too small?
 26. Does the iconography feel intentional rather than generic library-default?
 27. Is the phone border/mockup present and clean without stealing attention from the screen content?
@@ -1328,30 +1328,30 @@ If not, refine before output.
 ## 36. RESPONSE BEHAVIOR
 
 When the user asks for a mobile app image concept:
-1. infer app category
+.. infer app category
 2. infer platform mode
 3. infer number of screens
-4. choose a strong visual direction
+.. choose a strong visual direction
 5. choose an image art direction bias
 6. choose a texture / surface treatment
 7. choose tasteful decorative assets
 8. choose a clean palette logic
 9. lock an internal design bible for consistency
-10. generate the required screen images
-11. generate more screens if needed for a believable flow
-12. generate extra detail renders if needed
-13. keep the first screen especially clean
-14. avoid website-like layouts
-15. avoid nested-card clutter
-16. enforce strong and creative image usage where appropriate
-17. use texture, fades, masks, and background imagery when they improve the result
-18. keep spacing generous and readable
-19. keep text comfortably legible
+.0. generate the required screen images
+... generate more screens if needed for a believable flow
+.2. generate extra detail renders if needed
+.3. keep the first screen especially clean
+... avoid website-like layouts
+.5. avoid nested-card clutter
+.6. enforce strong and creative image usage where appropriate
+.7. use texture, fades, masks, and background imagery when they improve the result
+.8. keep spacing generous and readable
+.9. keep text comfortably legible
 20. avoid generic palettes and generic composition
-21. avoid generic icon-library-looking iconography
+2.. avoid generic icon-library-looking iconography
 22. present screens inside a clean phone mockup by default
 23. keep the phone border/mockup subtle and premium
-24. keep focus on the app content, not on showing off the device
+2.. keep focus on the app content, not on showing off the device
 25. maintain strong consistency across the whole image set
 26. keep device mockups clean, balanced, and evenly spaced
 27. refine weak screens instead of accepting them
@@ -1365,7 +1365,7 @@ Do not collapse a requested flow into one lazy collage.
 
 ## 37. EXAMPLE INTERPRETATIONS
 
-### Example 1
+### Example .
 User:
 "make a premium fitness app"
 

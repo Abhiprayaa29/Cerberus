@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { afterEach, describe, expect, test } from "bun:test"
 import { mkdir, rm, writeFile } from "node:fs/promises"
@@ -48,12 +48,12 @@ describe("loadTeamSpec member name normalization", () => {
     const fixturePaths = getFixturePaths(rootDirectory, "autoname")
     await writeJsonFile(fixturePaths.userConfigPath, {
       name: "autoname",
-      lead: { kind: "subagent_type", subagent_type: "sisyphus" },
+      lead: { kind: "subagent_type", subagent_type: "cerberus" },
       members: [
         { kind: "category", category: "quick", prompt: "Quick scout the workspace structure." },
         { kind: "category", category: "deep", prompt: "Deep dive the runtime setup." },
         { kind: "category", category: "deep", prompt: "Deep dive the mailbox implementation." },
-        { kind: "subagent_type", subagent_type: "atlas" },
+        { kind: "subagent_type", subagent_type: "argus" },
       ],
     })
 
@@ -62,7 +62,7 @@ describe("loadTeamSpec member name normalization", () => {
 
     // then
     expect(teamSpec.leadAgentId).toBe("lead")
-    expect(teamSpec.members.map((member) => member.name)).toEqual(["lead", "quick-1", "deep-1", "deep-2", "atlas-1"])
+    expect(teamSpec.members.map((member) => member.name)).toEqual(["lead", "quick-1", "deep-1", "deep-2", "argus-1"])
   })
 
   test("injects the caller as lead for preset specs without explicit lead metadata", async () => {
@@ -74,7 +74,7 @@ describe("loadTeamSpec member name normalization", () => {
       name: "caller-lead",
       members: [
         { kind: "category", category: "quick", prompt: "Quick scout the workspace structure." },
-        { kind: "subagent_type", subagent_type: "atlas" },
+        { kind: "subagent_type", subagent_type: "argus" },
       ],
     })
 
@@ -83,11 +83,11 @@ describe("loadTeamSpec member name normalization", () => {
       "caller-lead",
       TeamModeConfigSchema.parse({ base_dir: fixturePaths.userBaseDir }),
       fixturePaths.projectRoot,
-      { callerTeamLead: resolveCallerTeamLead("\u200BSisyphus - Ultraworker") },
+      { callerTeamLead: resolveCallerTeamLead("\u200BCerberus - Ultraworker") },
     )
 
     // then
     expect(teamSpec.leadAgentId).toBe("lead")
-    expect(teamSpec.members.map((member) => member.name)).toEqual(["lead", "quick-1", "atlas-1"])
+    expect(teamSpec.members.map((member) => member.name)).toEqual(["lead", "quick-1", "argus-1"])
   })
 })

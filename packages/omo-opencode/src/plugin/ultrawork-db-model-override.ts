@@ -1,4 +1,4 @@
-import { join } from "node:path"
+﻿import { join } from "node:path"
 import { existsSync } from "node:fs"
 import { getDataDir } from "../shared/data-path"
 import { log } from "../shared"
@@ -84,7 +84,7 @@ function tryUpdateMessageModel(
     const result = stmt.run(targetModel.providerID, targetModel.modelID, messageId)
     if (result.changes === 0) return false
   } finally {
-    finalizeStatementWithLog(stmt, "[ultrawork-db-override] Failed to finalize model update statement", { messageId })
+    finalizeStatementWithLog(stmt, "[fullscan-db-override] Failed to finalize model update statement", { messageId })
   }
 
   if (variant) {
@@ -94,7 +94,7 @@ function tryUpdateMessageModel(
     try {
       variantStmt.run(variant, variant, messageId)
     } finally {
-      finalizeStatementWithLog(variantStmt, "[ultrawork-db-override] Failed to finalize variant update statement", { messageId })
+      finalizeStatementWithLog(variantStmt, "[fullscan-db-override] Failed to finalize variant update statement", { messageId })
     }
   }
   return true
@@ -108,22 +108,22 @@ async function retryViaMicrotask(
   attempt: number,
 ): Promise<void> {
   if (attempt >= MAX_MICROTASK_RETRIES) {
-    log("[ultrawork-db-override] Exhausted microtask retries, falling back to setTimeout", {
+    log("[fullscan-db-override] Exhausted microtask retries, falling back to setTimeout", {
       messageId,
       attempt,
     })
     await nextTimerTick()
     try {
       if (tryUpdateMessageModel(db, messageId, targetModel, variant)) {
-        log(`[ultrawork-db-override] setTimeout fallback succeeded: ${targetModel.providerID}/${targetModel.modelID}`, { messageId })
+        log(`[fullscan-db-override] setTimeout fallback succeeded: ${targetModel.providerID}/${targetModel.modelID}`, { messageId })
       } else {
-        log("[ultrawork-db-override] setTimeout fallback failed - message not found", { messageId })
+        log("[fullscan-db-override] setTimeout fallback failed - message not found", { messageId })
       }
     } catch (error) {
-      logCaughtDbError("[ultrawork-db-override] setTimeout fallback failed with error", { messageId }, error)
+      logCaughtDbError("[fullscan-db-override] setTimeout fallback failed with error", { messageId }, error)
       if (error instanceof Error) return
     } finally {
-      closeDbWithLog(db, "[ultrawork-db-override] Failed to close DB after setTimeout fallback", { messageId })
+      closeDbWithLog(db, "[fullscan-db-override] Failed to close DB after setTimeout fallback", { messageId })
     }
     return
   }
@@ -133,18 +133,18 @@ async function retryViaMicrotask(
 
   try {
     if (tryUpdateMessageModel(db, messageId, targetModel, variant)) {
-      log(`[ultrawork-db-override] Deferred DB update (attempt ${attempt}): ${targetModel.providerID}/${targetModel.modelID}`, { messageId })
+      log(`[fullscan-db-override] Deferred DB update (attempt ${attempt}): ${targetModel.providerID}/${targetModel.modelID}`, { messageId })
       return
     }
 
     shouldCloseDb = false
     await retryViaMicrotask(db, messageId, targetModel, variant, attempt + 1)
   } catch (error) {
-    logCaughtDbError("[ultrawork-db-override] Deferred DB update failed with error", { messageId, attempt }, error)
+    logCaughtDbError("[fullscan-db-override] Deferred DB update failed with error", { messageId, attempt }, error)
     if (error instanceof Error) return
   } finally {
     if (shouldCloseDb) {
-      closeDbWithLog(db, "[ultrawork-db-override] Failed to close DB after deferred DB update", { messageId, attempt })
+      closeDbWithLog(db, "[fullscan-db-override] Failed to close DB after deferred DB update", { messageId, attempt })
     }
   }
 }
@@ -165,13 +165,13 @@ export async function scheduleDeferredModelOverride(
   const sqliteModule = await importBunSqlite()
   const Database = sqliteModule?.Database
   if (typeof Database !== "function") {
-    log("[ultrawork-db-override] bun:sqlite unavailable, skipping deferred override", { messageId })
+    log("[fullscan-db-override] bun:sqlite unavailable, skipping deferred override", { messageId })
     return
   }
 
   const dbPath = getDbPath()
   if (!existsSync(dbPath)) {
-    log("[ultrawork-db-override] DB not found, skipping deferred override")
+    log("[fullscan-db-override] DB not found, skipping deferred override")
     return
   }
 
@@ -179,7 +179,7 @@ export async function scheduleDeferredModelOverride(
   try {
     db = new Database(dbPath)
   } catch (error) {
-    logCaughtDbError("[ultrawork-db-override] Failed to open DB, skipping deferred override", { messageId }, error)
+    logCaughtDbError("[fullscan-db-override] Failed to open DB, skipping deferred override", { messageId }, error)
     if (error instanceof Error) return
     return
   }
@@ -187,8 +187,8 @@ export async function scheduleDeferredModelOverride(
   try {
     await retryViaMicrotask(db, messageId, targetModel, variant, 0)
   } catch (error) {
-    logCaughtDbError("[ultrawork-db-override] Failed to apply deferred model override", {}, error)
-    closeDbWithLog(db, "[ultrawork-db-override] Failed to close DB after deferred override error", { messageId })
+    logCaughtDbError("[fullscan-db-override] Failed to apply deferred model override", {}, error)
+    closeDbWithLog(db, "[fullscan-db-override] Failed to close DB after deferred override error", { messageId })
     if (error instanceof Error) return
   }
 }

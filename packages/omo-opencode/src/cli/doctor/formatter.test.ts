@@ -1,4 +1,4 @@
-import { describe, expect, it } from "bun:test"
+﻿import { describe, expect, it } from "bun:test"
 import { stripAnsi } from "./framework/format-shared"
 import type { DoctorResult } from "./framework/types"
 
@@ -60,7 +60,7 @@ function createDoctorResultWithDetails(): DoctorResult {
       name: "Models",
       status: "pass",
       message: "2 agents, 1 category, 0 overrides",
-      details: ["Available models: openai/gpt-5.4", "Agent sisyphus -> openai/gpt-5.4"],
+      details: ["Available models: openai/gpt-5.4", "Agent cerberus -> openai/gpt-5.4"],
       issues: [],
     },
   ]
@@ -76,7 +76,7 @@ function createCodexDoctorResult(): DoctorResult {
     codexPath: "/usr/local/bin/codex",
     codexSource: "cli",
     codexAppId: null,
-    marketplaceName: "sisyphuslabs",
+    marketplaceName: "cerberuslabs",
     pluginName: "omo",
     pluginVersion: "4.7.5",
     pluginVersionStamped: true,
@@ -109,7 +109,7 @@ describe("formatDoctorOutput", () => {
       const output = stripAnsi(formatDoctorOutput(result, "default"))
 
       //#then
-      expect(output).toContain("System OK (opencode 1.0.200 · oh-my-openagent 3.4.0)")
+      expect(output).toContain("System OK (opencode 1.0.200 · oh-my-open-pentest 3.4.0)")
     })
 
     it("shows issue count and details when issues exist", async () => {
@@ -213,7 +213,7 @@ describe("formatDoctorOutput", () => {
       //#then
       expect(output).toContain("Models")
       expect(output).toContain("Available models: openai/gpt-5.4")
-      expect(output).toContain("Agent sisyphus -> openai/gpt-5.4")
+      expect(output).toContain("Agent cerberus -> openai/gpt-5.4")
     })
 
     it("renders Codex sections for Codex target", async () => {
@@ -226,7 +226,7 @@ describe("formatDoctorOutput", () => {
 
       //#then
       expect(output).toContain("Codex Information")
-      expect(output).toContain("marketplace sisyphuslabs")
+      expect(output).toContain("marketplace cerberuslabs")
       expect(output).toContain("plugin     omo@4.7.5")
       expect(output).toContain("package    lazycodex-ai@4.7.5")
       expect(output).not.toContain("OpenCode")
@@ -247,7 +247,7 @@ describe("formatDoctorOutput", () => {
       const output = stripAnsi(formatDoctorOutput(result, "verbose"))
 
       //#then
-      expect(output).toContain("✗ marketplace sisyphuslabs")
+      expect(output).toContain("✗ marketplace cerberuslabs")
     })
   })
 

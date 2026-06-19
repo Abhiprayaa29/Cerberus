@@ -1,4 +1,4 @@
-import assert from "node:assert/strict";
+﻿import assert from "node:assert/strict";
 import { lstat, mkdir, mkdtemp, readdir, readFile, readlink, rm, stat, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join, sep } from "node:path";
@@ -23,7 +23,7 @@ async function withBinLinkFixture(run) {
 		const pluginData = join(root, "plugin-data");
 		await mkdir(codexHome, { recursive: true });
 		await mkdir(pluginData, { recursive: true });
-		await writeFile(join(codexHome, "config.toml"), `[marketplaces.sisyphuslabs]\n${MARKETPLACE_SOURCE_LINE}\n`);
+		await writeFile(join(codexHome, "config.toml"), `[marketplaces.cerberuslabs]\n${MARKETPLACE_SOURCE_LINE}\n`);
 		await run({ binDir, codexHome, pluginData, root });
 	} finally {
 		await rm(root, { force: true, recursive: true });
@@ -64,16 +64,16 @@ async function writeVersionedRoot(root, version, { withRuntimeCli = false } = {}
 		join(pluginRoot, ".mcp.json"),
 		`${JSON.stringify({ mcpServers: { git_bash: { args: ["serve"], command: "node", env: {} } } }, null, "\t")}\n`,
 	);
-	await mkdir(join(pluginRoot, "components", "ultrawork", "agents"), { recursive: true });
+	await mkdir(join(pluginRoot, "components", "fullscan", "agents"), { recursive: true });
 	await writeFile(
-		join(pluginRoot, "components", "ultrawork", "agents", "explorer.toml"),
-		'description = "Explorer agent"\nmodel_reasoning_effort = "medium"\n',
+		join(pluginRoot, "components", "fullscan", "agents", "explorer.toml"),
+		'description = "Scoutr agent"\nmodel_reasoning_effort = "medium"\n',
 	);
 	const componentRoot = join(pluginRoot, "components", "toolbox");
 	await mkdir(join(componentRoot, "dist"), { recursive: true });
 	await writeFile(
 		join(componentRoot, "package.json"),
-		`${JSON.stringify({ bin: { [COMPONENT_BIN_NAME]: "./dist/cli.js" }, name: "@sisyphuslabs/toolbox" })}\n`,
+		`${JSON.stringify({ bin: { [COMPONENT_BIN_NAME]: "./dist/cli.js" }, name: "@cerberuslabs/toolbox" })}\n`,
 	);
 	await writeFile(join(componentRoot, "dist", "cli.js"), "#!/usr/bin/env node\nconsole.log('toolbox');\n");
 	if (withRuntimeCli) {
@@ -219,7 +219,7 @@ test("#given a marketplace payload without dist/cli #when the worker setup runs 
 		assert.ok(
 			warning.includes("skipped the omo runtime wrapper because ") &&
 				warning.includes(`${join("dist", "cli", "index.js")} is missing; `) &&
-				warning.includes("omo sparkshell/ulw-loop commands will be unavailable until a package shipping dist/cli is installed"),
+				warning.includes("omo sparkshell/pentest-loop commands will be unavailable until a package shipping dist/cli is installed"),
 			`bootstrap.log must carry the install-local warning text, got: ${log}`,
 		);
 	});

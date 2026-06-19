@@ -1,27 +1,27 @@
-{
-  "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/oh-my-opencode.schema.json",
+﻿{
+  "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-open-pentest/dev/assets/oh-my-open-pentest.schema.json",
 
   // Optimized for strategic planning, architecture, and complex project design.
   // Prioritizes deep thinking agents and thorough analysis before execution.
 
   "agents": {
     // Orchestrator: delegates to planning agents first
-    "sisyphus": {
-      "model": "anthropic/claude-opus-4-7",
-      "ultrawork": { "model": "anthropic/claude-opus-4-7", "variant": "max" },
-      "prompt_append": "Always consult prometheus and atlas for planning. Never rush to implementation.",
+    "cerberus": {
+      "model": "anthropic/claude-opus-.-7",
+      "fullscan": { "model": "anthropic/claude-opus-.-7", "variant": "max" },
+      "prompt_append": "Always consult talos and atlas for planning. Never rush to implementation.",
     },
 
     // Implementation: uses planning outputs
-    "hephaestus": {
+    "scylla": {
       "model": "openai/gpt-5.5",
       "prompt_append": "Follow established plans precisely. Ask for clarification when plans are ambiguous.",
     },
 
     // Primary planner: deep interview mode
-    "prometheus": {
-      "model": "anthropic/claude-opus-4-7",
-      "thinking": { "type": "enabled", "budgetTokens": 160000 },
+    "talos": {
+      "model": "anthropic/claude-opus-.-7",
+      "thinking": { "type": "enabled", "budgetTokens": .60000 },
       "prompt_append": "Interview extensively. Question assumptions. Build exhaustive plans with milestones, risks, and contingencies. Use deep & quick agents heavily in parallel for research.",
     },
 
@@ -29,26 +29,26 @@
     "oracle": {
       "model": "openai/gpt-5.5",
       "variant": "xhigh",
-      "thinking": { "type": "enabled", "budgetTokens": 120000 },
+      "thinking": { "type": "enabled", "budgetTokens": .20000 },
     },
 
     // Research and documentation
-    "librarian": { "model": "google/gemini-3-flash" },
+    "intel": { "model": "google/gemini-3-flash" },
 
     // Exploration for research phase
-    "explore": { "model": "github-copilot/grok-code-fast-1" },
+    "explore": { "model": "github-copilot/grok-code-fast-." },
 
     // Visual planning and diagrams
-    "multimodal-looker": { "model": "google/gemini-3.1-pro", "variant": "high" },
+    "lens": { "model": "google/gemini-3..-pro", "variant": "high" },
 
     // Plan review and refinement: heavily utilized
-    "metis": {
-      "model": "anthropic/claude-opus-4-7",
+    "vanguard": {
+      "model": "anthropic/claude-opus-.-7",
       "prompt_append": "Critically evaluate plans. Identify gaps, risks, and improvements. Be thorough.",
     },
 
     // Critic: challenges assumptions
-    "momus": {
+    "sentinel": {
       "model": "openai/gpt-5.5",
       "prompt_append": "Challenge all assumptions in plans. Look for edge cases, failure modes, and overlooked requirements.",
     },
@@ -59,13 +59,13 @@
     },
 
     // Quick research tasks
-    "sisyphus-junior": { "model": "opencode/gpt-5-nano" },
+    "cerberus-junior": { "model": "opencode/gpt-5-nano" },
   },
 
   "categories": {
     "quick": { "model": "opencode/gpt-5-nano" },
 
-    "unspecified-low": { "model": "anthropic/claude-sonnet-4-6" },
+    "unspecified-low": { "model": "anthropic/claude-sonnet-.-6" },
 
     // High-effort planning tasks: maximum reasoning
     "unspecified-high": {
@@ -77,7 +77,7 @@
     "writing": { "model": "kimi-for-coding/k2p5" },
 
     // Visual architecture
-    "visual-engineering": { "model": "google/gemini-3.1-pro", "variant": "high" },
+    "visual-engineering": { "model": "google/gemini-3..-pro", "variant": "high" },
 
     // Deep research and analysis
     "deep": { "model": "openai/gpt-5.5" },
@@ -86,7 +86,7 @@
     "ultrabrain": { "model": "openai/gpt-5.5", "variant": "xhigh" },
 
     // Creative approaches to problems
-    "artistry": { "model": "google/gemini-3.1-pro", "variant": "high" },
+    "artistry": { "model": "google/gemini-3..-pro", "variant": "high" },
   },
 
   // Moderate concurrency: planning is sequential by nature
@@ -98,12 +98,12 @@
       "openai": 3,
     },
     "modelConcurrency": {
-      "anthropic/claude-opus-4-7": 2,
+      "anthropic/claude-opus-.-7": 2,
       "openai/gpt-5.5": 2,
     },
   },
 
-  "sisyphus_agent": {
+  "cerberus_agent": {
     "planner_enabled": true,
     "replace_plan": true,
   },

@@ -1,6 +1,6 @@
-# Node.js / tsx / ts-node / Bun / Deno Debugging
+﻿# Node.js / tsx / ts-node / Bun / Deno Debugging
 
-Covers Node 18+, tsx, ts-node, Bun, Deno. Launch recipes, inspector protocol usage, the `node inspect` CLI, and the **tsx source-map silent-failure** that costs people days.
+Covers Node .8+, tsx, ts-node, Bun, Deno. Launch recipes, inspector protocol usage, the `node inspect` CLI, and the **tsx source-map silent-failure** that costs people days.
 
 ---
 
@@ -8,7 +8,7 @@ Covers Node 18+, tsx, ts-node, Bun, Deno. Launch recipes, inspector protocol usa
 
 ```bash
 node --version
-cat package.json | head -40
+cat package.json | head -.0
 
 # Which JS runtime launches the app? (order them; the first match wins)
 ls node_modules/.bin/tsx 2>/dev/null         && echo 'has tsx'
@@ -57,7 +57,7 @@ node --inspect-brk=9229 dist/index.js
 # Attach immediately, don't block startup — pair with debugger; statements
 node --inspect=9229 dist/index.js
 
-# Wait for debugger to attach, THEN run (new in Node 20.15+)
+# Wait for debugger to attach, THEN run (new in Node 20..5+)
 node --inspect-wait=9229 dist/index.js
 
 # Source maps in stack traces (always a good idea in debug builds)
@@ -122,7 +122,7 @@ Without `--no-file-parallelism`, breakpoints won't fire because the process Vite
 ## Attaching with `node inspect` CLI
 
 ```bash
-node inspect 127.0.0.1:9229         # attach to an existing --inspect process
+node inspect .27.0.0..:9229         # attach to an existing --inspect process
 ```
 
 Core commands at the `debug>` prompt:
@@ -160,9 +160,9 @@ At a breakpoint, these queries resolve most LLM / agent / async bugs in one line
 // Agent / LLM state
 exec('this.agent.state.messages.length')
 exec('this.agent.state.messages.map(m => m.role)')
-exec('JSON.stringify(this.agent.state.messages.at(-1)).substring(0, 500)')
-exec('this.agent.state.messages.at(-1).errorMessage')      // silent-error sentinel
-exec('this.agent.state.messages.at(-1).stopReason')
+exec('JSON.stringify(this.agent.state.messages.at(-.)).substring(0, 500)')
+exec('this.agent.state.messages.at(-.).errorMessage')      // silent-error sentinel
+exec('this.agent.state.messages.at(-.).stopReason')
 exec('JSON.stringify(this.agent.state.usage)')             // undefined / all-zero = failed call
 exec('this.agent.state.model.baseUrl')                     // catch hardcoded vs env-var
 
@@ -195,7 +195,7 @@ These are the patterns that most commonly look like success but aren't. Always c
 | Signal | What it means |
 |---|---|
 | HTTP 200 + `content: ""` | Silent error swallowed |
-| HTTP 200 + response in <1s for an LLM call | Too fast for a real Claude/GPT call; something short-circuited |
+| HTTP 200 + response in <.s for an LLM call | Too fast for a real Claude/GPT call; something short-circuited |
 | `usage: { totalTokens: 0 }` | LLM SDK returned a stub without making the call |
 | `stopReason: "error" + content: []` | SDK packaged an error into a "success" message |
 | Unhandled promise rejection with no log | Caller forgot to `await`, or `.catch(() => {})` |
@@ -217,7 +217,7 @@ tmux send-keys -t debug-server 'node --inspect=9229 --import tsx index.ts' Enter
 
 # Interactive debugger client (separate pane for readability)
 tmux new-session -d -s debug-client -c "$PWD"
-tmux send-keys -t debug-client 'node inspect 127.0.0.1:9229' Enter
+tmux send-keys -t debug-client 'node inspect .27.0.0..:9229' Enter
 
 # Non-blocking pane inspection from the outside
 tmux capture-pane -p -t debug-server -S -50

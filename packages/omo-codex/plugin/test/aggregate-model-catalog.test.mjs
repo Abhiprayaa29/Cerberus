@@ -1,4 +1,4 @@
-import assert from "node:assert/strict";
+﻿import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { basename, dirname, join } from "node:path";
 import test from "node:test";
@@ -34,10 +34,10 @@ test("#given bundled model catalog #when inspected #then no role or managed pres
 
 test("#given Codex-facing orchestration surfaces #when inspected #then retired ChatGPT-account model names are not recommended", async () => {
 	const promptFiles = [
-		join(root, "skills", "ulw-loop", "references", "full-workflow.md"),
-		join(root, "components", "ulw-loop", "skills", "ulw-loop", "references", "full-workflow.md"),
-		join(root, "components", "ultrawork", "README.md"),
-		join(root, "components", "ultrawork", "CHANGELOG.md"),
+		join(root, "skills", "pentest-loop", "references", "full-workflow.md"),
+		join(root, "components", "pentest-loop", "skills", "pentest-loop", "references", "full-workflow.md"),
+		join(root, "components", "fullscan", "README.md"),
+		join(root, "components", "fullscan", "CHANGELOG.md"),
 		join(root, "components", "rules", "src", "post-compact-budget.ts"),
 	];
 

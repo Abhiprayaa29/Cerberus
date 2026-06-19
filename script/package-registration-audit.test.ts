@@ -1,4 +1,4 @@
-import { existsSync } from "node:fs"
+﻿import { existsSync } from "node:fs"
 import { readdir, readFile } from "node:fs/promises"
 import { join, relative } from "node:path"
 import { describe, expect, test } from "bun:test"
@@ -32,7 +32,7 @@ const mcpPackagePaths: readonly string[] = [
 const adapterPackagePaths: readonly string[] = ["packages/omo-codex", "packages/omo-opencode"] as const
 const skillPackagePaths: readonly string[] = ["packages/shared-skills"] as const
 const shimSourceRoots: readonly string[] = ["packages/omo-opencode/src", "packages/omo-codex/src"] as const
-const reExportShimFirstLinePattern = /^export (\*|\{).*from ["'](@oh-my-opencode\/[^/"']+)/
+const reExportShimFirstLinePattern = /^export (\*|\{).*from ["'](@oh-my-open-pentest\/[^/"']+)/
 
 const layerRanks = {
   skill: 1,
@@ -223,7 +223,7 @@ describe("package registration audit", () => {
       isRootManagedTypecheckPackage,
     )
     const actualDevDependencyNames = Object.entries(root.devDependencies)
-      .filter((entry) => entry[1] === "workspace:*" && entry[0].startsWith("@oh-my-opencode/"))
+      .filter((entry) => entry[1] === "workspace:*" && entry[0].startsWith("@oh-my-open-pentest/"))
       .map((entry) => entry[0])
       .toSorted()
 

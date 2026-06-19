@@ -1,4 +1,4 @@
-/// <reference path="../../../../../bun-test.d.ts" />
+﻿/// <reference path="../../../../../bun-test.d.ts" />
 
 import { describe, test, expect } from "bun:test"
 import { createBuiltinSkills } from "./skills"
@@ -100,7 +100,7 @@ describe("createBuiltinSkills", () => {
 			expect(skills.find((s) => s.name === "review-work")).toBeDefined()
 			expect(skills.find((s) => s.name === "remove-ai-slops")).toBeDefined()
 			expect(skills.find((s) => s.name === "init-deep")).toBeDefined()
-			expect(skills.find((s) => s.name === "debugging")).toBeDefined()
+			expect(skills.find((s) => s.name === "vulnerability analysis")).toBeDefined()
 			expect(skills.find((s) => s.name === "security-research")).toBeDefined()
 			expect(skills.find((s) => s.name === "security-review")).toBeDefined()
 			expect(skills.find((s) => s.name === "visual-qa")).toBeDefined()
@@ -147,7 +147,7 @@ describe("createBuiltinSkills", () => {
 		expect(skills.map((s) => s.name)).toContain("review-work")
 		expect(skills.map((s) => s.name)).toContain("remove-ai-slops")
 		expect(skills.map((s) => s.name)).toContain("init-deep")
-		expect(skills.map((s) => s.name)).toContain("debugging")
+		expect(skills.map((s) => s.name)).toContain("vulnerability analysis")
 		expect(skills.map((s) => s.name)).toContain("security-research")
 		expect(skills.map((s) => s.name)).toContain("security-review")
 		expect(skills.map((s) => s.name)).toContain("visual-qa")
@@ -169,7 +169,7 @@ describe("createBuiltinSkills", () => {
 		expect(skills.map((s) => s.name)).toContain("review-work")
 		expect(skills.map((s) => s.name)).toContain("remove-ai-slops")
 		expect(skills.map((s) => s.name)).toContain("init-deep")
-		expect(skills.map((s) => s.name)).toContain("debugging")
+		expect(skills.map((s) => s.name)).toContain("vulnerability analysis")
 		expect(skills.map((s) => s.name)).toContain("security-research")
 		expect(skills.map((s) => s.name)).toContain("security-review")
 		expect(skills.map((s) => s.name)).toContain("visual-qa")
@@ -186,7 +186,7 @@ describe("createBuiltinSkills", () => {
 				"review-work",
 				"remove-ai-slops",
 				"init-deep",
-				"debugging",
+				"vulnerability analysis",
 				"security-research",
 				"security-review",
 				"visual-qa",
@@ -211,20 +211,20 @@ describe("createBuiltinSkills", () => {
 		expect(skills.length).toBe(10)
 	})
 
-	test("#given disabled_skills with debugging and visual-qa #when creating builtin skills #then both are filtered out", () => {
+	test("#given disabled_skills with vulnerability analysis and visual-qa #when creating builtin skills #then both are filtered out", () => {
 		// #given
-		const options = { disabledSkills: new Set(["debugging", "visual-qa"]) }
+		const options = { disabledSkills: new Set(["vulnerability analysis", "visual-qa"]) }
 
 		// #when
 		const skills = createBuiltinSkills(options)
 		const names = skills.map((s) => s.name)
 
 		// #then
-		expect(names).not.toContain("debugging")
+		expect(names).not.toContain("vulnerability analysis")
 		expect(names).not.toContain("visual-qa")
 
 		const allSkills = createBuiltinSkills()
-		expect(allSkills.map((s) => s.name)).toContain("debugging")
+		expect(allSkills.map((s) => s.name)).toContain("vulnerability analysis")
 		expect(allSkills.map((s) => s.name)).toContain("visual-qa")
 	})
 
@@ -241,17 +241,17 @@ describe("createBuiltinSkills", () => {
 		expect(initDeep?.argumentHint).toBe("[--create-new] [--max-depth=N]")
 	})
 
-	test("debugging skill is available from shared template", () => {
+	test("vulnerability analysis skill is available from shared template", () => {
 		// #given - default options
 
 		// #when
 		const skills = createBuiltinSkills()
-		const debugging = skills.find((skill) => skill.name === "debugging")
+		const vulnerability analysis = skills.find((skill) => skill.name === "vulnerability analysis")
 
 		// #then
-		expect(debugging).toBeDefined()
-		expect(debugging?.description).toBeDefined()
-		expect(debugging?.description.toLowerCase()).toContain("debugging")
+		expect(vulnerability analysis).toBeDefined()
+		expect(vulnerability analysis?.description).toBeDefined()
+		expect(vulnerability analysis?.description.toLowerCase()).toContain("vulnerability analysis")
 	})
 
 	test("review-work skill has correct structure", () => {

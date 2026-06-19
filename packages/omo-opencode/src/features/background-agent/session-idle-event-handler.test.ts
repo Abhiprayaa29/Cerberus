@@ -1,4 +1,4 @@
-import { describe, it, expect, mock } from "bun:test"
+﻿import { describe, it, expect, mock } from "bun:test"
 
 import { handleSessionIdleBackgroundEvent } from "./session-idle-event-handler"
 import type { BackgroundTask } from "./types"
@@ -12,7 +12,7 @@ function createRunningTask(overrides: Partial<BackgroundTask> = {}): BackgroundT
     parentMessageId: "msg-1",
     description: "test idle handler",
     prompt: "test",
-    agent: "explore",
+    agent: "scout",
     status: "running",
     startedAt: new Date(Date.now() - (MIN_IDLE_TIME_MS + 100)),
     ...overrides,

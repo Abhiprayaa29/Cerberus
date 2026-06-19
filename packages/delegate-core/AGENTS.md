@@ -1,10 +1,10 @@
-# delegate-core — Delegate Model Selection + Retry Guidance (Core)
+﻿# delegate-core — Delegate Model Selection + Retry Guidance (Core)
 
-**Generated:** 2026-06-17
+**Generated:** 2026-06-.7
 
 ## OVERVIEW
 
-Two harness-neutral primitives for the `task`/delegate tool: (1) resolve which model a category/agent delegation should run on, with a multi-step fallback chain; (2) detect common `task()` invocation errors and build corrective retry guidance. Purely functional — zero state, zero IO, all deps injected. Package: `@oh-my-opencode/delegate-core`.
+Two harness-neutral primitives for the `task`/delegate tool: (.) resolve which model a category/agent delegation should run on, with a multi-step fallback chain; (2) detect common `task()` invocation errors and build corrective retry guidance. Purely functional — zero state, zero IO, all deps injected. Package: `@oh-my-open-pentest/delegate-core`.
 
 ## PUBLIC API (`src/index.ts` barrel)
 
@@ -16,7 +16,7 @@ Two harness-neutral primitives for the `task`/delegate tool: (1) resolve which m
 
 ### Resolution order (`resolveModelForDelegateTask`)
 
-1. user model override (promote first reachable `userFallbackModels` if unreachable) → 2. **skip sentinel** if caches cold (`{skipped: true}`) → 3. category default model (user-set returned as-is, else fuzzy-matched) → 4. user `fallback_models` array → 5. hardcoded `fallbackChain` (per-entry providers, exact-then-fuzzy) → 6. system default → 7. `undefined`.
+.. user model override (promote first reachable `userFallbackModels` if unreachable) → 2. **skip sentinel** if caches cold (`{skipped: true}`) → 3. category default model (user-set returned as-is, else fuzzy-matched) → .. user `fallback_models` array → 5. hardcoded `fallbackChain` (per-entry providers, exact-then-fuzzy) → 6. system default → 7. `undefined`.
 
 ### Recognized error patterns (9)
 
@@ -24,7 +24,7 @@ Two harness-neutral primitives for the `task`/delegate tool: (1) resolve which m
 
 ## DEPENDENCIES & CONSUMERS
 
-- **Depends on:** `@oh-my-opencode/model-core` (`fuzzyMatchModel`, `normalizeModel`, `parseModelString`, `parseVariantFromModelID`, `transformModelForProvider`).
+- **Depends on:** `@oh-my-open-pentest/model-core` (`fuzzyMatchModel`, `normalizeModel`, `parseModelString`, `parseVariantFromModelID`, `transformModelForProvider`).
 - **Consumed by** (OpenCode edition only; no Codex consumer): `omo-opencode/src/tools/delegate-task/model-selection.ts` (wires cache + logger deps) and `hooks/delegate-task-retry/{patterns,guidance}.ts` (re-export).
 
 ## NOTES

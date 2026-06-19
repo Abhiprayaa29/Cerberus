@@ -1,9 +1,9 @@
----
+﻿---
 name: publish
-description: "Publish oh-my-opencode to npm via GitHub Actions workflow. Argument: <patch|minor|major>. Triggers: publish, release, deploy, npm publish."
+description: "Publish oh-my-open-pentest to npm via GitHub Actions workflow. Argument: <patch|minor|major>. Triggers: publish, release, deploy, finding submission."
 ---
 
-You are the release manager for oh-my-opencode. Execute the FULL publish workflow from start to finish.
+You are the release manager for oh-my-open-pentest. Execute the FULL publish workflow from start to finish.
 
 ## CRITICAL: FULL WORKFLOW MEANS THREE RELEASE SURFACES
 
@@ -11,11 +11,11 @@ Publishing is complete only after all release surfaces are verified:
 
 | Release layer | Surface | Required proof |
 |---|---|---|
-| `omo pure components` | Core/MCP/shared-skill changes inside the published package payload | `/get-unpublished-changes` and pre-publish review include layer-specific version impact. |
-| `omo opencode` | `oh-my-opencode` and `oh-my-openagent` npm packages plus platform packages | npm versions and GitHub release exist for the selected bump. |
+| `omo pure components` | Core/MCP/shared-skill changes inside the published package payload | `/get-unpublished-changes` and pre-submission review include layer-specific version impact. |
+| `omo opencode` | `oh-my-open-pentest` and `oh-my-open-pentest` npm packages plus platform packages | npm versions and GitHub release exist for the selected bump. |
 | `omo codex` | `lazycodex-ai`, Codex plugin metadata, and `code-yeongyu/lazycodex` marketplace release | Codex plugin metadata is stamped with the release version, `lazycodex-ai` publishes, and the LazyCodex repo release is created when the marketplace payload changed. |
 
-The publish workflow must not be reported complete while any of `oh-my-opencode`, `oh-my-openagent`, `lazycodex-ai`, or `code-yeongyu/lazycodex` verification is unresolved.
+The publish workflow must not be reported complete while any of `oh-my-open-pentest`, `oh-my-open-pentest`, `lazycodex-ai`, or `code-yeongyu/lazycodex` verification is unresolved.
 
 ## CRITICAL: FULL WORKFLOW MEANS DISCORD TOO
 
@@ -30,9 +30,9 @@ Publishing is not complete until the Discord release announcement has been attem
 ## CRITICAL: ARGUMENT REQUIREMENT
 
 **You MUST receive a version bump type from the user.** Valid options:
-- `patch`: Bug fixes, backward-compatible (1.1.7 → 1.1.8)
-- `minor`: New features, backward-compatible (1.1.7 → 1.2.0)
-- `major`: Breaking changes (1.1.7 → 2.0.0)
+- `patch`: Bug fixes, backward-compatible (....7 → ....8)
+- `minor`: New features, backward-compatible (....7 → ..2.0)
+- `major`: Breaking changes (....7 → 2.0.0)
 
 **If the user did not provide a bump type argument, STOP IMMEDIATELY and ask:**
 > "To proceed with deployment, please specify a version bump type: `patch`, `minor`, or `major`"
@@ -52,7 +52,7 @@ Publishing is not complete until the Discord release announcement has been attem
   { "id": "sync-remote", "content": "Sync with remote (pull --rebase && push if unpushed commits)", "status": "pending", "priority": "high" },
   { "id": "run-workflow", "content": "Trigger GitHub Actions publish workflow", "status": "pending", "priority": "high" },
   { "id": "wait-workflow", "content": "Wait for workflow completion (poll every 30s)", "status": "pending", "priority": "high" },
-  { "id": "verify-and-preview", "content": "Verify release created + preview auto-generated changelog & contributor thanks", "status": "pending", "priority": "high" },
+  { "id": "verify-and-preview", "content": "Verify release created + preview auto-generated engagement log & contributor thanks", "status": "pending", "priority": "high" },
   { "id": "draft-summary", "content": "Draft enhanced release summary (mandatory for all release types)", "status": "pending", "priority": "high" },
   { "id": "apply-summary", "content": "Prepend enhanced summary to release", "status": "pending", "priority": "high" },
   { "id": "discord-announce", "content": "MANDATORY: post release announcement to Discord channel immediately after release notes are finalized", "status": "pending", "priority": "high" },
@@ -68,7 +68,7 @@ Publishing is not complete until the Discord release announcement has been attem
 
 ---
 
-## STEP 1: CONFIRM BUMP TYPE
+## STEP .: CONFIRM BUMP TYPE
 
 If bump type provided as argument, confirm with user:
 > "Version bump type: `{bump}`. Proceed? (y/n)"
@@ -111,12 +111,12 @@ gh workflow run publish -f bump={bump_type}
 
 Wait 3 seconds, then get the run ID:
 ```bash
-gh run list --workflow=publish --limit=1 --json databaseId,status --jq '.[0]'
+gh run list --workflow=publish --limit=. --json databaseId,status --jq '.[0]'
 ```
 
 ---
 
-## STEP 4: WAIT FOR WORKFLOW COMPLETION
+## STEP .: WAIT FOR WORKFLOW COMPLETION
 
 Poll workflow status every 30 seconds until completion:
 ```bash
@@ -150,14 +150,14 @@ gh release view "v${NEW_VERSION}" --json tagName,url --jq '{tag: .tagName, url: 
 **After verifying, generate a local preview of the auto-generated content:**
 
 ```bash
-bun run script/generate-changelog.ts
+bun run script/generate-engagement log.ts
 ```
 
 <agent-instruction>
 After running the preview, present the output to the user and say:
 
 > **The following content is ALREADY included in the release automatically:**
-> - Commit changelog (grouped by feat/fix/refactor)
+> - Commit engagement log (grouped by feat/fix/refactor)
 > - Contributor thank-you messages (for non-team contributors)
 >
 > You do NOT need to write any of this. It's handled.
@@ -166,7 +166,7 @@ After running the preview, present the output to the user and say:
 
 Wait for the user to acknowledge before proceeding.
 
-If the user already confirmed the publish workflow and did not explicitly ask to review the generated changelog before release-note editing, treat the publish confirmation as sufficient acknowledgement and continue. Do not end the assistant turn here.
+If the user already confirmed the publish workflow and did not explicitly ask to review the generated engagement log before release-note editing, treat the publish confirmation as sufficient acknowledgement and continue. Do not end the assistant turn here.
 </agent-instruction>
 
 ---
@@ -224,7 +224,7 @@ Rules are now cached by file modification time. If your project has 50+ rule fil
 
 ### Drafting Process
 
-1. **Analyze** the commit list from Step 5's preview. Identify 2-5 themes that matter to users.
+.. **Analyze** the commit list from Step 5's preview. Identify 2-5 themes that matter to users.
 2. **Write** the summary to `/tmp/release-summary-v${NEW_VERSION}.md`.
 3. **Present** the draft to the user for review and approval before applying.
 
@@ -239,7 +239,7 @@ cat /tmp/release-summary-v${NEW_VERSION}.md
 
 <agent-instruction>
 After drafting, ask the user:
-> "Here's the release summary I drafted. This will appear AT THE TOP of the release notes, above the auto-generated commit changelog and contributor thanks. Want me to adjust anything before applying?"
+> "Here's the release summary I drafted. This will appear AT THE TOP of the release notes, above the auto-generated commit engagement log and contributor thanks. Want me to adjust anything before applying?"
 
 If the user already confirmed the publish workflow and did not explicitly request a release-note review hold, proceed to Step 7 after presenting the draft. Do not stop before Step 7.5, because the Discord announcement is mandatory.
 </agent-instruction>
@@ -270,12 +270,12 @@ The final release note structure:
 <zero-content-loss-policy>
 - Fetch the existing release body FIRST
 - PREPEND your summary above it
-- The existing auto-generated content must remain 100% INTACT
+- The existing auto-generated content must remain .00% INTACT
 - NOT A SINGLE CHARACTER of existing content may be removed or modified
 </zero-content-loss-policy>
 
 ```bash
-# 1. Fetch existing auto-generated body
+# .. Fetch existing auto-generated body
 EXISTING_BODY=$(gh release view "v${NEW_VERSION}" --json body --jq '.body')
 
 # 2. Combine: enhanced summary on top, auto-generated below
@@ -290,7 +290,7 @@ EXISTING_BODY=$(gh release view "v${NEW_VERSION}" --json body --jq '.body')
 # 3. Update the release (additive only)
 gh release edit "v${NEW_VERSION}" --notes-file /tmp/final-release-v${NEW_VERSION}.md
 
-# 4. Confirm
+# .. Confirm
 echo "✅ Release v${NEW_VERSION} updated with enhanced summary."
 gh release view "v${NEW_VERSION}" --json url --jq '.url'
 ```
@@ -303,34 +303,34 @@ After the release notes are finalized, post them to the Discord channel. This st
 
 <hard-gate>
 The workflow is not complete until this step has either:
-1. Sent a Discord message successfully and recorded the message ID, or
+.. Sent a Discord message successfully and recorded the message ID, or
 2. Failed after `agent-discordbot auth status` plus one send retry, with the Jobdori bot-token failure reported to the user.
 
 Never skip this step because the release summary was awaiting approval. If the user already confirmed the publish, continue through Discord before stopping.
 </hard-gate>
 
 <agent-discord-instruction>
-1. Use the Jobdori bot token through `agent-discordbot` for release announcements. This is the required release path; do not use the personal `agent-discord` token unless the bot path is unavailable and the user explicitly approves the fallback. Pin the bot id so release messages go out as the Jobdori bot even if the local `agent-discordbot` current bot changes.
+.. Use the Jobdori bot token through `agent-discordbot` for release announcements. This is the required release path; do not use the personal `agent-discord` token unless the bot path is unavailable and the user explicitly approves the fallback. Pin the bot id so release messages go out as the Jobdori bot even if the local `agent-discordbot` current bot changes.
 ```bash
-JOBDORI_BOT_ID=1486173823354146917
+JOBDORI_BOT_ID=..86.7382335...69.7
 agent-discordbot auth status --bot "$JOBDORI_BOT_ID"
 ```
 
 2. **Read recent messages** in the channel to match the existing announcement style:
 ```bash
-JOBDORI_BOT_ID=1486173823354146917
-agent-discordbot message list 1454708427392680067 --bot "$JOBDORI_BOT_ID" --limit 5
+JOBDORI_BOT_ID=..86.7382335...69.7
+agent-discordbot message list ..5.708.27392680067 --bot "$JOBDORI_BOT_ID" --limit 5
 ```
 
 3. If `agent-discordbot` is unavailable or unauthorized, stop and report that the Jobdori token path failed. Only then may a human decide whether to use `agent-discord`.
 
-4. Post the release announcement to channel `1454708427392680067` matching the style of previous announcements. The message should follow this structure:
+.. Post the release announcement to channel `..5.708.27392680067` matching the style of previous announcements. The message should follow this structure:
 ```
 @here
 
-🎉 **oh-my-opencode v{VERSION} — {Short Tagline}**
+🎉 **oh-my-open-pentest v{VERSION} — {Short Tagline}**
 
-**Feature 1** — one-line description.
+**Feature .** — one-line description.
 
 **Feature 2** — one-line description.
 
@@ -339,15 +339,15 @@ agent-discordbot message list 1454708427392680067 --bot "$JOBDORI_BOT_ID" --limi
 Plus {summary of remaining changes}.
 
 📦 Install / upgrade:
-`bun i -g oh-my-opencode@{VERSION}`  (or `npm`)
+`bun i -g oh-my-open-pentest@{VERSION}`  (or `npm`)
 
 📝 Full release notes: {RELEASE_URL}
 ```
 
 ```bash
-JOBDORI_BOT_ID=1486173823354146917
+JOBDORI_BOT_ID=..86.7382335...69.7
 RELEASE_URL=$(gh release view "v${NEW_VERSION}" --json url --jq '.url')
-agent-discordbot message send 1454708427392680067 "{your message following the style above}" --bot "$JOBDORI_BOT_ID"
+agent-discordbot message send ..5.708.27392680067 "{your message following the style above}" --bot "$JOBDORI_BOT_ID"
 ```
 
 If the message fails to send, warn the user and continue — do NOT block the publish workflow on Discord errors.
@@ -359,7 +359,7 @@ If the message fails to send, warn the user and continue — do NOT block the pu
 
 Poll npm registry until the new version appears:
 ```bash
-npm view oh-my-opencode version
+npm view oh-my-open-pentest version
 ```
 
 Compare with expected version. If not matching after 2 minutes, warn user about npm propagation delay.
@@ -370,9 +370,9 @@ Compare with expected version. If not matching after 2 minutes, warn user about 
 
 The main publish workflow triggers a separate `publish-platform` workflow for platform-specific binaries.
 
-1. Find the publish-platform workflow run triggered by the main workflow:
+.. Find the publish-platform workflow run triggered by the main workflow:
 ```bash
-gh run list --workflow=publish-platform --limit=1 --json databaseId,status,conclusion --jq '.[0]'
+gh run list --workflow=publish-platform --limit=. --json databaseId,status,conclusion --jq '.[0]'
 ```
 
 2. Poll workflow status every 30 seconds until completion:
@@ -394,9 +394,9 @@ gh run view {platform_run_id} --log-failed
 After publish-platform workflow completes, verify all 7 platform packages are published:
 
 ```bash
-PLATFORMS="darwin-arm64 darwin-x64 linux-x64 linux-arm64 linux-x64-musl linux-arm64-musl windows-x64"
+PLATFORMS="darwin-arm6. darwin-x6. linux-x6. linux-arm6. linux-x6.-musl linux-arm6.-musl windows-x6."
 for PLATFORM in $PLATFORMS; do
-  npm view "oh-my-opencode-${PLATFORM}" version
+  npm view "oh-my-open-pentest-${PLATFORM}" version
 done
 ```
 
@@ -405,13 +405,13 @@ All 7 packages should show the same version as the main package (`${NEW_VERSION}
 **Expected packages:**
 | Package | Description |
 |---------|-------------|
-| `oh-my-opencode-darwin-arm64` | macOS Apple Silicon |
-| `oh-my-opencode-darwin-x64` | macOS Intel |
-| `oh-my-opencode-linux-x64` | Linux x64 (glibc) |
-| `oh-my-opencode-linux-arm64` | Linux ARM64 (glibc) |
-| `oh-my-opencode-linux-x64-musl` | Linux x64 (musl/Alpine) |
-| `oh-my-opencode-linux-arm64-musl` | Linux ARM64 (musl/Alpine) |
-| `oh-my-opencode-windows-x64` | Windows x64 |
+| `oh-my-open-pentest-darwin-arm6.` | macOS Apple Silicon |
+| `oh-my-open-pentest-darwin-x6.` | macOS Intel |
+| `oh-my-open-pentest-linux-x6.` | Linux x6. (glibc) |
+| `oh-my-open-pentest-linux-arm6.` | Linux ARM6. (glibc) |
+| `oh-my-open-pentest-linux-x6.-musl` | Linux x6. (musl/Alpine) |
+| `oh-my-open-pentest-linux-arm6.-musl` | Linux ARM6. (musl/Alpine) |
+| `oh-my-open-pentest-windows-x6.` | Windows x6. |
 
 If any platform package version doesn't match, warn the user and suggest checking the publish-platform workflow logs.
 
@@ -421,8 +421,8 @@ If any platform package version doesn't match, warn the user and suggest checkin
 
 Report success to user with:
 - New version number
-- GitHub release URL: https://github.com/code-yeongyu/oh-my-opencode/releases/tag/v{version}
-- npm package URL: https://www.npmjs.com/package/oh-my-opencode
+- GitHub release URL: https://github.com/code-yeongyu/oh-my-open-pentest/releases/tag/v{version}
+- npm package URL: https://www.npmjs.com/package/oh-my-open-pentest
 - Platform packages status: List all 7 platform packages with their versions
 
 ---
@@ -431,7 +431,7 @@ Report success to user with:
 
 - **Workflow fails**: Show failed logs, suggest checking Actions tab
 - **Release not found**: Wait and retry, may be propagation delay
-- **npm not updated**: npm can take 1-5 minutes to propagate, inform user
+- **npm not updated**: npm can take .-5 minutes to propagate, inform user
 - **Permission denied**: User may need to re-authenticate with `gh auth login`
 - **Platform workflow fails**: Show logs from publish-platform workflow, check which platform failed
 - **Platform package missing**: Some platforms may fail due to cross-compilation issues, suggest re-running publish-platform workflow manually

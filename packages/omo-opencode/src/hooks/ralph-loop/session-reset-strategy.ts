@@ -1,4 +1,4 @@
-import type { PluginInput } from "@opencode-ai/plugin"
+﻿import type { PluginInput } from "@opencode-ai/plugin"
 import { isRecord } from "../../shared/record-type-guard"
 import { log } from "../../shared/logger"
 
@@ -17,7 +17,7 @@ export async function createIterationSession(
     })
 
     if (createResult.error || !createResult.data?.id) {
-      log("[ralph-loop] Failed to create iteration session", {
+      log("[pentest-loop] Failed to create iteration session", {
         parentSessionID,
         error: String(createResult.error ?? "No session ID returned"),
       })
@@ -27,7 +27,7 @@ export async function createIterationSession(
     return createResult.data.id
   } catch (error: unknown) {
     const errorText = error instanceof Error ? String(error) : String(error)
-    log("[ralph-loop] session.create threw during iteration session creation", {
+    log("[pentest-loop] session.create threw during iteration session creation", {
       parentSessionID,
       error: errorText,
     })
@@ -49,7 +49,7 @@ export async function selectSessionInTui(
     return true
   } catch (error: unknown) {
     const errorText = error instanceof Error ? String(error) : String(error)
-    log("[ralph-loop] Failed to select session in TUI", {
+    log("[pentest-loop] Failed to select session in TUI", {
       sessionID,
       error: errorText,
     })

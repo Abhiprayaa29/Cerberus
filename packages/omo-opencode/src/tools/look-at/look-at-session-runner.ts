@@ -1,8 +1,8 @@
-import type { PluginInput } from "@opencode-ai/plugin"
+﻿import type { PluginInput } from "@opencode-ai/plugin"
 import type { ToolContext } from "@opencode-ai/plugin/tool"
 import { isAmbiguousPromptDispatchFailure, log, promptSyncWithModelSuggestionRetry } from "../../shared"
 import { extractLatestAssistantText } from "./assistant-message-extractor"
-import { MULTIMODAL_LOOKER_AGENT } from "./constants"
+import { LENS_AGENT } from "./constants"
 import { READ_ENABLED, buildLookAtPrompt } from "./look-at-prompt"
 import type { LookAtFilePart, LookAtInputPart } from "./look-at-input-preparer"
 import { resolveMultimodalLookerAgentMetadata } from "./multimodal-agent-metadata"
@@ -65,7 +65,7 @@ Original error: ${createResult.error}`
     await promptSyncWithModelSuggestionRetry(ctx.client, {
       path: { id: sessionID },
       body: {
-        agent: MULTIMODAL_LOOKER_AGENT,
+        agent: LENS_AGENT,
         tools: {
           task: false,
           call_omo_agent: false,
@@ -117,7 +117,7 @@ Original error: ${createResult.error}`
   const responseText = observedText ?? extractLatestAssistantText(messages)
   if (!responseText) {
     log("[look_at] No assistant message found")
-    return "Error: No response from multimodal-looker agent"
+    return "Error: No response from lens agent"
   }
 
   log(`[look_at] Got response, length: ${responseText.length}`)

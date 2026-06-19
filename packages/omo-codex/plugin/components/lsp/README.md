@@ -1,4 +1,4 @@
-# codex-lsp
+﻿# codex-lsp
 
 [![ci](https://github.com/code-yeongyu/codex-lsp/actions/workflows/ci.yml/badge.svg)](https://github.com/code-yeongyu/codex-lsp/actions/workflows/ci.yml) [![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
@@ -112,7 +112,7 @@ node dist/cli.js hook post-tool-use < test/fixtures/post-tool-use.json
 Smoke-test the MCP server:
 
 ```bash
-printf '%s\n' '{"jsonrpc":"2.0","id":1,"method":"tools/list"}' | node dist/cli.js mcp
+printf '%s\n' '{"jsonrpc":"2.0","id":.,"method":"tools/list"}' | node dist/cli.js mcp
 ```
 
 ## Local Codex Installation
@@ -121,10 +121,10 @@ printf '%s\n' '{"jsonrpc":"2.0","id":1,"method":"tools/list"}' | node dist/cli.j
 npx lazycodex-ai install
 ```
 
-The installer builds and copies the plugin into `~/.codex/plugins/cache/sisyphuslabs/omo/0.1.0`, registers the `sisyphuslabs` marketplace from the `lazycodex` Git repository, and enables:
+The installer builds and copies the plugin into `~/.codex/plugins/cache/cerberuslabs/omo/0...0`, registers the `cerberuslabs` marketplace from the `lazycodex` Git repository, and enables:
 
 ```toml
-[plugins."omo@sisyphuslabs"]
+[plugins."omo@cerberuslabs"]
 enabled = true
 ```
 

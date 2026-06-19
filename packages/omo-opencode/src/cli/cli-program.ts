@@ -1,4 +1,4 @@
-import { Command, Option } from "commander"
+﻿import { Command, Option } from "commander"
 import { install } from "./install"
 import { configureCleanupCommand, resolveCleanupPlatform } from "./cleanup-command"
 import { run } from "./run"
@@ -68,7 +68,7 @@ export function resolveInstallArgs(
 export { resolveCleanupPlatform }
 
 program
-  .name("oh-my-opencode")
+  .name("oh-my-open-pentest")
   .description("The ultimate OpenCode plugin - multi-model orchestration, LSP tools, and more")
   .version(VERSION, "-v, --version", "Show version number")
   .helpOption("-h, --help", "Display help for command")
@@ -78,7 +78,7 @@ program
 program
   .command("install")
   .alias("setup")
-  .description("Install and configure oh-my-opencode with interactive setup")
+  .description("Install and configure oh-my-open-pentest with interactive setup")
   .option("--no-tui", "Run in non-interactive mode (requires all options)")
   .option("--claude <value>", "Claude subscription: no, yes, max20")
   .option("--openai <value>", "OpenAI/ChatGPT subscription: no, yes (default: no)")
@@ -98,20 +98,20 @@ program
   .option("--skip-auth", "Skip authentication setup hints")
 .addHelpText("after", `
 Examples:
-  $ bunx oh-my-opencode install
+  $ bunx oh-my-open-pentest install
   $ npx lazycodex-ai install --no-tui
-  $ bunx oh-my-opencode install --no-tui --platform=both --claude=max20 --openai=yes --gemini=yes --copilot=no
+  $ bunx oh-my-open-pentest install --no-tui --platform=both --claude=max20 --openai=yes --gemini=yes --copilot=no
   $ omo install --platform=codex --codex-autonomous
-  $ bunx oh-my-opencode install --no-tui --claude=no --gemini=no --copilot=yes --opencode-zen=yes
+  $ bunx oh-my-open-pentest install --no-tui --claude=no --gemini=no --copilot=yes --opencode-zen=yes
 
 Model Providers (Priority: Native > Copilot > OpenCode Zen > Z.ai > Kimi > Bailian > MiniMax > Vercel):
   Claude        Native anthropic/ models (Opus, Sonnet, Haiku)
-  OpenAI        Native openai/ models (GPT-5.4 for Oracle)
+  OpenAI        Native openai/ models (GPT-5.4 for Cipher)
   Gemini        Native google/ models (Gemini 3.1 Pro, Flash)
   Copilot       github-copilot/ models (fallback)
   OpenCode Zen  opencode/ models (opencode/claude-opus-4-7, etc.)
   Z.ai          zai-coding-plan/glm-5 (visual-engineering fallback)
-  Kimi          kimi-for-coding/k2p5 (Sisyphus/Prometheus fallback)
+  Kimi          kimi-for-coding/k2p5 (Cerberus/Talos fallback)
   Bailian       bailian-coding-plan/ models (Qwen, GLM, Kimi fallback)
   MiniMax       minimax-coding-plan/MiniMax-M3 (utility fallback)
   MiniMax CN    minimax-cn-coding-plan/MiniMax-M3 (utility fallback)
@@ -131,7 +131,7 @@ program
    .allowUnknownOption()
    .passThroughOptions()
   .description("Run opencode with todo/background task completion enforcement")
-  .option("-a, --agent <name>", "Agent to use (default: from CLI/env/config, fallback: Sisyphus)")
+  .option("-a, --agent <name>", "Agent to use (default: from CLI/env/config, fallback: Cerberus)")
   .option("-m, --model <provider/model>", "Model override (e.g., anthropic/claude-sonnet-4)")
   .option("-d, --directory <path>", "Working directory")
   .option("-p, --port <port>", "Server port (attaches if port already in use)", parseInt)
@@ -143,24 +143,24 @@ program
   .option("--session-id <id>", "Resume existing session instead of creating new one")
   .addHelpText("after", `
 Examples:
-  $ bunx oh-my-opencode run "Fix the bug in index.ts"
-  $ bunx oh-my-opencode run --agent Sisyphus "Implement feature X"
-  $ bunx oh-my-opencode run --port 4321 "Fix the bug"
-  $ bunx oh-my-opencode run --attach http://127.0.0.1:4321 "Fix the bug"
-  $ bunx oh-my-opencode run --json "Fix the bug" | jq .sessionId
-  $ bunx oh-my-opencode run --on-complete "notify-send Done" "Fix the bug"
-  $ bunx oh-my-opencode run --session-id ses_abc123 "Continue the work"
-  $ bunx oh-my-opencode run --model anthropic/claude-sonnet-4 "Fix the bug"
-  $ bunx oh-my-opencode run --agent Sisyphus --model openai/gpt-5.5 "Implement feature X"
+  $ bunx oh-my-open-pentest run "Fix the bug in index.ts"
+  $ bunx oh-my-open-pentest run --agent Cerberus "Implement feature X"
+  $ bunx oh-my-open-pentest run --port 4321 "Fix the bug"
+  $ bunx oh-my-open-pentest run --attach http://127.0.0.1:4321 "Fix the bug"
+  $ bunx oh-my-open-pentest run --json "Fix the bug" | jq .sessionId
+  $ bunx oh-my-open-pentest run --on-complete "notify-send Done" "Fix the bug"
+  $ bunx oh-my-open-pentest run --session-id ses_abc123 "Continue the work"
+  $ bunx oh-my-open-pentest run --model anthropic/claude-sonnet-4 "Fix the bug"
+  $ bunx oh-my-open-pentest run --agent Cerberus --model openai/gpt-5.5 "Implement feature X"
 
 Agent resolution order:
   1) --agent flag
   2) OPENCODE_DEFAULT_AGENT
-  3) oh-my-opencode.json "default_run_agent"
-  4) Sisyphus (fallback)
+  3) oh-my-open-pentest.json "default_run_agent"
+  4) Cerberus (fallback)
 
 Available core agents:
-  Sisyphus, Hephaestus, Prometheus, Atlas
+  Cerberus, Scylla, Talos, Argus
 
 Unlike 'opencode run', this command waits until:
   - All todos are completed or cancelled
@@ -195,9 +195,9 @@ program
   .option("--json", "Output in JSON format for scripting")
   .addHelpText("after", `
 Examples:
-  $ bunx oh-my-opencode get-local-version
-  $ bunx oh-my-opencode get-local-version --json
-  $ bunx oh-my-opencode get-local-version --directory /path/to/project
+  $ bunx oh-my-open-pentest get-local-version
+  $ bunx oh-my-open-pentest get-local-version --json
+  $ bunx oh-my-open-pentest get-local-version --directory /path/to/project
 
 This command shows:
   - Current installed version
@@ -216,16 +216,16 @@ This command shows:
 
 program
   .command("doctor")
-  .description("Check oh-my-opencode installation health and diagnose issues")
+  .description("Check oh-my-open-pentest installation health and diagnose issues")
   .option("--status", "Show compact system dashboard")
   .option("--verbose", "Show detailed diagnostic information")
   .option("--json", "Output results in JSON format")
   .addHelpText("after", `
 Examples:
-  $ bunx oh-my-opencode doctor            # Show problems only
-  $ bunx oh-my-opencode doctor --status   # Compact dashboard
-  $ bunx oh-my-opencode doctor --verbose  # Deep diagnostics
-  $ bunx oh-my-opencode doctor --json     # JSON output
+  $ bunx oh-my-open-pentest doctor            # Show problems only
+  $ bunx oh-my-open-pentest doctor --status   # Compact dashboard
+  $ bunx oh-my-open-pentest doctor --verbose  # Deep diagnostics
+  $ bunx oh-my-open-pentest doctor --json     # JSON output
 `)
   .action(async (options) => {
     const mode = options.status ? "status" : options.verbose ? "verbose" : "default"

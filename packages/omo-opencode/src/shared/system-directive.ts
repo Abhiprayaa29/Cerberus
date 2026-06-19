@@ -1,5 +1,5 @@
-/**
- * Unified system directive prefix for oh-my-opencode internal messages.
+﻿/**
+ * Unified system directive prefix for oh-my-open-pentest internal messages.
  * All system-generated messages should use this prefix for consistent filtering.
  *
  * Format: [SYSTEM DIRECTIVE: OH-MY-OPENCODE - {TYPE}]
@@ -7,7 +7,7 @@
 
 export const SYSTEM_DIRECTIVE_PREFIX = "[SYSTEM DIRECTIVE: OH-MY-OPENCODE"
 
-const SYSTEM_DIRECTIVE_LEADING_KEYWORD_PATTERN = /^\s*(?:ultrawork|ulw)\s+/i
+const SYSTEM_DIRECTIVE_LEADING_KEYWORD_PATTERN = /^\s*(?:fullscan|ulw)\s+/i
 
 /**
  * Creates a system directive header with the given type.
@@ -19,7 +19,7 @@ export function createSystemDirective(type: string): string {
 }
 
 /**
- * Checks if a message starts with the oh-my-opencode system directive prefix.
+ * Checks if a message starts with the oh-my-open-pentest system directive prefix.
  * Used by keyword-detector and other hooks to skip system-generated messages.
  * @param text - The message text to check
  * @returns true if the message is a system directive
@@ -61,7 +61,7 @@ export const SystemDirectiveTypes = {
   SINGLE_TASK_ONLY: "SINGLE TASK ONLY",
   COMPACTION_CONTEXT: "COMPACTION CONTEXT",
   CONTEXT_WINDOW_MONITOR: "CONTEXT WINDOW MONITOR",
-  PROMETHEUS_READ_ONLY: "PROMETHEUS READ-ONLY",
+  TALOS_READ_ONLY: "TALOS READ-ONLY",
 } as const
 
 export type SystemDirectiveType = (typeof SystemDirectiveTypes)[keyof typeof SystemDirectiveTypes]

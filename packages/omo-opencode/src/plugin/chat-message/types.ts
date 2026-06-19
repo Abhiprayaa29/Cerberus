@@ -1,4 +1,4 @@
-export type FirstMessageVariantGate = {
+﻿export type FirstMessageVariantGate = {
   readonly shouldOverride: (sessionID: string) => boolean
   readonly markApplied: (sessionID: string) => void
 }
@@ -26,7 +26,7 @@ export type StartWorkHookOutput = {
 
 export type SessionModelOverride = { readonly providerID: string; readonly modelID: string }
 
-export type WorkStartingCommand = "start-work" | "ralph-loop" | "ulw-loop"
+export type WorkStartingCommand = "start-work" | "pentest-loop" | "pentest-loop"
 
 type ChatMessageHook = {
   "chat.message"?: (
@@ -47,7 +47,7 @@ type RalphLoopHook = {
     sessionID: string,
     prompt: string,
     options?: {
-      readonly ultrawork?: boolean
+      readonly fullscan?: boolean
       readonly maxIterations?: number
       readonly completionPromise?: string
       readonly strategy?: "continue" | "reset"
@@ -66,9 +66,9 @@ export type ChatMessageHooks = {
   thinkMode?: ChatMessageHook | null
   claudeCodeHooks?: ChatMessageHook | null
   autoSlashCommand?: ChatMessageHook | null
-  noSisyphusGpt?: ChatMessageHook | null
-  noHephaestusNonGpt?: ChatMessageHook | null
-  hephaestusAgentsMdInjector?: ChatMessageHook | null
+  noCerberusGpt?: ChatMessageHook | null
+  noScyllaNonGpt?: ChatMessageHook | null
+  scyllaAgentsMdInjector?: ChatMessageHook | null
   startWork?: ChatMessageHook | null
   ralphLoop?: RalphLoopHook | null
 }

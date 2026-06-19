@@ -1,14 +1,14 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { describe, expect, test } from "bun:test"
 import {
-  OMO_INTERNAL_INITIATOR_MARKER,
+  OMOP_INTERNAL_INITIATOR_MARKER,
   OMO_INTERNAL_NOREPLY_MARKER,
 } from "../internal-initiator-marker"
 import { latestAssistantTurnBlocksInternalPrompt } from "./pending-tool-turn"
 
-const NOREPLY_TAIL_TEXT = `notification\n${OMO_INTERNAL_INITIATOR_MARKER}\n${OMO_INTERNAL_NOREPLY_MARKER}`
-const REPLY_EXPECTING_TAIL_TEXT = `continue\n${OMO_INTERNAL_INITIATOR_MARKER}`
+const NOREPLY_TAIL_TEXT = `notification\n${OMOP_INTERNAL_INITIATOR_MARKER}\n${OMO_INTERNAL_NOREPLY_MARKER}`
+const REPLY_EXPECTING_TAIL_TEXT = `continue\n${OMOP_INTERNAL_INITIATOR_MARKER}`
 
 describe("latestAssistantTurnBlocksInternalPrompt", () => {
   test("#given completed assistant question tool has no real user answer #when checking prompt safety #then internal prompts stay blocked", () => {
@@ -66,7 +66,7 @@ describe("latestAssistantTurnBlocksInternalPrompt", () => {
           role: "user",
           time: { created: 4000 },
         },
-        parts: [{ type: "text", text: "wake\n<!-- OMO_INTERNAL_INITIATOR -->" }],
+        parts: [{ type: "text", text: "wake\n<!-- OMOP_INTERNAL_INITIATOR -->" }],
       },
     ]
 
@@ -99,7 +99,7 @@ describe("latestAssistantTurnBlocksInternalPrompt", () => {
           role: "user",
           time: { created: 4000 },
         },
-        parts: [{ type: "text", text: "wake\n<!-- OMO_INTERNAL_INITIATOR -->" }],
+        parts: [{ type: "text", text: "wake\n<!-- OMOP_INTERNAL_INITIATOR -->" }],
       },
     ]
 
@@ -132,7 +132,7 @@ describe("latestAssistantTurnBlocksInternalPrompt", () => {
           role: "user",
           time: { created: 4000 },
         },
-        parts: [{ type: "text", text: "wake\n<!-- OMO_INTERNAL_INITIATOR -->" }],
+        parts: [{ type: "text", text: "wake\n<!-- OMOP_INTERNAL_INITIATOR -->" }],
       },
     ]
 
@@ -221,7 +221,7 @@ describe("latestAssistantTurnBlocksInternalPrompt", () => {
           role: "user",
           time: { created: 3000 },
         },
-        parts: [{ type: "text", text: "continue\n<!-- OMO_INTERNAL_INITIATOR -->", synthetic: true }],
+        parts: [{ type: "text", text: "continue\n<!-- OMOP_INTERNAL_INITIATOR -->", synthetic: true }],
       },
     ]
 
@@ -240,7 +240,7 @@ describe("latestAssistantTurnBlocksInternalPrompt", () => {
           role: "user",
           time: { created: 1000 },
         },
-        parts: [{ type: "text", text: "continue\n<!-- OMO_INTERNAL_INITIATOR -->", synthetic: true }],
+        parts: [{ type: "text", text: "continue\n<!-- OMOP_INTERNAL_INITIATOR -->", synthetic: true }],
       },
       {
         info: {
@@ -270,7 +270,7 @@ describe("latestAssistantTurnBlocksInternalPrompt", () => {
           role: "user",
           time: { created: 1000 },
         },
-        parts: [{ type: "text", text: "continue\n<!-- OMO_INTERNAL_INITIATOR -->", synthetic: true }],
+        parts: [{ type: "text", text: "continue\n<!-- OMOP_INTERNAL_INITIATOR -->", synthetic: true }],
       },
       {
         info: {

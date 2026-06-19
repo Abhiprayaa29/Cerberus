@@ -1,4 +1,4 @@
-# Ghidra — Decompile Binaries Into Readable C
+﻿# Ghidra — Decompile Binaries Into Readable C
 
 **https://github.com/NationalSecurityAgency/ghidra**
 
@@ -17,11 +17,11 @@ brew install --cask ghidra
 
 # Linux
 # Download from https://github.com/NationalSecurityAgency/ghidra/releases
-# Requires JDK 21+
+# Requires JDK 2.+
 ./ghidraRun
 
 # Dependency
-java -version    # must be 21+
+java -version    # must be 2.+
 ```
 
 Ghidra is a Java Swing app. Looks dated, works well.
@@ -30,10 +30,10 @@ Ghidra is a Java Swing app. Looks dated, works well.
 
 ## First-time workflow (memorize this — it's not obvious)
 
-1. **Start Ghidra**: `ghidraRun`
+.. **Start Ghidra**: `ghidraRun`
 2. **Create a project**: File → New Project → Non-Shared → name it `debug-<binary-name>` (journal this path so you can rm it at Phase 9 if disposable).
 3. **Import the binary**: File → Import File → pick your target. Accept default format detection.
-4. **Double-click the imported binary** in the project listing. Ghidra asks to analyze it — say **yes**, accept defaults for the first pass. This takes anywhere from seconds (small binary) to tens of minutes (large binary).
+.. **Double-click the imported binary** in the project listing. Ghidra asks to analyze it — say **yes**, accept defaults for the first pass. This takes anywhere from seconds (small binary) to tens of minutes (large binary).
 5. **Once analysis completes**, you're in the CodeBrowser view.
 
 Two panels you'll use 95% of the time:
@@ -49,7 +49,7 @@ Don't try to read the whole binary. Use these to narrow:
 
 ### Symbol Tree (left panel)
 
-- `Functions` — all detected functions. Stripped binaries show `FUN_00401234` (address-named); unstripped show actual names.
+- `Functions` — all detected functions. Stripped binaries show `FUN_00.0.23.` (address-named); unstripped show actual names.
 - `Imports` — dynamically-linked functions. Great for "does this binary call `system()`, `strcpy`, `curl_easy_perform`?"
 - `Exports` — if it's a library.
 
@@ -81,13 +81,13 @@ Right-click any function / address → `References → Find References to`. Show
 
 Ghidra's decompiler is good but needs hints. These three actions dramatically improve its output:
 
-### 1. Rename variables
+### .. Rename variables
 
 Click a variable in the Decompiler view → press `L` → type a better name. Ghidra propagates the rename across all uses.
 
 ### 2. Set types
 
-A variable that looks like `undefined4` or `void *` is unhelpful. Click it → press `Ctrl+L` → set type (e.g. `int`, `char *`, `struct my_header *`).
+A variable that looks like `undefined.` or `void *` is unhelpful. Click it → press `Ctrl+L` → set type (e.g. `int`, `char *`, `struct my_header *`).
 
 For pointers to structs from headers you have, use:
 ```

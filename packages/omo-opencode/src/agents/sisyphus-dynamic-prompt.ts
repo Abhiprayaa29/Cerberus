@@ -1,13 +1,13 @@
-import type {
+﻿import type {
   AvailableAgent,
   AvailableCategory,
   AvailableSkill,
   AvailableTool,
 } from "./dynamic-agent-prompt-builder";
-import { buildSisyphusDynamicPromptContent } from "./sisyphus-dynamic-prompt-builder";
-import { applyGeminiFallbackOverrides } from "./sisyphus-gemini-fallback-overrides";
+import { buildCerberusDynamicPromptContent } from "./cerberus-dynamic-prompt-builder";
+import { applyGeminiFallbackOverrides } from "./cerberus-gemini-fallback-overrides";
 
-export function buildDynamicSisyphusPrompt(
+export function buildDynamicCerberusPrompt(
   model: string,
   availableAgents: AvailableAgent[],
   availableTools: AvailableTool[] = [],
@@ -15,7 +15,7 @@ export function buildDynamicSisyphusPrompt(
   availableCategories: AvailableCategory[] = [],
   useTaskSystem = false,
 ): string {
-  return buildSisyphusDynamicPromptContent(
+  return buildCerberusDynamicPromptContent(
     model,
     availableAgents,
     availableTools,
@@ -25,7 +25,7 @@ export function buildDynamicSisyphusPrompt(
   );
 }
 
-export function buildFallbackSisyphusPrompt(
+export function buildFallbackCerberusPrompt(
   model: string,
   agents: AvailableAgent[],
   tools: AvailableTool[],
@@ -35,6 +35,6 @@ export function buildFallbackSisyphusPrompt(
 ): string {
   return applyGeminiFallbackOverrides(
     model,
-    buildDynamicSisyphusPrompt(model, agents, tools, skills, categories, useTaskSystem),
+    buildDynamicCerberusPrompt(model, agents, tools, skills, categories, useTaskSystem),
   );
 }

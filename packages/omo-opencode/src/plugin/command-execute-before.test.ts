@@ -1,9 +1,9 @@
-import { describe, expect, mock, test } from "bun:test"
+﻿import { describe, expect, mock, test } from "bun:test"
 
 import { createCommandExecuteBeforeHandler } from "./command-execute-before"
 
 describe("createCommandExecuteBeforeHandler", () => {
-  test("#given stopped session and /ulw-loop #when command.execute.before runs #then clear is called", async () => {
+  test("#given stopped session and /pentest-loop #when command.execute.before runs #then clear is called", async () => {
     // given
     const clear = mock(() => {})
     const isStopped = mock(() => true)
@@ -24,7 +24,7 @@ describe("createCommandExecuteBeforeHandler", () => {
     // when
     await handler(
       {
-        command: "ulw-loop",
+        command: "pentest-loop",
         sessionID: "ses-stopped",
         arguments: "Ship feature",
       },
@@ -76,7 +76,7 @@ describe("createCommandExecuteBeforeHandler", () => {
     expect(clear).toHaveBeenCalledWith("ses-stopped")
   })
 
-  test("#given non-stopped session and /ulw-loop #when command.execute.before runs #then clear is not called", async () => {
+  test("#given non-stopped session and /pentest-loop #when command.execute.before runs #then clear is not called", async () => {
     // given
     const clear = mock(() => {})
     const isStopped = mock(() => false)
@@ -97,7 +97,7 @@ describe("createCommandExecuteBeforeHandler", () => {
     // when
     await handler(
       {
-        command: "ulw-loop",
+        command: "pentest-loop",
         sessionID: "ses-running",
         arguments: "Ship feature",
       },
@@ -112,7 +112,7 @@ describe("createCommandExecuteBeforeHandler", () => {
     expect(clear).not.toHaveBeenCalled()
   })
 
-  test("#given active ultrawork loop state and /ulw-loop continue #when command.execute.before runs #then resumes without replacing prompt", async () => {
+  test("#given active fullscan loop state and /pentest-loop continue #when command.execute.before runs #then resumes without replacing prompt", async () => {
     // given
     const startLoop = mock(() => true)
     const resumeLoop = mock(() => true)
@@ -129,7 +129,7 @@ describe("createCommandExecuteBeforeHandler", () => {
     // when
     await handler(
       {
-        command: "ulw-loop",
+        command: "pentest-loop",
         sessionID: "ses-resume",
         arguments: "continue",
       },

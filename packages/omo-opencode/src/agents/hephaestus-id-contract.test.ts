@@ -1,15 +1,15 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { describe, expect, test } from "bun:test"
-import { buildHephaestusPrompt as buildGptHephaestusPrompt } from "./hephaestus/gpt"
-import { buildHephaestusPrompt as buildGpt54HephaestusPrompt } from "./hephaestus/gpt-5-4"
-import { buildGpt55HephaestusPrompt } from "./hephaestus/gpt-5-5"
+import { buildScyllaPrompt as buildGptScyllaPrompt } from "./scylla/gpt"
+import { buildScyllaPrompt as buildGpt54ScyllaPrompt } from "./scylla/gpt-5-4"
+import { buildGpt55ScyllaPrompt } from "./scylla/gpt-5-5"
 
-describe("Hephaestus background task ID guidance", () => {
+describe("Scylla background task ID guidance", () => {
   const promptBuilders = [
-    ["gpt", () => buildGptHephaestusPrompt()],
-    ["gpt-5.4", () => buildGpt54HephaestusPrompt()],
-    ["gpt-5.5", () => buildGpt55HephaestusPrompt([])],
+    ["gpt", () => buildGptScyllaPrompt()],
+    ["gpt-5.4", () => buildGpt54ScyllaPrompt()],
+    ["gpt-5.5", () => buildGpt55ScyllaPrompt([])],
   ] as const
 
   for (const [name, buildPrompt] of promptBuilders) {

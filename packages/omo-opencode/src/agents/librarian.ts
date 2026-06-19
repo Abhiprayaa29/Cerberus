@@ -1,4 +1,4 @@
-import type { AgentConfig } from "@opencode-ai/sdk"
+﻿import type { AgentConfig } from "@opencode-ai/sdk"
 import type { AgentMode, AgentPromptMetadata } from "./types"
 import { createAgentToolRestrictions } from "../shared/permission-compat"
 
@@ -7,10 +7,10 @@ const MODE: AgentMode = "subagent"
 export const LIBRARIAN_PROMPT_METADATA: AgentPromptMetadata = {
   category: "exploration",
   cost: "CHEAP",
-  promptAlias: "Librarian",
-  keyTrigger: "External library/source mentioned → fire `librarian` background",
+  promptAlias: "Intel",
+  keyTrigger: "External library/source mentioned → fire `intel` background",
   triggers: [
-    { domain: "Librarian", trigger: "Unfamiliar packages / libraries, struggles at weird behaviour (to find existing implementation of opensource)" },
+    { domain: "Intel", trigger: "Unfamiliar packages / libraries, struggles at weird behaviour (to find existing implementation of opensource)" },
   ],
   useWhen: [
     "How do I use [library]?",
@@ -21,7 +21,7 @@ export const LIBRARIAN_PROMPT_METADATA: AgentPromptMetadata = {
   ],
 }
 
-export function createLibrarianAgent(model: string): AgentConfig {
+export function createIntelAgent(model: string): AgentConfig {
   const restrictions = createAgentToolRestrictions([
     "write",
     "edit",
@@ -32,7 +32,7 @@ export function createLibrarianAgent(model: string): AgentConfig {
 
   return {
     description:
-      "Specialized codebase understanding agent for multi-repository analysis, searching remote codebases, retrieving official documentation, and finding implementation examples using GitHub CLI, Context7, and Web Search. MUST BE USED when users ask to look up code in remote repositories, explain library internals, or find usage examples in open source. (Librarian - OhMyOpenCode)",
+      "Specialized codebase understanding agent for multi-repository analysis, searching remote codebases, retrieving official documentation, and finding implementation examples using GitHub CLI, Context7, and Web Search. MUST BE USED when users ask to look up code in remote repositories, explain library internals, or find usage examples in open source. (Intel - OhMyOpenCode)",
     mode: MODE,
     model,
     temperature: 0.1,
@@ -317,4 +317,4 @@ grep_app_searchGitHub(query: "useQuery")
 `,
   }
 }
-createLibrarianAgent.mode = MODE
+createIntelAgent.mode = MODE

@@ -1,1 +1,1 @@
-export { createHephaestusAgentsMdInjectorHook } from "./hook"
+﻿export { createScyllaAgentsMdInjectorHook } from "./hook"

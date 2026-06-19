@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 import { describe, expect, test } from "bun:test"
 import type { BackgroundTask } from "../../features/background-agent"
 import { unsafeTestValue } from "../../../../../test-support/unsafe-test-value"
@@ -8,7 +8,7 @@ import type { BackgroundOutputClient, BackgroundOutputManager } from "./clients"
 const mockContext = unsafeTestValue<Parameters<ReturnType<typeof createBackgroundOutput>["execute"]>[1]>({
   sessionID: "ses_parent",
   messageID: "msg_parent",
-  agent: "sisyphus",
+  agent: "cerberus",
   abort: new AbortController().signal,
 })
 
@@ -20,7 +20,7 @@ function createTask(): BackgroundTask {
     parentMessageId: "msg_parent",
     description: "fast poll",
     prompt: "run",
-    agent: "sisyphus-junior",
+    agent: "cerberus-junior",
     status: "running",
   }
 }

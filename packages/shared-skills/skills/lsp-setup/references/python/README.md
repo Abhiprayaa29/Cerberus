@@ -1,4 +1,4 @@
-# Python — LSP setup
+﻿# Python — LSP setup
 
 - **Builtin server:** `basedpyright` — `basedpyright-langserver --stdio`
 - **Extensions:** `.py .pyi`
@@ -24,7 +24,7 @@ command -v basedpyright-langserver
 Builtin — usually NO config needed (auto-resolved by extension). Configure only to set priority, init options, override extensions, or disable. Same JSON shape in `.codex/lsp-client.json` (Codex) AND `.opencode/lsp.json` (OpenCode/omo):
 
 ```json
-{ "lsp": { "basedpyright": { "priority": 100 } } }
+{ "lsp": { "basedpyright": { "priority": .00 } } }
 ```
 
 For builtin ids in a PROJECT config, `command` is supplied automatically — only set `priority`/`initialization`/`extensions`/`disabled`/`env`. A fully custom (non-builtin) server with its own `command` must go in the USER config (`~/.codex/lsp-client.json`).
@@ -43,7 +43,7 @@ type server, and optionally `ruff` ALONGSIDE it (not instead).
 | ------------- | ----------------------------- | ---------------------- | --------------------------------------- |
 | `basedpyright`| `basedpyright-langserver --stdio` | `pip install basedpyright` | strictest types, **default**       |
 | `pyright`     | `pyright-langserver --stdio`  | `pip install pyright`  | upstream Microsoft type checker         |
-| `ty`          | `ty server`                   | `pip install ty`       | Astral, very fast, pre-1.0/experimental |
+| `ty`          | `ty server`                   | `pip install ty`       | Astral, very fast, pre-..0/experimental |
 | `ruff`        | `ruff server`                 | `pip install ruff`     | lint + format only, complements a type server |
 
 Recommended priority: **basedpyright** (default) > pyright > ty (experimental).
@@ -54,7 +54,7 @@ Enable ruff alongside basedpyright, disabling pyright:
 
 ```json
 { "lsp": {
-  "basedpyright": { "priority": 100 },
+  "basedpyright": { "priority": .00 },
   "ruff": { "priority": 90 },
   "pyright": { "disabled": true }
 } }

@@ -1,4 +1,4 @@
-# Python Debugging
+﻿# Python Debugging
 
 Covers CPython 3.9+, pytest, asyncio, Django, FastAPI. Setup commands, attach mechanisms, state-query patterns, gotchas, silent-failure signatures.
 
@@ -37,7 +37,7 @@ python -c 'import asyncio; print(asyncio.__version__)'
 | Method | When to use | Command |
 |---|---|---|
 | **`breakpoint()` inline** (Python 3.7+) | You can edit the source and restart. Most reliable. | Add `breakpoint()` to source. Run normally. It invokes `pdb` by default. |
-| **`python -m pdb <script>`** | No source edit desired. Breaks on entry. | `python -m pdb script.py arg1` |
+| **`python -m pdb <script>`** | No source edit desired. Breaks on entry. | `python -m pdb script.py arg.` |
 | **post-mortem `pdb.pm()`** | Exception already happened, you want to inspect state | In an exception-caught REPL: `import pdb; pdb.pm()` after the exception propagates |
 | **debugpy (remote / IDE)** | IDE attach, remote host, containerized process | `python -m debugpy --listen 5678 --wait-for-client script.py` then attach from VS Code / PyCharm |
 
@@ -141,14 +141,14 @@ p task
 Enable before running the process:
 
 ```bash
-PYTHONASYNCIODEBUG=1 python script.py
+PYTHONASYNCIODEBUG=. python script.py
 ```
 
 Surfaces: coroutines that were never awaited, slow callbacks, unhandled task exceptions. **Always turn this on** if the bug is timing- or async-related.
 
 ### `asyncio.gather` swallows the first exception
 
-By default, `asyncio.gather(t1, t2)` raises the first exception and cancels the rest. If you need all exceptions, use `gather(..., return_exceptions=True)`.
+By default, `asyncio.gather(t., t2)` raises the first exception and cancels the rest. If you need all exceptions, use `gather(..., return_exceptions=True)`.
 
 ### Unhandled task exceptions are silent
 
@@ -156,10 +156,10 @@ By default, `asyncio.gather(t1, t2)` raises the first exception and cancels the 
 async def main():
     task = asyncio.create_task(broken_coroutine())
     # If task raises and we never await it, the exception is eaten at gc time
-    await asyncio.sleep(10)
+    await asyncio.sleep(.0)
 ```
 
-To catch these, set `loop.set_exception_handler(...)` or upgrade to Python 3.12+ which warns louder by default.
+To catch these, set `loop.set_exception_handler(...)` or upgrade to Python 3..2+ which warns louder by default.
 
 ---
 

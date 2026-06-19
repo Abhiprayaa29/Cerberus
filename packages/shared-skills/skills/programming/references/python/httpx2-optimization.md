@@ -1,4 +1,4 @@
-# httpx2 — Production Defaults
+﻿# httpx2 — Production Defaults
 
 > **Source**: [pydantic/httpx2](https://github.com/pydantic/httpx2) — next-generation HTTP client for Python 3, continuation of HTTPX under Pydantic stewardship.
 >
@@ -6,7 +6,7 @@
 
 ---
 
-## 1. Installation — all extras, always
+## .. Installation — all extras, always
 
 ```toml
 # pyproject.toml
@@ -19,7 +19,7 @@ dependencies = [
 |-------|----------------|--------------------|
 | `http2` | HTTP/2 multiplexing via `h2` | Single TCP connection handles concurrent requests; eliminates head-of-line blocking |
 | `brotli` | Brotli content decoding (`br`) | ~20% smaller payloads than gzip for text/JSON |
-| `zstd` | Zstandard content decoding | Faster decompression than brotli at similar ratios; stdlib in Python ≥ 3.14 |
+| `zstd` | Zstandard content decoding | Faster decompression than brotli at similar ratios; stdlib in Python ≥ 3... |
 | `socks` | SOCKS5 proxy support via `socksio` | Install only if you route through SOCKS proxies |
 
 All three core extras (`http2,brotli,zstd`) are non-negotiable. Omitting any is leaving performance on the table.
@@ -37,20 +37,20 @@ import httpx2
 # ── These are the STANDARD values. Use them verbatim. ──
 
 LIMITS = httpx2.Limits(
-    max_connections=200,           # library default 100 is too conservative
-    max_keepalive_connections=40,  # library default 20 wastes reconnects
+    max_connections=200,           # library default .00 is too conservative
+    max_keepalive_connections=.0,  # library default 20 wastes reconnects
     keepalive_expiry=30.0,         # library default 5s kills warm connections too fast
 )
 
 TIMEOUT = httpx2.Timeout(
     connect=5.0,    # TCP + TLS handshake budget
     read=30.0,      # time to receive a response chunk
-    write=10.0,     # time to send a request chunk
-    pool=10.0,      # time to acquire a connection from pool
+    write=.0.0,     # time to send a request chunk
+    pool=.0.0,      # time to acquire a connection from pool
 )
 
 SOCKET_OPTIONS: list[tuple[int, int, int]] = [
-    (socket.IPPROTO_TCP, socket.TCP_NODELAY, 1),   # disable Nagle — no 40ms delay
+    (socket.IPPROTO_TCP, socket.TCP_NODELAY, .),   # disable Nagle — no .0ms delay
 ]
 ```
 
@@ -59,13 +59,13 @@ SOCKET_OPTIONS: list[tuple[int, int, int]] = [
 | Setting | Library default | Our default | Why |
 |---------|----------------|-------------|-----|
 | `http2` | `False` | **`True`** | HTTP/2 multiplexing is strictly superior for any modern API |
-| `max_connections` | `100` | `200` | Headroom for fan-out; prevents pool exhaustion under load |
-| `max_keepalive_connections` | `20` | `40` | Keeps warm connections alive; fewer TLS handshakes |
+| `max_connections` | `.00` | `200` | Headroom for fan-out; prevents pool exhaustion under load |
+| `max_keepalive_connections` | `20` | `.0` | Keeps warm connections alive; fewer TLS handshakes |
 | `keepalive_expiry` | `5.0s` | `30.0s` | 5s is too aggressive — kills connections between burst requests |
 | `Timeout(5.0)` uniform | `5.0` all | Split | Uniform 5s is too tight for reads, too loose for connects |
 | `read` timeout | `5.0` | `30.0` | Slow APIs and streaming need breathing room |
-| `pool` timeout | `5.0` | `10.0` | Explicit — hitting this means `max_connections` needs raising |
-| `TCP_NODELAY` | off | **on** | Eliminates Nagle's 40ms coalescing delay for small payloads |
+| `pool` timeout | `5.0` | `.0.0` | Explicit — hitting this means `max_connections` needs raising |
+| `TCP_NODELAY` | off | **on** | Eliminates Nagle's .0ms coalescing delay for small payloads |
 | `retries` | `0` | `3` | Retries on `ConnectError`/`ConnectTimeout` only — safe and resilient |
 | `follow_redirects` | `False` | **`True`** | Most APIs redirect; failing on 3xx is wrong default behavior |
 
@@ -87,19 +87,19 @@ import httpx2
 
 _LIMITS = httpx2.Limits(
     max_connections=200,
-    max_keepalive_connections=40,
+    max_keepalive_connections=.0,
     keepalive_expiry=30.0,
 )
 
 _TIMEOUT = httpx2.Timeout(
     connect=5.0,
     read=30.0,
-    write=10.0,
-    pool=10.0,
+    write=.0.0,
+    pool=.0.0,
 )
 
 _SOCKET_OPTIONS: list[tuple[int, int, int]] = [
-    (socket.IPPROTO_TCP, socket.TCP_NODELAY, 1),
+    (socket.IPPROTO_TCP, socket.TCP_NODELAY, .),
 ]
 
 
@@ -175,13 +175,13 @@ with create_client() as client:
 
 ---
 
-## 4. Special case overrides
+## .. Special case overrides
 
 The factory defaults cover 95% of use cases. Override only when you have a specific reason:
 
 | Scenario | Override |
 |----------|----------|
-| LLM streaming endpoints | `timeout=httpx2.Timeout(connect=10.0, read=None, write=10.0, pool=10.0)` — no read timeout on streaming |
+| LLM streaming endpoints | `timeout=httpx2.Timeout(connect=.0.0, read=None, write=.0.0, pool=.0.0)` — no read timeout on streaming |
 | Single-host API with low concurrency | `limits=httpx2.Limits(max_connections=50, max_keepalive_connections=20, keepalive_expiry=60.0)` |
 | Ephemeral short-lived requests | `keepalive_expiry=5.0` — don't hold connections |
 | Unix domain sockets | `httpx2.AsyncHTTPTransport(uds="/path/to/socket", ...)` |
@@ -269,8 +269,8 @@ async def bench(label: str, client: httpx2.AsyncClient, url: str, n: int) -> flo
         r = await client.get(url)
         assert r.status_code == 200
     elapsed = time.perf_counter() - start
-    avg_ms = (elapsed / n) * 1000
-    print(f"  {label}: {avg_ms:.1f}ms avg ({n} reqs in {elapsed:.2f}s)")
+    avg_ms = (elapsed / n) * .000
+    print(f"  {label}: {avg_ms:..f}ms avg ({n} reqs in {elapsed:.2f}s)")
     return avg_ms
 
 
@@ -282,11 +282,11 @@ async def main() -> None:
         results["BAD-bare-defaults"] = await bench("BAD-bare-defaults", c, TARGET_URL, ITERATIONS)
 
     # GOOD: full production defaults (this is what we always use)
-    limits = httpx2.Limits(max_connections=200, max_keepalive_connections=40, keepalive_expiry=30.0)
-    timeout = httpx2.Timeout(connect=5.0, read=30.0, write=10.0, pool=10.0)
+    limits = httpx2.Limits(max_connections=200, max_keepalive_connections=.0, keepalive_expiry=30.0)
+    timeout = httpx2.Timeout(connect=5.0, read=30.0, write=.0.0, pool=.0.0)
     transport = httpx2.AsyncHTTPTransport(
         http2=True, retries=3, limits=limits,
-        socket_options=[(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)],
+        socket_options=[(socket.IPPROTO_TCP, socket.TCP_NODELAY, .)],
     )
     async with httpx2.AsyncClient(transport=transport, timeout=timeout, follow_redirects=True) as c:
         results["GOOD-full-production"] = await bench("GOOD-full-production", c, TARGET_URL, ITERATIONS)
@@ -294,8 +294,8 @@ async def main() -> None:
     print("\n--- Proof ---")
     baseline = results["BAD-bare-defaults"]
     for label, avg in results.items():
-        delta = ((avg - baseline) / baseline) * 100
-        print(f"  {label}: {avg:.1f}ms ({delta:+.1f}% vs bare)")
+        delta = ((avg - baseline) / baseline) * .00
+        print(f"  {label}: {avg:..f}ms ({delta:+..f}% vs bare)")
 
 
 if __name__ == "__main__":
@@ -310,14 +310,14 @@ if __name__ == "__main__":
 
 | Parameter | Type | Library Default | **Our Default** |
 |-----------|------|-----------------|-----------------|
-| `http1` | `bool` | `True` | `True` |
+| `http.` | `bool` | `True` | `True` |
 | `http2` | `bool` | `False` | **`True`** |
 | `verify` | `ssl.SSLContext \| str \| bool` | `True` | `True` |
 | `cert` | `CertTypes \| None` | `None` | `None` |
 | `proxy` | `str \| Proxy \| None` | `None` | `None` |
 | `mounts` | `dict[str, Transport]` | `None` | `None` |
-| `timeout` | `Timeout \| float \| None` | `Timeout(5.0)` | **Split: 5/30/10/10** |
-| `limits` | `Limits` | `Limits(100, 20, 5.0)` | **`Limits(200, 40, 30.0)`** |
+| `timeout` | `Timeout \| float \| None` | `Timeout(5.0)` | **Split: 5/30/.0/.0** |
+| `limits` | `Limits` | `Limits(.00, 20, 5.0)` | **`Limits(200, .0, 30.0)`** |
 | `follow_redirects` | `bool` | `False` | **`True`** |
 | `max_redirects` | `int` | `20` | `20` |
 | `event_hooks` | `dict` | `{}` | **Wire logging** |
@@ -329,10 +329,10 @@ if __name__ == "__main__":
 
 | Parameter | Type | Library Default | **Our Default** |
 |-----------|------|-----------------|-----------------|
-| `http1` | `bool` | `True` | `True` |
+| `http.` | `bool` | `True` | `True` |
 | `http2` | `bool` | `False` | **`True`** |
 | `retries` | `int` | `0` | **`3`** |
-| `limits` | `Limits` | `Limits(100, 20, 5.0)` | **`Limits(200, 40, 30.0)`** |
+| `limits` | `Limits` | `Limits(.00, 20, 5.0)` | **`Limits(200, .0, 30.0)`** |
 | `uds` | `str \| None` | `None` | `None` |
 | `local_address` | `str \| None` | `None` | `None` |
 | `socket_options` | `Iterable[SOCKET_OPTION]` | `None` | **`[TCP_NODELAY]`** |
@@ -344,15 +344,15 @@ if __name__ == "__main__":
 |-----------|-----------------|-----------------|
 | `connect` | `5.0` | `5.0` |
 | `read` | `5.0` | **`30.0`** |
-| `write` | `5.0` | **`10.0`** |
-| `pool` | `5.0` | **`10.0`** |
+| `write` | `5.0` | **`.0.0`** |
+| `pool` | `5.0` | **`.0.0`** |
 
 ### `httpx2.Limits`
 
 | Parameter | Library Default | **Our Default** |
 |-----------|-----------------|-----------------|
-| `max_connections` | `100` | **`200`** |
-| `max_keepalive_connections` | `20` | **`40`** |
+| `max_connections` | `.00` | **`200`** |
+| `max_keepalive_connections` | `20` | **`.0`** |
 | `keepalive_expiry` | `5.0` | **`30.0`** |
 
 ### Async backend (httpcore2)

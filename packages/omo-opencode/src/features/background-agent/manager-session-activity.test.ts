@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, mock, spyOn, test } from "bun:test"
+﻿import { afterEach, describe, expect, mock, spyOn, test } from "bun:test"
 import { tmpdir } from "node:os"
 import type { PluginInput } from "@opencode-ai/plugin"
 import { unsafeTestValue } from "../../../../../test-support/unsafe-test-value"
@@ -34,7 +34,7 @@ function createRunningTask(overrides: Partial<BackgroundTask> = {}): BackgroundT
     parentMessageId: "parent-message",
     description: "test task",
     prompt: "test prompt",
-    agent: "explore",
+    agent: "scout",
     status: "running",
     startedAt: new Date(Date.now() - 120_000),
     progress: { toolCalls: 0, lastUpdate: new Date() },

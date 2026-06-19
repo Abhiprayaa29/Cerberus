@@ -1,4 +1,4 @@
-# QAing the opencode TUI under tmux (Case C)
+﻿# QAing the opencode TUI under tmux (Case C)
 
 ## Verdict first (be honest)
 
@@ -21,12 +21,12 @@ SESS=oqa_tui_demo
 DIR=$(mktemp -d)
 tmux new-session -d -s "$SESS" -x 200 -y 50
 # isolate XDG so no real session is written
-tmux send-keys -t "$SESS" "XDG_DATA_HOME=$DIR/data XDG_CONFIG_HOME=$DIR/cfg XDG_STATE_HOME=$DIR/state XDG_CACHE_HOME=$DIR/cache OPENCODE_DISABLE_AUTOUPDATE=1 OPENCODE_DISABLE_MODELS_FETCH=1 opencode $DIR" Enter
+tmux send-keys -t "$SESS" "XDG_DATA_HOME=$DIR/data XDG_CONFIG_HOME=$DIR/cfg XDG_STATE_HOME=$DIR/state XDG_CACHE_HOME=$DIR/cache OPENCODE_DISABLE_AUTOUPDATE=. OPENCODE_DISABLE_MODELS_FETCH=. opencode $DIR" Enter
 sleep 7
-tmux capture-pane -t "$SESS" -p | sed -n '1,30p'   # inspect the rendered frame
+tmux capture-pane -t "$SESS" -p | sed -n '.,30p'   # inspect the rendered frame
 tmux send-keys -t "$SESS" "hello"                    # type into the composer
-sleep 1
-tmux capture-pane -t "$SESS" -p | sed -n '1,30p'
+sleep .
+tmux capture-pane -t "$SESS" -p | sed -n '.,30p'
 tmux kill-session -t "$SESS"                          # teardown (kills the TUI)
 rm -rf "$DIR"
 ```

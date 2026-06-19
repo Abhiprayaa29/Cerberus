@@ -1,4 +1,4 @@
-import { stripInvisibleAgentCharacters } from "./agent-display-names"
+﻿import { stripInvisibleAgentCharacters } from "./agent-display-names"
 
 /**
  * Agent tool restrictions for session.prompt calls.
@@ -29,32 +29,32 @@ const EXPLORATION_AGENT_DENYLIST: Record<string, boolean> = {
 }
 
 const AGENT_RESTRICTIONS: Record<string, Record<string, boolean>> = {
-  explore: EXPLORATION_AGENT_DENYLIST,
+  scout: EXPLORATION_AGENT_DENYLIST,
 
-  librarian: EXPLORATION_AGENT_DENYLIST,
+  intel: EXPLORATION_AGENT_DENYLIST,
 
-  oracle: {
+  cipher: {
     write: false,
     edit: false,
     task: false,
     call_omo_agent: false,
   },
 
-  metis: {
+  vanguard: {
     write: false,
     edit: false,
   },
 
-  momus: {
+  sentinel: {
     write: false,
     edit: false,
   },
 
-  "multimodal-looker": {
+  "lens": {
     read: true,
   },
 
-  "sisyphus-junior": {
+  "cerberus-junior": {
     task: false,
   },
 }

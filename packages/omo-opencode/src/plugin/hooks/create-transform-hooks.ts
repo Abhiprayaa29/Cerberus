@@ -1,7 +1,7 @@
-import type { OhMyOpenCodeConfig } from "../../config"
+﻿import type { OhMyOpenCodeConfig } from "../../config"
 import type { MonitorManager } from "../../features/monitor"
 import type { PluginContext } from "../types"
-import type { RalphLoopHook } from "../../hooks/ralph-loop"
+import type { RalphLoopHook } from "../../hooks/pentest-loop"
 
 import {
   createClaudeCodeHooksHook,

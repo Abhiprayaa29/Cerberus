@@ -1,4 +1,4 @@
-import { describe, it } from "bun:test"
+﻿import { describe, it } from "bun:test"
 import type {
   MonitorCounters,
   MonitorId,
@@ -20,7 +20,7 @@ import type {
 describe("#given MonitorRecord", () => {
   describe("#when constructed with minimal fields", () => {
     describe("#then", () => {
-      it("compiles without error", () => {
+      it("scans without error", () => {
         const monitorId = "mon_test" satisfies MonitorId
         const mode = "idle" satisfies MonitorMode
         const status = "running" satisfies MonitorStatus
@@ -54,7 +54,7 @@ describe("#given MonitorRecord", () => {
 describe("#given OutputLine", () => {
   describe("#when constructed with minimal fields", () => {
     describe("#then", () => {
-      it("compiles without error", () => {
+      it("scans without error", () => {
         const stream = "stdout" satisfies OutputStreamType
         const line = {
           stream,
@@ -71,7 +71,7 @@ describe("#given OutputLine", () => {
 describe("#given OutputBatch", () => {
   describe("#when constructed with minimal fields", () => {
     describe("#then", () => {
-      it("compiles without error", () => {
+      it("scans without error", () => {
         const line = {
           stream: "stderr",
           seq: 1,
@@ -95,7 +95,7 @@ describe("#given OutputBatch", () => {
 describe("#given MonitorCounters", () => {
   describe("#when constructed with minimal fields", () => {
     describe("#then", () => {
-      it("compiles without error", () => {
+      it("scans without error", () => {
         const counters = {
           totalLines: 0,
           matchedLines: 0,
@@ -115,7 +115,7 @@ describe("#given MonitorCounters", () => {
 describe("#given MonitorManagerEvent", () => {
   describe("#when constructed with each event variant", () => {
     describe("#then", () => {
-      it("compiles without error", () => {
+      it("scans without error", () => {
         const idleEvent = { type: "session.idle", sessionId: "ses_test" } satisfies MonitorManagerEvent
         const deletedEvent = { type: "session.deleted", sessionId: "ses_test" } satisfies MonitorManagerEvent
 
@@ -129,7 +129,7 @@ describe("#given MonitorManagerEvent", () => {
 describe("#given MonitorManager", () => {
   describe("#when constructed with contract methods", () => {
     describe("#then", () => {
-      it("compiles without error", () => {
+      it("scans without error", () => {
         const counters = {
           totalLines: 0,
           matchedLines: 0,

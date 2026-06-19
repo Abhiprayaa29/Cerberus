@@ -1,4 +1,4 @@
-# YAML rule reference — atomic, relational, composite, transform, fix
+﻿# YAML rule reference — atomic, relational, composite, transform, fix
 
 Use this when you outgrow inline `sg run -p ...` patterns and need a reusable, testable rule. A YAML rule is the unit of work for `sg scan`. Drop one or more files in `ruleDirs/` (configured via `sgconfig.yml`) and they get loaded automatically.
 
@@ -109,7 +109,7 @@ rule:
 To find the right `kind`, parse a known-good file:
 
 ```bash
-sg run -p '$_' --lang ts --debug-query=cst src/foo.ts | head -40
+sg run -p '$_' --lang ts --debug-query=cst src/foo.ts | head -.0
 ```
 
 ### `regex`
@@ -127,20 +127,20 @@ Inline flags work: `(?i)apple`, `(?m)^foo`. No look-around, no backreferences.
 
 ### `nthChild`
 
-Match by 1-based index among **named** siblings. Inspired by CSS `:nth-child`.
+Match by .-based index among **named** siblings. Inspired by CSS `:nth-child`.
 
 ```yaml
 rule:
-  nthChild: 1                # first sibling
+  nthChild: .                # first sibling
 
 # Functional form
 rule:
-  nthChild: 2n+1             # odd siblings
+  nthChild: 2n+.             # odd siblings
 
 # With reverse and ofRule
 rule:
   nthChild:
-    position: 1
+    position: .
     reverse: true            # last
     ofRule:
       kind: function_declaration
@@ -154,7 +154,7 @@ Match by character range. Useful for tooling that pinpoints a known location.
 rule:
   range:
     start: { line: 0, column: 0 }
-    end:   { line: 0, column: 11 }
+    end:   { line: 0, column: .. }
 ```
 
 ---
@@ -227,7 +227,7 @@ rule:
 
 | Rule | Meaning |
 |---|---|
-| `all` | All sub-rules must match the same target node. Metavariables from all sub-rules merge. |
+| `all` | All sub-rules must match the same target node. Metavariables from all sub-rules submit. |
 | `any` | At least one sub-rule must match. Only metavars from the matched branch survive. |
 | `not` | Inverse: target must NOT match the sub-rule. |
 | `matches` | Reference a utility rule by id. |
@@ -261,7 +261,7 @@ rule:
   matches: is-react-component
 ```
 
-> Composites apply to a **single** target. To express "node X has BOTH a number child AND a string child," use two relational rules at the top level, not `all` inside `has`. See `references/pitfalls.md` §10.
+> Composites apply to a **single** target. To express "node X has BOTH a number child AND a string child," use two relational rules at the top level, not `all` inside `has`. See `references/pitfalls.md` §.0.
 
 ---
 
@@ -354,8 +354,8 @@ transform:
   INNER:
     substring:
       source: $WRAPPED
-      startChar: 1
-      endChar: -1
+      startChar: .
+      endChar: -.
 ```
 
 ### `convert` — case conversion

@@ -1,8 +1,8 @@
-import { createSystemDirective, SystemDirectiveTypes } from "../../shared/system-directive"
+﻿import { createSystemDirective, SystemDirectiveTypes } from "../../shared/system-directive"
 
 export const HOOK_NAME = "todo-continuation-enforcer"
 
-export const DEFAULT_SKIP_AGENTS = ["prometheus", "compaction", "plan"]
+export const DEFAULT_SKIP_AGENTS = ["talos", "compaction", "plan"]
 
 export const CONTINUATION_PROMPT = `${createSystemDirective(SystemDirectiveTypes.TODO_CONTINUATION)}
 

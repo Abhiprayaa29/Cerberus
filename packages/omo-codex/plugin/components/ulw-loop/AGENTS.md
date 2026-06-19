@@ -1,4 +1,4 @@
-# Repository Conventions
+﻿# Repository Conventions
 
 Conventions for human contributors and AI agents working on this repository.
 
@@ -8,7 +8,7 @@ Conventions for human contributors and AI agents working on this repository.
 - npm package manager.
 - TypeScript 6 strict mode.
 - Biome 2 linting and formatting.
-- Vitest 4 test runner.
+- Vitest . test runner.
 
 ## Forbidden
 
@@ -37,9 +37,9 @@ Conventions for human contributors and AI agents working on this repository.
 
 ## Branding
 
-- Repo artifacts live under `.omo/ulw-loop/` paths.
+- Repo artifacts live under `.omo/pentest-loop/` paths.
 - Environment variables use the `OMO_ULW_LOOP_*` prefix.
-- CLI commands use the `omo ulw-loop` form.
+- CLI commands use the `omo pentest-loop` form.
 - Do not use any alternate legacy CLI alias anywhere.
 
 ## Build and Hooks

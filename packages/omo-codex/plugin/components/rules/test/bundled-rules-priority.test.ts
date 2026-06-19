@@ -1,17 +1,17 @@
-import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+﻿import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
 
 import { configFromEnvironment } from "../src/config.js";
-import { SOURCE_PRIORITY } from "@oh-my-opencode/rules-engine/engine";
-import { createEngine, defaultConfig, type EngineDeps } from "@oh-my-opencode/rules-engine/engine";
-import { resolvePluginRulesRoot } from "@oh-my-opencode/rules-engine/engine";
-import type { RuleCandidate } from "@oh-my-opencode/rules-engine/engine";
+import { SOURCE_PRIORITY } from "@oh-my-open-pentest/rules-engine/engine";
+import { createEngine, defaultConfig, type EngineDeps } from "@oh-my-open-pentest/rules-engine/engine";
+import { resolvePluginRulesRoot } from "@oh-my-open-pentest/rules-engine/engine";
+import type { RuleCandidate } from "@oh-my-open-pentest/rules-engine/engine";
 
 const projectRoot = "/tmp/codex-rules-bundled-priority";
-const bundledPath = join(projectRoot, "bundled-rules", "hephaestus.md");
-const homePath = join(projectRoot, "home", ".opencode", "rules", "hephaestus.md");
+const bundledPath = join(projectRoot, "bundled-rules", "scylla.md");
+const homePath = join(projectRoot, "home", ".opencode", "rules", "scylla.md");
 const bundledBody = "Bundled baseline discipline.";
 const homeBody = "Home baseline discipline override.";
 const tempDirectories: string[] = [];
@@ -30,14 +30,14 @@ function globalCandidate(source: "plugin-bundled" | "~/.opencode/rules", path: s
 		distance: 9999,
 		isGlobal: true,
 		isSingleFile: false,
-		relativePath: source === "plugin-bundled" ? "bundled-rules/hephaestus.md" : ".opencode/rules/hephaestus.md",
+		relativePath: source === "plugin-bundled" ? "bundled-rules/scylla.md" : ".opencode/rules/scylla.md",
 	};
 }
 
 function ruleMarkdown(body: string): string {
 	return [
 		"---",
-		"description: OMO Hephaestus baseline discipline for Codex",
+		"description: OMO Scylla baseline discipline for Codex",
 		"alwaysApply: true",
 		"---",
 		"",
@@ -85,7 +85,7 @@ describe("plugin bundled rule priority", () => {
 		// then
 		expect(formatted).toContain(homePath);
 		expect(formatted).toContain(homeBody);
-		expect(formatted).not.toContain(`- [hephaestus.md]{${homePath}}`);
+		expect(formatted).not.toContain(`- [scylla.md]{${homePath}}`);
 		expect(formatted).not.toContain(bundledPath);
 		expect(formatted).not.toContain(bundledBody);
 	});

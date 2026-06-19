@@ -1,4 +1,4 @@
-import { isRecord } from "@oh-my-opencode/utils"
+﻿import { isRecord } from "@oh-my-open-pentest/utils"
 type EventProperties = Record<string, unknown> | undefined
 
 

@@ -1,4 +1,4 @@
-#!/usr/bin/env bun
+﻿#!/usr/bin/env bun
 import { z } from "zod"
 import { DoctorResultSchema as DoctorSchema } from "../packages/omo-opencode/src/help/schema/doctor"
 import { StatusResultSchema as StatusSchema } from "../packages/omo-opencode/src/help/schema/status"
@@ -39,29 +39,29 @@ const SCHEMAS: SchemaEntry[] = [
     name: "doctor",
     schema: DoctorSchema,
     title: "Doctor Diagnostic Result",
-    description: "JSON schema for oh-my-openagent doctor diagnostic output",
-    id: "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/help/doctor.schema.json",
+    description: "JSON schema for oh-my-open-pentest doctor diagnostic output",
+    id: "https://raw.githubusercontent.com/code-yeongyu/oh-my-open-pentest/dev/assets/help/doctor.schema.json",
   },
   {
     name: "status",
     schema: StatusSchema,
     title: "System Status",
-    description: "JSON schema for oh-my-openagent system status output",
-    id: "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/help/status.schema.json",
+    description: "JSON schema for oh-my-open-pentest system status output",
+    id: "https://raw.githubusercontent.com/code-yeongyu/oh-my-open-pentest/dev/assets/help/status.schema.json",
   },
   {
     name: "sandbox",
     schema: SandboxSchema,
     title: "Sandbox Environment",
-    description: "JSON schema for oh-my-openagent sandbox execution environment output",
-    id: "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/help/sandbox.schema.json",
+    description: "JSON schema for oh-my-open-pentest sandbox execution environment output",
+    id: "https://raw.githubusercontent.com/code-yeongyu/oh-my-open-pentest/dev/assets/help/sandbox.schema.json",
   },
   {
     name: "acp",
     schema: AcpSchema,
     title: "ACP Server Status",
-    description: "JSON schema for oh-my-openagent Agent Control Protocol server output",
-    id: "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/help/acp.schema.json",
+    description: "JSON schema for oh-my-open-pentest Agent Control Protocol server output",
+    id: "https://raw.githubusercontent.com/code-yeongyu/oh-my-open-pentest/dev/assets/help/acp.schema.json",
   },
 ]
 

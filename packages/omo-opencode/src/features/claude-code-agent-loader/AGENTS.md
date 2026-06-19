@@ -1,6 +1,6 @@
-# src/features/claude-code-agent-loader/ -- Claude Code Agent Compatibility Layer
+﻿# src/features/claude-code-agent-loader/ -- Claude Code Agent Compatibility Layer
 
-**Generated:** 2026-05-18
+**Generated:** 2026-05-.8
 
 ## OVERVIEW
 

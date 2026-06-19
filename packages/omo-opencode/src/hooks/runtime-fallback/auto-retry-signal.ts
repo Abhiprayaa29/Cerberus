@@ -1,4 +1,4 @@
-export {
+﻿export {
   extractRuntimeFallbackAutoRetrySignal as extractAutoRetrySignal,
   type RuntimeFallbackAutoRetrySignal as AutoRetrySignal,
-} from "@oh-my-opencode/model-core"
+} from "@oh-my-open-pentest/model-core"

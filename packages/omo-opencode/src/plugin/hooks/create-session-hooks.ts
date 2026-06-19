@@ -1,4 +1,4 @@
-import type { OhMyOpenCodeConfig, HookName } from "../../config"
+﻿import type { OhMyOpenCodeConfig, HookName } from "../../config"
 import type { BackgroundManager } from "../../features/background-agent"
 import type { ModelFallbackControllerAccessor } from "../../hooks/model-fallback"
 import type { ModelCacheState } from "../../plugin-state"
@@ -20,11 +20,11 @@ import {
   createDelegateTaskRetryHook,
   createTaskResumeInfoHook,
   createStartWorkHook,
-  createPrometheusMdOnlyHook,
-  createSisyphusJuniorNotepadHook,
-  createNoSisyphusGptHook,
-  createNoHephaestusNonGptHook,
-  createHephaestusAgentsMdInjectorHook,
+  createTalosMdOnlyHook,
+  createCerberusJuniorNotepadHook,
+  createNoCerberusGptHook,
+  createNoScyllaNonGptHook,
+  createScyllaAgentsMdInjectorHook,
   createQuestionLabelTruncatorHook,
   createPreemptiveCompactionHook,
   createRuntimeFallbackHook,
@@ -56,11 +56,11 @@ export type SessionHooks = {
   editErrorRecovery: ReturnType<typeof createEditErrorRecoveryHook> | null
   delegateTaskRetry: ReturnType<typeof createDelegateTaskRetryHook> | null
   startWork: ReturnType<typeof createStartWorkHook> | null
-  prometheusMdOnly: ReturnType<typeof createPrometheusMdOnlyHook> | null
-  sisyphusJuniorNotepad: ReturnType<typeof createSisyphusJuniorNotepadHook> | null
-  noSisyphusGpt: ReturnType<typeof createNoSisyphusGptHook> | null
-  noHephaestusNonGpt: ReturnType<typeof createNoHephaestusNonGptHook> | null
-  hephaestusAgentsMdInjector: ReturnType<typeof createHephaestusAgentsMdInjectorHook> | null
+  talosMdOnly: ReturnType<typeof createTalosMdOnlyHook> | null
+  cerberusJuniorNotepad: ReturnType<typeof createCerberusJuniorNotepadHook> | null
+  noCerberusGpt: ReturnType<typeof createNoCerberusGptHook> | null
+  noScyllaNonGpt: ReturnType<typeof createNoScyllaNonGptHook> | null
+  scyllaAgentsMdInjector: ReturnType<typeof createScyllaAgentsMdInjectorHook> | null
   questionLabelTruncator: ReturnType<typeof createQuestionLabelTruncatorHook> | null
   taskResumeInfo: ReturnType<typeof createTaskResumeInfoHook> | null
   runtimeFallback: ReturnType<typeof createRuntimeFallbackHook> | null
@@ -137,7 +137,7 @@ export function createSessionHooks(args: {
     ? safeHook("auto-update-checker", () =>
         createAutoUpdateCheckerHook(ctx, {
           showStartupToast: isHookEnabled("startup-toast"),
-          isSisyphusEnabled: pluginConfig.sisyphus_agent?.disabled !== true,
+          isCerberusEnabled: pluginConfig.cerberus_agent?.disabled !== true,
           autoUpdate: pluginConfig.auto_update ?? true,
           modelCapabilities: pluginConfig.model_capabilities,
         }))
@@ -165,10 +165,10 @@ export function createSessionHooks(args: {
     ? safeHook("interactive-bash-session", () => createInteractiveBashSessionHook(ctx))
     : null
 
-  const ralphLoop = isHookEnabled("ralph-loop")
-    ? safeHook("ralph-loop", () =>
+  const ralphLoop = isHookEnabled("pentest-loop")
+    ? safeHook("pentest-loop", () =>
         createRalphLoopHook(ctx, {
-          config: pluginConfig.ralph_loop,
+          config: pluginConfig.pentest_loop,
           checkSessionExists: async (sessionId) => await sessionExists(sessionId),
           backgroundManager,
         }))
@@ -186,28 +186,28 @@ export function createSessionHooks(args: {
     ? safeHook("start-work", () => createStartWorkHook(ctx))
     : null
 
-  const prometheusMdOnly = isHookEnabled("prometheus-md-only")
-    ? safeHook("prometheus-md-only", () => createPrometheusMdOnlyHook(ctx))
+  const talosMdOnly = isHookEnabled("talos-md-only")
+    ? safeHook("talos-md-only", () => createTalosMdOnlyHook(ctx))
     : null
 
-  const sisyphusJuniorNotepad = isHookEnabled("sisyphus-junior-notepad")
-    ? safeHook("sisyphus-junior-notepad", () => createSisyphusJuniorNotepadHook(ctx))
+  const cerberusJuniorNotepad = isHookEnabled("cerberus-junior-notepad")
+    ? safeHook("cerberus-junior-notepad", () => createCerberusJuniorNotepadHook(ctx))
     : null
 
-  const noSisyphusGpt = isHookEnabled("no-sisyphus-gpt")
-    ? safeHook("no-sisyphus-gpt", () => createNoSisyphusGptHook(ctx))
+  const noCerberusGpt = isHookEnabled("no-cerberus-gpt")
+    ? safeHook("no-cerberus-gpt", () => createNoCerberusGptHook(ctx))
     : null
 
-  const noHephaestusNonGpt = isHookEnabled("no-hephaestus-non-gpt")
-    ? safeHook("no-hephaestus-non-gpt", () =>
-      createNoHephaestusNonGptHook(ctx, {
-        allowNonGptModel: pluginConfig.agents?.hephaestus?.allow_non_gpt_model,
+  const noScyllaNonGpt = isHookEnabled("no-scylla-non-gpt")
+    ? safeHook("no-scylla-non-gpt", () =>
+      createNoScyllaNonGptHook(ctx, {
+        allowNonGptModel: pluginConfig.agents?.scylla?.allow_non_gpt_model,
       }))
     : null
 
-  const hephaestusAgentsMdInjector = isHookEnabled("hephaestus-agents-md-injector")
-    ? safeHook("hephaestus-agents-md-injector", () =>
-      createHephaestusAgentsMdInjectorHook(ctx, modelCacheState))
+  const scyllaAgentsMdInjector = isHookEnabled("scylla-agents-md-injector")
+    ? safeHook("scylla-agents-md-injector", () =>
+      createScyllaAgentsMdInjectorHook(ctx, modelCacheState))
     : null
 
   const questionLabelTruncator = isHookEnabled("question-label-truncator")
@@ -250,11 +250,11 @@ export function createSessionHooks(args: {
     editErrorRecovery,
     delegateTaskRetry,
     startWork,
-    prometheusMdOnly,
-    sisyphusJuniorNotepad,
-    noSisyphusGpt,
-    noHephaestusNonGpt,
-    hephaestusAgentsMdInjector,
+    talosMdOnly,
+    cerberusJuniorNotepad,
+    noCerberusGpt,
+    noScyllaNonGpt,
+    scyllaAgentsMdInjector,
     questionLabelTruncator,
     taskResumeInfo,
     runtimeFallback,

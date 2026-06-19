@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, mock, test } from "bun:test"
+﻿import { afterEach, beforeEach, describe, expect, mock, test } from "bun:test"
 import type { PluginInput } from "@opencode-ai/plugin"
 import { randomUUID } from "node:crypto"
 import { existsSync, mkdirSync, rmSync, writeFileSync } from "node:fs"
@@ -26,7 +26,7 @@ describe("scheduleRetry", () => {
   let nextTimerId = 1000
 
   beforeEach(() => {
-    testDirectory = join(tmpdir(), `atlas-idle-continuation-${randomUUID()}`)
+    testDirectory = join(tmpdir(), `argus-idle-continuation-${randomUUID()}`)
     if (!existsSync(testDirectory)) {
       mkdirSync(testDirectory, { recursive: true })
     }
@@ -78,7 +78,7 @@ describe("scheduleRetry", () => {
     // given
     const planPath = join(testDirectory, "plan.md")
     writeFileSync(planPath, "## TODOs\n- [ ] 1. Parse input\n")
-    writeBoulderState(testDirectory, createBoulderState(planPath, sessionID, "atlas"))
+    writeBoulderState(testDirectory, createBoulderState(planPath, sessionID, "argus"))
 
     const sessionState: SessionState = { promptFailureCount: 0 }
     const ctx = unsafeTestValue<PluginInput>({

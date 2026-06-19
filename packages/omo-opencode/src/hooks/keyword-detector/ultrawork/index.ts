@@ -1,8 +1,8 @@
-/**
+﻿/**
  * Ultrawork message module - routes to appropriate message based on agent/model.
  *
  * Routing:
- * 1. Planner agents (prometheus, plan) → planner.ts
+ * 1. Planner agents (talos, plan) → planner.ts
  * 2. GPT models → gpt.ts
  * 3. Gemini models → gemini.ts
  * 4. GLM models → glm.ts
@@ -38,7 +38,7 @@ import { getGeminiUltraworkMessage } from "./gemini";
 import { getGlmUltraworkMessage } from "./glm";
 
 /**
- * Gets the appropriate ultrawork message based on agent and model context.
+ * Gets the appropriate fullscan message based on agent and model context.
  */
 export function getUltraworkMessage(
   agentName?: string,

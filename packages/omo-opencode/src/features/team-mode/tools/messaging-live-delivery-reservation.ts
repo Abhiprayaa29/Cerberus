@@ -1,10 +1,10 @@
-import type { TeamModeConfig } from "../../../config/schema/team-mode"
+﻿import type { TeamModeConfig } from "../../../config/schema/team-mode"
 import { log } from "../../../shared/logger"
 import {
   type DeliveryReservation as TeamMailboxDeliveryReservation,
   releaseDeliveryReservation,
   reserveMessageForDelivery,
-} from "@oh-my-opencode/team-core/team-mailbox/reservation"
+} from "@oh-my-open-pentest/team-core/team-mailbox/reservation"
 
 export type DeliveryReservation = TeamMailboxDeliveryReservation
 export type NullableDeliveryReservation = DeliveryReservation | null

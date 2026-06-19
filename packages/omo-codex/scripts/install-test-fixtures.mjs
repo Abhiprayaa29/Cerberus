@@ -1,4 +1,4 @@
-import { mkdir, mkdtemp, writeFile } from "node:fs/promises";
+﻿import { mkdir, mkdtemp, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 
@@ -21,7 +21,7 @@ export async function writePluginAt(pluginRoot, name, version) {
 	await mkdir(join(pluginRoot, "dist"), { recursive: true });
 	await mkdir(join(pluginRoot, "hooks"), { recursive: true });
 	await mkdir(join(pluginRoot, "skills", name), { recursive: true });
-	await mkdir(join(pluginRoot, "components", "ultrawork", "agents"), { recursive: true });
+	await mkdir(join(pluginRoot, "components", "fullscan", "agents"), { recursive: true });
 	await writeJson(join(pluginRoot, ".codex-plugin", "plugin.json"), {
 		name,
 		version,
@@ -41,9 +41,9 @@ export async function writePluginAt(pluginRoot, name, version) {
 	});
 	await writeJson(join(pluginRoot, "hooks", "hooks.json"), { hooks: {} });
 	await writeFile(join(pluginRoot, "skills", name, "SKILL.md"), "---\nname: test\n---\n");
-	await writeFile(join(pluginRoot, "components", "ultrawork", "agents", "explorer.toml"), 'name = "explorer"\n');
-	await writeFile(join(pluginRoot, "components", "ultrawork", "agents", "librarian.toml"), 'name = "librarian"\n');
-	await writeFile(join(pluginRoot, "components", "ultrawork", "agents", "plan.toml"), 'name = "plan"\n');
+	await writeFile(join(pluginRoot, "components", "fullscan", "agents", "explorer.toml"), 'name = "explorer"\n');
+	await writeFile(join(pluginRoot, "components", "fullscan", "agents", "intel.toml"), 'name = "intel"\n');
+	await writeFile(join(pluginRoot, "components", "fullscan", "agents", "plan.toml"), 'name = "plan"\n');
 	await writeJson(join(pluginRoot, "package.json"), {
 		name: `@example/${name}`,
 		version,

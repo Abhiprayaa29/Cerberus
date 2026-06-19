@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it, mock } from "bun:test"
+﻿import { afterEach, beforeEach, describe, expect, it, mock } from "bun:test"
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs"
 import { tmpdir } from "node:os"
 import { basename, join } from "node:path"
@@ -100,7 +100,7 @@ describe("discoverInstalledPlugins", () => {
       JSON.stringify({
         version: 2,
         plugins: {
-          "file:///D:/configs/user-configs/.config/opencode/node_modules/oh-my-opencode@latest": [
+          "file:///D:/configs/user-configs/.config/opencode/node_modules/oh-my-open-pentest@latest": [
             {
               scope: "user",
               installPath,
@@ -124,7 +124,7 @@ describe("discoverInstalledPlugins", () => {
     //#then
     expect(discovered.errors).toHaveLength(0)
     expect(discovered.plugins).toHaveLength(1)
-    expect(discovered.plugins[0]?.name).toBe("oh-my-opencode")
+    expect(discovered.plugins[0]?.name).toBe("oh-my-open-pentest")
   })
 
   it("derives canonical package name from npm plugin keys", async () => {
@@ -138,7 +138,7 @@ describe("discoverInstalledPlugins", () => {
       JSON.stringify({
         version: 2,
         plugins: {
-          "oh-my-openagent@3.13.1": [
+          "oh-my-open-pentest@3.13.1": [
             {
               scope: "user",
               installPath,
@@ -162,7 +162,7 @@ describe("discoverInstalledPlugins", () => {
     //#then
     expect(discovered.errors).toHaveLength(0)
     expect(discovered.plugins).toHaveLength(1)
-    expect(discovered.plugins[0]?.name).toBe("oh-my-openagent")
+    expect(discovered.plugins[0]?.name).toBe("oh-my-open-pentest")
   })
 
   describe("#given project-scoped entries in v1 format", () => {

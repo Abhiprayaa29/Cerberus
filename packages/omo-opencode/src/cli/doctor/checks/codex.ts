@@ -1,4 +1,4 @@
-import { isPlainRecord } from "@oh-my-opencode/utils"
+﻿import { isPlainRecord } from "@oh-my-open-pentest/utils"
 import { existsSync } from "node:fs"
 import { lstat, readdir, readFile } from "node:fs/promises"
 import { homedir } from "node:os"
@@ -22,7 +22,7 @@ interface JsonRecord {
   readonly [key: string]: unknown
 }
 
-const MARKETPLACE_NAME = "sisyphuslabs"
+const MARKETPLACE_NAME = "cerberuslabs"
 const PLUGIN_NAME = "omo"
 const DEFAULT_PLUGIN_VERSION = "0.1.0"
 const CODEX_BIN_NAMES = [
@@ -30,7 +30,7 @@ const CODEX_BIN_NAMES = [
   "omo-rules",
   "omo-lsp",
   "omo-comment-checker",
-  "omo-ultrawork",
+  "omo-fullscan",
   "omo-start-work-continuation",
   "omo-telemetry",
   "omo-git-bash-hook",
@@ -75,12 +75,12 @@ export async function checkCodex(deps: CodexDoctorDeps = {}): Promise<CheckResul
     message: status === "pass" ? "Codex checks passed" : `${issues.length} Codex issue(s) detected`,
     details: [
       `Codex: ${summary.codexPath ?? summary.codexAppId ?? "not detected"}`,
-      `CLI: oh-my-openagent@${summary.installerVersion}`,
+      `CLI: oh-my-open-pentest@${summary.installerVersion}`,
       `Marketplace: ${summary.marketplaceName}`,
       `Plugin: ${summary.pluginName}@${summary.pluginVersion ?? "unknown"}${summary.pluginVersionStamped ? "" : " (placeholder, not stamped)"}`,
       `Distribution: ${summary.packageName ?? "unknown"}@${summary.packageVersion ?? "unknown"}`,
       `Config: ${summary.configPath}`,
-      `Enabled plugin: ${summary.config.pluginEnabled ? "omo@sisyphuslabs" : "missing"}`,
+      `Enabled plugin: ${summary.config.pluginEnabled ? "omo@cerberuslabs" : "missing"}`,
       `Linked bins: ${summary.linkedBins.length > 0 ? summary.linkedBins.join(", ") : "none"}`,
       `Agents: ${summary.agents.length > 0 ? summary.agents.join(", ") : "none"}`,
     ],
@@ -110,7 +110,7 @@ function buildCodexIssues(summary: CodexDoctorSummary): DoctorIssue[] {
   } else if (!summary.pluginVersionStamped) {
     issues.push({
       title: "Codex plugin bundle is not version-stamped",
-      description: `The installed OMO Codex plugin reports the placeholder version ${summary.pluginVersion ?? "unknown"}${summary.packageVersion === null ? " and no distribution snapshot was found" : ""}. This usually means it was installed through the Codex app plugin UI instead of the CLI installer, so its version does not reflect the real release. Your CLI is oh-my-openagent ${summary.installerVersion}.`,
+      description: `The installed OMO Codex plugin reports the placeholder version ${summary.pluginVersion ?? "unknown"}${summary.packageVersion === null ? " and no distribution snapshot was found" : ""}. This usually means it was installed through the Codex app plugin UI instead of the CLI installer, so its version does not reflect the real release. Your CLI is oh-my-open-pentest ${summary.installerVersion}.`,
       fix: "Run: npx lazycodex-ai install",
       severity: "warning",
       affects: ["version reporting"],
@@ -120,16 +120,16 @@ function buildCodexIssues(summary: CodexDoctorSummary): DoctorIssue[] {
     issues.push({
       title: "omo runtime command is not linked",
       description:
-        "The omo runtime wrapper is missing from the installer bin directory, so `omo sparkshell` and `omo ulw-loop` fail in Codex sessions. lazycodex-ai 4.8.0/4.8.1 installs removed the legacy omo bin without writing a replacement.",
+        "The omo runtime wrapper is missing from the installer bin directory, so `omo sparkshell` and `omo pentest-loop` fail in Codex sessions. lazycodex-ai 4.8.0/4.8.1 installs removed the legacy omo bin without writing a replacement.",
       fix: "Run: npx lazycodex-ai@latest install",
       severity: "error",
-      affects: ["omo sparkshell", "ulw-loop"],
+      affects: ["omo sparkshell", "pentest-loop"],
     })
   }
   if (!summary.config.pluginEnabled) {
     issues.push({
       title: "Codex plugin is not enabled",
-      description: 'Expected [plugins."omo@sisyphuslabs"] enabled = true in Codex config.',
+      description: 'Expected [plugins."omo@cerberuslabs"] enabled = true in Codex config.',
       fix: "Run: npx lazycodex-ai install",
       severity: "error",
       affects: ["plugin loading"],
@@ -138,7 +138,7 @@ function buildCodexIssues(summary: CodexDoctorSummary): DoctorIssue[] {
   if (!summary.config.marketplaceConfigured) {
     issues.push({
       title: "LazyCodex marketplace is not configured",
-      description: 'Expected [marketplaces.sisyphuslabs] in Codex config.',
+      description: 'Expected [marketplaces.cerberuslabs] in Codex config.',
       fix: "Run: npx lazycodex-ai install",
       severity: "error",
       affects: ["plugin loading"],
@@ -171,8 +171,8 @@ async function readCodexConfigSummary(configPath: string): Promise<CodexConfigSu
   const content = await readFile(configPath, "utf8")
   return {
     exists: true,
-    marketplaceConfigured: content.includes("[marketplaces.sisyphuslabs]"),
-    pluginEnabled: settingEnabled(sectionBody(content, 'plugins."omo@sisyphuslabs"'), "enabled"),
+    marketplaceConfigured: content.includes("[marketplaces.cerberuslabs]"),
+    pluginEnabled: settingEnabled(sectionBody(content, 'plugins."omo@cerberuslabs"'), "enabled"),
     pluginsFeatureEnabled: featureEnabled(content, "plugins"),
     pluginHooksFeatureEnabled: featureEnabled(content, "plugin_hooks"),
   }

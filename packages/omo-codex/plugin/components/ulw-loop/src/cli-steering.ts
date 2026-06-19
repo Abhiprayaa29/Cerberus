@@ -1,4 +1,4 @@
-// biome-ignore-all format: keep this module under the mandated pure LOC budget.
+﻿// biome-ignore-all format: keep this module under the mandated pure LOC budget.
 import { parseGoalArg, readJsonInput, readValue } from "./cli-arg-parser.js";
 import { printJson, printStatus } from "./cli-output.js";
 import type { SteerUlwLoopResult, UlwLoopSteeringChildGoal, UlwLoopSteeringMutationKind, UlwLoopSteeringProposal, UlwLoopSteeringSource, UlwLoopSuccessCriterionUserModel } from "./types.js";
@@ -87,7 +87,7 @@ export function normalizeSteeringProposal(proposal: CliSteeringProposal): CliSte
 export function printSteerResult(result: SteerUlwLoopResult, json: boolean): void {
 	if (json) { printJson({ ok: result.accepted, accepted: result.accepted, rejectedReasons: result.rejectedReasons, deduped: result.deduped, audit: result.audit, plan: result.plan }); return; }
 	const outcome = result.deduped ? "deduped" : result.accepted ? "accepted" : "rejected";
-	process.stdout.write(`ulw-loop steer: ${outcome} ${result.audit.kind}\n`);
+	process.stdout.write(`pentest-loop steer: ${outcome} ${result.audit.kind}\n`);
 	if (result.rejectedReasons.length > 0) process.stdout.write(`rejected: ${result.rejectedReasons.join("; ")}\n`);
 	if (result.audit.idempotencyKey !== undefined) process.stdout.write(`idempotency-key: ${result.audit.idempotencyKey}\n`);
 	printStatus(result.plan);

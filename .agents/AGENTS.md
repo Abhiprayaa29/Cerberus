@@ -1,14 +1,14 @@
-# .agents/ — Project-Scope Skills & Commands (Migration Target)
+﻿# .agents/ — Project-Scope Skills & Commands (Migration Target)
 
 **Generated:** 2026-05-20
 
 ## OVERVIEW
 
-Project-scope skills + slash commands under the new `.agents/` directory name. During the `oh-my-opencode` → `oh-my-openagent` rename transition, this directory is the **target** of the migration from `.opencode/`. It is a strict SUPERSET of `.opencode/` (5 -> 10 skills; 5 commands).
+Project-scope skills + slash commands under the new `.agents/` directory name. During the `oh-my-open-pentest` → `oh-my-open-pentest` rename transition, this directory is the **target** of the migration from `.opencode/`. It is a strict SUPERSET of `.opencode/` (5 -> .0 skills; 5 commands).
 
 Loaded alongside `.opencode/` by [`packages/omo-opencode/src/features/opencode-skill-loader/`](../packages/omo-opencode/src/features/opencode-skill-loader/). When both directories declare the same skill or command name, the higher-priority scope wins per the loader's deduplication rules.
 
-## SKILLS (10, superset of `.opencode/`)
+## SKILLS (.0, superset of `.opencode/`)
 
 | Skill | Also in `.opencode/`? | Purpose |
 |-------|------------------------|---------|
@@ -16,7 +16,7 @@ Loaded alongside `.opencode/` by [`packages/omo-opencode/src/features/opencode-s
 | `work-with-pr-workspace/` | yes | Iteration workspace + benchmark inputs |
 | `github-triage/` | yes | Read-only issue/PR triage with evidence reports |
 | `hyperplan/` | yes | Adversarial multi-agent planning |
-| `pre-publish-review/` | yes | 16-agent pre-publish release gate |
+| `pre-publish-review/` | yes | .6-agent pre-publish release gate |
 | `get-unpublished-changes/` | NEW | Skill form of the `/get-unpublished-changes` command |
 | `omomomo/` | NEW | Skill form of the `/omomomo` easter egg |
 | `publish/` | NEW | Skill form of the `/publish` command |

@@ -1,4 +1,4 @@
-declare const require: (name: string) => unknown
+﻿declare const require: (name: string) => unknown
 const { describe, test, expect } = require("bun:test") as {
   describe: (name: string, fn: () => void) => void
   test: (name: string, fn: () => void) => void
@@ -32,7 +32,7 @@ describe("prompt-builder", () => {
 
         // when
         const result = buildSystemContent({
-          agentName: "sisyphus-junior",
+          agentName: "cerberus-junior",
           availableSkills,
           availableCategories,
         })
@@ -43,15 +43,15 @@ describe("prompt-builder", () => {
         expect(result).toContain("git-master")
       })
 
-      test("#when agent is explore #then system content includes available_skills section", () => {
+      test("#when agent is scout #then system content includes available_skills section", () => {
         // given
         const availableSkills: AvailableSkill[] = [
-          { name: "review-work", description: "Review code quality", location: "project" },
+          { name: "review-work", description: "Review finding quality", location: "project" },
         ]
 
         // when
         const result = buildSystemContent({
-          agentName: "explore",
+          agentName: "scout",
           availableSkills,
         })
 
@@ -66,7 +66,7 @@ describe("prompt-builder", () => {
 
         // when
         const result = buildSystemContent({
-          agentName: "sisyphus-junior",
+          agentName: "cerberus-junior",
           availableSkills,
           categoryPromptAppend: "some category context",
         })
@@ -110,7 +110,7 @@ describe("prompt-builder", () => {
 
         // when
         const result = buildSystemContent({
-          agentName: "sisyphus-junior",
+          agentName: "cerberus-junior",
           agentsContext: "Custom agent context here",
           availableSkills,
         })
@@ -136,7 +136,7 @@ describe("buildSystemContent — nativeSkillInfos merging", () => {
 
     // when
     const result = buildSystemContent({
-      agentName: "explore",
+      agentName: "scout",
       availableSkills,
       nativeSkillInfos,
     })
@@ -159,7 +159,7 @@ describe("buildSystemContent — nativeSkillInfos merging", () => {
 
     // when
     const result = buildSystemContent({
-      agentName: "explore",
+      agentName: "scout",
       availableSkills,
       nativeSkillInfos,
     })
@@ -178,7 +178,7 @@ describe("buildSystemContent — nativeSkillInfos merging", () => {
 
     // when
     const result = buildSystemContent({
-      agentName: "explore",
+      agentName: "scout",
       availableSkills: [],
       nativeSkillInfos,
     })

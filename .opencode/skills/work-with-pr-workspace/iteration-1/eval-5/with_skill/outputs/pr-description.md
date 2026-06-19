@@ -1,4 +1,4 @@
-# PR: fix(comment-checker): relax regex to stop flagging legitimate Note: comments
+﻿# PR: fix(comment-checker): relax regex to stop flagging legitimate Note: comments
 
 **Title:** `fix(comment-checker): relax regex to stop flagging legitimate Note: comments`
 **Base:** `dev`
@@ -14,11 +14,11 @@
 
 ## Context
 
-The comment-checker Go binary (`go-claude-code-comment-checker` v0.4.1) contains the regex `(?i)^[\s#/*-]*note:\s*\w` which matches ALL comments starting with "Note:" followed by a word character. This produces false positives for legitimate technical comments:
+The comment-checker Go binary (`go-claude-code-comment-checker` v0....) contains the regex `(?i)^[\s#/*-]*note:\s*\w` which matches ALL comments starting with "Note:" followed by a word character. This produces false positives for legitimate technical comments:
 
 ```typescript
 // Note: Thread-safe by design          <- flagged as AI slop
-# Note: See RFC 7231 for details        <- flagged as AI slop
+# Note: See RFC 723. for details        <- flagged as AI slop
 // Note: This edge case requires...     <- flagged as AI slop
 ```
 
@@ -38,7 +38,7 @@ These are standard engineering comments, not AI agent memos.
 ## Usage
 
 ```jsonc
-// .opencode/oh-my-opencode.jsonc
+// .opencode/oh-my-open-pentest.jsonc
 {
   "comment_checker": {
     "exclude_patterns": ["^Note:", "^TODO:", "^FIXME:"]

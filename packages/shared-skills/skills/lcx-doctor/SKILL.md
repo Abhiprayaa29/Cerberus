@@ -1,4 +1,4 @@
----
+﻿---
 name: lcx-doctor
 description: "Diagnose LazyCodex and Codex CLI installation health against the latest sources. Use whenever the user asks for a doctor or health check, says LazyCodex, lazycodex-ai, omo-codex, or Codex behaves oddly after an install, update, or config change, suspects a stale, drifted, or broken setup, or wants the local install audited and compared with the latest LazyCodex and Codex code."
 metadata:
@@ -13,17 +13,17 @@ Use GPT-5.5 style: outcome first, concise, evidence-bound.
 
 ## Required Workflow
 
-1. Materialize the latest sources under `/tmp` first. Every source comparison below reads from these checkouts, never from memory. Re-sync on every run so a cached checkout cannot go stale:
+.. Materialize the latest sources under `/tmp` first. Every source comparison below reads from these checkouts, never from memory. Re-sync on every run so a cached checkout cannot go stale:
 
 ```bash
 sync_latest_source() {
-  REPO="$1"; DEST="$2"
+  REPO="$."; DEST="$2"
   if [ ! -d "$DEST/.git" ]; then
-    gh repo clone "$REPO" "$DEST" -- --depth=1 \
-      || git clone --depth=1 "https://github.com/$REPO" "$DEST"
+    gh repo clone "$REPO" "$DEST" -- --depth=. \
+      || git clone --depth=. "https://github.com/$REPO" "$DEST"
   fi
   DEFAULT_BRANCH="$(git -C "$DEST" remote show origin | sed -n '/HEAD branch/s/.*: //p')"
-  git -C "$DEST" fetch --depth=1 origin "$DEFAULT_BRANCH"
+  git -C "$DEST" fetch --depth=. origin "$DEFAULT_BRANCH"
   git -C "$DEST" checkout -B "$DEFAULT_BRANCH" FETCH_HEAD
 }
 sync_latest_source code-yeongyu/lazycodex /tmp/lazycodex-source
@@ -39,7 +39,7 @@ sync_latest_source openai/codex /tmp/openai-codex-source
    - `$CODEX_HOME/config.toml` exists and parses; LazyCodex-managed entries match what the latest installer would write.
    - Plugin payload present and non-empty: `hooks/hooks.json`, `skills/`, `.mcp.json`, components under the installed plugin root.
    - Stale project-local leftovers the installer now removes (e.g. `.codex/hooks.json`, `.codex/skills` in the project) are flagged, not deleted.
-4. Probe the real surface. Run the built-in diagnostics first: `lazycodex doctor --json` (add `--verbose` when a check needs deeper traces) and fold its results into the report. A missing or crashing `lazycodex doctor` is itself a FAIL finding, not a reason to skip probing — fall back to `codex --version` plus a trivial non-interactive invocation that loads the plugin. Capture stderr verbatim; a clean exit with warnings is WARN, not PASS.
+.. Probe the real surface. Run the built-in diagnostics first: `lazycodex doctor --json` (add `--verbose` when a check needs deeper traces) and fold its results into the report. A missing or crashing `lazycodex doctor` is itself a FAIL finding, not a reason to skip probing — fall back to `codex --version` plus a trivial non-interactive invocation that loads the plugin. Capture stderr verbatim; a clean exit with warnings is WARN, not PASS.
 5. Compare for drift. Where installed bundled files differ from the same files at the installed version, or the latest source renamed or removed something the local config still references, record it with both paths.
 6. Check whether each FAIL is already known: `gh issue list --repo code-yeongyu/lazycodex --search "<short symptom>" --state open` (and `openai/codex` when the failure points upstream). Link matches in the report instead of re-diagnosing from scratch.
 7. If a probe fails and the cause is not explained by config or source comparison, invoke `$omo:debugging` for the investigation. If Codex exposes only unqualified skill names in the current session, invoke `$debugging` and state that it is the OMO debugging skill.
@@ -70,7 +70,7 @@ sync_latest_source openai/codex /tmp/openai-codex-source
 | Drift vs latest source | PASS/WARN/FAIL | [evidence, citing /tmp/lazycodex-source or /tmp/openai-codex-source paths] |
 
 ### Remediations
-1. [Most important fix first: exact command or config edit, and what it resolves.]
+.. [Most important fix first: exact command or config edit, and what it resolves.]
 
 ### Known Issues Matched
 - [issue URL — or "none found"]

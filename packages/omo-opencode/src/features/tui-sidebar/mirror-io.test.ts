@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it } from "bun:test"
+﻿import { afterEach, beforeEach, describe, expect, it } from "bun:test"
 import { existsSync, mkdirSync, mkdtempSync, realpathSync, rmSync, statSync, symlinkSync, writeFileSync } from "node:fs"
 import { tmpdir } from "node:os"
 import { dirname, join, resolve } from "node:path"
@@ -22,7 +22,7 @@ function snapshotFor(projectDir: string, updatedAt: number): TuiRuntimeSnapshot 
     version: MIRROR_SCHEMA_VERSION,
     projectDir: resolve(projectDir),
     updatedAt,
-    activeAgents: [{ name: "sisyphus", status: "running" }],
+    activeAgents: [{ name: "cerberus", status: "running" }],
     jobBoard: [
       {
         title: "Index repository",
@@ -66,7 +66,7 @@ describe("tui-sidebar mirror IPC", () => {
 
     // then
     expect(storageDir).toBe(
-      join(xdgDataHome, "opencode", "storage", "oh-my-openagent", MIRROR_DIR_NAME),
+      join(xdgDataHome, "opencode", "storage", "oh-my-open-pentest", MIRROR_DIR_NAME),
     )
   })
 

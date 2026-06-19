@@ -1,9 +1,9 @@
-import {
+﻿import {
   getDailyActiveCaptureState,
   getTelemetryActivityStateFilePath,
   resolveTelemetryStateDir,
-} from "@oh-my-opencode/telemetry-core"
-import type { TelemetryDiagnosticInput } from "@oh-my-opencode/telemetry-core"
+} from "@oh-my-open-pentest/telemetry-core"
+import type { TelemetryDiagnosticInput } from "@oh-my-open-pentest/telemetry-core"
 
 import { log } from "./logger"
 import { CACHE_DIR_NAME } from "./plugin-identity"

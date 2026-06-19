@@ -1,10 +1,10 @@
-import type { VariantTable } from "./types"
-import defaultPrompt from "../prompts/prometheus/default.md"
+﻿import type { VariantTable } from "./types"
+import defaultPrompt from "../prompts/talos/default.md"
 
-export const prometheusPromptVariants = {
+export const talosPromptVariants = {
   default: {
     kind: "bundled",
     content: defaultPrompt,
-    filePath: "packages/prompts-core/prompts/prometheus/default.md",
+    filePath: "packages/prompts-core/prompts/talos/default.md",
   },
 } satisfies VariantTable

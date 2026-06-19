@@ -1,4 +1,4 @@
-import { readdirSync, readFileSync, statSync } from "node:fs"
+﻿import { readdirSync, readFileSync, statSync } from "node:fs"
 import type { Dirent } from "node:fs"
 import { join } from "node:path"
 import { z } from "zod"
@@ -72,7 +72,7 @@ function enumerateCandidates(projectDir: string): readonly LoopCandidate[] {
 }
 
 function currentLoopCandidates(projectDir: string): readonly LoopCandidate[] {
-  const loopRoot = join(projectDir, ".omo", "ulw-loop")
+  const loopRoot = join(projectDir, ".omo", "pentest-loop")
   let entries: Dirent<string>[]
   try {
     entries = readdirSync(loopRoot, { withFileTypes: true })

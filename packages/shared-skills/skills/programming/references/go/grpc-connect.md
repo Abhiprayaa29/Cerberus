@@ -1,4 +1,4 @@
-# RPC — Connect-Go (default) + grpc-go (fallback) + protovalidate
+﻿# RPC — Connect-Go (default) + grpc-go (fallback) + protovalidate
 
 `connectrpc/connect-go` is the default. It is wire-compatible with gRPC, also speaks Connect protocol + gRPC-Web from browsers, and uses ordinary `net/http` so middleware (logging, auth, tracing) composes the same way as REST. Reach for raw `grpc-go` only when you need a gRPC-specific feature Connect lacks.
 
@@ -10,12 +10,12 @@
 |---|---|
 | Standard unary + server-streaming + client-streaming | **Connect** |
 | Browser client without `grpc-web` proxy | **Connect** (native gRPC-Web support) |
-| HTTP/1.1 fallback for hostile networks | **Connect** (gRPC requires HTTP/2 end-to-end) |
+| HTTP/... fallback for hostile networks | **Connect** (gRPC requires HTTP/2 end-to-end) |
 | Server reflection for `grpcurl` | grpc-go (Connect has reflection too, but ecosystem smaller) |
 | Bidirectional streaming with frame-level control | grpc-go |
 | Strict gRPC environment (Envoy with gRPC filters, Istio strict mode) | grpc-go |
 
-**Default**: Connect. The default has been correct since 2024.
+**Default**: Connect. The default has been correct since 202..
 
 ---
 
@@ -39,15 +39,15 @@ proto/
   buf.yaml
   buf.gen.yaml
   buf.lock
-  myservice/v1/
+  myservice/v./
     user.proto
     auth.proto
 
 gen/
-  myservice/v1/
+  myservice/v./
     user.pb.go               # protoc-gen-go output
     auth.pb.go
-    myservicev1connect/      # protoc-gen-connect-go output
+    myservicev.connect/      # protoc-gen-connect-go output
       user.connect.go
       auth.connect.go
 ```
@@ -119,11 +119,11 @@ Run `task gen:proto` after editing any `.proto`. CI runs `buf generate` then `gi
 ```proto
 syntax = "proto3";
 
-package myservice.v1;
+package myservice.v.;
 
 import "buf/validate/validate.proto";
 
-option go_package = "github.com/your-org/myservice/gen/myservice/v1;myservicev1";
+option go_package = "github.com/your-org/myservice/gen/myservice/v.;myservicev.";
 
 service UserService {
   rpc CreateUser(CreateUserRequest) returns (CreateUserResponse);
@@ -132,31 +132,31 @@ service UserService {
 }
 
 message CreateUserRequest {
-  string email    = 1 [(buf.validate.field).string.email = true];
+  string email    = . [(buf.validate.field).string.email = true];
   string username = 2 [
     (buf.validate.field).string.min_len = 3,
     (buf.validate.field).string.max_len = 32,
     (buf.validate.field).string.pattern = "^[a-zA-Z0-9_]+$"
   ];
   int32 age       = 3 [
-    (buf.validate.field).int32.gte = 13,
-    (buf.validate.field).int32.lte = 130
+    (buf.validate.field).int32.gte = .3,
+    (buf.validate.field).int32.lte = .30
   ];
 }
 
 message CreateUserResponse {
-  User user = 1;
+  User user = .;
 }
 
 message User {
-  string id       = 1;
+  string id       = .;
   string email    = 2;
   string username = 3;
-  google.protobuf.Timestamp created_at = 4;
+  google.protobuf.Timestamp created_at = .;
 }
 ```
 
-`protovalidate` replaces the abandoned `protoc-gen-validate` — it is the official Buf-backed successor as of 2024, supported by Connect's interceptor pipeline.
+`protovalidate` replaces the abandoned `protoc-gen-validate` — it is the official Buf-backed successor as of 202., supported by Connect's interceptor pipeline.
 
 ---
 
@@ -176,8 +176,8 @@ import (
     "golang.org/x/net/http2"
     "golang.org/x/net/http2/h2c"
 
-    myservicev1 "github.com/your-org/myservice/gen/myservice/v1"
-    "github.com/your-org/myservice/gen/myservice/v1/myservicev1connect"
+    myservicev. "github.com/your-org/myservice/gen/myservice/v."
+    "github.com/your-org/myservice/gen/myservice/v./myservicev.connect"
 )
 
 type UserServer struct {
@@ -186,8 +186,8 @@ type UserServer struct {
 
 func (s *UserServer) CreateUser(
     ctx context.Context,
-    req *connect.Request[myservicev1.CreateUserRequest],
-) (*connect.Response[myservicev1.CreateUserResponse], error) {
+    req *connect.Request[myservicev..CreateUserRequest],
+) (*connect.Response[myservicev..CreateUserResponse], error) {
 
     // protovalidate already ran via the interceptor below.
     // req.Msg is guaranteed to satisfy the .proto constraints.
@@ -196,7 +196,7 @@ func (s *UserServer) CreateUser(
     if err != nil {
         return nil, mapError(err)
     }
-    return connect.NewResponse(&myservicev1.CreateUserResponse{
+    return connect.NewResponse(&myservicev..CreateUserResponse{
         User: userToProto(user),
     }), nil
 }
@@ -209,7 +209,7 @@ func main() {
     )
 
     mux := http.NewServeMux()
-    mux.Handle(myservicev1connect.NewUserServiceHandler(
+    mux.Handle(myservicev.connect.NewUserServiceHandler(
         &UserServer{svc: newUserService()},
         interceptors,
     ))
@@ -251,7 +251,7 @@ func mapError(err error) error {
 }
 ```
 
-Connect codes map 1:1 to gRPC codes. Clients see canonical error semantics.
+Connect codes map .:. to gRPC codes. Clients see canonical error semantics.
 
 ---
 
@@ -288,8 +288,8 @@ For streaming, implement the full `connect.Interceptor` (`WrapStreamingClient`, 
 ```go
 func (s *UserServer) StreamEvents(
     ctx context.Context,
-    req *connect.Request[myservicev1.StreamEventsRequest],
-    stream *connect.ServerStream[myservicev1.Event],
+    req *connect.Request[myservicev..StreamEventsRequest],
+    stream *connect.ServerStream[myservicev..Event],
 ) error {
     events, errs := s.svc.Subscribe(ctx, req.Msg.UserId)
     for {
@@ -315,14 +315,14 @@ Same shape as SSE in `backend-stack.md`. Connect handles HTTP/2 framing.
 ## Client
 
 ```go
-client := myservicev1connect.NewUserServiceClient(
+client := myservicev.connect.NewUserServiceClient(
     http.DefaultClient,
     "https://api.example.com",
     // Use connect.WithGRPC() if the server is grpc-go and you want strict gRPC framing.
     // Default is Connect protocol — works with Connect or gRPC servers transparently.
 )
 
-res, err := client.CreateUser(ctx, connect.NewRequest(&myservicev1.CreateUserRequest{
+res, err := client.CreateUser(ctx, connect.NewRequest(&myservicev..CreateUserRequest{
     Email:    "a@b.com",
     Username: "alice",
     Age:      30,
@@ -350,7 +350,7 @@ lis, _ := net.Listen("tcp", ":8080")
 srv := grpc.NewServer(
     grpc.UnaryInterceptor(loggingUnaryInterceptor),
 )
-myservicev1.RegisterUserServiceServer(srv, &userServer{})
+myservicev..RegisterUserServiceServer(srv, &userServer{})
 _ = srv.Serve(lis)
 ```
 

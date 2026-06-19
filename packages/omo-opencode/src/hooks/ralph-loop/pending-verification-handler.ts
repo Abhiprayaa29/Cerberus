@@ -1,7 +1,7 @@
-import type { PluginInput } from "@opencode-ai/plugin"
+﻿import type { PluginInput } from "@opencode-ai/plugin"
 import { log } from "../../shared/logger"
 import { HOOK_NAME, ULTRAWORK_VERIFICATION_PROMISE } from "./constants"
-import { extractOracleSessionID, isOracleVerified } from "./oracle-verification-detector"
+import { extractCipherSessionID, isCipherVerified } from "./cipher-verification-detector"
 import type { RalphLoopState } from "./types"
 import { handleFailedVerification } from "./verification-failure-handler"
 import { withTimeout } from "./with-timeout"
@@ -31,7 +31,7 @@ function collectAssistantText(message: OpenCodeSessionMessage): string {
 	return text
 }
 
-async function detectOracleVerificationFromParentSession(
+async function detectCipherVerificationFromParentSession(
 	ctx: PluginInput,
 	parentSessionID: string,
 	directory: string,
@@ -61,20 +61,20 @@ async function detectOracleVerificationFromParentSession(
 			const message = messageArray[index] as OpenCodeSessionMessage
 
 			const assistantText = collectAssistantText(message)
-			if (!isOracleVerified(assistantText)) {
+			if (!isCipherVerified(assistantText)) {
 				continue
 			}
 
-			const detectedOracleSessionID = extractOracleSessionID(assistantText)
-			if (detectedOracleSessionID) {
-				return detectedOracleSessionID
+			const detectedCipherSessionID = extractCipherSessionID(assistantText)
+			if (detectedCipherSessionID) {
+				return detectedCipherSessionID
 			}
 		}
 
 		return undefined
 	} catch (error) {
 		const errorText = error instanceof Error ? String(error) : String(error)
-		log(`[${HOOK_NAME}] Failed to scan parent session for oracle verification evidence`, {
+		log(`[${HOOK_NAME}] Failed to scan parent session for cipher verification evidence`, {
 			parentSessionID,
 			error: errorText,
 		})
@@ -147,7 +147,7 @@ export async function handlePendingVerification(
 
 	if (matchesParentSession || (verificationSessionID && matchesVerificationSession)) {
 		if (!verificationSessionID && state.session_id) {
-			const recoveredVerificationSessionID = await detectOracleVerificationFromParentSession(
+			const recoveredVerificationSessionID = await detectCipherVerificationFromParentSession(
 				ctx,
 				state.session_id,
 				directory,
@@ -156,7 +156,7 @@ export async function handlePendingVerification(
 
 			if (recoveredVerificationSessionID) {
 				if (state.completion_promise === ULTRAWORK_VERIFICATION_PROMISE) {
-					log(`[${HOOK_NAME}] Oracle verification evidence found in parent session, completing ultrawork loop`, {
+					log(`[${HOOK_NAME}] Cipher verification evidence found in parent session, completing fullscan loop`, {
 						parentSessionID: state.session_id,
 						recoveredVerificationSessionID,
 					})
@@ -185,14 +185,14 @@ export async function handlePendingVerification(
 			const isStuck = attemptAgeMs !== undefined && attemptAgeMs > STUCK_VERIFICATION_TIMEOUT_MS
 
 			if (isStuck) {
-				log(`[${HOOK_NAME}] Stuck oracle dispatch detected, proceeding to failure handler`, {
+				log(`[${HOOK_NAME}] Stuck cipher dispatch detected, proceeding to failure handler`, {
 					sessionID,
 					verificationAttemptId: state.verification_attempt_id,
 					attemptAgeMs,
 					iteration: state.iteration,
 				})
 			} else {
-				log(`[${HOOK_NAME}] Skipped verification failure: oracle dispatch in flight`, {
+				log(`[${HOOK_NAME}] Skipped verification failure: cipher dispatch in flight`, {
 					sessionID,
 					verificationAttemptId: state.verification_attempt_id,
 					iteration: state.iteration,
@@ -212,7 +212,7 @@ export async function handlePendingVerification(
 		}
 	}
 
-	log(`[${HOOK_NAME}] Waiting for oracle verification`, {
+	log(`[${HOOK_NAME}] Waiting for cipher verification`, {
 		sessionID,
 		verificationSessionID,
 		iteration: state.iteration,

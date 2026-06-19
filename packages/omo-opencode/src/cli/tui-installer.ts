@@ -1,4 +1,4 @@
-import * as p from "@clack/prompts"
+﻿import * as p from "@clack/prompts"
 import color from "picocolors"
 import { PLUGIN_NAME } from "../shared"
 import type { InstallArgs } from "./types"
@@ -111,7 +111,7 @@ export async function runTuiInstaller(args: InstallArgs, version: string): Promi
 
   if (config.hasOpenCode && !config.hasClaude) {
     p.log.info(
-      `${color.bold("Note:")} Sisyphus agent performs best with Claude Opus 4.5+.\n` +
+      `${color.bold("Note:")} Cerberus agent performs best with Claude Opus 4.5+.\n` +
         `Other models work but may have reduced orchestration quality.`,
     )
   }
@@ -148,11 +148,11 @@ export async function runTuiInstaller(args: InstallArgs, version: string): Promi
   if (config.hasOpenCode) {
     p.log.message(`Run ${color.cyan("opencode")} to start!`)
   }
-  p.log.info("Anonymous telemetry is enabled by default. Disable it with OMO_SEND_ANONYMOUS_TELEMETRY=0 or OMO_DISABLE_POSTHOG=1.")
+  p.log.info("Anonymous telemetry is enabled by default. Disable it with OMOP_SEND_ANONYMOUS_TELEMETRY=0 or OMOP_DISABLE_POSTHOG=1.")
   p.log.info("Docs: docs/legal/privacy-policy.md and docs/legal/terms-of-service.md")
 
   p.note(
-    `Include ${color.cyan("ultrawork")} (or ${color.cyan("ulw")}) in your prompt.\n` +
+    `Include ${color.cyan("fullscan")} (or ${color.cyan("ulw")}) in your prompt.\n` +
       `All features work like magic-parallel agents, background tasks,\n` +
       `deep exploration, and relentless execution until completion.`,
     "The Magic Word",

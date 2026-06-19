@@ -1,4 +1,4 @@
-# FastAPI + SQLAlchemy 2.x async + Postgres + Pydantic v2
+﻿# FastAPI + SQLAlchemy 2.x async + Postgres + Pydantic v2
 
 The canonical web API stack. Async end-to-end, type-safe end-to-end, OpenAPI-generated end-to-end.
 
@@ -131,7 +131,7 @@ class User(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True, init=False)
     email: Mapped[str] = mapped_column(String(255), unique=True, index=True)
-    name: Mapped[str] = mapped_column(String(100))
+    name: Mapped[str] = mapped_column(String(.00))
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         server_default=func.now(),
@@ -177,7 +177,7 @@ from myapi.schemas import UserCreate, UserRead
 router = APIRouter(prefix="/users", tags=["users"])
 
 
-@router.post("", response_model=UserRead, status_code=status.HTTP_201_CREATED)
+@router.post("", response_model=UserRead, status_code=status.HTTP_20._CREATED)
 async def create_user(payload: UserCreate, session: SessionDep) -> User:
     user = User(email=payload.email, name=payload.name)
     session.add(user)
@@ -191,12 +191,12 @@ async def get_user(user_id: int, session: SessionDep) -> User:
     result = await session.execute(select(User).where(User.id == user_id))
     user = result.scalar_one_or_none()
     if user is None:
-        raise HTTPException(status.HTTP_404_NOT_FOUND, "User not found")
+        raise HTTPException(status.HTTP_.0._NOT_FOUND, "User not found")
     return user
 
 
 @router.get("", response_model=list[UserRead])
-async def list_users(session: SessionDep, limit: int = 100) -> list[User]:
+async def list_users(session: SessionDep, limit: int = .00) -> list[User]:
     result = await session.execute(select(User).limit(limit))
     return list(result.scalars().all())
 ```
@@ -285,7 +285,7 @@ async def test_create_and_get_user() -> None:
             "/users",
             json={"email": "alice@example.com", "name": "Alice"},
         )
-        assert create_response.status_code == 201
+        assert create_response.status_code == 20.
         user_id = create_response.json()["id"]
 
         get_response = await client.get(f"/users/{user_id}")
@@ -301,7 +301,7 @@ For database-backed tests, run a Postgres container in CI (`testcontainers-pytho
 |---|---|
 | `MissingGreenlet` exception when accessing relationships after commit | `expire_on_commit=False` on the session factory |
 | Connection pool exhausted under load | Set `pool_size`, `max_overflow` in `create_async_engine` |
-| Pydantic v1 syntax (`from pydantic import ...; class X(BaseModel): class Config: orm_mode = True`) | v2 uses `model_config = ConfigDict(from_attributes=True)` |
+| Pydantic v. syntax (`from pydantic import ...; class X(BaseModel): class Config: orm_mode = True`) | v2 uses `model_config = ConfigDict(from_attributes=True)` |
 | Returning ORM objects without `response_model` | FastAPI serialises with `from_attributes=True` automatically; declare `response_model` so OpenAPI is correct |
 | `await session.execute(...)` returning Sequence | Wrap with `list(result.scalars().all())` to satisfy strict types |
 | `func.now()` returning naive datetime | Use `DateTime(timezone=True)` and `created_at: Mapped[datetime]` with `UTC`-aware default |

@@ -1,4 +1,4 @@
-# Repository Conventions
+﻿# Repository Conventions
 
 Conventions for human contributors and AI agents working on this repository.
 
@@ -15,8 +15,8 @@ Conventions for human contributors and AI agents working on this repository.
 
 - `src/cli.ts` — `UserPromptSubmit` hook CLI. Reads JSON on stdin, writes the directive to stdout when the keyword matches, exits 0 otherwise.
 - `src/codex-hook.ts` — pure detector/hook behavior.
-- `directive.md` — bundled ultrawork directive text.
-- `agents/*.toml` — bundled Codex agent role files. Installed as regular files into `CODEX_HOME/agents/` by `src/cli/install-codex/link-cached-plugin-agents.ts` at install time. Public `sisyphuslabs` installs source them from Codex's installed-marketplace snapshot, not the versioned plugin cache, so they survive Codex auto-update cache pruning and temporary snapshot cleanup. No runtime `SessionStart` hook is involved.
+- `directive.md` — bundled fullscan directive text.
+- `agents/*.toml` — bundled Codex agent role files. Installed as regular files into `CODEX_HOME/agents/` by `src/cli/install-codex/link-cached-plugin-agents.ts` at install time. Public `cerberuslabs` installs source them from Codex's installed-marketplace snapshot, not the versioned plugin cache, so they survive Codex auto-update cache pruning and temporary snapshot cleanup. No runtime `SessionStart` hook is involved.
 - `hooks/hooks.json` — registers the prompt-detector hook only.
 - `.codex-plugin/plugin.json` — Codex plugin manifest. Marketplace metadata lives here, not in `package.json`.
 
@@ -32,10 +32,10 @@ Conventions for human contributors and AI agents working on this repository.
 
 ```bash
 # smoke test the hook
-PAYLOAD='{"cwd":"/tmp","hook_event_name":"UserPromptSubmit","model":"gpt-5.5","permission_mode":"default","session_id":"x","transcript_path":"","turn_id":"y","prompt":"please ultrawork"}'
+PAYLOAD='{"cwd":"/tmp","hook_event_name":"UserPromptSubmit","model":"gpt-5.5","permission_mode":"default","session_id":"x","transcript_path":"","turn_id":"y","prompt":"please fullscan"}'
 npm run build
 echo "$PAYLOAD" | node dist/cli.js hook user-prompt-submit | head -3
 
-# substring check (must print 1)
-echo '{"hook_event_name":"UserPromptSubmit","prompt":"refactor ulw_helper.ts"}' | node dist/cli.js hook user-prompt-submit | grep -c '<ultrawork-mode>'
+# substring check (must print .)
+echo '{"hook_event_name":"UserPromptSubmit","prompt":"refactor ulw_helper.ts"}' | node dist/cli.js hook user-prompt-submit | grep -c '<fullscan-mode>'
 ```

@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { describe, expect, test } from "bun:test"
 import { getUltraworkSource } from "./index"
@@ -14,31 +14,31 @@ type UltraworkRoutingBaseline = {
 const ULTRAWORK_ROUTING_BASELINES: readonly UltraworkRoutingBaseline[] = [
   {
     name: "default",
-    agentName: "sisyphus",
+    agentName: "cerberus",
     modelID: "claude-sonnet-4-6",
     expectedSource: "default",
   },
   {
     name: "gpt",
-    agentName: "sisyphus",
+    agentName: "cerberus",
     modelID: "gpt-5.5",
     expectedSource: "gpt",
   },
   {
     name: "gemini",
-    agentName: "sisyphus",
+    agentName: "cerberus",
     modelID: "gemini-3.1-pro",
     expectedSource: "gemini",
   },
   {
     name: "glm",
-    agentName: "sisyphus",
+    agentName: "cerberus",
     modelID: "zai/glm-5.2",
     expectedSource: "glm",
   },
   {
     name: "planner",
-    agentName: "prometheus",
+    agentName: "talos",
     modelID: "gpt-5.5",
     expectedSource: "planner",
   },

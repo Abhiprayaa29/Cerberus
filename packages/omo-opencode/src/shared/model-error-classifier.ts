@@ -1,11 +1,11 @@
-import {
+﻿import {
   getNextFallback,
   hasMoreFallbacks,
   isRetryableModelError,
   selectFallbackProviderWithCache,
   shouldRetryError,
-} from "@oh-my-opencode/model-core"
-import type { ErrorInfo } from "@oh-my-opencode/model-core"
+} from "@oh-my-open-pentest/model-core"
+import type { ErrorInfo } from "@oh-my-open-pentest/model-core"
 import * as connectedProvidersCache from "./connected-providers-cache"
 
 export type { ErrorInfo }

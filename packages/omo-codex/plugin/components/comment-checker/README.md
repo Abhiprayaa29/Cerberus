@@ -1,4 +1,4 @@
-# codex-comment-checker
+﻿# codex-comment-checker
 
 [![ci](https://github.com/code-yeongyu/codex-comment-checker/actions/workflows/ci.yml/badge.svg)](https://github.com/code-yeongyu/codex-comment-checker/actions/workflows/ci.yml) [![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
@@ -55,14 +55,14 @@ node dist/cli.js hook post-tool-use < test/fixtures/post-tool-use.json
 npx lazycodex-ai install
 ```
 
-The installer builds and copies the plugin into `~/.codex/plugins/cache/sisyphuslabs/omo/0.1.0`, registers the `sisyphuslabs` marketplace from the `lazycodex` Git repository, installs runtime dependencies there, and enables:
+The installer builds and copies the plugin into `~/.codex/plugins/cache/cerberuslabs/omo/0...0`, registers the `cerberuslabs` marketplace from the `lazycodex` Git repository, installs runtime dependencies there, and enables:
 
 ```toml
 [features]
 plugins = true
 plugin_hooks = true
 
-[plugins."omo@sisyphuslabs"]
+[plugins."omo@cerberuslabs"]
 enabled = true
 ```
 

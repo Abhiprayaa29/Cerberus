@@ -1,1 +1,1 @@
-export * from "@oh-my-opencode/mcp-client-core/mcp-oauth/resource-indicator"
+﻿export * from "@oh-my-open-pentest/mcp-client-core/mcp-oauth/resource-indicator"

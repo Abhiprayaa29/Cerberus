@@ -1,9 +1,9 @@
-import { posix, win32 } from "node:path"
+﻿import { posix, win32 } from "node:path"
 import type { PluginInput } from "@opencode-ai/plugin"
 import { normalizeSDKResponse } from "../../shared"
 import { log } from "../../shared/logger"
 
-const PLAN_PATH_PATTERN = /[A-Za-z0-9_./\\:~-]*\.(?:sisyphus|omo)[\\/]plans[\\/][A-Za-z0-9._/\\~-]+\.md/gi
+const PLAN_PATH_PATTERN = /[A-Za-z0-9_./\\:~-]*\.(?:cerberus|omo)[\\/]plans[\\/][A-Za-z0-9._/\\~-]+\.md/gi
 
 interface SessionMessagePart {
   text?: string

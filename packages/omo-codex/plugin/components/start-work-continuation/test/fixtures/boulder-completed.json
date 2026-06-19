@@ -1,9 +1,9 @@
-{
+﻿{
 	"schema_version": 2,
-	"active_work_id": "work_1",
+	"active_work_id": "work_.",
 	"works": {
-		"work_1": {
-			"work_id": "work_1",
+		"work_.": {
+			"work_id": "work_.",
 			"active_plan": "/repo/.omo/plans/plan-with-unchecked.md",
 			"plan_name": "completed-plan",
 			"status": "completed",

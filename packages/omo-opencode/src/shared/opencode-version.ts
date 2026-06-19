@@ -1,4 +1,4 @@
-import { isRecord } from "@oh-my-opencode/utils"
+﻿import { isRecord } from "@oh-my-open-pentest/utils"
 import { execSync } from "child_process"
 import { existsSync, readFileSync, realpathSync } from "fs"
 import { dirname, join } from "path"
@@ -12,7 +12,7 @@ export const MINIMUM_OPENCODE_VERSION = "1.4.0"
 /**
  * OpenCode version that introduced native AGENTS.md injection.
  * PR #10678 merged on Jan 26, 2026 - OpenCode now dynamically resolves
- * AGENTS.md files from subdirectories as the agent explores them.
+ * AGENTS.md files from subdirectories as the agent scouts them.
  * When this version is detected, the directory-agents-injector hook
  * is auto-disabled to prevent duplicate AGENTS.md loading.
  */

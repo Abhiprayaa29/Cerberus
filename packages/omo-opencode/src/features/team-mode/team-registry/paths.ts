@@ -1,1 +1,1 @@
-export * from "@oh-my-opencode/team-core/team-registry/paths"
+﻿export * from "@oh-my-open-pentest/team-core/team-registry/paths"

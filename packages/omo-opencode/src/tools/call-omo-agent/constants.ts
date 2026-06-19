@@ -1,9 +1,9 @@
-export const ALLOWED_AGENTS = [
-  "explore",
-  "librarian",
+﻿export const ALLOWED_AGENTS = [
+  "scout",
+  "intel",
 ] as const
 
-export const CALL_OMO_AGENT_DESCRIPTION = `Spawn explore/librarian agent. run_in_background REQUIRED (true=async with task_id, false=sync).
+export const CALL_OMO_AGENT_DESCRIPTION = `Spawn scout/intel agent. run_in_background REQUIRED (true=async with task_id, false=sync).
 
 Allowed agents:
 {agents}

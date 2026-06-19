@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { afterEach, describe, expect, test } from "bun:test"
 import { mkdir, rm, writeFile } from "node:fs/promises"
@@ -131,7 +131,7 @@ describe("team-registry loader", () => {
     await writeJsonFile(fixturePaths.userConfigPath, {
       name: "lead-shorthand",
       description: "team with shorthand lead",
-      lead: { kind: "subagent_type", subagent_type: "sisyphus" },
+      lead: { kind: "subagent_type", subagent_type: "cerberus" },
       members: [
         { kind: "category", name: "scout-1", category: "deep", prompt: "Scout the src directory for auth patterns." },
         { kind: "category", name: "scout-2", category: "quick", prompt: "Scout tests for auth coverage." },
@@ -144,7 +144,7 @@ describe("team-registry loader", () => {
     // then
     expect(teamSpec.leadAgentId).toBe("lead")
     expect(teamSpec.members).toHaveLength(3)
-    expect(teamSpec.members[0]).toMatchObject({ kind: "subagent_type", name: "lead", subagent_type: "sisyphus" })
+    expect(teamSpec.members[0]).toMatchObject({ kind: "subagent_type", name: "lead", subagent_type: "cerberus" })
   })
 
   test("derives leadAgentId from the only member when no lead hint exists", async () => {

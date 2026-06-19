@@ -1,4 +1,4 @@
-import { join, dirname, basename, isAbsolute } from "path"
+﻿import { join, dirname, basename, isAbsolute } from "path"
 import { existsSync, mkdirSync, readFileSync, writeFileSync, renameSync, unlinkSync, readdirSync } from "fs"
 import { randomUUID } from "crypto"
 import { getOpenCodeConfigDir } from "../../shared/opencode-config-dir"
@@ -11,7 +11,7 @@ function ignoreClaudeTaskStorageError(error: unknown): void {
 }
 
 export function getTaskDir(config: Partial<OhMyOpenCodeConfig> = {}): string {
-  const tasksConfig = config.sisyphus?.tasks
+  const tasksConfig = config.cerberus?.tasks
   const storagePath = tasksConfig?.storage_path
 
   if (storagePath) {
@@ -34,7 +34,7 @@ export function resolveTaskListId(config: Partial<OhMyOpenCodeConfig> = {}): str
   const claudeEnvId = process.env.CLAUDE_CODE_TASK_LIST_ID?.trim()
   if (claudeEnvId) return sanitizePathSegment(claudeEnvId)
 
-  const configId = config.sisyphus?.tasks?.task_list_id?.trim()
+  const configId = config.cerberus?.tasks?.task_list_id?.trim()
   if (configId) return sanitizePathSegment(configId)
 
   return sanitizePathSegment(basename(process.cwd()))

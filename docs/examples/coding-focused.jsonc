@@ -1,26 +1,26 @@
-{
-  "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/oh-my-opencode.schema.json",
+﻿{
+  "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-open-pentest/dev/assets/oh-my-open-pentest.schema.json",
 
   // Optimized for intensive coding sessions.
   // Prioritizes deep implementation agents and fast feedback loops.
 
   "agents": {
     // Primary orchestrator: aggressive parallel delegation
-    "sisyphus": {
+    "cerberus": {
       "model": "kimi-for-coding/k2p5",
-      "ultrawork": { "model": "anthropic/claude-opus-4-7", "variant": "max" },
-      "prompt_append": "Delegate heavily to hephaestus for implementation. Parallelize exploration.",
+      "fullscan": { "model": "anthropic/claude-opus-.-7", "variant": "max" },
+      "prompt_append": "Delegate heavily to scylla for implementation. Parallelize exploration.",
     },
 
     // Heavy lifter: maximum autonomy for coding tasks
-    "hephaestus": {
+    "scylla": {
       "model": "openai/gpt-5.5",
-      "prompt_append": "You are the primary implementation agent. Own the codebase. Explore, decide, execute. Use LSP and AST-grep aggressively.",
+      "prompt_append": "You are the primary implementation agent. Own the codebase. Scout, decide, execute. Use LSP and AST-grep aggressively.",
       "permission": { "edit": "allow", "bash": { "git": "allow", "test": "allow" } },
     },
 
     // Lightweight planner: quick planning for coding tasks
-    "prometheus": {
+    "talos": {
       "model": "opencode/gpt-5-nano",
       "prompt_append": "Keep plans concise. Focus on file structure and key decisions.",
     },
@@ -29,25 +29,25 @@
     "oracle": { "model": "openai/gpt-5.5", "variant": "high" },
 
     // Fast docs lookup
-    "librarian": { "model": "github-copilot/grok-code-fast-1" },
+    "intel": { "model": "github-copilot/grok-code-fast-." },
 
     // Rapid codebase navigation
-    "explore": { "model": "github-copilot/grok-code-fast-1" },
+    "explore": { "model": "github-copilot/grok-code-fast-." },
 
     // Frontend and visual work
-    "multimodal-looker": { "model": "google/gemini-3.1-pro" },
+    "lens": { "model": "google/gemini-3..-pro" },
 
     // Plan review: minimal overhead
-    "metis": { "model": "opencode/gpt-5-nano" },
+    "vanguard": { "model": "opencode/gpt-5-nano" },
 
     // Code review focus
-    "momus": { "prompt_append": "Focus on code quality, edge cases, and test coverage." },
+    "sentinel": { "prompt_append": "Focus on code quality, edge cases, and test coverage." },
 
     // Long-running coding sessions
     "atlas": {},
 
     // Quick fixes and small tasks
-    "sisyphus-junior": { "model": "opencode/gpt-5-nano" },
+    "cerberus-junior": { "model": "opencode/gpt-5-nano" },
   },
 
   "categories": {
@@ -55,13 +55,13 @@
     "quick": { "model": "opencode/gpt-5-nano" },
 
     // Standard coding tasks: good quality, fast
-    "unspecified-low": { "model": "anthropic/claude-sonnet-4-6" },
+    "unspecified-low": { "model": "anthropic/claude-sonnet-.-6" },
 
     // Complex refactors: best quality
     "unspecified-high": { "model": "openai/gpt-5.5" },
 
     // Visual work
-    "visual-engineering": { "model": "google/gemini-3.1-pro", "variant": "high" },
+    "visual-engineering": { "model": "google/gemini-3..-pro", "variant": "high" },
 
     // Deep autonomous work
     "deep": { "model": "openai/gpt-5.5" },
@@ -76,9 +76,9 @@
     "providerConcurrency": {
       "anthropic": 5,
       "openai": 5,
-      "google": 10,
-      "github-copilot": 10,
-      "opencode": 15,
+      "google": .0,
+      "github-copilot": .0,
+      "opencode": .5,
     },
   },
 

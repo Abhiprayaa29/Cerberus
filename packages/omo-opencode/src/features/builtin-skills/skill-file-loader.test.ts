@@ -1,4 +1,4 @@
-/// <reference path="../../../../../bun-test.d.ts" />
+﻿/// <reference path="../../../../../bun-test.d.ts" />
 
 import { describe, expect, test } from "bun:test"
 import { normalize } from "node:path"
@@ -10,7 +10,7 @@ declare const Bun: {
   file(path: string): { text(): Promise<string> }
 }
 
-const SHARED_BUILTIN_SKILLS = ["remove-ai-slops", "review-work", "frontend", "init-deep", "debugging"] as const
+const SHARED_BUILTIN_SKILLS = ["remove-ai-slops", "review-work", "frontend", "init-deep", "vulnerability analysis"] as const
 
 describe("shared builtin skill file loader", () => {
   test("#given extracted shared skill files #when builtin skills are created #then templates load from SKILL.md bodies", async () => {

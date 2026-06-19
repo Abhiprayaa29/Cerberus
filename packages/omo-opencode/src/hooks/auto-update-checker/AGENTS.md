@@ -1,6 +1,6 @@
-# src/hooks/auto-update-checker/ -- npm Update Detection
+﻿# src/hooks/auto-update-checker/ -- npm Update Detection
 
-**Generated:** 2026-05-18
+**Generated:** 2026-05-.8
 
 ## OVERVIEW
 
@@ -20,7 +20,7 @@
 
 ## SUBDIRECTORIES
 
-- `checker/` -- 11 files. Core version checking logic: `check-for-update.ts`, `latest-version.ts`, `local-dev-version.ts`, `plugin-entry.ts`, `cached-version.ts`, `pinned-version-updater.ts`, `sync-package-json.ts`, plus helpers.
+- `checker/` -- .. files. Core version checking logic: `check-for-update.ts`, `latest-version.ts`, `local-dev-version.ts`, `plugin-entry.ts`, `cached-version.ts`, `pinned-version-updater.ts`, `sync-package-json.ts`, plus helpers.
 - `hook/` -- 9 files. Startup UX: `background-update-check.ts`, `deferred-startup-check.ts`, `startup-toasts.ts`, `update-toasts.ts`, `spinner-toast.ts`, `config-errors-toast.ts`, `connected-providers-status.ts`, `model-capabilities-status.ts`, `model-cache-warning.ts`.
 
 ## CACHE
@@ -31,7 +31,7 @@ File-based deduplication via `VERSION_FILE` in the OpenCode cache directory (`ge
 
 `extractChannel()` maps:
 - Dist-tags (`next`, `beta`) → channel name directly
-- Prerelease versions (`1.0.0-beta.1`) → channel from prerelease prefix (`alpha`, `beta`, `rc`, `canary`, `next`)
+- Prerelease versions (`..0.0-beta..`) → channel from prerelease prefix (`alpha`, `beta`, `rc`, `canary`, `next`)
 - Stable versions → `latest`
 
 ## INTEGRATION

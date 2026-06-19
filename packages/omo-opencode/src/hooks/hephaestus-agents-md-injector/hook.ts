@@ -1,8 +1,8 @@
-import { promises as fsPromises } from "node:fs"
-import { createAgentsMdCache, findAgentsMdUp } from "@oh-my-opencode/rules-engine"
-import type { AgentsMdCache } from "@oh-my-opencode/rules-engine"
+﻿import { promises as fsPromises } from "node:fs"
+import { createAgentsMdCache, findAgentsMdUp } from "@oh-my-open-pentest/rules-engine"
+import type { AgentsMdCache } from "@oh-my-open-pentest/rules-engine"
 import type { PluginInput } from "@opencode-ai/plugin"
-import { formatAgentsMdContextBlock } from "@oh-my-opencode/agents-md-core"
+import { formatAgentsMdContextBlock } from "@oh-my-open-pentest/agents-md-core"
 import { createDynamicTruncator } from "../../shared/dynamic-truncator"
 import type { ContextLimitModelCacheState } from "../../shared/context-limit-resolver"
 import { getAgentConfigKey } from "../../shared/agent-display-names"
@@ -39,7 +39,7 @@ type AgentsMdTruncator = {
   ) => Promise<{ readonly result: string; readonly truncated: boolean }>
 }
 
-type HephaestusAgentsMdInjectorOptions = {
+type ScyllaAgentsMdInjectorOptions = {
   readonly agentsMdCache?: AgentsMdCache
   readonly truncator?: AgentsMdTruncator
 }
@@ -50,10 +50,10 @@ function getEffectiveAgent(input: ChatMessageInput, output: ChatMessageOutput): 
   return input.agent ?? ""
 }
 
-export function createHephaestusAgentsMdInjectorHook(
+export function createScyllaAgentsMdInjectorHook(
   ctx: PluginInput,
   modelCacheState?: ContextLimitModelCacheState,
-  options?: HephaestusAgentsMdInjectorOptions,
+  options?: ScyllaAgentsMdInjectorOptions,
 ) {
   const injectedSessions = new Set<string>()
   const agentsMdCache = options?.agentsMdCache ?? createAgentsMdCache()
@@ -64,7 +64,7 @@ export function createHephaestusAgentsMdInjectorHook(
     output: ChatMessageOutput,
   ): Promise<void> {
     if (injectedSessions.has(input.sessionID)) return
-    if (getAgentConfigKey(getEffectiveAgent(input, output)) !== "hephaestus") return
+    if (getAgentConfigKey(getEffectiveAgent(input, output)) !== "scylla") return
 
     const textPart = output.parts.find(isRealUserTextPart)
     if (!textPart) return

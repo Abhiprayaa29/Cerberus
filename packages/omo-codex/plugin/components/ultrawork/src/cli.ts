@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+﻿#!/usr/bin/env node
 import { stdin as processStdin, stdout as processStdout } from "node:process";
 
 import { runUserPromptSubmitHook } from "./codex-hook.js";
@@ -9,7 +9,7 @@ const subcommand = process.argv[3];
 if (command === "hook" && subcommand === "user-prompt-submit") {
 	await runHookCli();
 } else {
-	process.stderr.write("Usage: omo-ultrawork hook user-prompt-submit\n");
+	process.stderr.write("Usage: omo-fullscan hook user-prompt-submit\n");
 	process.exitCode = 1;
 }
 

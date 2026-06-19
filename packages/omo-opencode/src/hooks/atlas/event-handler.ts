@@ -1,14 +1,14 @@
-import type { PluginInput } from "@opencode-ai/plugin"
+﻿import type { PluginInput } from "@opencode-ai/plugin"
 import { log } from "../../shared/logger"
 import { resolveMessageEventSessionID, resolveSessionEventID } from "../../shared/event-session-id"
 import { HOOK_NAME } from "./hook-name"
 import { isAbortError } from "./is-abort-error"
-import { handleAtlasSessionIdle } from "./idle-event"
-import type { AtlasHookOptions, SessionState } from "./types"
+import { handleArgusSessionIdle } from "./idle-event"
+import type { ArgusHookOptions, SessionState } from "./types"
 
-export function createAtlasEventHandler(input: {
+export function createArgusEventHandler(input: {
   ctx: PluginInput
-  options?: AtlasHookOptions
+  options?: ArgusHookOptions
   sessions: Map<string, SessionState>
   getState: (sessionID: string) => SessionState
 }): (arg: { event: { type: string; properties?: unknown } }) => Promise<void> {
@@ -28,7 +28,7 @@ export function createAtlasEventHandler(input: {
       log(`[${HOOK_NAME}] session.error`, { sessionID, isAbort })
       if (!isAbort) {
         const previousInjectedAt = state.lastContinuationInjectedAt
-        await handleAtlasSessionIdle({ ctx, options, getState, sessionID })
+        await handleArgusSessionIdle({ ctx, options, getState, sessionID })
         if (
           state.lastContinuationInjectedAt !== undefined
           && state.lastContinuationInjectedAt !== previousInjectedAt
@@ -42,7 +42,7 @@ export function createAtlasEventHandler(input: {
     if (event.type === "session.idle") {
       const sessionID = resolveSessionEventID(props)
       if (!sessionID) return
-      await handleAtlasSessionIdle({ ctx, options, getState, sessionID })
+      await handleArgusSessionIdle({ ctx, options, getState, sessionID })
       return
     }
 

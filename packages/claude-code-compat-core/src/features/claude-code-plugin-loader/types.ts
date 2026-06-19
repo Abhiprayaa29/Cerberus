@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Claude Code Plugin Types
  *
  * Type definitions for Claude Code plugin system compatibility.
@@ -245,7 +245,7 @@ export interface PluginLoaderOptions {
   loadPluginManifestOverride?: (installPath: string) => PluginManifest | null
 
   /**
-   * Override enabled plugins from oh-my-opencode config.
+   * Override enabled plugins from oh-my-open-pentest config.
    * Key format: "pluginName@marketplace" (e.g., "shell-scripting@claude-code-workflows")
    * Value: true = enabled, false = disabled
    *

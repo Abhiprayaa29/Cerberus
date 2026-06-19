@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 import { afterEach, beforeEach, describe, expect, test } from "bun:test"
 import { existsSync, mkdirSync, rmSync } from "node:fs"
 import { tmpdir } from "node:os"
@@ -14,8 +14,8 @@ type PromptCall = {
 
 type BackgroundTaskStatus = "pending" | "running"
 
-describe("ralph-loop background task activity", () => {
-	const testDirectory = join(tmpdir(), `ralph-loop-bg-activity-${Date.now()}`)
+describe("pentest-loop background task activity", () => {
+	const testDirectory = join(tmpdir(), `pentest-loop-bg-activity-${Date.now()}`)
 	let promptCalls: PromptCall[]
 	let taskStatus: BackgroundTaskStatus
 

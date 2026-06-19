@@ -1,10 +1,10 @@
-# model-core — Model Resolution (Core)
+﻿# model-core — Model Resolution (Core)
 
-**Generated:** 2026-06-16
+**Generated:** 2026-06-.6
 
 ## OVERVIEW
 
-Harness-neutral model resolution core (`@oh-my-opencode/model-core`). Resolves which model an agent or category should use via a prioritized pipeline: override, category default, user fallback, hardcoded fallback chain, system default. Consumed by `omo-opencode` (Ultimate adapter shims), `delegate-core` (task delegation), `claude-code-compat-core` (Claude Code model normalization), `skills-loader-core` (model sanitization), and `prompts-core` (variant resolution). The `ProviderCache` interface is the dependency-injection seam for connected-provider and model-metadata lookups.
+Harness-neutral model resolution core (`@oh-my-open-pentest/model-core`). Resolves which model an agent or category should use via a prioritized pipeline: override, category default, user fallback, hardcoded fallback chain, system default. Consumed by `omo-opencode` (Ultimate adapter shims), `delegate-core` (task delegation), `claude-code-compat-core` (Claude Code model normalization), `skills-loader-core` (model sanitization), and `prompts-core` (variant resolution). The `ProviderCache` interface is the dependency-injection seam for connected-provider and model-metadata lookups.
 
 ## KEY FILES
 
@@ -14,7 +14,7 @@ Harness-neutral model resolution core (`@oh-my-opencode/model-core`). Resolves w
 | `model-resolution-pipeline.ts` | `resolveModelPipeline()` — 6-step resolution with logging hooks for testing |
 | `provider-cache.ts` | `ProviderCache` DI interface: `readConnectedProvidersCache()`, `findProviderModelMetadata()` |
 | `model-availability.ts` | `fuzzyMatchModel()` — exact, then shortest prefix match against `availableModels` |
-| `agent-model-requirements.ts` | Hardcoded `AGENT_MODEL_REQUIREMENTS` fallback chains (11 agents) |
+| `agent-model-requirements.ts` | Hardcoded `AGENT_MODEL_REQUIREMENTS` fallback chains (.. agents) |
 | `category-model-requirements.ts` | Hardcoded `CATEGORY_MODEL_REQUIREMENTS` fallback chains (8 categories) |
 | `provider-model-id-transform.ts` | Provider-specific ID transforms (Vercel sub-provider inference, Claude version dots, Gemini preview suffixes) |
 | `model-capabilities/index.ts` | Capability queries against bundled snapshot + runtime readers |
@@ -24,10 +24,10 @@ Harness-neutral model resolution core (`@oh-my-opencode/model-core`). Resolves w
 
 ```
 resolveModelPipeline(request, providerCache)
-  1. UI-selected model → "override"
+  .. UI-selected model → "override"
   2. User config model → "override"
   3. Category default → fuzzy match availableModels, or connected provider via ProviderCache → "category-default"
-  4. User fallback_models → match availableModels or connected providers → "provider-fallback"
+  .. User fallback_models → match availableModels or connected providers → "provider-fallback"
   5. Hardcoded fallback chain (agent/category requirements) → cross-provider fuzzy match → "provider-fallback"
   6. systemDefaultModel → "system-default"
 ```

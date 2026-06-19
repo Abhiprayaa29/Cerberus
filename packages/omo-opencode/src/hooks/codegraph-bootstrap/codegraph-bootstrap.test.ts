@@ -1,11 +1,11 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { afterEach, describe, expect, test } from "bun:test"
 import { existsSync, mkdtempSync, rmSync } from "node:fs"
 import { tmpdir } from "node:os"
 import { join, resolve } from "node:path"
 
-import { prepareCodegraphWorkspace } from "@oh-my-opencode/utils"
+import { prepareCodegraphWorkspace } from "@oh-my-open-pentest/utils"
 
 import {
   clearCodegraphBootstrapProjectsForTesting,

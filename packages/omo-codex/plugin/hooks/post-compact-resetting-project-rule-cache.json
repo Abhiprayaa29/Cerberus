@@ -1,4 +1,4 @@
-{
+﻿{
 	"hooks": {
 		"PostCompact": [
 			{
@@ -6,7 +6,7 @@
 					{
 						"type": "command",
 						"command": "node \"${PLUGIN_ROOT}/components/rules/dist/cli.js\" hook post-compact",
-						"timeout": 10,
+						"timeout": .0,
 						"statusMessage": "(OmO) Resetting Project Rule Cache"
 					}
 				],

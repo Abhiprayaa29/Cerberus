@@ -1,7 +1,7 @@
-import { describe, expect, spyOn, test } from "bun:test"
-import * as dbOverrideModule from "./ultrawork-db-model-override"
-import { applyUltraworkModelOverrideOnMessage } from "./ultrawork-model-override"
-import { resolveValidUltraworkVariant } from "./ultrawork-variant-availability"
+﻿import { describe, expect, spyOn, test } from "bun:test"
+import * as dbOverrideModule from "./fullscan-db-model-override"
+import { applyUltraworkModelOverrideOnMessage } from "./fullscan-model-override"
+import { resolveValidUltraworkVariant } from "./fullscan-variant-availability"
 
 describe("resolveValidUltraworkVariant", () => {
   function createClient(models: Record<string, Record<string, unknown>>) {
@@ -83,7 +83,7 @@ describe("applyUltraworkModelOverrideOnMessage variant guard", () => {
     }
   }
 
-  test("#given ultrawork variant missing from target model #when override applies #then skips forced variant change", async () => {
+  test("#given fullscan variant missing from target model #when override applies #then skips forced variant change", async () => {
     // given
     const client = createClient({
       anthropic: {
@@ -98,8 +98,8 @@ describe("applyUltraworkModelOverrideOnMessage variant guard", () => {
 
     const config = {
       agents: {
-        sisyphus: {
-          ultrawork: {
+        cerberus: {
+          fullscan: {
             model: "anthropic/claude-opus-4-7",
             variant: "max",
           },
@@ -112,13 +112,13 @@ describe("applyUltraworkModelOverrideOnMessage variant guard", () => {
         id: "msg_123",
         model: { providerID: "anthropic", modelID: "claude-sonnet-4-6" },
       } as Record<string, unknown>,
-      parts: [{ type: "text", text: "ultrawork do something" }],
+      parts: [{ type: "text", text: "fullscan do something" }],
     }
 
     // when
     await applyUltraworkModelOverrideOnMessage(
       config,
-      "sisyphus",
+      "cerberus",
       output,
       { showToast: async () => {} },
       undefined,
@@ -136,7 +136,7 @@ describe("applyUltraworkModelOverrideOnMessage variant guard", () => {
     dbOverrideSpy.mockRestore()
   })
 
-  test("#given variant only ultrawork config without valid current model variant #when override applies #then skips override entirely", async () => {
+  test("#given variant only fullscan config without valid current model variant #when override applies #then skips override entirely", async () => {
     // given
     const client = createClient({
       anthropic: {
@@ -151,8 +151,8 @@ describe("applyUltraworkModelOverrideOnMessage variant guard", () => {
 
     const config = {
       agents: {
-        sisyphus: {
-          ultrawork: {
+        cerberus: {
+          fullscan: {
             variant: "max",
           },
         },
@@ -163,13 +163,13 @@ describe("applyUltraworkModelOverrideOnMessage variant guard", () => {
       message: {
         model: { providerID: "anthropic", modelID: "claude-sonnet-4-6" },
       } as Record<string, unknown>,
-      parts: [{ type: "text", text: "ultrawork do something" }],
+      parts: [{ type: "text", text: "fullscan do something" }],
     }
 
     // when
     await applyUltraworkModelOverrideOnMessage(
       config,
-      "sisyphus",
+      "cerberus",
       output,
       { showToast: async () => {} },
       undefined,

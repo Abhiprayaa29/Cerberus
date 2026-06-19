@@ -1,4 +1,4 @@
-import { describe, expect, mock, test } from "bun:test"
+﻿import { describe, expect, mock, test } from "bun:test"
 
 import { waitForCompletion } from "./completion-poller"
 
@@ -6,7 +6,7 @@ function createToolContext(): Parameters<typeof waitForCompletion>[1] {
   return {
     sessionID: "parent-session",
     messageID: "parent-message",
-    agent: "sisyphus",
+    agent: "cerberus",
     abort: new AbortController().signal,
     metadata: mock(() => {}),
   }

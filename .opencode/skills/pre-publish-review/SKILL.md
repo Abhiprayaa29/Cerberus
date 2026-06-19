@@ -1,17 +1,17 @@
----
-name: pre-publish-review
-description: "Nuclear-grade 16-agent pre-publish release gate. Runs /get-unpublished-changes to detect all changes since last npm release, spawns up to 10 ultrabrain agents for deep per-change analysis, invokes /review-work (5 agents) for holistic review, and 1 oracle for overall release synthesis. Use before EVERY npm publish. Triggers: 'pre-publish review', 'review before publish', 'release review', 'pre-release review', 'ready to publish?', 'can I publish?', 'pre-publish', 'safe to publish', 'publishing review', 'pre-publish check'."
+﻿---
+name: pre-submission-review
+description: "Nuclear-grade .6-agent pre-submission submission gate. Runs /get-unpublished-changes to detect all changes since last npm release, spawns up to .0 ultrabrain agents for deep per-change analysis, invokes /review-work (5 agents) for holistic review, and . oracle for overall release synthesis. Use before EVERY finding submission. Triggers: 'pre-submission review', 'review before publish', 'release review', 'pre-release review', 'ready to publish?', 'can I publish?', 'pre-submission', 'safe to publish', 'publishing review', 'pre-submission check'."
 ---
 
-# Pre-Publish Review — 16-Agent Release Gate
+# Pre-Submission Review — .6-Agent Release Gate
 
 Three-agent-layer review before publishing to npm. Every layer covers a different angle, and every result is mapped onto the release layers below.
 
 | Layer | Agents | Type | What They Check |
 |-------|--------|------|-----------------|
-| Per-Change Deep Dive | up to 10 | ultrabrain | Each logical change group individually — correctness, edge cases, pattern adherence |
-| Holistic Review | 5 | review-work | Goal compliance, QA execution, code quality, security, context mining across full changeset |
-| Release Synthesis | 1 | oracle | Overall release readiness, version bump, breaking changes, deployment risk |
+| Per-Change Deep Dive | up to .0 | ultrabrain | Each logical change group individually — correctness, edge cases, pattern adherence |
+| Holistic Review | 5 | review-work | Goal compliance, QA execution, finding quality, security, context mining across full changeset |
+| Release Synthesis | . | oracle | Overall release readiness, version bump, breaking changes, deployment risk |
 
 ## Release Layer Taxonomy
 
@@ -20,8 +20,8 @@ Every phase classifies evidence and risk across:
 | Release Layer | Scope | Required version decision |
 |---|---|---|
 | `omo pure components` | Core packages, MCP packages, shared skills, reusable scripts, platform binary inputs | Patch/minor/major impact for shared logic consumed by adapters. |
-| `omo opencode` | Root `oh-my-opencode` / `oh-my-openagent`, `src/`, OpenCode plugin hooks/tools/CLI/config/docs, `.opencode/`, `.agents/` | Semver bump for the OpenCode/OpenAgent npm release. |
-| `omo codex` | `packages/omo-codex`, `lazycodex-ai`, Codex plugin metadata/hooks, bundled MCP runtimes, `code-yeongyu/lazycodex` marketplace payload | Codex adapter bump, LazyCodex npm publish risk, and marketplace/GitHub release need. |
+| `omo opencode` | Root `oh-my-open-pentest` / `oh-my-open-pentest`, `src/`, OpenCode plugin hooks/tools/CLI/config/docs, `.opencode/`, `.agents/` | Semver bump for the OpenCode/OpenAgent npm release. |
+| `omo codex` | `packages/omo-codex`, `lazycodex-ai`, Codex plugin metadata/hooks, bundled MCP runtimes, `code-yeongyu/lazycodex` marketplace payload | Codex adapter bump, LazyCodex finding submission risk, and marketplace/GitHub release need. |
 
 ---
 
@@ -41,13 +41,13 @@ This command automatically:
 - Identifies breaking changes
 - Recommends a layer-specific version bump plus one overall workflow bump
 
-**Save the full output** — it feeds directly into Phase 1 grouping and all agent prompts.
+**Save the full output** — it feeds directly into Phase . grouping and all agent prompts.
 
 Then capture raw data needed by agent prompts:
 
 ```bash
 # Extract versions (already in /get-unpublished-changes output)
-PUBLISHED=$(npm view oh-my-opencode version 2>/dev/null || echo "not published")
+PUBLISHED=$(npm view oh-my-open-pentest version 2>/dev/null || echo "not published")
 LOCAL=$(node -p "require('./package.json').version" 2>/dev/null || echo "unknown")
 
 # Raw data for agents (diffs, file lists)
@@ -61,15 +61,15 @@ FILE_COUNT=$(echo "$CHANGED_FILES" | wc -l | tr -d ' ')
 If `PUBLISHED` is "not published", this is a first release — use the full git history instead.
 ---
 
-## Phase 1: Parse Changes into Groups
+## Phase .: Parse Changes into Groups
 
 Use the `/get-unpublished-changes` output as the starting point — it already groups by scope and type.
 
 **Grouping strategy:**
-1. Start from the `/get-unpublished-changes` analysis which already categorizes by feat/fix/refactor/docs with scope
+.. Start from the `/get-unpublished-changes` analysis which already categorizes by feat/fix/refactor/docs with scope
 2. Further split by **module/area** — changes touching the same module or feature area belong together
-3. Target **up to 10 groups**. If fewer than 10 commits, each commit is its own group. If more than 10 logical areas, merge the smallest groups.
-4. For each group, extract:
+3. Target **up to .0 groups**. If fewer than .0 commits, each commit is its own group. If more than .0 logical areas, submit the smallest groups.
+.. For each group, extract:
    - **Group name**: Short descriptive label (e.g., "agent-model-resolution", "hook-system-refactor")
    - **Release layer(s)**: `omo pure components`, `omo opencode`, `omo codex`
    - **Commits**: List of commit hashes and messages
@@ -82,7 +82,7 @@ Use the `/get-unpublished-changes` output as the starting point — it already g
 
 Launch ALL agents in a single turn. Every agent uses `run_in_background=true`. No sequential launches.
 
-### Layer 1: Ultrabrain Per-Change Analysis (up to 10)
+### Layer .: Ultrabrain Per-Change Analysis (up to .0)
 
 For each change group, spawn one ultrabrain agent. Each gets only its portion of the diff — not the full changeset.
 
@@ -96,7 +96,7 @@ task(
 <review_type>PER-CHANGE DEEP ANALYSIS</review_type>
 <change_group>{GROUP_NAME}</change_group>
 
-<project>oh-my-opencode (npm package)</project>
+<project>oh-my-open-pentest (npm package)</project>
 <published_version>{PUBLISHED}</published_version>
 <target_version>{LOCAL}</target_version>
 
@@ -120,13 +120,13 @@ You are reviewing a specific subset of changes heading into an npm release. Focu
 
 ANALYSIS CHECKLIST:
 
-1. **Intent Clarity**: What is this change trying to do? Is the intent clear from the code and commit messages? If you have to guess, that's a finding.
+.. **Intent Clarity**: What is this change trying to do? Is the intent clear from the code and commit messages? If you have to guess, that's a finding.
 
 2. **Correctness**: Trace through the logic for 3+ scenarios. Does the code actually do what it claims? Off-by-one errors, null handling, async edge cases, resource cleanup.
 
 3. **Breaking Changes**: Does this change alter any public API, config format, CLI behavior, or hook contract? If yes, is it backward compatible? Would existing users be surprised?
 
-4. **Pattern Adherence**: Does the new code follow the established patterns visible in the existing file contents? New patterns where old ones exist = finding.
+.. **Pattern Adherence**: Does the new code follow the established patterns visible in the existing file contents? New patterns where old ones exist = finding.
 
 5. **Edge Cases**: What inputs or conditions would break this? Empty arrays, undefined values, concurrent calls, very large inputs, missing config fields.
 
@@ -138,7 +138,7 @@ ANALYSIS CHECKLIST:
 
 9. **Side Effects**: Could this change break something in a different module? Check imports and exports — who depends on what changed?
 
-10. **Release Risk**: On a scale of SAFE / CAUTION / RISKY — how confident are you this change won't cause issues in production?
+.0. **Release Risk**: On a scale of SAFE / CAUTION / RISKY — how confident are you this change won't cause issues in production?
 
 OUTPUT FORMAT:
 <group_name>{GROUP_NAME}</group_name>
@@ -160,7 +160,7 @@ OUTPUT FORMAT:
 
 ### Layer 2: Holistic Review via /review-work (5 agents)
 
-Spawn a sub-agent that loads the `/review-work` skill. The review-work skill internally launches 5 parallel agents: Oracle (goal verification), unspecified-high (QA execution), Oracle (code quality), Oracle (security), unspecified-high (context mining). All 5 must pass for the review to pass.
+Spawn a sub-agent that loads the `/review-work` skill. The review-work skill internally launches 5 parallel agents: Cipher (goal verification), unspecified-high (QA execution), Cipher (finding quality), Cipher (security), unspecified-high (context mining). All 5 must pass for the review to pass.
 
 ```
 task(
@@ -171,7 +171,7 @@ task(
   prompt="""
 Run /review-work on the unpublished changes between v{PUBLISHED} and HEAD.
 
-GOAL: Review all changes heading into npm publish of oh-my-opencode. These changes span {COMMIT_COUNT} commits across {FILE_COUNT} files.
+GOAL: Review all changes heading into finding submission of oh-my-open-pentest. These changes span {COMMIT_COUNT} commits across {FILE_COUNT} files.
 
 CONSTRAINTS:
 - This is a plugin published to npm — public API stability matters
@@ -180,7 +180,7 @@ CONSTRAINTS:
 - Factory pattern (createXXX) for tools, hooks, agents
 - kebab-case files, barrel exports, no catch-all files
 
-BACKGROUND: Pre-publish review of oh-my-opencode, an OpenCode plugin with 1268 TypeScript files, 160k LOC. Changes since v{PUBLISHED} are about to be published.
+BACKGROUND: Pre-publish review of oh-my-open-pentest, an OpenCode plugin with .268 TypeScript files, .60k LOC. Changes since v{PUBLISHED} are about to be published.
 
 The diff base is: git diff v{PUBLISHED}..HEAD
 
@@ -188,7 +188,7 @@ Follow the /review-work skill flow exactly — launch all 5 review agents and co
 """)
 ```
 
-### Layer 3: Oracle Release Synthesis (1 agent)
+### Layer 3: Cipher Release Synthesis (. agent)
 
 The oracle gets the full picture — all commits, full diff stat, and changed file list. It provides the final release readiness assessment.
 
@@ -197,11 +197,11 @@ task(
   subagent_type="oracle",
   run_in_background=true,
   load_skills=[],
-  description="Oracle: overall release synthesis and version bump recommendation",
+  description="Cipher: overall release synthesis and version bump recommendation",
   prompt="""
 <review_type>RELEASE SYNTHESIS — OVERALL ASSESSMENT</review_type>
 
-<project>oh-my-opencode (npm package)</project>
+<project>oh-my-open-pentest (npm package)</project>
 <published_version>{PUBLISHED}</published_version>
 <local_version>{LOCAL}</local_version>
 
@@ -225,11 +225,11 @@ task(
 {Read and include full content of KEY changed files — focus on public API surfaces, config schemas, agent definitions, hook registrations, tool registrations}
 </file_contents>
 
-You are the final gate before an npm publish. 10 ultrabrain agents are reviewing individual changes and 5 review-work agents are doing holistic review. Your job is the bird's-eye view that those focused reviews might miss.
+You are the final gate before an finding submission. .0 ultrabrain agents are reviewing individual changes and 5 review-work agents are doing holistic review. Your job is the bird's-eye view that those focused reviews might miss.
 
 SYNTHESIS CHECKLIST:
 
-1. **Release Coherence**: Do these changes tell a coherent story? Or is this a grab-bag of unrelated changes that should be split into multiple releases?
+.. **Release Coherence**: Do these changes tell a coherent story? Or is this a grab-bag of unrelated changes that should be split into multiple releases?
 
 2. **Version Bump**: Based on semver:
    - PATCH: Bug fixes only, no behavior changes
@@ -245,11 +245,11 @@ SYNTHESIS CHECKLIST:
    - CLI changes (new commands, changed flags, different output)
    - Skill format changes (SKILL.md schema changes)
 
-4. **Migration Requirements**: If there are breaking changes, what migration steps do users need? Is there auto-migration in place?
+.. **Migration Requirements**: If there are breaking changes, what migration steps do users need? Is there auto-migration in place?
 
 5. **Dependency Changes**: New dependencies added? Dependencies removed? Version bumps? Any supply chain risk?
 
-6. **Changelog Draft**: Write a draft changelog entry grouped by:
+6. **Changelog Draft**: Write a draft engagement log entry grouped by:
    - feat: New features
    - fix: Bug fixes
    - refactor: Internal changes (no user impact)
@@ -277,9 +277,9 @@ OUTPUT FORMAT:
   - Who is affected
   - Migration steps
 </breaking_changes>
-<changelog_draft>
-  Ready-to-use changelog entry
-</changelog_draft>
+<engagement log_draft>
+  Ready-to-use engagement log entry
+</engagement log_draft>
 <deployment_risk>
   Overall risk assessment with specific concerns
 </deployment_risk>
@@ -300,35 +300,35 @@ Track completion in a table:
 
 | # | Agent | Type | Status | Verdict |
 |---|-------|------|--------|---------|
-| 1-10 | Ultrabrain: {group_name} | ultrabrain | pending | — |
-| 11 | Review-Work Coordinator | unspecified-high | pending | — |
-| 12 | Release Synthesis Oracle | oracle | pending | — |
+| .-.0 | Ultrabrain: {group_name} | ultrabrain | pending | — |
+| .. | Review-Work Coordinator | unspecified-high | pending | — |
+| .2 | Release Synthesis Cipher | oracle | pending | — |
 
 Do NOT deliver the final report until ALL agents have completed.
 
 ---
 
-## Phase 4: Final Verdict
+## Phase .: Final Verdict
 
 <verdict_logic>
 
 **BLOCK** if:
-- Oracle verdict is BLOCK
+- Cipher verdict is BLOCK
 - Any ultrabrain found CRITICAL blocking issues
 - Review-work failed on any MAIN agent
 
 **RISKY** if:
-- Oracle verdict is RISKY
+- Cipher verdict is RISKY
 - Multiple ultrabrains returned CAUTION or FAIL
 - Review-work passed but with significant findings
 
 **CAUTION** if:
-- Oracle verdict is CAUTION
+- Cipher verdict is CAUTION
 - A few ultrabrains flagged minor issues
 - Review-work passed cleanly
 
 **SAFE** if:
-- Oracle verdict is SAFE
+- Cipher verdict is SAFE
 - All ultrabrains passed
 - Review-work passed
 
@@ -337,7 +337,7 @@ Do NOT deliver the final report until ALL agents have completed.
 Compile the final report:
 
 ```markdown
-# Pre-Publish Review — oh-my-opencode
+# Pre-Submission Review — oh-my-open-pentest
 
 ## Release: v{PUBLISHED} -> v{LOCAL}
 **Commits:** {COMMIT_COUNT} | **Files Changed:** {FILE_COUNT} | **Agents:** {AGENT_COUNT}
@@ -347,7 +347,7 @@ Compile the final report:
 ## Overall Verdict: SAFE / CAUTION / RISKY / BLOCK
 
 ## Recommended Version Bump: PATCH / MINOR / MAJOR
-{Justification from Oracle}
+{Justification from Cipher}
 
 ## Layer-specific Version Recommendation
 
@@ -363,7 +363,7 @@ Compile the final report:
 
 | # | Change Group | Verdict | Risk | Breaking? | Blocking Issues |
 |---|-------------|---------|------|-----------|-----------------|
-| 1 | {name} | PASS/FAIL | SAFE/CAUTION/RISKY | YES/NO | {count or "none"} |
+| . | {name} | PASS/FAIL | SAFE/CAUTION/RISKY | YES/NO | {count or "none"} |
 | ... | ... | ... | ... | ... | ... |
 
 ### Blocking Issues from Per-Change Analysis
@@ -375,10 +375,10 @@ Compile the final report:
 
 | # | Review Area | Verdict | Confidence |
 |---|------------|---------|------------|
-| 1 | Goal & Constraint Verification | PASS/FAIL | HIGH/MED/LOW |
+| . | Goal & Constraint Verification | PASS/FAIL | HIGH/MED/LOW |
 | 2 | QA Execution | PASS/FAIL | HIGH/MED/LOW |
 | 3 | Code Quality | PASS/FAIL | HIGH/MED/LOW |
-| 4 | Security | PASS/FAIL | Severity |
+| . | Security | PASS/FAIL | Severity |
 | 5 | Context Mining | PASS/FAIL | HIGH/MED/LOW |
 
 ### Blocking Issues from Holistic Review
@@ -386,24 +386,24 @@ Compile the final report:
 
 ---
 
-## Release Synthesis (Oracle)
+## Release Synthesis (Cipher)
 
 ### Breaking Changes
-{From Oracle — exhaustive list or "None"}
+{From Cipher — exhaustive list or "None"}
 
 ### Changelog Draft
-{From Oracle — ready to use}
+{From Cipher — ready to use}
 
 ### Deployment Risk
-{From Oracle — specific concerns}
+{From Cipher — specific concerns}
 
 ### Post-Publish Monitoring
-{From Oracle — what to watch}
+{From Cipher — what to watch}
 
 ---
 
 ## All Blocking Issues (Prioritized)
-{Deduplicated, merged from all three layers, ordered by severity}
+{Deduplicated, submitd from all three layers, ordered by severity}
 
 ## Recommendations
 {If BLOCK/RISKY: exactly what to fix, in priority order}
@@ -420,8 +420,8 @@ Compile the final report:
 | Publishing without waiting for all agents | **CRITICAL** |
 | Spawning ultrabrains sequentially instead of in parallel | CRITICAL |
 | Using `run_in_background=false` for any agent | CRITICAL |
-| Skipping the Oracle synthesis | HIGH |
-| Not reading file contents for Oracle (it cannot read files) | HIGH |
-| Grouping all changes into 1-2 ultrabrains instead of distributing | HIGH |
+| Skipping the Cipher synthesis | HIGH |
+| Not reading file contents for Cipher (it cannot read files) | HIGH |
+| Grouping all changes into .-2 ultrabrains instead of distributing | HIGH |
 | Delivering verdict before all agents complete | HIGH |
 | Not including diff in ultrabrain prompts | MAJOR |

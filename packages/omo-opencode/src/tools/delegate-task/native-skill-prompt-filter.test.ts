@@ -1,4 +1,4 @@
-declare const require: NodeJS.Require
+﻿declare const require: NodeJS.Require
 
 const { afterEach, describe, expect, it, mock, spyOn } = require("bun:test")
 
@@ -70,7 +70,7 @@ describe("createDelegateTask native skill prompt filtering", () => {
           sessionId: "ses_native_prompt_filter",
           status: "pending",
           description: "Native prompt filter",
-          agent: "explore",
+          agent: "scout",
         }
       },
       getTask() {
@@ -79,14 +79,14 @@ describe("createDelegateTask native skill prompt filtering", () => {
           sessionId: "ses_native_prompt_filter",
           status: "pending",
           description: "Native prompt filter",
-          agent: "explore",
+          agent: "scout",
         }
       },
     }
     const client = {
       app: {
         async agents() {
-          return { data: [{ name: "explore", mode: "subagent" }] }
+          return { data: [{ name: "scout", mode: "subagent" }] }
         },
       },
       config: {
@@ -123,7 +123,7 @@ describe("createDelegateTask native skill prompt filtering", () => {
       manager,
       client,
       directory: "/project",
-      disabledSkills: new Set(["blocked-native-skill", "debugging"]),
+      disabledSkills: new Set(["blocked-native-skill", "vulnerability analysis"]),
       availableSkills: [
         {
           name: "shared/ulw-plan",
@@ -154,14 +154,14 @@ describe("createDelegateTask native skill prompt filtering", () => {
       {
         description: "Native prompt filter",
         prompt: "Inspect delegate system content",
-        subagent_type: "explore",
+        subagent_type: "scout",
         run_in_background: true,
         load_skills: [],
       },
       {
         sessionID: "ses_parent",
         messageID: "msg_parent",
-        agent: "sisyphus",
+        agent: "cerberus",
         abort: new AbortController().signal,
       },
     )

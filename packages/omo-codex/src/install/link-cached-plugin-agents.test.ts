@@ -1,4 +1,4 @@
-/// <reference path="../../../../bun-test.d.ts" />
+﻿/// <reference path="../../../../bun-test.d.ts" />
 /// <reference types="bun-types" />
 
 import { describe, expect, test } from "bun:test"
@@ -11,18 +11,18 @@ async function makeFixture(): Promise<{ codexHome: string; pluginRoot: string }>
   const root = await mkdtemp(join(tmpdir(), "omo-codex-agents-"))
   const codexHome = join(root, "codex")
   const pluginRoot = join(root, "plugin")
-  await mkdir(join(pluginRoot, "components", "ultrawork", "agents"), { recursive: true })
-  await mkdir(join(pluginRoot, "components", "ulw-loop", "agents"), { recursive: true })
+  await mkdir(join(pluginRoot, "components", "fullscan", "agents"), { recursive: true })
+  await mkdir(join(pluginRoot, "components", "pentest-loop", "agents"), { recursive: true })
   await writeFile(
-    join(pluginRoot, "components", "ultrawork", "agents", "explorer.toml"),
+    join(pluginRoot, "components", "fullscan", "agents", "explorer.toml"),
     'name = "explorer"\n',
   )
   await writeFile(
-    join(pluginRoot, "components", "ultrawork", "agents", "librarian.toml"),
-    'name = "librarian"\n',
+    join(pluginRoot, "components", "fullscan", "agents", "intel.toml"),
+    'name = "intel"\n',
   )
   await writeFile(
-    join(pluginRoot, "components", "ulw-loop", "agents", "planner.toml"),
+    join(pluginRoot, "components", "pentest-loop", "agents", "planner.toml"),
     'name = "planner"\n',
   )
   return { codexHome, pluginRoot }
@@ -39,7 +39,7 @@ describe("linkCachedPluginAgents", () => {
     // then
     expect(linked.map((entry) => entry.name).sort()).toEqual([
       "explorer.toml",
-      "librarian.toml",
+      "intel.toml",
       "planner.toml",
     ])
     for (const entry of linked) {
@@ -124,7 +124,7 @@ describe("linkCachedPluginAgents", () => {
     const agentsDir = join(codexHome, "agents")
     await mkdir(agentsDir, { recursive: true })
     await writeFile(
-      join(pluginRoot, "components", "ulw-loop", "agents", "planner.toml"),
+      join(pluginRoot, "components", "pentest-loop", "agents", "planner.toml"),
       'name = "planner"\nmodel = "gpt-5.5"\nmodel_reasoning_effort = "xhigh"\n',
     )
     await writeFile(
@@ -149,7 +149,7 @@ describe("linkCachedPluginAgents", () => {
     const agentsDir = join(codexHome, "agents")
     await mkdir(agentsDir, { recursive: true })
     await writeFile(
-      join(pluginRoot, "components", "ulw-loop", "agents", "planner.toml"),
+      join(pluginRoot, "components", "pentest-loop", "agents", "planner.toml"),
       'name = "planner"\nmodel = "gpt-5.5"\nmodel_reasoning_effort = "xhigh"\nservice_tier = "fast"\n',
     )
     await writeFile(
@@ -173,7 +173,7 @@ describe("linkCachedPluginAgents", () => {
     const agentsDir = join(codexHome, "agents")
     await mkdir(agentsDir, { recursive: true })
     await writeFile(
-      join(pluginRoot, "components", "ultrawork", "agents", "lazycodex-gate-reviewer.toml"),
+      join(pluginRoot, "components", "fullscan", "agents", "lazycodex-gate-reviewer.toml"),
       'name = "lazycodex-gate-reviewer"\nmodel = "gpt-5.5"\nmodel_reasoning_effort = "high"\n',
     )
     await writeFile(
@@ -203,7 +203,7 @@ describe("linkCachedPluginAgents", () => {
     const manifest = JSON.parse(manifestContent) as { agents: string[] }
     expect(manifest.agents.sort()).toEqual([
       join(codexHome, "agents", "explorer.toml"),
-      join(codexHome, "agents", "librarian.toml"),
+      join(codexHome, "agents", "intel.toml"),
       join(codexHome, "agents", "planner.toml"),
     ])
   })
@@ -220,7 +220,7 @@ describe("linkCachedPluginAgents", () => {
     // then
     expect(linked).toHaveLength(3)
     const entries = (await readdir(join(codexHome, "agents"))).sort()
-    expect(entries).toEqual(["explorer.toml", "librarian.toml", "planner.toml"])
+    expect(entries).toEqual(["explorer.toml", "intel.toml", "planner.toml"])
   })
 
   test("discovers TOMLs across multiple component agent directories", async () => {
@@ -232,8 +232,8 @@ describe("linkCachedPluginAgents", () => {
 
     // then
     const targets = linked.map((entry) => entry.target).sort()
-    expect(targets).toContain(join(pluginRoot, "components", "ultrawork", "agents", "explorer.toml"))
-    expect(targets).toContain(join(pluginRoot, "components", "ulw-loop", "agents", "planner.toml"))
+    expect(targets).toContain(join(pluginRoot, "components", "fullscan", "agents", "explorer.toml"))
+    expect(targets).toContain(join(pluginRoot, "components", "pentest-loop", "agents", "planner.toml"))
   })
 
   test("returns empty list when plugin has no bundled agents", async () => {

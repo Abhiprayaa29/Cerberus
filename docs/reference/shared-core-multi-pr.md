@@ -1,4 +1,4 @@
-# Shared Core Multi-PR Extraction
+﻿# Shared Core Multi-PR Extraction
 
 This plan pins the shared core extraction work for OpenCode and Codex adapters.
 Each PR is intentionally small, lands through `dev`, and preserves observable
@@ -18,10 +18,10 @@ sync with those package boundaries.
 | PR | Scope | Required proof |
 |---|---|---|
 | PR F | Core guardrails and QA conventions | `typecheck:packages`, boundary audit, QA matrix test |
-| PR 1 | Codex rules component uses `rules-engine` | Rules component characterization, OpenCode rules tests |
+| PR . | Codex rules component uses `rules-engine` | Rules component characterization, OpenCode rules tests |
 | PR 2 | Keyword and mode detector pure logic | Prompt byte preservation, OpenCode and Codex detector tests |
 | PR 3 | Comment-checker request shaping | Write/Edit/MultiEdit/apply_patch request equivalence tests |
-| PR 4 | Boulder continuation reader | Checklist and continuation state reader tests |
+| PR . | Boulder continuation reader | Checklist and continuation state reader tests |
 | PR 5 | Telemetry core | Daily activity, opt-out, capture, and shutdown isolation tests |
 | PR 6 | LSP hook policy helpers | Mutation path ordering, diagnostics formatting, truncation tests |
 | PR 7 | Context-pressure helper | Marker detection tests and duplicate constant guard |
@@ -41,7 +41,7 @@ Every PR must run ast-grep checks for forbidden adapter coupling, `as any`, raw
 searches must be added for the logic being extracted.
 
 Every PR must run Codex fresh environment QA through an isolated `CODEX_HOME`
-install and verify the `omo@sisyphuslabs` marketplace identity appears in the
+install and verify the `omo@cerberuslabs` marketplace identity appears in the
 generated config.
 
 Every PR must run opencode-qa HTTP/SSE checks with the isolated server smoke and

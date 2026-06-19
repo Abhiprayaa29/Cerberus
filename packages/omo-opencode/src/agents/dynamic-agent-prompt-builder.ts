@@ -1,4 +1,4 @@
-export type {
+﻿export type {
   AvailableAgent,
   AvailableTool,
   AvailableSkill,
@@ -11,10 +11,10 @@ export {
   buildAgentIdentitySection,
   buildKeyTriggersSection,
   buildToolSelectionTable,
-  buildExploreSection,
-  buildLibrarianSection,
+  buildScoutSection,
+  buildIntelSection,
   buildDelegationTable,
-  buildOracleSection,
+  buildCipherSection,
   buildFrontendGuidanceSection,
   buildNonClaudePlannerSection,
   buildParallelDelegationSection,

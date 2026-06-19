@@ -1,5 +1,5 @@
-import type { AgentConfig } from "@opencode-ai/sdk";
-import { createSisyphusJuniorAgentWithOverrides } from "../agents/sisyphus-junior";
+﻿import type { AgentConfig } from "@opencode-ai/sdk";
+import { createCerberusJuniorAgentWithOverrides } from "../agents/cerberus-junior";
 import type { OhMyOpenCodeConfig } from "../config";
 import {
   getAgentConfigKey,
@@ -13,7 +13,7 @@ import {
 } from "./agent-override-protection";
 import type { AgentSourceMap, AgentSources } from "./agent-config-types";
 import { buildPlanDemoteConfig } from "./plan-model-inheritance";
-import { buildPrometheusAgentConfig } from "./prometheus-agent-config-builder";
+import { buildTalosAgentConfig } from "./talos-agent-config-builder";
 
 type BuiltinAgentMap = Record<string, AgentConfig | undefined>;
 
@@ -105,17 +105,17 @@ async function createCoreAgentConfig(
 ): Promise<Record<string, unknown>> {
   const { builtinAgents, pluginConfig, sources, currentModel, useTaskSystem } = params;
   const agentConfig: Record<string, unknown> = {
-    sisyphus: builtinAgents.sisyphus,
+    cerberus: builtinAgents.cerberus,
   };
 
-  if (builtinAgents.hephaestus) {
-    agentConfig.hephaestus = builtinAgents.hephaestus;
+  if (builtinAgents.scylla) {
+    agentConfig.scylla = builtinAgents.scylla;
   }
 
-  if (pluginConfig.sisyphus_agent?.planner_enabled ?? true) {
-    agentConfig.prometheus = await buildPrometheusAgentConfig({
+  if (pluginConfig.cerberus_agent?.planner_enabled ?? true) {
+    agentConfig.talos = await buildTalosAgentConfig({
       configAgentPlan: sources.configAgent?.plan,
-      pluginPrometheusOverride: pluginConfig.agents?.prometheus as
+      pluginTalosOverride: pluginConfig.agents?.talos as
         | (Record<string, unknown> & { prompt_append?: string })
         | undefined,
       userCategories: pluginConfig.categories,
@@ -124,13 +124,13 @@ async function createCoreAgentConfig(
     });
   }
 
-  if (builtinAgents.atlas) {
-    agentConfig.atlas = builtinAgents.atlas;
+  if (builtinAgents.argus) {
+    agentConfig.argus = builtinAgents.argus;
   }
 
-  agentConfig["sisyphus-junior"] = createSisyphusJuniorAgentWithOverrides(
-    pluginConfig.agents?.["sisyphus-junior"],
-    (builtinAgents.atlas as { model?: string } | undefined)?.model,
+  agentConfig["cerberus-junior"] = createCerberusJuniorAgentWithOverrides(
+    pluginConfig.agents?.["cerberus-junior"],
+    (builtinAgents.argus as { model?: string } | undefined)?.model,
     useTaskSystem,
   );
 
@@ -148,20 +148,20 @@ function applyDefaultAgent(
     return;
   }
 
-  config.default_agent = getAgentDisplayName("sisyphus");
+  config.default_agent = getAgentDisplayName("cerberus");
 }
 
-async function assembleSisyphusEnabledConfig(params: AssembleAgentConfigParams): Promise<void> {
+async function assembleCerberusEnabledConfig(params: AssembleAgentConfigParams): Promise<void> {
   const configuredDefaultAgent = getConfiguredDefaultAgent(params.config);
   applyDefaultAgent(params.config, configuredDefaultAgent);
 
   const agentConfig = await createCoreAgentConfig(params);
   const { configAgent } = params.sources;
-  const plannerEnabled = params.pluginConfig.sisyphus_agent?.planner_enabled ?? true;
-  const replacePlan = params.pluginConfig.sisyphus_agent?.replace_plan ?? true;
+  const plannerEnabled = params.pluginConfig.cerberus_agent?.planner_enabled ?? true;
+  const replacePlan = params.pluginConfig.cerberus_agent?.replace_plan ?? true;
   const shouldDemotePlan = plannerEnabled && replacePlan;
 
-  if (params.pluginConfig.sisyphus_agent?.default_builder_enabled ?? false) {
+  if (params.pluginConfig.cerberus_agent?.default_builder_enabled ?? false) {
     const { name: _buildName, ...buildConfigWithoutName } = configAgent?.build ?? {};
     const migratedBuildConfig = migrateAgentConfig(buildConfigWithoutName);
     const override = params.pluginConfig.agents?.["OpenCode-Builder"];
@@ -175,7 +175,7 @@ async function assembleSisyphusEnabledConfig(params: AssembleAgentConfigParams):
   const migratedBuild = configAgent?.build ? migrateAgentConfig(configAgent.build) : {};
   const planDemoteConfig = shouldDemotePlan
     ? buildPlanDemoteConfig(
-        agentConfig.prometheus as Record<string, unknown> | undefined,
+        agentConfig.talos as Record<string, unknown> | undefined,
         params.pluginConfig.agents?.plan as Record<string, unknown> | undefined,
       )
     : undefined;
@@ -203,7 +203,7 @@ async function assembleSisyphusEnabledConfig(params: AssembleAgentConfigParams):
     ...agentConfig,
     ...Object.fromEntries(
       Object.entries(params.builtinAgents).filter(
-        ([key]) => key !== "sisyphus" && key !== "hephaestus" && key !== "atlas",
+        ([key]) => key !== "cerberus" && key !== "scylla" && key !== "argus",
       ),
     ),
     ...orderedCustomAgentSources(filteredSources, params.disabledAgentNames),
@@ -213,7 +213,7 @@ async function assembleSisyphusEnabledConfig(params: AssembleAgentConfigParams):
   };
 }
 
-function assembleSisyphusDisabledConfig(params: AssembleAgentConfigParams): void {
+function assembleCerberusDisabledConfig(params: AssembleAgentConfigParams): void {
   const protectedBuiltinAgentNames = createProtectedAgentNameSet(Object.keys(params.builtinAgents));
   const filteredSources = filterCustomAgentSources(params.sources, protectedBuiltinAgentNames);
   const filteredConfigAgents = params.sources.configAgent
@@ -231,12 +231,12 @@ function assembleSisyphusDisabledConfig(params: AssembleAgentConfigParams): void
 
 export async function assembleAgentConfig(params: AssembleAgentConfigParams): Promise<AssemblyResult> {
   const configuredDefaultAgent = getConfiguredDefaultAgent(params.config);
-  const isSisyphusEnabled = params.pluginConfig.sisyphus_agent?.disabled !== true;
+  const isCerberusEnabled = params.pluginConfig.cerberus_agent?.disabled !== true;
 
-  if (isSisyphusEnabled && params.builtinAgents.sisyphus) {
-    await assembleSisyphusEnabledConfig(params);
+  if (isCerberusEnabled && params.builtinAgents.cerberus) {
+    await assembleCerberusEnabledConfig(params);
   } else {
-    assembleSisyphusDisabledConfig(params);
+    assembleCerberusDisabledConfig(params);
   }
 
   return { configuredDefaultAgent };

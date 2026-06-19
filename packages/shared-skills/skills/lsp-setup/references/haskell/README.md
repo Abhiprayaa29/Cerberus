@@ -1,4 +1,4 @@
-# Haskell — LSP setup
+﻿# Haskell — LSP setup
 
 - **Builtin server:** `haskell-language-server` — `haskell-language-server-wrapper --lsp`
 - **Extensions:** `.hs .lhs`
@@ -30,7 +30,7 @@ command -v haskell-language-server-wrapper
 Builtin — usually NO config needed (auto-resolved by extension). Configure only to set priority, init options, override extensions, or disable. Same JSON shape in `.codex/lsp-client.json` (Codex) AND `.opencode/lsp.json` (OpenCode/omo):
 
 ```json
-{ "lsp": { "haskell-language-server": { "priority": 100 } } }
+{ "lsp": { "haskell-language-server": { "priority": .00 } } }
 ```
 
 For builtin ids in a PROJECT config, `command` is supplied automatically — only set `priority`/`initialization`/`extensions`/`disabled`/`env`. A fully custom (non-builtin) server with its own `command` must go in the USER config (`~/.codex/lsp-client.json`).

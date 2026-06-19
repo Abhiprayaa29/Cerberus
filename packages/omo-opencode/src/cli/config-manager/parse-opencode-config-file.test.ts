@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, test } from "bun:test"
+﻿import { afterEach, describe, expect, test } from "bun:test"
 import { mkdtempSync, rmSync, writeFileSync } from "node:fs"
 import { tmpdir } from "node:os"
 import { join } from "node:path"
@@ -19,14 +19,14 @@ describe("parseOpenCodeConfigFileWithError", () => {
     const directory = mkdtempSync(join(tmpdir(), "omo-parse-config-"))
     tempDirectories.push(directory)
     const filePath = join(directory, "opencode.json")
-    writeFileSync(filePath, '{"plugin": ["oh-my-openagent"]}\n', "utf-8")
+    writeFileSync(filePath, '{"plugin": ["oh-my-open-pentest"]}\n', "utf-8")
 
     // when
     const result = parseOpenCodeConfigFileWithError(filePath)
 
     // then
     expect(result).toEqual({
-      config: { plugin: ["oh-my-openagent"] },
+      config: { plugin: ["oh-my-open-pentest"] },
     })
   })
 

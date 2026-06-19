@@ -1,4 +1,4 @@
-import { describe, expect, test } from "bun:test"
+﻿import { describe, expect, test } from "bun:test"
 import { existsSync, readFileSync, statSync } from "node:fs"
 import { join } from "node:path"
 
@@ -65,7 +65,7 @@ describe("agent dev-environment scripts", () => {
       const body = read(join(AGENT_DIR, "cleanup.sh"))
 
       // then
-      expect(body).toContain("oh-my-openagent") // package-name repo-root guard
+      expect(body).toContain("oh-my-open-pentest") // package-name repo-root guard
       const dangerous = ["rm -rf /", "rm -rf ~", "rm -rf $HOME", "rm -rf src", "rm -rf packages"]
       for (const pattern of dangerous) {
         expect(body, `cleanup must never contain '${pattern}'`).not.toContain(pattern)

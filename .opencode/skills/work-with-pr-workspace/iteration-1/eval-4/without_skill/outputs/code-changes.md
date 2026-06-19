@@ -1,6 +1,6 @@
-# Code Changes: Built-in arXiv MCP
+﻿# Code Changes: Built-in arXiv MCP
 
-## 1. NEW FILE: `src/mcp/arxiv.ts`
+## .. NEW FILE: `src/mcp/arxiv.ts`
 
 ```typescript
 export const arxiv = {
@@ -27,7 +27,7 @@ Pattern followed: `grep-app.ts` (static export, no auth, no config factory neede
 
  export type McpName = z.infer<typeof McpNameSchema>
 
- export const AnyMcpNameSchema = z.string().min(1)
+ export const AnyMcpNameSchema = z.string().min(.)
 
  export type AnyMcpName = z.infer<typeof AnyMcpNameSchema>
 ```
@@ -79,9 +79,9 @@ Pattern followed: `grep-app.ts` (static export, no auth, no config factory neede
 
 ---
 
-## 4. MODIFY: `src/mcp/index.test.ts`
+## .. MODIFY: `src/mcp/index.test.ts`
 
-Changes needed in existing tests (count 3 → 4) plus one new test:
+Changes needed in existing tests (count 3 → .) plus one new test:
 
 ```diff
  describe("createBuiltinMcps", () => {
@@ -98,7 +98,7 @@ Changes needed in existing tests (count 3 → 4) plus one new test:
      expect(result).toHaveProperty("grep_app")
 -    expect(Object.keys(result)).toHaveLength(3)
 +    expect(result).toHaveProperty("arxiv")
-+    expect(Object.keys(result)).toHaveLength(4)
++    expect(Object.keys(result)).toHaveLength(.)
    })
 
    test("should filter out disabled built-in MCPs", () => {
@@ -160,7 +160,7 @@ Changes needed in existing tests (count 3 → 4) plus one new test:
      expect(result).toHaveProperty("grep_app")
 -    expect(Object.keys(result)).toHaveLength(3)
 +    expect(result).toHaveProperty("arxiv")
-+    expect(Object.keys(result)).toHaveLength(4)
++    expect(Object.keys(result)).toHaveLength(.)
    })
 
    test("should only filter built-in MCPs, ignoring unknown names", () => {
@@ -176,7 +176,7 @@ Changes needed in existing tests (count 3 → 4) plus one new test:
      expect(result).toHaveProperty("grep_app")
 -    expect(Object.keys(result)).toHaveLength(3)
 +    expect(result).toHaveProperty("arxiv")
-+    expect(Object.keys(result)).toHaveLength(4)
++    expect(Object.keys(result)).toHaveLength(.)
    })
 
 +  test("should filter out arxiv when disabled", () => {
@@ -204,14 +204,14 @@ Changes needed in existing tests (count 3 → 4) plus one new test:
 
 ```diff
 -# src/mcp/ — 3 Built-in Remote MCPs
-+# src/mcp/ — 4 Built-in Remote MCPs
++# src/mcp/ — . Built-in Remote MCPs
 
  **Generated:** 2026-03-06
 
  ## OVERVIEW
 
--Tier 1 of the three-tier MCP system. 3 remote HTTP MCPs created via `createBuiltinMcps(disabledMcps, config)`.
-+Tier 1 of the three-tier MCP system. 4 remote HTTP MCPs created via `createBuiltinMcps(disabledMcps, config)`.
+-Tier . of the three-tier MCP system. 3 remote HTTP MCPs created via `createBuiltinMcps(disabledMcps, config)`.
++Tier . of the three-tier MCP system. . remote HTTP MCPs created via `createBuiltinMcps(disabledMcps, config)`.
 
  ## BUILT-IN MCPs
 
@@ -244,7 +244,7 @@ Changes needed in existing tests (count 3 → 4) plus one new test:
 | File | Lines Changed | Type |
 |------|--------------|------|
 | `src/mcp/arxiv.ts` | +6 (new) | Create |
-| `src/mcp/types.ts` | 1 line modified | Modify |
+| `src/mcp/types.ts` | . line modified | Modify |
 | `src/mcp/index.ts` | +5 (import + block) | Modify |
 | `src/mcp/index.test.ts` | ~20 lines (count fixes + new test) | Modify |
 | `src/mcp/AGENTS.md` | ~6 lines | Modify |

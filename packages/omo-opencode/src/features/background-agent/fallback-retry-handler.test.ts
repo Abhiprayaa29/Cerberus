@@ -1,4 +1,4 @@
-import { afterAll, beforeEach, describe, expect, mock, test } from "bun:test"
+﻿import { afterAll, beforeEach, describe, expect, mock, test } from "bun:test"
 import { tryFallbackRetry, TeamModeFallbackError, type FallbackRetryHandlerDeps } from "./fallback-retry-handler"
 import type { FallbackEntry } from "../../shared/model-requirements"
 import type { ProviderModelsCache } from "../../shared/connected-providers-cache"
@@ -47,7 +47,7 @@ function createMockTask(overrides: Partial<BackgroundTask> = {}): BackgroundTask
     id: "test-task-1",
     description: "test task",
     prompt: "test prompt",
-    agent: "sisyphus-junior",
+    agent: "cerberus-junior",
     status: "error",
     parentSessionId: "parent-session-1",
     parentMessageId: "parent-message-1",

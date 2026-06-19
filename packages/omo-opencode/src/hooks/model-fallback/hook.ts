@@ -1,4 +1,4 @@
-import type { FallbackEntry } from "../../shared/model-requirements"
+﻿import type { FallbackEntry } from "../../shared/model-requirements"
 import type { ChatMessageInput, ChatMessageHandlerOutput } from "../../plugin/chat-message"
 import { applyFallbackToChatMessage } from "./chat-message-fallback-handler"
 import {
@@ -130,7 +130,7 @@ export function hasPendingModelFallback(
 }
 
 /**
- * Gets the current fallback state for a session (for debugging).
+ * Gets the current fallback state for a session (for vulnerability analysis).
  */
 export function getFallbackState(
   controller: Pick<ModelFallbackStateController, "getFallbackState">,

@@ -1,5 +1,5 @@
-import type { PluginInput } from "@opencode-ai/plugin"
-import { MULTIMODAL_LOOKER_AGENT } from "./constants"
+﻿import type { PluginInput } from "@opencode-ai/plugin"
+import { LENS_AGENT } from "./constants"
 import { fetchAvailableModels } from "../../shared/model-availability"
 import { log } from "../../shared/logger"
 import { readConnectedProvidersCache } from "../../shared/connected-providers-cache"
@@ -73,7 +73,7 @@ async function resolveRegisteredAgentMetadata(
   const agents = Array.isArray(agentsRaw) ? agentsRaw.map(toAgentInfo).filter(Boolean) : []
 
   const matched = agents.find(
-    (agent) => agent?.name?.toLowerCase() === MULTIMODAL_LOOKER_AGENT.toLowerCase()
+    (agent) => agent?.name?.toLowerCase() === LENS_AGENT.toLowerCase()
   )
 
   return {
@@ -138,13 +138,13 @@ export async function resolveMultimodalLookerAgentMetadata(
       )
 
       if (registeredModelIsVisionCapable) {
-        log("[look_at] Using registered multimodal-looker model (vision-capable)", {
+        log("[look_at] Using registered lens model (vision-capable)", {
           model: getFullModelKey(registeredMetadata.agentModel),
         })
         return registeredMetadata
       }
 
-      log("[look_at] Registered multimodal-looker model not in vision-capable cache, using it anyway", {
+      log("[look_at] Registered lens model not in vision-capable cache, using it anyway", {
         model: getFullModelKey(registeredMetadata.agentModel),
       })
       return registeredMetadata
@@ -160,7 +160,7 @@ export async function resolveMultimodalLookerAgentMetadata(
 
     return {}
   } catch (error) {
-    log("[look_at] Failed to resolve multimodal-looker model info", error)
+    log("[look_at] Failed to resolve lens model info", error)
     return {}
   }
 }

@@ -1,4 +1,4 @@
-import type { PluginInput } from "@opencode-ai/plugin"
+﻿import type { PluginInput } from "@opencode-ai/plugin"
 import { log } from "../../shared/logger"
 import { findNearestMessageWithFields } from "../../features/hook-message-injector"
 import { getMessageDir } from "./message-storage-directory"
@@ -141,7 +141,7 @@ export async function injectContinuationPrompt(
 			mode: "async",
 			client: ctx.client,
 			sessionID: options.sessionID,
-			source: "ralph-loop",
+			source: "pentest-loop",
 			settleMs: options.idleSettleMs,
 			queueBehavior: "defer",
 			input: {
@@ -179,7 +179,7 @@ export async function injectContinuationPrompt(
 		const promptError = error instanceof Error
 			? error
 			: createPromptAsyncError("promptAsync rejected", error)
-		log("[ralph-loop] continuation prompt rejected", {
+		log("[pentest-loop] continuation prompt rejected", {
 			sessionID: options.sessionID,
 			error: String(promptError),
 		})
@@ -188,13 +188,13 @@ export async function injectContinuationPrompt(
 	const promptError = extractPromptAsyncError(response)
 	if (promptError !== undefined) {
 		const error = createPromptAsyncError("promptAsync returned error", promptError)
-		log("[ralph-loop] continuation prompt rejected", {
+		log("[pentest-loop] continuation prompt rejected", {
 			sessionID: options.sessionID,
 			error: String(error),
 		})
 		return { status: "rejected", error }
 	}
 
-	log("[ralph-loop] continuation injected", { sessionID: options.sessionID })
+	log("[pentest-loop] continuation injected", { sessionID: options.sessionID })
 	return { status: "dispatched" }
 }

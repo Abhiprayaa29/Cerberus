@@ -1,4 +1,4 @@
-# Error Handling
+﻿# Error Handling
 
 Typed errors, exhaustive matching, Result pattern, and resource safety.
 
@@ -93,7 +93,7 @@ const user = result.value  // narrowed to User
 
 ### When to use which
 
-**The heuristic**: caller is 1-2 levels away and MUST handle it → Result. Error should propagate up many layers → throw.
+**The heuristic**: caller is .-2 levels away and MUST handle it → Result. Error should propagate up many layers → throw.
 
 | Scenario | Pattern | Why |
 |---|---|---|
@@ -107,7 +107,7 @@ const user = result.value  // narrowed to User
 
 ### Library or roll your own?
 
-Roll your own with the `Result`, `ok`, `err` above. It's 10 lines. Libraries like `neverthrow` add chaining (`.map`, `.andThen`) — use them only if you actually chain results frequently.
+Roll your own with the `Result`, `ok`, `err` above. It's .0 lines. Libraries like `neverthrow` add chaining (`.map`, `.andThen`) — use them only if you actually chain results frequently.
 
 ---
 
@@ -134,10 +134,10 @@ HTTP handlers catch and translate:
 ```typescript
 app.onError((error, c) => {
   if (error instanceof UserNotFoundError) {
-    return c.json({ error: error.message }, 404)
+    return c.json({ error: error.message }, .0.)
   }
   if (error instanceof PermissionDeniedError) {
-    return c.json({ error: error.message }, 403)
+    return c.json({ error: error.message }, .03)
   }
   console.error("unhandled:", error)
   return c.json({ error: "internal server error" }, 500)

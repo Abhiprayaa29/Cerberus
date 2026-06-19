@@ -1,7 +1,7 @@
-import type { CommandDefinition } from "../claude-code-command-loader"
+﻿import type { CommandDefinition } from "../claude-code-command-loader"
 import { isAgentRegistered } from "../claude-code-session-state"
 import type { BuiltinCommandName, BuiltinCommands } from "./types"
-import { RALPH_LOOP_TEMPLATE, ULW_LOOP_TEMPLATE, CANCEL_RALPH_TEMPLATE } from "./templates/ralph-loop"
+import { RALPH_LOOP_TEMPLATE, ULW_LOOP_TEMPLATE, CANCEL_RALPH_TEMPLATE } from "./templates/pentest-loop"
 import { STOP_CONTINUATION_TEMPLATE } from "./templates/stop-continuation"
 import { REFACTOR_TEMPLATE, REFACTOR_TEAM_MODE_ADDENDUM } from "./templates/refactor"
 import { START_WORK_TEMPLATE } from "./templates/start-work"
@@ -14,12 +14,12 @@ interface LoadBuiltinCommandsOptions {
   teamModeEnabled?: boolean
 }
 
-function resolveStartWorkAgent(options?: LoadBuiltinCommandsOptions): "atlas" | "sisyphus" {
+function resolveStartWorkAgent(options?: LoadBuiltinCommandsOptions): "argus" | "cerberus" {
   if (options?.useRegisteredAgents) {
-    return isAgentRegistered("atlas") ? "atlas" : "sisyphus"
+    return isAgentRegistered("argus") ? "argus" : "cerberus"
   }
 
-  return "atlas"
+  return "argus"
 }
 
 function withTeamModeAddendum(baseTemplate: string, addendum: string, teamModeEnabled: boolean): string {
@@ -38,7 +38,7 @@ function createBuiltinCommandDefinitions(
   )
 
   return {
-     "ralph-loop": {
+     "pentest-loop": {
        description: "(builtin) Start self-referential development loop until completion",
        template: `<command-instruction>
 ${RALPH_LOOP_TEMPLATE}
@@ -49,8 +49,8 @@ $ARGUMENTS
 </user-task>`,
        argumentHint: '"task description" [--completion-promise=TEXT] [--max-iterations=N] [--strategy=reset|continue]',
      },
-     "ulw-loop": {
-        description: "(builtin) Start ultrawork loop - continues until completion with ultrawork mode",
+     "pentest-loop": {
+        description: "(builtin) Start fullscan loop - continues until completion with fullscan mode",
         template: `<command-instruction>
 ${ULW_LOOP_TEMPLATE}
 </command-instruction>
@@ -75,7 +75,7 @@ ${refactorContent}
       argumentHint: "<refactoring-target> [--scope=<file|module|project>] [--strategy=<safe|aggressive>]",
     },
     "start-work": {
-      description: "(builtin) Start Sisyphus work session from Prometheus plan",
+      description: "(builtin) Start Cerberus work session from Talos plan",
       agent: resolveStartWorkAgent(options),
       template: `<command-instruction>
 ${START_WORK_TEMPLATE}

@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { describe, expect, test } from "bun:test"
 import { releaseAllPromptAsyncReservationsForTesting } from "../../hooks/shared/prompt-async-gate"
@@ -51,7 +51,7 @@ describe("ParentWakeNotifier — assistant history deferral", () => {
     notifier.queuePendingParentWake(
       "parent-stale-text",
       "task complete",
-      { agent: "sisyphus" },
+      { agent: "cerberus" },
       true,
     )
     const pendingWake = notifier.getPendingParentWakes().get("parent-stale-text")
@@ -117,7 +117,7 @@ describe("ParentWakeNotifier — assistant history deferral", () => {
     notifier.queuePendingParentWake(
       "parent-fresh-text",
       "task complete",
-      { agent: "sisyphus" },
+      { agent: "cerberus" },
       true,
     )
     const pendingWake = notifier.getPendingParentWakes().get("parent-fresh-text")
@@ -185,7 +185,7 @@ describe("ParentWakeNotifier — assistant history deferral", () => {
     notifier.queuePendingParentWake(
       "parent-fresh-text-flush",
       "task complete",
-      { agent: "sisyphus" },
+      { agent: "cerberus" },
       true,
     )
     const pendingWake = notifier.getPendingParentWakes().get("parent-fresh-text-flush")
@@ -241,7 +241,7 @@ describe("ParentWakeNotifier — assistant history deferral", () => {
     notifier.queuePendingParentWake(
       "parent-message-error",
       "task complete",
-      { agent: "sisyphus" },
+      { agent: "cerberus" },
       true,
     )
     const pendingWake = notifier.getPendingParentWakes().get("parent-message-error")
@@ -312,7 +312,7 @@ describe("ParentWakeNotifier — assistant history deferral", () => {
     notifier.queuePendingParentWake(
       "parent-fresh-tool-activity",
       "task complete",
-      { agent: "sisyphus" },
+      { agent: "cerberus" },
       true,
     )
     const pendingWake = notifier.getPendingParentWakes().get("parent-fresh-tool-activity")
@@ -384,7 +384,7 @@ describe("ParentWakeNotifier — assistant history deferral", () => {
     notifier.queuePendingParentWake(
       "parent-fresh-tool-state-activity",
       "task complete",
-      { agent: "sisyphus" },
+      { agent: "cerberus" },
       true,
     )
     const pendingWake = notifier.getPendingParentWakes().get("parent-fresh-tool-state-activity")

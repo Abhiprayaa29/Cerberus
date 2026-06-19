@@ -1,6 +1,6 @@
-import { readFile, readdir, stat } from "node:fs/promises"
+﻿import { readFile, readdir, stat } from "node:fs/promises"
 import { dirname, join, resolve, sep } from "node:path"
-import { isPlainRecord } from "@oh-my-opencode/utils"
+import { isPlainRecord } from "@oh-my-open-pentest/utils"
 
 export async function validateLazycodexPluginBundle(pluginRoot: string): Promise<void> {
   const issues: string[] = []

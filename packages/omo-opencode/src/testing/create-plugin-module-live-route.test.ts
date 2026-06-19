@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, mock } from "bun:test"
+﻿import { beforeEach, describe, expect, it, mock } from "bun:test"
 import { createPluginModule } from "./create-plugin-module"
 
 const mockInitConfigContext = mock(() => {})
@@ -249,9 +249,9 @@ describe("createPluginModule() — live-server-route wiring", () => {
       const mockInitLiveServerRoute = mock(() => {})
       mockDetectDuplicateOmoPlugin.mockReturnValue({
         detected: true,
-        pluginName: "oh-my-openagent",
-        duplicatePlugins: ["oh-my-openagent@latest"],
-        allPlugins: ["oh-my-openagent@latest"],
+        pluginName: "oh-my-open-pentest",
+        duplicatePlugins: ["oh-my-open-pentest@latest"],
+        allPlugins: ["oh-my-open-pentest@latest"],
       })
       mockGetDuplicateOmoPluginWarning.mockReturnValue("duplicate detected")
       const consoleWarn = mock(() => {})

@@ -1,18 +1,18 @@
-import { describe, expect, test } from "bun:test"
+﻿import { describe, expect, test } from "bun:test"
 import { readFileSync } from "node:fs"
-import { codexUltraworkPromptVariants, ultraworkPromptVariants } from "./index"
+import { codexUltraworkPromptVariants, fullscanPromptVariants } from "./index"
 
-describe("ultrawork prompt variants", () => {
-  test("#given package surface #when inspected #then OpenCode and Codex ultrawork variants are exported", () => {
+describe("fullscan prompt variants", () => {
+  test("#given package surface #when inspected #then OpenCode and Codex fullscan variants are exported", () => {
     // given
-    const codexPromptPath = "packages/prompts-core/prompts/ultrawork/codex.md"
+    const codexPromptPath = "packages/prompts-core/prompts/fullscan/codex.md"
 
     // when
-    const ultraworkVariantNames = Object.keys(ultraworkPromptVariants)
+    const fullscanVariantNames = Object.keys(fullscanPromptVariants)
     const codexVariant = codexUltraworkPromptVariants.codex
 
     // then
-    expect(ultraworkVariantNames).toEqual(["planner", "gpt", "gemini", "glm", "default"])
+    expect(fullscanVariantNames).toEqual(["planner", "gpt", "gemini", "glm", "default"])
     expect(codexVariant.kind).toBe("bundled")
     expect(codexVariant.filePath).toBe(codexPromptPath)
     expect(codexVariant.content).toBe(readFileSync(codexPromptPath, "utf8"))

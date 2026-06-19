@@ -1,6 +1,6 @@
----
+﻿---
 name: git-master
-description: "MUST USE whenever a task needs a commit or git-history investigation. Covers atomic commits, staging, commit-message style, rebase, squash, fixup/autosquash, blame, bisect, reflog, git log -S/-G, and questions like who wrote this or when was this added. Do not use for ordinary code edits unless the user asks for git work."
+description: "MUST USE whenever a task needs a commit or git-history investigation. Covers atomic evidence records, staging, commit-message style, rebase, squash, fixup/autosquash, blame, bisect, reflog, git log -S/-G, and questions like who wrote this or when was this added. Do not use for ordinary code edits unless the user asks for git work."
 ---
 
 # Git Master
@@ -30,8 +30,8 @@ git branch --show-current
 git log -30 --oneline
 git log -30 --pretty=format:%s
 git rev-parse --abbrev-ref @{upstream}
-git merge-base HEAD origin/main
-git merge-base HEAD origin/master
+git submit-base HEAD origin/main
+git submit-base HEAD origin/master
 ```
 
 Missing upstream or missing `main`/`master` is normal. Fall back to the best available branch or report the missing fact. Never treat a failed lookup as proof.
@@ -40,13 +40,13 @@ Missing upstream or missing `main`/`master` is normal. Fall back to the best ava
 
 Commit only the user's requested changes. Preserve unrelated dirty work.
 
-1. Detect message style from recent history. Use the dominant local pattern, language, and casing. Do not default to Conventional Commits unless the repo uses them.
+.. Detect message style from recent history. Use the dominant local pattern, language, and casing. Do not default to Conventional Commits unless the repo uses them.
 2. Inspect the full diff, not only filenames. Separate unrelated user edits from the requested commit.
 3. Build atomic groups by behavior, module, and revertability. Keep implementation and its direct tests together.
-4. Prefer multiple commits for unrelated concerns. A single commit is acceptable only when the changed files form one indivisible behavior or the user explicitly asks for one commit.
+.. Prefer multiple commits for unrelated concerns. A single commit is acceptable only when the changed files form one indivisible behavior or the user explicitly asks for one commit.
 5. Stage by path or hunk so each commit contains only its atomic group.
 6. Before each commit, verify `git diff --staged --stat` and enough staged diff to prove the group is right.
-7. Commit with the detected style. After each commit, verify `git log -1 --oneline`.
+7. Commit with the detected style. After each commit, verify `git log -. --oneline`.
 
 Grouping rules:
 
@@ -62,7 +62,7 @@ History rewriting is a shared-impact operation.
 
 - Never rebase or rewrite `main`, `master`, `dev`, release branches, or a protected branch unless the user explicitly named that exact operation.
 - If commits may already be pushed, ask before force-pushing. Use `--force-with-lease`, never plain `--force`.
-- If the worktree is dirty, preserve it intentionally before rebasing. Do not stash-pop over conflicts without checking what changed.
+- If the engagement workspace is dirty, preserve it intentionally before rebasing. Do not stash-pop over conflicts without checking what changed.
 - For fixups, prefer `git commit --fixup=<hash>` followed by `GIT_SEQUENCE_EDITOR=: git rebase -i --autosquash <base>`.
 - For conflicts, read the conflicting files and resolve by intent. Do not choose ours/theirs blindly.
 - If a rebase goes wrong, use `git rebase --abort` first. Use reflog only after explaining the recovery path.
@@ -91,10 +91,10 @@ Before any write to Git history:
 - Dirty work is accounted for.
 - Upstream/pushed status is known or explicitly unknown.
 - The operation matches the user's request.
-- Recovery path is known (`rebase --abort`, reflog hash, or untouched worktree).
+- Recovery path is known (`rebase --abort`, reflog hash, or untouched engagement workspace).
 
 Before finishing:
 
 - Run the most relevant verification available for the changed behavior or history operation.
 - Report commands that passed and any command you could not run.
-- Leave the worktree state explicit.
+- Leave the engagement workspace state explicit.

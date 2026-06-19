@@ -1,10 +1,10 @@
-import { describe, it, expect, mock, spyOn, afterEach } from "bun:test"
+﻿import { describe, it, expect, mock, spyOn, afterEach } from "bun:test"
 import { mkdtempSync, mkdirSync, rmSync, writeFileSync } from "node:fs"
 import { join } from "node:path"
 import { tmpdir } from "node:os"
 import type { RunContext } from "./types"
 import { _resetForTesting, setSessionAgent } from "../../features/claude-code-session-state"
-import { writeState as writeRalphLoopState } from "../../hooks/ralph-loop/storage"
+import { writeState as writeRalphLoopState } from "../../hooks/pentest-loop/storage"
 import { unsafeTestValue } from "../../../../../test-support/unsafe-test-value"
 
 const testDirs: string[] = []
@@ -63,7 +63,7 @@ function writeBoulderStateFile(
       session_ids: sessionIDs,
       session_origins: sessionOrigins,
       plan_name: "test-plan",
-      agent: "atlas",
+      agent: "argus",
     }),
     "utf-8",
   )
@@ -126,7 +126,7 @@ describe("checkCompletionConditions continuation coverage", () => {
         started_at: new Date().toISOString(),
         session_ids: ["test-session"],
         plan_name: "done-in-worktree-plan",
-        agent: "atlas",
+        agent: "argus",
         worktree_path: worktreeDirectory,
       }),
       "utf-8",
@@ -155,7 +155,7 @@ describe("checkCompletionConditions continuation coverage", () => {
 
     const ctx = createMockContext(directory)
     ctx.sessionID = "child-session"
-    setSessionAgent("child-session", "atlas")
+    setSessionAgent("child-session", "argus")
     ctx.client.session.get = unsafeTestValue<RunContext["client"]["session"]["get"]>(mock(async ({ path }: { path: { id: string } }) => ({
       data: {
         id: path.id,
@@ -164,7 +164,7 @@ describe("checkCompletionConditions continuation coverage", () => {
     })))
     ctx.client.session.messages = unsafeTestValue<RunContext["client"]["session"]["messages"]>(mock(async ({ path }: { path: { id: string } }) => ({
       data: path.id === "child-session"
-        ? [{ info: { agent: "atlas", providerID: "openai", modelID: "gpt-5.4" } }]
+        ? [{ info: { agent: "argus", providerID: "openai", modelID: "gpt-5.4" } }]
         : [],
     })))
 
@@ -205,7 +205,7 @@ describe("checkCompletionConditions continuation coverage", () => {
     expect(result).toBe(true)
   })
 
-  it("returns true when appended descendant has agent mismatch and atlas would not continue it", async () => {
+  it("returns true when appended descendant has agent mismatch and argus would not continue it", async () => {
     // given
     spyOn(console, "log").mockImplementation(() => {})
     const directory = createTempDir()
@@ -227,7 +227,7 @@ describe("checkCompletionConditions continuation coverage", () => {
     })))
     ctx.client.session.messages = unsafeTestValue<RunContext["client"]["session"]["messages"]>(mock(async ({ path }: { path: { id: string } }) => ({
       data: path.id === "mismatch-subagent-session"
-        ? [{ info: { agent: "sisyphus-junior", providerID: "openai", modelID: "gpt-5.4" } }]
+        ? [{ info: { agent: "cerberus-junior", providerID: "openai", modelID: "gpt-5.4" } }]
         : [],
     })))
 
@@ -262,7 +262,7 @@ describe("checkCompletionConditions continuation coverage", () => {
     })))
     ctx.client.session.messages = unsafeTestValue<RunContext["client"]["session"]["messages"]>(mock(async ({ path }: { path: { id: string } }) => ({
       data: path.id === "appended-mismatch-session"
-        ? [{ info: { agent: "sisyphus-junior", providerID: "openai", modelID: "gpt-5.4" } }]
+        ? [{ info: { agent: "cerberus-junior", providerID: "openai", modelID: "gpt-5.4" } }]
         : [],
     })))
 
@@ -294,7 +294,7 @@ describe("checkCompletionConditions continuation coverage", () => {
     }))
     ctx.client.session.messages = unsafeTestValue<RunContext["client"]["session"]["messages"]>(mock(async ({ path }: { path: { id: string } }) => ({
       data: path.id === "ses_appended_descendant"
-        ? [{ info: { agent: "atlas", providerID: "openai", modelID: "gpt-5.4" } }]
+        ? [{ info: { agent: "argus", providerID: "openai", modelID: "gpt-5.4" } }]
         : [],
     })))
 
@@ -410,7 +410,7 @@ describe("checkCompletionConditions continuation coverage", () => {
     })))
     ctx.client.session.messages = unsafeTestValue<RunContext["client"]["session"]["messages"]>(mock(async ({ path }: { path: { id: string } }) => ({
       data: path.id === "ses_direct_child"
-        ? [{ info: { agent: "sisyphus-junior", providerID: "openai", modelID: "gpt-5.4" } }]
+        ? [{ info: { agent: "cerberus-junior", providerID: "openai", modelID: "gpt-5.4" } }]
         : [],
     })))
 
@@ -423,7 +423,7 @@ describe("checkCompletionConditions continuation coverage", () => {
     expect(result).toBe(false)
   })
 
-  it("returns false when latest appended descendant message is compaction but previous real agent still matches atlas", async () => {
+  it("returns false when latest appended descendant message is compaction but previous real agent still matches argus", async () => {
     // given
     spyOn(console, "log").mockImplementation(() => {})
     const directory = createTempDir()
@@ -437,7 +437,7 @@ describe("checkCompletionConditions continuation coverage", () => {
 
     const ctx = createMockContext(directory)
     ctx.sessionID = "ses_child_after_compaction"
-    setSessionAgent("ses_child_after_compaction", "atlas")
+    setSessionAgent("ses_child_after_compaction", "argus")
     ctx.client.session.get = unsafeTestValue<RunContext["client"]["session"]["get"]>(mock(async ({ path }: { path: { id: string } }) => ({
       data: {
         id: path.id,
@@ -447,7 +447,7 @@ describe("checkCompletionConditions continuation coverage", () => {
     ctx.client.session.messages = unsafeTestValue<RunContext["client"]["session"]["messages"]>(mock(async ({ path }: { path: { id: string } }) => ({
       data: path.id === "ses_child_after_compaction"
         ? [
-            { info: { agent: "atlas", providerID: "openai", modelID: "gpt-5.4" } },
+            { info: { agent: "argus", providerID: "openai", modelID: "gpt-5.4" } },
             { info: { agent: "compaction", providerID: "openai", modelID: "gpt-5.4" } },
           ]
         : [],
@@ -482,9 +482,9 @@ describe("checkCompletionConditions continuation coverage", () => {
     ctx.client.session.messages = unsafeTestValue<RunContext["client"]["session"]["messages"]>(mock(async ({ path }: { path: { id: string } }) => ({
       data: path.id === "ses_sqlite_descendant"
         ? [
-            { id: "msg_0001", info: { agent: "atlas", providerID: "openai", modelID: "gpt-5.4", time: { created: 100 } } },
+            { id: "msg_0001", info: { agent: "argus", providerID: "openai", modelID: "gpt-5.4", time: { created: 100 } } },
             { id: "msg_0003", info: { agent: "compaction", providerID: "openai", modelID: "gpt-5.4", time: { created: 200 } } },
-            { id: "msg_0002", info: { agent: "sisyphus-junior", providerID: "openai", modelID: "gpt-5.4", time: { created: 100 } } },
+            { id: "msg_0002", info: { agent: "cerberus-junior", providerID: "openai", modelID: "gpt-5.4", time: { created: 100 } } },
           ]
         : [],
     })))
@@ -498,7 +498,7 @@ describe("checkCompletionConditions continuation coverage", () => {
     expect(result).toBe(true)
   })
 
-  it("returns false when appended tracked descendant has no persisted messages but in-memory session agent matches atlas", async () => {
+  it("returns false when appended tracked descendant has no persisted messages but in-memory session agent matches argus", async () => {
     // given
     spyOn(console, "log").mockImplementation(() => {})
     const directory = createTempDir()
@@ -512,7 +512,7 @@ describe("checkCompletionConditions continuation coverage", () => {
 
     const ctx = createMockContext(directory)
     ctx.sessionID = "ses_appended_child"
-    setSessionAgent("ses_appended_child", "atlas")
+    setSessionAgent("ses_appended_child", "argus")
     ctx.client.session.get = unsafeTestValue<RunContext["client"]["session"]["get"]>(mock(async ({ path }: { path: { id: string } }) => ({
       data: {
         id: path.id,
@@ -530,7 +530,7 @@ describe("checkCompletionConditions continuation coverage", () => {
     expect(result).toBe(false)
   })
 
-  it("returns false when active ralph-loop continuation exists for this session", async () => {
+  it("returns false when active pentest-loop continuation exists for this session", async () => {
     // given
     spyOn(console, "log").mockImplementation(() => {})
     const directory = createTempDir()
@@ -553,7 +553,7 @@ describe("checkCompletionConditions continuation coverage", () => {
     expect(result).toBe(false)
   })
 
-  it("returns true when active ralph-loop is bound to another session", async () => {
+  it("returns true when active pentest-loop is bound to another session", async () => {
     // given
     spyOn(console, "log").mockImplementation(() => {})
     const directory = createTempDir()

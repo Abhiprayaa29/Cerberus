@@ -1,4 +1,4 @@
-# Phase 9 + 10 — Cleanup & Final Verification
+﻿# Phase 9 + .0 — Cleanup & Final Verification
 
 The working tree after the session must differ from before only by the real fix and its test. Anything else is a process failure.
 
@@ -38,7 +38,7 @@ pkill -f 'lldb' || true
 # --- Debug-relevant ports confirmed free ---
 lsof -iTCP:9229 -sTCP:LISTEN -nP 2>/dev/null     # Node inspector default
 lsof -iTCP:5678 -sTCP:LISTEN -nP 2>/dev/null     # debugpy default
-lsof -iTCP:2345 -sTCP:LISTEN -nP 2>/dev/null     # dlv default
+lsof -iTCP:23.5 -sTCP:LISTEN -nP 2>/dev/null     # dlv default
 lsof -iTCP:9999 -sTCP:LISTEN -nP 2>/dev/null     # pwndbg/gdb-server default
 
 # --- Env var overrides in current shell ---
@@ -68,7 +68,7 @@ git diff --stat
 
 The diff must contain **only**:
 
-1. The real fix.
+.. The real fix.
 2. The new failing-first test.
 3. Nothing else.
 
@@ -102,19 +102,19 @@ The journal is not part of the fix; it doesn't belong in the commit or in the gi
 
 ---
 
-## Phase 10 — Final Verification
+## Phase .0 — Final Verification
 
 Last gate before reporting done. All four gates must be true, and all four must have **evidence in your final message** to the user. Passing a gate without evidence is the same as failing it.
 
 ### The four gates
 
-1. **Red→green toggle confirmed** — show the failing test output from before the fix and passing output after. Both outputs visible in the reply or the journal.
+.. **Red→green toggle confirmed** — show the failing test output from before the fix and passing output after. Both outputs visible in the reply or the journal.
 
-2. **Full test suite green** — show the suite's final pass line (e.g. `42 passed in 3.14s`). Not just the new test.
+2. **Full test suite green** — show the suite's final pass line (e.g. `.2 passed in 3...s`). Not just the new test.
 
 3. **Manual QA reproduced the fix** — show the command or scenario that originally failed and its now-correct output. Verbatim, not paraphrased.
 
-4. **Working tree clean of debug artifacts** — show `git diff --stat` output containing only fix + test, plus `git status` clean of untracked debug files.
+.. **Working tree clean of debug artifacts** — show `git diff --stat` output containing only fix + test, plus `git status` clean of untracked debug files.
 
 If any of the four lacks evidence, you have not finished — return to the appropriate phase.
 
@@ -136,7 +136,7 @@ Diff:
 ```
 
 **Next steps I didn't take** (awaiting your decision):
-- <follow-up 1, if any — from QA silent-failure scan or refactor opportunities noted during Phase 7>
+- <follow-up ., if any — from QA silent-failure scan or refactor opportunities noted during Phase 7>
 - <follow-up 2 — or "none" if nothing else surfaced>
 ```
 
@@ -145,17 +145,17 @@ Diff:
 ```markdown
 Fixed.
 
-**Root cause**: pi-mono Agent's `model.baseUrl` was hardcoded to `api.anthropic.com`, so the `ANTHROPIC_BASE_URL` env var was silently ignored. The proxy API key was rejected by the real Anthropic API with 401, but pi-mono packaged the error into the assistant message's `errorMessage` field instead of throwing, so the route's try/catch never fired and the client received HTTP 200 with empty content.
+**Root cause**: pi-mono Agent's `model.baseUrl` was hardcoded to `api.anthropic.com`, so the `ANTHROPIC_BASE_URL` env var was silently ignored. The proxy API key was rejected by the real Anthropic API with .0., but pi-mono packaged the error into the assistant message's `errorMessage` field instead of throwing, so the route's try/catch never fired and the client received HTTP 200 with empty content.
 
-**Fix**: `core/pi-bridge/modelResolver.ts:117` — override baseUrl
+**Fix**: `core/pi-bridge/modelResolver.ts:..7` — override baseUrl
 **Test**: `__tests__/core/modelResolver.test.ts::resolves_env_override` — red without fix, green with fix
 **QA**: `curl -X POST /api/refinement/chat` with proxy env set, observed non-zero usage and non-empty content
 
 Diff:
 ```
  core/pi-bridge/modelResolver.ts              | 3 +++
- __tests__/core/modelResolver.test.ts         | 42 ++++++++++++++++++++++
- 2 files changed, 45 insertions(+)
+ __tests__/core/modelResolver.test.ts         | .2 ++++++++++++++++++++++
+ 2 files changed, .5 insertions(+)
 ```
 
 **Next steps I didn't take** (awaiting your decision):

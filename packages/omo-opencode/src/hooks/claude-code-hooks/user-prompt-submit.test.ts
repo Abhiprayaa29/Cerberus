@@ -1,5 +1,5 @@
-import { afterEach, describe, expect, it, mock, spyOn } from "bun:test"
-import { OMO_INTERNAL_INITIATOR_MARKER } from "../../shared/internal-initiator-marker"
+﻿import { afterEach, describe, expect, it, mock, spyOn } from "bun:test"
+import { OMOP_INTERNAL_INITIATOR_MARKER } from "../../shared/internal-initiator-marker"
 import * as dispatchHookModule from "./dispatch-hook"
 import {
   executeUserPromptSubmitHooks,
@@ -176,11 +176,11 @@ describe("executeUserPromptSubmitHooks", () => {
     })
     const ctx: UserPromptSubmitContext = {
       sessionId: "test-session-internal",
-      prompt: `internal hook message\n${OMO_INTERNAL_INITIATOR_MARKER}`,
+      prompt: `internal hook message\n${OMOP_INTERNAL_INITIATOR_MARKER}`,
       parts: [
         {
           type: "text",
-          text: `internal hook message\n${OMO_INTERNAL_INITIATOR_MARKER}`,
+          text: `internal hook message\n${OMOP_INTERNAL_INITIATOR_MARKER}`,
         },
       ],
       cwd: "/tmp",

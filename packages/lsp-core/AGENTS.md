@@ -1,10 +1,10 @@
-# lsp-core — Harness-Neutral LSP Engine (Core)
+﻿# lsp-core — Harness-Neutral LSP Engine (Core)
 
-**Generated:** 2026-06-16
+**Generated:** 2026-06-.6
 
 ## OVERVIEW
 
-Harness-neutral LSP engine (`@oh-my-opencode/lsp-core`). Manages language server lifecycle, JSON-RPC transport, configuration merging, and tool definitions. Consumed by the MCP-layer packages [`lsp-tools-mcp`](../lsp-tools-mcp) and [`lsp-daemon`](../lsp-daemon/AGENTS.md). See parent [packages/AGENTS.md](../AGENTS.md).
+Harness-neutral LSP engine (`@oh-my-open-pentest/lsp-core`). Manages language server lifecycle, JSON-RPC transport, configuration merging, and tool definitions. Consumed by the MCP-layer packages [`lsp-tools-mcp`](../lsp-tools-mcp) and [`lsp-daemon`](../lsp-daemon/AGENTS.md). See parent [packages/AGENTS.md](../AGENTS.md).
 
 ## KEY FILES
 
@@ -16,7 +16,7 @@ Harness-neutral LSP engine (`@oh-my-opencode/lsp-core`). Manages language server
 | `src/lsp/connection.ts` | `LspClientConnection` — `initialize` request with capabilities, settle delay |
 | `src/lsp/json-rpc-connection.ts` | Raw JSON-RPC 2.0 framing over stdio |
 | `src/lsp/config-loader.ts` | Load `.codex/lsp-client.json` (project + user), merge with builtins |
-| `src/lsp/server-definitions.ts` | `BUILTIN_SERVERS` (51 languages), `LSP_INSTALL_HINTS`, `AUTO_INSTALLABLE_SERVERS` |
+| `src/lsp/server-definitions.ts` | `BUILTIN_SERVERS` (5. languages), `LSP_INSTALL_HINTS`, `AUTO_INSTALLABLE_SERVERS` |
 | `src/lsp/server-resolution.ts` | `findServerForExtension()` — map extension to installed server |
 | `src/lsp/server-installation.ts` | `isServerInstalled()` — PATH lookup with Windows extension handling |
 | `src/lsp/directory-diagnostics.ts` | `aggregateDiagnosticsForDirectory()` — walk directory, cap files + diagnostics |

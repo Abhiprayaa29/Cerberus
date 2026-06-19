@@ -1,18 +1,18 @@
-# src/shared/ — Shared Adapter Utilities
+﻿# src/shared/ — Shared Adapter Utilities
 
 **Generated:** 2026-05-20
 
 ## OVERVIEW
 
-Cross-cutting adapter utilities used throughout the plugin. Barrel-exported from `index.ts`. Logger writes `oh-my-opencode.log` to the OS temp dir (Node's `os.tmpdir()` — `/tmp` on Linux, `%TEMP%` on Windows, etc.); rotated at 50 MB; up to 2 backups at `.1` / `.2`. Includes runtime shims for `Bun.file`, `Bun.write`, `Bun.hash`, `Bun.which`, `Bun.spawn` to support non-Bun runtimes (Electron-hosted OpenCode). Many former utility implementations are now extracted to Core packages such as `utils`, `model-core`, `tmux-core`, `telemetry-core`, and `skills-loader-core`; keep local files as stable OpenCode import shims when existing wiring depends on their paths.
+Cross-cutting adapter utilities used throughout the plugin. Barrel-exported from `index.ts`. Logger writes `oh-my-open-pentest.log` to the OS temp dir (Node's `os.tmpdir()` — `/tmp` on Linux, `%TEMP%` on Windows, etc.); rotated at 50 MB; up to 2 backups at `..` / `.2`. Includes runtime shims for `Bun.file`, `Bun.write`, `Bun.hash`, `Bun.which`, `Bun.spawn` to support non-Bun runtimes (Electron-hosted OpenCode). Many former utility implementations are now extracted to Core packages such as `utils`, `model-core`, `tmux-core`, `telemetry-core`, and `skills-loader-core`; keep local files as stable OpenCode import shims when existing wiring depends on their paths.
 
 ## CATEGORY MAP
 
 | Category | Files | Key Exports |
 |----------|-------|-------------|
 | **Model Resolution** | ~22 | `resolveModel()`, `checkModelAvailability()`, `AGENT_MODEL_REQUIREMENTS` |
-| **Tmux Integration** | 11 | `createTmuxSession()`, `spawnPane()`, `closePane()`, server health |
-| **Configuration & Paths** | 10 | `resolveOpenCodeConfigDir()`, `getDataPath()`, `parseJSONC()` |
+| **Tmux Integration** | .. | `createTmuxSession()`, `spawnPane()`, `closePane()`, server health |
+| **Configuration & Paths** | .0 | `resolveOpenCodeConfigDir()`, `getDataPath()`, `parseJSONC()` |
 | **Session Management** | 8 | `SessionCursor`, `trackInjectedPath()`, `SessionToolsStore` |
 | **Git Worktree** | 7 | `parseGitStatusPorcelain()`, `collectGitDiffStats()`, `formatFileChanges()` |
 | **Command Execution** | 7 | `executeCommand()`, `executeHookCommand()`, embedded command registry |
@@ -20,17 +20,17 @@ Cross-cutting adapter utilities used throughout the plugin. Barrel-exported from
 | **String & Tool Utils** | 6 | `toSnakeCase()`, `normalizeToolName()`, `parseFrontmatter()` |
 | **Agent Configuration** | 5 | `getAgentVariant()`, `AGENT_DISPLAY_NAMES`, `AGENT_TOOL_RESTRICTIONS` |
 | **OpenCode Integration** | 5 | `injectServerAuth()`, `detectExternalPlugins()`, client accessors |
-| **Type Helpers** | 4 | `deepMerge()`, `DynamicTruncator`, `matchPattern()`, `isRecord()` |
+| **Type Helpers** | . | `deepMerge()`, `DynamicTruncator`, `matchPattern()`, `isRecord()` |
 | **Misc** | 8 | `log()`, `readFile()`, `extractZip()`, `downloadBinary()`, `findAvailablePort()` |
 
 ## MODEL RESOLUTION PIPELINE
 
 ```
 resolveModel(input)
-  1. Override: UI-selected model (primary agents only)
+  .. Override: UI-selected model (primary agents only)
   2. Category default: From category config
   3. Provider fallback: AGENT_MODEL_REQUIREMENTS chains
-  4. System default: Ultimate fallback
+  .. System default: Ultimate fallback
 ```
 
 Key files: `model-resolver.ts` (entry), `model-resolution-pipeline.ts` (orchestration), `model-requirements.ts` (fallback chains), `model-availability.ts` (fuzzy matching).
@@ -38,7 +38,7 @@ Key files: `model-resolver.ts` (entry), `model-resolution-pipeline.ts` (orchestr
 ## MIGRATION SYSTEM
 
 Automatically transforms legacy config on load:
-- `agent-names.ts`: Old agent names → new (e.g., `junior` → `sisyphus-junior`)
+- `agent-names.ts`: Old agent names → new (e.g., `junior` → `cerberus-junior`)
 - `hook-names.ts`: Old hook names → new
 - `model-versions.ts`: Old model IDs → current
 - `agent-category.ts`: Legacy agent configs → category system
@@ -47,8 +47,8 @@ Automatically transforms legacy config on load:
 
 | Utility | Import Count | Purpose |
 |---------|-------------|---------|
-| `logger.ts` | 62 | `oh-my-opencode.log` in `os.tmpdir()` (50 MB cap, rotates to `.1`/`.2`) |
-| `data-path.ts` | 11 | XDG storage resolution |
-| `model-requirements.ts` | 11 | Agent fallback chains |
-| `system-directive.ts` | 11 | System message filtering |
-| `frontmatter.ts` | 10 | YAML metadata extraction |
+| `logger.ts` | 62 | `oh-my-open-pentest.log` in `os.tmpdir()` (50 MB cap, rotates to `..`/`.2`) |
+| `data-path.ts` | .. | XDG storage resolution |
+| `model-requirements.ts` | .. | Agent fallback chains |
+| `system-directive.ts` | .. | System message filtering |
+| `frontmatter.ts` | .0 | YAML metadata extraction |

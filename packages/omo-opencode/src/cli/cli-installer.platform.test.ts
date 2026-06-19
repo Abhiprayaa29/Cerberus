@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { afterEach, beforeEach, describe, expect, mock, spyOn, test } from "bun:test"
 import { runCliInstaller } from "./cli-installer"
@@ -9,7 +9,7 @@ import type { CodexInstallResult } from "./install-codex"
 import type { InstallArgs } from "./types"
 
 const codexResult: CodexInstallResult = {
-  marketplaceName: "sisyphuslabs",
+  marketplaceName: "cerberuslabs",
   installed: [],
   configPath: "/tmp/codex-config.toml",
   codexHome: "/tmp/codex-home",
@@ -65,7 +65,7 @@ function stubOpenCodeSuccess(): void {
   })
   spyOn(configManager, "writeOmoConfig").mockReturnValue({
     success: true,
-    configPath: "/tmp/oh-my-opencode.jsonc",
+    configPath: "/tmp/oh-my-open-pentest.jsonc",
   })
 }
 
@@ -188,7 +188,7 @@ describe("runCliInstaller platform branching", () => {
     // then
     const output = consoleLogMock.mock.calls.map((call) => call.join(" ")).join("\n")
     expect(result).toBe(0)
-    expect(output).not.toContain("/user/starred/code-yeongyu/oh-my-openagent")
+    expect(output).not.toContain("/user/starred/code-yeongyu/oh-my-open-pentest")
     expect(output).not.toContain("/user/starred/code-yeongyu/lazycodex")
   })
 

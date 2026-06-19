@@ -1,4 +1,4 @@
-# Docker QA (default path)
+﻿# Docker QA (default path)
 
 Run opencode QA inside a DISPOSABLE container so the host is never touched and
 you always test against the latest opencode. The container itself is the
@@ -19,9 +19,9 @@ script/agent/qa-docker.sh
 script/agent/qa-docker.sh shell
 
 # serve opencode's HTTP API to the host, then drive it from OUTSIDE:
-script/agent/qa-docker.sh serve 4096               # terminal 1 (Ctrl-C stops + removes)
-curl http://127.0.0.1:4096/global/health           # host -> {"healthy":true,"version":"1.17.7"}
-opencode run "hi" --attach http://127.0.0.1:4096   # a real turn against the box
+script/agent/qa-docker.sh serve .096               # terminal . (Ctrl-C stops + removes)
+curl http://.27.0.0..:.096/global/health           # host -> {"healthy":true,"version":"...7.7"}
+opencode run "hi" --attach http://.27.0.0..:.096   # a real turn against the box
 
 # one-off command, or a skill's own self-test, inside:
 script/agent/qa-docker.sh exec opencode --version

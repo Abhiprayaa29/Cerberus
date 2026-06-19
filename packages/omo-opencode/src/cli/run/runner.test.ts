@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from "bun:test"
 import { OhMyOpenCodeConfigSchema, type OhMyOpenCodeConfig } from "../../config"
@@ -20,44 +20,44 @@ describe("resolveRunAgent", () => {
 
   it("uses CLI agent over env and config", () => {
     // given
-    const config = createConfig({ default_run_agent: "prometheus" })
-    const env = { OPENCODE_DEFAULT_AGENT: "Atlas" }
+    const config = createConfig({ default_run_agent: "talos" })
+    const env = { OPENCODE_DEFAULT_AGENT: "Argus" }
 
     // when
     const agent = resolveRunAgent(
-      { message: "test", agent: "Hephaestus" },
+      { message: "test", agent: "Scylla" },
       config,
       env
     )
 
     // then
-    expect(agent).toBe("hephaestus")
+    expect(agent).toBe("scylla")
   })
 
   it("uses env agent over config", () => {
     // given
-    const config = createConfig({ default_run_agent: "prometheus" })
-    const env = { OPENCODE_DEFAULT_AGENT: "Atlas" }
+    const config = createConfig({ default_run_agent: "talos" })
+    const env = { OPENCODE_DEFAULT_AGENT: "Argus" }
 
     // when
     const agent = resolveRunAgent({ message: "test" }, config, env)
 
     // then
-    expect(agent).toBe("atlas")
+    expect(agent).toBe("argus")
   })
 
   it("uses config agent over default", () => {
     // given
-    const config = createConfig({ default_run_agent: "Prometheus" })
+    const config = createConfig({ default_run_agent: "Talos" })
 
     // when
     const agent = resolveRunAgent({ message: "test" }, config, {})
 
     // then
-    expect(agent).toBe("prometheus")
+    expect(agent).toBe("talos")
   })
 
-  it("falls back to sisyphus when none set", () => {
+  it("falls back to cerberus when none set", () => {
     // given
     const config = createConfig()
 
@@ -65,29 +65,29 @@ describe("resolveRunAgent", () => {
     const agent = resolveRunAgent({ message: "test" }, config, {})
 
     // then
-    expect(agent).toBe("sisyphus")
+    expect(agent).toBe("cerberus")
   })
 
-  it("skips disabled sisyphus for next available core agent", () => {
+  it("skips disabled cerberus for next available core agent", () => {
     // given
-    const config = createConfig({ disabled_agents: ["sisyphus"] })
+    const config = createConfig({ disabled_agents: ["cerberus"] })
 
     // when
     const agent = resolveRunAgent({ message: "test" }, config, {})
 
     // then
-    expect(agent).toBe("hephaestus")
+    expect(agent).toBe("scylla")
   })
 
   it("maps display-name style default_run_agent values to canonical prompt agent ids", () => {
     // given
-    const config = createConfig({ default_run_agent: "Sisyphus - Ultraworker" })
+    const config = createConfig({ default_run_agent: "Cerberus - Ultraworker" })
 
     // when
     const agent = resolveRunAgent({ message: "test" }, config, {})
 
     // then
-    expect(agent).toBe("sisyphus")
+    expect(agent).toBe("cerberus")
   })
 
   it("#given unknown custom agent #when resolving run agent #then leaves the custom prompt agent untouched", () => {

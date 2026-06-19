@@ -1,11 +1,11 @@
-# Model Capabilities Maintenance
+﻿# Model Capabilities Maintenance
 
 This project treats model capability resolution as a layered system:
 
-1. runtime metadata from connected providers
+.. runtime metadata from connected providers
 2. `models.dev` bundled/runtime snapshot data
 3. explicit compatibility aliases
-4. heuristic fallback as the last resort
+.. heuristic fallback as the last resort
 
 ## Internal policy
 

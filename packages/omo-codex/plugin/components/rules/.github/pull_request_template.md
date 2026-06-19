@@ -1,6 +1,6 @@
-## Summary
+﻿## Summary
 
-<!-- Brief description, 1-3 bullets -->
+<!-- Brief description, .-3 bullets -->
 
 -
 

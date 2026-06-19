@@ -1,4 +1,4 @@
-// biome-ignore-all format: compact steering module must stay below the 240 pure-LOC budget
+﻿// biome-ignore-all format: compact steering module must stay below the 240 pure-LOC budget
 import { isUlwLoopDone } from "./goal-status.js";
 import type { UlwLoopScope } from "./paths.js";
 import { seedDefaultSuccessCriteria } from "./plan-crud.js";
@@ -230,7 +230,7 @@ function isProposal(value: unknown): value is UlwLoopSteeringProposal {
 }
 
 export function parseUlwLoopSteeringDirective(text: string): UlwLoopSteeringProposal | null {
-	const match = /(?:^|\s)(?:OMO_ULW_LOOP_STEER|omo\.ulw-loop\.steer|omo ulw-loop steer):\s*([\s\S]+)$/u.exec(text);
+	const match = /(?:^|\s)(?:OMO_ULW_LOOP_STEER|omo\.pentest-loop\.steer|omo pentest-loop steer):\s*([\s\S]+)$/u.exec(text);
 	if (match?.[1] === undefined) return null;
 	try {
 		const parsed: unknown = JSON.parse(match[1].trim());

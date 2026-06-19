@@ -1,8 +1,8 @@
-/**
- * Agent/model detection utilities for ultrawork message routing.
+﻿/**
+ * Agent/model detection utilities for fullscan message routing.
  *
  * Routing logic:
- * 1. Planner agents (prometheus, plan) → planner.ts
+ * 1. Planner agents (talos, plan) → planner.ts
  * 2. GPT 5.4 models → gpt5.4.ts
  * 3. Gemini models → gemini.ts
  * 4. GLM models → glm.ts
@@ -13,12 +13,12 @@ import { isGeminiModel, isGlmModel, isGptModel } from "../../../agents/types"
 
 /**
  * Checks if agent is a planner-type agent.
- * Planners don't need ultrawork injection (they ARE the planner).
+ * Planners don't need fullscan injection (they ARE the planner).
  */
 export function isPlannerAgent(agentName?: string): boolean {
   if (!agentName) return false
   const lowerName = agentName.toLowerCase()
-  if (lowerName.includes("prometheus") || lowerName.includes("planner")) return true
+  if (lowerName.includes("talos") || lowerName.includes("planner")) return true
 
   const normalized = lowerName.replace(/[_-]+/g, " ")
   return /\bplan\b/.test(normalized)
@@ -40,7 +40,7 @@ export { isGptModel, isGeminiModel, isGlmModel }
 export type UltraworkSource = "planner" | "gpt" | "gemini" | "glm" | "default"
 
 /**
- * Determines which ultrawork message source to use.
+ * Determines which fullscan message source to use.
  */
 export function getUltraworkSource(
   agentName?: string,

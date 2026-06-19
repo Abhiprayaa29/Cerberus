@@ -1,14 +1,14 @@
-# Terms of Service
+﻿# Terms of Service
 
-Last revised: April 11, 2026
+Last revised: April .., 2026
 
-These Terms of Service govern your use of oh-my-opencode and oh-my-openagent, including the published CLI package, the OpenCode plugin runtime, the repository, and related distribution materials.
+These Terms of Service govern your use of oh-my-open-pentest and oh-my-open-pentest, including the published CLI package, the OpenCode plugin runtime, the repository, and related distribution materials.
 
-For these Terms, "Application" means the published `oh-my-opencode` package and plugin. "Service" means the Application and related project distribution surfaces. "We" and "our" refer to the maintainer of oh-my-opencode. "You" refer to the individual or entity using the Service.
+For these Terms, "Application" means the published `oh-my-open-pentest` package and plugin. "Service" means the Application and related project distribution surfaces. "We" and "our" refer to the maintainer of oh-my-open-pentest. "You" refer to the individual or entity using the Service.
 
 By accessing or using the Service, you agree to these Terms. If you do not agree, do not use the Service.
 
-## 1. License
+## .. License
 
 Your use of the source code is governed by the repository license in [LICENSE.md](../../LICENSE.md). Your use of packaged releases, binaries, and hosted project surfaces is also subject to these Terms.
 
@@ -26,7 +26,7 @@ You must not use the Service to violate law, infringe rights, or interfere with 
 
 You retain ownership of your code, prompts, files, and other content. Except for the limited anonymous telemetry described in the Privacy Policy, the Application is intended to run locally and does not transmit your repository contents to us as part of ordinary use.
 
-## 4. Third-Party Services
+## .. Third-Party Services
 
 The Service depends on or interoperates with third-party tools and providers, including OpenCode, model providers, package registries, repository hosts, and analytics infrastructure. Their availability and terms are outside our control.
 
@@ -52,6 +52,6 @@ We may modify, suspend, or discontinue the Service at any time. You may stop usi
 
 We may update these Terms from time to time. Continued use of the Service after changes become effective constitutes acceptance of the updated Terms.
 
-## 10. Contact
+## .0. Contact
 
 Questions about these Terms should be raised through the project repository issue tracker or the maintainer contact channels published in the repository.

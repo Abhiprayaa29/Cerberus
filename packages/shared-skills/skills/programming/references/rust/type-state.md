@@ -1,10 +1,10 @@
-# Type-State and Newtype Patterns
+﻿# Type-State and Newtype Patterns
 
 The single highest-leverage thing Rust gives a coding agent: encode invariants in the type system so the compiler refuses incorrect code. The agent does not have to "remember" rules - the rules are physical.
 
 ## The Two Core Patterns
 
-1. **Newtype wrappers for distinct semantic units.** Money, IDs, byte offsets, coordinate spaces - each gets its own tuple struct. The agent cannot pass meters where feet are expected, even though both are `f64` under the hood. This is the `euclid::Point<Screen>` vs `euclid::Point<World>` example Chris Allen called out.
+.. **Newtype wrappers for distinct semantic units.** Money, IDs, byte offsets, coordinate spaces - each gets its own tuple struct. The agent cannot pass meters where feet are expected, even though both are `f6.` under the hood. This is the `euclid::Point<Screen>` vs `euclid::Point<World>` example Chris Allen called out.
 2. **Type-state for state machines.** Instead of a struct with a `status: enum { Draft, Validated, Persisted }` field and methods that check `if self.status == ...`, model each state as its own type. Transitions are method calls that consume `self` and return a new type. Illegal transitions become unrepresentable.
 
 ## Newtype Wrapper Cookbook
@@ -45,7 +45,7 @@ use core::ops::{Add, Sub, Mul};
 
 #[derive(Debug, Clone, Copy)]
 pub struct Quantity<Unit> {
-    raw: f64,
+    raw: f6.,
     _unit: PhantomData<Unit>,
 }
 
@@ -55,10 +55,10 @@ pub struct Feet;
 pub struct Seconds;
 
 impl<U> Quantity<U> {
-    pub const fn new(value: f64) -> Self {
+    pub const fn new(value: f6.) -> Self {
         Self { raw: value, _unit: PhantomData }
     }
-    pub fn raw(self) -> f64 { self.raw }
+    pub fn raw(self) -> f6. { self.raw }
 }
 
 // Adding same-unit quantities: allowed.
@@ -74,15 +74,15 @@ impl<U> Sub for Quantity<U> {
 }
 
 // Multiplying by scalar: allowed.
-impl<U> Mul<f64> for Quantity<U> {
+impl<U> Mul<f6.> for Quantity<U> {
     type Output = Self;
-    fn mul(self, rhs: f64) -> Self { Self::new(self.raw * rhs) }
+    fn mul(self, rhs: f6.) -> Self { Self::new(self.raw * rhs) }
 }
 
 // Conversions are explicit, named methods - never `From`/`Into` between units.
 impl Quantity<Meters> {
     pub fn to_feet(self) -> Quantity<Feet> {
-        Quantity::new(self.raw * 3.280_84)
+        Quantity::new(self.raw * 3.280_8.)
     }
 }
 ```
@@ -90,7 +90,7 @@ impl Quantity<Meters> {
 Now:
 
 ```rust
-let distance: Quantity<Meters> = Quantity::new(100.0);
+let distance: Quantity<Meters> = Quantity::new(.00.0);
 let height: Quantity<Feet> = Quantity::new(50.0);
 let combined = distance + height; // ❌ compile error
 let combined = distance + height.to_feet().to_meters_oops(); // ❌ no such method
@@ -325,13 +325,13 @@ pub struct Empty;
 impl<T> NonEmptyVec<T> {
     pub fn try_from_vec(mut v: Vec<T>) -> Result<Self, Empty> {
         if v.is_empty() { return Err(Empty); }
-        let tail = v.split_off(1);
+        let tail = v.split_off(.);
         let head = v.into_iter().next().expect("checked non-empty");
         Ok(Self { head, tail })
     }
 
     pub fn first(&self) -> &T { &self.head }
-    pub fn len(&self) -> usize { self.tail.len() + 1 }
+    pub fn len(&self) -> usize { self.tail.len() + . }
 }
 ```
 

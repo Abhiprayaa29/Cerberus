@@ -1,4 +1,4 @@
-import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+﻿import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
@@ -106,7 +106,7 @@ describe("codex rules post-compaction read directive", () => {
 		expect(output).toBe("");
 	});
 
-	it("#given bundled hephaestus rule dropped by compaction #when compact SessionStart recovers #then hephaestus body is re-injected in full alongside the directive", async () => {
+	it("#given bundled scylla rule dropped by compaction #when compact SessionStart recovers #then scylla body is re-injected in full alongside the directive", async () => {
 		// given
 		const { root, pluginData } = makeProject();
 		const env = { CODEX_RULES_ENABLED_SOURCES: "CONTEXT.md,plugin-bundled" };
@@ -125,7 +125,7 @@ describe("codex rules post-compaction read directive", () => {
 
 		// then
 		const context = readAdditionalContext(output);
-		expect(context).toContain("You are Hephaestus");
+		expect(context).toContain("You are Scylla");
 		expect(context).not.toContain("[Truncated. Full:");
 		expect(context).toContain("MUST READ");
 		expect(context).toContain("CONTEXT.md");

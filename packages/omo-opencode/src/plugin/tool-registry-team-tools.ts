@@ -1,10 +1,10 @@
-import type { ToolDefinition } from "@opencode-ai/plugin"
+﻿import type { ToolDefinition } from "@opencode-ai/plugin"
 import type { OhMyOpenCodeConfig } from "../config"
 import type { Managers } from "../create-managers"
 import type { PluginContext } from "./types"
 import type { ToolRegistryFactories } from "./tool-registry-factories"
 
-export function getSisyphusJuniorModelOverride(agentOverride?: { model?: string }): string | undefined {
+export function getCerberusJuniorModelOverride(agentOverride?: { model?: string }): string | undefined {
   return agentOverride?.model
 }
 
@@ -25,7 +25,7 @@ export function createTeamModeToolsRecord(args: {
       managers.tmuxSessionManager,
       {
         userCategories: pluginConfig.categories,
-        sisyphusJuniorModel: getSisyphusJuniorModelOverride(pluginConfig.agents?.["sisyphus-junior"]),
+        cerberusJuniorModel: getCerberusJuniorModelOverride(pluginConfig.agents?.["cerberus-junior"]),
         agentOverrides: pluginConfig.agents,
       },
     ),

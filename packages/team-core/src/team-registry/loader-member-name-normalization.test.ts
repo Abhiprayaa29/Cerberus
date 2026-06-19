@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { afterEach, describe, expect, test } from "bun:test"
 import { mkdir, rm, writeFile } from "node:fs/promises"
@@ -48,7 +48,7 @@ describe("loadTeamSpec member name normalization", () => {
     const fixturePaths = getFixturePaths(rootDirectory, "autoname")
     await writeJsonFile(fixturePaths.userConfigPath, {
       name: "autoname",
-      lead: { kind: "subagent_type", subagent_type: "sisyphus" },
+      lead: { kind: "subagent_type", subagent_type: "cerberus" },
       members: [
         { kind: "category", category: "quick", prompt: "Quick scout the workspace structure." },
         { kind: "category", category: "deep", prompt: "Deep dive the runtime setup." },
@@ -83,7 +83,7 @@ describe("loadTeamSpec member name normalization", () => {
       "caller-lead",
       TeamModeConfigSchema.parse({ base_dir: fixturePaths.userBaseDir }),
       fixturePaths.projectRoot,
-      { callerTeamLead: resolveCallerTeamLead("\u200BSisyphus - Ultraworker") },
+      { callerTeamLead: resolveCallerTeamLead("\u200BCerberus - Ultraworker") },
     )
 
     // then

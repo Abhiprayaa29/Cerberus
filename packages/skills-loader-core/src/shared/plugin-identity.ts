@@ -1,13 +1,13 @@
-import { createProductIdentity } from "@oh-my-opencode/utils"
+﻿import { createProductIdentity } from "@oh-my-open-pentest/utils"
 
 const PRODUCT_IDENTITY = createProductIdentity({
-  pluginName: "oh-my-openagent",
-  legacyPluginName: "oh-my-opencode",
-  publishedPackageName: "oh-my-opencode",
-  configBasename: "oh-my-openagent",
-  legacyConfigBasename: "oh-my-opencode",
-  logFileName: "oh-my-opencode.log",
-  cacheDirName: "oh-my-opencode",
+  pluginName: "oh-my-open-pentest",
+  legacyPluginName: "oh-my-open-pentest",
+  publishedPackageName: "oh-my-open-pentest",
+  configBasename: "oh-my-open-pentest",
+  legacyConfigBasename: "oh-my-open-pentest",
+  logFileName: "oh-my-open-pentest.log",
+  cacheDirName: "oh-my-open-pentest",
 })
 
 export const PLUGIN_NAME = PRODUCT_IDENTITY.pluginName

@@ -1,4 +1,4 @@
-import { isPlainRecord } from "./codex-cache-fs"
+﻿import { isPlainRecord } from "./codex-cache-fs"
 import { readdir, readFile, writeFile } from "node:fs/promises"
 import { join } from "node:path"
 
@@ -27,7 +27,7 @@ export function resolveLazyCodexPluginVersion(input: {
   readonly pluginName: string
   readonly distributionManifest?: DistributionManifest
 }): string {
-  if (input.marketplaceName === "sisyphuslabs" && input.pluginName === "omo" && input.distributionManifest !== undefined) {
+  if (input.marketplaceName === "cerberuslabs" && input.pluginName === "omo" && input.distributionManifest !== undefined) {
     return input.distributionManifest.version
   }
   return input.manifestVersion ?? "local"

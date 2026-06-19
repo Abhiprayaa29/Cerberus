@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+﻿import { describe, expect, it } from "vitest";
 import {
 	collectHookCommandsFromValue,
 	readJsonFile,
@@ -8,7 +8,7 @@ import {
 	requireScripts,
 } from "../../test-support/package-smoke-fixture.js";
 
-describe("codex ultrawork package metadata", () => {
+describe("codex fullscan package metadata", () => {
 	it("#given package metadata #when inspected #then hook ships as bundled CLI", () => {
 		// given
 		const packageJson = readPackageJson("package.json");
@@ -24,17 +24,17 @@ describe("codex ultrawork package metadata", () => {
 		// then
 		expect(packageJson.type).toBe("module");
 		expect(packageJson.packageManager).toBe("npm@11.12.1");
-		expect(packageJson.bin["omo-ultrawork"]).toBe("./dist/cli.js");
+		expect(packageJson.bin["omo-fullscan"]).toBe("./dist/cli.js");
 		expect(scripts["build"]).toBe(
 			"node scripts/sync-directive.mjs && node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\" && bun build src/cli.ts --target node --format esm --outfile dist/cli.js",
 		);
 		expect(scripts["test"]).toBe("vitest --run");
 		expect(packageFiles).toContain("dist");
 		expect(packageFiles).toContain("directive.md");
-		expect(packageFiles).not.toContain("hooks/ultrawork-detector.py");
+		expect(packageFiles).not.toContain("hooks/fullscan-detector.py");
 		expect(cliSource.startsWith("#!/usr/bin/env node")).toBe(true);
 		expect(hookCommands).toContain(`node "${pluginRoot}/dist/cli.js" hook user-prompt-submit`);
-		expect(hookCommands).not.toContainEqual(expect.stringMatching(/\bpython3?\b|ultrawork-detector\.py/));
+		expect(hookCommands).not.toContainEqual(expect.stringMatching(/\bpython3?\b|fullscan-detector\.py/));
 	});
 
 	it("#given explorer guidance #when inspected #then names the packaged code-search surfaces", () => {
@@ -68,12 +68,12 @@ describe("codex ultrawork package metadata", () => {
 		expect(guidance).toContain("--tmux-pane");
 	});
 
-	it("#given librarian guidance #when inspected #then names the packaged research MCP surfaces", () => {
+	it("#given intel guidance #when inspected #then names the packaged research MCP surfaces", () => {
 		// given
-		const librarian = readTextFile("agents/librarian.toml");
+		const intel = readTextFile("agents/intel.toml");
 
 		// when
-		const guidance = librarian.toLowerCase();
+		const guidance = intel.toLowerCase();
 
 		// then
 		expect(guidance).toContain("grep_app");

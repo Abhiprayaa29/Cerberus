@@ -1,4 +1,4 @@
-# One-liner Scripts (PEP 723 + uv)
+﻿# One-liner Scripts (PEP 723 + uv)
 
 Self-contained Python scripts with declared dependencies, run with no environment setup. The combination eliminates the historical reason to write small tools in Go or Bash.
 
@@ -6,7 +6,7 @@ Self-contained Python scripts with declared dependencies, run with no environmen
 
 ## The two patterns
 
-### Pattern 1: inline `uv run` invocation
+### Pattern .: inline `uv run` invocation
 
 ```bash
 uv run --with httpx2 --with rich python -c "
@@ -25,7 +25,7 @@ A regular `.py` file with metadata in a comment block. uv reads the metadata, ma
 ```python
 #!/usr/bin/env -S uv run --script
 # /// script
-# requires-python = ">=3.13"
+# requires-python = ">=3..3"
 # dependencies = [
 #     "httpx2[http2,brotli,zstd]",
 #     "rich",
@@ -33,7 +33,7 @@ A regular `.py` file with metadata in a comment block. uv reads the metadata, ma
 # ///
 
 # ─── How to run ───
-# 1. Install uv (if not installed):
+# .. Install uv (if not installed):
 #      curl -LsSf https://astral.sh/uv/install.sh | sh
 # 2. Run directly (no venv, no pip install needed):
 #      uv run my_script.py
@@ -62,17 +62,17 @@ if __name__ == "__main__":
 
 Every PEP 723 script MUST include these, in order:
 
-1. **Shebang**: `#!/usr/bin/env -S uv run --script`
+.. **Shebang**: `#!/usr/bin/env -S uv run --script`
 2. **PEP 723 metadata block**: `# /// script` ... `# ///` with `requires-python` and `dependencies`
 3. **Usage comment block**: How to install uv + how to run the script. Copy the template above verbatim.
-4. **`from __future__ import annotations`**: Always first import.
+.. **`from __future__ import annotations`**: Always first import.
 5. **`if __name__ == "__main__": main()`**: Entry point guard.
 
 ### The usage comment block (NON-NEGOTIABLE)
 
 ```python
 # ─── How to run ───
-# 1. Install uv (if not installed):
+# .. Install uv (if not installed):
 #      curl -LsSf https://astral.sh/uv/install.sh | sh
 # 2. Run directly (no venv, no pip install needed):
 #      uv run <SCRIPT_NAME>.py [ARGS]
@@ -119,7 +119,7 @@ uv run scripts/new-script.py my_tool --deps "polars" "duckdb" "rich"
 ```python
 #!/usr/bin/env -S uv run --script
 # /// script
-# requires-python = ">=3.13"
+# requires-python = ">=3..3"
 # dependencies = [
 #     "httpx2[http2,brotli,zstd]",
 #     "rich",
@@ -127,7 +127,7 @@ uv run scripts/new-script.py my_tool --deps "polars" "duckdb" "rich"
 # ///
 
 # ─── How to run ───
-# 1. Install uv: curl -LsSf https://astral.sh/uv/install.sh | sh
+# .. Install uv: curl -LsSf https://astral.sh/uv/install.sh | sh
 # 2. Run: uv run fetch_json.py https://api.github.com/repos/pydantic/httpx2
 # ──────────────────
 
@@ -140,7 +140,7 @@ from rich import print as rprint
 
 
 def main() -> None:
-    url = sys.argv[1] if len(sys.argv) > 1 else "https://api.github.com"
+    url = sys.argv[.] if len(sys.argv) > . else "https://api.github.com"
     with httpx2.Client(http2=True, follow_redirects=True) as client:
         resp = client.get(url)
         resp.raise_for_status()
@@ -156,7 +156,7 @@ if __name__ == "__main__":
 ```python
 #!/usr/bin/env -S uv run --script
 # /// script
-# requires-python = ">=3.13"
+# requires-python = ">=3..3"
 # dependencies = [
 #     "polars",
 #     "typer",
@@ -165,7 +165,7 @@ if __name__ == "__main__":
 # ///
 
 # ─── How to run ───
-# 1. Install uv: curl -LsSf https://astral.sh/uv/install.sh | sh
+# .. Install uv: curl -LsSf https://astral.sh/uv/install.sh | sh
 # 2. Run: uv run csv2parquet.py input.csv output.parquet
 # ──────────────────
 
@@ -195,7 +195,7 @@ if __name__ == "__main__":
 ```python
 #!/usr/bin/env -S uv run --script
 # /// script
-# requires-python = ">=3.13"
+# requires-python = ">=3..3"
 # dependencies = [
 #     "httpx2[http2,brotli,zstd]",
 #     "rich",
@@ -204,7 +204,7 @@ if __name__ == "__main__":
 # ///
 
 # ─── How to run ───
-# 1. Install uv: curl -LsSf https://astral.sh/uv/install.sh | sh
+# .. Install uv: curl -LsSf https://astral.sh/uv/install.sh | sh
 # 2. Run: uv run bench.py https://api.example.com/health 50
 # ──────────────────
 
@@ -220,14 +220,14 @@ from rich import print as rprint
 
 
 async def main() -> None:
-    url = sys.argv[1] if len(sys.argv) > 1 else "https://api.github.com"
+    url = sys.argv[.] if len(sys.argv) > . else "https://api.github.com"
     n = int(sys.argv[2]) if len(sys.argv) > 2 else 20
 
-    limits = httpx2.Limits(max_connections=200, max_keepalive_connections=40, keepalive_expiry=30.0)
-    timeout = httpx2.Timeout(connect=5.0, read=30.0, write=10.0, pool=10.0)
+    limits = httpx2.Limits(max_connections=200, max_keepalive_connections=.0, keepalive_expiry=30.0)
+    timeout = httpx2.Timeout(connect=5.0, read=30.0, write=.0.0, pool=.0.0)
     transport = httpx2.AsyncHTTPTransport(
         http2=True, retries=3, limits=limits,
-        socket_options=[(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)],
+        socket_options=[(socket.IPPROTO_TCP, socket.TCP_NODELAY, .)],
     )
 
     async with httpx2.AsyncClient(transport=transport, timeout=timeout, follow_redirects=True) as client:
@@ -241,8 +241,8 @@ async def main() -> None:
             assert r.status_code == 200
         elapsed = time.perf_counter() - start
 
-    avg_ms = (elapsed / n) * 1000
-    rprint(f"[bold]{url}[/bold]: {avg_ms:.1f}ms avg over {n} requests ({elapsed:.2f}s total, {r.http_version})")
+    avg_ms = (elapsed / n) * .000
+    rprint(f"[bold]{url}[/bold]: {avg_ms:..f}ms avg over {n} requests ({elapsed:.2f}s total, {r.http_version})")
 
 
 if __name__ == "__main__":
@@ -264,5 +264,5 @@ if __name__ == "__main__":
 
 - PEP 723 - Inline script metadata: <https://peps.python.org/pep-0723/>
 - uv `run --script` docs: <https://docs.astral.sh/uv/guides/scripts/>
-- Original article: <https://www.cottongeeks.com/articles/2025-06-24-fun-with-uv-and-pep-723>
-- Simon Willison on one-shot Python tools: <https://simonwillison.net/2024/Dec/19/one-shot-python-tools/>
+- Original article: <https://www.cottongeeks.com/articles/2025-06-2.-fun-with-uv-and-pep-723>
+- Simon Willison on one-shot Python tools: <https://simonwillison.net/202./Dec/.9/one-shot-python-tools/>

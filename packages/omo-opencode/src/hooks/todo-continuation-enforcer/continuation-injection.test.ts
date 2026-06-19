@@ -1,7 +1,7 @@
-import { afterEach, describe, expect, test } from "bun:test"
+﻿import { afterEach, describe, expect, test } from "bun:test"
 
 import { injectContinuation } from "./continuation-injection"
-import { OMO_INTERNAL_INITIATOR_MARKER } from "../../shared/internal-initiator-marker"
+import { OMOP_INTERNAL_INITIATOR_MARKER } from "../../shared/internal-initiator-marker"
 import {
   dispatchInternalPrompt,
   releaseAllPromptAsyncReservationsForTesting,
@@ -41,14 +41,14 @@ describe("injectContinuation", () => {
       ctx: ctx as never,
       sessionID: "ses_display_name_agent",
       resolvedInfo: {
-        agent: "Sisyphus - ultraworker",
+        agent: "Cerberus - fullscaner",
         model: { providerID: "anthropic", modelID: "claude-sonnet-4-20250514" },
       },
       sessionStateStore: sessionStateStore as never,
     })
 
     // then
-    expect(capturedAgent).toBe("Sisyphus - ultraworker")
+    expect(capturedAgent).toBe("Cerberus - fullscaner")
   })
 
   test("#given resolved agent name still carries a ZWSP sort prefix #when continuation is injected #then promptAsync receives the agent name without the ZWSP prefix", async () => {
@@ -79,14 +79,14 @@ describe("injectContinuation", () => {
       ctx: ctx as never,
       sessionID: "ses_zwsp_agent",
       resolvedInfo: {
-        agent: "\u200B\u200BSisyphus - ultraworker",
+        agent: "\u200B\u200BCerberus - fullscaner",
         model: { providerID: "anthropic", modelID: "claude-sonnet-4-20250514" },
       },
       sessionStateStore: sessionStateStore as never,
     })
 
     // then
-    expect(capturedAgent).toBe("Sisyphus - ultraworker")
+    expect(capturedAgent).toBe("Cerberus - fullscaner")
     expect(capturedAgent).not.toContain("\u200B")
   })
 
@@ -135,7 +135,7 @@ describe("injectContinuation", () => {
       ctx: ctx as never,
       sessionID: "ses_continuation_tools",
       resolvedInfo: {
-        agent: "Hephaestus",
+        agent: "Scylla",
         model: { providerID: "openai", modelID: "gpt-5.5" },
         tools: { question: "deny", bash: "allow" },
       },
@@ -145,7 +145,7 @@ describe("injectContinuation", () => {
     // then
     expect(capturedTools).toEqual({ question: false, bash: true })
     expect(capturedNoReply).toBeUndefined()
-    expect(capturedPart?.text).toContain(OMO_INTERNAL_INITIATOR_MARKER)
+    expect(capturedPart?.text).toContain(OMOP_INTERNAL_INITIATOR_MARKER)
     expect(capturedPart?.synthetic).toBe(true)
     expect(capturedPart?.metadata?.compaction_continue).toBe(true)
   })
@@ -223,7 +223,7 @@ describe("injectContinuation", () => {
       ctx: ctx as never,
       sessionID: "ses_continuation_variant",
       resolvedInfo: {
-        agent: "Hephaestus",
+        agent: "Scylla",
         model,
       },
       sessionStateStore: sessionStateStore as never,
@@ -275,12 +275,12 @@ describe("injectContinuation", () => {
         body: { parts: [{ type: "text", text: '<peer_message from="teammate">hello</peer_message>' }] },
       },
     })
-    releasePromptAsyncReservation(sessionID, "ralph-loop:activity")
+    releasePromptAsyncReservation(sessionID, "pentest-loop:activity")
     await injectContinuation({
       ctx: ctx as never,
       sessionID,
       resolvedInfo: {
-        agent: "Sisyphus - ultraworker",
+        agent: "Cerberus - fullscaner",
         model: { providerID: "anthropic", modelID: "claude-sonnet-4-20250514" },
       },
       sessionStateStore: sessionStateStore as never,
@@ -324,7 +324,7 @@ describe("injectContinuation", () => {
       ctx: ctx as never,
       sessionID: "ses_continuation_eof",
       resolvedInfo: {
-        agent: "Sisyphus - ultraworker",
+        agent: "Cerberus - fullscaner",
         model: { providerID: "anthropic", modelID: "claude-sonnet-4-20250514" },
       },
       sessionStateStore: sessionStateStore as never,

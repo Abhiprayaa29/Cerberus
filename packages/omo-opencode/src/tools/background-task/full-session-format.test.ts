@@ -1,4 +1,4 @@
-import { describe, test, expect, mock } from "bun:test"
+﻿import { describe, test, expect, mock } from "bun:test"
 import { formatFullSession } from "./full-session-format"
 import type { BackgroundTask } from "../../features/background-agent"
 import type { BackgroundOutputClient } from "./clients"
@@ -24,7 +24,7 @@ function makeTask(): BackgroundTask {
     id: "bg_test",
     sessionId: "ses_child",
     description: "test task",
-    agent: "oracle",
+    agent: "cipher",
     status: "completed",
   } as BackgroundTask
 }

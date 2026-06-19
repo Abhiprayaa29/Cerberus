@@ -1,4 +1,4 @@
-import type { JSX } from "react"
+﻿import type { JSX } from "react"
 import { getTranslations } from "next-intl/server"
 import { ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -19,7 +19,7 @@ export async function FinalCtaSection(): Promise<JSX.Element> {
 
         <Button size="lg" className="rounded-full px-8 py-6 text-lg" asChild>
           <Link
-            href="https://github.com/code-yeongyu/oh-my-openagent"
+            href="https://github.com/code-yeongyu/oh-my-open-pentest"
             target="_blank"
             rel="noopener noreferrer"
           >

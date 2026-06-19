@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { mkdtempSync, realpathSync, rmSync, writeFileSync } from "node:fs"
 import { tmpdir } from "node:os"
@@ -6,10 +6,10 @@ import { join } from "node:path"
 import { afterEach, describe, expect, test } from "bun:test"
 import { getAgentDisplayName } from "../../shared/agent-display-names"
 import { unsafeTestValue } from "../../../../../test-support/unsafe-test-value"
-import { createHephaestusAgentsMdInjectorHook } from "./index"
+import { createScyllaAgentsMdInjectorHook } from "./index"
 
-const HEPHAESTUS_DISPLAY = getAgentDisplayName("hephaestus")
-const SISYPHUS_DISPLAY = getAgentDisplayName("sisyphus")
+const SCYLLA_DISPLAY = getAgentDisplayName("scylla")
+const CERBERUS_DISPLAY = getAgentDisplayName("cerberus")
 
 let temporaryDirectory = ""
 
@@ -20,7 +20,7 @@ function createOutput(text = "Implement the thing") {
   }
 }
 
-describe("hephaestus agents md injector hook", () => {
+describe("scylla agents md injector hook", () => {
   afterEach(() => {
     if (temporaryDirectory.length > 0) {
       rmSync(temporaryDirectory, { recursive: true, force: true })
@@ -28,11 +28,11 @@ describe("hephaestus agents md injector hook", () => {
     }
   })
 
-  test("injects project AGENTS.md into the first Hephaestus user message", async () => {
+  test("injects project AGENTS.md into the first Scylla user message", async () => {
     // given
-    temporaryDirectory = mkdtempSync(join(tmpdir(), "hephaestus-agents-md-"))
+    temporaryDirectory = mkdtempSync(join(tmpdir(), "scylla-agents-md-"))
     writeFileSync(join(temporaryDirectory, "AGENTS.md"), "Always force-load this rule.")
-    const hook = createHephaestusAgentsMdInjectorHook(unsafeTestValue({
+    const hook = createScyllaAgentsMdInjectorHook(unsafeTestValue({
       directory: temporaryDirectory,
       client: { session: { messages: async () => [] } },
     }))
@@ -41,7 +41,7 @@ describe("hephaestus agents md injector hook", () => {
     // when
     await hook["chat.message"]?.({
       sessionID: "ses_hep",
-      agent: HEPHAESTUS_DISPLAY,
+      agent: SCYLLA_DISPLAY,
     }, output)
 
     // then
@@ -50,11 +50,11 @@ describe("hephaestus agents md injector hook", () => {
     expect(output.parts[0]?.text).toEndWith("Implement the thing")
   })
 
-  test("does not inject AGENTS.md for non-Hephaestus agents", async () => {
+  test("does not inject AGENTS.md for non-Scylla agents", async () => {
     // given
-    temporaryDirectory = mkdtempSync(join(tmpdir(), "hephaestus-agents-md-"))
-    writeFileSync(join(temporaryDirectory, "AGENTS.md"), "Hephaestus-only rule.")
-    const hook = createHephaestusAgentsMdInjectorHook(unsafeTestValue({
+    temporaryDirectory = mkdtempSync(join(tmpdir(), "scylla-agents-md-"))
+    writeFileSync(join(temporaryDirectory, "AGENTS.md"), "Scylla-only rule.")
+    const hook = createScyllaAgentsMdInjectorHook(unsafeTestValue({
       directory: temporaryDirectory,
       client: { session: { messages: async () => [] } },
     }))
@@ -63,39 +63,39 @@ describe("hephaestus agents md injector hook", () => {
     // when
     await hook["chat.message"]?.({
       sessionID: "ses_sis",
-      agent: SISYPHUS_DISPLAY,
+      agent: CERBERUS_DISPLAY,
     }, output)
 
     // then
     expect(output.parts[0]?.text).toBe("Implement the thing")
   })
 
-  test("does not inject when an earlier hook switched Hephaestus to another agent", async () => {
+  test("does not inject when an earlier hook switched Scylla to another agent", async () => {
     // given
-    temporaryDirectory = mkdtempSync(join(tmpdir(), "hephaestus-agents-md-"))
+    temporaryDirectory = mkdtempSync(join(tmpdir(), "scylla-agents-md-"))
     writeFileSync(join(temporaryDirectory, "AGENTS.md"), "Should not be injected.")
-    const hook = createHephaestusAgentsMdInjectorHook(unsafeTestValue({
+    const hook = createScyllaAgentsMdInjectorHook(unsafeTestValue({
       directory: temporaryDirectory,
       client: { session: { messages: async () => [] } },
     }))
     const output = createOutput()
-    output.message.agent = "sisyphus"
+    output.message.agent = "cerberus"
 
     // when
     await hook["chat.message"]?.({
       sessionID: "ses_switched",
-      agent: HEPHAESTUS_DISPLAY,
+      agent: SCYLLA_DISPLAY,
     }, output)
 
     // then
     expect(output.parts[0]?.text).toBe("Implement the thing")
   })
 
-  test("injects AGENTS.md once per Hephaestus session", async () => {
+  test("injects AGENTS.md once per Scylla session", async () => {
     // given
-    temporaryDirectory = mkdtempSync(join(tmpdir(), "hephaestus-agents-md-"))
+    temporaryDirectory = mkdtempSync(join(tmpdir(), "scylla-agents-md-"))
     writeFileSync(join(temporaryDirectory, "AGENTS.md"), "Inject me once.")
-    const hook = createHephaestusAgentsMdInjectorHook(unsafeTestValue({
+    const hook = createScyllaAgentsMdInjectorHook(unsafeTestValue({
       directory: temporaryDirectory,
       client: { session: { messages: async () => [] } },
     }))
@@ -105,11 +105,11 @@ describe("hephaestus agents md injector hook", () => {
     // when
     await hook["chat.message"]?.({
       sessionID: "ses_once",
-      agent: HEPHAESTUS_DISPLAY,
+      agent: SCYLLA_DISPLAY,
     }, firstOutput)
     await hook["chat.message"]?.({
       sessionID: "ses_once",
-      agent: HEPHAESTUS_DISPLAY,
+      agent: SCYLLA_DISPLAY,
     }, secondOutput)
 
     // then

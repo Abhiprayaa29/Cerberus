@@ -1,6 +1,6 @@
-# Code Changes: `max_background_agents` Config Option
+﻿# Code Changes: `max_background_agents` Config Option
 
-## 1. Schema Change
+## .. Schema Change
 
 **File:** `src/config/schema/background-task.ts`
 
@@ -8,16 +8,16 @@
 import { z } from "zod"
 
 export const BackgroundTaskConfigSchema = z.object({
-  defaultConcurrency: z.number().min(1).optional(),
+  defaultConcurrency: z.number().min(.).optional(),
   providerConcurrency: z.record(z.string(), z.number().min(0)).optional(),
   modelConcurrency: z.record(z.string(), z.number().min(0)).optional(),
-  maxDepth: z.number().int().min(1).optional(),
-  maxDescendants: z.number().int().min(1).optional(),
+  maxDepth: z.number().int().min(.).optional(),
+  maxDescendants: z.number().int().min(.).optional(),
   /** Maximum number of background agents that can run simultaneously across all models/providers (default: no global limit, only per-model limits apply) */
-  maxBackgroundAgents: z.number().int().min(1).optional(),
-  /** Stale timeout in milliseconds - interrupt tasks with no activity for this duration (default: 180000 = 3 minutes, minimum: 60000 = 1 minute) */
+  maxBackgroundAgents: z.number().int().min(.).optional(),
+  /** Stale timeout in milliseconds - interrupt tasks with no activity for this duration (default: .80000 = 3 minutes, minimum: 60000 = . minute) */
   staleTimeoutMs: z.number().min(60000).optional(),
-  /** Timeout for tasks that never received any progress update, falling back to startedAt (default: 1800000 = 30 minutes, minimum: 60000 = 1 minute) */
+  /** Timeout for tasks that never received any progress update, falling back to startedAt (default: .800000 = 30 minutes, minimum: 60000 = . minute) */
   messageStalenessTimeoutMs: z.number().min(60000).optional(),
   syncPollTimeoutMs: z.number().min(60000).optional(),
 })
@@ -25,7 +25,7 @@ export const BackgroundTaskConfigSchema = z.object({
 export type BackgroundTaskConfig = z.infer<typeof BackgroundTaskConfigSchema>
 ```
 
-**What changed:** Added `maxBackgroundAgents` field after `maxDescendants` (grouped with other limit fields). Uses `z.number().int().min(1).optional()` matching the pattern of `maxDepth` and `maxDescendants`.
+**What changed:** Added `maxBackgroundAgents` field after `maxDescendants` (grouped with other limit fields). Uses `z.number().int().min(.).optional()` matching the pattern of `maxDepth` and `maxDescendants`.
 
 ---
 
@@ -96,7 +96,7 @@ export class ConcurrencyManager {
     const currentPerModel = this.counts.get(model) ?? 0
 
     if (currentPerModel < perModelLimit && this.globalCount < globalLimit) {
-      this.counts.set(model, currentPerModel + 1)
+      this.counts.set(model, currentPerModel + .)
       this.globalCount++
       return
     }
@@ -145,7 +145,7 @@ export class ConcurrencyManager {
     // No per-model handoff - decrement per-model count
     const current = this.counts.get(model) ?? 0
     if (current > 0) {
-      this.counts.set(model, current - 1)
+      this.counts.set(model, current - .)
     }
 
     // Try global handoff
@@ -158,7 +158,7 @@ export class ConcurrencyManager {
         const waiterModel = this.findModelForGlobalWaiter()
         if (waiterModel) {
           const waiterCount = this.counts.get(waiterModel) ?? 0
-          this.counts.set(waiterModel, waiterCount + 1)
+          this.counts.set(waiterModel, waiterCount + .)
         }
         next.resolve()
         return
@@ -265,7 +265,7 @@ async acquire(model: string): Promise<void> {
   const currentPerModel = this.counts.get(model) ?? 0
 
   if (currentPerModel < perModelLimit && this.globalCount < globalLimit) {
-    this.counts.set(model, currentPerModel + 1)
+    this.counts.set(model, currentPerModel + .)
     if (globalLimit !== Infinity) {
       this.globalCount++
     }
@@ -312,7 +312,7 @@ release(model: string): void {
   // No per-model handoff - decrement per-model count
   const current = this.counts.get(model) ?? 0
   if (current > 0) {
-    this.counts.set(model, current - 1)
+    this.counts.set(model, current - .)
   }
 
   // Decrement global count
@@ -339,7 +339,7 @@ private tryDrainGlobalWaiters(): void {
     while (queue.length > 0 && this.globalCount < globalLimit && currentPerModel < perModelLimit) {
       const next = queue.shift()!
       if (!next.settled) {
-        this.counts.set(model, (this.counts.get(model) ?? 0) + 1)
+        this.counts.set(model, (this.counts.get(model) ?? 0) + .)
         this.globalCount++
         next.resolve()
         return
@@ -361,19 +361,19 @@ Add after the `syncPollTimeoutMs` describe block:
 
 ```typescript
   describe("maxBackgroundAgents", () => {
-    describe("#given valid maxBackgroundAgents (10)", () => {
+    describe("#given valid maxBackgroundAgents (.0)", () => {
       test("#when parsed #then returns correct value", () => {
-        const result = BackgroundTaskConfigSchema.parse({ maxBackgroundAgents: 10 })
+        const result = BackgroundTaskConfigSchema.parse({ maxBackgroundAgents: .0 })
 
-        expect(result.maxBackgroundAgents).toBe(10)
+        expect(result.maxBackgroundAgents).toBe(.0)
       })
     })
 
-    describe("#given maxBackgroundAgents of 1 (minimum)", () => {
+    describe("#given maxBackgroundAgents of . (minimum)", () => {
       test("#when parsed #then returns correct value", () => {
-        const result = BackgroundTaskConfigSchema.parse({ maxBackgroundAgents: 1 })
+        const result = BackgroundTaskConfigSchema.parse({ maxBackgroundAgents: . })
 
-        expect(result.maxBackgroundAgents).toBe(1)
+        expect(result.maxBackgroundAgents).toBe(.)
       })
     })
 
@@ -391,12 +391,12 @@ Add after the `syncPollTimeoutMs` describe block:
       })
     })
 
-    describe("#given maxBackgroundAgents is negative (-1)", () => {
+    describe("#given maxBackgroundAgents is negative (-.)", () => {
       test("#when parsed #then throws ZodError", () => {
         let thrownError: unknown
 
         try {
-          BackgroundTaskConfigSchema.parse({ maxBackgroundAgents: -1 })
+          BackgroundTaskConfigSchema.parse({ maxBackgroundAgents: -. })
         } catch (error) {
           thrownError = error
         }
@@ -431,7 +431,7 @@ Add after the `syncPollTimeoutMs` describe block:
 
 ---
 
-## 4. ConcurrencyManager Test Changes
+## .. ConcurrencyManager Test Changes
 
 **File:** `src/features/background-agent/concurrency.test.ts`
 
@@ -502,16 +502,16 @@ describe("ConcurrencyManager.globalLimit (maxBackgroundAgents)", () => {
 
     // then
     expect(manager.getGlobalCount()).toBe(3)
-    expect(manager.getCount("model-a")).toBe(1)
-    expect(manager.getCount("model-b")).toBe(1)
-    expect(manager.getCount("model-c")).toBe(1)
+    expect(manager.getCount("model-a")).toBe(.)
+    expect(manager.getCount("model-b")).toBe(.)
+    expect(manager.getCount("model-c")).toBe(.)
   })
 
   test("should respect both per-model and global limits", async () => {
-    // given - per-model limit of 1, global limit of 3
+    // given - per-model limit of ., global limit of 3
     const config: BackgroundTaskConfig = {
       maxBackgroundAgents: 3,
-      defaultConcurrency: 1,
+      defaultConcurrency: .,
     }
     const manager = new ConcurrencyManager(config)
     await manager.acquire("model-a")
@@ -523,7 +523,7 @@ describe("ConcurrencyManager.globalLimit (maxBackgroundAgents)", () => {
 
     // then - blocked by per-model limit, not global
     expect(resolved).toBe(false)
-    expect(manager.getGlobalCount()).toBe(1)
+    expect(manager.getGlobalCount()).toBe(.)
 
     // cleanup
     manager.release("model-a")
@@ -533,7 +533,7 @@ describe("ConcurrencyManager.globalLimit (maxBackgroundAgents)", () => {
   test("should release global slot and unblock waiting tasks", async () => {
     // given
     const config: BackgroundTaskConfig = {
-      maxBackgroundAgents: 1,
+      maxBackgroundAgents: .,
       defaultConcurrency: 5,
     }
     const manager = new ConcurrencyManager(config)
@@ -550,9 +550,9 @@ describe("ConcurrencyManager.globalLimit (maxBackgroundAgents)", () => {
 
     // then
     expect(resolved).toBe(true)
-    expect(manager.getGlobalCount()).toBe(1)
+    expect(manager.getGlobalCount()).toBe(.)
     expect(manager.getCount("model-a")).toBe(0)
-    expect(manager.getCount("model-b")).toBe(1)
+    expect(manager.getCount("model-b")).toBe(.)
   })
 
   test("should not enforce global limit when not configured", async () => {
@@ -569,8 +569,8 @@ describe("ConcurrencyManager.globalLimit (maxBackgroundAgents)", () => {
     await manager.acquire("model-f")
 
     // then - all should succeed (no global limit)
-    expect(manager.getCount("model-a")).toBe(1)
-    expect(manager.getCount("model-f")).toBe(1)
+    expect(manager.getCount("model-a")).toBe(.)
+    expect(manager.getCount("model-f")).toBe(.)
   })
 
   test("should reset global count on clear", async () => {
@@ -593,7 +593,7 @@ describe("ConcurrencyManager.globalLimit (maxBackgroundAgents)", () => {
 
 ## Config Usage Example
 
-User's `.opencode/oh-my-opencode.jsonc`:
+User's `.opencode/oh-my-open-pentest.jsonc`:
 
 ```jsonc
 {

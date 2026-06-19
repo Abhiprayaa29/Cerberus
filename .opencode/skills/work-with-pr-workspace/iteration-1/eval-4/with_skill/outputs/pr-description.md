@@ -1,4 +1,4 @@
-# PR: feat(mcp): add built-in arXiv paper search MCP
+﻿# PR: feat(mcp): add built-in arXiv paper search MCP
 
 ## Title
 
@@ -9,9 +9,9 @@
 ```markdown
 ## Summary
 
-Closes #100
+Closes #.00
 
-- Add `arxiv` as 4th built-in remote MCP for arXiv paper search
+- Add `arxiv` as .th built-in remote MCP for arXiv paper search
 - Follows existing static export pattern (same as `grep_app`, `context7`)
 - No auth required, disableable via `disabled_mcps: ["arxiv"]`
 
@@ -29,7 +29,7 @@ Closes #100
 Enabled by default. Disable with:
 
 ```jsonc
-// .opencode/oh-my-opencode.jsonc
+// .opencode/oh-my-open-pentest.jsonc
 {
   "disabled_mcps": ["arxiv"]
 }

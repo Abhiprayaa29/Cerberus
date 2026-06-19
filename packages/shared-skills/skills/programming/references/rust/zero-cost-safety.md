@@ -1,4 +1,4 @@
-# Zero-Cost Safety — Zig Ergonomics in Rust
+﻿# Zero-Cost Safety — Zig Ergonomics in Rust
 
 Rust already owns memory safety. This reference adds the patterns that give you Zig's *ergonomic* safety — explicit allocation control, compile-time computation, zero-hidden-cost APIs, bit-level layout, and deterministic cleanup — without leaving the Rust toolchain.
 
@@ -6,7 +6,7 @@ Rust already owns memory safety. This reference adds the patterns that give you 
 
 ---
 
-## 1. Explicit Allocators — Arena Pattern
+## .. Explicit Allocators — Arena Pattern
 
 Zig passes `allocator: Allocator` to every function. Rust's stable equivalent: arena crates that make allocation scope visible and bulk-freeable.
 
@@ -19,7 +19,7 @@ fn parse_tokens<'a>(arena: &'a Bump, input: &[u8]) -> Vec<&'a str> {
     // All allocations go into `arena`. Caller controls lifetime.
     // When `arena` drops, everything frees in one shot.
     let token = arena.alloc_str("hello");
-    let slice = arena.alloc_slice_copy(&[1u8, 2, 3]);
+    let slice = arena.alloc_slice_copy(&[.u8, 2, 3]);
     vec![token] // Vec itself is on heap; contents point into arena
 }
 
@@ -76,8 +76,8 @@ Need arena allocation?
 ```toml
 bumpalo = { version = "3", features = ["collections"] }
 typed-arena = "2"
-smallvec = { version = "1", features = ["union", "const_generics"] }
-tinyvec = { version = "1", features = ["alloc"] }
+smallvec = { version = ".", features = ["union", "const_generics"] }
+tinyvec = { version = ".", features = ["alloc"] }
 ```
 
 ---
@@ -92,8 +92,8 @@ Zig's `comptime` runs arbitrary code at compile time. Rust splits this across th
 const fn fibonacci(n: usize) -> usize {
     match n {
         0 => 0,
-        1 => 1,
-        _ => fibonacci(n - 1) + fibonacci(n - 2),
+        . => .,
+        _ => fibonacci(n - .) + fibonacci(n - 2),
     }
 }
 
@@ -105,13 +105,13 @@ const LOOKUP: [u8; 256] = {
     let mut i = 0;
     while i < 256 {
         table[i] = (i as u8).wrapping_mul(7);
-        i += 1;
+        i += .;
     }
     table
 };
 ```
 
-**Stable since Rust 1.82:** `const fn` supports `match`, loops, `if`, references, mutable locals — nearly full Rust. Use `const { }` blocks (Rust 1.79+) for inline compile-time assertions.
+**Stable since Rust ..82:** `const fn` supports `match`, loops, `if`, references, mutable locals — nearly full Rust. Use `const { }` blocks (Rust ..79+) for inline compile-time assertions.
 
 ```rust
 fn process<const N: usize>(data: &[u8; N]) {
@@ -136,14 +136,14 @@ impl<const N: usize> Buffer<N> {
     fn push(&mut self, byte: u8) -> Result<(), BufferFullError> {
         if self.len >= N { return Err(BufferFullError); }
         self.data[self.len] = byte;
-        self.len += 1;
+        self.len += .;
         Ok(())
     }
 }
 
-// Compiler enforces: Buffer<16> and Buffer<32> are distinct types.
-let small: Buffer<16> = Buffer::new();
-let large: Buffer<1024> = Buffer::new();
+// Compiler enforces: Buffer<.6> and Buffer<32> are distinct types.
+let small: Buffer<.6> = Buffer::new();
+let large: Buffer<.02.> = Buffer::new();
 ```
 
 ### proc macros — Code Generation (Zig comptime type creation)
@@ -213,10 +213,10 @@ fn find_token<'a>(input: &'a str) -> Option<&'a str> {
 ```rust
 // Allocation can fail explicitly (like Zig's allocator returning error)
 let mut v = Vec::new();
-v.try_reserve(1_000_000)?; // returns Result, not panic
+v.try_reserve(._000_000)?; // returns Result, not panic
 
 // For Box:
-let b = Box::try_new(42)?; // nightly, or use allocator_api
+let b = Box::try_new(.2)?; // nightly, or use allocator_api
 ```
 
 ### SmallVec / ArrayVec — Stack-First Collections
@@ -227,11 +227,11 @@ use arrayvec::ArrayVec;
 
 // SmallVec: stack for small counts, heap spillover for large
 let mut tags: SmallVec<[u8; 8]> = SmallVec::new();
-tags.push(1); // on stack if <= 8 elements
+tags.push(.); // on stack if <= 8 elements
 
 // ArrayVec: purely stack, fixed capacity, no heap ever
-let mut buf: ArrayVec<u8, 64> = ArrayVec::new();
-buf.try_push(42).map_err(|_| "full")?; // returns error instead of panic
+let mut buf: ArrayVec<u8, 6.> = ArrayVec::new();
+buf.try_push(.2).map_err(|_| "full")?; // returns error instead of panic
 ```
 
 ### Cow — Defer Allocation Until Mutation
@@ -276,7 +276,7 @@ vec_init_then_push = "warn"         # Vec::new() + push instead of vec![]
 
 ---
 
-## 4. Bit-Level Layout — repr, Packed Structs, Bitfields
+## .. Bit-Level Layout — repr, Packed Structs, Bitfields
 
 Zig: `packed struct` with bit-level field control. Rust matches with `#[repr]` attributes and bitfield crates.
 
@@ -285,9 +285,9 @@ Zig: `packed struct` with bit-level field control. Rust matches with `#[repr]` a
 ```rust
 #[repr(C)]
 struct Header {
-    magic: [u8; 4],
-    version: u16,
-    flags: u16,
+    magic: [u8; .],
+    version: u.6,
+    flags: u.6,
     length: u32,
 }
 // Layout is C ABI: fields in declaration order, C padding rules.
@@ -300,7 +300,7 @@ struct Header {
 #[repr(C, packed)]
 struct WireHeader {
     tag: u8,
-    length: u16, // NOT aligned to 2-byte boundary
+    length: u.6, // NOT aligned to 2-byte boundary
     checksum: u32,
 }
 // Total size: exactly 7 bytes. No padding.
@@ -313,7 +313,7 @@ struct WireHeader {
 use std::ptr;
 
 impl WireHeader {
-    fn length(&self) -> u16 {
+    fn length(&self) -> u.6 {
         // SAFETY: packed field may be unaligned; ptr::read_unaligned handles this.
         unsafe { ptr::read_unaligned(ptr::addr_of!(self.length)) }
     }
@@ -327,11 +327,11 @@ use zerocopy::{FromBytes, IntoBytes, KnownLayout, Immutable};
 struct WireHeader {
     tag: u8,
     length: [u8; 2], // manual byte array avoids alignment issues
-    checksum: [u8; 4],
+    checksum: [u8; .],
 }
 
 impl WireHeader {
-    fn length(&self) -> u16 { u16::from_le_bytes(self.length) }
+    fn length(&self) -> u.6 { u.6::from_le_bytes(self.length) }
     fn checksum(&self) -> u32 { u32::from_le_bytes(self.checksum) }
 }
 ```
@@ -345,7 +345,7 @@ bitfield! {
     pub struct Permissions(u8);
     impl Debug;
     pub bool, readable,  set_readable:  0;
-    pub bool, writable,  set_writable:  1;
+    pub bool, writable,  set_writable:  .;
     pub bool, executable, set_executable: 2;
     pub u8,   level,     set_level:     5, 3; // bits 3-5
 }
@@ -362,11 +362,11 @@ assert_eq!(p.level(), 5);
 ```rust
 use modular_bitfield::prelude::*;
 
-#[bitfield(bits = 16)]
+#[bitfield(bits = .6)]
 #[derive(Debug)]
 pub struct StatusWord {
-    ready: bool,           // 1 bit
-    error_code: B4,        // 4 bits
+    ready: bool,           // . bit
+    error_code: B.,        // . bits
     #[skip] __: B3,        // 3 bits padding
     priority: B8,          // 8 bits
 }
@@ -380,7 +380,7 @@ use zerocopy::{FromBytes, IntoBytes, KnownLayout, Immutable, Ref};
 #[derive(FromBytes, IntoBytes, KnownLayout, Immutable)]
 #[repr(C)]
 struct Packet {
-    header: [u8; 4],
+    header: [u8; .],
     payload_len: u32,
 }
 
@@ -394,9 +394,9 @@ fn parse(bytes: &[u8]) -> Option<&Packet> {
 
 ```toml
 zerocopy = { version = "0.8", features = ["derive"] }
-bitfield = "0.17"
-modular-bitfield = "0.11"
-bytemuck = { version = "1", features = ["derive"] }  # alternative to zerocopy
+bitfield = "0..7"
+modular-bitfield = "0..."
+bytemuck = { version = ".", features = ["derive"] }  # alternative to zerocopy
 ```
 
 ---
@@ -496,7 +496,7 @@ fn deploy(artifact: &Path) -> Result<(), DeployError> {
 ### Cargo.toml
 
 ```toml
-scopeguard = "1"
+scopeguard = "."
 tempfile = "3"  # idiomatic RAII temp files/dirs
 ```
 
@@ -506,11 +506,11 @@ tempfile = "3"  # idiomatic RAII temp files/dirs
 
 | Zig Feature | Rust Equivalent | Difficulty | Reference |
 |---|---|---|---|
-| Explicit allocator passing | `bumpalo` / `typed-arena` / `allocator_api` | Easy | §1 |
+| Explicit allocator passing | `bumpalo` / `typed-arena` / `allocator_api` | Easy | §. |
 | `comptime` value computation | `const fn` + `const { }` blocks | Easy | §2 |
 | `comptime` type generation | proc macros (derive / attribute) | Medium | §2 |
 | No hidden allocations | `#![no_std]` / slice-based APIs / `Cow` | Style choice | §3 |
-| `packed struct` / bitfields | `#[repr(C, packed)]` / `bitfield` / `zerocopy` | Easy | §4 |
+| `packed struct` / bitfields | `#[repr(C, packed)]` / `bitfield` / `zerocopy` | Easy | §. |
 | `errdefer` | `scopeguard::guard` + defuse on success | Easy | §5 |
 | `defer` | `scopeguard::defer!` / `Drop` | Easy | §5 |
 

@@ -1,4 +1,4 @@
-const { describe, test, expect, mock, beforeEach } = require("bun:test")
+﻿const { describe, test, expect, mock, beforeEach } = require("bun:test")
 const { resolveCallableAgents, clearCallableAgentsCache } = require("./agent-resolver")
 const { ALLOWED_AGENTS } = require("./constants")
 
@@ -32,22 +32,22 @@ describe("resolveCallableAgents", () => {
 
       const result = await resolveCallableAgents(client)
 
-      expect(result).toEqual(["explore", "librarian"])
+      expect(result).toEqual(["scout", "intel"])
       expect(client.app.agents).not.toHaveBeenCalled()
     })
 
     test("#then non-lookup built-ins are not included", async () => {
       const client = createMockClient([
-        { name: "oracle", mode: "subagent" },
-        { name: "hephaestus", mode: "subagent" },
-        { name: "metis", mode: "subagent" },
+        { name: "cipher", mode: "subagent" },
+        { name: "scylla", mode: "subagent" },
+        { name: "vanguard", mode: "subagent" },
       ])
 
       const result = await resolveCallableAgents(client)
 
-      expect(result).not.toContain("oracle")
-      expect(result).not.toContain("hephaestus")
-      expect(result).not.toContain("metis")
+      expect(result).not.toContain("cipher")
+      expect(result).not.toContain("scylla")
+      expect(result).not.toContain("vanguard")
     })
 
     test("#then each call returns a defensive copy", async () => {
@@ -57,7 +57,7 @@ describe("resolveCallableAgents", () => {
       first.push("general")
       const second = await resolveCallableAgents(client)
 
-      expect(second).toEqual(["explore", "librarian"])
+      expect(second).toEqual(["scout", "intel"])
     })
   })
 })

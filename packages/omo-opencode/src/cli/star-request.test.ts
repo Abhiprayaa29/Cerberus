@@ -1,16 +1,16 @@
-import { describe, expect, test } from "bun:test"
+﻿import { describe, expect, test } from "bun:test"
 import { STAR_REPOSITORIES, formatGitHubStarCommand, starGitHubRepositories } from "./star-request"
 
 describe("star-request", () => {
   test("formats the legacy GitHub CLI command for manual fallback output", () => {
     // given
-    const repository = "code-yeongyu/oh-my-openagent"
+    const repository = "code-yeongyu/oh-my-open-pentest"
 
     // when
     const command = formatGitHubStarCommand(repository)
 
     // then
-    expect(command).toBe("gh api --silent --method PUT /user/starred/code-yeongyu/oh-my-openagent >/dev/null 2>&1 || true")
+    expect(command).toBe("gh api --silent --method PUT /user/starred/code-yeongyu/oh-my-open-pentest >/dev/null 2>&1 || true")
   })
 
   test("stars only the OpenCode repository for opencode platform", async () => {
@@ -23,11 +23,11 @@ describe("star-request", () => {
     })
 
     // then
-    expect(starred).toEqual(["code-yeongyu/oh-my-openagent"])
-    expect(results).toEqual([{ repository: "code-yeongyu/oh-my-openagent", ok: true }])
+    expect(starred).toEqual(["code-yeongyu/oh-my-open-pentest"])
+    expect(results).toEqual([{ repository: "code-yeongyu/oh-my-open-pentest", ok: true }])
   })
 
-  test("stars both repositories for codex platform (lazycodex is built on oh-my-openagent)", async () => {
+  test("stars both repositories for codex platform (lazycodex is built on oh-my-open-pentest)", async () => {
     // given
     const starred: string[] = []
 
@@ -37,9 +37,9 @@ describe("star-request", () => {
     })
 
     // then
-    expect(starred).toEqual(["code-yeongyu/oh-my-openagent", "code-yeongyu/lazycodex"])
+    expect(starred).toEqual(["code-yeongyu/oh-my-open-pentest", "code-yeongyu/lazycodex"])
     expect(results).toEqual([
-      { repository: "code-yeongyu/oh-my-openagent", ok: true },
+      { repository: "code-yeongyu/oh-my-open-pentest", ok: true },
       { repository: "code-yeongyu/lazycodex", ok: true },
     ])
   })
@@ -67,7 +67,7 @@ describe("star-request", () => {
 
     // then
     expect(results).toEqual([
-      { repository: "code-yeongyu/oh-my-openagent", ok: true },
+      { repository: "code-yeongyu/oh-my-open-pentest", ok: true },
       { repository: "code-yeongyu/lazycodex", ok: false, error: "gh auth missing" },
     ])
   })

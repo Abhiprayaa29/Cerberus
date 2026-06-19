@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+﻿import { describe, expect, it } from "vitest";
 
 import {
 	iso,
@@ -12,10 +12,10 @@ import {
 	UlwLoopError,
 } from "../src/types.ts";
 
-describe("ulw-loop domain constants", () => {
+describe("pentest-loop domain constants", () => {
 	describe("when checking workspace paths", () => {
 		it("then ULW_LOOP_DIR points to the omo workspace", () => {
-			expect(ULW_LOOP_DIR).toBe(".omo/ulw-loop");
+			expect(ULW_LOOP_DIR).toBe(".omo/pentest-loop");
 		});
 
 		it("then artifact filenames are stable", () => {

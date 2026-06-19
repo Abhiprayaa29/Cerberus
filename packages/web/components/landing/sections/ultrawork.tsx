@@ -1,4 +1,4 @@
-import type { JSX } from "react"
+﻿import type { JSX } from "react"
 import { getTranslations } from "next-intl/server"
 import { Badge } from "@/components/ui/badge"
 import { TerminalTypewriter } from "@/components/landing/motion-wrappers"
@@ -8,7 +8,7 @@ export async function UltraworkSection(): Promise<JSX.Element> {
 
   return (
     <section
-      data-section="ultrawork"
+      data-section="fullscan"
       id="features"
       className="overflow-hidden border-t border-white/5 bg-[#0a0a0a] py-24"
     >

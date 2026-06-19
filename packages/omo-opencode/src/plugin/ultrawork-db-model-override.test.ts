@@ -1,4 +1,4 @@
-import { describe, expect, test, beforeEach, afterEach, spyOn } from "bun:test"
+﻿import { describe, expect, test, beforeEach, afterEach, spyOn } from "bun:test"
 import { Database } from "bun:sqlite"
 import { mkdtempSync, mkdirSync, rmSync } from "node:fs"
 import { join } from "node:path"
@@ -6,10 +6,10 @@ import { tmpdir } from "node:os"
 import * as dataPathModule from "../shared/data-path"
 import * as sharedModule from "../shared"
 
-let scheduleDeferredModelOverride: (typeof import("./ultrawork-db-model-override"))["scheduleDeferredModelOverride"]
+let scheduleDeferredModelOverride: (typeof import("./fullscan-db-model-override"))["scheduleDeferredModelOverride"]
 
-async function importFreshUltraworkDbModelOverrideModule(): Promise<typeof import("./ultrawork-db-model-override")> {
-  return import(`./ultrawork-db-model-override?test=${Date.now()}-${Math.random()}`)
+async function importFreshUltraworkDbModelOverrideModule(): Promise<typeof import("./fullscan-db-model-override")> {
+  return import(`./fullscan-db-model-override?test=${Date.now()}-${Math.random()}`)
 }
 
 function flushMicrotasks(depth: number): Promise<void> {
@@ -44,7 +44,7 @@ describe("scheduleDeferredModelOverride", () => {
   let getDataDirSpy: ReturnType<typeof spyOn>
 
   beforeEach(async () => {
-    tempDir = mkdtempSync(join(tmpdir(), "ultrawork-db-test-"))
+    tempDir = mkdtempSync(join(tmpdir(), "fullscan-db-test-"))
     const opencodePath = join(tempDir, "opencode")
     mkdirSync(opencodePath, { recursive: true })
     dbPath = join(opencodePath, "opencode.db")
@@ -185,7 +185,7 @@ describe("scheduleDeferredModelOverride", () => {
       const message = call[0]
       const metadata = call[1]
       return (
-        message === "[ultrawork-db-override] Exhausted microtask retries, falling back to setTimeout"
+        message === "[fullscan-db-override] Exhausted microtask retries, falling back to setTimeout"
         && isRecord(metadata)
         && metadata.messageId === "msg_retry_exhausted"
         && metadata.attempt === 10

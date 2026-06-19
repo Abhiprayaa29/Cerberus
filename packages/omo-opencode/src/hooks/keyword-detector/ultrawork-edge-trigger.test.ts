@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, test } from "bun:test"
+﻿import { afterEach, beforeEach, describe, expect, test } from "bun:test"
 import type { PluginInput } from "@opencode-ai/plugin"
 
 import { createKeywordDetectorHook } from "./index"
@@ -32,7 +32,7 @@ function createMockRalphLoop(startLoopCalls: StartLoopCall[]) {
   }
 }
 
-describe("keyword-detector ultrawork edge trigger", () => {
+describe("keyword-detector fullscan edge trigger", () => {
   beforeEach(() => {
     _resetForTesting()
     setMainSession("main-session")
@@ -42,7 +42,7 @@ describe("keyword-detector ultrawork edge trigger", () => {
     _resetForTesting()
   })
 
-  test("#given greeting text before ulw and surrounding whitespace #when chat.message fires #then ultrawork still activates without starting ralph loop", async () => {
+  test("#given greeting text before ulw and surrounding whitespace #when chat.message fires #then fullscan still activates without starting ralph loop", async () => {
     // given
     const toastCalls: string[] = []
     const startLoopCalls: StartLoopCall[] = []
@@ -57,7 +57,7 @@ describe("keyword-detector ultrawork edge trigger", () => {
     }
 
     // when
-    await hook["chat.message"]({ sessionID: "main-session", agent: "sisyphus" }, output)
+    await hook["chat.message"]({ sessionID: "main-session", agent: "cerberus" }, output)
 
     // then
     expect(toastCalls).toContain("Ultrawork Mode Activated")
@@ -66,7 +66,7 @@ describe("keyword-detector ultrawork edge trigger", () => {
     expect(output.parts[0]?.text).toContain(" hi there ulw ")
   })
 
-  test("#given greeting before ulw with a trailing task #when chat.message fires #then ultrawork activates and preserves the task without starting ralph loop", async () => {
+  test("#given greeting before ulw with a trailing task #when chat.message fires #then fullscan activates and preserves the task without starting ralph loop", async () => {
     // given
     const toastCalls: string[] = []
     const startLoopCalls: StartLoopCall[] = []
@@ -81,7 +81,7 @@ describe("keyword-detector ultrawork edge trigger", () => {
     }
 
     // when
-    await hook["chat.message"]({ sessionID: "main-session", agent: "sisyphus" }, output)
+    await hook["chat.message"]({ sessionID: "main-session", agent: "cerberus" }, output)
 
     // then
     expect(toastCalls).toContain("Ultrawork Mode Activated")
@@ -90,7 +90,7 @@ describe("keyword-detector ultrawork edge trigger", () => {
     expect(output.parts[0]?.text).toContain("hey ulw fix the flaky keyword tests")
   })
 
-  test("#given ulw mentioned in the middle of a sentence #when chat.message fires #then ultrawork still activates without starting ralph loop", async () => {
+  test("#given ulw mentioned in the middle of a sentence #when chat.message fires #then fullscan still activates without starting ralph loop", async () => {
     // given
     const toastCalls: string[] = []
     const startLoopCalls: StartLoopCall[] = []
@@ -105,7 +105,7 @@ describe("keyword-detector ultrawork edge trigger", () => {
     }
 
     // when
-    await hook["chat.message"]({ sessionID: "main-session", agent: "sisyphus" }, output)
+    await hook["chat.message"]({ sessionID: "main-session", agent: "cerberus" }, output)
 
     // then
     expect(toastCalls).toContain("Ultrawork Mode Activated")
@@ -113,7 +113,7 @@ describe("keyword-detector ultrawork edge trigger", () => {
     expect(output.parts[0]?.text).toContain("please ulw fix the flaky keyword tests")
   })
 
-  test("#given trailing ultrawork reference without punctuation #when chat.message fires #then ultrawork still activates without starting ralph loop", async () => {
+  test("#given trailing fullscan reference without punctuation #when chat.message fires #then fullscan still activates without starting ralph loop", async () => {
     // given
     const toastCalls: string[] = []
     const startLoopCalls: StartLoopCall[] = []
@@ -124,15 +124,15 @@ describe("keyword-detector ultrawork edge trigger", () => {
     )
     const output = {
       message: {} as Record<string, unknown>,
-      parts: [{ type: "text", text: "what is ultrawork" }],
+      parts: [{ type: "text", text: "what is fullscan" }],
     }
 
     // when
-    await hook["chat.message"]({ sessionID: "main-session", agent: "sisyphus" }, output)
+    await hook["chat.message"]({ sessionID: "main-session", agent: "cerberus" }, output)
 
     // then
     expect(toastCalls).toContain("Ultrawork Mode Activated")
     expect(startLoopCalls).toHaveLength(0)
-    expect(output.parts[0]?.text).toContain("what is ultrawork")
+    expect(output.parts[0]?.text).toContain("what is fullscan")
   })
 })

@@ -1,4 +1,4 @@
-# Strict tsconfig + Biome
+﻿# Strict tsconfig + Biome
 
 The canonical ultra-strict config. Copy-paste, then add your own paths.
 
@@ -109,7 +109,7 @@ For Bun projects, add to `compilerOptions`:
     "enabled": true,
     "indentStyle": "space",
     "indentWidth": 2,
-    "lineWidth": 100
+    "lineWidth": .00
   },
   "javascript": {
     "formatter": {

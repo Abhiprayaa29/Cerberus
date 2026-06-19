@@ -1,9 +1,9 @@
-import { afterEach, beforeEach, describe, expect, it } from "bun:test"
+﻿import { afterEach, beforeEach, describe, expect, it } from "bun:test"
 import type {
   TelemetryCaptureMessage,
   TelemetryTransportFactory,
   TelemetryTransportOptions,
-} from "@oh-my-opencode/telemetry-core"
+} from "@oh-my-open-pentest/telemetry-core"
 
 type CapturedPostHogMessage = TelemetryCaptureMessage
 type PostHogModule = Awaited<ReturnType<typeof importPostHogModule>>
@@ -27,14 +27,14 @@ function resetPostHogModuleTestSeams(): void {
 }
 
 function enableTelemetryEnv(): void {
-  process.env.OMO_DISABLE_POSTHOG = "0"
-  process.env.OMO_SEND_ANONYMOUS_TELEMETRY = "1"
+  process.env.OMOP_DISABLE_POSTHOG = "0"
+  process.env.OMOP_SEND_ANONYMOUS_TELEMETRY = "1"
   process.env.POSTHOG_API_KEY = "test-api-key"
 }
 
 function clearTelemetryEnv(): void {
-  delete process.env.OMO_DISABLE_POSTHOG
-  delete process.env.OMO_SEND_ANONYMOUS_TELEMETRY
+  delete process.env.OMOP_DISABLE_POSTHOG
+  delete process.env.OMOP_SEND_ANONYMOUS_TELEMETRY
   delete process.env.POSTHOG_API_KEY
   delete process.env.POSTHOG_HOST
 }
@@ -87,8 +87,8 @@ describe("posthog client creation", () => {
 
   it("creates a plugin client when os.cpus throws", async () => {
     // given
-    process.env.OMO_DISABLE_POSTHOG = "0"
-    process.env.OMO_SEND_ANONYMOUS_TELEMETRY = "1"
+    process.env.OMOP_DISABLE_POSTHOG = "0"
+    process.env.OMOP_SEND_ANONYMOUS_TELEMETRY = "1"
     process.env.POSTHOG_API_KEY = "test-api-key"
 
     const posthogModule = usePostHogModule(await importPostHogModule())
@@ -172,9 +172,9 @@ describe("posthog disable env var parsing", () => {
   const disableValues = ["TRUE", "True", "Yes", "YES", " 1 ", " true "]
 
   for (const value of disableValues) {
-    it(`treats OMO_DISABLE_POSTHOG=${JSON.stringify(value)} as disabled`, async () => {
+    it(`treats OMOP_DISABLE_POSTHOG=${JSON.stringify(value)} as disabled`, async () => {
       // given
-      process.env.OMO_DISABLE_POSTHOG = value
+      process.env.OMOP_DISABLE_POSTHOG = value
       process.env.POSTHOG_API_KEY = "test-api-key"
       const captured: CapturedPostHogMessage[] = []
       const posthogModule = usePostHogModule(await importPostHogModule())
@@ -196,9 +196,9 @@ describe("posthog disable env var parsing", () => {
   const sendFalsyValues = ["NO", "No", "FALSE", "False", " 0 "]
 
   for (const value of sendFalsyValues) {
-    it(`treats OMO_SEND_ANONYMOUS_TELEMETRY=${JSON.stringify(value)} as disabled`, async () => {
+    it(`treats OMOP_SEND_ANONYMOUS_TELEMETRY=${JSON.stringify(value)} as disabled`, async () => {
       // given
-      process.env.OMO_SEND_ANONYMOUS_TELEMETRY = value
+      process.env.OMOP_SEND_ANONYMOUS_TELEMETRY = value
       process.env.POSTHOG_API_KEY = "test-api-key"
       const captured: CapturedPostHogMessage[] = []
       const posthogModule = usePostHogModule(await importPostHogModule())
@@ -266,9 +266,9 @@ describe("posthog trackActive emission contract", () => {
     const expectedPropertyKeys = ["$os", "$os_version", "$process_person_profile", "ci", "cpu_count", "cpu_model", "day_utc", "locale", "os_arch", "os_type", "package_name", "package_version", "platform", "plugin_name", "reason", "runtime", "runtime_version", "shell", "source", "terminal", "timezone", "total_memory_gb"]
     expect(Object.keys(properties).sort()).toEqual(expectedPropertyKeys.sort())
     expect(properties).toMatchObject({
-      platform: "oh-my-opencode",
-      package_name: "oh-my-openagent",
-      plugin_name: "oh-my-openagent",
+      platform: "oh-my-open-pentest",
+      package_name: "oh-my-open-pentest",
+      plugin_name: "oh-my-open-pentest",
       source: "cli",
       $os: "linux",
       $os_version: "6.8.0-test",

@@ -1,13 +1,13 @@
-import {
+﻿import {
   cleanupTelemetryDiagnostics as cleanupCoreTelemetryDiagnostics,
   getTelemetryDiagnosticsFilePath as getCoreTelemetryDiagnosticsFilePath,
   writeTelemetryDiagnostic as writeCoreTelemetryDiagnostic,
-} from "@oh-my-opencode/telemetry-core"
+} from "@oh-my-open-pentest/telemetry-core"
 import type {
   TelemetryDiagnosticErrorKind,
   TelemetryDiagnosticEvent,
   TelemetryDiagnosticInput,
-} from "@oh-my-opencode/telemetry-core"
+} from "@oh-my-open-pentest/telemetry-core"
 
 import { getActivityStateDir } from "./data-path"
 

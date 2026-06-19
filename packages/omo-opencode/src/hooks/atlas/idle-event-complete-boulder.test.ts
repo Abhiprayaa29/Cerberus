@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it } from "bun:test"
+﻿import { afterEach, beforeEach, describe, expect, it } from "bun:test"
 import { randomUUID } from "node:crypto"
 import { existsSync, mkdirSync, rmSync, writeFileSync } from "node:fs"
 import { tmpdir } from "node:os"
@@ -6,13 +6,13 @@ import { join } from "node:path"
 import { clearBoulderState, readBoulderState, writeBoulderState } from "../../features/boulder-state"
 import { unsafeTestValue } from "../../../../../test-support/unsafe-test-value"
 
-const { createAtlasHook } = await import("./index")
+const { createArgusHook } = await import("./index")
 
-describe("atlas hook idle-event complete boulder", () => {
+describe("argus hook idle-event complete boulder", () => {
   let testDirectory = ""
 
   beforeEach(() => {
-    testDirectory = join(tmpdir(), `atlas-idle-complete-${randomUUID()}`)
+    testDirectory = join(tmpdir(), `argus-idle-complete-${randomUUID()}`)
     if (!existsSync(testDirectory)) {
       mkdirSync(testDirectory, { recursive: true })
     }
@@ -50,7 +50,7 @@ describe("atlas hook idle-event complete boulder", () => {
       },
     })
 
-    const hook = createAtlasHook(unsafeTestValue<Parameters<typeof createAtlasHook>[0]>({
+    const hook = createArgusHook(unsafeTestValue<Parameters<typeof createArgusHook>[0]>({
       directory: testDirectory,
       client: {
         session: {

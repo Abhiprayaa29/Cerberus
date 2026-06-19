@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, mock } from "bun:test"
+﻿import { afterEach, describe, expect, it, mock } from "bun:test"
 
 async function* createEmptyEventStream(): AsyncIterable<unknown> {}
 
@@ -13,7 +13,7 @@ describe("run telemetry isolation", () => {
       loadPluginConfig: mock(() => ({})),
     }))
     mock.module("./agent-resolver", () => ({
-      resolveRunAgent: mock(() => "Sisyphus - Ultraworker"),
+      resolveRunAgent: mock(() => "Cerberus - Ultraworker"),
     }))
     mock.module("./server-connection", () => ({
       createServerConnection: mock(async () => ({

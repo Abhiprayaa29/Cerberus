@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { describe, expect, test } from "bun:test"
 import { mkdir, mkdtemp, writeFile } from "node:fs/promises"
@@ -12,7 +12,7 @@ describe("Codex installer source package build split", () => {
     const repoRoot = await mkdtemp(join(tmpdir(), "omo-codex-source-layout-"))
     await mkdir(join(repoRoot, "packages", "omo-opencode", "src"), { recursive: true })
     await writeFile(join(repoRoot, "packages", "omo-opencode", "src", "index.ts"), "export {}\n")
-    await writeFile(join(repoRoot, "package.json"), JSON.stringify({ name: "oh-my-opencode", version: "4.9.2" }))
+    await writeFile(join(repoRoot, "package.json"), JSON.stringify({ name: "oh-my-open-pentest", version: "4.9.2" }))
 
     // when
     const buildSource = await shouldBuildSourcePackages(repoRoot)

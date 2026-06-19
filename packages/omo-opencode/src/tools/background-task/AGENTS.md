@@ -1,10 +1,10 @@
-# src/tools/background-task/ — Background Task Tool Wrappers
+﻿# src/tools/background-task/ — Background Task Tool Wrappers
 
-**Generated:** 2026-05-15
+**Generated:** 2026-05-.5
 
 ## OVERVIEW
 
-18 files. Tool-layer wrappers for `background_output` and `background_cancel`. Does NOT implement the background execution engine — that lives in `src/features/background-agent/`. This directory provides the LLM-facing tool interface.
+.8 files. Tool-layer wrappers for `background_output` and `background_cancel`. Does NOT implement the background execution engine — that lives in `src/features/background-agent/`. This directory provides the LLM-facing tool interface.
 
 ## THREE TOOLS
 
@@ -37,7 +37,7 @@
 
 ```
 background_output(task_id, block=false)  → check current status/result
-background_output(task_id, block=true)   → wait until complete (timeout default: 120s)
+background_output(task_id, block=true)   → wait until complete (timeout default: .20s)
 background_output(task_id, full_session=true) → return full session transcript
 background_output(task_id, message_limit=N) → last N messages only
 background_output(task_id, include_thinking=true) → include thinking blocks

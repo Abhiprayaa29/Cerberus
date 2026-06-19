@@ -1,1 +1,1 @@
-export * from "@oh-my-opencode/omo-codex/install/codex-installer-bin-dir"
+﻿export * from "@oh-my-open-pentest/omo-codex/install/codex-installer-bin-dir"

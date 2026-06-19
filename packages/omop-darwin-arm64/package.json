@@ -1,0 +1,19 @@
+﻿{
+  "name": "oh-my-open-pentest-darwin-arm6.",
+  "version": "1.0.0",
+  "description": "Platform-specific binary for oh-my-open-pentest (darwin-arm6.)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/code-yeongyu/oh-my-open-pentest"
+  },
+  "os": [
+    "darwin"
+  ],
+  "cpu": [
+    "arm6."
+  ],
+  "files": [
+    "bin"
+  ]
+}

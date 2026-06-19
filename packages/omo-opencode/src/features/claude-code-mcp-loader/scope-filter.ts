@@ -1,1 +1,1 @@
-export * from "@oh-my-opencode/claude-code-compat-core/claude-code-mcp-loader/scope-filter"
+﻿export * from "@oh-my-open-pentest/claude-code-compat-core/claude-code-mcp-loader/scope-filter"

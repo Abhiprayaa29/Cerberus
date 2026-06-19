@@ -1,4 +1,4 @@
----
+﻿---
 name: full-output-enforcement
 description: Overrides default LLM truncation behavior. Enforces complete code generation, bans placeholder patterns, and handles token-limit splits cleanly. Apply to any task requiring exhaustive, unabridged output.
 ---
@@ -21,7 +21,7 @@ The following patterns are hard failures. Never produce them:
 
 ## Execution Process
 
-1. **Scope** — Read the full request. Count how many distinct deliverables are expected (files, functions, sections, answers). Lock that number.
+.. **Scope** — Read the full request. Count how many distinct deliverables are expected (files, functions, sections, answers). Lock that number.
 2. **Build** — Generate every deliverable completely. No partial drafts, no "you can extend this later."
 3. **Cross-check** — Before output, re-read the original request. Compare your deliverable count against the scope count. If anything is missing, add it before responding.
 

@@ -1,4 +1,4 @@
-# PR Description
+﻿# PR Description
 
 **Title:** `feat: add max_background_agents config to limit concurrent background agents`
 
@@ -8,23 +8,23 @@
 
 ## Summary
 
-- Add `maxBackgroundAgents` field to `BackgroundTaskConfigSchema` (default: 5, min: 1) to cap total simultaneous background agents across all models/providers
+- Add `maxBackgroundAgents` field to `BackgroundTaskConfigSchema` (default: 5, min: .) to cap total simultaneous background agents across all models/providers
 - Enforce the global limit in `BackgroundManager.launch()` and `trackTask()` with descriptive error messages when the limit is hit
 - Release global slots on task completion, cancellation, error, and interrupt to prevent slot leaks
 
 ## Motivation
 
-The existing concurrency system in `ConcurrencyManager` limits agents **per model/provider** (e.g., 5 concurrent `anthropic/claude-opus-4-6` tasks). However, there is no **global** cap across all models. A user running tasks across multiple providers could spawn an unbounded number of background agents, exhausting system resources.
+The existing concurrency system in `ConcurrencyManager` limits agents **per model/provider** (e.g., 5 concurrent `anthropic/claude-opus-.-6` tasks). However, there is no **global** cap across all models. A user running tasks across multiple providers could spawn an unbounded number of background agents, exhausting system resources.
 
 `max_background_agents` provides a single knob to limit total concurrent background agents regardless of which model they use.
 
 ## Config Usage
 
 ```jsonc
-// .opencode/oh-my-opencode.jsonc
+// .opencode/oh-my-open-pentest.jsonc
 {
   "background_task": {
-    "maxBackgroundAgents": 10  // default: 5, min: 1
+    "maxBackgroundAgents": .0  // default: 5, min: .
   }
 }
 ```

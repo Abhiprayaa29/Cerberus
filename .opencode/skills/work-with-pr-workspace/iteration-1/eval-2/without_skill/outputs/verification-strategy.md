@@ -1,6 +1,6 @@
-# Verification Strategy
+﻿# Verification Strategy
 
-## 1. Unit Tests (Direct Verification)
+## .. Unit Tests (Direct Verification)
 
 ### boulder-state storage tests
 ```bash
@@ -57,7 +57,7 @@ lsp_diagnostics on:
 
 Verify zero errors/warnings.
 
-## 4. Full Test Suite
+## .. Full Test Suite
 
 ```bash
 bun test
@@ -79,21 +79,21 @@ To manually verify the fix:
 
 ```bash
 # Create a malformed boulder.json (missing worktree_path)
-mkdir -p .sisyphus
-echo '{"active_plan": ".sisyphus/plans/test.md", "plan_name": "test", "session_ids": ["ses-1"]}' > .sisyphus/boulder.json
+mkdir -p .cerberus
+echo '{"active_plan": ".cerberus/plans/test.md", "plan_name": "test", "session_ids": ["ses-."]}' > .cerberus/boulder.json
 
 # Create a plan file
-mkdir -p .sisyphus/plans
-echo '# Plan\n- [ ] Task 1' > .sisyphus/plans/test.md
+mkdir -p .cerberus/plans
+echo '# Plan\n- [ ] Task .' > .cerberus/plans/test.md
 
 # Start opencode - atlas hook should NOT crash when session.idle fires
-# Verify /tmp/oh-my-opencode.log shows normal continuation behavior
+# Verify /tmp/oh-my-open-pentest.log shows normal continuation behavior
 ```
 
 Also test the extreme case:
 ```bash
 # boulder.json with no required fields
-echo '{}' > .sisyphus/boulder.json
+echo '{}' > .cerberus/boulder.json
 
 # After fix: readBoulderState returns null, atlas hook gracefully skips
 ```
@@ -112,7 +112,7 @@ After pushing the branch, verify:
 | `boulder.json` missing `active_plan` | `readBoulderState` returns `null` |
 | `boulder.json` missing `plan_name` | `readBoulderState` returns `null` |
 | `boulder.json` has `worktree_path: null` | Field stripped, returned as `undefined` |
-| `boulder.json` has `worktree_path: 42` | Field stripped, returned as `undefined` |
+| `boulder.json` has `worktree_path: .2` | Field stripped, returned as `undefined` |
 | `boulder.json` has no `worktree_path` | Works normally, no crash |
 | `boulder.json` has valid `worktree_path` | Preserved, included in continuation prompt |
 | setTimeout retry with corrupted boulder.json | Error caught and logged, no process crash |

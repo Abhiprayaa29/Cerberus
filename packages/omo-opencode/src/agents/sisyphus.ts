@@ -1,10 +1,10 @@
-import type { AgentPromptMetadata } from "./types";
+﻿import type { AgentPromptMetadata } from "./types";
 
-export const SISYPHUS_PROMPT_METADATA: AgentPromptMetadata = {
+export const CERBERUS_PROMPT_METADATA: AgentPromptMetadata = {
   category: "utility",
   cost: "EXPENSIVE",
-  promptAlias: "Sisyphus",
+  promptAlias: "Cerberus",
   triggers: [],
 };
 
-export { createSisyphusAgent } from "./sisyphus-agent-factory";
+export { createCerberusAgent } from "./cerberus-agent-factory";

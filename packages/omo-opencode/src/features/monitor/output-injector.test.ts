@@ -1,4 +1,4 @@
-import { describe, expect, test } from "bun:test"
+﻿import { describe, expect, test } from "bun:test"
 
 import { MonitorOutputInjector } from "./output-injector"
 import type { MonitorCounters, MonitorRecord, OutputBatch } from "./types"
@@ -236,7 +236,7 @@ describe("MonitorOutputInjector", () => {
       // given
       const record = createRecord()
       const batch = createBatch(7)
-      const acceptedText = "[OMO MONITOR OUTPUT]\nmonitor_id: mon_1\nbatch: 7\n<!-- OMO_INTERNAL_INITIATOR -->\n<!-- OMO_INTERNAL_NOREPLY -->"
+      const acceptedText = "[OMO MONITOR OUTPUT]\nmonitor_id: mon_1\nbatch: 7\n<!-- OMOP_INTERNAL_INITIATOR -->\n<!-- OMO_INTERNAL_NOREPLY -->"
       const { injector, calls } = createHarness({
         dispatchResults: [{ status: "failed", error: new Error("unexpected eof"), dispatchAttempted: true }],
         messages: [{ role: "user", time: { created: 1_000 }, parts: [{ type: "text", text: acceptedText }] }],
@@ -277,7 +277,7 @@ describe("MonitorOutputInjector", () => {
       const priorNoReplyMonitorMessage = {
         role: "user",
         time: { created: 900 },
-        parts: [{ type: "text", text: "[OMO MONITOR OUTPUT]\nmonitor_id: mon_1\nbatch: 1\n<!-- OMO_INTERNAL_INITIATOR -->\n<!-- OMO_INTERNAL_NOREPLY -->" }],
+        parts: [{ type: "text", text: "[OMO MONITOR OUTPUT]\nmonitor_id: mon_1\nbatch: 1\n<!-- OMOP_INTERNAL_INITIATOR -->\n<!-- OMO_INTERNAL_NOREPLY -->" }],
       }
       const batch = createBatch(12)
       const { injector, calls } = createHarness({ messages: [priorNoReplyMonitorMessage], now: 1_000 })

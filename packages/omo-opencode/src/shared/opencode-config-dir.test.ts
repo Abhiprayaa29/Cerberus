@@ -1,4 +1,4 @@
-import { describe, test, expect, beforeEach, afterEach, spyOn } from "bun:test"
+﻿import { describe, test, expect, beforeEach, afterEach, spyOn } from "bun:test"
 import * as fs from "node:fs"
 import { homedir } from "node:os"
 import { join, resolve, win32 } from "node:path"
@@ -328,7 +328,7 @@ describe("opencode-config-dir", () => {
       expect(paths.configJson).toBe(join(expectedDir, "opencode.json"))
       expect(paths.configJsonc).toBe(join(expectedDir, "opencode.jsonc"))
       expect(paths.packageJson).toBe(join(expectedDir, "package.json"))
-      expect(paths.omoConfig).toBe(join(expectedDir, "oh-my-openagent.json"))
+      expect(paths.omoConfig).toBe(join(expectedDir, "oh-my-open-pentest.json"))
     })
 
     test("returns all config paths for desktop binary", () => {
@@ -344,7 +344,7 @@ describe("opencode-config-dir", () => {
       expect(paths.configJson).toBe(join(expectedDir, "opencode.json"))
       expect(paths.configJsonc).toBe(join(expectedDir, "opencode.jsonc"))
       expect(paths.packageJson).toBe(join(expectedDir, "package.json"))
-      expect(paths.omoConfig).toBe(join(expectedDir, "oh-my-openagent.json"))
+      expect(paths.omoConfig).toBe(join(expectedDir, "oh-my-open-pentest.json"))
     })
   })
 

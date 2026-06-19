@@ -1,4 +1,4 @@
-export { disposeDefaultLspManager } from "@oh-my-opencode/lsp-core/lsp/manager";
+﻿export { disposeDefaultLspManager } from "@oh-my-open-pentest/lsp-core/lsp/manager";
 export {
 	type CallToolOptions,
 	callDiagnosticsViaDaemon,

@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, test } from "bun:test"
+﻿import { afterEach, describe, expect, test } from "bun:test"
 import { randomUUID } from "node:crypto"
 import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises"
 import { tmpdir } from "node:os"
@@ -30,7 +30,7 @@ async function seedRuntimeState(baseDir: string, teamName: string, leadSessionId
       createdAt: Date.now(),
       leadAgentId: "lead",
       members: [
-        { kind: "subagent_type", name: "lead", subagent_type: "sisyphus", backendType: "in-process", isActive: true, color: "red" },
+        { kind: "subagent_type", name: "lead", subagent_type: "cerberus", backendType: "in-process", isActive: true, color: "red" },
         ...memberSessionIds.map((sessionID, index) => ({
           kind: "category" as const,
           name: `member-${index + 1}`,

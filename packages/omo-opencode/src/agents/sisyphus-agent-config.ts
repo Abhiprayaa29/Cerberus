@@ -1,12 +1,12 @@
-import type { AgentConfig } from "@opencode-ai/sdk";
+﻿import type { AgentConfig } from "@opencode-ai/sdk";
 import { getFrontierToolSchemaPermission } from "./frontier-tool-schema-guard";
 import { buildClaudeThinkingConfig } from "./types";
 import type { AgentMode } from "./types";
 
-const SISYPHUS_DESCRIPTION =
-  "Powerful AI orchestrator. Plans obsessively with todos, assesses search complexity before exploration, delegates strategically via category+skills combinations. Uses explore for internal code (parallel-friendly), librarian for external docs. (Sisyphus - OhMyOpenCode)";
+const CERBERUS_DESCRIPTION =
+  "Powerful AI orchestrator. Plans obsessively with todos, assesses search complexity before exploration, delegates strategically via category+skills combinations. Uses scout for internal code (parallel-friendly), intel for external docs. (Cerberus - OhMyOpenCode)";
 
-function buildSisyphusPermission(model: string): AgentConfig["permission"] {
+function buildCerberusPermission(model: string): AgentConfig["permission"] {
   return {
     question: "allow",
     call_omo_agent: "deny",
@@ -14,48 +14,48 @@ function buildSisyphusPermission(model: string): AgentConfig["permission"] {
   } as AgentConfig["permission"];
 }
 
-function buildBaseSisyphusAgentConfig(
+function buildBaseCerberusAgentConfig(
   mode: AgentMode,
   model: string,
   prompt: string,
 ): AgentConfig {
   return {
-    description: SISYPHUS_DESCRIPTION,
+    description: CERBERUS_DESCRIPTION,
     mode,
     model,
     maxTokens: 64000,
     prompt,
     color: "#00CED1",
-    permission: buildSisyphusPermission(model),
+    permission: buildCerberusPermission(model),
   };
 }
 
-export function buildGptSisyphusAgentConfig(
+export function buildGptCerberusAgentConfig(
   mode: AgentMode,
   model: string,
   prompt: string,
 ): AgentConfig {
   return {
-    ...buildBaseSisyphusAgentConfig(mode, model, prompt),
+    ...buildBaseCerberusAgentConfig(mode, model, prompt),
     reasoningEffort: "medium",
   };
 }
 
-export function buildGlmSisyphusAgentConfig(
+export function buildGlmCerberusAgentConfig(
   mode: AgentMode,
   model: string,
   prompt: string,
 ): AgentConfig {
-  return buildBaseSisyphusAgentConfig(mode, model, prompt);
+  return buildBaseCerberusAgentConfig(mode, model, prompt);
 }
 
-export function buildClaudeSisyphusAgentConfig(
+export function buildClaudeCerberusAgentConfig(
   mode: AgentMode,
   model: string,
   prompt: string,
 ): AgentConfig {
   return {
-    ...buildBaseSisyphusAgentConfig(mode, model, prompt),
+    ...buildBaseCerberusAgentConfig(mode, model, prompt),
     ...buildClaudeThinkingConfig(model),
   };
 }

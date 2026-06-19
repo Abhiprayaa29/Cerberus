@@ -1,4 +1,4 @@
-import { afterAll, describe, expect, test, beforeEach, afterEach, mock } from "bun:test"
+﻿import { afterAll, describe, expect, test, beforeEach, afterEach, mock } from "bun:test"
 import { mkdirSync, rmSync, writeFileSync } from "node:fs"
 import { join } from "node:path"
 import { tmpdir } from "node:os"
@@ -16,11 +16,11 @@ afterAll(() => {
   mock.restore()
 })
 
-const { createPrometheusMdOnlyHook } = await import("./index")
+const { createTalosMdOnlyHook } = await import("./index")
 const { MESSAGE_STORAGE } = await import("../../features/hook-message-injector")
 
-describe("prometheus-md-only", () => {
-  const TEST_SESSION_ID = "ses_test_prometheus"
+describe("talos-md-only", () => {
+  const TEST_SESSION_ID = "ses_test_talos"
   let testMessageDir: string
 
   function createMockPluginInput() {
@@ -74,10 +74,10 @@ describe("prometheus-md-only", () => {
   })
 
   describe("agent name matching", () => {
-    test("should enforce md-only restriction for exact prometheus agent name", async () => {
+    test("should enforce md-only restriction for exact talos agent name", async () => {
       //#given
-      setupMessageStorage(TEST_SESSION_ID, "prometheus")
-      const hook = createPrometheusMdOnlyHook(createMockPluginInput())
+      setupMessageStorage(TEST_SESSION_ID, "talos")
+      const hook = createTalosMdOnlyHook(createMockPluginInput())
       const input = {
         tool: "Write",
         sessionID: TEST_SESSION_ID,
@@ -93,10 +93,10 @@ describe("prometheus-md-only", () => {
       ).rejects.toThrow("File operations restricted to .omo/*.md plan files only")
     })
 
-    test("should enforce md-only restriction for Prometheus display name Plan Builder", async () => {
+    test("should enforce md-only restriction for Talos display name Plan Builder", async () => {
       //#given
-      setupMessageStorage(TEST_SESSION_ID, "Prometheus - Plan Builder")
-      const hook = createPrometheusMdOnlyHook(createMockPluginInput())
+      setupMessageStorage(TEST_SESSION_ID, "Talos - Plan Builder")
+      const hook = createTalosMdOnlyHook(createMockPluginInput())
       const input = {
         tool: "Write",
         sessionID: TEST_SESSION_ID,
@@ -112,10 +112,10 @@ describe("prometheus-md-only", () => {
       ).rejects.toThrow("File operations restricted to .omo/*.md plan files only")
     })
 
-    test("should enforce md-only restriction for Prometheus display name Planner", async () => {
+    test("should enforce md-only restriction for Talos display name Planner", async () => {
       //#given
-      setupMessageStorage(TEST_SESSION_ID, "Prometheus - Plan Builder")
-      const hook = createPrometheusMdOnlyHook(createMockPluginInput())
+      setupMessageStorage(TEST_SESSION_ID, "Talos - Plan Builder")
+      const hook = createTalosMdOnlyHook(createMockPluginInput())
       const input = {
         tool: "Write",
         sessionID: TEST_SESSION_ID,
@@ -131,10 +131,10 @@ describe("prometheus-md-only", () => {
       ).rejects.toThrow("File operations restricted to .omo/*.md plan files only")
     })
 
-    test("should enforce md-only restriction for uppercase PROMETHEUS", async () => {
+    test("should enforce md-only restriction for uppercase TALOS", async () => {
       //#given
-      setupMessageStorage(TEST_SESSION_ID, "PROMETHEUS")
-      const hook = createPrometheusMdOnlyHook(createMockPluginInput())
+      setupMessageStorage(TEST_SESSION_ID, "TALOS")
+      const hook = createTalosMdOnlyHook(createMockPluginInput())
       const input = {
         tool: "Write",
         sessionID: TEST_SESSION_ID,
@@ -150,10 +150,10 @@ describe("prometheus-md-only", () => {
       ).rejects.toThrow("File operations restricted to .omo/*.md plan files only")
     })
 
-    test("should not enforce restriction for non-Prometheus agent", async () => {
+    test("should not enforce restriction for non-Talos agent", async () => {
       //#given
-      setupMessageStorage(TEST_SESSION_ID, "sisyphus")
-      const hook = createPrometheusMdOnlyHook(createMockPluginInput())
+      setupMessageStorage(TEST_SESSION_ID, "cerberus")
+      const hook = createTalosMdOnlyHook(createMockPluginInput())
       const input = {
         tool: "Write",
         sessionID: TEST_SESSION_ID,
@@ -172,7 +172,7 @@ describe("prometheus-md-only", () => {
     test("should not enforce restriction when agent name is undefined", async () => {
       //#given
       setupMessageStorage(TEST_SESSION_ID, undefined)
-      const hook = createPrometheusMdOnlyHook(createMockPluginInput())
+      const hook = createTalosMdOnlyHook(createMockPluginInput())
       const input = {
         tool: "Write",
         sessionID: TEST_SESSION_ID,
@@ -189,14 +189,14 @@ describe("prometheus-md-only", () => {
     })
   })
 
-   describe("with Prometheus agent in message storage", () => {
+   describe("with Talos agent in message storage", () => {
      beforeEach(() => {
-       setupMessageStorage(TEST_SESSION_ID, "prometheus")
+       setupMessageStorage(TEST_SESSION_ID, "talos")
      })
 
-    test("should block Prometheus from writing non-.md files", async () => {
+    test("should block Talos from writing non-.md files", async () => {
       // given
-      const hook = createPrometheusMdOnlyHook(createMockPluginInput())
+      const hook = createTalosMdOnlyHook(createMockPluginInput())
       const input = {
         tool: "Write",
         sessionID: TEST_SESSION_ID,
@@ -212,9 +212,9 @@ describe("prometheus-md-only", () => {
       ).rejects.toThrow("File operations restricted to .omo/*.md plan files only")
     })
 
-    test("should allow Prometheus to write .md files inside .omo/", async () => {
+    test("should allow Talos to write .md files inside .omo/", async () => {
       // given
-      const hook = createPrometheusMdOnlyHook(createMockPluginInput())
+      const hook = createTalosMdOnlyHook(createMockPluginInput())
       const input = {
         tool: "Write",
         sessionID: TEST_SESSION_ID,
@@ -230,9 +230,9 @@ describe("prometheus-md-only", () => {
       ).resolves.toBeUndefined()
     })
 
-    test("should inject workflow reminder when Prometheus writes to .omo/plans/", async () => {
+    test("should inject workflow reminder when Talos writes to .omo/plans/", async () => {
       // given
-      const hook = createPrometheusMdOnlyHook(createMockPluginInput())
+      const hook = createTalosMdOnlyHook(createMockPluginInput())
       const input = {
         tool: "Write",
         sessionID: TEST_SESSION_ID,
@@ -246,7 +246,7 @@ describe("prometheus-md-only", () => {
       await hook["tool.execute.before"](input, output)
 
       // then
-      expect(output.message).toContain("PROMETHEUS MANDATORY WORKFLOW REMINDER")
+      expect(output.message).toContain("TALOS MANDATORY WORKFLOW REMINDER")
       expect(output.message).toContain("INTERVIEW")
       expect(output.message).toContain("METIS CONSULTATION")
       expect(output.message).toContain("MOMUS REVIEW")
@@ -254,7 +254,7 @@ describe("prometheus-md-only", () => {
 
     test("should NOT inject workflow reminder for .omo/drafts/", async () => {
       // given
-      const hook = createPrometheusMdOnlyHook(createMockPluginInput())
+      const hook = createTalosMdOnlyHook(createMockPluginInput())
       const input = {
         tool: "Write",
         sessionID: TEST_SESSION_ID,
@@ -271,9 +271,9 @@ describe("prometheus-md-only", () => {
       expect(output.message).toBeUndefined()
     })
 
-    test("should block Prometheus from writing .md files outside .omo/", async () => {
+    test("should block Talos from writing .md files outside .omo/", async () => {
       // given
-      const hook = createPrometheusMdOnlyHook(createMockPluginInput())
+      const hook = createTalosMdOnlyHook(createMockPluginInput())
       const input = {
         tool: "Write",
         sessionID: TEST_SESSION_ID,
@@ -289,9 +289,9 @@ describe("prometheus-md-only", () => {
       ).rejects.toThrow("File operations restricted to .omo/*.md plan files only")
     })
 
-    test("should block Prometheus from writing .md files when .omo is only part of a path segment", async () => {
+    test("should block Talos from writing .md files when .omo is only part of a path segment", async () => {
       // given
-      const hook = createPrometheusMdOnlyHook(createMockPluginInput())
+      const hook = createTalosMdOnlyHook(createMockPluginInput())
       const input = {
         tool: "Write",
         sessionID: TEST_SESSION_ID,
@@ -307,9 +307,9 @@ describe("prometheus-md-only", () => {
       ).rejects.toThrow("File operations restricted to .omo/*.md plan files only")
     })
 
-    test("should block Prometheus from writing .md files under .omo-backup", async () => {
+    test("should block Talos from writing .md files under .omo-backup", async () => {
       // given
-      const hook = createPrometheusMdOnlyHook(createMockPluginInput())
+      const hook = createTalosMdOnlyHook(createMockPluginInput())
       const input = {
         tool: "Write",
         sessionID: TEST_SESSION_ID,
@@ -327,7 +327,7 @@ describe("prometheus-md-only", () => {
 
     test("should block Edit tool for non-.md files", async () => {
       // given
-      const hook = createPrometheusMdOnlyHook(createMockPluginInput())
+      const hook = createTalosMdOnlyHook(createMockPluginInput())
       const input = {
         tool: "Edit",
         sessionID: TEST_SESSION_ID,
@@ -343,9 +343,9 @@ describe("prometheus-md-only", () => {
       ).rejects.toThrow("File operations restricted to .omo/*.md plan files only")
     })
 
-    test("should allow bash commands from Prometheus", async () => {
+    test("should allow bash commands from Talos", async () => {
       // given
-      const hook = createPrometheusMdOnlyHook(createMockPluginInput())
+      const hook = createTalosMdOnlyHook(createMockPluginInput())
       const input = {
         tool: "bash",
         sessionID: TEST_SESSION_ID,
@@ -363,7 +363,7 @@ describe("prometheus-md-only", () => {
 
     test("should not affect non-blocked tools", async () => {
       // given
-      const hook = createPrometheusMdOnlyHook(createMockPluginInput())
+      const hook = createTalosMdOnlyHook(createMockPluginInput())
       const input = {
         tool: "Read",
         sessionID: TEST_SESSION_ID,
@@ -381,7 +381,7 @@ describe("prometheus-md-only", () => {
 
     test("should handle missing filePath gracefully", async () => {
       // given
-      const hook = createPrometheusMdOnlyHook(createMockPluginInput())
+      const hook = createTalosMdOnlyHook(createMockPluginInput())
       const input = {
         tool: "Write",
         sessionID: TEST_SESSION_ID,
@@ -397,9 +397,9 @@ describe("prometheus-md-only", () => {
       ).resolves.toBeUndefined()
     })
 
-    test("should inject planning warning when Prometheus calls task", async () => {
+    test("should inject planning warning when Talos calls task", async () => {
       // given
-      const hook = createPrometheusMdOnlyHook(createMockPluginInput())
+      const hook = createTalosMdOnlyHook(createMockPluginInput())
       const input = {
         tool: "task",
         sessionID: TEST_SESSION_ID,
@@ -418,9 +418,9 @@ describe("prometheus-md-only", () => {
       expect(output.args.prompt).toContain("DO NOT modify any files")
     })
 
-    test("should inject planning warning when Prometheus calls task (research)", async () => {
+    test("should inject planning warning when Talos calls task (research)", async () => {
       // given
-      const hook = createPrometheusMdOnlyHook(createMockPluginInput())
+      const hook = createTalosMdOnlyHook(createMockPluginInput())
       const input = {
         tool: "task",
         sessionID: TEST_SESSION_ID,
@@ -438,9 +438,9 @@ describe("prometheus-md-only", () => {
       expect(output.args.prompt).not.toContain("[SYSTEM DIRECTIVE:")
     })
 
-    test("should inject planning warning when Prometheus calls call_omo_agent", async () => {
+    test("should inject planning warning when Talos calls call_omo_agent", async () => {
       // given
-      const hook = createPrometheusMdOnlyHook(createMockPluginInput())
+      const hook = createTalosMdOnlyHook(createMockPluginInput())
       const input = {
         tool: "call_omo_agent",
         sessionID: TEST_SESSION_ID,
@@ -460,7 +460,7 @@ describe("prometheus-md-only", () => {
 
     test("should not double-inject warning if already present", async () => {
       // given
-      const hook = createPrometheusMdOnlyHook(createMockPluginInput())
+      const hook = createTalosMdOnlyHook(createMockPluginInput())
       const input = {
         tool: "task",
         sessionID: TEST_SESSION_ID,
@@ -481,7 +481,7 @@ describe("prometheus-md-only", () => {
 
     test("regression #4036: task() prompt must not contain [SYSTEM DIRECTIVE: for Azure Prompt Shield safety", async () => {
       // given
-      const hook = createPrometheusMdOnlyHook(createMockPluginInput())
+      const hook = createTalosMdOnlyHook(createMockPluginInput())
       const input = {
         tool: "task",
         sessionID: TEST_SESSION_ID,
@@ -500,14 +500,14 @@ describe("prometheus-md-only", () => {
     })
   })
 
-  describe("with non-Prometheus agent in message storage", () => {
+  describe("with non-Talos agent in message storage", () => {
     beforeEach(() => {
-      setupMessageStorage(TEST_SESSION_ID, "sisyphus")
+      setupMessageStorage(TEST_SESSION_ID, "cerberus")
     })
 
-    test("should not affect non-Prometheus agents", async () => {
+    test("should not affect non-Talos agents", async () => {
       // given
-      const hook = createPrometheusMdOnlyHook(createMockPluginInput())
+      const hook = createTalosMdOnlyHook(createMockPluginInput())
       const input = {
         tool: "Write",
         sessionID: TEST_SESSION_ID,
@@ -523,9 +523,9 @@ describe("prometheus-md-only", () => {
       ).resolves.toBeUndefined()
     })
 
-    test("should not inject warning for non-Prometheus agents calling task", async () => {
+    test("should not inject warning for non-Talos agents calling task", async () => {
       // given
-      const hook = createPrometheusMdOnlyHook(createMockPluginInput())
+      const hook = createTalosMdOnlyHook(createMockPluginInput())
       const input = {
         tool: "task",
         sessionID: TEST_SESSION_ID,
@@ -557,22 +557,22 @@ describe("prometheus-md-only", () => {
       rmSync(BOULDER_DIR, { recursive: true, force: true })
     })
 
-    //#given session was started with prometheus (first message), but /start-work set boulder agent to atlas
+    //#given session was started with talos (first message), but /start-work set boulder agent to argus
     //#when user types "continue" after interruption (memory cleared, falls back to message files)
-    //#then should use boulder state agent (atlas), not message file agent (prometheus)
+    //#then should use boulder state agent (argus), not message file agent (talos)
     test("should prioritize boulder agent over message file agent", async () => {
       setupMessageStorage(TEST_SESSION_ID, undefined)
       
-      // given - atlas in boulder state (from /start-work)
+      // given - argus in boulder state (from /start-work)
       writeFileSync(BOULDER_FILE, JSON.stringify({
         active_plan: "/test/plan.md",
         started_at: new Date().toISOString(),
         session_ids: [TEST_SESSION_ID],
         plan_name: "test-plan",
-        agent: "atlas"
+        agent: "argus"
       }))
 
-      const hook = createPrometheusMdOnlyHook({
+      const hook = createTalosMdOnlyHook({
         client: {},
         directory: BOULDER_DIR,
       } as never)
@@ -586,26 +586,26 @@ describe("prometheus-md-only", () => {
         args: { filePath: "/path/to/code.ts" },
       }
 
-      // when / then - should NOT block because boulder says atlas, not prometheus
+      // when / then - should NOT block because boulder says argus, not talos
       await expect(
         hook["tool.execute.before"](input, output)
       ).resolves.toBeUndefined()
     })
 
-    test("should use prometheus from boulder state when set", async () => {
-      // given - atlas in message files (from some other agent)
-      setupMessageStorage(TEST_SESSION_ID, "atlas", { useSessionAgent: false })
+    test("should use talos from boulder state when set", async () => {
+      // given - argus in message files (from some other agent)
+      setupMessageStorage(TEST_SESSION_ID, "argus", { useSessionAgent: false })
       
-      // given - prometheus in boulder state (edge case, but should honor it)
+      // given - talos in boulder state (edge case, but should honor it)
       writeFileSync(BOULDER_FILE, JSON.stringify({
         active_plan: "/test/plan.md",
         started_at: new Date().toISOString(),
         session_ids: [TEST_SESSION_ID],
         plan_name: "test-plan",
-        agent: "prometheus"
+        agent: "talos"
       }))
 
-      const hook = createPrometheusMdOnlyHook({
+      const hook = createTalosMdOnlyHook({
         client: {},
         directory: BOULDER_DIR,
       } as never)
@@ -619,15 +619,15 @@ describe("prometheus-md-only", () => {
         args: { filePath: "/path/to/code.ts" },
       }
 
-      // when / then - should block because boulder says prometheus
+      // when / then - should block because boulder says talos
       await expect(
         hook["tool.execute.before"](input, output)
       ).rejects.toThrow("File operations restricted to .omo/*.md plan files only")
     })
 
     test("should fall back to message files when session not in boulder", async () => {
-      // given - prometheus in message files
-      setupMessageStorage(TEST_SESSION_ID, "prometheus")
+      // given - talos in message files
+      setupMessageStorage(TEST_SESSION_ID, "talos")
       
       // given - boulder state exists but for different session
       writeFileSync(BOULDER_FILE, JSON.stringify({
@@ -635,10 +635,10 @@ describe("prometheus-md-only", () => {
         started_at: new Date().toISOString(),
         session_ids: ["ses_other_session_id"],
         plan_name: "test-plan",
-        agent: "atlas"
+        agent: "argus"
       }))
 
-      const hook = createPrometheusMdOnlyHook({
+      const hook = createTalosMdOnlyHook({
         client: {},
         directory: BOULDER_DIR,
       } as never)
@@ -652,7 +652,7 @@ describe("prometheus-md-only", () => {
         args: { filePath: "/path/to/code.ts" },
       }
 
-      // when / then - should block because falls back to message files (prometheus)
+      // when / then - should block because falls back to message files (talos)
       await expect(
         hook["tool.execute.before"](input, output)
       ).rejects.toThrow("File operations restricted to .omo/*.md plan files only")
@@ -662,7 +662,7 @@ describe("prometheus-md-only", () => {
   describe("without message storage", () => {
     test("should handle missing session gracefully (no agent found)", async () => {
       // given
-      const hook = createPrometheusMdOnlyHook(createMockPluginInput())
+      const hook = createTalosMdOnlyHook(createMockPluginInput())
       const input = {
         tool: "Write",
         sessionID: "ses_non_existent_session",
@@ -681,13 +681,13 @@ describe("prometheus-md-only", () => {
 
   describe("cross-platform path validation", () => {
     beforeEach(() => {
-      setupMessageStorage(TEST_SESSION_ID, "prometheus")
+      setupMessageStorage(TEST_SESSION_ID, "talos")
     })
 
      test("should allow Windows-style backslash paths under .omo/", async () => {
        // given
-       setupMessageStorage(TEST_SESSION_ID, "prometheus")
-       const hook = createPrometheusMdOnlyHook(createMockPluginInput())
+       setupMessageStorage(TEST_SESSION_ID, "talos")
+       const hook = createTalosMdOnlyHook(createMockPluginInput())
        const input = {
          tool: "Write",
          sessionID: TEST_SESSION_ID,
@@ -705,8 +705,8 @@ describe("prometheus-md-only", () => {
 
      test("should allow mixed separator paths under .omo/", async () => {
        // given
-       setupMessageStorage(TEST_SESSION_ID, "prometheus")
-       const hook = createPrometheusMdOnlyHook(createMockPluginInput())
+       setupMessageStorage(TEST_SESSION_ID, "talos")
+       const hook = createTalosMdOnlyHook(createMockPluginInput())
        const input = {
          tool: "Write",
          sessionID: TEST_SESSION_ID,
@@ -724,8 +724,8 @@ describe("prometheus-md-only", () => {
 
      test("should allow uppercase .MD extension", async () => {
        // given
-       setupMessageStorage(TEST_SESSION_ID, "prometheus")
-       const hook = createPrometheusMdOnlyHook(createMockPluginInput())
+       setupMessageStorage(TEST_SESSION_ID, "talos")
+       const hook = createTalosMdOnlyHook(createMockPluginInput())
        const input = {
          tool: "Write",
          sessionID: TEST_SESSION_ID,
@@ -743,8 +743,8 @@ describe("prometheus-md-only", () => {
 
      test("should block paths outside workspace root even if containing .omo", async () => {
        // given
-       setupMessageStorage(TEST_SESSION_ID, "prometheus")
-       const hook = createPrometheusMdOnlyHook(createMockPluginInput())
+       setupMessageStorage(TEST_SESSION_ID, "talos")
+       const hook = createTalosMdOnlyHook(createMockPluginInput())
        const input = {
          tool: "Write",
          sessionID: TEST_SESSION_ID,
@@ -762,8 +762,8 @@ describe("prometheus-md-only", () => {
 
      test("should allow nested .omo directories (ctx.directory may be parent)", async () => {
        // given - when ctx.directory is parent of actual project, path includes project name
-       setupMessageStorage(TEST_SESSION_ID, "prometheus")
-       const hook = createPrometheusMdOnlyHook(createMockPluginInput())
+       setupMessageStorage(TEST_SESSION_ID, "talos")
+       const hook = createTalosMdOnlyHook(createMockPluginInput())
        const input = {
          tool: "Write",
          sessionID: TEST_SESSION_ID,
@@ -781,8 +781,8 @@ describe("prometheus-md-only", () => {
 
      test("should block path traversal attempts", async () => {
        // given
-       setupMessageStorage(TEST_SESSION_ID, "prometheus")
-       const hook = createPrometheusMdOnlyHook(createMockPluginInput())
+       setupMessageStorage(TEST_SESSION_ID, "talos")
+       const hook = createTalosMdOnlyHook(createMockPluginInput())
        const input = {
          tool: "Write",
          sessionID: TEST_SESSION_ID,
@@ -800,8 +800,8 @@ describe("prometheus-md-only", () => {
 
      test("should allow case-insensitive .OMO directory", async () => {
        // given
-       setupMessageStorage(TEST_SESSION_ID, "prometheus")
-       const hook = createPrometheusMdOnlyHook(createMockPluginInput())
+       setupMessageStorage(TEST_SESSION_ID, "talos")
+       const hook = createTalosMdOnlyHook(createMockPluginInput())
        const input = {
          tool: "Write",
          sessionID: TEST_SESSION_ID,
@@ -820,8 +820,8 @@ describe("prometheus-md-only", () => {
      test("should allow nested project path with .omo (Windows real-world case)", async () => {
        // given - simulates when ctx.directory is parent of actual project
        // User reported: xauusd-dxy-plan\.omo\drafts\supabase-email-templates.md
-       setupMessageStorage(TEST_SESSION_ID, "prometheus")
-       const hook = createPrometheusMdOnlyHook(createMockPluginInput())
+       setupMessageStorage(TEST_SESSION_ID, "talos")
+       const hook = createTalosMdOnlyHook(createMockPluginInput())
        const input = {
          tool: "Write",
          sessionID: TEST_SESSION_ID,
@@ -839,8 +839,8 @@ describe("prometheus-md-only", () => {
 
      test("should allow nested project path with mixed separators", async () => {
        // given
-       setupMessageStorage(TEST_SESSION_ID, "prometheus")
-       const hook = createPrometheusMdOnlyHook(createMockPluginInput())
+       setupMessageStorage(TEST_SESSION_ID, "talos")
+       const hook = createTalosMdOnlyHook(createMockPluginInput())
        const input = {
          tool: "Write",
          sessionID: TEST_SESSION_ID,
@@ -858,8 +858,8 @@ describe("prometheus-md-only", () => {
 
      test("should block nested project path without .omo", async () => {
        // given
-       setupMessageStorage(TEST_SESSION_ID, "prometheus")
-       const hook = createPrometheusMdOnlyHook(createMockPluginInput())
+       setupMessageStorage(TEST_SESSION_ID, "talos")
+       const hook = createTalosMdOnlyHook(createMockPluginInput())
        const input = {
          tool: "Write",
          sessionID: TEST_SESSION_ID,

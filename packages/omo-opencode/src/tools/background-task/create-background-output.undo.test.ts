@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { afterEach, describe, expect, test } from "bun:test"
 import type { ToolContext } from "@opencode-ai/plugin/tool"
@@ -9,7 +9,7 @@ import { resetMessageCursor } from "../../shared/session-cursor"
 import type { BackgroundOutputClient, BackgroundOutputManager } from "./clients"
 import { createBackgroundOutput } from "./create-background-output"
 
-const projectDir = "/Users/yeongyu/local-workspaces/oh-my-opencode"
+const projectDir = "/Users/yeongyu/local-workspaces/oh-my-open-pentest"
 
 const parentSessionID = "parent-session"
 const taskSessionID = "task-session"

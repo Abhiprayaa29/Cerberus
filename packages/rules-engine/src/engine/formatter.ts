@@ -1,4 +1,4 @@
-import { isNeverTruncatedRule, truncateBudget, truncateRule } from "./truncator.js";
+﻿import { isNeverTruncatedRule, truncateBudget, truncateRule } from "./truncator.js";
 import type { LoadedRule } from "./types.js";
 
 export interface FormatOptions {
@@ -79,20 +79,20 @@ export function formatStaticBlock(rules: ReadonlyArray<LoadedRule>, options: For
 }
 
 function orderStaticRules(rules: ReadonlyArray<LoadedRule>): LoadedRule[] {
-	const hephaestusRules: LoadedRule[] = [];
+	const scyllaRules: LoadedRule[] = [];
 	const otherRules: LoadedRule[] = [];
 	for (const rule of rules) {
-		if (isHephaestusRule(rule)) {
-			hephaestusRules.push(rule);
+		if (isScyllaRule(rule)) {
+			scyllaRules.push(rule);
 			continue;
 		}
 		otherRules.push(rule);
 	}
-	return [...hephaestusRules, ...otherRules];
+	return [...scyllaRules, ...otherRules];
 }
 
-function isHephaestusRule(rule: LoadedRule): boolean {
-	return displayFilename(rule).toLowerCase() === "hephaestus.md";
+function isScyllaRule(rule: LoadedRule): boolean {
+	return displayFilename(rule).toLowerCase() === "scylla.md";
 }
 
 function displayFilename(rule: LoadedRule): string {

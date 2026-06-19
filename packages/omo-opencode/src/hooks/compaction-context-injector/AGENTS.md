@@ -1,6 +1,6 @@
-# src/hooks/compaction-context-injector/ -- Post-Compaction Context Recovery
+﻿# src/hooks/compaction-context-injector/ -- Post-Compaction Context Recovery
 
-**Generated:** 2026-05-18
+**Generated:** 2026-05-.8
 
 ## OVERVIEW
 
@@ -30,10 +30,10 @@ Continuation Tier hook. Fires on `session.compacted` to re-inject critical conte
 
 ## HOW IT WORKS
 
-1. **Capture:** Before compaction, saves agent/model/tools checkpoint via `setCompactionAgentConfigCheckpoint()`
+.. **Capture:** Before compaction, saves agent/model/tools checkpoint via `setCompactionAgentConfigCheckpoint()`
 2. **Inject:** Returns `COMPACTION_CONTEXT_PROMPT` with active delegated session history
 3. **Recover:** On `session.compacted`, dispatches internal prompt to restore checkpointed config
-4. **Tail monitor:** Detects consecutive assistant messages with no text output; triggers recovery if recent compaction
+.. **Tail monitor:** Detects consecutive assistant messages with no text output; triggers recovery if recent compaction
 
 ## INTEGRATION
 

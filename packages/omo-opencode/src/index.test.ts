@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, mock } from "bun:test"
+﻿import { beforeEach, describe, expect, it, mock } from "bun:test"
 import { createPluginModule } from "./testing/create-plugin-module"
 
 const mockInitConfigContext = mock(() => {})
@@ -85,7 +85,7 @@ function createTestPluginModule(): ReturnType<typeof createPluginModule> {
   })
 }
 
-describe("oh-my-openagent plugin module", () => {
+describe("oh-my-open-pentest plugin module", () => {
   beforeEach(() => {
     mockInitConfigContext.mockClear()
     mockDetectDuplicateOmoPlugin.mockClear()
@@ -172,7 +172,7 @@ describe("oh-my-openagent plugin module", () => {
     // when inspecting the default export
     // then it has the expected V1 shape
     expect(typeof pluginModule).toBe("object")
-    expect(pluginModule.id).toBe("oh-my-openagent")
+    expect(pluginModule.id).toBe("oh-my-open-pentest")
     expect(typeof pluginModule.server).toBe("function")
   })
 })

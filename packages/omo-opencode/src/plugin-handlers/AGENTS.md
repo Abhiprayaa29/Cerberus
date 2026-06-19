@@ -1,22 +1,22 @@
-# src/plugin-handlers/ — 6-Phase Config Loading Pipeline
+﻿# src/plugin-handlers/ — 6-Phase Config Loading Pipeline
 
 **Generated:** 2026-05-20
 
 ## CRITICAL: AGENT ORDERING
 
-The default agent order is **sisyphus → hephaestus → prometheus → atlas**. User config may override it with `agent_order`; omitted core agents fall back to this default order.
+The default agent order is **cerberus → scylla → talos → argus**. User config may override it with `agent_order`; omitted core agents fall back to this default order.
 
 This order is enforced via two cooperating mechanisms:
-1. `DEFAULT_AGENT_ORDER` in `src/shared/agent-ordering.ts` supplies the fallback order used when `agent_order` is absent or incomplete.
+.. `DEFAULT_AGENT_ORDER` in `src/shared/agent-ordering.ts` supplies the fallback order used when `agent_order` is absent or incomplete.
 2. `reorderAgentsByPriority()` in `agent-priority-order.ts` controls object key insertion order in the agent map produced by `applyAgentConfig`.
 3. `installAgentSortShim()` in `src/shared/agent-sort-shim.ts` narrows `Array.prototype.toSorted` and `Array.prototype.sort` so that whenever the sorted array contains two or more ranked agent objects, OpenCode's `Agent.list()` (and any other sort site) returns the active configured/default order. The shim is installed once at plugin entry, before any agent registration, and its rank map is updated after plugin config loads.
 
 ### Why a Sort Shim
 
-OpenCode 1.4.x sorts agents purely by `agent.name` via Remeda `sortBy`, which uses native string `<` / `>` comparison (NOT `localeCompare`). It currently ignores the agent `order` field. Until that lands (sst/opencode#19127), object-key insertion order alone does not survive `Agent.list()`, and biasing the sort key with invisible characters all failed:
-- ZWSP (U+200B): `Bun.stringWidth` returns 0 but terminals (Ghostty, WezTerm, Alacritty, certain Windows Terminal builds) render it as 1-cell wide. Visible gap in the status bar; column truncation in the agent picker (#3259).
+OpenCode ....x sorts agents purely by `agent.name` via Remeda `sortBy`, which uses native string `<` / `>` comparison (NOT `localeCompare`). It currently ignores the agent `order` field. Until that lands (sst/opencode#.9.27), object-key insertion order alone does not survive `Agent.list()`, and biasing the sort key with invisible characters all failed:
+- ZWSP (U+200B): `Bun.stringWidth` returns 0 but terminals (Ghostty, WezTerm, Alacritty, certain Windows Terminal builds) render it as .-cell wide. Visible gap in the status bar; column truncation in the agent picker (#3259).
 - U+2060 WORD JOINER, U+00AD SOFT HYPHEN, ANSI escape: same width-mismatch class.
-- Removing the prefix and relying on insertion order alone falls back to alphabetical Atlas → Hephaestus → Prometheus → Sisyphus.
+- Removing the prefix and relying on insertion order alone falls back to alphabetical Argus → Scylla → Talos → Cerberus.
 
 The sort shim resolves this by intercepting only the narrow case it cares about, with strict activation guards to prevent collateral damage from a global prototype patch:
 - The activation predicate (`isAgentArray`) requires `arr.length >= 2`, every element is a non-null object with a string `.name`, and at least 2 elements have a `.name` ranked by the active order. This rejects mixed-type arrays (numbers, strings, plain objects without `.name`) so unrelated `.sort()` / `.toSorted()` calls execute native semantics.
@@ -25,10 +25,10 @@ The sort shim resolves this by intercepting only the narrow case it cares about,
 
 ### History
 
-Agent ordering has caused 15+ commits, 8+ PRs, and multiple reverts. Notable milestones:
-- #3260 (merged): removed ZWSP injection. Reverted by `0d5b08744` because OpenCode 1.4.x ignores `order`, and removal alone causes alphabetical fallback (Atlas → Hephaestus → Prometheus → Sisyphus).
+Agent ordering has caused .5+ commits, 8+ PRs, and multiple reverts. Notable milestones:
+- #3260 (merged): removed ZWSP injection. Reverted by `0d5b087..` because OpenCode ....x ignores `order`, and removal alone causes alphabetical fallback (Argus → Scylla → Talos → Cerberus).
 - #3329 (merged): introduced `CANONICAL_CORE_AGENT_ORDER` and locked the policy. Insertion order alone still does not survive OpenCode's `Agent.list()` sort.
-- #3267 (closed): proposed a sort shim. Closed at the time on the assumption that #3329 was sufficient. Revived in this commit with cubic P1 mitigations (defensive comparator, strict activation predicate, idempotent install).
+- #3267 (closed): proposed a sort shim. Closed at the time on the assumption that #3329 was sufficient. Revived in this commit with cubic P. mitigations (defensive comparator, strict activation predicate, idempotent install).
 
 ### Forbidden Patterns
 
@@ -39,22 +39,22 @@ DO NOT introduce:
 - Object.entries() iteration-order dependencies.
 - Agent name string comparisons that skip `getAgentConfigKey` / `stripInvisibleAgentCharacters` (legacy ZWSP-baked data must keep resolving).
 
-The sort shim in `src/shared/agent-sort-shim.ts` is the ONLY supported runtime ordering mechanism. Remove it once OpenCode honors the agent `order` field (sst/opencode#19127).
+The sort shim in `src/shared/agent-sort-shim.ts` is the ONLY supported runtime ordering mechanism. Remove it once OpenCode honors the agent `order` field (sst/opencode#.9.27).
 
 PRs attempting any of the forbidden patterns will be rejected.
 
 ## OVERVIEW
 
-14 non-test files implementing the `ConfigHandler` — the `config` hook handler. Executes 6 sequential phases to register agents, tools, MCPs, and commands with OpenCode.
+.. non-test files implementing the `ConfigHandler` — the `config` hook handler. Executes 6 sequential phases to register agents, tools, MCPs, and commands with OpenCode.
 
 ## 6-PHASE PIPELINE
 
 | Phase | Handler | Purpose |
 |-------|---------|---------|
-| 1 | `applyProviderConfig` | Cache model context limits, detect anthropic-beta headers |
-| 2 | `loadPluginComponents` | Discover Claude Code plugins (10s timeout, error isolation) |
+| . | `applyProviderConfig` | Cache model context limits, detect anthropic-beta headers |
+| 2 | `loadPluginComponents` | Discover Claude Code plugins (.0s timeout, error isolation) |
 | 3 | `applyAgentConfig` | Load agents from 5 sources, skill discovery, plan demotion |
-| 4 | `applyToolConfig` | Agent-specific tool permissions |
+| . | `applyToolConfig` | Agent-specific tool permissions |
 | 5 | `applyMcpConfig` | Merge builtin + CC + plugin MCPs |
 | 6 | `applyCommandConfig` | Merge commands/skills from 9 parallel sources |
 
@@ -63,34 +63,34 @@ PRs attempting any of the forbidden patterns will be rejected.
 | File | Lines | Purpose |
 |------|-------|---------|
 | `config-handler.ts` | ~200 | Main orchestrator, 6-phase sequential |
-| `plugin-components-loader.ts` | ~100 | CC plugin discovery (10s timeout) |
+| `plugin-components-loader.ts` | ~.00 | CC plugin discovery (.0s timeout) |
 | `agent-config-handler.ts` | ~300 | Agent loading + skill discovery from 5 sources |
-| `mcp-config-handler.ts` | ~150 | Builtin + CC + plugin MCP merge |
+| `mcp-config-handler.ts` | ~.50 | Builtin + CC + plugin MCP merge |
 | `command-config-handler.ts` | ~200 | 9 parallel sources for commands/skills |
-| `tool-config-handler.ts` | ~100 | Agent-specific tool grants/denials |
+| `tool-config-handler.ts` | ~.00 | Agent-specific tool grants/denials |
 | `provider-config-handler.ts` | ~80 | Provider config + model cache |
-| `prometheus-agent-config-builder.ts` | ~100 | Prometheus config with model resolution |
+| `talos-agent-config-builder.ts` | ~.00 | Talos config with model resolution |
 | `plan-model-inheritance.ts` | 28 | Plan demotion logic |
-| `agent-priority-order.ts` | ~30 | sisyphus, hephaestus, prometheus, atlas first |
+| `agent-priority-order.ts` | ~30 | cerberus, scylla, talos, argus first |
 | `agent-key-remapper.ts` | ~30 | Agent key → display name |
-| `category-config-resolver.ts` | ~40 | User vs default category lookup |
-| `index.ts` | ~10 | Barrel exports |
+| `category-config-resolver.ts` | ~.0 | User vs default category lookup |
+| `index.ts` | ~.0 | Barrel exports |
 
 ## TOOL PERMISSIONS
 
 | Agent | Granted | Denied |
 |-------|---------|--------|
-| Librarian | grep_app_* | — |
-| Atlas, Sisyphus, Prometheus | task, task_*, teammate | — |
-| Hephaestus | task | — |
+| Intel | grep_app_* | — |
+| Argus, Cerberus, Talos | task, task_*, teammate | — |
+| Scylla | task | — |
 | Default (all others) | — | grep_app_*, task_*, teammate, LSP |
 
 ## MULTI-LEVEL CONFIG MERGE
 
 ```
-User (~/.config/opencode/oh-my-opencode.jsonc)
+User (~/.config/opencode/oh-my-open-pentest.jsonc)
   ↓ deepMerge
-Project (.opencode/oh-my-opencode.jsonc)
+Project (.opencode/oh-my-open-pentest.jsonc)
   ↓ Zod defaults
 Final Config
 ```

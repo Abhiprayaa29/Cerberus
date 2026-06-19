@@ -1,4 +1,4 @@
-import { describe, it, expect } from "bun:test"
+﻿import { describe, it, expect } from "bun:test"
 import { mkdirSync, rmSync, writeFileSync } from "node:fs"
 import { tmpdir } from "node:os"
 import { join } from "node:path"
@@ -42,7 +42,7 @@ describe("config check", () => {
         mkdirSync(testConfigDir, { recursive: true })
         process.env.OPENCODE_CONFIG_DIR = testConfigDir
         writeFileSync(
-          join(testConfigDir, "oh-my-openagent.json"),
+          join(testConfigDir, "oh-my-open-pentest.json"),
           JSON.stringify({ disabled_hooks: ["comment-checker"] }, null, 2) + "\n",
           "utf-8",
         )
@@ -50,7 +50,7 @@ describe("config check", () => {
         const result = await config.checkConfig()
 
         expect(normalizePathForAssertion(result.details?.[0] ?? "")).toContain(
-          normalizePathForAssertion(join(testConfigDir, "oh-my-openagent.json")),
+          normalizePathForAssertion(join(testConfigDir, "oh-my-open-pentest.json")),
         )
       } finally {
         rmSync(testConfigDir, { recursive: true, force: true })
@@ -79,8 +79,8 @@ describe("config check", () => {
         process.env.HOME = testRootDir
         process.env.OPENCODE_CONFIG_DIR = join(testRootDir, "empty-user-config")
         writeFileSync(
-          join(projectDir, ".opencode", "oh-my-openagent.json"),
-          JSON.stringify({ agents: { sisyphus: { model: 123 } } }, null, 2) + "\n",
+          join(projectDir, ".opencode", "oh-my-open-pentest.json"),
+          JSON.stringify({ agents: { cerberus: { model: 123 } } }, null, 2) + "\n",
           "utf-8",
         )
         process.chdir(childDir)
@@ -88,7 +88,7 @@ describe("config check", () => {
         const result = await config.checkConfig()
 
         expect(result.status).toBe("fail")
-        expect(result.issues.some((issue) => issue.description.includes("agents.sisyphus.model"))).toBe(true)
+        expect(result.issues.some((issue) => issue.description.includes("agents.cerberus.model"))).toBe(true)
       } finally {
         process.chdir(originalCwd)
         rmSync(testRootDir, { recursive: true, force: true })
@@ -127,8 +127,8 @@ describe("config check", () => {
         process.env.XDG_CACHE_HOME = xdgCacheDir
 
         writeFileSync(
-          join(pluginConfigDir, "oh-my-openagent.json"),
-          JSON.stringify({ agents: { sisyphus: { model: "kiro/claude-opus-4-6" } } }, null, 2) + "\n",
+          join(pluginConfigDir, "oh-my-open-pentest.json"),
+          JSON.stringify({ agents: { cerberus: { model: "kiro/claude-opus-4-6" } } }, null, 2) + "\n",
           "utf-8",
         )
         writeFileSync(
@@ -188,10 +188,10 @@ describe("config check", () => {
         mkdirSync(testConfigDir, { recursive: true })
         process.env.OPENCODE_CONFIG_DIR = testConfigDir
         writeFileSync(
-          join(testConfigDir, "oh-my-openagent.json"),
+          join(testConfigDir, "oh-my-open-pentest.json"),
           JSON.stringify({
             agents: {
-              sisyphus: { reasoningEffort: "max" },
+              cerberus: { reasoningEffort: "max" },
             },
           }, null, 2) + "\n",
           "utf-8",

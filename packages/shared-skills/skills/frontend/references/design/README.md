@@ -1,4 +1,4 @@
-
+﻿
 # Frontend Design Router
 
 You are an elite frontend design engineer. Your only job in this skill is to **route correctly**: pick the right reference file(s), load them into context, then execute with their guidance. The reference files contain the actual design rules — this file just decides which to consult.
@@ -7,16 +7,16 @@ You are an elite frontend design engineer. Your only job in this skill is to **r
 
 `taste-skill.md` alone is a strong default, but it does not commit to any specific aesthetic. When the user has named a clear visual direction (a brand, a style label, an existing site to mimic), a dedicated reference produces sharper output than the generic default. Loading the wrong reference, or none, is how you produce the bland generic SaaS slop these skills exist to prevent.
 
-The library lives flat in this directory (`references/design/`, max depth 1) and has two conceptual layers, and **most non-trivial tasks load one from each layer**:
+The library lives flat in this directory (`references/design/`, max depth .) and has two conceptual layers, and **most non-trivial tasks load one from each layer**:
 
-- **Layer A — taste skills (12 files):** how to execute. Discipline, motion physics, spacing rules, anti-slop guardrails, output completeness. Filenames end in `-skill.md` or start with `imagegen-`.
+- **Layer A — taste skills (.2 files):** how to execute. Discipline, motion physics, spacing rules, anti-slop guardrails, output completeness. Filenames end in `-skill.md` or start with `imagegen-`.
 - **Layer B — design systems (69 files):** what it should look like. Concrete color/type/component tokens for one specific brand aesthetic. Filenames are brand names (`claude.md`, `notion.md`, `stripe.md`, …).
 
-A combined directory of all 81 reference files is at `_INDEX.md`. **Read that index before loading anything** unless the routing is obvious — it has the full mood-mapping and stacking rules in one place.
+A combined directory of all 8. reference files is at `_INDEX.md`. **Read that index before loading anything** unless the routing is obvious — it has the full mood-mapping and stacking rules in one place.
 
 ## Open Design Library
 
-For broader brand/style coverage, load the `open-design` skill — the local `nexu-io/open-design` library (150+ design systems).
+For broader brand/style coverage, load the `open-design` skill — the local `nexu-io/open-design` library (.50+ design systems).
 
 Use the `open-design` skill when the request explicitly mentions Open Design, Claude Design alternatives, design-system libraries, or a brand/style that is not covered by this skill's curated reference set. Treat Open Design as the expanded reference library; keep this skill responsible for routing discipline, design-system gating, and frontend execution quality.
 
@@ -30,19 +30,19 @@ Before touching any UI code, before routing to any reference, before even thinki
 
 #### If NO design system exists → CREATE ONE FIRST
 
-1. Read `design-system-architecture.md` — it defines the exact structure.
-2. Explore the project: what is the product domain? Who are the users? What feeling should it evoke?
+.. Read `design-system-architecture.md` — it defines the exact structure.
+2. Scout the project: what is the product domain? Who are the users? What feeling should it evoke?
 3. If the project has existing UI code, **extract** the implicit system (colors, fonts, spacing already in use) rather than inventing from scratch.
-4. If the project is greenfield, **ask the user one question**: "What should this feel like?" — or infer from context.
+.. If the project is greenfield, **ask the user one question**: "What should this feel like?" — or infer from context.
 5. Write `DESIGN.md` at project root following the 7-section structure from the reference.
 6. **Do not proceed to any component implementation until `DESIGN.md` exists and is committed to context.**
 
 #### If YES design system exists → READ IT, FOLLOW IT
 
-1. Read the entire `DESIGN.md` into context.
+.. Read the entire `DESIGN.md` into context.
 2. Every color, font size, spacing value, and component pattern you produce MUST reference tokens from this file.
 3. If you need a token that doesn't exist, **add it to `DESIGN.md` first**, then use it.
-4. Never introduce raw hex codes, arbitrary px values, or ad-hoc component patterns that bypass the system.
+.. Never introduce raw hex codes, arbitrary px values, or ad-hoc component patterns that bypass the system.
 
 **This gate is non-negotiable. No design system = no UI work. Period.**
 
@@ -84,7 +84,7 @@ Open the entry file. Each tool must sit behind a `NODE_ENV === 'development'` or
 
 Run through this in order and stop at the first match. Do not skip — earlier rules dominate later ones.
 
-### Step 1 — Did the user name a specific brand or site?
+### Step . — Did the user name a specific brand or site?
 
 Phrasings: "make it look like Linear", "Stripe-style buttons", "Notion-feel sidebar", "like {brand}'s landing page", or pasting a screenshot of a known brand site.
 
@@ -116,7 +116,7 @@ Triggers: "fix the design", "this looks bad", "redesign", "make this better", "i
 
 Do NOT use this for greenfield work — the audit phase is wasted effort there.
 
-### Step 4 — Is this an image-first workflow?
+### Step . — Is this an image-first workflow?
 
 Triggers: "generate the design first then code it", "make a mockup before we build", "show me what it could look like".
 
@@ -142,7 +142,7 @@ Triggers: "generate a mockup image", "create a brand kit board", "design referen
 
 Triggers: "Google Stitch", "compatible with Stitch", "also write a DESIGN.md", "give me the design as a doc".
 
-**Action:** Add `stitch-skill.md` on top of whatever you loaded in Steps 1–4.
+**Action:** Add `stitch-skill.md` on top of whatever you loaded in Steps .–..
 
 ### Step 7 — The agent has been lazy
 
@@ -152,10 +152,10 @@ Triggers (mid-conversation, not initial): "you keep leaving placeholders", "stop
 
 ## Stacking rules (read this once, internalize it)
 
-1. **At most one Layer A *style* skill at a time.** A layout cannot be both `minimalist-skill` and `brutalist-skill` simultaneously — they encode opposite spacing and typography philosophies. Pick one.
+.. **At most one Layer A *style* skill at a time.** A layout cannot be both `minimalist-skill` and `brutalist-skill` simultaneously — they encode opposite spacing and typography philosophies. Pick one.
 2. **`taste-skill.md` and `gpt-tasteskill.md` are also style-skills** — do not stack them with `minimalist`, `brutalist`, or `soft`. They are alternative defaults at different intensity levels.
 3. **`output-skill.md` and `stitch-skill.md` stack on top of any style skill.** They add discipline and output format, not visual direction.
-4. **`redesign-skill.md` replaces a style-skill** when the task is auditing, not building. Stack a Layer B brand if the user wants a specific direction.
+.. **`redesign-skill.md` replaces a style-skill** when the task is auditing, not building. Stack a Layer B brand if the user wants a specific direction.
 5. **`image-to-code-skill.md` pairs with one imagegen skill** for the full flow.
 6. **Layer B (brand DESIGN.md) is orthogonal to Layer A.** You can pair any Layer A skill with any Layer B brand. Use Layer B as the source of color/type/component tokens; let Layer A drive the execution discipline.
 
@@ -172,11 +172,11 @@ Triggers (mid-conversation, not initial): "you keep leaving placeholders", "stop
 
 Once references are loaded, before writing any UI code:
 
-1. **`DESIGN.md` was read** (or created) in Phase 0. If you skipped it, stop and go back now.
+.. **`DESIGN.md` was read** (or created) in Phase 0. If you skipped it, stop and go back now.
 2. **Verify dependencies.** Read `package.json`. Do not assume `framer-motion`, `gsap`, `lucide-react`, `tailwindcss` (and which version!) are installed. If missing, output the install command first.
-3. **Tailwind version lock.** Tailwind v4 uses `@tailwindcss/postcss` or the Vite plugin, NOT `tailwindcss` in `postcss.config.js`. v3 uses different config syntax. Pick based on what's in `package.json`.
-4. **No emojis in code, markup, alt text, or visible UI.** Replace with proper icons (Radix, Phosphor, Lucide) or clean SVG. Emojis are slop signal.
-5. **Viewport stability.** Use `min-h-[100dvh]`, never `h-screen`, for full-height heroes — `h-screen` causes catastrophic jumps on iOS Safari.
+3. **Tailwind version lock.** Tailwind v. uses `@tailwindcss/postcss` or the Vite plugin, NOT `tailwindcss` in `postcss.config.js`. v3 uses different config syntax. Pick based on what's in `package.json`.
+.. **No emojis in code, markup, alt text, or visible UI.** Replace with proper icons (Radix, Phosphor, Lucide) or clean SVG. Emojis are slop signal.
+5. **Viewport stability.** Use `min-h-[.00dvh]`, never `h-screen`, for full-height heroes — `h-screen` causes catastrophic jumps on iOS Safari.
 6. **Server vs client components (Next.js).** If motion/state/portals are involved, isolate as a `'use client'` leaf component. Don't bleed `'use client'` to the page level.
 7. **Match the project's existing patterns FIRST.** If the codebase already uses CSS Modules, don't introduce Tailwind. If it uses styled-components, don't introduce CSS-in-JS variants. The references guide *style*, not *infrastructure*.
 8. **All tokens trace back to `DESIGN.md`.** No orphan hex codes, no magic px values. If you need a new token, update `DESIGN.md` first.
@@ -208,8 +208,8 @@ Code that "looks correct" in an editor is not verified. Colors render differentl
 
 ### How
 
-1. **Launch the app** in a real browser (use `agent-browser` skill or the project's dev server + screenshot tool).
-2. **Take screenshots** at key breakpoints: mobile (375px), tablet (768px), desktop (1280px).
+.. **Launch the app** in a real browser (use `agent-browser` skill or the project's dev server + screenshot tool).
+2. **Take screenshots** at key breakpoints: mobile (375px), tablet (768px), desktop (.280px).
 3. **Walk the design system checklist** visually:
    - [ ] Colors match `DESIGN.md` palette — no off-brand colors visible
    - [ ] Typography hierarchy is clear — headings, body, captions are visually distinct
@@ -219,7 +219,7 @@ Code that "looks correct" in an editor is not verified. Colors render differentl
    - [ ] Dark mode (if declared in `DESIGN.md`) works completely
    - [ ] No layout overflow, no horizontal scroll on mobile
    - [ ] Motion/animation feels smooth — no jank, no missing transitions
-4. **If anything fails**, fix it and re-check. Do not report "done" with visual bugs.
+.. **If anything fails**, fix it and re-check. Do not report "done" with visual bugs.
 5. **If you cannot launch a browser** (e.g. no dev server, CI-only environment), state this explicitly and list what you would check. Never silently skip QA.
 
 ### QA Report

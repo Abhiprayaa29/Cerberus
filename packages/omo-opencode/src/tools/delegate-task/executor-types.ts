@@ -1,5 +1,5 @@
-import type { BackgroundManager } from "../../features/background-agent"
-import type { CategoriesConfig, GitMasterConfig, BrowserAutomationProvider, AgentOverrides, SisyphusAgentConfig } from "../../config/schema"
+﻿import type { BackgroundManager } from "../../features/background-agent"
+import type { CategoriesConfig, GitMasterConfig, BrowserAutomationProvider, AgentOverrides, CerberusAgentConfig } from "../../config/schema"
 import type { ModelFallbackControllerAccessor } from "../../hooks/model-fallback"
 import type { OpencodeClient } from "./types"
 
@@ -9,10 +9,10 @@ export interface ExecutorContext {
   directory: string
   userCategories?: CategoriesConfig
   gitMasterConfig?: GitMasterConfig
-  sisyphusJuniorModel?: string
+  cerberusJuniorModel?: string
   browserProvider?: BrowserAutomationProvider
   agentOverrides?: AgentOverrides
-  sisyphusAgentConfig?: SisyphusAgentConfig
+  cerberusAgentConfig?: CerberusAgentConfig
   modelFallbackControllerAccessor?: ModelFallbackControllerAccessor
   onSyncSessionCreated?: (event: { sessionID: string; parentID: string; title: string }) => Promise<void>
   syncPollTimeoutMs?: number

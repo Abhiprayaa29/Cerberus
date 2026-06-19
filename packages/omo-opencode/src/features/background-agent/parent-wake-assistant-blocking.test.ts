@@ -1,9 +1,9 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { describe, expect, test } from "bun:test"
 import { releaseAllPromptAsyncReservationsForTesting } from "../../hooks/shared/prompt-async-gate"
 import {
-  OMO_INTERNAL_INITIATOR_MARKER,
+  OMOP_INTERNAL_INITIATOR_MARKER,
   OMO_INTERNAL_NOREPLY_MARKER,
 } from "../../shared/internal-initiator-marker"
 import { unsafeTestValue } from "../../../../../test-support/unsafe-test-value"
@@ -73,7 +73,7 @@ describe("ParentWakeNotifier — assistant turn blocking", () => {
     notifier.queuePendingParentWake(
       "parent-local-unknown",
       "task complete",
-      { agent: "sisyphus" },
+      { agent: "cerberus" },
       true,
     )
 
@@ -148,7 +148,7 @@ describe("ParentWakeNotifier — assistant turn blocking", () => {
     notifier.queuePendingParentWake(
       "parent-question-unanswered",
       "task complete",
-      { agent: "sisyphus" },
+      { agent: "cerberus" },
       true,
     )
     const pendingWake = notifier.getPendingParentWakes().get("parent-question-unanswered")
@@ -228,7 +228,7 @@ describe("ParentWakeNotifier — assistant turn blocking", () => {
     notifier.queuePendingParentWake(
       "parent-completed-unknown",
       "task complete",
-      { agent: "sisyphus" },
+      { agent: "cerberus" },
       true,
     )
     const pendingWake = notifier.getPendingParentWakes().get("parent-completed-unknown")
@@ -255,7 +255,7 @@ describe("ParentWakeNotifier — assistant turn blocking", () => {
 
   test("#given a completed assistant followed by stacked noReply notification tails #when flushing a shouldReply wake #then it dispatches immediately instead of deadlocking", async () => {
     // given
-    const noReplyTailText = `task done\n${OMO_INTERNAL_INITIATOR_MARKER}\n${OMO_INTERNAL_NOREPLY_MARKER}`
+    const noReplyTailText = `task done\n${OMOP_INTERNAL_INITIATOR_MARKER}\n${OMO_INTERNAL_NOREPLY_MARKER}`
     const promptAsyncCalls: PromptAsyncCall[] = []
     const client = unsafeTestValue<ParentWakeClient>({
       session: {
@@ -305,7 +305,7 @@ describe("ParentWakeNotifier — assistant turn blocking", () => {
     notifier.queuePendingParentWake(
       "parent-noreply-tail",
       "[ALL BACKGROUND TASKS COMPLETE]",
-      { agent: "sisyphus" },
+      { agent: "cerberus" },
       true,
     )
 

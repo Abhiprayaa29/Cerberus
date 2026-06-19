@@ -1,4 +1,4 @@
-declare const require: (name: string) => any
+﻿declare const require: (name: string) => any
 const { describe, it, expect, beforeEach, afterEach, beforeAll, spyOn } = require("bun:test")
 import { mkdtempSync, writeFileSync, rmSync, existsSync, readFileSync } from "fs"
 import { tmpdir } from "os"
@@ -678,7 +678,7 @@ describe("fetchAvailableModels with provider-models cache (whitelist-filtered)",
 		originalXdgCache = process.env.XDG_CACHE_HOME
 		process.env.XDG_CACHE_HOME = tempDir
 		providerModelsCacheSpy = spyOn(connectedProvidersCache, "readProviderModelsCache").mockImplementation(() => {
-			const cacheFile = join(tempDir, "oh-my-opencode", "provider-models.json")
+			const cacheFile = join(tempDir, "oh-my-open-pentest", "provider-models.json")
 			if (!existsSync(cacheFile)) {
 				return null
 			}
@@ -697,7 +697,7 @@ describe("fetchAvailableModels with provider-models cache (whitelist-filtered)",
 	})
 
 	function writeProviderModelsCache(data: { models: Record<string, string[] | any[]>; connected: string[] }) {
-		const cacheDir = join(tempDir, "oh-my-opencode")
+		const cacheDir = join(tempDir, "oh-my-open-pentest")
 		require("fs").mkdirSync(cacheDir, { recursive: true })
 		writeFileSync(join(cacheDir, "provider-models.json"), JSON.stringify({
 			...data,
@@ -911,7 +911,7 @@ describe("fallback model availability", () => {
 		// given
 		tempDir = mkdtempSync(join(tmpdir(), "opencode-test-"))
 		connectedProvidersCacheSpy = spyOn(connectedProvidersCache, "readConnectedProvidersCache").mockImplementation(() => {
-			const cacheFile = join(tempDir, "oh-my-opencode", "connected-providers.json")
+			const cacheFile = join(tempDir, "oh-my-open-pentest", "connected-providers.json")
 			if (!existsSync(cacheFile)) {
 				return null
 			}
@@ -926,7 +926,7 @@ describe("fallback model availability", () => {
 	})
 
 	function writeConnectedProvidersCache(connected: string[]): void {
-		const cacheDir = join(tempDir, "oh-my-opencode")
+		const cacheDir = join(tempDir, "oh-my-open-pentest")
 		require("fs").mkdirSync(cacheDir, { recursive: true })
 		writeFileSync(
 			join(cacheDir, "connected-providers.json"),

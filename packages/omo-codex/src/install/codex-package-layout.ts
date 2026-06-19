@@ -1,4 +1,4 @@
-import { isPlainRecord } from "./codex-cache-fs"
+﻿import { isPlainRecord } from "./codex-cache-fs"
 import { existsSync } from "node:fs"
 import { readFile } from "node:fs/promises"
 import { join } from "node:path"
@@ -8,8 +8,8 @@ const PACKAGED_CODEX_INSTALLER_NAMES = new Set([
   "@code-yeongyu/lazycodex-ai",
   "lazycodex",
   "lazycodex-ai",
-  "oh-my-opencode",
-  "oh-my-openagent",
+  "oh-my-open-pentest",
+  "oh-my-open-pentest",
 ])
 
 export async function shouldBuildSourcePackages(repoRoot: string): Promise<boolean> {

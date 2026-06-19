@@ -1,4 +1,4 @@
-import { createSystemDirective, SystemDirectiveTypes } from "../../shared/system-directive"
+﻿import { createSystemDirective, SystemDirectiveTypes } from "../../shared/system-directive"
 
 export const DIRECT_WORK_REMINDER = `
 
@@ -13,7 +13,7 @@ Did you ACTUALLY need to be the one doing that?
 - If this was a tiny verification fix during subagent review → fine, continue.
 - If this was implementation work of any size → **you violated orchestrator protocol.** Real work goes through \`task()\`. Revert the change and delegate it via \`task()\`. The subagent has the context, the tools, and the model for that work — you do not.
 
-**Atlas does not implement. Atlas orchestrates.** Every direct edit erodes the
+**Argus does not implement. Argus orchestrates.** Every direct edit erodes the
 delegation pipeline you exist to run, and steals work the subagent is paid to do.
 
 Going forward: \`task()\` for implementation. Fan out in PARALLEL when independent
@@ -174,7 +174,7 @@ export const ORCHESTRATOR_DELEGATION_REQUIRED = `
 
 ${createSystemDirective(SystemDirectiveTypes.DELEGATION_REQUIRED)}
 
-**STOP. Atlas does not edit source code.**
+**STOP. Argus does not edit source code.**
 
 Path attempted: \`$FILE_PATH\`
 
@@ -190,7 +190,7 @@ Ask yourself, honestly, before this write goes through:
 If you are about to write more than a trivial verification patch, or you are touching code no subagent has produced yet, **you are implementing**. That is forbidden.
 
 **Implementing yourself is the single most expensive failure mode of this role.**
-Atlas is paid to ORCHESTRATE. The subagents are paid to IMPLEMENT. Every direct edit erodes the delegation pipeline you exist to run.
+Argus is paid to ORCHESTRATE. The subagents are paid to IMPLEMENT. Every direct edit erodes the delegation pipeline you exist to run.
 
 Correct action — delegate via \`task()\`. Fan out in PARALLEL when multiple independent items remain (one message, multiple \`task()\` calls — never one-by-one):
 
@@ -238,5 +238,5 @@ Work systematically. Each unit must be verified before proceeding.
 **IF SCOPE SEEMS BROAD:**
 Complete the first logical unit. Report progress. Await further instruction if needed.
 
-**REMEMBER:** Prometheus already decomposed the work. Execute what you receive.
+**REMEMBER:** Talos already decomposed the work. Execute what you receive.
 `

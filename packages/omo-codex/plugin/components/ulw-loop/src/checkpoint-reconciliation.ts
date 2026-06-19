@@ -1,4 +1,4 @@
-import { existsSync } from "node:fs";
+﻿import { existsSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 
 import { codexGoalMode, isFinalRunCompletionCandidate } from "./goal-status.js";
@@ -87,14 +87,14 @@ export async function canReconcileActiveFinalTaskScopedAggregateSnapshot(
 function buildCompletedLegacyGoalRemediation(goal: UlwLoopItem): string {
 	return [
 		"If get_goal returns a different completed legacy/thread objective, do not repeat --status complete in this thread.",
-		`Record a non-terminal blocker with: omo ulw-loop checkpoint --goal-id ${goal.id} --status blocked --evidence "<completed legacy Codex goal blocks create_goal in this thread>" --codex-goal-json "<different completed get_goal JSON or path>".`,
+		`Record a non-terminal blocker with: omo pentest-loop checkpoint --goal-id ${goal.id} --status blocked --evidence "<completed legacy Codex goal blocks create_goal in this thread>" --codex-goal-json "<different completed get_goal JSON or path>".`,
 		"Then continue only from a Codex goal context with no active/completed conflicting goal, in the same repo/worktree, and create the intended goal there.",
 	].join(" ");
 }
 
 export function buildTaskScopedAggregateReconciliationHint(goal: UlwLoopItem, final: boolean): string {
 	if (final) {
-		return ` Final task-scoped aggregate reconciliation requires the checkpoint goal to be the active in-progress final OMO goal and the completed get_goal objective to map to the ulw-loop brief or artifact. ${buildCompletedLegacyGoalRemediation(goal)}`;
+		return ` Final task-scoped aggregate reconciliation requires the checkpoint goal to be the active in-progress final OMO goal and the completed get_goal objective to map to the pentest-loop brief or artifact. ${buildCompletedLegacyGoalRemediation(goal)}`;
 	}
-	return ` Completed task-scoped aggregate reconciliation requires the checkpoint goal to be the active in-progress OMO goal, evidence that names that active OMO goal id, names .omo/ulw-loop/goals.json or ledger.jsonl, includes completed implementation plus validation/review evidence, and a get_goal objective that maps to the ulw-loop brief/artifact. ${buildCompletedLegacyGoalRemediation(goal)}`;
+	return ` Completed task-scoped aggregate reconciliation requires the checkpoint goal to be the active in-progress OMO goal, evidence that names that active OMO goal id, names .omo/pentest-loop/goals.json or ledger.jsonl, includes completed implementation plus validation/review evidence, and a get_goal objective that maps to the pentest-loop brief/artifact. ${buildCompletedLegacyGoalRemediation(goal)}`;
 }

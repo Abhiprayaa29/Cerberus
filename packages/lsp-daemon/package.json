@@ -1,9 +1,9 @@
-{
+﻿{
 	"name": "@code-yeongyu/lsp-daemon",
-	"version": "0.1.0",
+	"version": "0...0",
 	"description": "Shared per-user Language Server Protocol daemon over a unix socket, with a stdio MCP proxy and a tool client.",
 	"type": "module",
-	"packageManager": "npm@11.16.0",
+	"packageManager": "npm@....6.0",
 	"license": "MIT",
 	"main": "./dist/index.js",
 	"types": "./dist/index.d.ts",
@@ -26,12 +26,12 @@
 		"check": "tsc --noEmit && biome check . && npm run build"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.4.16",
-		"@oh-my-opencode/lsp-core": "file:../lsp-core",
-		"@oh-my-opencode/mcp-stdio-core": "file:../mcp-stdio-core",
+		"@biomejs/biome": "2....6",
+		"@oh-my-open-pentest/lsp-core": "file:../lsp-core",
+		"@oh-my-open-pentest/mcp-stdio-core": "file:../mcp-stdio-core",
 		"@types/node": "^25.9.2",
 		"typescript": "^6.0.3",
-		"vitest": "^4.1.8"
+		"vitest": "^....8"
 	},
 	"engines": {
 		"node": ">=20.0.0"

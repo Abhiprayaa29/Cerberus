@@ -1,4 +1,4 @@
-import { describe, expect, it } from "bun:test"
+﻿import { describe, expect, it } from "bun:test"
 import { formatDefault } from "./framework/format-default"
 import { stripAnsi } from "./framework/format-shared"
 import type { DoctorResult } from "./framework/types"
@@ -86,7 +86,7 @@ describe("formatDefault", () => {
       codexPath: "/usr/local/bin/codex",
       codexSource: "cli",
       codexAppId: null,
-      marketplaceName: "sisyphuslabs",
+      marketplaceName: "cerberuslabs",
       pluginName: "omo",
       pluginVersion: "4.7.5",
       pluginVersionStamped: true,

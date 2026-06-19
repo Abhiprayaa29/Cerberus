@@ -1,23 +1,23 @@
-import type { JSX } from "react"
+﻿import type { JSX } from "react"
 import { getTranslations } from "next-intl/server"
 import { Brain, Layers, ArrowRight } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
-export async function PrometheusAtlasSection(): Promise<JSX.Element> {
+export async function TalosAtlasSection(): Promise<JSX.Element> {
   const t = await getTranslations("landing")
 
   return (
-    <section className="border-y border-white/5 bg-[#0a0a0a] py-24" data-section="prometheus-atlas">
+    <section className="border-y border-white/5 bg-[#0a0a0a] py-24" data-section="talos-atlas">
       <div className="reveal-on-enter container mx-auto px-4 md:px-6">
         <div className="mb-16 text-center">
           <Badge className="mb-6 border-violet-500/20 bg-violet-500/10 px-4 py-1.5 text-violet-400">
-            {t("prometheusAtlas.badge")}
+            {t("talosAtlas.badge")}
           </Badge>
           <h2 className="mb-4 text-4xl font-bold text-white md:text-5xl">
-            {t("prometheusAtlas.title")}
+            {t("talosAtlas.title")}
           </h2>
-          <p className="mx-auto max-w-2xl text-xl text-zinc-400">{t("prometheusAtlas.headline")}</p>
+          <p className="mx-auto max-w-2xl text-xl text-zinc-400">{t("talosAtlas.headline")}</p>
         </div>
 
         <div className="mb-12 grid grid-cols-1 gap-8 lg:grid-cols-2">
@@ -29,25 +29,25 @@ export async function PrometheusAtlasSection(): Promise<JSX.Element> {
                     <Brain className="h-6 w-6 text-violet-400" />
                   </div>
                   <Badge variant="outline" className="border-zinc-700 text-xs text-zinc-400">
-                    {t("prometheusAtlas.prometheus.model")}
+                    {t("talosAtlas.talos.model")}
                   </Badge>
                 </div>
                 <CardTitle className="mt-4 text-2xl text-violet-400">
-                  {t("prometheusAtlas.prometheus.name")}
+                  {t("talosAtlas.talos.name")}
                 </CardTitle>
                 <CardDescription className="font-medium text-zinc-400">
-                  {t("prometheusAtlas.prometheus.role")}
+                  {t("talosAtlas.talos.role")}
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <p className="leading-relaxed text-zinc-300">
-                  {t("prometheusAtlas.prometheus.description")}
+                  {t("talosAtlas.talos.description")}
                 </p>
                 <ul className="space-y-2">
                   {([0, 1, 2, 3] as const).map((i) => (
                     <li key={i} className="flex items-center gap-2 text-sm text-zinc-400">
                       <ArrowRight className="h-3 w-3 shrink-0 text-violet-400" />
-                      {t(`prometheusAtlas.prometheus.features.${i}`)}
+                      {t(`talosAtlas.talos.features.${i}`)}
                     </li>
                   ))}
                 </ul>
@@ -63,25 +63,25 @@ export async function PrometheusAtlasSection(): Promise<JSX.Element> {
                     <Layers className="h-6 w-6 text-violet-400" />
                   </div>
                   <Badge variant="outline" className="border-zinc-700 text-xs text-zinc-400">
-                    {t("prometheusAtlas.atlas.model")}
+                    {t("talosAtlas.atlas.model")}
                   </Badge>
                 </div>
                 <CardTitle className="mt-4 text-2xl text-violet-400">
-                  {t("prometheusAtlas.atlas.name")}
+                  {t("talosAtlas.atlas.name")}
                 </CardTitle>
                 <CardDescription className="font-medium text-zinc-400">
-                  {t("prometheusAtlas.atlas.role")}
+                  {t("talosAtlas.atlas.role")}
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <p className="leading-relaxed text-zinc-300">
-                  {t("prometheusAtlas.atlas.description")}
+                  {t("talosAtlas.atlas.description")}
                 </p>
                 <ul className="space-y-2">
                   {([0, 1, 2, 3] as const).map((i) => (
                     <li key={i} className="flex items-center gap-2 text-sm text-zinc-400">
                       <ArrowRight className="h-3 w-3 shrink-0 text-violet-400" />
-                      {t(`prometheusAtlas.atlas.features.${i}`)}
+                      {t(`talosAtlas.atlas.features.${i}`)}
                     </li>
                   ))}
                 </ul>
@@ -100,7 +100,7 @@ export async function PrometheusAtlasSection(): Promise<JSX.Element> {
                       {step}
                     </div>
                     <span className="text-sm whitespace-nowrap text-zinc-300">
-                      {t(`prometheusAtlas.workflow.step${step}`)}
+                      {t(`talosAtlas.workflow.step${step}`)}
                     </span>
                   </div>
                   {i < 4 && (
@@ -110,7 +110,7 @@ export async function PrometheusAtlasSection(): Promise<JSX.Element> {
               ))}
             </div>
             <p className="mt-6 border-t border-zinc-800 pt-6 text-center text-zinc-400 italic">
-              {t("prometheusAtlas.whyItWorks")}
+              {t("talosAtlas.whyItWorks")}
             </p>
           </div>
         </div>

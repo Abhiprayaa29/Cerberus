@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, mock, test } from "bun:test"
+﻿import { afterEach, beforeEach, describe, expect, mock, test } from "bun:test"
 import { randomUUID } from "node:crypto"
 import { existsSync, mkdirSync, rmSync, writeFileSync } from "node:fs"
 import { tmpdir } from "node:os"
@@ -7,15 +7,15 @@ import { createOpencodeClient } from "@opencode-ai/sdk"
 import type { AssistantMessage, Session } from "@opencode-ai/sdk"
 import type { BoulderState } from "../../features/boulder-state"
 import { clearBoulderState, writeBoulderState } from "../../features/boulder-state"
-import { createAtlasHook } from "./index"
+import { createArgusHook } from "./index"
 
-type AtlasHookContext = Parameters<typeof createAtlasHook>[0]
+type ArgusHookContext = Parameters<typeof createArgusHook>[0]
 type PromptMock = ReturnType<typeof mock>
 
-describe("Atlas final verification approval gate", () => {
+describe("Argus final verification approval gate", () => {
   let testDirectory = ""
 
-  function createMockPluginInput(): AtlasHookContext & { _promptMock: PromptMock } {
+  function createMockPluginInput(): ArgusHookContext & { _promptMock: PromptMock } {
     const client = createOpencodeClient({ baseUrl: "http://localhost" })
     const promptMock = mock((input: unknown) => input)
 
@@ -39,9 +39,9 @@ describe("Atlas final verification approval gate", () => {
 
     Reflect.set(client.session, "get", async ({ path }: { path: { id: string } }) => {
       const parentID = path.id === "ses_final_wave_review"
-        ? "atlas-final-wave-session"
+        ? "argus-final-wave-session"
         : path.id === "ses_feature_task"
-          ? "atlas-non-final-session"
+          ? "argus-non-final-session"
           : "main-session-123"
       return {
         data: {
@@ -55,17 +55,17 @@ describe("Atlas final verification approval gate", () => {
 
     return {
       directory: testDirectory,
-      project: {} as AtlasHookContext["project"],
+      project: {} as ArgusHookContext["project"],
       worktree: testDirectory,
       serverUrl: new URL("http://localhost"),
-      $: {} as AtlasHookContext["$"],
+      $: {} as ArgusHookContext["$"],
       client,
       _promptMock: promptMock,
     }
   }
 
   beforeEach(() => {
-    testDirectory = join(tmpdir(), `atlas-final-wave-test-${randomUUID()}`)
+    testDirectory = join(tmpdir(), `argus-final-wave-test-${randomUUID()}`)
     mkdirSync(join(testDirectory, ".omo"), { recursive: true })
     clearBoulderState(testDirectory)
   })
@@ -79,7 +79,7 @@ describe("Atlas final verification approval gate", () => {
 
   test("waits for explicit user approval after the last final-wave approval arrives", async () => {
     // given
-    const sessionID = "atlas-final-wave-session"
+    const sessionID = "argus-final-wave-session"
 
     const planPath = join(testDirectory, "final-wave-plan.md")
     writeFileSync(
@@ -90,7 +90,7 @@ describe("Atlas final verification approval gate", () => {
 - [x] 1. Ship the implementation
 
 ## Final Verification Wave (MANDATORY - after ALL implementation tasks)
-- [x] F1. **Plan Compliance Audit** - \`oracle\`
+- [x] F1. **Plan Compliance Audit** - \`cipher\`
 - [x] F2. **Code Quality Review** - \`unspecified-high\`
 - [x] F3. **Real Manual QA** - \`unspecified-high\`
 - [ ] F4. **Scope Fidelity Check** - \`deep\`
@@ -102,14 +102,14 @@ describe("Atlas final verification approval gate", () => {
       started_at: "2026-01-02T10:00:00Z",
       session_ids: [sessionID],
       plan_name: "final-wave-plan",
-      agent: "atlas",
+      agent: "argus",
     }
     writeBoulderState(testDirectory, state)
 
     const mockInput = createMockPluginInput()
-    const hook = createAtlasHook(mockInput, { directory: testDirectory, isCallerOrchestrator: async () => true })
+    const hook = createArgusHook(mockInput, { directory: testDirectory, isCallerOrchestrator: async () => true })
     const toolOutput = {
-      title: "Sisyphus Task",
+      title: "Cerberus Task",
       output: `Tasks [4/4 compliant] | Contamination [CLEAN] | Unaccounted [CLEAN] | VERDICT: APPROVE
 
 <task_metadata>
@@ -132,7 +132,7 @@ session_id: ses_final_wave_review
 
   test("keeps normal auto-continue instructions for non-final tasks", async () => {
     // given
-    const sessionID = "atlas-non-final-session"
+    const sessionID = "argus-non-final-session"
 
     const planPath = join(testDirectory, "implementation-plan.md")
     writeFileSync(
@@ -144,7 +144,7 @@ session_id: ses_final_wave_review
 - [ ] 2. Implement feature
 
 ## Final Verification Wave (MANDATORY - after ALL implementation tasks)
-- [ ] F1. **Plan Compliance Audit** - \`oracle\`
+- [ ] F1. **Plan Compliance Audit** - \`cipher\`
 - [ ] F2. **Code Quality Review** - \`unspecified-high\`
 - [ ] F3. **Real Manual QA** - \`unspecified-high\`
 - [ ] F4. **Scope Fidelity Check** - \`deep\`
@@ -156,16 +156,16 @@ session_id: ses_final_wave_review
       started_at: "2026-01-02T10:00:00Z",
       session_ids: [sessionID],
       plan_name: "implementation-plan",
-      agent: "atlas",
+      agent: "argus",
     }
     writeBoulderState(testDirectory, state)
 
-    const hook = createAtlasHook(createMockPluginInput(), {
+    const hook = createArgusHook(createMockPluginInput(), {
       directory: testDirectory,
       isCallerOrchestrator: async () => true,
     })
     const toolOutput = {
-      title: "Sisyphus Task",
+      title: "Cerberus Task",
       output: `Implementation finished successfully
 
 <task_metadata>

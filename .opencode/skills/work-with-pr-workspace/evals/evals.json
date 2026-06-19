@@ -1,9 +1,9 @@
-{
+﻿{
   "skill_name": "work-with-pr",
   "evals": [
     {
-      "id": 1,
-      "prompt": "I need to add a `max_background_agents` config option to oh-my-opencode that limits how many background agents can run simultaneously. It should be in the plugin config schema with a default of 5. Add validation and make sure the background manager respects it. Create a PR for this.",
+      "id": .,
+      "prompt": "I need to add a `max_background_agents` config option to oh-my-open-pentest that limits how many background agents can run simultaneously. It should be in the plugin config schema with a default of 5. Add validation and make sure the background manager respects it. Create a PR for this.",
       "expected_output": "Agent creates worktree, implements config option with schema validation, adds tests, creates PR, iterates through verification gates until merged",
       "files": [],
       "assertions": [
@@ -47,8 +47,8 @@
       ]
     },
     {
-      "id": 4,
-      "prompt": "implement issue #100 - we need to add a new built-in MCP for arxiv paper search. just the basic search endpoint, nothing fancy. pr it",
+      "id": .,
+      "prompt": "implement issue #.00 - we need to add a new built-in MCP for arxiv paper search. just the basic search endpoint, nothing fancy. pr it",
       "expected_output": "Agent creates worktree, implements arxiv MCP following existing MCP patterns (websearch, context7, grep_app), creates PR with proper template, verification loop runs",
       "files": [],
       "assertions": [

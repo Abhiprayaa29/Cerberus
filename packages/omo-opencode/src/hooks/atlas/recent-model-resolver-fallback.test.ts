@@ -1,4 +1,4 @@
-import { afterAll, describe, expect, test } from "bun:test"
+﻿import { afterAll, describe, expect, test } from "bun:test"
 import { mkdtempSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs"
 import { join } from "node:path"
 import { tmpdir } from "node:os"
@@ -44,13 +44,13 @@ describe("resolveRecentPromptContextForSession fallback ordering", () => {
     const messageDir = join(storageRoot, sessionID)
     mkdirSync(messageDir, { recursive: true })
     writeFileSync(join(messageDir, "msg_ffff0000_000001.json"), JSON.stringify({
-      agent: "atlas",
+      agent: "argus",
       model: { providerID: "anthropic", modelID: "claude-sonnet-4-6" },
       tools: { read: true },
       time: { created: 10 },
     }), "utf-8")
     writeFileSync(join(messageDir, "msg_00000000_000999.json"), JSON.stringify({
-      agent: "atlas",
+      agent: "argus",
       model: { providerID: "openai", modelID: "gpt-5.4" },
       tools: { edit: true },
       time: { created: 100 },

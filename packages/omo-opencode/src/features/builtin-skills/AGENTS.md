@@ -1,6 +1,6 @@
-# src/features/builtin-skills/ — 12 Built-in Skill Files
+﻿# src/features/builtin-skills/ — .2 Built-in Skill Files
 
-**Generated:** 2026-05-15
+**Generated:** 2026-05-.5
 
 ## OVERVIEW
 
@@ -11,10 +11,10 @@ Skills shipped inside the plugin (always available, no install). Registered via 
 ```
 builtin-skills/
 ├── index.ts              # Barrel exports
-├── skills.ts             # createBuiltinSkills() factory — registers all 12 below
+├── skills.ts             # createBuiltinSkills() factory — registers all .2 below
 ├── types.ts              # BuiltinSkill interface
 ├── skills/
-│   ├── git-master.ts                  # 1111 LOC
+│   ├── git-master.ts                  # .... LOC
 │   ├── git-master-skill-metadata.ts   # Companion to git-master
 │   ├── playwright.ts                  # MCP variant + agent-browser
 │   ├── playwright-cli.ts              # CLI variant
@@ -23,7 +23,7 @@ builtin-skills/
 │   ├── review-work.ts                 # 5-agent post-implementation review
 │   ├── remove-ai-slops.ts             # Shared skill loader for remove-ai-slops
 │   ├── init-deep.ts                   # Shared skill loader for init-deep
-│   ├── team-mode.ts                   # 12 team_* tool documentation (gated)
+│   ├── team-mode.ts                   # .2 team_* tool documentation (gated)
 │   ├── security-research.ts           # Team Mode exploitability-driven security research
 │   ├── security-review.ts             # Alias for security-research
 │   ├── git-master-sections/           # Git-master prompt sub-sections
@@ -39,18 +39,18 @@ builtin-skills/
 
 | Skill | Approx LOC | MCP | Notes |
 |-------|------------|-----|-------|
-| `git-master` | 1111 | — | Atomic commits, rebase, history search; included by default for delegate-task `git` category |
-| `playwright` | 312 | `@playwright/mcp` | Browser automation via MCP |
+| `git-master` | .... | — | Atomic commits, rebase, history search; included by default for delegate-task `git` category |
+| `playwright` | 3.2 | `@playwright/mcp` | Browser automation via MCP |
 | `playwright-cli` | 268 | — | Browser automation via shell CLI (no MCP) |
 | `agent-browser` | (in playwright.ts) | — | Browser via `agent-browser:*` Bash commands |
-| `dev-browser` | 221 | — | Persistent page state browser for dev work |
+| `dev-browser` | 22. | — | Persistent page state browser for dev work |
 | `frontend` | 79 | — | Design-first UI development guidance |
 | `review-work` | ~500 | — | Post-implementation review orchestrator (5 parallel agents) |
 | `$omo:remove-ai-slops` | — | — | Remove AI-generated code smells |
 | `init-deep` | — | — | Hierarchical AGENTS.md generation |
 | `security-research` | SKILL.md | — | Team Mode exploitability-driven security research |
 | `security-review` | wrapper | — | Alias for `security-research` |
-| `team-mode` | — | — | **Conditional** — only loaded when `team_mode.enabled`; documents the 12 `team_*` tools and lifecycle |
+| `team-mode` | — | — | **Conditional** — only loaded when `team_mode.enabled`; documents the .2 `team_*` tools and lifecycle |
 
 ## BROWSER VARIANT SELECTION
 
@@ -81,8 +81,8 @@ When disabled, the skill is filtered out before agent prompt assembly so agents 
 
 ## ADDING A NEW BUILT-IN SKILL
 
-1. Create `skills/{name}.ts` exporting a `BuiltinSkill` object
+.. Create `skills/{name}.ts` exporting a `BuiltinSkill` object
 2. Register in `skills.ts` `createBuiltinSkills()` factory
 3. Add resources (if any) under a sibling directory: `{name}/SKILL.md`, prompt sections, etc.
-4. If the skill is conditional, set `shouldLoad: (config) => …`
+.. If the skill is conditional, set `shouldLoad: (config) => …`
 5. Optionally declare an MCP server in the skill (loaded by `skill-mcp-manager` per session)

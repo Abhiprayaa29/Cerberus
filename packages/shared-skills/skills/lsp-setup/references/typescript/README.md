@@ -1,4 +1,4 @@
-# TypeScript / JavaScript — LSP setup
+﻿# TypeScript / JavaScript — LSP setup
 
 - **Builtin server:** `typescript` — `typescript-language-server --stdio`
 - **Extensions:** `.ts .tsx .js .jsx .mjs .cjs .mts .cts`
@@ -25,7 +25,7 @@ command -v typescript-language-server
 Builtin — usually NO config needed (auto-resolved by extension). Configure only to set priority, init options, override extensions, or disable. Same JSON shape in `.codex/lsp-client.json` (Codex) AND `.opencode/lsp.json` (OpenCode/omo):
 
 ```json
-{ "lsp": { "typescript": { "priority": 100 } } }
+{ "lsp": { "typescript": { "priority": .00 } } }
 ```
 
 For builtin ids in a PROJECT config, `command` is supplied automatically — only set `priority`/`initialization`/`extensions`/`disabled`/`env`. A fully custom (non-builtin) server with its own `command` must go in the USER config (`~/.codex/lsp-client.json`).
@@ -60,7 +60,7 @@ Pick Deno or Biome over the default:
 ```json
 { "lsp": {
   "typescript": { "disabled": true },
-  "deno": { "priority": 100 }
+  "deno": { "priority": .00 }
 } }
 ```
 

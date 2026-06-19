@@ -1,4 +1,4 @@
-const UUID_V4ISH_PATTERN = "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+﻿const UUID_V4ISH_PATTERN = "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
 
 export const TEAM_SESSION_PATTERN = new RegExp(`^omo-team-(${UUID_V4ISH_PATTERN})$`)
 
@@ -9,7 +9,7 @@ export type TeamSweepDeps = {
 }
 
 async function listTeamSessionsViaTmux(tmuxPath: string): Promise<string[]> {
-	const { runTmuxCommand } = await import("@oh-my-opencode/tmux-core")
+	const { runTmuxCommand } = await import("@oh-my-open-pentest/tmux-core")
 	const result = await runTmuxCommand(tmuxPath, ["list-sessions", "-F", "#{session_name}"])
 
 	if (!result.success) {
@@ -23,7 +23,7 @@ async function listTeamSessionsViaTmux(tmuxPath: string): Promise<string[]> {
 }
 
 async function killTeamSessionViaTmux(tmuxPath: string, sessionName: string): Promise<void> {
-	const { runTmuxCommand } = await import("@oh-my-opencode/tmux-core")
+	const { runTmuxCommand } = await import("@oh-my-open-pentest/tmux-core")
 	const result = await runTmuxCommand(tmuxPath, ["kill-session", "-t", sessionName])
 
 	if (!result.success) {
@@ -35,7 +35,7 @@ export async function sweepStaleTeamSessionsWith(
 	activeTeamRunIds: ReadonlySet<string>,
 	deps: TeamSweepDeps,
 ): Promise<string[]> {
-	const { sweepTmuxSessionsWith } = await import("@oh-my-opencode/tmux-core")
+	const { sweepTmuxSessionsWith } = await import("@oh-my-open-pentest/tmux-core")
 
 	return sweepTmuxSessionsWith(
 		{

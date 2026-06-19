@@ -1,4 +1,4 @@
-import { describe, expect, test } from "bun:test"
+﻿import { describe, expect, test } from "bun:test"
 
 import { createSyncSession } from "./sync-session-creator"
 
@@ -19,7 +19,7 @@ describe("createSyncSession", () => {
     // when
     const result = await createSyncSession(client as never, {
       parentSessionID: "ses_parent",
-      agentToUse: "explore",
+      agentToUse: "scout",
       description: "test task",
       defaultDirectory: "/fallback",
     })
@@ -29,7 +29,7 @@ describe("createSyncSession", () => {
     expect(createCalls).toHaveLength(1)
     expect(createCalls[0]?.body).toEqual({
       parentID: "ses_parent",
-      title: "test task (@explore subagent)",
+      title: "test task (@scout subagent)",
       permission: [
         { permission: "question", action: "deny", pattern: "*" },
       ],

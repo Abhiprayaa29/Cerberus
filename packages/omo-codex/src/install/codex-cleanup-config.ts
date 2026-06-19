@@ -1,15 +1,15 @@
-import { lstat, mkdir, readFile, writeFile } from "node:fs/promises"
+﻿import { lstat, mkdir, readFile, writeFile } from "node:fs/promises"
 import { dirname } from "node:path"
 
-const MANAGED_MARKETPLACES = ["sisyphuslabs", "lazycodex", "code-yeongyu-codex-plugins"] as const
+const MANAGED_MARKETPLACES = ["cerberuslabs", "lazycodex", "code-yeongyu-codex-plugins"] as const
 
-const LEGACY_MANAGED_CODEX_AGENT_NAMES_TO_PURGE = ["codex-ultrawork-reviewer"] as const
+const LEGACY_MANAGED_CODEX_AGENT_NAMES_TO_PURGE = ["codex-fullscan-reviewer"] as const
 
 const CURRENT_MANAGED_CODEX_AGENT_NAMES = [
   "explorer",
-  "librarian",
-  "metis",
-  "momus",
+  "intel",
+  "vanguard",
+  "sentinel",
   "plan",
 ] as const
 

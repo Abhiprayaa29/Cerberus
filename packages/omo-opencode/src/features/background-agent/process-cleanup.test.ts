@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 // This test file modifies process.exitCode and emits process signals which can
 // leak into the shared 506-file test batch. Route to isolated batch.
@@ -610,7 +610,7 @@ describe("#given process cleanup registration", () => {
     })
 
     test("#given a non-stdio ECONNRESET (mid-stream provider socket reset) OUTSIDE shutdown window #then it is NOT harmless and must log", () => {
-      // Regression guard for the sisyphus-bot review of PR #4355: a real
+      // Regression guard for the cerberus-bot review of PR #4355: a real
       // network bug surfacing as ECONNRESET during normal runtime must remain
       // visible to operators. Only shutdown-time bursts are silenced.
       const reset = Object.assign(new Error("connection reset"), { code: "ECONNRESET" })

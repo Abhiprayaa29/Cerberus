@@ -1,4 +1,4 @@
-declare const require: (name: string) => any
+﻿declare const require: (name: string) => any
 const { describe, expect, test, mock } = require("bun:test")
 
 import { DEFAULT_MESSAGE_STALENESS_TIMEOUT_MS } from "./constants"
@@ -13,7 +13,7 @@ function createRunningTask(startedAt: Date): BackgroundTask {
     parentMessageId: "msg-1",
     description: "test",
     prompt: "test",
-    agent: "explore",
+    agent: "scout",
     status: "running",
     startedAt,
     progress: undefined,

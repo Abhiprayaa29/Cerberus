@@ -1,4 +1,4 @@
-import type { DelegateTaskArgs, ToolContextWithMetadata } from "./types"
+﻿import type { DelegateTaskArgs, ToolContextWithMetadata } from "./types"
 import type { ExecutorContext, ParentContext, SessionMessage } from "./executor-types"
 import { getDeliverableTag, isPlanFamily } from "./constants"
 import { handedBackSyncSessions } from "../../features/claude-code-session-state"
@@ -99,7 +99,7 @@ export async function executeSyncContinuation(
   deps: SyncContinuationDeps = syncContinuationDeps,
   systemContent?: string
 ): Promise<string> {
-  const { client, syncPollTimeoutMs, sisyphusAgentConfig } = executorCtx
+  const { client, syncPollTimeoutMs, cerberusAgentConfig } = executorCtx
   const toastManager = getTaskToastManager()
   const continuationID = getTaskID(args)
   if (!continuationID) {
@@ -154,7 +154,7 @@ export async function executeSyncContinuation(
     await publishToolMetadata(ctx, syncContMeta)
 
     const allowTask = isPlanFamily(resumeAgent)
-    const tddEnabled = sisyphusAgentConfig?.tdd
+    const tddEnabled = cerberusAgentConfig?.tdd
     const effectivePrompt = buildTaskPrompt(args.prompt, resumeAgent, tddEnabled)
     const tools = {
       task: allowTask,

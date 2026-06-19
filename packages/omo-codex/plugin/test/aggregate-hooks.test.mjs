@@ -1,4 +1,4 @@
-import assert from "node:assert/strict";
+﻿import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import test from "node:test";
@@ -33,8 +33,8 @@ test("#given isolated components #when hooks are inspected #then commands stay i
 		"components/rules/dist/cli.js",
 		"components/start-work-continuation/dist/cli.js",
 		"components/telemetry/dist/cli.js",
-		"components/ulw-loop/dist/cli.js",
-		"components/ultrawork/dist/cli.js",
+		"components/pentest-loop/dist/cli.js",
+		"components/fullscan/dist/cli.js",
 		"scripts/auto-update.mjs",
 	];
 
@@ -42,7 +42,7 @@ test("#given isolated components #when hooks are inspected #then commands stay i
 	for (const marker of componentMarkers) {
 		assert.match(text, new RegExp(marker.replaceAll("/", "\\/")));
 	}
-	assert.doesNotMatch(text, /codex-(comment-checker|lsp|rules|telemetry|ulw-loop|ultrawork)@/);
+	assert.doesNotMatch(text, /codex-(comment-checker|lsp|rules|telemetry|pentest-loop|fullscan)@/);
 	assert.equal(await exists("scripts/migrate-codex-config.mjs"), true);
 });
 
@@ -104,7 +104,7 @@ test("#given aggregate hook commands #when inspected #then commands stay Node-ba
 
 	// then
 	assert(!commands.some((command) => /\bpython3?\b/i.test(command)));
-	assert(commands.includes('node "${PLUGIN_ROOT}/components/ultrawork/dist/cli.js" hook user-prompt-submit'));
+	assert(commands.includes('node "${PLUGIN_ROOT}/components/fullscan/dist/cli.js" hook user-prompt-submit'));
 	assert(commands.every((command) => command.startsWith("node ")));
 	assert(commands.every((command) => !command.includes("\\")));
 });
@@ -140,7 +140,7 @@ test("#given hook status messages #when inspected #then labels describe OMO resp
 	assert.deepEqual(genericStatusMessages, []);
 });
 
-test("#given aggregate OMO plugin is enabled #when hooks are inspected #then shell guidance and ulw-loop guard are registered", async () => {
+test("#given aggregate OMO plugin is enabled #when hooks are inspected #then shell guidance and pentest-loop guard are registered", async () => {
 	// given
 	const manifests = await readAggregateHookManifests();
 	const text = await readAggregateHooksText();
@@ -153,7 +153,7 @@ test("#given aggregate OMO plugin is enabled #when hooks are inspected #then she
 	assert.match(text, /Recommending Git Bash MCP/);
 	assert.match(text, /hook post-compact/);
 	assert.match(text, /Resetting Git Bash MCP Reminder/);
-	assert.match(text, /components\/ulw-loop\/dist\/cli\.js/);
+	assert.match(text, /components\/pentest-loop\/dist\/cli\.js/);
 	assert.match(text, /hook pre-tool-use/);
 	assert.deepEqual(preToolUseGroups.map((group) => group.matcher), ["^Bash$", "^create_goal$"]);
 });
@@ -188,5 +188,5 @@ test("#given aggregate plugin packaging #when inspected #then hooks and compatib
 	const aggregateText = `${hooksText}\n${aggregateTestText}`;
 
 	// then
-	assert.doesNotMatch(aggregateText, /\bpython3?\b|ultrawork-detector\.py/);
+	assert.doesNotMatch(aggregateText, /\bpython3?\b|fullscan-detector\.py/);
 });

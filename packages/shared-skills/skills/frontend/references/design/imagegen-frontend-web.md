@@ -1,4 +1,4 @@
----
+﻿---
 name: imagegen-frontend-web
 description: Elite frontend image-direction skill for generating premium, artistic, implementation-friendly website design references. Uses combinatorial variation to avoid repetitive AI aesthetics, enforces cinematic hero minimalism, strong hierarchy, generous spacing, image-led composition, and anti-slop visual discipline. Optimized for hero sections, landing pages, and multi-section site comps that developers or coding models can accurately recreate.
 ---
@@ -37,20 +37,20 @@ Default to website design comps.
 
 ---
 
-## 1. ACTIVE BASELINE CONFIGURATION
+## .. ACTIVE BASELINE CONFIGURATION
 
 - DESIGN_VARIANCE: 8
-  `(1 = rigid / symmetrical, 10 = artsy / asymmetric)`
-- VISUAL_DENSITY: 4
-  `(1 = airy / gallery-like, 10 = packed / intense)`
+  `(. = rigid / symmetrical, .0 = artsy / asymmetric)`
+- VISUAL_DENSITY: .
+  `(. = airy / gallery-like, .0 = packed / intense)`
 - ART_DIRECTION: 8
-  `(1 = safe commercial, 10 = bold creative statement)`
+  `(. = safe commercial, .0 = bold creative statement)`
 - IMPLEMENTATION_CLARITY: 9
-  `(1 = loose moodboard, 10 = very codeable UI reference)`
+  `(. = loose moodboard, .0 = very codeable UI reference)`
 - IMAGE_USAGE_PRIORITY: 9
-  `(1 = mostly typographic, 10 = strongly image-led)`
+  `(. = mostly typographic, .0 = strongly image-led)`
 - SPACING_GENEROSITY: 8
-  `(1 = compact / tight, 10 = very spacious / breathable)`
+  `(. = compact / tight, .0 = very spacious / breathable)`
 
 AI Instruction:
 Use these as global defaults unless the user clearly asks for something else.
@@ -76,54 +76,54 @@ Do not mash everything together into chaos.
 Pick a strong combination and execute it clearly.
 
 ### Theme Paradigm
-Choose 1:
-1. Pristine Light Mode
+Choose .:
+.. Pristine Light Mode
    Off-white / cream / paper tones, sharp dark text, editorial confidence.
 2. Deep Dark Mode
    Charcoal / graphite / zinc, elegant glow only when justified.
 3. Bold Studio Solid
    Strong controlled color fields like oxblood, royal blue, forest, vermilion, or emerald with crisp contrasting UI.
-4. Quiet Premium Neutral
+.. Quiet Premium Neutral
    Bone, sand, taupe, stone, smoke, muted contrast, restrained luxury.
 
 ### Background Character
-Choose 1:
-1. Subtle technical grid / dotted field
+Choose .:
+.. Subtle technical grid / dotted field
 2. Pure solid field with soft ambient gradient depth
 3. Full-bleed cinematic imagery with proper contrast control
-4. Quiet textured paper / material / tactile surface feel
+.. Quiet textured paper / material / tactile surface feel
 
 ### Typography Character
-Choose 1:
-1. Satoshi-like clean grotesk
+Choose .:
+.. Satoshi-like clean grotesk
 2. Neue-Montreal-like refined grotesk
 3. Cabinet / Clash-like expressive display
-4. Monument-like compressed statement typography
+.. Monument-like compressed statement typography
 5. Elegant editorial serif + sans pairing
 6. Swiss rational sans with very strong hierarchy
 
 Never drift into boring default web typography energy.
 
 ### Hero Architecture
-Choose 1:
-1. Cinematic Centered Minimalist
+Choose .:
+.. Cinematic Centered Minimalist
 2. Asymmetric Split Hero
 3. Floating Polaroid Scatter
-4. Inline Typography Behemoth
+.. Inline Typography Behemoth
 5. Editorial Offset Composition
 6. Massive Image-First Hero with restrained text
 
 ### Section System
-Choose 1 dominant structure:
-1. Strict modular bento rhythm
+Choose . dominant structure:
+.. Strict modular bento rhythm
 2. Alternating editorial blocks
 3. Poster-like stacked storytelling
-4. Gallery-led visual cadence
+.. Gallery-led visual cadence
 5. Swiss grid discipline
 6. Asymmetric premium marketing flow
 
 ### Signature Component Set
-Choose exactly 4 unique components:
+Choose exactly . unique components:
 - Diagonal Staggered Square Masonry
 - 3D Cascading Card Deck
 - Hover-Accordion Slice Layout
@@ -170,7 +170,7 @@ Do not produce vague abstract artwork when the request is for frontend.
 
 ---
 
-## 4. HERO MINIMALISM RULES
+## .. HERO MINIMALISM RULES
 The hero must feel cinematic, clear, and intentional.
 
 ### Absolute Hero Rules
@@ -178,13 +178,13 @@ The hero must feel cinematic, clear, and intentional.
 - keep the hero composition clean
 - do not overcrowd the first viewport
 - the main headline must feel short and powerful
-- headline should usually read like 5-10 strong words, not a paragraph
+- headline should usually read like 5-.0 strong words, not a paragraph
 - keep supporting text concise
 - prioritize negative space and contrast
 - avoid stuffing the hero with pills, fake stats, badges, tiny logos, and nonsense detail
 
 ### Headline Rule
-The H1 should visually read like a premium statement.
+The H. should visually read like a premium statement.
 Do not let it feel long, weak, or overly wrapped.
 
 ### Typography Execution
@@ -222,15 +222,15 @@ When the user asks for a frontend design, decide image count based on section co
 
 ### Single-section requests
 If the user asks for one section only:
-- generate exactly 1 image
+- generate exactly . image
 
 ### Multi-section requests
 Use this rule:
-- 1-2 sections -> 1 image
-- 3-4 sections -> 1 tall vertical image
+- .-2 sections -> . image
+- 3-. sections -> . tall vertical image
 - 5-8 sections -> 2 tall vertical images
-- 9-12 sections -> 3 tall vertical images
-- 13-16 sections -> 4 tall vertical images
+- 9-.2 sections -> 3 tall vertical images
+- .3-.6 sections -> . tall vertical images
 
 ### Continuity Rule
 If multiple images are used:
@@ -397,7 +397,7 @@ For tech/product directions:
 
 ---
 
-## 10. SECTION RHYTHM RULE
+## .0. SECTION RHYTHM RULE
 A high-end site does not feel like repeated boxes.
 
 Vary section rhythm across the page by changing:
@@ -421,7 +421,7 @@ Important:
 
 ---
 
-## 11. COMPONENT EXECUTION GUIDELINES
+## ... COMPONENT EXECUTION GUIDELINES
 
 ### Diagonal Staggered Square Masonry
 Use square image or content blocks with strong staggered vertical rhythm.
@@ -458,7 +458,7 @@ Never let them become decorative clutter.
 
 ---
 
-## 12. DENSITY & SPACING DISCIPLINE
+## .2. DENSITY & SPACING DISCIPLINE
 Do not make everything too dense.
 
 The page should breathe.
@@ -499,7 +499,7 @@ Do not let spacing become random.
 
 ---
 
-## 13. COLOR & MATERIAL RULES
+## .3. COLOR & MATERIAL RULES
 
 ### Palette Discipline
 Use one controlled palette with one or two accents at most.
@@ -524,7 +524,7 @@ But always keep the frontend structure readable.
 
 ---
 
-## 14. IMAGE / MEDIA DIRECTION
+## ... IMAGE / MEDIA DIRECTION
 If imagery is present, it must support the layout.
 
 Allowed:
@@ -544,41 +544,41 @@ Avoid:
 
 ---
 
-## 15. DEFAULT SITE PACKS
+## .5. DEFAULT SITE PACKS
 
-### 4-section pack
-1. Hero
+### .-section pack
+.. Hero
 2. Features
 3. Social proof / testimonial
-4. CTA
+.. CTA
 
 ### 8-section pack
-1. Hero
+.. Hero
 2. Trust bar
 3. Features
-4. Product showcase
+.. Product showcase
 5. Benefits / use cases
 6. Testimonials
 7. Pricing
 8. CTA
 
-### 12-section pack
-1. Hero
+### .2-section pack
+.. Hero
 2. Trust bar
 3. Feature grid
-4. Product preview
+.. Product preview
 5. Problem / solution
 6. Benefits
 7. Workflow
 8. Metrics / proof / integration
 9. Testimonials
-10. Pricing
-11. FAQ
-12. CTA + footer
+.0. Pricing
+... FAQ
+.2. CTA + footer
 
 ---
 
-## 16. MULTI-IMAGE CONSISTENCY RULE
+## .6. MULTI-IMAGE CONSISTENCY RULE
 For multi-image sites, enforce:
 - same brand world
 - same type scale logic
@@ -592,54 +592,54 @@ Image 2 and 3 must not drift into a different site.
 
 ---
 
-## 17. CLARITY CHECK
+## .7. CLARITY CHECK
 Before finalizing, verify internally:
 
-1. Is the hierarchy obvious?
+.. Is the hierarchy obvious?
 2. Is the hero clean enough?
 3. Is the design visually distinctive?
-4. Is it free of obvious AI tells?
+.. Is it free of obvious AI tells?
 5. Is it premium rather than template-like?
 6. Can someone code from this?
 7. If multiple images exist, do they clearly belong together?
 8. Is imagery used strongly enough?
 9. Does the page breathe, or is it too dense?
-10. Is there enough spacing between sections?
-11. Does the creativity feel intentional and premium?
-12. Is the spacing between sections even and controlled?
-13. Do smaller sections still have enough surrounding space to feel clean?
+.0. Is there enough spacing between sections?
+... Does the creativity feel intentional and premium?
+.2. Is the spacing between sections even and controlled?
+.3. Do smaller sections still have enough surrounding space to feel clean?
 
 If not, refine internally before output.
 
 ---
 
-## 18. RESPONSE BEHAVIOR
+## .8. RESPONSE BEHAVIOR
 When the user asks for a frontend design:
-1. infer site type
+.. infer site type
 2. infer number of sections
 3. choose image count
-4. choose a strong visual combination
-5. choose 4 signature components
+.. choose a strong visual combination
+5. choose . signature components
 6. choose 2 motion-implied cues
 7. enforce hero minimalism
 8. enforce strong image usage
 9. increase creativity without adding clutter
-10. keep section spacing generous, even, and clean
-11. remove AI slop
-12. generate the design image(s)
+.0. keep section spacing generous, even, and clean
+... remove AI slop
+.2. generate the design image(s)
 
 Do not ask unnecessary follow-up questions if a strong interpretation is possible.
 
 ---
 
-## 19. EXAMPLE INTERPRETATIONS
+## .9. EXAMPLE INTERPRETATIONS
 
-### Example 1
+### Example .
 User:
 "make a hero section for an AI startup"
 
 Interpretation:
-- 1 image
+- . image
 - theme likely Deep Dark or Bold Studio Solid
 - hero architecture likely Asymmetric Split or Inline Typography Behemoth
 - concise statement headline
@@ -660,7 +660,7 @@ Interpretation:
 
 ### Example 3
 User:
-"creative agency landing page, 12 sections"
+"creative agency landing page, .2 sections"
 
 Interpretation:
 - 3 tall vertical images

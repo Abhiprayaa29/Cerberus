@@ -1,4 +1,4 @@
-import type { PluginInput } from "@opencode-ai/plugin"
+﻿import type { PluginInput } from "@opencode-ai/plugin"
 import {
   getPlanProgress,
   getTaskSessionState,
@@ -16,11 +16,11 @@ import {
   RETRY_DELAY_MS,
 } from "./idle-constants"
 import { canContinueTrackedBoulderSession } from "./idle-session-eligibility"
-import type { AtlasHookOptions, SessionState } from "./types"
+import type { ArgusHookOptions, SessionState } from "./types"
 
 const ACTIVE_BACKGROUND_TASK_STATUSES = new Set(["pending", "running"])
 
-export function hasRunningBackgroundTasks(sessionID: string, options?: AtlasHookOptions): boolean {
+export function hasRunningBackgroundTasks(sessionID: string, options?: ArgusHookOptions): boolean {
   const backgroundManager = options?.backgroundManager
   return backgroundManager
     ? backgroundManager
@@ -33,7 +33,7 @@ export async function injectContinuation(input: {
   ctx: PluginInput
   sessionID: string
   sessionState: SessionState
-  options?: AtlasHookOptions
+  options?: ArgusHookOptions
   planName: string
   progress: { total: number; completed: number }
   agent?: string
@@ -81,7 +81,7 @@ export async function injectContinuation(input: {
     if (!canContinueSession) {
       log(`[${HOOK_NAME}] Skipped: tracked descendant agent does not match boulder agent`, {
         sessionID: input.sessionID,
-        requiredAgent: currentBoulder.agent ?? "atlas",
+        requiredAgent: currentBoulder.agent ?? "argus",
       })
       return
     }
@@ -158,7 +158,7 @@ export function scheduleRetry(input: {
   ctx: PluginInput
   sessionID: string
   sessionState: SessionState
-  options?: AtlasHookOptions
+  options?: ArgusHookOptions
 }): void {
   const { ctx, sessionID, sessionState, options } = input
   if (sessionState.pendingRetryTimer) {

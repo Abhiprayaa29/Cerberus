@@ -1,8 +1,8 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import type { RuntimeStateMember } from "../types"
 import { log } from "../logger"
-import { closeTmuxPane } from "@oh-my-opencode/tmux-core"
+import { closeTmuxPane } from "@oh-my-open-pentest/tmux-core"
 
 type TeamMemberPaneIds = Pick<RuntimeStateMember, "tmuxPaneId" | "tmuxGridPaneId">
 

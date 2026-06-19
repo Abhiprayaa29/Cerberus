@@ -1,4 +1,4 @@
-import { describe, expect, test } from "bun:test"
+﻿import { describe, expect, test } from "bun:test"
 import { tmpdir } from "node:os"
 import type { PluginInput } from "@opencode-ai/plugin"
 import { unsafeTestValue } from "../../../../../test-support/unsafe-test-value"
@@ -58,7 +58,7 @@ async function dispatchParentWake(manager: BackgroundManager, sessionID: string)
   internals.queuePendingParentWake(
     sessionID,
     "<system-reminder>done</system-reminder>",
-    { agent: "sisyphus" },
+    { agent: "cerberus" },
     true,
     0,
   )
@@ -90,7 +90,7 @@ describe("BackgroundManager parent-wake part event regression", () => {
           role: "user",
           part: {
             type: "text",
-            text: "done\n<!-- OMO_INTERNAL_INITIATOR -->",
+            text: "done\n<!-- OMOP_INTERNAL_INITIATOR -->",
           },
         },
       })
@@ -126,7 +126,7 @@ describe("BackgroundManager parent-wake part event regression", () => {
           sessionID: "parent-session-user-part-delta",
           role: "user",
           field: "text",
-          delta: "done\n<!-- OMO_INTERNAL_INITIATOR -->",
+          delta: "done\n<!-- OMOP_INTERNAL_INITIATOR -->",
         },
       })
 

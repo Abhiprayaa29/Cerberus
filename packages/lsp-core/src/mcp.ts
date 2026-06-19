@@ -1,4 +1,4 @@
-import type { Readable, Writable } from "node:stream";
+﻿import type { Readable, Writable } from "node:stream";
 import {
 	errorResponse,
 	isPlainRecord,
@@ -11,7 +11,7 @@ import {
 	type JsonRpcResponse,
 	type JsonRpcResult,
 	type McpToolDescriptor,
-} from "@oh-my-opencode/mcp-stdio-core";
+} from "@oh-my-open-pentest/mcp-stdio-core";
 import { coerceToolArguments, executeLspTool, LSP_MCP_TOOLS } from "./tools.js";
 
 export type { JsonRpcError, JsonRpcId, JsonRpcResponse, JsonRpcResult, McpToolDescriptor };

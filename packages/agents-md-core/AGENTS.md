@@ -1,10 +1,10 @@
-# agents-md-core — AGENTS.md Discovery + Injection (Core)
+﻿# agents-md-core — AGENTS.md Discovery + Injection (Core)
 
-**Generated:** 2026-06-17
+**Generated:** 2026-06-.7
 
 ## OVERVIEW
 
-Harness-neutral logic for walking a file path UP its directory tree, discovering nearby `AGENTS.md` files, truncating their content, and formatting them as a `[Directory Context: ...]` block for injection into the session. Discovery itself is delegated to [`rules-engine`](../rules-engine/AGENTS.md) (`findAgentsMdUp`, `AgentsMdCache`); this package owns path resolution, formatting, and the per-session injected-paths cache. Package: `@oh-my-opencode/agents-md-core`.
+Harness-neutral logic for walking a file path UP its directory tree, discovering nearby `AGENTS.md` files, truncating their content, and formatting them as a `[Directory Context: ...]` block for injection into the session. Discovery itself is delegated to [`rules-engine`](../rules-engine/AGENTS.md) (`findAgentsMdUp`, `AgentsMdCache`); this package owns path resolution, formatting, and the per-session injected-paths cache. Package: `@oh-my-open-pentest/agents-md-core`.
 
 ## PUBLIC API (`src/index.ts`)
 
@@ -19,8 +19,8 @@ Harness-neutral logic for walking a file path UP its directory tree, discovering
 
 ## DEPENDENCIES & CONSUMERS
 
-- **Depends on:** `@oh-my-opencode/rules-engine` only.
-- **Consumed by** (OpenCode edition only; no Codex consumer): `omo-opencode/src/hooks/directory-agents-injector/{finder,injector}.ts` (re-export) and `hooks/hephaestus-agents-md-injector/hook.ts` (`formatAgentsMdContextBlock`).
+- **Depends on:** `@oh-my-open-pentest/rules-engine` only.
+- **Consumed by** (OpenCode edition only; no Codex consumer): `omo-opencode/src/hooks/directory-agents-injector/{finder,injector}.ts` (re-export) and `hooks/scylla-agents-md-injector/hook.ts` (`formatAgentsMdContextBlock`).
 
 ## NOTES
 

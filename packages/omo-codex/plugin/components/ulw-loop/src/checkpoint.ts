@@ -1,4 +1,4 @@
-import { existsSync, statSync } from "node:fs";
+﻿import { existsSync, statSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import {
@@ -59,11 +59,11 @@ function normalizeObjective(value: string): string {
 }
 function nonEmptyEvidence(value: string): string {
 	const trimmed = value.trim();
-	return trimmed || ulwLoopFail("Evidence must be a non-empty string.", "ulw_loop_evidence_required");
+	return trimmed || ulwLoopFail("Evidence must be a non-empty string.", "pentest_loop_evidence_required");
 }
 function findGoal(plan: UlwLoopPlan, goalId: string): UlwLoopItem {
 	const goal = plan.goals.find((candidate) => candidate.id === goalId);
-	return goal ?? ulwLoopFail(`Unknown ulw-loop id: ${goalId}.`, "ulw_loop_goal_not_found");
+	return goal ?? ulwLoopFail(`Unknown pentest-loop id: ${goalId}.`, "pentest_loop_goal_not_found");
 }
 
 async function readJsonInput(raw: string | undefined, repoRoot: string): Promise<unknown> {
@@ -76,13 +76,13 @@ async function readJsonInput(raw: string | undefined, repoRoot: string): Promise
 	}
 	const path = resolve(repoRoot, trimmed);
 	if (!existsSync(path))
-		return ulwLoopFail("Quality gate JSON is neither valid JSON nor a readable path.", "ulw_loop_json_input_invalid");
+		return ulwLoopFail("Quality gate JSON is neither valid JSON nor a readable path.", "pentest_loop_json_input_invalid");
 	try {
 		return JSON.parse(await readFile(path, "utf8"));
 	} catch (error) {
 		return ulwLoopFail(
 			`Quality gate path does not contain valid JSON${error instanceof Error ? `: ${error.message}` : "."}`,
-			"ulw_loop_json_input_invalid",
+			"pentest_loop_json_input_invalid",
 		);
 	}
 }
@@ -213,7 +213,7 @@ export async function checkpointUlwLoop(
 				if (!taskScoped)
 					throw new UlwLoopError(
 						`${formatCodexGoalReconciliation(reconciliation)}${aggregate && snapshot?.status === "complete" && objective !== undefined ? buildTaskScopedAggregateReconciliationHint(goal, final) : ""}`,
-						"ulw_loop_codex_snapshot_mismatch",
+						"pentest_loop_codex_snapshot_mismatch",
 					);
 			}
 			if (final) aggregateCompletion = makeAggregateCompletion(now, evidence, codexGoal);

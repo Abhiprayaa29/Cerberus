@@ -1,4 +1,4 @@
-import { describe, expect, mock, test } from "bun:test"
+﻿import { describe, expect, mock, test } from "bun:test"
 import type { PluginInput } from "@opencode-ai/plugin"
 import { createBackgroundUpdateCheckRunner } from "./background-update-check"
 
@@ -19,10 +19,10 @@ describe("createBackgroundUpdateCheckRunner — OpenCode-managed sandbox (#4318)
     //                Npm.add() installs the plugin)
     const cacheDir = "/cache/packages"
     const configDir = "/config"
-    const sandboxDir = "/cache/packages/oh-my-openagent@^4.2"
+    const sandboxDir = "/cache/packages/oh-my-open-pentest@^4.2"
 
     const findPluginEntry = mock(() => ({
-      entry: "oh-my-openagent@^4.2",
+      entry: "oh-my-open-pentest@^4.2",
       pinnedVersion: "^4.2",
       isPinned: false,
       configPath: "/project/opencode.json",
@@ -86,7 +86,7 @@ describe("createBackgroundUpdateCheckRunner — OpenCode-managed sandbox (#4318)
     const configDir = "/config"
 
     const findPluginEntry = mock(() => ({
-      entry: "oh-my-openagent",
+      entry: "oh-my-open-pentest",
       pinnedVersion: null,
       isPinned: false,
       configPath: "/project/opencode.json",
@@ -140,7 +140,7 @@ describe("createBackgroundUpdateCheckRunner — OpenCode-managed sandbox (#4318)
     const nonError = Symbol("install failed")
 
     const findPluginEntry = mock(() => ({
-      entry: "oh-my-openagent",
+      entry: "oh-my-open-pentest",
       pinnedVersion: null,
       isPinned: false,
       configPath: "/project/opencode.json",

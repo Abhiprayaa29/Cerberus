@@ -1,4 +1,4 @@
-/// <reference path="../../../../../bun-test.d.ts" />
+﻿/// <reference path="../../../../../bun-test.d.ts" />
 
 import { beforeEach, describe, expect, it } from "bun:test"
 import {
@@ -15,7 +15,7 @@ describe("shouldApplyRule", () => {
     resetMatcherCache()
   })
 
-  it("#given repeated glob metadata #when matching many files #then compiles each pattern once", () => {
+  it("#given repeated glob metadata #when matching many files #then scans each pattern once", () => {
     // given
     const metadata = { globs: ["src/**/*.ts", "test/**/*.ts"] }
     const projectRoot = "/workspace/project"

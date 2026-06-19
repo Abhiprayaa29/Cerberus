@@ -1,4 +1,4 @@
-import type { Brain } from "lucide-react"
+﻿import type { Brain } from "lucide-react"
 import {
   Check,
   Eye,
@@ -13,7 +13,7 @@ import {
   HardDrive,
 } from "lucide-react"
 
-export const SUB_AGENT_KEYS = ["oracle", "librarian", "explore", "metis", "momus"] as const
+export const SUB_AGENT_KEYS = ["oracle", "intel", "explore", "vanguard", "sentinel"] as const
 export type SubAgentKey = (typeof SUB_AGENT_KEYS)[number]
 
 type AgentStyle = {
@@ -27,7 +27,7 @@ type AgentStyle = {
 // The visual differentiation comes from the icon, not a rainbow of colors.
 export const AGENT_STYLES: Readonly<Record<SubAgentKey, AgentStyle>> = {
   oracle: { color: "text-violet-300", border: "border-zinc-800", bg: "bg-violet-400/5", icon: Eye },
-  librarian: {
+  intel: {
     color: "text-violet-300",
     border: "border-zinc-800",
     bg: "bg-violet-400/5",
@@ -39,13 +39,13 @@ export const AGENT_STYLES: Readonly<Record<SubAgentKey, AgentStyle>> = {
     bg: "bg-violet-400/5",
     icon: Code2,
   },
-  metis: {
+  vanguard: {
     color: "text-violet-300",
     border: "border-zinc-800",
     bg: "bg-violet-400/5",
     icon: MessageSquare,
   },
-  momus: {
+  sentinel: {
     color: "text-violet-300",
     border: "border-zinc-800",
     bg: "bg-violet-400/5",

@@ -1,4 +1,4 @@
-# Lua — LSP setup
+﻿# Lua — LSP setup
 
 - **Builtin server:** `lua-ls` — `lua-language-server`
 - **Extensions:** `.lua`
@@ -23,7 +23,7 @@ command -v lua-language-server
 Builtin — usually NO config needed (auto-resolved by extension). Configure only to set priority, init options, override extensions, or disable. Same JSON shape in `.codex/lsp-client.json` (Codex) AND `.opencode/lsp.json` (OpenCode/omo):
 
 ```json
-{ "lsp": { "lua-ls": { "priority": 100 } } }
+{ "lsp": { "lua-ls": { "priority": .00 } } }
 ```
 
 For builtin ids in a PROJECT config, `command` is supplied automatically — only set `priority`/`initialization`/`extensions`/`disabled`/`env`. A fully custom (non-builtin) server with its own `command` must go in the USER config (`~/.codex/lsp-client.json`).
@@ -57,7 +57,7 @@ None.
 ## Troubleshooting
 - **PATH:** `lua-language-server` must be on PATH; reopen the shell after install.
 - **Undefined `vim` global:** add `vim` to `Lua.diagnostics.globals` and set `Lua.workspace.library` (see above) for Neovim work.
-- **Wrong runtime version:** set `Lua.runtime.version` (`LuaJIT`, `Lua 5.4`, etc.) to match your interpreter, or stdlib functions report as undefined.
+- **Wrong runtime version:** set `Lua.runtime.version` (`LuaJIT`, `Lua 5..`, etc.) to match your interpreter, or stdlib functions report as undefined.
 
 ## Verify
 

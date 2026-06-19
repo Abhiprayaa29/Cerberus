@@ -1,4 +1,4 @@
-/// <reference path="../../../../bun-test.d.ts" />
+﻿/// <reference path="../../../../bun-test.d.ts" />
 /// <reference types="bun-types" />
 
 import { describe, expect, test } from "bun:test"
@@ -11,12 +11,12 @@ const INSTALL_CODEX_LEGACY_AGENT_PURGE_TIMEOUT_MS = 20_000
 
 const skipAstGrepInstall = async () => ({ kind: "skipped" as const, reason: "test" })
 
-const LEGACY_MANAGED_ULTRAWORK_REVIEWER_TOML = `name = "codex-ultrawork-reviewer"
-description = "Strict ultrawork verification reviewer. Use after full QA evidence to audit the diff, goal, and scenario evidence before declaring done."
+const LEGACY_MANAGED_ULTRAWORK_REVIEWER_TOML = `name = "codex-fullscan-reviewer"
+description = "Strict fullscan verification reviewer. Use after full QA evidence to audit the diff, goal, and scenario evidence before declaring done."
 nickname_candidates = ["Verifier"]
 model = "gpt-5.5"
 model_reasoning_effort = "high"
-developer_instructions = """You are the ultrawork verification reviewer.
+developer_instructions = """You are the fullscan verification reviewer.
 
 Review only. Do not implement.
 
@@ -44,15 +44,15 @@ describe("install-codex legacy agent purge", () => {
     await writeFile(
       join(codexHome, "config.toml"),
       [
-        "[agents.codex-ultrawork-reviewer]",
-        'config_file = "./agents/codex-ultrawork-reviewer.toml"',
+        "[agents.codex-fullscan-reviewer]",
+        'config_file = "./agents/codex-fullscan-reviewer.toml"',
         "",
         "[agents.user_custom]",
         'config_file = "./agents/user-custom.toml"',
         "",
       ].join("\n"),
     )
-    await writeFile(join(agentsDir, "codex-ultrawork-reviewer.toml"), LEGACY_MANAGED_ULTRAWORK_REVIEWER_TOML)
+    await writeFile(join(agentsDir, "codex-fullscan-reviewer.toml"), LEGACY_MANAGED_ULTRAWORK_REVIEWER_TOML)
     await writeFile(join(agentsDir, "user-custom.toml"), 'name = "user-custom"\nmodel = "gpt-5.5"\n')
 
     // when
@@ -60,9 +60,9 @@ describe("install-codex legacy agent purge", () => {
 
     // then
     const configContent = await readFile(join(codexHome, "config.toml"), "utf8")
-    expect(configContent).not.toContain("[agents.codex-ultrawork-reviewer]")
-    expect(configContent).not.toContain('config_file = "./agents/codex-ultrawork-reviewer.toml"')
-    expect(await pathExists(join(agentsDir, "codex-ultrawork-reviewer.toml"))).toBe(false)
+    expect(configContent).not.toContain("[agents.codex-fullscan-reviewer]")
+    expect(configContent).not.toContain('config_file = "./agents/codex-fullscan-reviewer.toml"')
+    expect(await pathExists(join(agentsDir, "codex-fullscan-reviewer.toml"))).toBe(false)
     expect(await readFile(join(agentsDir, "user-custom.toml"), "utf8")).toBe('name = "user-custom"\nmodel = "gpt-5.5"\n')
   }, { timeout: INSTALL_CODEX_LEGACY_AGENT_PURGE_TIMEOUT_MS })
 
@@ -71,21 +71,21 @@ describe("install-codex legacy agent purge", () => {
     const codexHome = await mkdtemp(join(tmpdir(), "omo-codex-home-custom-reviewer-"))
     const binDir = await mkdtemp(join(tmpdir(), "omo-codex-bin-custom-reviewer-"))
     const agentsDir = join(codexHome, "agents")
-    const customReviewer = 'name = "codex-ultrawork-reviewer"\ndescription = "My local reviewer override"\n'
+    const customReviewer = 'name = "codex-fullscan-reviewer"\ndescription = "My local reviewer override"\n'
     await mkdir(agentsDir, { recursive: true })
     await writeFile(
       join(codexHome, "config.toml"),
-      ["[agents.codex-ultrawork-reviewer]", 'config_file = "./agents/codex-ultrawork-reviewer.toml"', ""].join("\n"),
+      ["[agents.codex-fullscan-reviewer]", 'config_file = "./agents/codex-fullscan-reviewer.toml"', ""].join("\n"),
     )
-    await writeFile(join(agentsDir, "codex-ultrawork-reviewer.toml"), customReviewer)
+    await writeFile(join(agentsDir, "codex-fullscan-reviewer.toml"), customReviewer)
 
     // when
     await runCodexInstaller({ codexHome, binDir, repoRoot: process.cwd(), astGrepInstaller: skipAstGrepInstall, runCommand: async () => undefined })
 
     // then
     const configContent = await readFile(join(codexHome, "config.toml"), "utf8")
-    expect(configContent).not.toContain("[agents.codex-ultrawork-reviewer]")
-    expect(await readFile(join(agentsDir, "codex-ultrawork-reviewer.toml"), "utf8")).toBe(customReviewer)
+    expect(configContent).not.toContain("[agents.codex-fullscan-reviewer]")
+    expect(await readFile(join(agentsDir, "codex-fullscan-reviewer.toml"), "utf8")).toBe(customReviewer)
   }, { timeout: INSTALL_CODEX_LEGACY_AGENT_PURGE_TIMEOUT_MS })
 })
 

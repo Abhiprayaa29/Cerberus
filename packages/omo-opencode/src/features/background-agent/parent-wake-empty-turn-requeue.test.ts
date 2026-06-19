@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, test } from "bun:test"
+﻿import { afterEach, describe, expect, test } from "bun:test"
 import { tmpdir } from "node:os"
 import type { PluginInput } from "@opencode-ai/plugin"
 import { releaseAllPromptAsyncReservationsForTesting } from "../../hooks/shared/prompt-async-gate"
@@ -175,7 +175,7 @@ describe("BackgroundManager parent wake empty-turn recovery", () => {
     managerUnderTest = manager
     const sessionID = "parent-session-empty-wake"
     const notification = "<system-reminder>done</system-reminder>"
-    internals.queuePendingParentWake(sessionID, notification, { agent: "sisyphus" }, true, 0)
+    internals.queuePendingParentWake(sessionID, notification, { agent: "cerberus" }, true, 0)
     await internals.flushPendingParentWake(sessionID)
     expect(promptCalls).toHaveLength(1)
     expect(internals.parentWakeNotifier.getDispatchedParentWakes().has(sessionID)).toBe(true)
@@ -204,8 +204,8 @@ describe("BackgroundManager parent wake empty-turn recovery", () => {
     const sessionID = "parent-session-empty-wake"
     const firstNotification = "<system-reminder>first</system-reminder>"
     const secondNotification = "<system-reminder>second</system-reminder>"
-    internals.queuePendingParentWake(sessionID, firstNotification, { agent: "sisyphus" }, true, 0)
-    internals.queuePendingParentWake(sessionID, secondNotification, { agent: "sisyphus" }, true, 0)
+    internals.queuePendingParentWake(sessionID, firstNotification, { agent: "cerberus" }, true, 0)
+    internals.queuePendingParentWake(sessionID, secondNotification, { agent: "cerberus" }, true, 0)
     await internals.flushPendingParentWake(sessionID)
     expect(promptCalls).toHaveLength(1)
     expect(internals.parentWakeNotifier.getDispatchedParentWakes().get(sessionID)?.notifications).toEqual([
@@ -250,7 +250,7 @@ describe("BackgroundManager parent wake empty-turn recovery", () => {
     ]
     const { manager, internals, promptCalls } = createManager(sessionMessages)
     managerUnderTest = manager
-    internals.queuePendingParentWake(sessionID, notification, { agent: "sisyphus" }, true, 0)
+    internals.queuePendingParentWake(sessionID, notification, { agent: "cerberus" }, true, 0)
     await internals.flushPendingParentWake(sessionID)
     expect(promptCalls).toHaveLength(1)
     sessionMessages.push(...completedEmptyHistory)

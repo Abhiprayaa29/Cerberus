@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { afterAll, afterEach, beforeEach, describe, expect, mock, test } from "bun:test"
 import { access, mkdtemp, readdir, rm } from "node:fs/promises"
@@ -377,7 +377,7 @@ describe("createTeamRun", () => {
       createdAt: Date.now(),
       leadAgentId: "lead",
       members: [
-        { kind: "subagent_type", name: "lead", subagent_type: "sisyphus", backendType: "in-process", isActive: true },
+        { kind: "subagent_type", name: "lead", subagent_type: "cerberus", backendType: "in-process", isActive: true },
         { kind: "category", name: "member-1", category: "quick", prompt: "prompt-1", backendType: "in-process", isActive: true },
       ],
     }
@@ -390,7 +390,7 @@ describe("createTeamRun", () => {
       createConfig(baseDir),
       manager,
       undefined,
-      { callerAgentTypeId: "sisyphus" },
+      { callerAgentTypeId: "cerberus" },
     )
 
     // then
@@ -419,7 +419,7 @@ describe("createTeamRun", () => {
       createdAt: Date.now(),
       leadAgentId: "lead",
       members: [
-        { kind: "subagent_type", name: "lead", subagent_type: "sisyphus", backendType: "in-process", isActive: true },
+        { kind: "subagent_type", name: "lead", subagent_type: "cerberus", backendType: "in-process", isActive: true },
         { kind: "category", name: "worker", category: "quick", prompt: "work hard", backendType: "in-process", isActive: true },
       ],
     }
@@ -427,18 +427,18 @@ describe("createTeamRun", () => {
     // when
     const runtimeState = await createTeamRun(
       spec,
-      "ses_caller_sisyphus",
+      "ses_caller_cerberus",
       createContext(baseDir, manager),
       createConfig(baseDir),
       manager,
       undefined,
-      { callerAgentTypeId: "sisyphus" },
+      { callerAgentTypeId: "cerberus" },
     )
 
     // then
     const leadMember = runtimeState.members.find((member) => member.name === "lead")
-    expect(leadMember?.sessionId).toBe("ses_caller_sisyphus")
-    expect(leadMember?.subagent_type).toBe("sisyphus")
+    expect(leadMember?.sessionId).toBe("ses_caller_cerberus")
+    expect(leadMember?.subagent_type).toBe("cerberus")
     expect(leadMember?.model).toBeUndefined()
   })
 
@@ -458,7 +458,7 @@ describe("createTeamRun", () => {
       createdAt: Date.now(),
       leadAgentId: "captain",
       members: [
-        { kind: "subagent_type", name: "captain", subagent_type: "atlas", backendType: "in-process", isActive: true },
+        { kind: "subagent_type", name: "captain", subagent_type: "argus", backendType: "in-process", isActive: true },
         { kind: "category", name: "member-1", category: "quick", prompt: "prompt-1", backendType: "in-process", isActive: true },
       ],
     }
@@ -471,7 +471,7 @@ describe("createTeamRun", () => {
       createConfig(baseDir),
       manager,
       undefined,
-      { callerAgentTypeId: "sisyphus" },
+      { callerAgentTypeId: "cerberus" },
     )
 
     // then

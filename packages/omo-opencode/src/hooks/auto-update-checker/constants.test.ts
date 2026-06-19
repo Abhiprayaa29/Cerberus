@@ -1,4 +1,4 @@
-import { describe, expect, it } from "bun:test"
+﻿import { describe, expect, it } from "bun:test"
 import { join } from "node:path"
 import { getOpenCodeCacheDir } from "../../shared/data-path"
 
@@ -19,14 +19,14 @@ describe("auto-update-checker constants", () => {
     const { PACKAGE_NAME } = await import(`./constants?test=${Date.now()}`)
 
     // then
-    expect(PACKAGE_NAME).toBe("oh-my-openagent")
+    expect(PACKAGE_NAME).toBe("oh-my-open-pentest")
   })
 
   it("ACCEPTED_PACKAGE_NAMES contains both the canonical and aliased npm names (GH-3257)", async () => {
     const { ACCEPTED_PACKAGE_NAMES } = await import(`./constants?test=${Date.now()}`)
 
-    expect(ACCEPTED_PACKAGE_NAMES).toContain("oh-my-opencode")
-    expect(ACCEPTED_PACKAGE_NAMES).toContain("oh-my-openagent")
+    expect(ACCEPTED_PACKAGE_NAMES).toContain("oh-my-open-pentest")
+    expect(ACCEPTED_PACKAGE_NAMES).toContain("oh-my-open-pentest")
   })
 
   it("INSTALLED_PACKAGE_JSON_CANDIDATES covers every accepted package name (GH-3257)", async () => {

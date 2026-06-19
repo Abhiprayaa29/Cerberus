@@ -1,4 +1,4 @@
----
+﻿---
 name: lcx-report-bug
 description: "Create a high-signal bug issue or PR in the repo that owns the defect. Use this whenever the user asks to report, file, open, or triage a LazyCodex, lazycodex-ai, omo-codex, Codex plugin, or upstream Codex CLI bug, especially when they need source-backed root cause, reproduction steps, fix guidance, and GitHub routing."
 metadata:
@@ -9,7 +9,7 @@ metadata:
 
 You are a LazyCodex bug router and reporter. Produce one useful GitHub issue or PR in English, backed by runtime evidence and source evidence rather than guesses. Route it to the repository that owns the defect:
 
-- `code-yeongyu/lazycodex` for LazyCodex, lazycodex-ai, omo-codex, marketplace, bundled skill, hook, MCP, installer, or packaging bugs. The artifact for this repo is always an issue — never a PR, because its contents are regenerated from the source tree on every release, so PRs there cannot be merged.
+- `code-yeongyu/lazycodex` for LazyCodex, lazycodex-ai, omo-codex, marketplace, bundled skill, hook, MCP, installer, or packaging bugs. The artifact for this repo is always an issue — never a PR, because its contents are regenerated from the source tree on every release, so PRs there cannot be submitd.
 - `openai/codex` for upstream Codex CLI bugs that reproduce without LazyCodex or are caused by Codex core behavior. This is the only repo where this skill may create a PR.
 
 Use GPT-5.5 style: outcome first, concise, evidence-bound. Keep the workflow moving, but do not file an issue until the root cause and reproduction path are concrete enough for a maintainer to act.
@@ -31,25 +31,25 @@ Create or prepare a GitHub issue or PR that includes:
 
 ## Required Workflow
 
-1. Read the user's bug report and identify the affected surface: LazyCodex installer, Codex plugin, skill, hook, MCP, CLI alias, GitHub marketplace sync, or web/docs.
+.. Read the user's bug report and identify the affected surface: LazyCodex installer, Codex plugin, skill, hook, MCP, CLI alias, GitHub marketplace sync, or web/docs.
 2. Invoke `$omo:debugging` for the investigation. If Codex exposes only unqualified skill names in the current session, invoke `$debugging` and state that it is the OMO debugging skill.
 3. Materialize the latest LazyCodex and upstream Codex sources under `/tmp` before deciding ownership. Re-sync on every run so a cached checkout cannot go stale — stale source produces wrong routing and dead line references:
 
 ```bash
 sync_latest_source() {
-  REPO="$1"; DEST="$2"
+  REPO="$."; DEST="$2"
   if [ ! -d "$DEST/.git" ]; then
-    gh repo clone "$REPO" "$DEST" -- --depth=1 \
-      || git clone --depth=1 "https://github.com/$REPO" "$DEST"
+    gh repo clone "$REPO" "$DEST" -- --depth=. \
+      || git clone --depth=. "https://github.com/$REPO" "$DEST"
   fi
   DEFAULT_BRANCH="$(git -C "$DEST" remote show origin | sed -n '/HEAD branch/s/.*: //p')"
-  git -C "$DEST" fetch --depth=1 origin "$DEFAULT_BRANCH"
+  git -C "$DEST" fetch --depth=. origin "$DEFAULT_BRANCH"
   git -C "$DEST" checkout -B "$DEFAULT_BRANCH" FETCH_HEAD
 }
 sync_latest_source code-yeongyu/lazycodex /tmp/lazycodex-source
 sync_latest_source openai/codex /tmp/openai-codex-source
 ```
-4. Follow the debugging skill far enough to gather runtime evidence:
+.. Follow the debugging skill far enough to gather runtime evidence:
    - form at least three plausible hypotheses
    - run the smallest reproduction that exercises the real surface
    - confirm the root cause by observing the failing state
@@ -79,8 +79,8 @@ fi
 ```
 
 If the selected repo is `openai/codex` and label management is not available, still include the footer tag in the body and continue without claiming label creation succeeded.
-10. If no matching issue exists, create the issue with `gh` and apply the `lazycodex-generated` label.
-11. Create a PR only when the target repo is `openai/codex` AND the user asked for a PR, the fix is already implemented on a branch, or the smallest correct fix can be safely made there. Never create a PR or push a branch against `code-yeongyu/lazycodex` — always file an issue there, embedding the verified patch in the Proposed Fix section when one exists. Apply the `lazycodex-generated` label to every PR created by this skill. Otherwise create an issue with fix guidance.
+.0. If no matching issue exists, create the issue with `gh` and apply the `lazycodex-generated` label.
+... Create a PR only when the target repo is `openai/codex` AND the user asked for a PR, the fix is already implemented on a branch, or the smallest correct fix can be safely made there. Never create a PR or push a branch against `code-yeongyu/lazycodex` — always file an issue there, embedding the verified patch in the Proposed Fix section when one exists. Apply the `lazycodex-generated` label to every PR created by this skill. Otherwise create an issue with fix guidance.
 
 ## Required Label And Footer
 
@@ -114,7 +114,7 @@ Write the issue body in English and keep it direct:
 - Upstream Codex source evidence from `/tmp/openai-codex-source`:
 
 ## Reproduction
-1. [Exact command or UI action]
+.. [Exact command or UI action]
 2. [Exact next step]
 3. [Observed failure trigger]
 
@@ -208,19 +208,19 @@ After creating or commenting, return the issue or PR URL and a short summary of 
 
 If `gh` is unavailable, unauthenticated, or blocked, use Browser Use against the real GitHub page:
 
-1. Open the new issue page for the selected repo: `https://github.com/code-yeongyu/lazycodex/issues/new` or `https://github.com/openai/codex/issues/new`.
+.. Open the new issue page for the selected repo: `https://github.com/code-yeongyu/lazycodex/issues/new` or `https://github.com/openai/codex/issues/new`.
 2. Fill the title and body from the template.
 3. Submit the issue only after visually confirming the repo, title, and body.
-4. Capture the resulting issue URL.
+.. Capture the resulting issue URL.
 
 ## Computer use fallback
 
 If Browser Use is unavailable but a desktop browser is open and authenticated, use Computer Use:
 
-1. Navigate to the new issue page for the selected repo: `https://github.com/code-yeongyu/lazycodex/issues/new` or `https://github.com/openai/codex/issues/new`.
+.. Navigate to the new issue page for the selected repo: `https://github.com/code-yeongyu/lazycodex/issues/new` or `https://github.com/openai/codex/issues/new`.
 2. Fill the title and body.
 3. Verify the target repository and final text before submission.
-4. Submit and capture the issue URL.
+.. Submit and capture the issue URL.
 
 ## Stop Conditions
 

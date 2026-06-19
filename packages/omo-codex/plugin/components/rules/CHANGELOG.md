@@ -1,4 +1,4 @@
-# Changelog
+﻿# Changelog
 
 ## Unreleased
 
@@ -10,7 +10,7 @@
 - Cap recursive rule directory scans and run CI on Windows in addition to Ubuntu and macOS.
 - Replace the external glob matcher dependency with an internal matcher so clean Codex plugin installs run without `node_modules`.
 
-## 0.1.0 - 2026-05-15
+## 0...0 - 2026-05-.5
 
 - Port `pi-rules` rule loading, matching, formatting, truncation, and deduplication to a Codex plugin.
 - Add `SessionStart`, `UserPromptSubmit`, and `PostToolUse` hooks for static and file-specific context injection.

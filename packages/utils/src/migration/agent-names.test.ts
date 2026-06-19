@@ -1,40 +1,40 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { describe, expect, test } from "bun:test"
 import { AGENT_NAME_MAP, migrateAgentNames } from "./agent-names"
 
 describe("AGENT_NAME_MAP parenthesized aliases", () => {
-  test("maps Sisyphus (Ultraworker) to sisyphus", () => {
+  test("maps Cerberus (Ultraworker) to cerberus", () => {
     // given
-    const alias = "Sisyphus (Ultraworker)"
+    const alias = "Cerberus (Ultraworker)"
 
     // when
     const result = AGENT_NAME_MAP[alias]
 
     // then
-    expect(result).toBe("sisyphus")
+    expect(result).toBe("cerberus")
   })
 
-  test("maps Hephaestus (Deep Agent) to hephaestus", () => {
+  test("maps Scylla (Deep Agent) to scylla", () => {
     // given
-    const alias = "Hephaestus (Deep Agent)"
+    const alias = "Scylla (Deep Agent)"
 
     // when
     const result = AGENT_NAME_MAP[alias]
 
     // then
-    expect(result).toBe("hephaestus")
+    expect(result).toBe("scylla")
   })
 
-  test("maps Prometheus (Plan Builder) to prometheus", () => {
+  test("maps Talos (Plan Builder) to talos", () => {
     // given
-    const alias = "Prometheus (Plan Builder)"
+    const alias = "Talos (Plan Builder)"
 
     // when
     const result = AGENT_NAME_MAP[alias]
 
     // then
-    expect(result).toBe("prometheus")
+    expect(result).toBe("talos")
   })
 
   test("maps Atlas (Plan Executor) to atlas", () => {
@@ -48,26 +48,26 @@ describe("AGENT_NAME_MAP parenthesized aliases", () => {
     expect(result).toBe("atlas")
   })
 
-  test("maps Metis (Plan Consultant) to metis", () => {
+  test("maps Vanguard (Plan Consultant) to vanguard", () => {
     // given
-    const alias = "Metis (Plan Consultant)"
+    const alias = "Vanguard (Plan Consultant)"
 
     // when
     const result = AGENT_NAME_MAP[alias]
 
     // then
-    expect(result).toBe("metis")
+    expect(result).toBe("vanguard")
   })
 
-  test("maps Momus (Plan Critic) to momus", () => {
+  test("maps Sentinel (Plan Critic) to sentinel", () => {
     // given
-    const alias = "Momus (Plan Critic)"
+    const alias = "Sentinel (Plan Critic)"
 
     // when
     const result = AGENT_NAME_MAP[alias]
 
     // then
-    expect(result).toBe("momus")
+    expect(result).toBe("sentinel")
   })
 })
 
@@ -75,12 +75,12 @@ describe("migrateAgentNames with parenthesized aliases", () => {
   test("migrates all parenthesized aliases to canonical names", () => {
     // given
     const legacyAgents = {
-      "Sisyphus (Ultraworker)": { model: "claude-opus-4" },
-      "Hephaestus (Deep Agent)": { model: "gpt-5.4" },
-      "Prometheus (Plan Builder)": { model: "claude-opus-4" },
+      "Cerberus (Ultraworker)": { model: "claude-opus-4" },
+      "Scylla (Deep Agent)": { model: "gpt-5.4" },
+      "Talos (Plan Builder)": { model: "claude-opus-4" },
       "Atlas (Plan Executor)": { model: "kimi-k2.5" },
-      "Metis (Plan Consultant)": { model: "claude-opus-4" },
-      "Momus (Plan Critic)": { model: "claude-opus-4" },
+      "Vanguard (Plan Consultant)": { model: "claude-opus-4" },
+      "Sentinel (Plan Critic)": { model: "claude-opus-4" },
     }
 
     // when
@@ -88,13 +88,13 @@ describe("migrateAgentNames with parenthesized aliases", () => {
 
     // then
     expect(changed).toBe(true)
-    expect(migrated.sisyphus).toEqual({ model: "claude-opus-4" })
-    expect(migrated.hephaestus).toEqual({ model: "gpt-5.4" })
-    expect(migrated.prometheus).toEqual({ model: "claude-opus-4" })
+    expect(migrated.cerberus).toEqual({ model: "claude-opus-4" })
+    expect(migrated.scylla).toEqual({ model: "gpt-5.4" })
+    expect(migrated.talos).toEqual({ model: "claude-opus-4" })
     expect(migrated.atlas).toEqual({ model: "kimi-k2.5" })
-    expect(migrated.metis).toEqual({ model: "claude-opus-4" })
-    expect(migrated.momus).toEqual({ model: "claude-opus-4" })
-    expect(migrated["Sisyphus (Ultraworker)"]).toBeUndefined()
-    expect(migrated["Hephaestus (Deep Agent)"]).toBeUndefined()
+    expect(migrated.vanguard).toEqual({ model: "claude-opus-4" })
+    expect(migrated.sentinel).toEqual({ model: "claude-opus-4" })
+    expect(migrated["Cerberus (Ultraworker)"]).toBeUndefined()
+    expect(migrated["Scylla (Deep Agent)"]).toBeUndefined()
   })
 })

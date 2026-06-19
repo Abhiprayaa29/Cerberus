@@ -1,4 +1,4 @@
-import { z } from "zod"
+﻿import { z } from "zod"
 
 /**
  * Help JSON schema for the `doctor` surface.
@@ -29,7 +29,7 @@ export const SystemInfoSchema = z
   .object({
     opencodeVersion: z.string().nullable().describe("Installed OpenCode version"),
     opencodePath: z.string().nullable().describe("Path to OpenCode binary"),
-    pluginVersion: z.string().nullable().describe("oh-my-openagent plugin version"),
+    pluginVersion: z.string().nullable().describe("oh-my-open-pentest plugin version"),
     loadedVersion: z.string().nullable().describe("Loaded plugin version at runtime"),
     bunVersion: z.string().nullable().describe("Bun runtime version"),
     configPath: z.string().nullable().describe("Path to active config file"),

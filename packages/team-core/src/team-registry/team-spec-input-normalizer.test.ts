@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 
 import { describe, expect, test } from "bun:test"
 
@@ -15,14 +15,14 @@ describe("normalizeTeamSpecInput", () => {
 
     // when
     const normalizedSpec = normalizeTeamSpecInput(rawSpec, {
-      callerTeamLead: resolveCallerTeamLead("\u200BSisyphus - Ultraworker"),
+      callerTeamLead: resolveCallerTeamLead("\u200BCerberus - Ultraworker"),
     })
 
     // then
     expect(normalizedSpec).toMatchObject({
       leadAgentId: "lead",
       members: [
-        { name: "lead", kind: "subagent_type", subagent_type: "sisyphus" },
+        { name: "lead", kind: "subagent_type", subagent_type: "cerberus" },
         { name: "quick-1", kind: "category", category: "quick" },
       ],
     })
@@ -41,7 +41,7 @@ describe("normalizeTeamSpecInput", () => {
 
     // when
     const normalizedSpec = normalizeTeamSpecInput(rawSpec, {
-      callerTeamLead: resolveCallerTeamLead("Sisyphus - Ultraworker"),
+      callerTeamLead: resolveCallerTeamLead("Cerberus - Ultraworker"),
     })
 
     // then
@@ -60,7 +60,7 @@ describe("normalizeTeamSpecInput", () => {
 
     // when
     const normalizedSpec = normalizeTeamSpecInput(rawSpec, {
-      callerTeamLead: resolveCallerTeamLead("Sisyphus - Ultraworker"),
+      callerTeamLead: resolveCallerTeamLead("Cerberus - Ultraworker"),
     })
 
     // then
@@ -122,7 +122,7 @@ describe("normalizeTeamSpecInput", () => {
 
     // when
     const normalizedSpec = normalizeTeamSpecInput(rawSpec, {
-      callerTeamLead: resolveCallerTeamLead("Sisyphus - Ultraworker"),
+      callerTeamLead: resolveCallerTeamLead("Cerberus - Ultraworker"),
     })
 
     // then
@@ -148,7 +148,7 @@ describe("normalizeTeamSpecInput", () => {
 
     // when
     const normalizedSpec = normalizeTeamSpecInput(rawSpec, {
-      callerTeamLead: resolveCallerTeamLead("Sisyphus - Ultraworker"),
+      callerTeamLead: resolveCallerTeamLead("Cerberus - Ultraworker"),
       defaultCategoryName: "analysis",
     })
 
@@ -173,7 +173,7 @@ describe("normalizeTeamSpecInput", () => {
 
     // when
     const normalizedSpec = normalizeTeamSpecInput(rawSpec, {
-      callerTeamLead: resolveCallerTeamLead("Sisyphus - Ultraworker"),
+      callerTeamLead: resolveCallerTeamLead("Cerberus - Ultraworker"),
     })
 
     // then

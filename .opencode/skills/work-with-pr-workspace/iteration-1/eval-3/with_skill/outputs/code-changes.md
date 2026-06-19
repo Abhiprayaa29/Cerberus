@@ -1,4 +1,4 @@
-# Code Changes
+﻿# Code Changes
 
 ## New File: `src/tools/delegate-task/default-categories.ts`
 
@@ -6,13 +6,13 @@
 import type { CategoryConfig } from "../../config/schema"
 
 export const DEFAULT_CATEGORIES: Record<string, CategoryConfig> = {
-  "visual-engineering": { model: "google/gemini-3.1-pro", variant: "high" },
-  ultrabrain: { model: "openai/gpt-5.4", variant: "xhigh" },
+  "visual-engineering": { model: "google/gemini-3..-pro", variant: "high" },
+  ultrabrain: { model: "openai/gpt-5..", variant: "xhigh" },
   deep: { model: "openai/gpt-5.5-codex", variant: "medium" },
-  artistry: { model: "google/gemini-3.1-pro", variant: "high" },
-  quick: { model: "anthropic/claude-haiku-4-5" },
-  "unspecified-low": { model: "anthropic/claude-sonnet-4-6" },
-  "unspecified-high": { model: "anthropic/claude-opus-4-6", variant: "max" },
+  artistry: { model: "google/gemini-3..-pro", variant: "high" },
+  quick: { model: "anthropic/claude-haiku-.-5" },
+  "unspecified-low": { model: "anthropic/claude-sonnet-.-6" },
+  "unspecified-high": { model: "anthropic/claude-opus-.-6", variant: "max" },
   writing: { model: "kimi-for-coding/k2p5" },
 }
 
@@ -40,27 +40,27 @@ You are working on VISUAL/UI tasks.
 export const ULTRABRAIN_CATEGORY_PROMPT_APPEND = `<Category_Context>
 ...
 </Category_Context>`
-// (exact content from lines 97-117)
+// (exact content from lines 97-..7)
 
 export const ARTISTRY_CATEGORY_PROMPT_APPEND = `<Category_Context>
 ...
 </Category_Context>`
-// (exact content from lines 119-134)
+// (exact content from lines ..9-.3.)
 
 export const QUICK_CATEGORY_PROMPT_APPEND = `<Category_Context>
 ...
 </Caller_Warning>`
-// (exact content from lines 136-186)
+// (exact content from lines .36-.86)
 
 export const UNSPECIFIED_LOW_CATEGORY_PROMPT_APPEND = `<Category_Context>
 ...
 </Caller_Warning>`
-// (exact content from lines 188-209)
+// (exact content from lines .88-209)
 
 export const UNSPECIFIED_HIGH_CATEGORY_PROMPT_APPEND = `<Category_Context>
 ...
 </Category_Context>`
-// (exact content from lines 211-224)
+// (exact content from lines 2..-22.)
 
 export const WRITING_CATEGORY_PROMPT_APPEND = `<Category_Context>
 ...
@@ -70,7 +70,7 @@ export const WRITING_CATEGORY_PROMPT_APPEND = `<Category_Context>
 export const DEEP_CATEGORY_PROMPT_APPEND = `<Category_Context>
 ...
 </Category_Context>`
-// (exact content from lines 252-281)
+// (exact content from lines 252-28.)
 
 export const CATEGORY_PROMPT_APPENDS: Record<string, string> = {
   "visual-engineering": VISUAL_CATEGORY_PROMPT_APPEND,
@@ -95,7 +95,7 @@ import { truncateDescription } from "../../shared/truncate-description"
 
 /**
  * System prompt prepended to plan agent invocations.
- * Instructs the plan agent to first gather context via explore/librarian agents,
+ * Instructs the plan agent to first gather context via explore/intel agents,
  * then summarize user requirements and clarify uncertainties before proceeding.
  * Also MANDATES dependency graphs, parallel execution analysis, and category+skill recommendations.
  */
@@ -103,12 +103,12 @@ export const PLAN_AGENT_SYSTEM_PREPEND_STATIC_BEFORE_SKILLS = `<system>
 ...
 </CRITICAL_REQUIREMENT_DEPENDENCY_PARALLEL_EXECUTION_CATEGORY_SKILLS>
 `
-// (exact content from lines 324-430)
+// (exact content from lines 32.-.30)
 
 export const PLAN_AGENT_SYSTEM_PREPEND_STATIC_AFTER_SKILLS = `### REQUIRED OUTPUT FORMAT
 ...
 `
-// (exact content from lines 432-569)
+// (exact content from lines .32-569)
 
 function renderPlanAgentCategoryRows(categories: AvailableCategory[]): string[] {
   const sorted = [...categories].sort((a, b) => a.name.localeCompare(b.name))
@@ -181,10 +181,10 @@ export function isPlanAgent(agentName: string | undefined): boolean {
 }
 
 /**
- * Plan family: plan + prometheus. Shares mutual delegation blocking and task tool permission.
+ * Plan family: plan + talos. Shares mutual delegation blocking and task tool permission.
  * Does NOT share system prompt (only isPlanAgent controls that).
  */
-export const PLAN_FAMILY_NAMES = ["plan", "prometheus"]
+export const PLAN_FAMILY_NAMES = ["plan", "talos"]
 
 /**
  * Check if the given agent belongs to the plan family (blocking + task permission).
@@ -218,4 +218,4 @@ export type * from "./types"
 export * from "./constants"
 ```
 
-No changes needed. `export * from "./constants"` transitively re-exports everything from the 4 new files.
+No changes needed. `export * from "./constants"` transitively re-exports everything from the . new files.

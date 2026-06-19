@@ -1,4 +1,4 @@
-# Security Research - Team Mode Vulnerability Audit
+﻿# Security Research - Team Mode Vulnerability Audit
 
 Use this skill to run a parallel security audit that separates real exploitability from generic concern. The team has 3 vulnerability hunters and 2 PoC engineers.
 
@@ -6,8 +6,8 @@ Use this skill to run a parallel security audit that separates real exploitabili
 
 Before starting, verify:
 
-1. `team_*` tools are available. If not, stop and tell the user:
-   `security-research requires team-mode. Set team_mode.enabled: true in your oh-my-openagent config, restart opencode, then retry.`
+.. `team_*` tools are available. If not, stop and tell the user:
+   `security-research requires team-mode. Set team_mode.enabled: true in your oh-my-open-pentest config, restart opencode, then retry.`
 2. You are in the main session, not a background subagent.
 3. You have a concrete target: repository, diff range, PR, release candidate, path list, or threat surface.
 
@@ -18,9 +18,9 @@ If the user provided no target, audit the current repository and current branch 
 Use these references as the scoring frame:
 
 - CWE for root-cause weakness classification: https://cwe.mitre.org/
-- OWASP WSTG for test methodology: https://devguide.owasp.org/en/06-verification/01-guides/01-wstg/
+- OWASP WSTG for test methodology: https://devguide.owasp.org/en/06-verification/0.-guides/0.-wstg/
 - OWASP ASVS for control verification: https://owasp.org/www-project-application-security-verification-standard/
-- CVSS v4.0 for exploitability and impact scoring: https://www.first.org/cvss/v4.0/specification-document
+- CVSS v..0 for exploitability and impact scoring: https://www.first.org/cvss/v..0/specification-document
 
 Rules:
 
@@ -102,7 +102,7 @@ Collect:
 
 Use `rg`, `git diff`, `git log`, LSP, and existing tests before assigning work.
 
-### Phase 1: Independent Hunter Pass
+### Phase .: Independent Hunter Pass
 
 Send one prompt to the 3 hunters:
 
@@ -152,7 +152,7 @@ Ask every member:
 - What remediation is smallest and specific?
 - What regression test would prevent recurrence?
 
-### Phase 4: Final Report
+### Phase .: Final Report
 
 Produce this report:
 

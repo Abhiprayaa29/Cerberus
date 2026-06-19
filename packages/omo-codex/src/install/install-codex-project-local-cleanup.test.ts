@@ -1,4 +1,4 @@
-/// <reference path="../../../../bun-test.d.ts" />
+﻿/// <reference path="../../../../bun-test.d.ts" />
 /// <reference types="bun-types" />
 
 import { describe, expect, test } from "bun:test"
@@ -15,7 +15,7 @@ async function createPackagedCodexRepoRoot(): Promise<string> {
   const repoRoot = await mkdtemp(join(tmpdir(), "omo-codex-project-cleanup-repo-"))
   const codexPackageRoot = join(repoRoot, "packages", "omo-codex")
   const pluginRoot = join(codexPackageRoot, "plugin")
-  await writeFile(join(repoRoot, "package.json"), JSON.stringify({ name: "oh-my-openagent", version: "4.5.12" }))
+  await writeFile(join(repoRoot, "package.json"), JSON.stringify({ name: "oh-my-open-pentest", version: "4.5.12" }))
   await mkdir(join(repoRoot, "dist", "cli"), { recursive: true })
   await writeFile(join(repoRoot, "dist", "cli", "index.js"), "#!/usr/bin/env node\n")
   await mkdir(join(pluginRoot, ".codex-plugin"), { recursive: true })
@@ -23,7 +23,7 @@ async function createPackagedCodexRepoRoot(): Promise<string> {
   await mkdir(join(pluginRoot, "hooks"), { recursive: true })
   await writeFile(
     join(codexPackageRoot, "marketplace.json"),
-    JSON.stringify({ name: "sisyphuslabs", plugins: [{ name: "omo", source: "./plugin" }] }),
+    JSON.stringify({ name: "cerberuslabs", plugins: [{ name: "omo", source: "./plugin" }] }),
   )
   await writeFile(
     join(pluginRoot, ".codex-plugin", "plugin.json"),
@@ -31,7 +31,7 @@ async function createPackagedCodexRepoRoot(): Promise<string> {
   )
   await writeFile(
     join(pluginRoot, "package.json"),
-    JSON.stringify({ name: "@sisyphuslabs/omo-codex-plugin", version: "0.1.0" }),
+    JSON.stringify({ name: "@cerberuslabs/omo-codex-plugin", version: "0.1.0" }),
   )
   await writeFile(join(pluginRoot, "dist", "cli.js"), "#!/usr/bin/env node\n")
   await writeFile(join(pluginRoot, "hooks", "hooks.json"), JSON.stringify({ hooks: {} }))

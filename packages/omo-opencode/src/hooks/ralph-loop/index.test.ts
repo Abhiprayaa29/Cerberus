@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 import { describe, expect, test, beforeEach, afterEach } from "bun:test"
 import { existsSync, mkdirSync, rmSync, writeFileSync } from "node:fs"
 import { join } from "node:path"
@@ -9,8 +9,8 @@ import type { RalphLoopState } from "./types"
 import { parseRalphLoopArguments } from "./command-arguments"
 import { DEFAULT_PROMPT_ASYNC_POST_DISPATCH_HOLD_MS } from "../shared/prompt-async-gate"
 
-describe("ralph-loop", () => {
-  const TEST_DIR = join(tmpdir(), "ralph-loop-test-" + Date.now())
+describe("pentest-loop", () => {
+  const TEST_DIR = join(tmpdir(), "pentest-loop-test-" + Date.now())
   let promptCalls: Array<{ sessionID: string; text: string }>
   let toastCalls: Array<{ title: string; message: string; variant: string }>
   let messagesCalls: Array<{ sessionID: string }>
@@ -117,8 +117,8 @@ describe("ralph-loop", () => {
       expect(readResult?.session_id).toBe("test-session-123")
     })
 
-    test("should handle ultrawork field", () => {
-      // given - a state object with ultrawork enabled
+    test("should handle fullscan field", () => {
+      // given - a state object with fullscan enabled
       const state: RalphLoopState = {
         active: true,
         iteration: 1,
@@ -127,15 +127,15 @@ describe("ralph-loop", () => {
         started_at: "2025-12-30T01:00:00Z",
         prompt: "Build a REST API",
         session_id: "test-session-123",
-        ultrawork: true,
+        fullscan: true,
       }
 
       // when - write and read state
       writeState(TEST_DIR, state)
       const readResult = readState(TEST_DIR)
 
-      // then - ultrawork field should be preserved
-      expect(readResult?.ultrawork).toBe(true)
+      // then - fullscan field should be preserved
+      expect(readResult?.fullscan).toBe(true)
     })
 
     test("should store and read strategy field", () => {
@@ -169,7 +169,7 @@ describe("ralph-loop", () => {
 
     test("#given state path is a directory #when reading state #then returns null", () => {
       // given
-      mkdirSync(join(TEST_DIR, ".ralph-loop-state.md"), { recursive: true })
+      mkdirSync(join(TEST_DIR, ".pentest-loop-state.md"), { recursive: true })
 
       // when
       const result = readState(TEST_DIR)
@@ -240,7 +240,7 @@ describe("ralph-loop", () => {
 
   describe("command arguments", () => {
     test("should parse --strategy=reset flag", () => {
-      // given - ralph-loop command arguments with reset strategy
+      // given - pentest-loop command arguments with reset strategy
       const rawArguments = '"Build feature X" --strategy=reset --max-iterations=12'
 
       // when - parse command arguments
@@ -253,7 +253,7 @@ describe("ralph-loop", () => {
     })
 
     test("should parse --strategy=continue flag", () => {
-      // given - ralph-loop command arguments with continue strategy
+      // given - pentest-loop command arguments with continue strategy
       const rawArguments = '"Build feature X" --strategy=continue'
 
       // when - parse command arguments
@@ -286,23 +286,23 @@ describe("ralph-loop", () => {
       expect(state?.session_id).toBe("session-123")
     })
 
-    test("should accept ultrawork option in startLoop", () => {
+    test("should accept fullscan option in startLoop", () => {
       // given - hook instance
       const hook = createRalphLoopHook(createMockPluginInput())
 
-      // when - start loop with ultrawork
-      hook.startLoop("session-123", "Build something", { ultrawork: true })
+      // when - start loop with fullscan
+      hook.startLoop("session-123", "Build something", { fullscan: true })
 
-      // then - state should have ultrawork=true
+      // then - state should have fullscan=true
       const state = hook.getState()
-      expect(state?.ultrawork).toBe(true)
+      expect(state?.fullscan).toBe(true)
     })
 
-    test("#given active ultrawork loop #when resumeLoop binds a new session #then prompt is preserved", () => {
+    test("#given active fullscan loop #when resumeLoop binds a new session #then prompt is preserved", () => {
       // given
       const hook = createRalphLoopHook(createMockPluginInput())
       hook.startLoop("session-old", "Build feature\nwith long prompt", {
-        ultrawork: true,
+        fullscan: true,
         messageCountAtStart: 8,
       })
 
@@ -314,21 +314,21 @@ describe("ralph-loop", () => {
       const state = hook.getState()
       expect(state?.session_id).toBe("session-new")
       expect(state?.prompt).toBe("Build feature\nwith long prompt")
-      expect(state?.ultrawork).toBe(true)
+      expect(state?.fullscan).toBe(true)
       expect(state?.message_count_at_start).toBeUndefined()
       expect(messagesCalls).toEqual([])
     })
 
-    test("should handle missing ultrawork option in startLoop", () => {
+    test("should handle missing fullscan option in startLoop", () => {
       // given - hook instance
       const hook = createRalphLoopHook(createMockPluginInput())
 
-      // when - start loop without ultrawork
+      // when - start loop without fullscan
       hook.startLoop("session-123", "Build something")
 
-      // then - state should have ultrawork=undefined
+      // then - state should have fullscan=undefined
       const state = hook.getState()
-      expect(state?.ultrawork).toBeUndefined()
+      expect(state?.fullscan).toBeUndefined()
     })
 
     test("should inject continuation when loop active and no completion detected", async () => {
@@ -1406,14 +1406,14 @@ Original task: Build something`
       expect(messagesCalls.length).toBe(1)
     })
 
-    test("should require oracle verification toast for ultrawork completion promise", async () => {
-      // given - hook with ultrawork mode and completion in transcript
+    test("should require cipher verification toast for fullscan completion promise", async () => {
+      // given - hook with fullscan mode and completion in transcript
       const transcriptPath = join(TEST_DIR, "transcript.jsonl")
       const hook = createRalphLoopHook(createMockPluginInput(), {
         getTranscriptPath: () => transcriptPath,
       })
       writeFileSync(transcriptPath, JSON.stringify({ type: "assistant", content: "<promise>DONE</promise>" }) + "\n")
-      hook.startLoop("test-id", "Build API", { ultrawork: true })
+      hook.startLoop("test-id", "Build API", { fullscan: true })
 
       // when - idle event triggered
       await hook.event({ event: { type: "session.idle", properties: { sessionID: "test-id" } } })
@@ -1421,12 +1421,12 @@ Original task: Build something`
       const verificationToast = toastCalls.find(t => t.title === "ULTRAWORK LOOP")
       expect(verificationToast).toBeDefined()
       if (!verificationToast) {
-        throw new Error("expected ultrawork verification toast")
+        throw new Error("expected fullscan verification toast")
       }
-      expect(verificationToast.message).toMatch(/Oracle verification is now required/)
+      expect(verificationToast.message).toMatch(/Cipher verification is now required/)
     })
 
-    test("#given loop-start message count resolves late after progress #when ulw DONE appears #then oracle verification still starts", async () => {
+    test("#given loop-start message count resolves late after progress #when ulw DONE appears #then cipher verification still starts", async () => {
       // given - the initial message-count request is delayed past the first continuation
       let messageCallCount = 0
       let resolveInitialMessages: ((value: { data: typeof mockSessionMessages }) => void) | undefined
@@ -1448,7 +1448,7 @@ Original task: Build something`
         getTranscriptPath: () => join(TEST_DIR, "missing-transcript.jsonl"),
         idleSettleMs: 0,
       })
-      hook.startLoop("session-123", "Build API", { ultrawork: true })
+      hook.startLoop("session-123", "Build API", { fullscan: true })
 
       await hook.event({ event: { type: "session.idle", properties: { sessionID: "session-123" } } })
       expect(hook.getState()?.iteration).toBe(2)
@@ -1469,11 +1469,11 @@ Original task: Build something`
       // then - the late snapshot must not hide the DONE message from verification gating
       expect(hook.getState()?.verification_pending).toBe(true)
       expect(hook.getState()?.completion_promise).toBe("VERIFIED")
-      expect(promptCalls[promptCalls.length - 1]?.text).toContain('task(subagent_type="oracle"')
+      expect(promptCalls[promptCalls.length - 1]?.text).toContain('task(subagent_type="cipher"')
     })
 
-    test("should show regular completion toast when ultrawork disabled", async () => {
-      // given - hook without ultrawork
+    test("should show regular completion toast when fullscan disabled", async () => {
+      // given - hook without fullscan
       const transcriptPath = join(TEST_DIR, "transcript.jsonl")
       const hook = createRalphLoopHook(createMockPluginInput(), {
         getTranscriptPath: () => transcriptPath,
@@ -1488,23 +1488,23 @@ Original task: Build something`
       expect(toastCalls.some(t => t.title === "Ralph Loop Complete!")).toBe(true)
     })
 
-    test("should prepend ultrawork to continuation prompt when ultrawork=true", async () => {
-      // given - hook with ultrawork mode enabled
+    test("should prepend fullscan to continuation prompt when fullscan=true", async () => {
+      // given - hook with fullscan mode enabled
       const hook = createRalphLoopHook(createMockPluginInput())
-      hook.startLoop("session-123", "Build API", { ultrawork: true })
+      hook.startLoop("session-123", "Build API", { fullscan: true })
 
       // when - session goes idle (continuation triggered)
       await hook.event({
         event: { type: "session.idle", properties: { sessionID: "session-123" } },
       })
 
-      // then - prompt should start with "ultrawork "
+      // then - prompt should start with "fullscan "
       expect(promptCalls.length).toBe(1)
-      expect(promptCalls[0].text).toMatch(/^ultrawork /)
+      expect(promptCalls[0].text).toMatch(/^fullscan /)
     })
 
-    test("should NOT prepend ultrawork to continuation prompt when ultrawork=false", async () => {
-      // given - hook without ultrawork mode
+    test("should NOT prepend fullscan to continuation prompt when fullscan=false", async () => {
+      // given - hook without fullscan mode
       const hook = createRalphLoopHook(createMockPluginInput())
       hook.startLoop("session-123", "Build API")
 
@@ -1513,9 +1513,9 @@ Original task: Build something`
         event: { type: "session.idle", properties: { sessionID: "session-123" } },
       })
 
-      // then - prompt should NOT start with "ultrawork "
+      // then - prompt should NOT start with "fullscan "
       expect(promptCalls.length).toBe(1)
-      expect(promptCalls[0].text).not.toMatch(/^ultrawork /)
+      expect(promptCalls[0].text).not.toMatch(/^fullscan /)
     })
   })
 

@@ -1,9 +1,9 @@
-import { describe, expect, mock, test } from "bun:test"
+﻿import { describe, expect, mock, test } from "bun:test"
 import type { ToolContext } from "@opencode-ai/plugin/tool"
 
 import type { MonitorManager, MonitorRecord, MonitorStartOpts } from "../../features/monitor/types"
 import type { BashPermissionAskInput } from "../../features/monitor/permission"
-import type { OhMyOpenCodeConfig } from "../../config/schema/oh-my-opencode-config"
+import type { OhMyOpenCodeConfig } from "../../config/schema/oh-my-open-pentest-config"
 import type { PluginContext } from "../../plugin/types"
 import { unsafeTestValue } from "../../../../../test-support/unsafe-test-value"
 import { createMonitorStart } from "./monitor-start"
@@ -54,7 +54,7 @@ function createToolContext(ask?: PermissionAsk): ToolContext {
   return unsafeTestValue<ToolContext>({
     sessionID: "ses_parent",
     messageID: "msg_parent",
-    agent: "sisyphus",
+    agent: "cerberus",
     directory: "/repo",
     worktree: "/repo",
     abort: new AbortController().signal,

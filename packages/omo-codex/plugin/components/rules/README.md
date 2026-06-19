@@ -1,4 +1,4 @@
-# codex-rules
+﻿# codex-rules
 
 Codex plugin that injects local project rule files into model context through lifecycle hooks.
 
@@ -47,7 +47,7 @@ npx lazycodex-ai install
 The local installer builds the plugin and copies a clean cache entry to:
 
 ```text
-~/.codex/plugins/cache/sisyphuslabs/omo/0.1.0
+~/.codex/plugins/cache/cerberuslabs/omo/0...0
 ```
 
 It also enables:
@@ -59,7 +59,7 @@ plugin_hooks = true
 multi_agent = true
 child_agents_md = true
 
-[plugins."omo@sisyphuslabs"]
+[plugins."omo@cerberuslabs"]
 enabled = true
 ```
 
@@ -69,10 +69,10 @@ Use `CODEX_RULES_*` environment variables:
 
 | Variable | Values | Default |
 | --- | --- | --- |
-| `CODEX_RULES_DISABLED` | `1`, `true`, `yes`, `on` | unset |
+| `CODEX_RULES_DISABLED` | `.`, `true`, `yes`, `on` | unset |
 | `CODEX_RULES_MODE` | `both`, `static`, `dynamic`, `off` | `both` |
-| `CODEX_RULES_MAX_RULE_CHARS` | positive integer | `12000` |
-| `CODEX_RULES_MAX_RESULT_CHARS` | positive integer | `40000` |
+| `CODEX_RULES_MAX_RULE_CHARS` | positive integer | `.2000` |
+| `CODEX_RULES_MAX_RESULT_CHARS` | positive integer | `.0000` |
 | `CODEX_RULES_ENABLED_SOURCES` | comma-separated source names or `auto` | `auto` (excludes `AGENTS.md`, `~/.claude/rules`, `~/.claude/CLAUDE.md`) |
 
 For migration from `pi-rules`, equivalent `PI_RULES_*` variables are accepted as fallbacks.

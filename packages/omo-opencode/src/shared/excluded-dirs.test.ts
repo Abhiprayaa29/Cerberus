@@ -1,4 +1,4 @@
-import { describe, expect, test } from "bun:test"
+﻿import { describe, expect, test } from "bun:test"
 import { EXCLUDED_DIRS } from "./excluded-dirs"
 import { EXCLUDED_DIRS as EXCLUDED_DIRS_FROM_BARREL } from "."
 
@@ -12,7 +12,7 @@ describe("EXCLUDED_DIRS", () => {
       "build",
       ".next",
       ".omo",
-      ".sisyphus",
+      ".cerberus",
       ".turbo",
       "coverage",
       "out",

@@ -1,8 +1,8 @@
-import { DEFAULT_AGENT_ORDER, resolveAgentOrderDisplayNames } from "../shared/agent-ordering"
+﻿import { DEFAULT_AGENT_ORDER, resolveAgentOrderDisplayNames } from "../shared/agent-ordering"
 
 /**
  * Default source of truth for core agent ordering.
- * The default order is: sisyphus → hephaestus → prometheus → atlas.
+ * The default order is: cerberus → scylla → talos → argus.
  *
  * User config may override the runtime order through `agent_order`; missing
  * core agents still fall back to this default order. Do not reintroduce sort

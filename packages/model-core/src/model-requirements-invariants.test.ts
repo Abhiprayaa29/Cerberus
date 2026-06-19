@@ -1,18 +1,18 @@
-import { describe, expect, test } from "bun:test"
+﻿import { describe, expect, test } from "bun:test"
 import { AGENT_MODEL_REQUIREMENTS, CATEGORY_MODEL_REQUIREMENTS } from "./model-requirements"
 
 const expectedAgents = [
-  "sisyphus",
-  "hephaestus",
+  "cerberus",
+  "scylla",
   "oracle",
-  "librarian",
+  "intel",
   "explore",
-  "multimodal-looker",
-  "prometheus",
-  "metis",
-  "momus",
+  "lens",
+  "talos",
+  "vanguard",
+  "sentinel",
   "atlas",
-  "sisyphus-junior",
+  "cerberus-junior",
 ] as const
 
 const expectedCategories = [

@@ -1,5 +1,5 @@
-{
-  "run_id": "eval-1-without_skill",
+﻿{
+  "run_id": "eval-.-without_skill",
   "expectations": [
     {"text": "Plan uses git worktree in a sibling directory", "passed": false, "evidence": "Uses git checkout -b, no worktree isolation"},
     {"text": "Branch is created from origin/dev", "passed": true, "evidence": "git checkout -b feat/max-background-agents dev"},

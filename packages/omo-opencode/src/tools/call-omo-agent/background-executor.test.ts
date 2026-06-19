@@ -1,4 +1,4 @@
-/// <reference types="bun-types" />
+﻿/// <reference types="bun-types" />
 import { describe, test, expect, mock } from "bun:test"
 import type { BackgroundManager } from "../../features/background-agent"
 import type { PluginInput } from "@opencode-ai/plugin"
@@ -104,13 +104,13 @@ describe("executeBackground", () => {
     //#given
     const wrappedArgs = {
       ...testArgs,
-      subagent_type: "\\hephaestus\\",
+      subagent_type: "\\scylla\\",
     }
     launchMock.mockResolvedValueOnce({
       id: "test-task-id",
       sessionId: "sub-session",
       description: "Test task",
-      agent: "hephaestus",
+      agent: "scylla",
       status: "pending",
     })
 
@@ -126,7 +126,7 @@ describe("executeBackground", () => {
     if (!launchArgs) {
       throw new Error("Expected launch arguments")
     }
-    expect(launchArgs.agent).toBe("Hephaestus - Deep Agent")
+    expect(launchArgs.agent).toBe("Scylla - Deep Agent")
   })
 
   test("keeps launched background task alive when parent aborts before session id resolves", async () => {
@@ -211,47 +211,47 @@ describe("executeBackground", () => {
     expect(secondResult).not.toContain("interrupt")
   })
 
-  test("#given subagent_type is the lowercase config key 'hephaestus' #when executeBackground runs #then BackgroundManager.launch receives the registered display name", async () => {
+  test("#given subagent_type is the lowercase config key 'scylla' #when executeBackground runs #then BackgroundManager.launch receives the registered display name", async () => {
     //#given
     launchMock.mockClear()
     launchMock.mockResolvedValueOnce({
       id: "test-task-id",
       sessionId: "sub-session",
       description: "Test task",
-      agent: "Hephaestus - Deep Agent",
+      agent: "Scylla - Deep Agent",
       status: "pending",
     })
 
     //#when
-    await executeBackground({ ...testArgs, subagent_type: "hephaestus" }, testContext, mockManager, mockClient)
+    await executeBackground({ ...testArgs, subagent_type: "scylla" }, testContext, mockManager, mockClient)
 
     //#then
     const latestCall = [...launchMock.mock.calls].pop()
     if (!latestCall) throw new Error("Expected background manager launch to be called")
     const launchArgs = latestCall[0]
     if (!launchArgs) throw new Error("Expected launch arguments")
-    expect(launchArgs.agent).toBe("Hephaestus - Deep Agent")
+    expect(launchArgs.agent).toBe("Scylla - Deep Agent")
   })
 
-  test("#given subagent_type is a same-keyed agent 'explore' #when executeBackground runs #then BackgroundManager.launch receives the unchanged key (regression guard)", async () => {
+  test("#given subagent_type is a same-keyed agent 'scout' #when executeBackground runs #then BackgroundManager.launch receives the unchanged key (regression guard)", async () => {
     //#given
     launchMock.mockClear()
     launchMock.mockResolvedValueOnce({
       id: "test-task-id",
       sessionId: "sub-session",
       description: "Test task",
-      agent: "explore",
+      agent: "scout",
       status: "pending",
     })
 
     //#when
-    await executeBackground({ ...testArgs, subagent_type: "explore" }, testContext, mockManager, mockClient)
+    await executeBackground({ ...testArgs, subagent_type: "scout" }, testContext, mockManager, mockClient)
 
     //#then
     const latestCall = [...launchMock.mock.calls].pop()
     if (!latestCall) throw new Error("Expected background manager launch to be called")
     const launchArgs = latestCall[0]
     if (!launchArgs) throw new Error("Expected launch arguments")
-    expect(launchArgs.agent).toBe("explore")
+    expect(launchArgs.agent).toBe("scout")
   })
 })

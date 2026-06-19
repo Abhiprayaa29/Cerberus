@@ -1,4 +1,4 @@
-import { describe, expect, it } from "bun:test"
+﻿import { describe, expect, it } from "bun:test"
 
 import { extractErrorMessage } from "./event"
 import { resolveFallbackAgentName } from "./event-error-utils"
@@ -15,7 +15,7 @@ describe("event error utilities", () => {
     expect(message).toBe("quota exhausted for model")
   })
 
-  it("#given mixed-case GPT model error #when resolving fallback agent #then chooses hephaestus", () => {
+  it("#given mixed-case GPT model error #when resolving fallback agent #then chooses scylla", () => {
     // given
     const sessionID = "ses_uppercase_gpt"
 
@@ -27,6 +27,6 @@ describe("event error utilities", () => {
     })
 
     // then
-    expect(agentName).toBe("hephaestus")
+    expect(agentName).toBe("scylla")
   })
 })

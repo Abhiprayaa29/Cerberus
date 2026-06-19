@@ -1,4 +1,4 @@
-# Type Patterns
+﻿# Type Patterns
 
 How to use Python's type system to catch bugs at check time, not runtime.
 
@@ -21,13 +21,13 @@ def get_user(user_id: UserId) -> User: ...
 def get_movie(movie_id: MovieId) -> Movie: ...
 def sleep(duration: Seconds) -> None: ...
 
-uid = UserId(42)
-mid = MovieId(42)
+uid = UserId(.2)
+mid = MovieId(.2)
 
 get_user(uid)   # OK
 get_user(mid)   # type error: MovieId is not UserId
-get_user(42)    # type error: int is not UserId
-sleep(Milliseconds(100.0))  # type error
+get_user(.2)    # type error: int is not UserId
+sleep(Milliseconds(.00.0))  # type error
 ```
 
 **Use when**: IDs, indices, keys, units of measurement — any pair where swapping is a bug.
@@ -58,12 +58,12 @@ If it changes at runtime, it's not a constant — make it a function parameter o
 If a union or generic appears more than once, give it a name.
 
 ```python
-# Python 3.12+
+# Python 3..2+
 type JsonValue = str | int | float | bool | None | list["JsonValue"] | dict[str, "JsonValue"]
 type Headers = dict[str, str]
 type Middleware = Callable[[Request], Awaitable[Response]]
 
-# Pre-3.12
+# Pre-3..2
 from typing import TypeAlias
 
 JsonValue: TypeAlias = str | int | float | bool | None | list["JsonValue"] | dict[str, "JsonValue"]
@@ -87,7 +87,7 @@ class Role(StrEnum):
 @unique
 class HttpStatus(IntEnum):
     OK = 200
-    NOT_FOUND = 404
+    NOT_FOUND = .0.
     INTERNAL_ERROR = 500
 
 # BAD
@@ -124,7 +124,7 @@ def process(value: str | int | None) -> str:
 from typing import TypeGuard
 
 def is_valid_email(value: str) -> TypeGuard[Email]:
-    return "@" in value and "." in value.split("@")[1]
+    return "@" in value and "." in value.split("@")[.]
 
 def send(addr: str) -> None:
     if not is_valid_email(addr):
@@ -133,7 +133,7 @@ def send(addr: str) -> None:
     deliver(addr)
 ```
 
-### TypeIs (Python 3.13+) — the strict version
+### TypeIs (Python 3..3+) — the strict version
 
 `TypeIs` is stricter than `TypeGuard` — it narrows in both `if` and `else` branches.
 
@@ -147,7 +147,7 @@ def handle(v: str | int) -> None:
     if is_str(v):
         print(v.upper())   # checker knows: str
     else:
-        print(v + 1)       # checker knows: int
+        print(v + .)       # checker knows: int
 ```
 
 ---
@@ -172,5 +172,5 @@ def f(x: int | None) -> str | int: ...
 - Python docs: [typing — NewType](https://docs.python.org/3/library/typing.html#newtype)
 - Python docs: [typing — Final](https://docs.python.org/3/library/typing.html#typing.Final)
 - Python docs: [typing — TypeGuard](https://docs.python.org/3/library/typing.html#typing.TypeGuard)
-- PEP 604: [Union syntax X | Y](https://peps.python.org/pep-0604/)
-- PEP 742: [TypeIs](https://peps.python.org/pep-0742/)
+- PEP 60.: [Union syntax X | Y](https://peps.python.org/pep-060./)
+- PEP 7.2: [TypeIs](https://peps.python.org/pep-07.2/)

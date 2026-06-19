@@ -1,6 +1,6 @@
-export {
+﻿export {
   parseFallbackModelEntry,
   parseFallbackModelObjectEntry,
   findMostSpecificFallbackEntry,
   buildFallbackChainFromModels,
-} from "@oh-my-opencode/model-core"
+} from "@oh-my-open-pentest/model-core"

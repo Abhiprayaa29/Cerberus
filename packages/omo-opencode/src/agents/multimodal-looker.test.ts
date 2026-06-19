@@ -1,7 +1,7 @@
-import { describe, test, expect } from "bun:test"
+﻿import { describe, test, expect } from "bun:test"
 import { createAgentToolAllowlist } from "../shared/permission-compat"
 import { READ_ENABLED } from "../tools/look-at/look-at-prompt"
-import { createMultimodalLookerAgent } from "./multimodal-looker"
+import { createMultimodalLookerAgent } from "./lens"
 
 function extractAvailableToolClaims(prompt: string): readonly string[] {
   const availableToolsLine = prompt

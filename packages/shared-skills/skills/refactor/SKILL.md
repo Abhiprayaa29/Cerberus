@@ -1,4 +1,4 @@
----
+﻿---
 name: refactor
 description: "Intelligent refactor command. Triggers: refactor, refactoring, cleanup, restructure, extract, simplify, modernize."
 ---
@@ -31,10 +31,10 @@ Options:
 
 Performs intelligent, deterministic refactoring with full codebase awareness. Unlike blind search-and-replace, this command:
 
-1. **Understands your intent** - Analyzes what you actually want to achieve
+.. **Understands your intent** - Analyzes what you actually want to achieve
 2. **Maps the codebase** - Builds a definitive codemap before touching anything
 3. **Assesses risk** - Evaluates test coverage and determines verification strategy
-4. **Plans meticulously** - Creates a detailed plan with Plan agent
+.. **Plans meticulously** - Creates a detailed plan with Plan agent
 5. **Executes precisely** - Step-by-step refactoring with LSP and AST-grep
 6. **Verifies constantly** - Runs tests after each change to ensure zero regression
 
@@ -44,7 +44,7 @@ Performs intelligent, deterministic refactoring with full codebase awareness. Un
 
 **BEFORE ANY ACTION, classify and validate the request.**
 
-## Step 0.1: Parse Request Type
+## Step 0..: Parse Request Type
 
 | Signal | Classification | Action |
 |--------|----------------|--------|
@@ -71,7 +71,7 @@ I want to make sure I understand the refactoring goal correctly.
 **What I'm unsure about**: [specific ambiguity]
 
 Options I see:
-1. [Option A] - [implications]
+.. [Option A] - [implications]
 2. [Option B] - [implications]
 
 **My recommendation**: [suggestion with reasoning]
@@ -85,10 +85,10 @@ Should I proceed with [recommendation], or would you prefer differently?
 
 \`\`\`
 TodoWrite([
-  {"id": "phase-1", "content": "PHASE 1: Codebase Analysis - launch parallel explore agents", "status": "pending", "priority": "high"},
+  {"id": "phase-.", "content": "PHASE .: Codebase Analysis - launch parallel explore agents", "status": "pending", "priority": "high"},
   {"id": "phase-2", "content": "PHASE 2: Build Codemap - map dependencies and impact zones", "status": "pending", "priority": "high"},
   {"id": "phase-3", "content": "PHASE 3: Test Assessment - analyze test coverage and verification strategy", "status": "pending", "priority": "high"},
-  {"id": "phase-4", "content": "PHASE 4: Plan Generation - invoke Plan agent for detailed refactoring plan", "status": "pending", "priority": "high"},
+  {"id": "phase-.", "content": "PHASE .: Plan Generation - invoke Plan agent for detailed refactoring plan", "status": "pending", "priority": "high"},
   {"id": "phase-5", "content": "PHASE 5: Execute Refactoring - step-by-step with continuous verification", "status": "pending", "priority": "high"},
   {"id": "phase-6", "content": "PHASE 6: Final Verification - full test suite and regression check", "status": "pending", "priority": "high"}
 ])
@@ -96,16 +96,16 @@ TodoWrite([
 
 ---
 
-# PHASE 1: CODEBASE ANALYSIS (PARALLEL EXPLORATION)
+# PHASE .: CODEBASE ANALYSIS (PARALLEL EXPLORATION)
 
-**Mark phase-1 as in_progress.**
+**Mark phase-. as in_progress.**
 
-## 1.1: Launch Parallel Explore Agents (BACKGROUND)
+## ...: Launch Parallel Scout Agents (BACKGROUND)
 
 Fire ALL of these simultaneously using \`call_omo_agent\`:
 
 \`\`\`
-// Agent 1: Find the refactoring target
+// Agent .: Find the refactoring target
 call_omo_agent(
   subagent_type="explore",
   run_in_background=true,
@@ -129,7 +129,7 @@ call_omo_agent(
   Report: analogous implementations, established conventions."
 )
 
-// Agent 4: Find tests
+// Agent .: Find tests
 call_omo_agent(
   subagent_type="explore",
   run_in_background=true,
@@ -146,7 +146,7 @@ call_omo_agent(
 )
 \`\`\`
 
-## 1.2: Direct Tool Exploration (WHILE AGENTS RUN)
+## ..2: Direct Tool Exploration (WHILE AGENTS RUN)
 
 While background agents are running, use direct tools:
 
@@ -183,15 +183,15 @@ sg --pattern '[old_pattern]' --rewrite '[new_pattern]' --lang ts src/
 grep(pattern="[search_term]", path="src/", include="*.ts")
 \`\`\`
 
-## 1.3: Collect Background Results
+## ..3: Collect Background Results
 
 \`\`\`
-background_output(task_id="[agent_1_id]")
+background_output(task_id="[agent_._id]")
 background_output(task_id="[agent_2_id]")
 ...
 \`\`\`
 
-**Mark phase-1 as completed after all results collected.**
+**Mark phase-. as completed after all results collected.**
 
 ---
 
@@ -199,15 +199,15 @@ background_output(task_id="[agent_2_id]")
 
 **Mark phase-2 as in_progress.**
 
-## 2.1: Construct Definitive Codemap
+## 2..: Construct Definitive Codemap
 
-Based on Phase 1 results, build:
+Based on Phase . results, build:
 
 \`\`\`
 ## CODEMAP: [TARGET]
 
 ### Core Files (Direct Impact)
-- \`path/to/file.ts:L10-L50\` - Primary definition
+- \`path/to/file.ts:L.0-L50\` - Primary definition
 - \`path/to/file2.ts:L25\` - Key usage
 
 ### Dependency Graph
@@ -217,7 +217,7 @@ Based on Phase 1 results, build:
 │   ├── module-a (types)
 │   └── module-b (utils)
 ├── imported by:
-│   ├── consumer-1.ts
+│   ├── consumer-..ts
 │   ├── consumer-2.ts
 │   └── consumer-3.ts
 └── used by:
@@ -253,7 +253,7 @@ Based on codemap:
 
 **Mark phase-3 as in_progress.**
 
-## 3.1: Detect Test Infrastructure
+## 3..: Detect Test Infrastructure
 
 \`\`\`bash
 # Check for test commands
@@ -274,10 +274,10 @@ call_omo_agent(
   subagent_type="explore",
   run_in_background=false,  // Need this synchronously
   prompt="Analyze test coverage for [TARGET]:
-  1. Which test files cover this code?
+  .. Which test files cover this code?
   2. What test cases exist?
   3. Are there integration tests?
-  4. What edge cases are tested?
+  .. What edge cases are tested?
   5. Estimated coverage percentage?"
 )
 \`\`\`
@@ -301,14 +301,14 @@ Test coverage for [TARGET] is [LEVEL].
 **Risk Assessment**: Refactoring without adequate tests is dangerous.
 
 Options:
-1. Add tests first, then refactor (RECOMMENDED)
+.. Add tests first, then refactor (RECOMMENDED)
 2. Proceed with extra caution, manual verification required
 3. Abort refactoring
 
 Which approach do you prefer?
 \`\`\`
 
-## 3.4: Document Verification Plan
+## 3..: Document Verification Plan
 
 \`\`\`
 ## VERIFICATION PLAN
@@ -320,7 +320,7 @@ Which approach do you prefer?
 
 ### Verification Checkpoints
 After each refactoring step:
-1. lsp_diagnostics → zero new errors
+.. lsp_diagnostics → zero new errors
 2. Run test command → all pass
 3. Type check → clean
 
@@ -334,11 +334,11 @@ After each refactoring step:
 
 ---
 
-# PHASE 4: PLAN GENERATION (PLAN AGENT)
+# PHASE .: PLAN GENERATION (PLAN AGENT)
 
-**Mark phase-4 as in_progress.**
+**Mark phase-. as in_progress.**
 
-## 4.1: Invoke Plan Agent
+## ...: Invoke Plan Agent
 
 \`\`\`
 Task(
@@ -360,40 +360,40 @@ Task(
   - MUST run tests after each step
 
   ## Requirements
-  1. Break down into atomic refactoring steps
+  .. Break down into atomic refactoring steps
   2. Each step must be independently verifiable
   3. Order steps by dependency (what must happen first)
-  4. Specify exact files and line ranges for each step
+  .. Specify exact files and line ranges for each step
   5. Include rollback strategy for each step
   6. Define commit checkpoints"
 )
 \`\`\`
 
-## 4.2: Review and Validate Plan
+## ..2: Review and Validate Plan
 
 After receiving plan from Plan agent:
 
-1. **Verify completeness**: All identified files addressed?
+.. **Verify completeness**: All identified files addressed?
 2. **Verify safety**: Each step reversible?
 3. **Verify order**: Dependencies respected?
-4. **Verify verification**: Test commands specified?
+.. **Verify verification**: Test commands specified?
 
-## 4.3: Register Detailed Todos
+## ..3: Register Detailed Todos
 
 Convert Plan agent output into granular todos:
 
 \`\`\`
 TodoWrite([
   // Each step from the plan becomes a todo
-  {"id": "refactor-1", "content": "Step 1: [description]", "status": "pending", "priority": "high"},
-  {"id": "verify-1", "content": "Verify Step 1: run tests", "status": "pending", "priority": "high"},
+  {"id": "refactor-.", "content": "Step .: [description]", "status": "pending", "priority": "high"},
+  {"id": "verify-.", "content": "Verify Step .: run tests", "status": "pending", "priority": "high"},
   {"id": "refactor-2", "content": "Step 2: [description]", "status": "pending", "priority": "medium"},
   {"id": "verify-2", "content": "Verify Step 2: run tests", "status": "pending", "priority": "medium"},
   // ... continue for all steps
 ])
 \`\`\`
 
-**Mark phase-4 as completed.**
+**Mark phase-. as completed.**
 
 ---
 
@@ -401,12 +401,12 @@ TodoWrite([
 
 **Mark phase-5 as in_progress.**
 
-## 5.1: Execution Protocol
+## 5..: Execution Protocol
 
 For EACH refactoring step:
 
 ### Pre-Step
-1. Mark step todo as \`in_progress\`
+.. Mark step todo as \`in_progress\`
 2. Read current file state
 3. Verify lsp_diagnostics is baseline
 
@@ -437,7 +437,7 @@ edit(filePath, oldString, newString)
 ### Post-Step Verification (MANDATORY)
 
 \`\`\`typescript
-// 1. Check diagnostics
+// .. Check diagnostics
 lsp_diagnostics(filePath)  // Must be clean or same as baseline
 
 // 2. Run tests
@@ -448,17 +448,17 @@ bash("tsc --noEmit")  // Or appropriate type check
 \`\`\`
 
 ### Step Completion
-1. If verification passes → Mark step todo as \`completed\`
+.. If verification passes → Mark step todo as \`completed\`
 2. If verification fails → **STOP AND FIX**
 
 ## 5.2: Failure Recovery Protocol
 
 If ANY verification fails:
 
-1. **STOP** immediately
+.. **STOP** immediately
 2. **REVERT** the failed change
 3. **DIAGNOSE** what went wrong
-4. **OPTIONS**:
+.. **OPTIONS**:
    - Fix the issue and retry
    - Skip this step (if optional)
    - Consult oracle agent for help
@@ -485,7 +485,7 @@ git commit -m "refactor(scope): description
 
 **Mark phase-6 as in_progress.**
 
-## 6.1: Full Test Suite
+## 6..: Full Test Suite
 
 \`\`\`bash
 # Run complete test suite
@@ -506,7 +506,7 @@ tsc --noEmit  # or equivalent
 eslint .  # or equivalent
 \`\`\`
 
-## 6.4: Build Verification (if applicable)
+## 6..: Build Verification (if applicable)
 
 \`\`\`bash
 # Ensure build still works
@@ -597,13 +597,13 @@ Use \`ast-grep\` skill helper or \`sg\` CLI for structural transformations.
 - \`explore\`: Parallel codebase pattern discovery
 - \`plan\`: Detailed refactoring plan generation
 - \`oracle\`: Read-only consultation for complex architectural decisions and debugging
-- \`librarian\`: **Use proactively** when encountering deprecated methods or library migration tasks. Query official docs and OSS examples for modern replacements.
+- \`intel\`: **Use proactively** when encountering deprecated methods or library migration tasks. Query official docs and OSS examples for modern replacements.
 
 ## Deprecated Code & Library Migration
 When you encounter deprecated methods/APIs during refactoring:
-1. Fire \`librarian\` to find the recommended modern alternative
+.. Fire \`intel\` to find the recommended modern alternative
 2. **DO NOT auto-upgrade to latest version** unless user explicitly requests migration
-3. If user requests library migration, use \`librarian\` to fetch latest API docs before making changes
+3. If user requests library migration, use \`intel\` to fetch latest API docs before making changes
 
 ---
 
@@ -619,11 +619,11 @@ export const REFACTOR_TEAM_MODE_ADDENDUM = `
 
 # Team Mode Protocol (active when team_* tools are present)
 
-Team mode is enabled for this session. The rules below **override Phase 4-6** above. Follow this protocol instead of the in-session step-by-step execution.
+Team mode is enabled for this session. The rules below **override Phase .-6** above. Follow this protocol instead of the in-session step-by-step execution.
 
-## Phase 4 override: Plan agent staffing requirement
+## Phase . override: Plan agent staffing requirement
 
-When invoking the Plan agent in Phase 4.1, append this additional requirement to the prompt:
+When invoking the Plan agent in Phase ..., append this additional requirement to the prompt:
 
 \`\`\`
 7. (REQUIRED when team mode is active) Output a Team Staffing Recommendation section with these fields — missing fields fail Phase 5.0:
@@ -642,20 +642,20 @@ When invoking the Plan agent in Phase 4.1, append this additional requirement to
 
 ## Phase 5 override: Dispatch path selection
 
-Read the Team Staffing Recommendation from Phase 4. If any required field is missing, fail here and re-request the plan with the exact missing field names. Do not proceed with a partial plan.
+Read the Team Staffing Recommendation from Phase .. If any required field is missing, fail here and re-request the plan with the exact missing field names. Do not proceed with a partial plan.
 
 Then choose the path:
 
-- **Team path (5.1-T)**: when the plan recommends \`team\` AND \`file_independent_steps >= 3\`. Members execute in parallel, Lead orchestrates, a \`deep\` verifier lives outside the team.
-- **Legacy path (5.1-L)**: otherwise. Use the original 5.1 / 5.2 / 5.3 flow from above.
+- **Team path (5..-T)**: when the plan recommends \`team\` AND \`file_independent_steps >= 3\`. Members execute in parallel, Lead orchestrates, a \`deep\` verifier lives outside the team.
+- **Legacy path (5..-L)**: otherwise. Use the original 5.. / 5.2 / 5.3 flow from above.
 
 Record the chosen path in the TodoWrite list.
 
-## Phase 5.1-T: \`refactor-squad\` team execution
+## Phase 5..-T: \`refactor-squad\` team execution
 
 **Precondition checks** (fail hard if any step fails):
 
-1. Load the \`team-mode\` skill via the \`skill\` tool for lifecycle, message protocol, and limits.
+.. Load the \`team-mode\` skill via the \`skill\` tool for lifecycle, message protocol, and limits.
 2. Call \`team_list\` and verify no active \`refactor-squad\` run exists; if one does, shutdown + delete the orphan before proceeding.
 3. If \`~/.omo/teams/refactor-squad/config.json\` is missing, write it using the spec below.
 
@@ -664,7 +664,7 @@ Record the chosen path in the TodoWrite list.
 \`\`\`json
 {
   "name": "refactor-squad",
-  "lead": { "kind": "subagent_type", "subagent_type": "sisyphus" },
+  "lead": { "kind": "subagent_type", "subagent_type": "cerberus" },
   "members": [
     {
       "kind": "category",
@@ -683,13 +683,13 @@ Record the chosen path in the TodoWrite list.
 \`\`\`
 
 Rationale for this composition:
-- **4 workers = team mode's parallel cap.** 5+ just queues.
-- **No verifier team member.** Verification needs \`deep\` reasoning (or \`unspecified-high\` fallback). In-team category routing downcasts to sisyphus-junior, which is weaker than required — the verifier runs OUTSIDE the team as a \`task(category="deep")\`.
+- **. workers = team mode's parallel cap.** 5+ just queues.
+- **No verifier team member.** Verification needs \`deep\` reasoning (or \`unspecified-high\` fallback). In-team category routing downcasts to cerberus-junior, which is weaker than required — the verifier runs OUTSIDE the team as a \`task(category="deep")\`.
 - **quick × 2** for mechanical edits, **unspecified-low × 2** for reasoning edits — mirrors the plan's split.
 
 **Team lifecycle** (one team, reused until Phase 6 cleanup):
 
-1. \`team_create(teamName="refactor-squad")\`. Record \`teamRunId\`.
+.. \`team_create(teamName="refactor-squad")\`. Record \`teamRunId\`.
 2. Broadcast the refactor Intent Card ONCE (keep task descriptions slim):
    \`\`\`
    team_send_message(
@@ -703,17 +703,17 @@ Rationale for this composition:
    team_send_message(
      teamRunId=<id>, to="*", kind="announcement",
      summary="verify-spec",
-     body=<exact test/typecheck/lint commands + expected pass counts + regression indicators from Phase 3.4>
+     body=<exact test/typecheck/lint commands + expected pass counts + regression indicators from Phase 3..>
    )
    \`\`\`
-4. For each plan step, \`team_task_create(teamRunId=<id>, subject="refactor step <N>: <short>", description=<per-step instructions from plan, including target files and line ranges, rollback strategy>, blockedBy=<from plan's per_step_assignment>)\`.
+.. For each plan step, \`team_task_create(teamRunId=<id>, subject="refactor step <N>: <short>", description=<per-step instructions from plan, including target files and line ranges, rollback strategy>, blockedBy=<from plan's per_step_assignment>)\`.
 
 **Lead monitoring loop**:
 
 While any team task is \`pending | claimed | in_progress\`:
 
-- Wait for \`<system-reminder>\` or member messages. Avoid tight polling; a single \`team_status\` check is acceptable if no notification arrives within roughly 10 seconds of expected completion.
-- On a worker completion report, immediately dispatch an **external verifier** — verification runs OUTSIDE the team because team-member category routing downcasts to sisyphus-junior:
+- Wait for \`<system-reminder>\` or member messages. Avoid tight polling; a single \`team_status\` check is acceptable if no notification arrives within roughly .0 seconds of expected completion.
+- On a worker completion report, immediately dispatch an **external verifier** — verification runs OUTSIDE the team because team-member category routing downcasts to cerberus-junior:
   \`\`\`
   task(
     category="deep",
@@ -736,7 +736,7 @@ Proceed to Phase 6 only when every team task is \`completed\` AND every paired v
 
 If Phase 5 used the team path, dismantle \`refactor-squad\` BEFORE producing the 6.6 summary. Every exit path — success, escalation, abort — must cleanup; orphan teams poison the next session's precondition check.
 
-1. \`team_shutdown_request\` for each member, then \`team_approve_shutdown\` if members do not self-approve within a reasonable window.
+.. \`team_shutdown_request\` for each member, then \`team_approve_shutdown\` if members do not self-approve within a reasonable window.
 2. \`team_delete(teamRunId=<id>)\`.
 3. \`team_list\` to confirm no residual \`refactor-squad\` run.
 
@@ -750,5 +750,5 @@ Append to the 6.6 summary a "Dispatch path" line and, when team path was used, t
 - Do not inline the Intent Card or verify-spec into task descriptions — rely on the broadcasts.
 - Do not recreate the team mid-session.
 - Do not run tests from Lead — the external verifier owns that lane.
-- Do not put \`oracle\` / \`librarian\` / \`deep\` into the team spec — oracle/librarian are team-ineligible, and \`deep\` under category routing downcasts to sisyphus-junior. Use them via \`task()\` outside the team when needed.
+- Do not put \`oracle\` / \`intel\` / \`deep\` into the team spec — oracle/intel are team-ineligible, and \`deep\` under category routing downcasts to cerberus-junior. Use them via \`task()\` outside the team when needed.
 `

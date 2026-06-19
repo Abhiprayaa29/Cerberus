@@ -1,4 +1,4 @@
-import type { BuiltinSkill } from "../types"
+﻿import type { BuiltinSkill } from "../types"
 
 export const teamModeSkill: BuiltinSkill = {
   name: "team-mode",
@@ -29,7 +29,7 @@ Example:
   "name": "release-squad",
   "lead": {
     "kind": "subagent_type",
-    "subagent_type": "sisyphus"
+    "subagent_type": "cerberus"
   },
   "members": [
     {
@@ -74,20 +74,20 @@ Example:
 
 ## Member schema
 
-Use \`kind: "category"\` when you want a category-backed worker. It must include both \`category\` and \`prompt\`. D-40: category members always route through \`sisyphus-junior\`.
+Use \`kind: "category"\` when you want a category-backed worker. It must include both \`category\` and \`prompt\`. D-40: category members always route through \`cerberus-junior\`.
 
 Use \`kind: "subagent_type"\` only for eligible agents.
 
 ### Eligible subagent types
 
-- \`sisyphus\`
+- \`cerberus\`
 - \`atlas\`
-- \`sisyphus-junior\`
-- \`hephaestus\`
+- \`cerberus-junior\`
+- \`scylla\`
 
 ### Hard rejects
 
-Do not use \`oracle\`, \`prometheus\`, or other non-eligible agents here. For those, use \`delegate-task\` instead.
+Do not use \`oracle\`, \`talos\`, or other non-eligible agents here. For those, use \`delegate-task\` instead.
 
 ## Lifecycle
 

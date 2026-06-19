@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, test } from "bun:test"
+﻿import { afterEach, beforeEach, describe, expect, test } from "bun:test"
 import type { OhMyOpenCodeConfig } from "../config"
 import type { DefaultModeConfig } from "../config/schema/default-mode"
 import type { CreatedHooks } from "../create-hooks"
@@ -9,9 +9,9 @@ import { createChatMessageHandler, type ChatMessageHandlerOutput } from "./chat-
 import { createSystemTransformHandler } from "./system-transform"
 import type { PluginContext } from "./types"
 
-const ULTRAWORK_INSTRUCTION_MARKER = "<ultrawork-mode>matrix ultrawork instructions"
+const ULTRAWORK_INSTRUCTION_MARKER = "<fullscan-mode>matrix fullscan instructions"
 const FIRST_TURN_PROMPT = "ship the default-mode priority behavior"
-const DEFAULT_ULTRAWORK_TOAST = "Default ultrawork mode enabled. All agents at your disposal."
+const DEFAULT_ULTRAWORK_TOAST = "Default fullscan mode enabled. All agents at your disposal."
 
 type ToastCall = {
   readonly body: {
@@ -30,7 +30,7 @@ type RalphLoopCall = {
 
 type MatrixCase = {
   readonly name: string
-  readonly ultrawork: boolean
+  readonly fullscan: boolean
   readonly ralphLoop: boolean
   readonly expectUltraworkSystem: boolean
   readonly expectToast: boolean
@@ -40,15 +40,15 @@ type MatrixCase = {
 const DEFAULT_MODE_CASES = [
   {
     name: "neither default mode enabled",
-    ultrawork: false,
+    fullscan: false,
     ralphLoop: false,
     expectUltraworkSystem: false,
     expectToast: false,
     expectRalphLoop: false,
   },
   {
-    name: "ultrawork default mode only",
-    ultrawork: true,
+    name: "fullscan default mode only",
+    fullscan: true,
     ralphLoop: false,
     expectUltraworkSystem: true,
     expectToast: true,
@@ -56,15 +56,15 @@ const DEFAULT_MODE_CASES = [
   },
   {
     name: "ralph loop default mode only",
-    ultrawork: false,
+    fullscan: false,
     ralphLoop: true,
     expectUltraworkSystem: false,
     expectToast: false,
     expectRalphLoop: true,
   },
   {
-    name: "ultrawork and ralph loop default modes together",
-    ultrawork: true,
+    name: "fullscan and ralph loop default modes together",
+    fullscan: true,
     ralphLoop: true,
     expectUltraworkSystem: true,
     expectToast: true,
@@ -74,8 +74,8 @@ const DEFAULT_MODE_CASES = [
 
 function createDefaultMode(testCase: MatrixCase): DefaultModeConfig {
   return {
-    ultrawork: testCase.ultrawork,
-    ralph_loop: testCase.ralphLoop,
+    fullscan: testCase.fullscan,
+    pentest_loop: testCase.ralphLoop,
   }
 }
 
@@ -153,7 +153,7 @@ async function collectDefaultModeToasts(
   )
 
   await hook["chat.message"](
-    { sessionID, agent: "sisyphus" },
+    { sessionID, agent: "cerberus" },
     {
       message: {},
       parts: [{ type: "text", text: FIRST_TURN_PROMPT }],
@@ -182,7 +182,7 @@ async function collectRalphLoopCalls(
   await handler(
     {
       sessionID,
-      agent: "sisyphus",
+      agent: "cerberus",
       model: { providerID: "openai", modelID: "gpt-5.5" },
     },
     output,
@@ -204,7 +204,7 @@ describe("default-mode priority matrix", () => {
     test(`#given ${testCase.name} #when first user turn runs #then prompt toast and loop state match config`, async () => {
       // given
       const defaultMode = createDefaultMode(testCase)
-      const sessionID = `default-mode-${testCase.ultrawork}-${testCase.ralphLoop}`
+      const sessionID = `default-mode-${testCase.fullscan}-${testCase.ralphLoop}`
       setMainSession(sessionID)
 
       // when
@@ -224,7 +224,7 @@ describe("default-mode priority matrix", () => {
         expect(startLoopCalls).toHaveLength(1)
         expect(startLoopCalls[0]?.sessionID).toBe(sessionID)
         expect(startLoopCalls[0]?.prompt).toBe(FIRST_TURN_PROMPT)
-        expect(startLoopCalls[0]?.options["ultrawork"]).toBe(testCase.ultrawork)
+        expect(startLoopCalls[0]?.options["fullscan"]).toBe(testCase.fullscan)
       }
     })
   }

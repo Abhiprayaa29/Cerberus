@@ -1,4 +1,4 @@
-import { describe, expect, test } from "bun:test"
+﻿import { describe, expect, test } from "bun:test"
 import { resolveDoctorTarget } from "./framework/doctor-target"
 
 describe("resolveDoctorTarget", () => {
@@ -26,7 +26,7 @@ describe("resolveDoctorTarget", () => {
 
   test("#given opencode invocation #when resolving doctor target #then keeps OpenCode diagnostics", () => {
     // given
-    const invocationName = "oh-my-opencode"
+    const invocationName = "oh-my-open-pentest"
 
     // when
     const target = resolveDoctorTarget(invocationName)

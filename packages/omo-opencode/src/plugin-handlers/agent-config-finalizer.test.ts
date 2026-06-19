@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, test } from "bun:test";
+﻿import { afterEach, describe, expect, test } from "bun:test";
 import {
   isAgentRegistered,
   registerAgentName,
@@ -9,7 +9,7 @@ import { finalizeAgentConfig } from "./agent-config-finalizer";
 
 function createPluginConfig(): OhMyOpenCodeConfig {
   return {
-    sisyphus_agent: {
+    cerberus_agent: {
       planner_enabled: false,
     },
   };

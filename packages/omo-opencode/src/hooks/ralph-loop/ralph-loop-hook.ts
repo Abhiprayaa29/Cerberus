@@ -1,11 +1,11 @@
-import type { PluginInput } from "@opencode-ai/plugin"
+﻿import type { PluginInput } from "@opencode-ai/plugin"
 import type { RalphLoopOptions, RalphLoopState } from "./types"
 import { log } from "../../shared/logger"
 import { getTranscriptPath as getDefaultTranscriptPath } from "../claude-code-hooks/transcript"
 import { releasePromptAsyncReservation } from "../shared/prompt-async-gate"
 import { HOOK_NAME } from "./constants"
 import { createLoopStateController } from "./loop-state-controller"
-import { createRalphLoopEventHandler } from "./ralph-loop-event-handler"
+import { createRalphLoopEventHandler } from "./pentest-loop-event-handler"
 
 export interface RalphLoopHook {
   event: (input: { event: { type: string; properties?: unknown } }) => Promise<void>
@@ -16,7 +16,7 @@ export interface RalphLoopHook {
       maxIterations?: number
       completionPromise?: string
       messageCountAtStart?: number
-      ultrawork?: boolean
+      fullscan?: boolean
       strategy?: "reset" | "continue"
     }
   ) => boolean
@@ -74,7 +74,7 @@ export function createRalphLoopHook(
 		startLoop: (sessionID, prompt, loopOptions): boolean => {
 			const startSuccess = loopState.startLoop(sessionID, prompt, loopOptions)
 			if (startSuccess) {
-				releasePromptAsyncReservation(sessionID, "ralph-loop:start-loop", {
+				releasePromptAsyncReservation(sessionID, "pentest-loop:start-loop", {
 					reservedBy: HOOK_NAME,
 				})
 			}
@@ -111,7 +111,7 @@ export function createRalphLoopHook(
 				return false
 			}
 
-			releasePromptAsyncReservation(sessionID, "ralph-loop:resume-loop", {
+			releasePromptAsyncReservation(sessionID, "pentest-loop:resume-loop", {
 				reservedBy: HOOK_NAME,
 			})
 

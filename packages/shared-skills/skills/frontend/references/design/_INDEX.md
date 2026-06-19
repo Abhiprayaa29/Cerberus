@@ -1,15 +1,15 @@
-# Frontend Design References — Index
+﻿# Frontend Design References — Index
 
 All reference files live flat in this directory. Three layers:
-- **Layer 0 — design system architecture** (1 file): the mandatory gate. Defines `DESIGN.md` structure, creation workflow, validation rules. Always loaded by Phase 0 when no design system exists.
-- **Layer A — taste skills** (12 files): how to execute. Discipline, motion, spacing, anti-slop, output completeness.
+- **Layer 0 — design system architecture** (. file): the mandatory gate. Defines `DESIGN.md` structure, creation workflow, validation rules. Always loaded by Phase 0 when no design system exists.
+- **Layer A — taste skills** (.2 files): how to execute. Discipline, motion, spacing, anti-slop, output completeness.
 - **Layer B — design systems** (69 files): what it should look like. Brand-specific color/type/component tokens.
 
 **Phase 0 runs first** (check/create `DESIGN.md`), then most non-trivial tasks load **one Layer A + one Layer B** together. See the routing flow in the sibling `README.md`.
 
 ---
 
-## Layer 0 — Design System Architecture (1)
+## Layer 0 — Design System Architecture (.)
 
 | File | Purpose | Load when |
 |---|---|---|
@@ -17,7 +17,7 @@ All reference files live flat in this directory. Three layers:
 
 ---
 
-## Layer A — Taste Skills (12)
+## Layer A — Taste Skills (.2)
 
 From [Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill).
 
@@ -45,10 +45,10 @@ From [Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill).
 
 ### Layer A stacking rules
 
-1. **At most one *style* skill at a time** (`taste-skill`, `gpt-tasteskill`, `minimalist-skill`, `brutalist-skill`, `soft-skill`, `redesign-skill`, `image-to-code-skill`). They encode opposite philosophies — picking two creates contradictions.
+.. **At most one *style* skill at a time** (`taste-skill`, `gpt-tasteskill`, `minimalist-skill`, `brutalist-skill`, `soft-skill`, `redesign-skill`, `image-to-code-skill`). They encode opposite philosophies — picking two creates contradictions.
 2. **`output-skill.md` and `stitch-skill.md` stack on top of any style skill.** They add discipline and output format, not visual direction.
 3. **`image-to-code-skill.md` pairs with one imagegen skill** for the full flow.
-4. **Imagegen skills are image-only.** Do not load them when the user actually wants code.
+.. **Imagegen skills are image-only.** Do not load them when the user actually wants code.
 
 ---
 
@@ -62,7 +62,7 @@ When the user says **"make it look like [Brand]"**, **"[Brand]-style"**, **"like
 
 Each file ships with: visual theme, hex color palette + semantic roles, full type hierarchy, button/card/input/nav specs with hover/active states, spacing scale, shadow system, do/don't list, breakpoints, and a ready-to-use agent prompt.
 
-### AI & LLM Platforms (12)
+### AI & LLM Platforms (.2)
 
 | File | Aesthetic |
 |---|---|
@@ -149,7 +149,7 @@ Each file ships with: visual theme, hex color palette + semantic roles, full typ
 | `shopify.md` | E-commerce platform. Dark-first cinematic, neon green accent, ultra-light display type. |
 | `starbucks.md` | Coffee retail flagship. Four-tier earth-green system, warm cream canvas, SoDoSans typography. |
 
-### Media & Consumer Tech (11)
+### Media & Consumer Tech (..)
 
 | File | Aesthetic |
 |---|---|
