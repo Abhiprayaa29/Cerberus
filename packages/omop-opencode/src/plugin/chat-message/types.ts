@@ -62,6 +62,7 @@ export type ChatMessageHooks = {
   stopContinuationGuard?: StopContinuationGuard | null
   backgroundNotificationHook?: ChatMessageHook | null
   runtimeFallback?: ChatMessageHook | null
+  pentestContext?: ChatMessageHook | null
   keywordDetector?: ChatMessageHook | null
   thinkMode?: ChatMessageHook | null
   claudeCodeHooks?: ChatMessageHook | null

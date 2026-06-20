@@ -7,6 +7,7 @@ import {
   createClaudeCodeHooksHook,
   createKeywordDetectorHook,
   createMonitorStatusInjectorHook,
+  createPentestContextHook,
   createTeamMailboxInjector,
   createTeamModeStatusInjector,
   createToolPairValidatorHook,
@@ -20,6 +21,7 @@ import { safeCreateHook } from "../../shared/safe-create-hook"
 export type TransformHooks = {
   claudeCodeHooks: ReturnType<typeof createClaudeCodeHooksHook> | null
   keywordDetector: ReturnType<typeof createKeywordDetectorHook> | null
+  pentestContext: ReturnType<typeof createPentestContextHook> | null
   contextInjectorMessagesTransform: ReturnType<typeof createContextInjectorMessagesTransformHook>
   teamModeStatusInjector: ReturnType<typeof createTeamModeStatusInjector> | null
   teamMailboxInjector: ReturnType<typeof createTeamMailboxInjector> | null
@@ -69,6 +71,14 @@ export function createTransformHooks(args: {
       )
     : null
 
+  const pentestContext = isHookEnabled("pentest-context")
+    ? safeCreateHook(
+        "pentest-context",
+        () => createPentestContextHook(),
+        { enabled: safeHookEnabled },
+      )
+    : null
+
   const contextInjectorMessagesTransform =
     createContextInjectorMessagesTransformHook(contextCollector)
 
@@ -110,6 +120,7 @@ export function createTransformHooks(args: {
   return {
     claudeCodeHooks,
     keywordDetector,
+    pentestContext,
     contextInjectorMessagesTransform,
     teamModeStatusInjector,
     teamMailboxInjector,
