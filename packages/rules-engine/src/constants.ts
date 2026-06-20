@@ -3,7 +3,7 @@ import type { RuleSource } from "./types";
 export const PROJECT_MARKERS = [".git", "pyproject.toml", "package.json", "Cargo.toml", "go.mod", ".venv"] as const;
 
 export const PROJECT_RULE_SUBDIRS = [
-  [".omo", "rules"],
+  [".omop", "rules"],
   [".claude", "rules"],
   [".cursor", "rules"],
   [".github", "instructions"],

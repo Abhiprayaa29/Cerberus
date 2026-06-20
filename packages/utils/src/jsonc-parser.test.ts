@@ -5,7 +5,7 @@ import { join } from "node:path"
 
 const pluginConfigDetectionOptions = {
   basenames: ["oh-my-open-pentest"],
-  legacyBasenames: ["oh-my-open-pentest"],
+  legacyBasenames: ["oh-my-opencode"],
 } as const
 
 describe("parseJsonc", () => {
@@ -339,11 +339,11 @@ describe("detectPluginConfigFile", () => {
     clearPluginConfigFileDetectionCache()
   })
 
-  test("prefers oh-my-open-pentest over oh-my-open-pentest when both jsonc files exist", () => {
+  test("prefers oh-my-open-pentest over oh-my-opencode when both jsonc files exist", () => {
     // given
     mkdirSync(testDir, { recursive: true })
     writeFileSync(join(testDir, "oh-my-open-pentest.jsonc"), "{}")
-    writeFileSync(join(testDir, "oh-my-open-pentest.jsonc"), "{}")
+    writeFileSync(join(testDir, "oh-my-opencode.jsonc"), "{}")
 
     // when
     const result = detectPluginConfigFile(testDir, pluginConfigDetectionOptions)
@@ -351,28 +351,28 @@ describe("detectPluginConfigFile", () => {
     // then
     expect(result.format).toBe("jsonc")
     expect(result.path).toBe(join(testDir, "oh-my-open-pentest.jsonc"))
-    expect(result.legacyPath).toBe(join(testDir, "oh-my-open-pentest.jsonc"))
+    expect(result.legacyPath).toBe(join(testDir, "oh-my-opencode.jsonc"))
   })
 
-  test("falls back to oh-my-open-pentest when oh-my-open-pentest doesn't exist", () => {
+  test("falls back to oh-my-opencode when oh-my-open-pentest doesn't exist", () => {
     // given
     mkdirSync(testDir, { recursive: true })
-    writeFileSync(join(testDir, "oh-my-open-pentest.jsonc"), "{}")
+    writeFileSync(join(testDir, "oh-my-opencode.jsonc"), "{}")
 
     // when
     const result = detectPluginConfigFile(testDir, pluginConfigDetectionOptions)
 
     // then
     expect(result.format).toBe("jsonc")
-    expect(result.path).toBe(join(testDir, "oh-my-open-pentest.jsonc"))
+    expect(result.path).toBe(join(testDir, "oh-my-opencode.jsonc"))
     expect(result.legacyPath).toBeUndefined()
   })
 
-  test("loads oh-my-open-pentest.json before oh-my-open-pentest.json when no jsonc exists", () => {
+  test("loads oh-my-open-pentest.json before oh-my-opencode.json when no jsonc exists", () => {
     // given
     mkdirSync(testDir, { recursive: true })
     writeFileSync(join(testDir, "oh-my-open-pentest.json"), "{}")
-    writeFileSync(join(testDir, "oh-my-open-pentest.json"), "{}")
+    writeFileSync(join(testDir, "oh-my-opencode.json"), "{}")
 
     // when
     const result = detectPluginConfigFile(testDir, pluginConfigDetectionOptions)
@@ -380,7 +380,7 @@ describe("detectPluginConfigFile", () => {
     // then
     expect(result.format).toBe("json")
     expect(result.path).toBe(join(testDir, "oh-my-open-pentest.json"))
-    expect(result.legacyPath).toBe(join(testDir, "oh-my-open-pentest.json"))
+    expect(result.legacyPath).toBe(join(testDir, "oh-my-opencode.json"))
   })
 
   test("returns none when no config files exist", () => {
@@ -399,7 +399,7 @@ describe("detectPluginConfigFile", () => {
   test("prefers canonical jsonc over legacy json when both exist", () => {
     // given
     mkdirSync(testDir, { recursive: true })
-    writeFileSync(join(testDir, "oh-my-open-pentest.json"), "{}")
+    writeFileSync(join(testDir, "oh-my-opencode.json"), "{}")
     writeFileSync(join(testDir, "oh-my-open-pentest.jsonc"), "{}")
 
     // when
@@ -408,7 +408,7 @@ describe("detectPluginConfigFile", () => {
     // then
     expect(result.format).toBe("jsonc")
     expect(result.path).toBe(join(testDir, "oh-my-open-pentest.jsonc"))
-    expect(result.legacyPath).toBe(join(testDir, "oh-my-open-pentest.json"))
+    expect(result.legacyPath).toBe(join(testDir, "oh-my-opencode.json"))
   })
 
   test("loads oh-my-open-pentest when only canonical jsonc exists", () => {
@@ -422,6 +422,6 @@ describe("detectPluginConfigFile", () => {
     // then
     expect(result.format).toBe("jsonc")
     expect(result.path).toBe(join(testDir, "oh-my-open-pentest.jsonc"))
-    expect(result.legacyPath).toBeUndefined()
+    expect(result.legacyPath).toBeUndefined()  // no oh-my-opencode.jsonc on disk
   })
 })

@@ -2,11 +2,11 @@ import { createProductIdentity } from "@omop/utils"
 
 const PRODUCT_IDENTITY = createProductIdentity({
   pluginName: "oh-my-open-pentest",
-  legacyPluginName: "oh-my-open-pentest",
+  legacyPluginName: "oh-my-opencode",
   publishedPackageName: "oh-my-open-pentest",
-  acceptedPackageNames: ["oh-my-open-pentest", "oh-my-open-pentest"],
+  acceptedPackageNames: ["oh-my-open-pentest", "oh-my-opencode"],
   configBasename: "oh-my-open-pentest",
-  legacyConfigBasename: "oh-my-open-pentest",
+  legacyConfigBasename: "oh-my-opencode",
   logFileName: "oh-my-open-pentest.log",
   cacheDirName: "oh-my-open-pentest",
 })

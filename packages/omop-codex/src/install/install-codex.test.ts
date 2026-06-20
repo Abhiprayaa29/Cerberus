@@ -175,7 +175,7 @@ describe("install-codex", () => {
     const marketplace = JSON.parse(
       await readFile(join(codexHome, "plugins", "cache", "cerberuslabs", ".agents", "plugins", "marketplace.json"), "utf8"),
     ) as { plugins: Array<{ name: string; source: { source: string; path: string } }> }
-    expect(marketplace.plugins).toEqual([{ name: "omop", source: { source: "local", path: `./omo/${rootPackage.version}` } }])
+    expect(marketplace.plugins).toEqual([{ name: "omop", source: { source: "local", path: `./omop/${rootPackage.version}` } }])
     let legacyCacheMissing = false
     try {
       await stat(join(codexHome, "plugins", "cache", "code-yeongyu-codex-plugins", "omop"))

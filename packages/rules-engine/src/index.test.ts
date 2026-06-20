@@ -41,14 +41,14 @@ describe("rules-core", () => {
     // given
     const root = createTestRoot("rules-core-order");
     mkdirSync(join(root, ".git"));
-    mkdirSync(join(root, ".omo", "rules"), { recursive: true });
+    mkdirSync(join(root, ".omop", "rules"), { recursive: true });
     mkdirSync(join(root, ".cerberus", "rules"), { recursive: true });
     mkdirSync(join(root, ".claude", "rules"), { recursive: true });
     mkdirSync(join(root, ".cursor", "rules"), { recursive: true });
     mkdirSync(join(root, ".github", "instructions"), { recursive: true });
     mkdirSync(join(root, "src"), { recursive: true });
     writeFileSync(join(root, ".github", "copilot-instructions.md"), "copilot");
-    writeFileSync(join(root, ".omo", "rules", "omo.md"), "omop");
+    writeFileSync(join(root, ".omop", "rules", "omo.md"), "omop");
     writeFileSync(join(root, ".cerberus", "rules", "cerberus.md"), "cerberus");
     writeFileSync(join(root, ".claude", "rules", "claude.md"), "claude");
     writeFileSync(join(root, ".cursor", "rules", "cursor.md"), "cursor");
@@ -109,10 +109,10 @@ describe("rules-core", () => {
     // given
     const root = createTestRoot("rules-core-cerberus-restored");
     mkdirSync(join(root, ".git"));
-    mkdirSync(join(root, ".omo", "rules"), { recursive: true });
+    mkdirSync(join(root, ".omop", "rules"), { recursive: true });
     mkdirSync(join(root, ".cerberus", "rules"), { recursive: true });
     mkdirSync(join(root, "src"), { recursive: true });
-    writeFileSync(join(root, ".omo", "rules", "shared.md"), "omop");
+    writeFileSync(join(root, ".omop", "rules", "shared.md"), "omop");
     writeFileSync(join(root, ".cerberus", "rules", "shared.md"), "legacy");
     writeFileSync(join(root, ".cerberus", "rules", "legacy.md"), "legacy");
 
@@ -157,9 +157,9 @@ describe("rules-core", () => {
     const root = createTestRoot("rules-core-markerless-workspace");
     const homeDir = join(root, "home");
     const sourceDir = join(root, "src");
-    const ruleFile = join(root, ".omo", "rules", "test-rule.md");
+    const ruleFile = join(root, ".omop", "rules", "test-rule.md");
     const currentFile = join(sourceDir, "index.ts");
-    mkdirSync(join(root, ".omo", "rules"), { recursive: true });
+    mkdirSync(join(root, ".omop", "rules"), { recursive: true });
     mkdirSync(homeDir, { recursive: true });
     mkdirSync(sourceDir, { recursive: true });
     writeFileSync(ruleFile, "markerless workspace rule");
@@ -256,9 +256,9 @@ describe("rules-core", () => {
     // given
     const root = createTestRoot("rules-core-cache");
     mkdirSync(join(root, ".git"));
-    mkdirSync(join(root, ".omo", "rules"), { recursive: true });
+    mkdirSync(join(root, ".omop", "rules"), { recursive: true });
     mkdirSync(join(root, "src"), { recursive: true });
-    writeFileSync(join(root, ".omo", "rules", "typescript.md"), "typescript");
+    writeFileSync(join(root, ".omop", "rules", "typescript.md"), "typescript");
     const cache = createRuleScanCache();
 
     // when

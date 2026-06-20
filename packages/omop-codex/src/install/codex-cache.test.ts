@@ -294,7 +294,7 @@ describe("codex-cache", () => {
     await writeFile(join(pluginRoot, "package.json"), JSON.stringify({ name: "@scope/omo" }))
     await writeFile(
       join(componentRoot, "package.json"),
-      JSON.stringify({ name: "@scope/pentest-loop", bin: { omo: "dist/cli.js", "omop-pentest-loop": "dist/cli.js" } }),
+      JSON.stringify({ name: "@scope/pentest-loop", bin: { omop: "dist/cli.js", "omop-pentest-loop": "dist/cli.js" } }),
     )
     await writeFile(join(componentRoot, "dist", "cli.js"), "#!/usr/bin/env node\n")
 

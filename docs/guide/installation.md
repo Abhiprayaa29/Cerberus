@@ -355,6 +355,35 @@ Installation flow for agents:
 
 ---
 
+## Component CLI Binaries
+
+These binaries are installed automatically to your Codex bin directory:
+
+| Binary | Role |
+|--------|------|
+| `omop` | Runtime wrapper — main entry point |
+| `omop-comment-checker` | Comment quality enforcement hook |
+| `omop-git-bash-hook` | Git Bash integration hook |
+| `lazycodex-executor-verify` | LazyCodex executor verification |
+| `omop-lsp` | LSP tools MCP server |
+| `omop-rules` | Rules engine CLI |
+| `omop-start-work-continuation` | Start-work continuation hook |
+| `omop-telemetry` | Telemetry reporter |
+| `omop-pentest-loop` | Pentest loop orchestrator |
+| `omop-fullscan` | Full engagement scan trigger |
+
+## LazyCodex Agent Roles
+
+Installed to `~/.codex/agents/{name}.toml`:
+
+- `lazycodex-clone-fidelity-reviewer`
+- `lazycodex-code-reviewer`
+- `lazycodex-executor`
+- `lazycodex-gate-reviewer`
+- `lazycodex-qa-executor`
+
+---
+
 ## Further Reading
 
 - [Usage Guide](./usage.md) — how to run engagements
