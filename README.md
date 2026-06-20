@@ -10,9 +10,9 @@
 
 <div align="center">
 
-<a href="https://github.com/code-yeongyu/oh-my-open-pentest#oh-my-open-pentest"><img src="./.github/assets/omop-logo.png" alt="OmOP" width="200" /></a>
+<a href="https://github.com/zakirkun/oh-my-open-pentest#oh-my-open-pentest"><img src="./.github/assets/omop-logo.png" alt="OmOP" width="200" /></a>
 
-[![Oh My Open Pentest](./.github/assets/hero.jpg)](https://github.com/code-yeongyu/oh-my-open-pentest#oh-my-open-pentest)
+[![Oh My Open Pentest](./.github/assets/hero.jpg)](https://github.com/zakirkun/oh-my-open-pentest#oh-my-open-pentest)
 
 </div>
 
@@ -20,14 +20,11 @@
 
 <div align="center">
 
-[![GitHub Release](https://img.shields.io/github/v/release/code-yeongyu/oh-my-open-pentest?color=369eff&labelColor=black&logo=github&style=flat-square)](https://github.com/code-yeongyu/oh-my-open-pentest/releases)
-[![GitHub Contributors](https://img.shields.io/github/contributors/code-yeongyu/oh-my-open-pentest?color=c4f042&labelColor=black&style=flat-square)](https://github.com/code-yeongyu/oh-my-open-pentest/graphs/contributors)
-[![GitHub Stars](https://img.shields.io/github/stars/code-yeongyu/oh-my-open-pentest?color=ffcb47&labelColor=black&style=flat-square)](https://github.com/code-yeongyu/oh-my-open-pentest/stargazers)
-[![GitHub Issues](https://img.shields.io/github/issues/code-yeongyu/oh-my-open-pentest?color=ff80eb&labelColor=black&style=flat-square)](https://github.com/code-yeongyu/oh-my-open-pentest/issues)
-[![License](https://img.shields.io/badge/license-SUL--1.0-white?labelColor=black&style=flat-square)](https://github.com/code-yeongyu/oh-my-open-pentest/blob/dev/LICENSE.md)
-[![Docs](https://img.shields.io/badge/docs-omo.vibetip.help-369eff?labelColor=black&logo=readthedocs&logoColor=white&style=flat-square)](https://omo.vibetip.help/docs)
-
-[English](README.md) | [한국어](README.ko.md) | [日本語](README.ja.md) | [简体中文](README.zh-cn.md)
+[![GitHub Release](https://img.shields.io/github/v/release/zakirkun/oh-my-open-pentest?color=369eff&labelColor=black&logo=github&style=flat-square)](https://github.com/zakirkun/oh-my-open-pentest/releases)
+[![GitHub Contributors](https://img.shields.io/github/contributors/zakirkun/oh-my-open-pentest?color=c4f042&labelColor=black&style=flat-square)](https://github.com/zakirkun/oh-my-open-pentest/graphs/contributors)
+[![GitHub Stars](https://img.shields.io/github/stars/zakirkun/oh-my-open-pentest?color=ffcb47&labelColor=black&style=flat-square)](https://github.com/zakirkun/oh-my-open-pentest/stargazers)
+[![GitHub Issues](https://img.shields.io/github/issues/zakirkun/oh-my-open-pentest?color=ff80eb&labelColor=black&style=flat-square)](https://github.com/zakirkun/oh-my-open-pentest/issues)
+[![License](https://img.shields.io/badge/license-SUL--1.0-white?labelColor=black&style=flat-square)](https://github.com/zakirkun/oh-my-open-pentest/blob/dev/LICENSE.md)
 
 </div>
 
@@ -45,6 +42,16 @@ oh-my-open-pentest is an agentic automation platform for offensive security. It 
 
 ---
 
+## What's New in v2.2
+
+- **109 security tools** — expanded from 60, added netexec, certipy, sliver, ligolo-ng, chisel, dalfox, xsstrike, wifite, pacu, prowler and more
+- **250 skill playbooks** — comprehensive coverage across vuln classes, protocols, frameworks, post-exploitation, and payloads
+- **airecon data layer** — attack chains, vuln ontology, WAF signatures, CVE correlations, tech correlations, fuzzer data loaded from structured JSON
+- **Client-side pentest** — Playwright browser automation for DOM XSS, auth flow testing, CSRF PoC, SPA endpoint discovery
+- **Live catalog** — tools-catalog.json fetched from GitHub at startup, always current
+
+---
+
 ## The Core Loop
 
 ```
@@ -57,53 +64,202 @@ Every phase is autonomous. Scope boundaries are parsed, validated, and enforced 
 
 ---
 
-## Quickstart
+## Installation
+
+### Prerequisites
+
+- [OpenCode](https://github.com/opencode-ai/opencode) installed and configured
+- [Bun](https://bun.sh) runtime (`curl -fsSL https://bun.sh/install | bash`)
+
+### Step 1 — Install oh-my-open-pentest
 
 ```bash
 bunx oh-my-open-pentest install
 ```
 
-The installer walks through: mode selection, provider authentication, agent configuration.
+The wizard configures:
+1. **Mode** — default engagement mode
+2. **Provider** — Anthropic, OpenAI, Gemini, or custom OpenAI-compatible endpoint
+3. **Models** — per-agent model assignments
+4. **Verification** — `doctor` check at the end
 
-Then:
+### Step 2 — Register the plugin in OpenCode
+
+After install, confirm the plugin is registered:
+
+```bash
+cat ~/.config/opencode/opencode.json | grep plugin
+```
+
+Expected output:
+```json
+"plugin": ["file:///path/to/oh-my-open-pentest/dist/index.js"]
+```
+
+If `plugin` is empty, add it manually:
+
+```bash
+# Get the dist path
+bunx oh-my-open-pentest doctor
+
+# Edit opencode.json — add the file:// path
+# Linux/macOS:
+jq '.plugin = ["file:///home/USER/.npm-global/lib/node_modules/oh-my-open-pentest/dist/index.js"]' \
+  ~/.config/opencode/opencode.json > /tmp/oc.json && mv /tmp/oc.json ~/.config/opencode/opencode.json
+
+# Or for a local dev clone:
+jq --arg p "file:///path/to/oh-my-open-pentest/dist/index.js" '.plugin = [$p]' \
+  ~/.config/opencode/opencode.json > /tmp/oc.json && mv /tmp/oc.json ~/.config/opencode/opencode.json
+```
+
+### Step 3 — Verify
+
+```bash
+bunx oh-my-open-pentest doctor
+```
+
+All checks green = ready.
+
+### Non-interactive install
+
+```bash
+bunx oh-my-open-pentest install --non-interactive
+```
+
+---
+
+## Quickstart
+
+Open OpenCode in any directory and type:
 
 ```
 fullscan
 ```
 
-One word. Every agent activates. Doesn't stop until the engagement is done.
+For a specific target:
+
+```
+fullscan https://target.example.com
+```
+
+The agent auto-detects the engagement mode from the target, loads the matching skill chain, and runs recon through report.
+
+---
+
+## Usage
+
+### Starting an engagement
+
+```bash
+# Auto-detect mode from target
+fullscan https://target.example.com
+
+# IP/network target (red-team mode auto-detected)
+fullscan 10.0.0.1/24
+
+# Explicit mode
+/mode bug-bounty
+fullscan https://target.example.com
+```
+
+### Running specific phases
+
+```bash
+# Individual phases
+/pentest-recon
+/pentest-enum
+/pentest-exploit
+/pentest-report
+
+# Red team phases
+/red-recon
+/red-exploit
+/red-lateral
+/red-persistence
+
+# Vulnerability-specific
+/vuln-sqli
+/vuln-xss
+/vuln-ssrf
+/vuln-cors
+/vuln-idor
+/vuln-rce
+/vuln-xxe
+/vuln-ssti
+/vuln-deserialization
+/vuln-file-upload
+/vuln-http-smuggling
+/vuln-race-conditions
+/vuln-business-logic
+
+# Protocol-specific
+/proto-smb
+/proto-kerberos
+/proto-graphql
+/proto-ssh
+
+# Technology-specific
+/tech-spring
+/tech-wordpress
+/tech-docker
+/tech-redis
+/tech-jenkins
+
+# Client-side pentest (browser automation)
+/pentest-browser
+
+# Payload collections
+/payload-xss
+/payload-sqli
+/payload-ssrf
+/payload-ssti
+/payload-xxe
+/payload-lfi
+/payload-command-injection
+
+# Post-exploitation
+/post-linux-privesc
+/post-windows-privesc
+/post-pivoting
+```
+
+### Engagement state
+
+```bash
+# Health check
+bunx oh-my-open-pentest doctor
+
+# View doctor output
+bunx oh-my-open-pentest doctor --verbose
+```
+
+Engagement state is preserved across sessions. Interrupted engagements resume from the last checkpoint.
 
 ---
 
 ## Engagement Modes
 
-Seven modes, each tuned for a different context. The agent auto-detects the right mode from target indicators, or you pick one explicitly.
+Ten modes, each tuned for a different context. Auto-detected from target indicators, or set explicitly.
 
 | Mode | When to use | Tool priority | Report format |
 | :--- | :--- | :--- | :--- |
 | **Auto** | Unknown target, let the agent decide | Adaptive | Standard |
-| **CTF** | Capture The Flag challenges | Exploit → Enum → Recon | Flag submission |
+| **CTF** | Capture The Flag competitions | Exploit → Enum → Recon | Flag submission |
 | **Bug Bounty** | HackerOne, Bugcrowd, Intigriti, YesWeHack | Recon → Enum → Exploit | HackerOne format |
 | **Red Team** | Stealth operations, persistence, lateral movement | Recon → Exploit → Enum | Executive summary |
 | **Blue Team** | Detection, incident response, forensics | Enum → Recon → Report | IR report |
 | **Offensive** | Aggressive exploitation, PoC chains | Exploit → Enum → Recon | Technical |
 | **Grey Hat** | Balanced offensive/defensive | Balanced | Technical |
 | **Forensic** | Digital forensics, evidence preservation, IR | Forensics → Report | Forensic (chain-of-custody) |
-| **Reverse Engineering** | Binary analysis, malware RE, CTF rev challenges | RE → Exploit → Utility | Technical RE |
+| **Reverse Engineering** | Binary analysis, malware RE | RE → Exploit → Utility | Technical RE |
 | **Mobile Pentest** | Android/iOS app security assessment | Mobile → Enum → Exploit | Mobile (OWASP Top 10) |
 
-Switch mode with a slash command:
+Switch mode:
 
 ```
 /mode bug-bounty
 /mode red-team
-/mode ctf
-```
-
-Or let the agent auto-detect:
-
-```
-fullscan https://target.example.com
+/mode mobile-pentest
 ```
 
 ---
@@ -121,62 +277,140 @@ A coordinated team. Each agent owns its phase.
 | **Talos** | Scope Guard | Parses RoE, validates every target before active testing, logs scope decisions |
 | **Hermes** | Reporter | Generates submission-ready reports with CVSS scoring and working PoCs |
 
-For large engagements, enable **Team Mode** and run all agents in parallel — Hydra recons while Scylla exploits earlier findings.
-
 ---
 
 ## Tool Coverage
 
-60+ security tools, ready to use. Installed automatically if missing.
+109 security tools, ready to use. Missing tools are installed automatically before first use.
 
-**Recon**
-`subfinder` · `amass` · `assetfinder` · `httpx` · `naabu` · `massdns` · `nmap`
+**Recon / OSINT**
+`subfinder` · `amass` · `assetfinder` · `httpx` · `naabu` · `massdns` · `nmap` · `masscan` · `rustscan` · `theHarvester` · `sublist3r` · `spiderfoot` · `sherlock` · `holehe` · `maigret` · `dnstwist`
+
+**Secrets / Code**
+`trufflehog` · `gitleaks` · `secretfinder`
 
 **Enumeration**
-`nuclei` · `ffuf` · `gobuster` · `feroxbuster` · `dirsearch` · `whatweb` · `wafw00f` · `nikto` · `burpsuite` · `owasp-zap`
+`nuclei` · `ffuf` · `gobuster` · `feroxbuster` · `dirsearch` · `whatweb` · `wafw00f` · `nikto` · `katana` · `arjun` · `testssl` · `trivy` · `gospider`
 
-**Exploitation**
-`sqlmap` · `commix` · `hydra` · `hashcat` · `john` · `pwntools` · `metasploit` · `bloodhound` · `crackmapexec` · `responder` · `impacket`
+**Web Exploitation**
+`sqlmap` · `commix` · `dalfox` · `xsstrike` · `nosqlmap` · `burpsuite` · `owasp-zap` · `mitmproxy`
+
+**Credential / Auth**
+`hydra` · `hashcat` · `john` · `certipy` · `kerbrute`
+
+**Active Directory / Windows**
+`netexec` · `evil-winrm` · `bloodhound` · `crackmapexec` · `impacket` · `responder` · `mimikatz`
+
+**C2 / Pivoting**
+`metasploit` · `sliver` · `havoc` · `mythic` · `pwncat-cs` · `chisel` · `ligolo-ng`
+
+**Post-Exploitation**
+`peass-ng` · `pwntools`
+
+**Wireless**
+`wifite` · `airgeddon` · `wifiphisher` · `bettercap` · `hcxdumptool`
+
+**Cloud**
+`pacu` · `routersploit` · `prowler` · `scoutsuite`
+
+**Phishing**
+`evilginx3` · `setoolkit`
 
 **Forensics / IR**
-`volatility3` · `autopsy` · `binwalk` · `foremost` · `bulk_extractor` · `exiftool` · `tcpdump` · `tshark` · `wireshark` · `yara`
+`volatility3` · `autopsy` · `binwalk` · `foremost` · `bulk_extractor` · `exiftool` · `tcpdump` · `tshark` · `wireshark` · `yara` · `steghide` · `stegcracker` · `pspy`
 
 **Reverse Engineering**
 `ghidra` · `radare2` · `cutter` · `gdb` · `pwndbg` · `ltrace` · `strace` · `angr`
 
 **Mobile**
-`apktool` · `jadx` · `frida` · `objection` · `mobsf` · `adb`
+`apktool` · `jadx` · `frida` · `objection` · `mobsf` · `adb` · `androguard`
 
 **Utility**
-`curl` · `jq` · `anew` · `notify` · `grep`
+`curl` · `jq` · `anew` · `notify` · `grep` · `haiti`
 
-Full catalog: [`tools-catalog.json`](tools-catalog.json) — each tool includes install commands (Linux, macOS, Windows), flag definitions, and availability checks. Tools are verified before use. Missing tools are installed automatically.
+Full catalog: [`tools-catalog.json`](tools-catalog.json) — each tool includes install commands, version check, flag definitions, and phase tags. The catalog is fetched live from GitHub at startup.
 
 ---
 
-## Skill Chains
+## Skill Library
 
-Skills are the execution playbooks. Each mode has a predetermined skill chain. The agent loads and follows them automatically.
+250 skills covering every phase of a penetration test. Skills are markdown playbooks — readable, editable, and executable by the agent.
 
-| Phase | Skill | What runs |
-| :--- | :--- | :--- |
-| Mode selection | `pentest-mode` | Detects or applies mode config |
-| Recon | `pentest-recon` / `red-recon` / `ctf-recon` | subfinder, amass, httpx, naabu |
-| Enumeration | `pentest-enum` | nuclei, ffuf, gobuster, whatweb, wafw00f |
-| Exploitation | `pentest-exploit` / `red-exploit` / `ctf-exploit` | sqlmap, commix, hydra, metasploit |
-| Post-exploitation | `red-lateral` / `red-persistence` | bloodhound, crackmapexec, impacket |
-| Detection / IR | `blue-detect` / `blue-ir` / `blue-forensics` | volatility, autopsy, yara |
-| Memory forensics | `forensic-memory` | volatility3 (processes, network, malfind, hashdump) |
-| Disk forensics | `forensic-disk` | autopsy, foremost, bulk_extractor, binwalk, exiftool |
-| Network forensics | `forensic-network` | tshark, tcpdump (C2 detection, credential extraction) |
-| Static RE | `re-static` | ghidra, radare2, strings, binwalk, objdump |
-| Dynamic RE | `re-dynamic` | gdb, pwndbg, strace, ltrace, angr |
-| Android | `mobile-android` | apktool, jadx, adb, frida, mobsf |
-| iOS | `mobile-ios` | frida, objection, mobsf |
-| Mobile API | `mobile-dynamic` | objection, frida, burpsuite, nuclei, ffuf |
-| Reporting | `pentest-report` / `blue-report` / `forensic-report` / `mobile-report` | Mode-appropriate report with PoCs |
+**Vulnerability Classes**
+`vuln-sqli` · `vuln-xss` · `vuln-ssrf` · `vuln-cors` · `vuln-idor` · `vuln-rce` · `vuln-xxe` · `vuln-ssti` · `vuln-deserialization` · `vuln-file-upload` · `vuln-http-smuggling` · `vuln-race-conditions` · `vuln-business-logic` · `vuln-csrf` · `vuln-path-traversal` · `vuln-open-redirect` · `vuln-mass-assignment` · `vuln-nosql` · `vuln-host-header` · `vuln-crlf` · `vuln-prototype-pollution` · `vuln-jwt` · `vuln-oauth` · `vuln-2fa-bypass` · `vuln-account-takeover` · `vuln-bfla` · `vuln-cors` · `vuln-websocket` · `vuln-grpc` · `vuln-waf-bypass` · `vuln-subdomain-takeover` · `vuln-supply-chain` · and 20+ more
 
-Skills live in [`.agents/skills/`](.agents/skills/) — readable, editable, and extensible.
+**Reconnaissance**
+`recon-full` · `recon-subdomain` · `recon-internal` · `recon-dorking` · `recon-js-analysis` · `recon-secrets` · `recon-shodan` · `recon-asn-whois` · `recon-devtools`
+
+**Post-Exploitation**
+`post-linux-privesc` · `post-windows-privesc` · `post-pivoting` · `post-lateral-movement` · `post-credential-dumping` · `post-bloodhound` · `post-container-escape`
+
+**Payload Collections**
+`payload-xss` · `payload-sqli` · `payload-ssrf` · `payload-ssti` · `payload-xxe` · `payload-lfi` · `payload-command-injection` · `payload-ldap-injection` · `payload-xpath-injection`
+
+**Technology-Specific**
+`tech-spring` · `tech-wordpress` · `tech-docker` · `tech-redis` · `tech-jenkins` · `tech-mongodb` · `tech-elasticsearch` · `tech-tomcat` · `tech-firebase` · `tech-supabase` · `tech-cloud-security` · `tech-kubernetes` · `tech-nginx-apache`
+
+**Frameworks**
+`framework-django` · `framework-flask` · `framework-laravel` · `framework-rails` · `framework-spring` · `framework-express` · `framework-nextjs` · `framework-fastapi` · `framework-php` · `framework-wordpress` · `framework-dotnet`
+
+**Protocols**
+`proto-smb` · `proto-kerberos` · `proto-graphql` · `proto-ssh` · `proto-ldap` · `proto-rdp` · `proto-ftp` · `proto-smtp` · `proto-snmp` · `proto-dns`
+
+**Tool Guides**
+`tool-nmap` · `tool-sqlmap` · `tool-nuclei` · `tool-metasploit` · `tool-impacket` · `tool-dalfox` · `tool-hashcat-john` · `tool-advanced-fuzzing` · `tool-caido` · `tool-semgrep`
+
+Skills live in [`.agents/skills/`](.agents/skills/) — readable, editable, extensible.
+
+---
+
+## Client-Side Pentest
+
+Browser automation for testing JavaScript-heavy applications. The `pentest-browser` builtin skill drives a real headless browser via Playwright.
+
+```
+/pentest-browser
+```
+
+Covers:
+- **DOM XSS** — hash/fragment/query sinks, postMessage, innerHTML injection
+- **Auth flow testing** — session fixation, remember-me abuse, concurrent sessions
+- **CSRF PoC** — `fetch()` intercept, state-changing request capture
+- **SPA endpoint discovery** — XHR/fetch monkey-patch, network log analysis
+- **Client-side storage** — localStorage, sessionStorage, IndexedDB, Service Worker cache
+- **CSP analysis** — header inspection, JSONP bypass, angular template injection
+- **Clickjacking** — iframe embedding test, screenshot evidence
+
+Playwright provider options (configure in `oh-my-open-pentest.jsonc`):
+
+```jsonc
+{
+  "browser_automation": {
+    "provider": "playwright"        // MCP via @playwright/mcp (default)
+    // "provider": "playwright-cli" // CLI binary, token-efficient
+    // "provider": "agent-browser"  // Vercel agent-browser
+  }
+}
+```
+
+---
+
+## Intelligence Data Layer
+
+Structured reference data used at runtime for smarter analysis. Sourced from airecon and stored in `packages/pentest-core/src/data/`.
+
+| File | What it contains |
+| :--- | :--- |
+| `attack_chains.json` | 40+ multi-stage exploitation pathways with step-by-step sequences |
+| `vuln_ontology.json` | Unified vulnerability classification — 12 categories, CWE mapping, regex signals |
+| `waf_signatures.json` | WAF fingerprinting signatures |
+| `waff_bypass.json` | WAF bypass technique library |
+| `fuzzer_data.json` | Fuzzing payload collections |
+| `tech_correlations.json` | Technology → known vulnerability correlations |
+| `port_correlations.json` | Port → service → attack vector mapping |
+| `cve_correlations.json` | CVE to technology and attack pattern mapping |
+| `patterns.json` | Detection patterns for vulnerability identification |
+| `endpoint_patterns.json` | API endpoint pattern library |
 
 ---
 
@@ -184,7 +418,7 @@ Skills live in [`.agents/skills/`](.agents/skills/) — readable, editable, and 
 
 One agent is fast. A coordinated team is devastating.
 
-Team Mode runs multiple specialist agents in parallel, each communicating through dedicated tools. Hydra recons while Scylla exploits. Argus watches scope while Hermes drafts the report.
+Team Mode runs multiple specialist agents in parallel, each communicating through dedicated tools.
 
 ```jsonc
 // .opencode/oh-my-open-pentest.jsonc
@@ -198,7 +432,6 @@ Team Mode runs multiple specialist agents in parallel, each communicating throug
 ```
 
 Built-in team skills:
-
 - **`hyperplan`** — 5 adversarial critics tear apart the engagement plan before a single tool fires
 - **`security-research`** — 3 hunters + 2 PoC engineers audit the target in parallel
 
@@ -206,9 +439,7 @@ Built-in team skills:
 
 ## Scope Enforcement
 
-The agent polices itself.
-
-Before any active testing, Talos parses the program scope, validates every target against it, and refuses to test out-of-scope assets — even if they appear in the attack path. Scope decisions are logged.
+Before any active testing, Talos parses the program scope, validates every target against it, and refuses to test out-of-scope assets — even if they appear in the attack path.
 
 Per-mode safety controls:
 
@@ -222,58 +453,11 @@ Per-mode safety controls:
 
 ---
 
-## Installation
-
-```bash
-bunx oh-my-open-pentest install
-```
-
-The wizard handles:
-
-1. **Mode** — select your default engagement mode
-2. **Provider auth** — Anthropic, OpenAI, Gemini, or others
-3. **Agent configuration** — model assignments per agent
-4. **Verification** — `bunx oh-my-open-pentest doctor` confirms everything
-
-For non-interactive install:
-
-```bash
-bunx oh-my-open-pentest install --non-interactive
-```
-
----
-
-## Usage
-
-```bash
-# Start an engagement
-fullscan
-
-# With a target
-fullscan https://target.example.com
-
-# Pick a mode first
-/mode bug-bounty
-fullscan
-
-# Run specific phases
-/pentest-recon
-/pentest-enum
-/pentest-exploit
-
-# Check engagement state
-bunx oh-my-open-pentest doctor
-```
-
-Engagement state is preserved across sessions. Interrupted engagements resume from the last checkpoint. Already-tested vectors are tracked and skipped.
-
----
-
 ## Uninstallation
 
 ```bash
 # Remove plugin from OpenCode config
-jq '.plugin = [.plugin[] | select(. != "oh-my-open-pentest" and . != "oh-my-open-pentest")]' \
+jq '.plugin = [.plugin[] | select(. != "oh-my-open-pentest")]' \
     ~/.config/opencode/opencode.json > /tmp/oc.json && \
     mv /tmp/oc.json ~/.config/opencode/opencode.json
 
@@ -288,8 +472,8 @@ rm -f ~/.config/opencode/oh-my-open-pentest.jsonc \
 
 - [Manifesto](docs/manifesto.md) — the philosophy
 - [Engagement Workflow](docs/guide/pentest-workflow.md) — full lifecycle guide
-- [Engagement Modes](docs/guide/modes.md) — 7 modes in detail
-- [Tool Reference](docs/guide/tools.md) — 40+ tools by phase
+- [Engagement Modes](docs/guide/modes.md) — 10 modes in detail
+- [Tool Reference](docs/guide/tools.md) — 109 tools by phase
 - [Team Mode](docs/guide/team-mode.md) — parallel agent coordination
 - [Installation Guide](docs/guide/installation.md) — step-by-step setup
 

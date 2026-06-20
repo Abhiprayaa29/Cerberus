@@ -15,6 +15,7 @@ import {
   securityResearchSkill,
   securityReviewSkill,
   visualQaSkill,
+  pentestBrowserSkill,
   teamModeSkill,
 } from "./skills/index"
 
@@ -49,6 +50,7 @@ export function createBuiltinSkills(options: CreateBuiltinSkillsOptions = {}): B
 		securityResearchSkill,
 		securityReviewSkill,
 		visualQaSkill,
+		pentestBrowserSkill,
 	]
 
   if (teamModeEnabled && !disabledSkills?.has("team-mode")) {

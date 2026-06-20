@@ -1,6 +1,6 @@
 {
   "$schema": "tools-catalog-v.",
-  "version": ".0.0.0",
+  "version": "1.1.0",
   "categories": ["recon", "enumeration", "exploitation", "reporting", "utility", "forensics", "reverse-engineering", "mobile"],
 
   "tools": [
@@ -2222,6 +2222,1759 @@
       "output_format": ["text"],
       "homepage": "https://developer.android.com/tools/adb",
       "alternatives": []
+    },
+
+    {
+      "tools_name": "masscan",
+      "description": "Ultra-fast TCP port scanner. Scans the entire internet in under 6 minutes. Transmit-only design with custom TCP/IP stack for maximum speed.",
+      "category": "recon",
+      "command": {
+        "base": "masscan",
+        "flags": [
+          { "name": "-p", "type": "string", "description": "Port(s) to scan (e.g. '80,443' or '1-65535')", "required": true },
+          { "name": "--rate", "type": "number", "description": "Packets per second", "default": 10000 },
+          { "name": "-oJ", "type": "path", "description": "JSON output file", "required": false },
+          { "name": "-oG", "type": "path", "description": "Grepable output file", "required": false },
+          { "name": "--banners", "type": "boolean", "description": "Grab banners", "default": false },
+          { "name": "--exclude", "type": "string", "description": "IP to exclude from scan", "required": false }
+        ],
+        "positional": [
+          { "name": "target", "type": "string", "description": "Target IP/CIDR", "required": true }
+        ],
+        "pipes": ["jq", "anew"]
+      },
+      "installation": {
+        "linux": { "command": "sudo apt-get install -y masscan", "manager": "apt" },
+        "darwin": { "command": "brew install masscan", "manager": "brew" },
+        "win32": { "command": "git clone https://github.com/robertdavidgraham/masscan && cd masscan && make", "manager": "make" }
+      },
+      "check_installed": {
+        "command": "masscan --version",
+        "exit_code": 0
+      },
+      "skills_loader": "pentest-recon",
+      "phase": ["recon"],
+      "tags": ["port-scan", "fast", "network", "internet-scale"],
+      "requires_root": true,
+      "output_format": ["text", "json", "xml"],
+      "homepage": "https://github.com/robertdavidgraham/masscan",
+      "alternatives": ["nmap", "naabu", "rustscan"]
+    },
+
+    {
+      "tools_name": "rustscan",
+      "description": "Modern port scanner written in Rust. Scans all 65k ports in 3 seconds then feeds results to nmap for service detection.",
+      "category": "recon",
+      "command": {
+        "base": "rustscan",
+        "flags": [
+          { "name": "-a", "type": "string", "description": "Target IP/host", "required": true },
+          { "name": "-p", "type": "string", "description": "Specific ports to scan", "required": false },
+          { "name": "--range", "type": "string", "description": "Port range (e.g. '1-65535')", "required": false },
+          { "name": "-b", "type": "number", "description": "Batch size (ports per batch)", "default": 65535 },
+          { "name": "-t", "type": "number", "description": "Timeout in milliseconds", "default": 1500 },
+          { "name": "--ulimit", "type": "number", "description": "Ulimit (file descriptors)", "default": 5000 },
+          { "name": "--", "type": "string", "description": "Arguments passed to nmap", "required": false }
+        ],
+        "positional": [],
+        "pipes": ["nmap"]
+      },
+      "installation": {
+        "linux": { "command": "cargo install rustscan", "manager": "cargo" },
+        "darwin": { "command": "cargo install rustscan", "manager": "cargo" },
+        "win32": { "command": "cargo install rustscan", "manager": "cargo" }
+      },
+      "check_installed": {
+        "command": "rustscan --version",
+        "exit_code": 0
+      },
+      "skills_loader": "pentest-recon",
+      "phase": ["recon"],
+      "tags": ["port-scan", "fast", "rust", "nmap-integration"],
+      "requires_root": false,
+      "output_format": ["text"],
+      "homepage": "https://github.com/RustScan/RustScan",
+      "alternatives": ["nmap", "masscan", "naabu"]
+    },
+
+    {
+      "tools_name": "theHarvester",
+      "description": "OSINT tool for gathering emails, subdomains, hosts, employee names, open ports from public sources like search engines and DNS.",
+      "category": "recon",
+      "command": {
+        "base": "theHarvester",
+        "flags": [
+          { "name": "-d", "type": "string", "description": "Domain to search", "required": true },
+          { "name": "-b", "type": "choice", "description": "Data source", "choices": ["google", "bing", "linkedin", "shodan", "all"], "default": "google" },
+          { "name": "-l", "type": "number", "description": "Limit number of results", "default": 500 },
+          { "name": "-f", "type": "path", "description": "Output file (html/xml)", "required": false },
+          { "name": "-v", "type": "boolean", "description": "Verify host name via DNS", "default": false },
+          { "name": "-n", "type": "boolean", "description": "Enable DNS brute force", "default": false }
+        ],
+        "positional": [],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "pip3 install theHarvester", "manager": "pip" },
+        "darwin": { "command": "pip3 install theHarvester", "manager": "pip" },
+        "win32": { "command": "pip3 install theHarvester", "manager": "pip" }
+      },
+      "check_installed": {
+        "command": "theHarvester -h",
+        "exit_code": 0
+      },
+      "skills_loader": "pentest-recon",
+      "phase": ["recon"],
+      "tags": ["osint", "email", "subdomain", "employee", "search-engine"],
+      "requires_root": false,
+      "output_format": ["text", "html", "xml"],
+      "homepage": "https://github.com/laramies/theHarvester",
+      "alternatives": ["spiderfoot", "amass"]
+    },
+
+    {
+      "tools_name": "sublist3r",
+      "description": "Subdomain enumeration tool using search engines (Google, Bing, Yahoo, DNSDumpster, VirusTotal) and brute-force.",
+      "category": "recon",
+      "command": {
+        "base": "sublist3r",
+        "flags": [
+          { "name": "-d", "type": "string", "description": "Domain to enumerate", "required": true },
+          { "name": "-o", "type": "path", "description": "Output file", "required": false },
+          { "name": "-t", "type": "number", "description": "Number of threads", "default": 10 },
+          { "name": "-e", "type": "string", "description": "Comma-separated list of engines", "required": false },
+          { "name": "-b", "type": "boolean", "description": "Enable brute-force", "default": false },
+          { "name": "-v", "type": "boolean", "description": "Enable verbosity", "default": false }
+        ],
+        "positional": [],
+        "pipes": ["anew"]
+      },
+      "installation": {
+        "linux": { "command": "pip3 install sublist3r", "manager": "pip" },
+        "darwin": { "command": "pip3 install sublist3r", "manager": "pip" },
+        "win32": { "command": "pip3 install sublist3r", "manager": "pip" }
+      },
+      "check_installed": {
+        "command": "sublist3r -h",
+        "exit_code": 0
+      },
+      "skills_loader": "pentest-recon",
+      "phase": ["recon"],
+      "tags": ["subdomain", "osint", "search-engine", "passive"],
+      "requires_root": false,
+      "output_format": ["text"],
+      "homepage": "https://github.com/aboul3la/Sublist3r",
+      "alternatives": ["subfinder", "amass", "assetfinder"]
+    },
+
+    {
+      "tools_name": "spiderfoot",
+      "description": "Automated OSINT framework with 200+ modules. Correlates data from DNS, WHOIS, social media, threat intelligence, and more.",
+      "category": "recon",
+      "command": {
+        "base": "sf.py",
+        "flags": [
+          { "name": "-s", "type": "string", "description": "Scan target (domain/IP/email/username)", "required": true },
+          { "name": "-t", "type": "string", "description": "Target type (DOMAIN/IP/EMAIL/USERNAME)", "required": false },
+          { "name": "-o", "type": "choice", "description": "Output format", "choices": ["csv", "json", "nmap-xml", "pretty"], "default": "csv" },
+          { "name": "-q", "type": "boolean", "description": "Disable progress messages", "default": false },
+          { "name": "-l", "type": "string", "description": "Start web server on HOST:PORT", "required": false },
+          { "name": "-m", "type": "string", "description": "Comma-separated modules to use", "required": false }
+        ],
+        "positional": [],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "pip3 install spiderfoot", "manager": "pip" },
+        "darwin": { "command": "pip3 install spiderfoot", "manager": "pip" },
+        "win32": { "command": "pip3 install spiderfoot", "manager": "pip" }
+      },
+      "check_installed": {
+        "command": "sf.py --help",
+        "exit_code": 0
+      },
+      "skills_loader": "pentest-recon",
+      "phase": ["recon"],
+      "tags": ["osint", "automation", "multi-source", "correlation"],
+      "requires_root": false,
+      "output_format": ["csv", "json", "xml"],
+      "homepage": "https://www.spiderfoot.net",
+      "alternatives": ["theHarvester", "maltego"]
+    },
+
+    {
+      "tools_name": "trufflehog",
+      "description": "Find credentials and secrets in git repos, S3 buckets, and filesystems. Verifies secrets against APIs to eliminate false positives.",
+      "category": "recon",
+      "command": {
+        "base": "trufflehog",
+        "flags": [
+          { "name": "--only-verified", "type": "boolean", "description": "Only output verified results", "default": false },
+          { "name": "--json", "type": "boolean", "description": "JSON output", "default": false },
+          { "name": "--concurrency", "type": "number", "description": "Number of concurrent workers", "default": 8 },
+          { "name": "--no-update", "type": "boolean", "description": "Skip update check", "default": false }
+        ],
+        "positional": [
+          { "name": "source", "type": "string", "description": "Source type and target (e.g. 'git https://github.com/org/repo')", "required": true }
+        ],
+        "pipes": ["jq"]
+      },
+      "installation": {
+        "linux": { "command": "go install github.com/trufflesecurity/trufflehog/v3@latest", "manager": "go" },
+        "darwin": { "command": "brew install trufflesecurity/trufflehog/trufflehog", "manager": "brew" },
+        "win32": { "command": "go install github.com/trufflesecurity/trufflehog/v3@latest", "manager": "go" }
+      },
+      "check_installed": {
+        "command": "trufflehog --version",
+        "exit_code": 0
+      },
+      "skills_loader": "pentest-recon",
+      "phase": ["recon"],
+      "tags": ["secrets", "git", "credentials", "api-keys", "osint"],
+      "requires_root": false,
+      "output_format": ["text", "json"],
+      "homepage": "https://github.com/trufflesecurity/trufflehog",
+      "alternatives": ["gitleaks", "secretfinder"]
+    },
+
+    {
+      "tools_name": "gitleaks",
+      "description": "SAST tool for detecting hardcoded secrets (API keys, passwords, tokens) in git repos. Fast and configurable with built-in and custom rules.",
+      "category": "recon",
+      "command": {
+        "base": "gitleaks",
+        "flags": [
+          { "name": "detect", "type": "boolean", "description": "Detect mode (scan for leaks)", "default": false },
+          { "name": "protect", "type": "boolean", "description": "Protect mode (pre-commit scan)", "default": false },
+          { "name": "--source", "type": "path", "description": "Path to source (repo/directory)", "required": false },
+          { "name": "--report-path", "type": "path", "description": "Report output path", "required": false },
+          { "name": "--report-format", "type": "choice", "description": "Report format", "choices": ["json", "csv", "sarif"], "default": "json" },
+          { "name": "--no-git", "type": "boolean", "description": "Scan without git history", "default": false },
+          { "name": "-v", "type": "boolean", "description": "Verbose output", "default": false }
+        ],
+        "positional": [],
+        "pipes": ["jq"]
+      },
+      "installation": {
+        "linux": { "command": "go install github.com/gitleaks/gitleaks/v8@latest", "manager": "go" },
+        "darwin": { "command": "brew install gitleaks", "manager": "brew" },
+        "win32": { "command": "go install github.com/gitleaks/gitleaks/v8@latest", "manager": "go" }
+      },
+      "check_installed": {
+        "command": "gitleaks version",
+        "exit_code": 0
+      },
+      "skills_loader": "pentest-recon",
+      "phase": ["recon"],
+      "tags": ["secrets", "git", "sast", "credentials", "token-leak"],
+      "requires_root": false,
+      "output_format": ["json", "csv", "sarif"],
+      "homepage": "https://github.com/gitleaks/gitleaks",
+      "alternatives": ["trufflehog", "secretfinder"]
+    },
+
+    {
+      "tools_name": "sherlock",
+      "description": "Hunt down social media accounts by username across 400+ platforms including Twitter, GitHub, Instagram, LinkedIn and more.",
+      "category": "recon",
+      "command": {
+        "base": "sherlock",
+        "flags": [
+          { "name": "--output", "type": "path", "description": "Output file", "required": false },
+          { "name": "--timeout", "type": "number", "description": "Request timeout in seconds", "default": 60 },
+          { "name": "--site", "type": "string", "description": "Specific site to check", "required": false },
+          { "name": "--json", "type": "boolean", "description": "JSON output", "default": false },
+          { "name": "--tor", "type": "boolean", "description": "Use Tor", "default": false },
+          { "name": "--print-all", "type": "boolean", "description": "Output all sites (not just found)", "default": false }
+        ],
+        "positional": [
+          { "name": "username", "type": "string", "description": "Username(s) to search", "required": true }
+        ],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "pip3 install sherlock-project", "manager": "pip" },
+        "darwin": { "command": "pip3 install sherlock-project", "manager": "pip" },
+        "win32": { "command": "pip3 install sherlock-project", "manager": "pip" }
+      },
+      "check_installed": {
+        "command": "sherlock --version",
+        "exit_code": 0
+      },
+      "skills_loader": "pentest-recon",
+      "phase": ["recon"],
+      "tags": ["osint", "username", "social-media", "profiling"],
+      "requires_root": false,
+      "output_format": ["text", "json", "csv"],
+      "homepage": "https://github.com/sherlock-project/sherlock",
+      "alternatives": ["holehe", "maigret"]
+    },
+
+    {
+      "tools_name": "holehe",
+      "description": "Check if an email address is registered on 120+ online platforms including Twitter, Instagram, GitHub and more.",
+      "category": "recon",
+      "command": {
+        "base": "holehe",
+        "flags": [
+          { "name": "--only-used", "type": "boolean", "description": "Show only used sites", "default": false },
+          { "name": "--no-color", "type": "boolean", "description": "No color output", "default": false }
+        ],
+        "positional": [
+          { "name": "email", "type": "string", "description": "Email address to check", "required": true }
+        ],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "pip3 install holehe", "manager": "pip" },
+        "darwin": { "command": "pip3 install holehe", "manager": "pip" },
+        "win32": { "command": "pip3 install holehe", "manager": "pip" }
+      },
+      "check_installed": {
+        "command": "holehe --help",
+        "exit_code": 0
+      },
+      "skills_loader": "pentest-recon",
+      "phase": ["recon"],
+      "tags": ["osint", "email", "account-enumeration"],
+      "requires_root": false,
+      "output_format": ["text"],
+      "homepage": "https://github.com/megadose/holehe",
+      "alternatives": ["sherlock", "maigret"]
+    },
+
+    {
+      "tools_name": "maigret",
+      "description": "Collect user information by username from 3000+ sites. Profiles social network footprint with detailed metadata extraction.",
+      "category": "recon",
+      "command": {
+        "base": "maigret",
+        "flags": [
+          { "name": "--output", "type": "path", "description": "Output directory", "required": false },
+          { "name": "--json", "type": "path", "description": "JSON output file", "required": false },
+          { "name": "--html", "type": "boolean", "description": "HTML report", "default": false },
+          { "name": "--site", "type": "string", "description": "Site name to check", "required": false },
+          { "name": "--timeout", "type": "number", "description": "Request timeout (seconds)", "default": 30 },
+          { "name": "-a", "type": "boolean", "description": "Check all sites", "default": false }
+        ],
+        "positional": [
+          { "name": "username", "type": "string", "description": "Username to search", "required": true }
+        ],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "pip3 install maigret", "manager": "pip" },
+        "darwin": { "command": "pip3 install maigret", "manager": "pip" },
+        "win32": { "command": "pip3 install maigret", "manager": "pip" }
+      },
+      "check_installed": {
+        "command": "maigret --version",
+        "exit_code": 0
+      },
+      "skills_loader": "pentest-recon",
+      "phase": ["recon"],
+      "tags": ["osint", "username", "profiling", "social-network"],
+      "requires_root": false,
+      "output_format": ["text", "json", "html", "pdf"],
+      "homepage": "https://github.com/soxoj/maigret",
+      "alternatives": ["sherlock", "holehe"]
+    },
+
+    {
+      "tools_name": "katana",
+      "description": "Fast and configurable web crawler and spider from ProjectDiscovery. Supports headless mode, JS rendering, and scope control.",
+      "category": "enumeration",
+      "command": {
+        "base": "katana",
+        "flags": [
+          { "name": "-u", "type": "string", "description": "Target URL", "required": true },
+          { "name": "-d", "type": "number", "description": "Crawl depth", "default": 3 },
+          { "name": "-o", "type": "path", "description": "Output file", "required": false },
+          { "name": "-json", "type": "boolean", "description": "JSON output", "default": false },
+          { "name": "-jc", "type": "boolean", "description": "Enable JS crawling", "default": false },
+          { "name": "-headless", "type": "boolean", "description": "Headless browser mode", "default": false },
+          { "name": "-kf", "type": "boolean", "description": "Known files enumeration", "default": false },
+          { "name": "-c", "type": "number", "description": "Concurrency", "default": 10 },
+          { "name": "-silent", "type": "boolean", "description": "Silent output", "default": false }
+        ],
+        "positional": [],
+        "pipes": ["httpx", "anew"]
+      },
+      "installation": {
+        "linux": { "command": "go install github.com/projectdiscovery/katana/cmd/katana@latest", "manager": "go" },
+        "darwin": { "command": "go install github.com/projectdiscovery/katana/cmd/katana@latest", "manager": "go" },
+        "win32": { "command": "go install github.com/projectdiscovery/katana/cmd/katana@latest", "manager": "go" }
+      },
+      "check_installed": {
+        "command": "katana -version",
+        "exit_code": 0
+      },
+      "skills_loader": "pentest-enum",
+      "phase": ["enumeration", "recon"],
+      "tags": ["crawler", "spider", "web", "js-rendering", "endpoints"],
+      "requires_root": false,
+      "output_format": ["text", "json"],
+      "homepage": "https://github.com/projectdiscovery/katana",
+      "alternatives": ["gospider", "hakrawler"]
+    },
+
+    {
+      "tools_name": "arjun",
+      "description": "HTTP parameter discovery suite. Finds hidden GET/POST parameters using wordlists and multi-threaded probing.",
+      "category": "enumeration",
+      "command": {
+        "base": "arjun",
+        "flags": [
+          { "name": "-u", "type": "string", "description": "Target URL", "required": false },
+          { "name": "-i", "type": "path", "description": "File with URLs", "required": false },
+          { "name": "-m", "type": "choice", "description": "HTTP method", "choices": ["GET", "POST", "JSON", "XML"], "default": "GET" },
+          { "name": "-oJ", "type": "path", "description": "JSON output file", "required": false },
+          { "name": "-t", "type": "number", "description": "Number of threads", "default": 5 },
+          { "name": "--stable", "type": "boolean", "description": "Prefer stability over speed", "default": false },
+          { "name": "-w", "type": "path", "description": "Custom wordlist", "required": false }
+        ],
+        "positional": [],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "pip3 install arjun", "manager": "pip" },
+        "darwin": { "command": "pip3 install arjun", "manager": "pip" },
+        "win32": { "command": "pip3 install arjun", "manager": "pip" }
+      },
+      "check_installed": {
+        "command": "arjun --help",
+        "exit_code": 0
+      },
+      "skills_loader": "pentest-enum",
+      "phase": ["enumeration"],
+      "tags": ["parameter-discovery", "fuzzing", "http", "hidden-params"],
+      "requires_root": false,
+      "output_format": ["text", "json"],
+      "homepage": "https://github.com/s0md3v/Arjun",
+      "alternatives": ["ffuf", "x8"]
+    },
+
+    {
+      "tools_name": "mitmproxy",
+      "description": "Interactive man-in-the-middle HTTP/HTTPS proxy. Intercept, inspect, modify, and replay web traffic. Scriptable via Python addons.",
+      "category": "enumeration",
+      "command": {
+        "base": "mitmproxy",
+        "flags": [
+          { "name": "-p", "type": "number", "description": "Proxy port", "default": 8080 },
+          { "name": "--listen-host", "type": "string", "description": "Listen host", "default": "127.0.0.1" },
+          { "name": "-s", "type": "path", "description": "Python addon script", "required": false },
+          { "name": "-w", "type": "path", "description": "Write flows to file", "required": false },
+          { "name": "-r", "type": "path", "description": "Read flows from file", "required": false },
+          { "name": "--ssl-insecure", "type": "boolean", "description": "Skip SSL verification", "default": false }
+        ],
+        "positional": [],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "pip3 install mitmproxy", "manager": "pip" },
+        "darwin": { "command": "brew install mitmproxy", "manager": "brew" },
+        "win32": { "command": "pip3 install mitmproxy", "manager": "pip" }
+      },
+      "check_installed": {
+        "command": "mitmproxy --version",
+        "exit_code": 0,
+        "parse_version": "mitmproxy ([\\d.]+)"
+      },
+      "skills_loader": "pentest-enum",
+      "phase": ["enumeration", "exploitation"],
+      "tags": ["proxy", "http", "intercept", "traffic", "mitm"],
+      "requires_root": false,
+      "output_format": ["text", "json", "flow"],
+      "homepage": "https://mitmproxy.org",
+      "alternatives": ["burpsuite", "owasp-zap", "caido"]
+    },
+
+    {
+      "tools_name": "testssl",
+      "description": "Free command-line tool to check SSL/TLS encryption. Tests ciphers, protocols, vulnerabilities (BEAST, POODLE, Heartbleed) and certificate issues.",
+      "category": "enumeration",
+      "command": {
+        "base": "testssl.sh",
+        "flags": [
+          { "name": "--severity", "type": "choice", "description": "Minimum severity to report", "choices": ["LOW", "MEDIUM", "HIGH", "CRITICAL"], "required": false },
+          { "name": "--jsonfile", "type": "path", "description": "JSON output file", "required": false },
+          { "name": "--csvfile", "type": "path", "description": "CSV output file", "required": false },
+          { "name": "--htmlfile", "type": "path", "description": "HTML output file", "required": false },
+          { "name": "--full", "type": "boolean", "description": "Full run (all checks)", "default": false },
+          { "name": "--fast", "type": "boolean", "description": "Fast scan (skip some checks)", "default": false },
+          { "name": "-p", "type": "boolean", "description": "Test protocols only", "default": false }
+        ],
+        "positional": [
+          { "name": "target", "type": "string", "description": "hostname[:port] to test", "required": true }
+        ],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "git clone https://github.com/drwetter/testssl.sh.git", "manager": "git" },
+        "darwin": { "command": "brew install testssl", "manager": "brew" },
+        "win32": { "command": "git clone https://github.com/drwetter/testssl.sh.git", "manager": "git" }
+      },
+      "check_installed": {
+        "command": "testssl.sh --version",
+        "exit_code": 0
+      },
+      "skills_loader": "pentest-enum",
+      "phase": ["enumeration"],
+      "tags": ["ssl", "tls", "certificate", "cipher", "vulnerability"],
+      "requires_root": false,
+      "output_format": ["text", "json", "csv", "html"],
+      "homepage": "https://testssl.sh",
+      "alternatives": ["sslscan", "nmap"]
+    },
+
+    {
+      "tools_name": "dnstwist",
+      "description": "Domain name permutation engine to detect typosquatting, phishing, and corporate espionage. Generates and checks variations of domain names.",
+      "category": "recon",
+      "command": {
+        "base": "dnstwist",
+        "flags": [
+          { "name": "-r", "type": "boolean", "description": "Resolve domains (skip non-resolving)", "default": false },
+          { "name": "-f", "type": "choice", "description": "Output format", "choices": ["text", "csv", "json", "list"], "default": "text" },
+          { "name": "-t", "type": "number", "description": "Number of threads", "default": 16 },
+          { "name": "--mxcheck", "type": "boolean", "description": "Check MX records", "default": false },
+          { "name": "--ssdeep", "type": "boolean", "description": "Fuzzy hash similarity check", "default": false }
+        ],
+        "positional": [
+          { "name": "domain", "type": "string", "description": "Target domain name", "required": true }
+        ],
+        "pipes": ["jq"]
+      },
+      "installation": {
+        "linux": { "command": "pip3 install dnstwist", "manager": "pip" },
+        "darwin": { "command": "pip3 install dnstwist", "manager": "pip" },
+        "win32": { "command": "pip3 install dnstwist", "manager": "pip" }
+      },
+      "check_installed": {
+        "command": "dnstwist --version",
+        "exit_code": 0
+      },
+      "skills_loader": "pentest-recon",
+      "phase": ["recon"],
+      "tags": ["typosquatting", "phishing", "domain", "permutation"],
+      "requires_root": false,
+      "output_format": ["text", "csv", "json"],
+      "homepage": "https://github.com/elceef/dnstwist",
+      "alternatives": ["urlcrazy"]
+    },
+
+    {
+      "tools_name": "evilginx3",
+      "description": "MITM attack framework for phishing credentials while bypassing 2FA. Proxies target website to capture session cookies.",
+      "category": "exploitation",
+      "command": {
+        "base": "evilginx",
+        "flags": [
+          { "name": "-p", "type": "path", "description": "Phishlets directory", "required": false },
+          { "name": "-developer", "type": "boolean", "description": "Developer mode (no SSL)", "default": false },
+          { "name": "-debug", "type": "boolean", "description": "Debug output", "default": false }
+        ],
+        "positional": [],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "go install github.com/kgretzky/evilginx2@latest", "manager": "go" },
+        "darwin": { "command": "go install github.com/kgretzky/evilginx2@latest", "manager": "go" },
+        "win32": { "command": "go install github.com/kgretzky/evilginx2@latest", "manager": "go" }
+      },
+      "check_installed": {
+        "command": "evilginx -h",
+        "exit_code": 0
+      },
+      "skills_loader": "red-exploit",
+      "phase": ["exploitation"],
+      "tags": ["phishing", "mitm", "2fa-bypass", "credentials", "session-hijack"],
+      "requires_root": true,
+      "output_format": ["text"],
+      "homepage": "https://github.com/kgretzky/evilginx2",
+      "alternatives": ["setoolkit", "gophish"]
+    },
+
+    {
+      "tools_name": "setoolkit",
+      "description": "Social Engineering Toolkit. Comprehensive suite for social engineering attacks: spear-phishing, website cloning, credential harvesting, and payload delivery.",
+      "category": "exploitation",
+      "command": {
+        "base": "setoolkit",
+        "flags": [],
+        "positional": [],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "git clone https://github.com/trustedsec/social-engineer-toolkit.git && cd social-engineer-toolkit && pip3 install -r requirements.txt", "manager": "git+pip" },
+        "darwin": { "command": "git clone https://github.com/trustedsec/social-engineer-toolkit.git && cd social-engineer-toolkit && pip3 install -r requirements.txt", "manager": "git+pip" },
+        "win32": { "command": "Not supported on Windows. Use WSL.", "manager": "wsl" }
+      },
+      "check_installed": {
+        "command": "setoolkit --help",
+        "exit_code": 0
+      },
+      "skills_loader": "red-exploit",
+      "phase": ["exploitation"],
+      "tags": ["social-engineering", "phishing", "spear-phishing", "payload"],
+      "requires_root": true,
+      "output_format": ["text"],
+      "homepage": "https://github.com/trustedsec/social-engineer-toolkit",
+      "alternatives": ["gophish", "evilginx3"]
+    },
+
+    {
+      "tools_name": "netexec",
+      "description": "Network execution tool — successor to CrackMapExec for SMB, WinRM, LDAP, MSSQL, SSH. Mass credential testing and lateral movement automation.",
+      "category": "exploitation",
+      "command": {
+        "base": "nxc",
+        "flags": [
+          { "name": "-u", "type": "string", "description": "Username or file", "required": false },
+          { "name": "-p", "type": "string", "description": "Password or file", "required": false },
+          { "name": "-H", "type": "string", "description": "NTLM hash", "required": false },
+          { "name": "-d", "type": "string", "description": "Domain name", "required": false },
+          { "name": "-M", "type": "string", "description": "Module to use", "required": false },
+          { "name": "--shares", "type": "boolean", "description": "Enumerate shares", "default": false },
+          { "name": "--users", "type": "boolean", "description": "Enumerate users", "default": false },
+          { "name": "--groups", "type": "boolean", "description": "Enumerate groups", "default": false },
+          { "name": "--exec-method", "type": "choice", "description": "Code exec method", "choices": ["wmiexec", "smbexec", "atexec"], "required": false }
+        ],
+        "positional": [
+          { "name": "protocol", "type": "choice", "description": "Protocol to use", "choices": ["smb", "winrm", "ldap", "mssql", "ssh", "rdp"], "required": true },
+          { "name": "target", "type": "string", "description": "Target IP/range/file", "required": true }
+        ],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "pip3 install netexec", "manager": "pip" },
+        "darwin": { "command": "pip3 install netexec", "manager": "pip" },
+        "win32": { "command": "pip3 install netexec", "manager": "pip" }
+      },
+      "check_installed": {
+        "command": "nxc --version",
+        "exit_code": 0
+      },
+      "skills_loader": "red-lateral",
+      "phase": ["exploitation"],
+      "tags": ["lateral-movement", "smb", "winrm", "ldap", "ad", "credential-testing"],
+      "requires_root": false,
+      "output_format": ["text"],
+      "homepage": "https://github.com/Pennyw0rth/NetExec",
+      "alternatives": ["crackmapexec", "impacket"]
+    },
+
+    {
+      "tools_name": "certipy",
+      "description": "Tool for enumerating and exploiting Active Directory Certificate Services (AD CS). Finds vulnerable certificate templates for privilege escalation.",
+      "category": "exploitation",
+      "command": {
+        "base": "certipy",
+        "flags": [
+          { "name": "-u", "type": "string", "description": "Username@domain", "required": true },
+          { "name": "-p", "type": "string", "description": "Password", "required": false },
+          { "name": "-hashes", "type": "string", "description": "NTLM hashes (LM:NT)", "required": false },
+          { "name": "-dc-ip", "type": "string", "description": "Domain controller IP", "required": false },
+          { "name": "-ca", "type": "string", "description": "Certificate Authority name", "required": false },
+          { "name": "-template", "type": "string", "description": "Certificate template name", "required": false },
+          { "name": "-vulnerable", "type": "boolean", "description": "Only show vulnerable templates", "default": false }
+        ],
+        "positional": [
+          { "name": "action", "type": "choice", "description": "Action to perform", "choices": ["find", "req", "auth", "relay", "shadow", "template", "forge"], "required": true }
+        ],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "pip3 install certipy-ad", "manager": "pip" },
+        "darwin": { "command": "pip3 install certipy-ad", "manager": "pip" },
+        "win32": { "command": "pip3 install certipy-ad", "manager": "pip" }
+      },
+      "check_installed": {
+        "command": "certipy -h",
+        "exit_code": 0
+      },
+      "skills_loader": "red-lateral",
+      "phase": ["exploitation"],
+      "tags": ["ad-cs", "certificate", "privilege-escalation", "kerberos", "red-team"],
+      "requires_root": false,
+      "output_format": ["text", "json"],
+      "homepage": "https://github.com/ly4k/Certipy",
+      "alternatives": ["bloodhound", "impacket"]
+    },
+
+    {
+      "tools_name": "kerbrute",
+      "description": "Kerberos brute-force and user enumeration tool. Performs AS-REP roasting, password spraying, and user enumeration against Active Directory.",
+      "category": "exploitation",
+      "command": {
+        "base": "kerbrute",
+        "flags": [
+          { "name": "--dc", "type": "string", "description": "Domain controller IP", "required": true },
+          { "name": "-d", "type": "string", "description": "Domain name", "required": true },
+          { "name": "--output", "type": "path", "description": "Output file", "required": false },
+          { "name": "-t", "type": "number", "description": "Number of goroutines", "default": 10 },
+          { "name": "--safe", "type": "boolean", "description": "Stop on lockout detection", "default": false }
+        ],
+        "positional": [
+          { "name": "command", "type": "choice", "description": "Attack type", "choices": ["userenum", "bruteuser", "passwordspray", "brute", "bruteforce"], "required": true }
+        ],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "go install github.com/ropnop/kerbrute@latest", "manager": "go" },
+        "darwin": { "command": "go install github.com/ropnop/kerbrute@latest", "manager": "go" },
+        "win32": { "command": "go install github.com/ropnop/kerbrute@latest", "manager": "go" }
+      },
+      "check_installed": {
+        "command": "kerbrute --help",
+        "exit_code": 0
+      },
+      "skills_loader": "red-lateral",
+      "phase": ["exploitation"],
+      "tags": ["kerberos", "brute-force", "active-directory", "user-enum", "as-rep-roasting"],
+      "requires_root": false,
+      "output_format": ["text"],
+      "homepage": "https://github.com/ropnop/kerbrute",
+      "alternatives": ["netexec", "impacket"]
+    },
+
+    {
+      "tools_name": "evil-winrm",
+      "description": "WinRM shell for pentesting Windows targets. Supports pass-the-hash, pass-the-ticket, Kerberos authentication, file upload/download, and PowerShell remoting.",
+      "category": "exploitation",
+      "command": {
+        "base": "evil-winrm",
+        "flags": [
+          { "name": "-i", "type": "string", "description": "Target IP", "required": true },
+          { "name": "-u", "type": "string", "description": "Username", "required": true },
+          { "name": "-p", "type": "string", "description": "Password", "required": false },
+          { "name": "-H", "type": "string", "description": "NTLM hash", "required": false },
+          { "name": "-s", "type": "path", "description": "PowerShell scripts directory", "required": false },
+          { "name": "-e", "type": "path", "description": "Executables directory", "required": false },
+          { "name": "-P", "type": "number", "description": "WinRM port", "default": 5985 },
+          { "name": "-S", "type": "boolean", "description": "Enable SSL", "default": false }
+        ],
+        "positional": [],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "gem install evil-winrm", "manager": "gem" },
+        "darwin": { "command": "gem install evil-winrm", "manager": "gem" },
+        "win32": { "command": "gem install evil-winrm", "manager": "gem" }
+      },
+      "check_installed": {
+        "command": "evil-winrm --version",
+        "exit_code": 0
+      },
+      "skills_loader": "red-lateral",
+      "phase": ["exploitation"],
+      "tags": ["winrm", "shell", "windows", "pass-the-hash", "post-exploitation"],
+      "requires_root": false,
+      "output_format": ["text"],
+      "homepage": "https://github.com/Hackplayers/evil-winrm",
+      "alternatives": ["netexec", "impacket"]
+    },
+
+    {
+      "tools_name": "chisel",
+      "description": "Fast TCP/UDP tunnel over HTTP, secured with SSH. Enables port forwarding and SOCKS proxy through firewalls and restricted networks.",
+      "category": "exploitation",
+      "command": {
+        "base": "chisel",
+        "flags": [
+          { "name": "--port", "type": "number", "description": "Listening port (server mode)", "default": 8080 },
+          { "name": "--host", "type": "string", "description": "Listening host (server mode)", "default": "0.0.0.0" },
+          { "name": "--socks5", "type": "boolean", "description": "Enable SOCKS5 proxy", "default": false },
+          { "name": "--reverse", "type": "boolean", "description": "Enable reverse tunneling", "default": false },
+          { "name": "--auth", "type": "string", "description": "Auth credentials (user:pass)", "required": false },
+          { "name": "--tls-skip-verify", "type": "boolean", "description": "Skip TLS verification", "default": false }
+        ],
+        "positional": [
+          { "name": "mode", "type": "choice", "description": "Run mode", "choices": ["server", "client"], "required": true }
+        ],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "go install github.com/jpillora/chisel@latest", "manager": "go" },
+        "darwin": { "command": "go install github.com/jpillora/chisel@latest", "manager": "go" },
+        "win32": { "command": "go install github.com/jpillora/chisel@latest", "manager": "go" }
+      },
+      "check_installed": {
+        "command": "chisel --version",
+        "exit_code": 0
+      },
+      "skills_loader": "red-lateral",
+      "phase": ["exploitation"],
+      "tags": ["tunnel", "pivoting", "socks5", "port-forward", "http"],
+      "requires_root": false,
+      "output_format": ["text"],
+      "homepage": "https://github.com/jpillora/chisel",
+      "alternatives": ["ligolo-ng", "socat", "ssh"]
+    },
+
+    {
+      "tools_name": "ligolo-ng",
+      "description": "Advanced tunneling and pivoting tool using TUN interfaces. No SOCKS proxy needed — agents create real network interfaces for seamless pivoting.",
+      "category": "exploitation",
+      "command": {
+        "base": "ligolo-ng",
+        "flags": [
+          { "name": "--selfcert", "type": "boolean", "description": "Use self-signed certificate", "default": false },
+          { "name": "--listen", "type": "string", "description": "Listen address (proxy mode)", "required": false },
+          { "name": "--connect", "type": "string", "description": "Connect to proxy (agent mode)", "required": false },
+          { "name": "--tls-ca", "type": "path", "description": "CA certificate file", "required": false }
+        ],
+        "positional": [],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "go install github.com/nicocha30/ligolo-ng/cmd/proxy@latest && go install github.com/nicocha30/ligolo-ng/cmd/agent@latest", "manager": "go" },
+        "darwin": { "command": "go install github.com/nicocha30/ligolo-ng/cmd/proxy@latest && go install github.com/nicocha30/ligolo-ng/cmd/agent@latest", "manager": "go" },
+        "win32": { "command": "go install github.com/nicocha30/ligolo-ng/cmd/proxy@latest && go install github.com/nicocha30/ligolo-ng/cmd/agent@latest", "manager": "go" }
+      },
+      "check_installed": {
+        "command": "ligolo-ng --help",
+        "exit_code": 0
+      },
+      "skills_loader": "red-lateral",
+      "phase": ["exploitation"],
+      "tags": ["tunneling", "pivoting", "tun", "reverse-tunnel", "red-team"],
+      "requires_root": true,
+      "output_format": ["text"],
+      "homepage": "https://github.com/nicocha30/ligolo-ng",
+      "alternatives": ["chisel", "socat"]
+    },
+
+    {
+      "tools_name": "sliver",
+      "description": "Open-source cross-platform C2 framework by BishopFox. Generates implants, manages sessions, and supports MTLS/HTTP/DNS/WireGuard C2 channels.",
+      "category": "exploitation",
+      "command": {
+        "base": "sliver",
+        "flags": [
+          { "name": "generate", "type": "boolean", "description": "Generate a new implant", "default": false },
+          { "name": "--os", "type": "choice", "description": "Target OS", "choices": ["linux", "windows", "darwin"], "required": false },
+          { "name": "--arch", "type": "choice", "description": "Target architecture", "choices": ["amd64", "arm64", "386"], "required": false },
+          { "name": "--format", "type": "choice", "description": "Output format", "choices": ["exe", "shared", "service", "shellcode"], "default": "exe" },
+          { "name": "--mtls", "type": "string", "description": "mTLS C2 host:port", "required": false },
+          { "name": "--http", "type": "string", "description": "HTTP C2 host:port", "required": false }
+        ],
+        "positional": [],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "curl https://sliver.sh/install | sudo bash", "manager": "curl" },
+        "darwin": { "command": "curl https://sliver.sh/install | sudo bash", "manager": "curl" },
+        "win32": { "command": "Download from https://github.com/BishopFox/sliver/releases", "manager": "manual" }
+      },
+      "check_installed": {
+        "command": "sliver-server --version",
+        "exit_code": 0
+      },
+      "skills_loader": "red-persist",
+      "phase": ["exploitation"],
+      "tags": ["c2", "implant", "post-exploitation", "red-team"],
+      "requires_root": false,
+      "output_format": ["text"],
+      "homepage": "https://github.com/BishopFox/sliver",
+      "alternatives": ["havoc", "mythic", "metasploit"]
+    },
+
+    {
+      "tools_name": "havoc",
+      "description": "Modern C2 framework with an advanced GUI and extensible shellcode loaders. Supports multiple agents and post-exploitation modules.",
+      "category": "exploitation",
+      "command": {
+        "base": "havoc",
+        "flags": [
+          { "name": "server", "type": "boolean", "description": "Start teamserver", "default": false },
+          { "name": "client", "type": "boolean", "description": "Start GUI client", "default": false },
+          { "name": "--profile", "type": "path", "description": "Teamserver profile YAML", "required": false },
+          { "name": "--debug", "type": "boolean", "description": "Enable debug logging", "default": false }
+        ],
+        "positional": [],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "git clone https://github.com/HavocFramework/Havoc.git && cd Havoc && make", "manager": "make" },
+        "darwin": { "command": "git clone https://github.com/HavocFramework/Havoc.git && cd Havoc && make", "manager": "make" },
+        "win32": { "command": "Not supported on Windows", "manager": "wsl" }
+      },
+      "check_installed": {
+        "command": "havoc --help",
+        "exit_code": 0
+      },
+      "skills_loader": "red-persist",
+      "phase": ["exploitation"],
+      "tags": ["c2", "post-exploitation", "red-team", "shellcode"],
+      "requires_root": false,
+      "output_format": ["text"],
+      "homepage": "https://github.com/HavocFramework/Havoc",
+      "alternatives": ["sliver", "mythic", "metasploit"]
+    },
+
+    {
+      "tools_name": "mythic",
+      "description": "Collaborative multi-user C2 framework with a web UI. Plugin-based architecture supporting multiple agents (Athena, Apollo, Merlin) and C2 profiles.",
+      "category": "exploitation",
+      "command": {
+        "base": "mythic-cli",
+        "flags": [
+          { "name": "start", "type": "boolean", "description": "Start Mythic server", "default": false },
+          { "name": "stop", "type": "boolean", "description": "Stop Mythic server", "default": false },
+          { "name": "status", "type": "boolean", "description": "Show service status", "default": false },
+          { "name": "--all", "type": "boolean", "description": "Apply to all services", "default": false }
+        ],
+        "positional": [],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "git clone https://github.com/its-a-feature/Mythic.git && cd Mythic && make", "manager": "docker" },
+        "darwin": { "command": "git clone https://github.com/its-a-feature/Mythic.git && cd Mythic && make", "manager": "docker" },
+        "win32": { "command": "Not supported on Windows", "manager": "wsl" }
+      },
+      "check_installed": {
+        "command": "mythic-cli status",
+        "exit_code": 0
+      },
+      "skills_loader": "red-persist",
+      "phase": ["exploitation"],
+      "tags": ["c2", "collaborative", "red-team", "plugin", "web-ui"],
+      "requires_root": false,
+      "output_format": ["text", "json"],
+      "homepage": "https://github.com/its-a-feature/Mythic",
+      "alternatives": ["sliver", "havoc"]
+    },
+
+    {
+      "tools_name": "peass-ng",
+      "description": "Privilege Escalation Awesome Scripts (LinPEAS/WinPEAS). Automated local privilege escalation enumeration for Linux, Windows, and macOS.",
+      "category": "exploitation",
+      "command": {
+        "base": "linpeas.sh",
+        "flags": [
+          { "name": "-a", "type": "boolean", "description": "All checks (slower, more thorough)", "default": false },
+          { "name": "-q", "type": "boolean", "description": "Quiet mode", "default": false },
+          { "name": "-o", "type": "string", "description": "Only perform selected checks (comma-separated)", "required": false },
+          { "name": "-s", "type": "boolean", "description": "Stealth mode (skip noisy checks)", "default": false }
+        ],
+        "positional": [],
+        "pipes": ["tee"]
+      },
+      "installation": {
+        "linux": { "command": "curl -L https://github.com/carlospolop/PEASS-ng/releases/latest/download/linpeas.sh -o linpeas.sh && chmod +x linpeas.sh", "manager": "curl" },
+        "darwin": { "command": "curl -L https://github.com/carlospolop/PEASS-ng/releases/latest/download/linpeas.sh -o linpeas.sh && chmod +x linpeas.sh", "manager": "curl" },
+        "win32": { "command": "Download winpeas.exe from https://github.com/carlospolop/PEASS-ng/releases", "manager": "manual" }
+      },
+      "check_installed": {
+        "command": "linpeas.sh --help",
+        "exit_code": 0
+      },
+      "skills_loader": "red-lateral",
+      "phase": ["exploitation"],
+      "tags": ["privilege-escalation", "post-exploitation", "linux", "windows", "enumeration"],
+      "requires_root": false,
+      "output_format": ["text"],
+      "homepage": "https://github.com/carlospolop/PEASS-ng",
+      "alternatives": ["pspy"]
+    },
+
+    {
+      "tools_name": "pwncat-cs",
+      "description": "Netcat replacement with persistence-focused post-exploitation. Handles shell stabilization, file upload/download, and automated enumeration on connection.",
+      "category": "exploitation",
+      "command": {
+        "base": "pwncat-cs",
+        "flags": [
+          { "name": "-l", "type": "boolean", "description": "Listen mode", "default": false },
+          { "name": "-p", "type": "number", "description": "Port number", "required": false },
+          { "name": "--certfile", "type": "path", "description": "TLS certificate file", "required": false },
+          { "name": "--keyfile", "type": "path", "description": "TLS key file", "required": false }
+        ],
+        "positional": [
+          { "name": "target", "type": "string", "description": "Target host:port (client mode)", "required": false }
+        ],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "pip3 install pwncat-cs", "manager": "pip" },
+        "darwin": { "command": "pip3 install pwncat-cs", "manager": "pip" },
+        "win32": { "command": "pip3 install pwncat-cs", "manager": "pip" }
+      },
+      "check_installed": {
+        "command": "pwncat-cs --version",
+        "exit_code": 0
+      },
+      "skills_loader": "red-persist",
+      "phase": ["exploitation"],
+      "tags": ["reverse-shell", "persistence", "post-exploitation", "linux"],
+      "requires_root": false,
+      "output_format": ["text"],
+      "homepage": "https://github.com/calebstewart/pwncat",
+      "alternatives": ["metasploit", "sliver"]
+    },
+
+    {
+      "tools_name": "routersploit",
+      "description": "Exploitation framework for embedded devices and routers. Modules for exploiting CVEs in Cisco, Huawei, D-Link, TP-Link, and other network devices.",
+      "category": "exploitation",
+      "command": {
+        "base": "rsf.py",
+        "flags": [],
+        "positional": [],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "git clone https://www.github.com/threat9/routersploit && cd routersploit && python3 -m pip install -r requirements.txt", "manager": "git+pip" },
+        "darwin": { "command": "git clone https://www.github.com/threat9/routersploit && cd routersploit && python3 -m pip install -r requirements.txt", "manager": "git+pip" },
+        "win32": { "command": "git clone https://www.github.com/threat9/routersploit && cd routersploit && python3 -m pip install -r requirements.txt", "manager": "git+pip" }
+      },
+      "check_installed": {
+        "command": "rsf.py --help",
+        "exit_code": 0
+      },
+      "skills_loader": "pentest-exploit",
+      "phase": ["exploitation"],
+      "tags": ["router", "iot", "embedded", "cve", "network-device"],
+      "requires_root": false,
+      "output_format": ["text"],
+      "homepage": "https://github.com/threat9/routersploit",
+      "alternatives": ["metasploit"]
+    },
+
+    {
+      "tools_name": "nosqlmap",
+      "description": "Automated NoSQL database exploitation tool. Tests for NoSQL injection vulnerabilities in MongoDB, Redis, CouchDB, and other NoSQL systems.",
+      "category": "exploitation",
+      "command": {
+        "base": "nosqlmap",
+        "flags": [
+          { "name": "-u", "type": "string", "description": "Target URL", "required": false },
+          { "name": "-v", "type": "boolean", "description": "Verbose mode", "default": false },
+          { "name": "--findDatabases", "type": "boolean", "description": "Find databases", "default": false },
+          { "name": "--findCollections", "type": "boolean", "description": "Find collections", "default": false }
+        ],
+        "positional": [],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "git clone https://github.com/codingo/NoSQLMap.git && cd NoSQLMap && pip3 install -r requirements.txt", "manager": "git+pip" },
+        "darwin": { "command": "git clone https://github.com/codingo/NoSQLMap.git && cd NoSQLMap && pip3 install -r requirements.txt", "manager": "git+pip" },
+        "win32": { "command": "git clone https://github.com/codingo/NoSQLMap.git && cd NoSQLMap && pip3 install -r requirements.txt", "manager": "git+pip" }
+      },
+      "check_installed": {
+        "command": "nosqlmap --help",
+        "exit_code": 0
+      },
+      "skills_loader": "pentest-exploit",
+      "phase": ["exploitation"],
+      "tags": ["nosql", "injection", "mongodb", "database"],
+      "requires_root": false,
+      "output_format": ["text"],
+      "homepage": "https://github.com/codingo/NoSQLMap",
+      "alternatives": ["sqlmap"]
+    },
+
+    {
+      "tools_name": "dalfox",
+      "description": "Powerful open-source XSS scanner and exploitation tool. Parameter analysis, DOM XSS detection, blind XSS support, and custom payload injection.",
+      "category": "exploitation",
+      "command": {
+        "base": "dalfox",
+        "flags": [
+          { "name": "url", "type": "string", "description": "Single URL to scan", "required": false },
+          { "name": "file", "type": "path", "description": "File with URLs to scan", "required": false },
+          { "name": "pipe", "type": "boolean", "description": "Read URLs from stdin", "default": false },
+          { "name": "-b", "type": "string", "description": "Blind XSS callback URL", "required": false },
+          { "name": "-o", "type": "path", "description": "Output file", "required": false },
+          { "name": "--format", "type": "choice", "description": "Output format", "choices": ["plain", "json"], "default": "plain" },
+          { "name": "-w", "type": "number", "description": "Worker count", "default": 100 },
+          { "name": "--silence", "type": "boolean", "description": "Silent mode", "default": false },
+          { "name": "--skip-bav", "type": "boolean", "description": "Skip basic auth bypass", "default": false }
+        ],
+        "positional": [],
+        "pipes": ["anew"]
+      },
+      "installation": {
+        "linux": { "command": "go install github.com/hahwul/dalfox/v2@latest", "manager": "go" },
+        "darwin": { "command": "brew install dalfox", "manager": "brew" },
+        "win32": { "command": "go install github.com/hahwul/dalfox/v2@latest", "manager": "go" }
+      },
+      "check_installed": {
+        "command": "dalfox version",
+        "exit_code": 0
+      },
+      "skills_loader": "pentest-exploit",
+      "phase": ["exploitation"],
+      "tags": ["xss", "scanner", "blind-xss", "dom-xss", "web"],
+      "requires_root": false,
+      "output_format": ["text", "json"],
+      "homepage": "https://github.com/hahwul/dalfox",
+      "alternatives": ["xsstrike", "nuclei"]
+    },
+
+    {
+      "tools_name": "xsstrike",
+      "description": "Advanced XSS detection suite with intelligent payload generation, context analysis, and WAF bypass capabilities.",
+      "category": "exploitation",
+      "command": {
+        "base": "python3",
+        "flags": [
+          { "name": "-u", "type": "string", "description": "Target URL", "required": true },
+          { "name": "--crawl", "type": "boolean", "description": "Crawl and fuzz all forms", "default": false },
+          { "name": "--fuzzer", "type": "boolean", "description": "Fuzzer mode", "default": false },
+          { "name": "--blind", "type": "string", "description": "Blind XSS server URL", "required": false },
+          { "name": "--json", "type": "boolean", "description": "JSON response parsing", "default": false },
+          { "name": "--headers", "type": "string", "description": "Custom headers (JSON)", "required": false },
+          { "name": "--timeout", "type": "number", "description": "Request timeout", "default": 10 }
+        ],
+        "positional": [
+          { "name": "script", "type": "path", "description": "XSStrike script path", "required": true }
+        ],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "git clone https://github.com/s0md3v/XSStrike.git && cd XSStrike && pip3 install -r requirements.txt", "manager": "git+pip" },
+        "darwin": { "command": "git clone https://github.com/s0md3v/XSStrike.git && cd XSStrike && pip3 install -r requirements.txt", "manager": "git+pip" },
+        "win32": { "command": "git clone https://github.com/s0md3v/XSStrike.git && cd XSStrike && pip3 install -r requirements.txt", "manager": "git+pip" }
+      },
+      "check_installed": {
+        "command": "python3 xsstrike.py --help",
+        "exit_code": 0
+      },
+      "skills_loader": "pentest-exploit",
+      "phase": ["exploitation"],
+      "tags": ["xss", "fuzzer", "waf-bypass", "context-analysis", "web"],
+      "requires_root": false,
+      "output_format": ["text"],
+      "homepage": "https://github.com/s0md3v/XSStrike",
+      "alternatives": ["dalfox", "nuclei"]
+    },
+
+    {
+      "tools_name": "wifite",
+      "description": "Automated wireless auditing tool. Attacks WEP, WPA, WPA2, and WPS networks. Captures handshakes and cracks with built-in Hashcat/Aircrack-ng support.",
+      "category": "exploitation",
+      "command": {
+        "base": "wifite",
+        "flags": [
+          { "name": "--interface", "type": "string", "description": "Wireless interface", "required": false },
+          { "name": "-c", "type": "number", "description": "Specific channel to scan", "required": false },
+          { "name": "-e", "type": "string", "description": "ESSID to attack", "required": false },
+          { "name": "-b", "type": "string", "description": "BSSID to attack", "required": false },
+          { "name": "--wpa", "type": "boolean", "description": "Target WPA networks only", "default": false },
+          { "name": "--wps", "type": "boolean", "description": "Target WPS networks only", "default": false },
+          { "name": "--kill", "type": "boolean", "description": "Kill conflicting processes", "default": false }
+        ],
+        "positional": [],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "sudo apt-get install -y wifite", "manager": "apt" },
+        "darwin": { "command": "Not supported on macOS", "manager": "n/a" },
+        "win32": { "command": "Use WSL with USB wireless adapter", "manager": "wsl" }
+      },
+      "check_installed": {
+        "command": "wifite --version",
+        "exit_code": 0
+      },
+      "skills_loader": "pentest-exploit",
+      "phase": ["exploitation"],
+      "tags": ["wireless", "wpa", "wep", "wps", "wifi", "automated"],
+      "requires_root": true,
+      "output_format": ["text"],
+      "homepage": "https://github.com/derv82/wifite2",
+      "alternatives": ["airgeddon", "aircrack-ng"]
+    },
+
+    {
+      "tools_name": "airgeddon",
+      "description": "Multi-use bash menu-driven wireless auditing framework. Handshake capture, evil twin attacks, PMKID attacks, and captive portal attacks in one script.",
+      "category": "exploitation",
+      "command": {
+        "base": "airgeddon.sh",
+        "flags": [],
+        "positional": [],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "git clone https://github.com/v1s1t0r1sh3r3/airgeddon.git && cd airgeddon && sudo bash airgeddon.sh", "manager": "git" },
+        "darwin": { "command": "Not supported on macOS", "manager": "n/a" },
+        "win32": { "command": "Not supported on Windows", "manager": "n/a" }
+      },
+      "check_installed": {
+        "command": "bash airgeddon.sh --help",
+        "exit_code": 0
+      },
+      "skills_loader": "pentest-exploit",
+      "phase": ["exploitation"],
+      "tags": ["wireless", "wpa", "handshake", "evil-twin", "captive-portal"],
+      "requires_root": true,
+      "output_format": ["text"],
+      "homepage": "https://github.com/v1s1t0r1sh3r3/airgeddon",
+      "alternatives": ["wifite", "bettercap"]
+    },
+
+    {
+      "tools_name": "wifiphisher",
+      "description": "Automated WiFi phishing framework. Creates rogue access points with realistic captive portals to capture WPA credentials via social engineering.",
+      "category": "exploitation",
+      "command": {
+        "base": "wifiphisher",
+        "flags": [
+          { "name": "-i", "type": "string", "description": "Monitor interface", "required": false },
+          { "name": "-jI", "type": "string", "description": "Jamming interface", "required": false },
+          { "name": "-aI", "type": "string", "description": "AP interface", "required": false },
+          { "name": "-p", "type": "string", "description": "Phishing scenario (e.g. firmware-upgrade)", "required": false },
+          { "name": "-e", "type": "string", "description": "Target ESSID", "required": false }
+        ],
+        "positional": [],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "sudo apt-get install -y wifiphisher", "manager": "apt" },
+        "darwin": { "command": "Not supported on macOS", "manager": "n/a" },
+        "win32": { "command": "Not supported on Windows", "manager": "n/a" }
+      },
+      "check_installed": {
+        "command": "wifiphisher --version",
+        "exit_code": 0
+      },
+      "skills_loader": "pentest-exploit",
+      "phase": ["exploitation"],
+      "tags": ["wifi", "phishing", "social-engineering", "captive-portal", "wpa"],
+      "requires_root": true,
+      "output_format": ["text"],
+      "homepage": "https://github.com/wifiphisher/wifiphisher",
+      "alternatives": ["airgeddon", "evilginx3"]
+    },
+
+    {
+      "tools_name": "bettercap",
+      "description": "Swiss army knife for network attacks and monitoring. ARP spoofing, DNS spoofing, HTTP/HTTPS MITM, WiFi scanning, BLE scanning, and scriptable modules.",
+      "category": "exploitation",
+      "command": {
+        "base": "bettercap",
+        "flags": [
+          { "name": "-iface", "type": "string", "description": "Network interface", "required": false },
+          { "name": "-caplet", "type": "path", "description": "Caplet script to execute", "required": false },
+          { "name": "-eval", "type": "string", "description": "Command to evaluate on start", "required": false },
+          { "name": "-no-colors", "type": "boolean", "description": "Disable colors", "default": false },
+          { "name": "-silent", "type": "boolean", "description": "Silent mode", "default": false }
+        ],
+        "positional": [],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "sudo apt-get install -y bettercap", "manager": "apt" },
+        "darwin": { "command": "brew install bettercap", "manager": "brew" },
+        "win32": { "command": "Not supported on Windows", "manager": "n/a" }
+      },
+      "check_installed": {
+        "command": "bettercap --version",
+        "exit_code": 0
+      },
+      "skills_loader": "pentest-exploit",
+      "phase": ["exploitation", "enumeration"],
+      "tags": ["mitm", "arp-spoofing", "dns-spoofing", "network", "wifi", "ble"],
+      "requires_root": true,
+      "output_format": ["text", "json"],
+      "homepage": "https://www.bettercap.org",
+      "alternatives": ["ettercap", "mitmproxy"]
+    },
+
+    {
+      "tools_name": "hcxdumptool",
+      "description": "Capture WiFi packets and PMKID hashes from WPA/WPA2 networks. Designed for offline WPA password cracking with hcxtools and hashcat.",
+      "category": "exploitation",
+      "command": {
+        "base": "hcxdumptool",
+        "flags": [
+          { "name": "-i", "type": "string", "description": "Wireless interface", "required": true },
+          { "name": "-o", "type": "path", "description": "Output pcapng file", "required": true },
+          { "name": "--enable_status", "type": "number", "description": "Enable status frames (1-3)", "default": 3 },
+          { "name": "--filtermode", "type": "number", "description": "Filter mode (1=blacklist, 2=whitelist)", "required": false },
+          { "name": "--filterlist_ap", "type": "path", "description": "AP filter list", "required": false }
+        ],
+        "positional": [],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "sudo apt-get install -y hcxdumptool", "manager": "apt" },
+        "darwin": { "command": "Not supported on macOS", "manager": "n/a" },
+        "win32": { "command": "Not supported on Windows", "manager": "n/a" }
+      },
+      "check_installed": {
+        "command": "hcxdumptool --version",
+        "exit_code": 0
+      },
+      "skills_loader": "pentest-exploit",
+      "phase": ["exploitation"],
+      "tags": ["wifi", "wpa", "pmkid", "capture", "handshake"],
+      "requires_root": true,
+      "output_format": ["binary"],
+      "homepage": "https://github.com/ZerBea/hcxdumptool",
+      "alternatives": ["wifite", "airgeddon"]
+    },
+
+    {
+      "tools_name": "steghide",
+      "description": "Steganography tool for hiding data in JPEG, BMP, WAV, and AU files. Password-protected embedding and extraction of secret messages.",
+      "category": "forensics",
+      "command": {
+        "base": "steghide",
+        "flags": [
+          { "name": "embed", "type": "boolean", "description": "Embed secret data", "default": false },
+          { "name": "extract", "type": "boolean", "description": "Extract secret data", "default": false },
+          { "name": "info", "type": "boolean", "description": "Display file info", "default": false },
+          { "name": "-sf", "type": "path", "description": "Cover/stego file", "required": true },
+          { "name": "-ef", "type": "path", "description": "File to embed (embed mode)", "required": false },
+          { "name": "-p", "type": "string", "description": "Passphrase", "required": false },
+          { "name": "-f", "type": "boolean", "description": "Force overwrite", "default": false },
+          { "name": "-q", "type": "boolean", "description": "Quiet mode", "default": false }
+        ],
+        "positional": [],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "sudo apt-get install -y steghide", "manager": "apt" },
+        "darwin": { "command": "brew install steghide", "manager": "brew" },
+        "win32": { "command": "Download from https://steghide.sourceforge.net", "manager": "manual" }
+      },
+      "check_installed": {
+        "command": "steghide --version",
+        "exit_code": 0
+      },
+      "skills_loader": "blue-forensics",
+      "phase": ["forensics"],
+      "tags": ["steganography", "ctf", "embed", "extract", "image"],
+      "requires_root": false,
+      "output_format": ["text", "binary"],
+      "homepage": "https://steghide.sourceforge.net",
+      "alternatives": ["stegcracker", "zsteg"]
+    },
+
+    {
+      "tools_name": "stegcracker",
+      "description": "Steganography brute-force tool for uncovering hidden data in image files. Supports steghide and other steganography tools.",
+      "category": "forensics",
+      "command": {
+        "base": "stegcracker",
+        "flags": [
+          { "name": "--threads", "type": "number", "description": "Number of threads", "default": 8 },
+          { "name": "--verbose", "type": "boolean", "description": "Verbose output", "default": false },
+          { "name": "--wordlist", "type": "path", "description": "Custom wordlist (positional arg2)", "required": false }
+        ],
+        "positional": [
+          { "name": "file", "type": "path", "description": "Stego file to crack", "required": true },
+          { "name": "wordlist", "type": "path", "description": "Wordlist file", "required": false }
+        ],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "pip3 install stegcracker", "manager": "pip" },
+        "darwin": { "command": "pip3 install stegcracker", "manager": "pip" },
+        "win32": { "command": "pip3 install stegcracker", "manager": "pip" }
+      },
+      "check_installed": {
+        "command": "stegcracker --version",
+        "exit_code": 0
+      },
+      "skills_loader": "blue-forensics",
+      "phase": ["forensics"],
+      "tags": ["steganography", "brute-force", "ctf", "image"],
+      "requires_root": false,
+      "output_format": ["text"],
+      "homepage": "https://github.com/Paradoxis/StegCracker",
+      "alternatives": ["steghide", "stegsolve"]
+    },
+
+    {
+      "tools_name": "androguard",
+      "description": "Python tool for reverse engineering Android applications. APK parsing, DEX disassembly, control flow analysis, and taint analysis.",
+      "category": "mobile",
+      "command": {
+        "base": "androguard",
+        "flags": [
+          { "name": "analyze", "type": "boolean", "description": "Analyze APK", "default": false },
+          { "name": "apkid", "type": "boolean", "description": "APK ID and compiler detection", "default": false },
+          { "name": "disassemble", "type": "boolean", "description": "Disassemble DEX", "default": false },
+          { "name": "-i", "type": "path", "description": "Input APK or DEX file", "required": false },
+          { "name": "-o", "type": "path", "description": "Output file", "required": false }
+        ],
+        "positional": [],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "pip3 install androguard", "manager": "pip" },
+        "darwin": { "command": "pip3 install androguard", "manager": "pip" },
+        "win32": { "command": "pip3 install androguard", "manager": "pip" }
+      },
+      "check_installed": {
+        "command": "androguard --version",
+        "exit_code": 0
+      },
+      "skills_loader": "re-static",
+      "phase": ["mobile", "reverse-engineering"],
+      "tags": ["android", "apk", "dex", "decompile", "taint-analysis"],
+      "requires_root": false,
+      "output_format": ["text", "json"],
+      "homepage": "https://github.com/androguard/androguard",
+      "alternatives": ["jadx", "apktool"]
+    },
+
+    {
+      "tools_name": "trivy",
+      "description": "All-in-one security scanner for containers, filesystems, git repos, and cloud configs. Detects CVEs, misconfigurations, secrets, and generates SBOMs.",
+      "category": "enumeration",
+      "command": {
+        "base": "trivy",
+        "flags": [
+          { "name": "--format", "type": "choice", "description": "Output format", "choices": ["table", "json", "sarif", "cyclonedx", "github"], "default": "table" },
+          { "name": "--severity", "type": "string", "description": "Severity levels (CRITICAL,HIGH,MEDIUM,LOW)", "required": false },
+          { "name": "--ignore-unfixed", "type": "boolean", "description": "Ignore unfixed vulnerabilities", "default": false },
+          { "name": "-o", "type": "path", "description": "Output file", "required": false },
+          { "name": "--skip-update", "type": "boolean", "description": "Skip vulnerability database update", "default": false }
+        ],
+        "positional": [
+          { "name": "subcommand", "type": "choice", "description": "Scan target type", "choices": ["image", "fs", "repo", "config", "sbom", "k8s", "aws"], "required": true },
+          { "name": "target", "type": "string", "description": "Target (image name, path, URL, etc.)", "required": true }
+        ],
+        "pipes": ["jq"]
+      },
+      "installation": {
+        "linux": { "command": "sudo apt-get install -y trivy", "manager": "apt" },
+        "darwin": { "command": "brew install aquasecurity/trivy/trivy", "manager": "brew" },
+        "win32": { "command": "winget install AquaSecurity.Trivy", "manager": "winget" }
+      },
+      "check_installed": {
+        "command": "trivy --version",
+        "exit_code": 0
+      },
+      "skills_loader": "pentest-enum",
+      "phase": ["enumeration", "reporting"],
+      "tags": ["container", "docker", "vulnerability", "sbom", "cloud", "misconfiguration"],
+      "requires_root": false,
+      "output_format": ["text", "json", "sarif"],
+      "homepage": "https://github.com/aquasecurity/trivy",
+      "alternatives": ["grype", "clair"]
+    },
+
+    {
+      "tools_name": "prowler",
+      "description": "Security assessment tool for AWS, GCP, and Azure. Performs 300+ checks for CIS benchmarks, GDPR, HIPAA, and custom compliance frameworks.",
+      "category": "recon",
+      "command": {
+        "base": "prowler",
+        "flags": [
+          { "name": "-p", "type": "string", "description": "AWS profile to use", "required": false },
+          { "name": "-r", "type": "string", "description": "AWS region", "required": false },
+          { "name": "--checks", "type": "string", "description": "Comma-separated checks to run", "required": false },
+          { "name": "-M", "type": "choice", "description": "Output format", "choices": ["text", "json", "json-ocsf", "csv", "html"], "default": "text" },
+          { "name": "-f", "type": "string", "description": "Filter by severity", "required": false }
+        ],
+        "positional": [
+          { "name": "provider", "type": "choice", "description": "Cloud provider", "choices": ["aws", "gcp", "azure"], "required": false }
+        ],
+        "pipes": ["jq"]
+      },
+      "installation": {
+        "linux": { "command": "pip3 install prowler", "manager": "pip" },
+        "darwin": { "command": "pip3 install prowler", "manager": "pip" },
+        "win32": { "command": "pip3 install prowler", "manager": "pip" }
+      },
+      "check_installed": {
+        "command": "prowler --version",
+        "exit_code": 0
+      },
+      "skills_loader": "pentest-recon",
+      "phase": ["recon", "enumeration"],
+      "tags": ["cloud", "aws", "gcp", "azure", "compliance", "cis"],
+      "requires_root": false,
+      "output_format": ["text", "json", "csv", "html"],
+      "homepage": "https://github.com/prowler-cloud/prowler",
+      "alternatives": ["scoutsuite", "pacu"]
+    },
+
+    {
+      "tools_name": "pacu",
+      "description": "AWS exploitation framework. Post-exploitation and persistence in AWS environments — privilege escalation, data exfiltration, and lateral movement.",
+      "category": "exploitation",
+      "command": {
+        "base": "pacu",
+        "flags": [
+          { "name": "--new-session", "type": "string", "description": "Start new session with name", "required": false },
+          { "name": "--import-keys", "type": "string", "description": "Import AWS keys (profile name)", "required": false },
+          { "name": "--module-name", "type": "string", "description": "Module to run", "required": false },
+          { "name": "--module-args", "type": "string", "description": "Module arguments", "required": false }
+        ],
+        "positional": [],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "pip3 install pacu", "manager": "pip" },
+        "darwin": { "command": "pip3 install pacu", "manager": "pip" },
+        "win32": { "command": "pip3 install pacu", "manager": "pip" }
+      },
+      "check_installed": {
+        "command": "pacu --help",
+        "exit_code": 0
+      },
+      "skills_loader": "red-lateral",
+      "phase": ["exploitation"],
+      "tags": ["aws", "cloud", "exploitation", "privilege-escalation", "post-exploitation"],
+      "requires_root": false,
+      "output_format": ["text", "json"],
+      "homepage": "https://github.com/RhinoSecurityLabs/pacu",
+      "alternatives": ["prowler", "scoutsuite"]
+    },
+
+    {
+      "tools_name": "scoutsuite",
+      "description": "Multi-cloud security auditing tool. Gathers data from AWS, GCP, Azure, Alibaba Cloud, and Oracle Cloud to identify misconfigurations and risks.",
+      "category": "recon",
+      "command": {
+        "base": "scout",
+        "flags": [
+          { "name": "--report-dir", "type": "path", "description": "Report output directory", "required": false },
+          { "name": "--report-name", "type": "string", "description": "Report name", "required": false },
+          { "name": "--services", "type": "string", "description": "Services to audit (comma-separated)", "required": false },
+          { "name": "--exceptions", "type": "path", "description": "Exceptions file (JSON)", "required": false }
+        ],
+        "positional": [
+          { "name": "provider", "type": "choice", "description": "Cloud provider", "choices": ["aws", "gcp", "azure", "aliyun", "oci"], "required": true }
+        ],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "pip3 install scoutsuite", "manager": "pip" },
+        "darwin": { "command": "pip3 install scoutsuite", "manager": "pip" },
+        "win32": { "command": "pip3 install scoutsuite", "manager": "pip" }
+      },
+      "check_installed": {
+        "command": "scout --help",
+        "exit_code": 0
+      },
+      "skills_loader": "pentest-recon",
+      "phase": ["recon", "enumeration"],
+      "tags": ["cloud", "multi-cloud", "audit", "aws", "gcp", "azure"],
+      "requires_root": false,
+      "output_format": ["html", "json"],
+      "homepage": "https://github.com/nccgroup/ScoutSuite",
+      "alternatives": ["prowler", "trivy"]
+    },
+
+    {
+      "tools_name": "pspy",
+      "description": "Monitor Linux processes without root privileges. Sniffs process creations by watching /proc. Useful for detecting cron jobs, privilege escalation vectors, and scheduled tasks.",
+      "category": "forensics",
+      "command": {
+        "base": "pspy",
+        "flags": [
+          { "name": "-p", "type": "boolean", "description": "Print commands to stdout", "default": false },
+          { "name": "-f", "type": "boolean", "description": "Print file system events", "default": false },
+          { "name": "-i", "type": "number", "description": "Inotify interval in milliseconds", "default": 100 },
+          { "name": "-c", "type": "boolean", "description": "Add colors", "default": false }
+        ],
+        "positional": [],
+        "pipes": ["grep"]
+      },
+      "installation": {
+        "linux": { "command": "wget https://github.com/DominicBreuker/pspy/releases/download/v1.2.1/pspy64 -O pspy && chmod +x pspy", "manager": "manual" },
+        "darwin": { "command": "Not applicable on macOS", "manager": "n/a" },
+        "win32": { "command": "Not applicable on Windows", "manager": "n/a" }
+      },
+      "check_installed": {
+        "command": "pspy --help",
+        "exit_code": 0
+      },
+      "skills_loader": "blue-forensics",
+      "phase": ["forensics"],
+      "tags": ["process-monitor", "linux", "privilege-escalation", "cron", "no-root"],
+      "requires_root": false,
+      "output_format": ["text"],
+      "homepage": "https://github.com/DominicBreuker/pspy",
+      "alternatives": ["peass-ng"]
+    },
+
+    {
+      "tools_name": "cupp",
+      "description": "Common User Passwords Profiler. Generates targeted password lists based on personal information gathered through social engineering or OSINT.",
+      "category": "utility",
+      "command": {
+        "base": "cupp",
+        "flags": [
+          { "name": "-i", "type": "boolean", "description": "Interactive mode (guided questions)", "default": false },
+          { "name": "-w", "type": "path", "description": "Improve existing wordlist", "required": false },
+          { "name": "-l", "type": "boolean", "description": "Download huge wordlists from repository", "default": false },
+          { "name": "-a", "type": "boolean", "description": "Parse default usernames from Alecto DB", "default": false },
+          { "name": "-q", "type": "boolean", "description": "Quiet mode", "default": false }
+        ],
+        "positional": [],
+        "pipes": ["hashcat", "john"]
+      },
+      "installation": {
+        "linux": { "command": "pip3 install cupp", "manager": "pip" },
+        "darwin": { "command": "pip3 install cupp", "manager": "pip" },
+        "win32": { "command": "pip3 install cupp", "manager": "pip" }
+      },
+      "check_installed": {
+        "command": "cupp -h",
+        "exit_code": 0
+      },
+      "skills_loader": "pentest-exploit",
+      "phase": ["exploitation"],
+      "tags": ["wordlist", "password", "social-engineering", "profiling"],
+      "requires_root": false,
+      "output_format": ["text"],
+      "homepage": "https://github.com/Mebus/cupp",
+      "alternatives": ["crunch", "cewl"]
+    },
+
+    {
+      "tools_name": "slowloris",
+      "description": "Slow HTTP denial-of-service attack tool. Keeps many connections open to the target web server simultaneously by sending partial HTTP requests.",
+      "category": "exploitation",
+      "command": {
+        "base": "slowloris",
+        "flags": [
+          { "name": "-p", "type": "number", "description": "Port to attack", "default": 80 },
+          { "name": "-s", "type": "number", "description": "Number of sockets", "default": 150 },
+          { "name": "--https", "type": "boolean", "description": "Use HTTPS", "default": false },
+          { "name": "--sleeptime", "type": "number", "description": "Seconds between header sends", "default": 15 },
+          { "name": "--proxy-host", "type": "string", "description": "SOCKS5 proxy host", "required": false },
+          { "name": "--proxy-port", "type": "number", "description": "SOCKS5 proxy port", "required": false }
+        ],
+        "positional": [
+          { "name": "host", "type": "string", "description": "Target hostname or IP", "required": true }
+        ],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "pip3 install slowloris", "manager": "pip" },
+        "darwin": { "command": "pip3 install slowloris", "manager": "pip" },
+        "win32": { "command": "pip3 install slowloris", "manager": "pip" }
+      },
+      "check_installed": {
+        "command": "slowloris --help",
+        "exit_code": 0
+      },
+      "skills_loader": "pentest-exploit",
+      "phase": ["exploitation"],
+      "tags": ["dos", "slow-http", "web", "denial-of-service"],
+      "requires_root": false,
+      "output_format": ["text"],
+      "homepage": "https://github.com/gkbrk/slowloris",
+      "alternatives": ["goldeneye"]
+    },
+
+    {
+      "tools_name": "haiti",
+      "description": "Hash type identifier. Detects hash algorithms from a given hash string and provides hashcat/john mode numbers.",
+      "category": "utility",
+      "command": {
+        "base": "haiti",
+        "flags": [
+          { "name": "--no-color", "type": "boolean", "description": "Disable colored output", "default": false },
+          { "name": "--short", "type": "boolean", "description": "Short output (one line per result)", "default": false },
+          { "name": "--extended", "type": "boolean", "description": "Extended output with examples", "default": false }
+        ],
+        "positional": [
+          { "name": "hash", "type": "string", "description": "Hash string to identify", "required": true }
+        ],
+        "pipes": []
+      },
+      "installation": {
+        "linux": { "command": "gem install haiti-hash", "manager": "gem" },
+        "darwin": { "command": "gem install haiti-hash", "manager": "gem" },
+        "win32": { "command": "gem install haiti-hash", "manager": "gem" }
+      },
+      "check_installed": {
+        "command": "haiti --version",
+        "exit_code": 0
+      },
+      "skills_loader": "pentest-enum",
+      "phase": ["utility"],
+      "tags": ["hash", "identification", "hashcat-mode", "john-format"],
+      "requires_root": false,
+      "output_format": ["text"],
+      "homepage": "https://github.com/noraj/haiti",
+      "alternatives": ["hash-identifier", "hashid"]
+    },
+
+    {
+      "tools_name": "gospider",
+      "description": "Fast web spider for web application recon. Discovers URLs from sitemaps, JavaScript, robots.txt, forms, and external sources.",
+      "category": "enumeration",
+      "command": {
+        "base": "gospider",
+        "flags": [
+          { "name": "-s", "type": "string", "description": "Single site to spider", "required": false },
+          { "name": "-S", "type": "path", "description": "File with multiple sites", "required": false },
+          { "name": "-o", "type": "path", "description": "Output directory", "required": false },
+          { "name": "-c", "type": "number", "description": "Concurrent requests", "default": 5 },
+          { "name": "-d", "type": "number", "description": "Crawl depth", "default": 1 },
+          { "name": "-t", "type": "number", "description": "Timeout in seconds", "default": 10 },
+          { "name": "--other-source", "type": "boolean", "description": "Find URLs from other sources (WaybackMachine, CommonCrawl)", "default": false },
+          { "name": "--include-subs", "type": "boolean", "description": "Include subdomains", "default": false },
+          { "name": "--json", "type": "boolean", "description": "JSON output", "default": false },
+          { "name": "-a", "type": "boolean", "description": "Random user-agent", "default": false }
+        ],
+        "positional": [],
+        "pipes": ["anew", "httpx"]
+      },
+      "installation": {
+        "linux": { "command": "go install github.com/jaeles-project/gospider@latest", "manager": "go" },
+        "darwin": { "command": "go install github.com/jaeles-project/gospider@latest", "manager": "go" },
+        "win32": { "command": "go install github.com/jaeles-project/gospider@latest", "manager": "go" }
+      },
+      "check_installed": {
+        "command": "gospider --version",
+        "exit_code": 0
+      },
+      "skills_loader": "pentest-enum",
+      "phase": ["enumeration", "recon"],
+      "tags": ["spider", "crawler", "js-parsing", "wayback", "urls"],
+      "requires_root": false,
+      "output_format": ["text", "json"],
+      "homepage": "https://github.com/jaeles-project/gospider",
+      "alternatives": ["katana", "hakrawler"]
+    },
+
+    {
+      "tools_name": "secretfinder",
+      "description": "Python tool to discover sensitive data (API keys, tokens, passwords) in JavaScript files via regex patterns.",
+      "category": "recon",
+      "command": {
+        "base": "python3",
+        "flags": [
+          { "name": "-i", "type": "string", "description": "URL or JS file to analyze", "required": true },
+          { "name": "-o", "type": "path", "description": "Output file", "required": false },
+          { "name": "-e", "type": "boolean", "description": "Extract all JS file links from URL", "default": false },
+          { "name": "-p", "type": "string", "description": "Regex pattern to search", "required": false }
+        ],
+        "positional": [
+          { "name": "script", "type": "path", "description": "Path to SecretFinder.py", "required": true }
+        ],
+        "pipes": ["grep", "jq"]
+      },
+      "installation": {
+        "linux": { "command": "git clone https://github.com/m4ll0k/SecretFinder.git && cd SecretFinder && pip3 install -r requirements.txt", "manager": "git+pip" },
+        "darwin": { "command": "git clone https://github.com/m4ll0k/SecretFinder.git && cd SecretFinder && pip3 install -r requirements.txt", "manager": "git+pip" },
+        "win32": { "command": "git clone https://github.com/m4ll0k/SecretFinder.git && cd SecretFinder && pip3 install -r requirements.txt", "manager": "git+pip" }
+      },
+      "check_installed": {
+        "command": "python3 SecretFinder.py --help",
+        "exit_code": 0
+      },
+      "skills_loader": "pentest-recon",
+      "phase": ["recon"],
+      "tags": ["secrets", "javascript", "api-keys", "tokens", "regex"],
+      "requires_root": false,
+      "output_format": ["text", "html"],
+      "homepage": "https://github.com/m4ll0k/SecretFinder",
+      "alternatives": ["trufflehog", "gitleaks"]
     }
   ]
 }
