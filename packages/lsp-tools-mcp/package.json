@@ -51,7 +51,4 @@
   "engines": {
     "node": ">=20.0.0"
   },
-  "dependencies": {
-    "oh-my-open-pentest": "file:../.."
-  }
 }
