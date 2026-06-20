@@ -37,7 +37,7 @@ test("#given packaged lazycodex tarball layout #when installing Codex plugin #th
     JSON.stringify({
       name: "@cerberuslabs/omop-codex-plugin",
       version: "0.1.0",
-      bin: { omo: "dist/cli.js" },
+      bin: { omop: "dist/cli.js" },
       scripts: { build: "exit 42" },
     }),
   )
