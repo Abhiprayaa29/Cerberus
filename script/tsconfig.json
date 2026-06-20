@@ -9,7 +9,10 @@
     "types": ["bun-types"],
     "skipLibCheck": true,
     "allowImportingTsExtensions": true,
-    "noEmit": true
+    "noEmit": true,
+    "paths": {
+      "@omop/utils": ["../packages/utils/src/index.ts"]
+    }
   },
   "include": ["./*.ts"]
 }
