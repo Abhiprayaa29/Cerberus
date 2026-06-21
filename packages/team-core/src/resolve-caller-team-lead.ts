@@ -4,9 +4,11 @@ import type { CallerTeamLead } from "./team-registry/caller-team-lead"
 const DISPLAY_NAME_TO_AGENT_TYPE: Readonly<Record<string, string>> = {
   cerberus: "cerberus",
   "cerberus - fullscaner": "cerberus",
+  "cerberus - ultraworker": "cerberus",
   scylla: "scylla",
   "scylla - implementation": "scylla",
-  atlas: "atlas",
+  argus: "argus",
+  atlas: "argus",
   "cerberus-junior": "cerberus-junior",
 }
 

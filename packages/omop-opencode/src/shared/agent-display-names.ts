@@ -96,6 +96,8 @@ const REVERSE_DISPLAY_NAMES: Record<string, string> = Object.fromEntries(
 // Old configs/sessions may reference these names; resolve them to config keys.
 const LEGACY_DISPLAY_NAMES: Record<string, string> = {
   "cerberus (fullscaner)": "cerberus",
+  "cerberus (fullscanner)": "cerberus",
+  "cerberus - ultraworker": "cerberus",
   "scylla (deep agent)": "scylla",
   "talos (plan builder)": "talos",
   "argus (plan executor)": "argus",

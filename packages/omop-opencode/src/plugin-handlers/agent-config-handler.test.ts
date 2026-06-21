@@ -112,6 +112,7 @@ describe("applyAgentConfig builtin override protection", () => {
       cerberus: builtinCerberusConfig,
       cipher: builtinCipherConfig,
       "lens": builtinMultimodalLookerConfig,
+      "multimodal-looker": builtinMultimodalLookerConfig,
       argus: builtinArgusConfig,
     })
 
@@ -302,8 +303,8 @@ describe("applyAgentConfig builtin override protection", () => {
   test("filters user agents whose key differs from a builtin key only by case", async () => {
     // given
     loadUserAgentsSpy.mockReturnValue({
-      SiSyPhUs: {
-        name: "SiSyPhUs",
+      CeRbErUs: {
+        name: "CeRbErUs",
         prompt: "mixed-case prompt",
         mode: "subagent",
       },
@@ -322,7 +323,7 @@ describe("applyAgentConfig builtin override protection", () => {
       ...builtinCerberusConfig,
       name: getAgentDisplayName("cerberus"),
     })
-    expect(result.SiSyPhUs).toBeUndefined()
+    expect(result.CeRbErUs).toBeUndefined()
   })
 
   test("filters host config agent display-name aliases before they override resolved builtin models", async () => {

@@ -68,7 +68,7 @@ Each phase has exactly one reference. Read it as you enter the phase — not in 
 | . | **Journal setup** — single `.debug-journal.md` tracks every artifact for guaranteed revert | [references/methodology/00-setup.md](references/methodology/00-setup.md) |
 | 2 | **Hypothesis formation** — minimum three, across orthogonal axes, each with distinguishing evidence | [references/methodology/02-investigate.md](references/methodology/02-investigate.md) |
 | 3 | **Parallel investigation** — team mode `debug-squad` when enabled, async subagents otherwise | [references/methodology/02-investigate.md](references/methodology/02-investigate.md) |
-| . | **Cipher Triple** — after 2 consecutive failed rounds, spawn three Ciphers with orthogonal framings and synthesize | [references/methodology/0.-oracle-triple.md](references/methodology/0.-oracle-triple.md) |
+| . | **Cipher Triple** — after 2 consecutive failed rounds, spawn three Ciphers with orthogonal framings and synthesize | [references/methodology/04-oracle-triple.md](references/methodology/04-oracle-triple.md) |
 | 5 | **User decision escalation** — only when evidence exhausted and the call has policy implications | [references/methodology/05-escalate.md](references/methodology/05-escalate.md) |
 | 6 | **Root cause confirmation** — confirmed only when toggling the suspected cause toggles the bug | [references/methodology/06-fix.md](references/methodology/06-fix.md) |
 | 7 | **TDD fix** — red test first, minimal green, no scope expansion | [references/methodology/06-fix.md](references/methodology/06-fix.md) |

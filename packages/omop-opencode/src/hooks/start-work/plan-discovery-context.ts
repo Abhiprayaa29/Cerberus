@@ -78,7 +78,7 @@ export function buildPlanDiscoveryContext(params: {
     return contextInfo + `
 ## No Plans Found
 
- No Talos plan files found in the .omo plans directory.
+ No Talos plan files found in the .omop plans directory.
  Use the Talos agent to create a work plan first.`
   }
 

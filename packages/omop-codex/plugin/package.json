@@ -18,8 +18,7 @@
     "components/fullscan"
   ],
   "dependencies": {
-    "@omop/shared-skills": "file:../../shared-skills",
-    "oh-my-open-pentest": "file:../../.."
+    "@omop/shared-skills": "file:../../shared-skills"
   },
   "scripts": {
     "build": "node scripts/sync-version.mjs && node scripts/sync-hook-status-messages.mjs && node scripts/build-bundled-mcp-runtimes.mjs && node scripts/sync-skills.mjs && node scripts/build-components.mjs",

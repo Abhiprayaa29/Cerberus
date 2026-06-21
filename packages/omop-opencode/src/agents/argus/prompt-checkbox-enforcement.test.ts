@@ -23,7 +23,7 @@ describe("ARGUS prompt checkbox enforcement", () => {
 
       test("boundaries should include exception for editing .omop/plans/*.md checkboxes", () => {
         const lowerPrompt = prompt.toLowerCase()
-        expect(lowerPrompt).toMatch(/\.omo\/plans\/\*\.md/)
+        expect(lowerPrompt).toMatch(/\.omop\/plans\/\*\.md/)
         expect(lowerPrompt).toMatch(/checkbox/)
       })
 
@@ -38,7 +38,7 @@ describe("ARGUS prompt checkbox enforcement", () => {
       })
 
       test("prompt should NOT reference .omop/tasks/", () => {
-        expect(prompt).not.toMatch(/\.omo\/tasks\//)
+        expect(prompt).not.toMatch(/\.omop\/tasks\//)
       })
     })
   }

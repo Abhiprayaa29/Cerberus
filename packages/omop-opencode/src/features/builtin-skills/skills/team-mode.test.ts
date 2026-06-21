@@ -56,9 +56,9 @@ describe("teamModeSkill gating", () => {
       "category",
       "subagent_type",
       "cerberus",
-      "argus",
+      "atlas",
       "scylla",
-      "cipher",
+      "oracle",
       "eligible",
     ]
 

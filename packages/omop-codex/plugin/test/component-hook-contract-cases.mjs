@@ -174,7 +174,7 @@ export function componentHookContractCases(tempRoot) {
 			assertOutput(stdout) {
 				const output = JSON.parse(stdout);
 				assert.equal(output.decision, "block");
-				assert.match(output.reason, /\.omo\/evidence\//);
+				assert.match(output.reason, /\.omop\/evidence\//);
 			},
 		},
 		{

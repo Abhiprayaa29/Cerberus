@@ -5,7 +5,7 @@ import { log } from "../../shared"
 import { NATIVE_LOOP_TRIGGERED_FLAG } from "../command-execute-before"
 import { extractPromptText } from "./prompt-text"
 import { clearStoppedContinuationBeforeWorkStart } from "./start-work-message"
-import type { ChatMessageHooks, ChatMessageHandlerOutput, ChatMessageInput } from "./types"
+import type { ChatMessageHooks, ChatMessageHandlerOutput, ChatMessageInput, WorkStartingCommand } from "./types"
 
 type RawLoopCommand =
   | { readonly command: "pentest-loop" | "ulw-loop"; readonly args: string }
@@ -81,8 +81,8 @@ export function handleRalphLoopMessage(args: {
     const taskMatch = promptText.match(/<user-task>\s*([\s\S]*?)\s*<\/user-task>/i)
     const rawTask = taskMatch?.[1]?.trim() || rawLoopCommand?.args || ""
     const parsedArguments = parseRalphLoopArguments(rawTask)
-    const fullscan = isUlwLoopTemplate || rawLoopCommand?.command === "ulw-loop"
-    const command = fullscan ? "ulw-loop" : "pentest-loop"
+    const fullscan = isRalphLoopTemplate || isUlwLoopTemplate || rawLoopCommand?.command === "pentest-loop" || rawLoopCommand?.command === "ulw-loop"
+    const command: WorkStartingCommand = rawLoopCommand?.command === "ulw-loop" ? "ulw-loop" : "pentest-loop"
 
     clearStoppedContinuationBeforeWorkStart(hooks, input.sessionID, command)
     const resumed = isRalphLoopResumeArgument(rawTask)

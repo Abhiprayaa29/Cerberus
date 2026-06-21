@@ -42,7 +42,7 @@ describe("resolveRunnableRunAgent", () => {
     const client = createClient(["Cerberus - fullscaner"])
 
     // when
-    const agent = await resolveRunnableRunAgent(client, "Cerberus - Ultraworker")
+    const agent = await resolveRunnableRunAgent(client, "cerberus (fullscaner)")
 
     // then
     expect(agent).toBe("Cerberus - fullscaner")

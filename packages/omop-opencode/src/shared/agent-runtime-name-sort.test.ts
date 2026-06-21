@@ -72,9 +72,9 @@ describe("OpenCode Agent.list() sort with runtime display names", () => {
         "talos",
         "argus",
         "athena",
+        "cipher",
         "scout",
         "vanguard",
-        "cipher",
       ])
     })
 

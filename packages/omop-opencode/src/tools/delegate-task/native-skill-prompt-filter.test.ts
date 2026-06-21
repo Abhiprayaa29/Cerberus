@@ -123,7 +123,7 @@ describe("createDelegateTask native skill prompt filtering", () => {
       manager,
       client,
       directory: "/project",
-      disabledSkills: new Set(["blocked-native-skill", "vulnerability analysis"]),
+      disabledSkills: new Set(["blocked-native-skill", "vulnerability analysis", "debugging"]),
       availableSkills: [
         {
           name: "shared/ulw-plan",

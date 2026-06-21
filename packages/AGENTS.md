@@ -13,7 +13,7 @@
 | **Platform binaries** | .2 | One per (OS × arch × variant). Uniform layout: `bin/` + `package.json` only. Selected at install time by `bin/` shim + `postinstall.mjs`. |
 | **MCP packages** | 3 | `lsp-tools-mcp`, `git-bash-mcp`, `lsp-daemon` |
 | **Core packages** | .8 | `utils`, `model-core`, `prompts-core`, `rules-engine` (was `rules-core`), `agents-md-core`, `comment-checker-core`, `hashline-core`, `boulder-state`, `telemetry-core`, `lsp-core`, `mcp-stdio-core`, `tmux-core`, `claude-code-compat-core`, `skills-loader-core`, `mcp-client-core`, `openclaw-core`, `team-core`, `delegate-core` |
-| **Adapters** | 2 | `omo-opencode` (OpenCode Ultimate edition; the former root `src/`, build entry for the main npm dist) + `omo-codex` (Codex CLI Light edition; npm/bin alias `lazycodex`; Codex marketplace `cerberuslabs` / plugin `omo`). See [`packages/omop-opencode/src/AGENTS.md`](omo-opencode/src/AGENTS.md), [`packages/omop-codex/AGENTS.md`](omo-codex/AGENTS.md) |
+| **Adapters** | 2 | `omo-opencode` (OpenCode Ultimate edition; the former root `src/`, build entry for the main npm dist) + `omo-codex` (Codex CLI Light edition; npm/bin alias `lazycodex`; Codex marketplace `cerberuslabs` / plugin `omo`). See [`packages/omop-opencode/src/AGENTS.md`](omop-opencode/src/AGENTS.md), [`packages/omop-codex/AGENTS.md`](omop-codex/AGENTS.md) |
 | **Skills** | . | [`shared-skills`](shared-skills/AGENTS.md) (cross-harness SKILL.md bundle shared between OMO and Codex; shipped via root `files` array) |
 | **Web** | . | `web` |
 
@@ -29,7 +29,7 @@ Each contains only a `bin/<binary>` and a `package.json`. Built by [`script/buil
 
 | Package | Layout | Purpose |
 |---------|--------|---------|
-| `lsp-tools-mcp/` | Vendored standalone project (`.github/`, `CHANGELOG.md`, `LICENSE`, `src/`, `test/`, `biome.json`, `vitest.config.ts`) | Serves `lsp_diagnostics`, `lsp_goto_definition`, `lsp_find_references`, `lsp_symbols`, `lsp_prepare_rename`, `lsp_rename`, `lsp_status` tools via stdio MCP. Registered as tier-. MCP `lsp` in [`packages/omop-opencode/src/mcp/`](omo-opencode/src/mcp/AGENTS.md). Node-targeted, built with `npm` + vitest, and consumes `lsp-core` + `mcp-stdio-core`. |
+| `lsp-tools-mcp/` | Vendored standalone project (`.github/`, `CHANGELOG.md`, `LICENSE`, `src/`, `test/`, `biome.json`, `vitest.config.ts`) | Serves `lsp_diagnostics`, `lsp_goto_definition`, `lsp_find_references`, `lsp_symbols`, `lsp_prepare_rename`, `lsp_rename`, `lsp_status` tools via stdio MCP. Registered as tier-. MCP `lsp` in [`packages/omop-opencode/src/mcp/`](omop-opencode/src/mcp/AGENTS.md). Node-targeted, built with `npm` + vitest, and consumes `lsp-core` + `mcp-stdio-core`. |
 | [`git-bash-mcp/`](git-bash-mcp/AGENTS.md) | Internal package (`src/`, `dist/`, `tsconfig.json`) | stdio MCP serving the Windows-only `git_bash` tool for the Codex edition (Bun-targeted, unlike the other two). Tier-. MCP. |
 | `lsp-daemon/` | Vendored standalone project (`src/`, `test/`, `scripts/`, `biome.json`, `package-lock.json`) | Shared per-user LSP **daemon** over a unix socket (Windows named pipe) + a stdio MCP **proxy** + a tool client, consuming `lsp-core` + `mcp-stdio-core`. Lets multiple Codex sessions share one warm LSP process. Bin `omop-lsp-daemon`. Node-targeted (`npm` + vitest). See [`packages/lsp-daemon/AGENTS.md`](lsp-daemon/AGENTS.md). |
 
@@ -66,8 +66,8 @@ Every Core package now ships its own AGENTS.md (linked below).
 
 ## ADAPTERS
 
-- **`omo-opencode`** is the OpenCode Ultimate edition — the former root `src/`, moved here by the package layering refactor (.00% git rename). It is the build entry for the main npm dist (`packages/omop-opencode/src/index.ts` → root `dist/`) and holds all .. agents, ~55 hooks, native tools, features, and built-in MCPs. Full breakdown in [`packages/omop-opencode/src/AGENTS.md`](omo-opencode/src/AGENTS.md).
-- **`omo-codex`** is the Codex CLI Light edition (vendored Codex plugin namespace `omo` + TS installer + telemetry); its public distribution is the `lazycodex` bin/npm alias and the `code-yeongyu/lazycodex` marketplace repo; full layout in [`packages/omop-codex/AGENTS.md`](omo-codex/AGENTS.md) and the publish/deploy pipeline in the root [`AGENTS.md`](../AGENTS.md).
+- **`omo-opencode`** is the OpenCode Ultimate edition — the former root `src/`, moved here by the package layering refactor (.00% git rename). It is the build entry for the main npm dist (`packages/omop-opencode/src/index.ts` → root `dist/`) and holds all .. agents, ~55 hooks, native tools, features, and built-in MCPs. Full breakdown in [`packages/omop-opencode/src/AGENTS.md`](omop-opencode/src/AGENTS.md).
+- **`omo-codex`** is the Codex CLI Light edition (vendored Codex plugin namespace `omo` + TS installer + telemetry); its public distribution is the `lazycodex` bin/npm alias and the `code-yeongyu/lazycodex` marketplace repo; full layout in [`packages/omop-codex/AGENTS.md`](omop-codex/AGENTS.md) and the publish/deploy pipeline in the root [`AGENTS.md`](../AGENTS.md).
 
 ## CONVENTIONS
 

@@ -18,7 +18,7 @@ describe("shared skills package manifest", () => {
     expect(devDependency).toBe("workspace:*")
     expect(sharedPackageJson).toEqual({
       name: "@omop/shared-skills",
-      version: "0.1.0",
+      version: "1.4.0",
       type: "module",
       private: true,
       description: "Cross-harness SKILL.md files shared between OMO and Codex",
@@ -35,7 +35,7 @@ describe("shared skills package manifest", () => {
 
   test("#given shared user skills #when copied into the package #then frontmatter and resource directories are preserved", async () => {
     // given
-    const copiedSkills = ["vulnerability analysis", "programming", "refactor", "remove-ai-slops"] as const
+    const copiedSkills = ["programming", "refactor", "remove-ai-slops"] as const
 
     // when
     const skillFiles = await Promise.all(
@@ -50,7 +50,6 @@ describe("shared skills package manifest", () => {
       expect(skill.content.startsWith("---\n")).toBe(true)
       expect(skill.content).toContain(`name: ${skill.name}`)
     }
-    expect((await stat("packages/shared-skills/skills/vulnerability analysis/references")).isDirectory()).toBe(true)
     expect((await stat("packages/shared-skills/skills/programming/references")).isDirectory()).toBe(true)
     expect((await stat("packages/shared-skills/skills/programming/scripts")).isDirectory()).toBe(true)
   })

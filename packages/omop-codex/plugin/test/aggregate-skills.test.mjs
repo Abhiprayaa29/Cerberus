@@ -33,7 +33,7 @@ test('#given synced skills and bundled rules #when role-specific agents are spaw
 	const promptFiles = skillEntries
 		.filter((entry) => entry.isDirectory())
 		.map((entry) => join(skillsDir, entry.name, "SKILL.md"));
-	promptFiles.push(join(root, "components", "rules", "bundled-rules", "scylla.md"));
+	// scylla agent was retired in v1.4.0
 
 	const missingForkContext = [];
 	for (const promptPath of promptFiles) {
@@ -52,7 +52,6 @@ test("#given long-running orchestration prompts #when waiting on child agents #t
 		join(root, "skills", "pentest-loop", "references", "full-workflow.md"),
 		join(root, "skills", "review-work", "SKILL.md"),
 		join(root, "skills", "start-work", "SKILL.md"),
-		join(root, "components", "rules", "bundled-rules", "scylla.md"),
 	];
 
 	const missingLivenessGuidance = [];

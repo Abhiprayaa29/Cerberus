@@ -15,7 +15,7 @@ Verify a rendered UI against intent using objective script evidence plus two par
 
 In the commands below, `$SKILL_DIR` is this skill's own directory (the folder containing this SKILL.md). The bundled script lives at `scripts/cli.ts` inside it.
 
-## Step . - Detect the surface
+## Step 1 - Detect the surface
 
 - Web/page UI: renders in a browser (HTML/CSS/JS, components, canvas, SVG). Evidence is screenshots.
 - TUI/terminal UI: renders as text in a terminal (box-drawing, panes, status lines, REPL/TUI apps). Evidence is terminal captures.
@@ -26,7 +26,7 @@ If the change touches both, run both capture tracks and feed both into the passe
 
 ### Web
 
-.. Capture a REFERENCE image: the user's mock/target, or a known-good baseline. Save as PNG.
+1. Capture a REFERENCE image: the user's mock/target, or a known-good baseline. Save as PNG.
 2. Capture the ACTUAL rendered screenshot at the same viewport size using the project's browser tooling (the playwright, agent-browser, or dev-browser skill). Save as PNG. If none is configured or available, install [agent-browser](https://github.com/vercel-labs/agent-browser) (`bun add -g agent-browser && agent-browser install`) and capture with it — see `$SKILL_DIR/references/agent-browser-setup.md` for the full setup, including how to shoot a fixed-viewport screenshot.
 3. Run the diff and keep the JSON:
 
@@ -34,11 +34,11 @@ If the change touches both, run both capture tracks and feed both into the passe
 bun "$SKILL_DIR/scripts/cli.ts" image-diff <reference.png> <actual.png>
 ```
 
-Key fields: `dimensionsMatch`, `diffRatio` (0...), `similarityScore` (0...00), `alphaChannelIntact`, `hotspots[]` (grid regions ranked by `diffRatio`).
+Key fields: `dimensionsMatch`, `diffRatio` (0-1), `similarityScore` (0-100), `alphaChannelIntact`, `hotspots[]` (grid regions ranked by `diffRatio`).
 
 ### TUI
 
-.. Capture plain text and an ANSI-preserving copy:
+1. Capture plain text and an ANSI-preserving copy:
 
 ```
 tmux capture-pane -p > capture.txt
@@ -87,17 +87,17 @@ SHARED SCRIPT EVIDENCE (reference, not verdict):
 {Paste the image-diff or tui-check JSON. Use alphaChannelIntact for the transparency check.}
 
 CHECK EACH:
-.. Real design system vs ad-hoc/mock-only: are styles driven by coherent design tokens and reused primitives, or one-off hardcoded values scattered per element? Treat mock-only screens, static compositions, or one-page hardcoded styling with no reusable system as BLOCKING unless the user explicitly requested a throwaway mock.
+1. Real design system vs ad-hoc/mock-only: are styles driven by coherent design tokens and reused primitives, or one-off hardcoded values scattered per element? Treat mock-only screens, static compositions, or one-page hardcoded styling with no reusable system as BLOCKING unless the user explicitly requested a throwaway mock.
 2. Faked-with-an-image anti-pattern: is the UI a real DOM/component tree, or a pasted raster/screenshot or background-image standing in for live elements? For TUI: a real layout that reflows, or hardcoded pre-rendered text at fixed widths?
 3. Alpha and transparency: handled correctly, with no unexpected opaque or black fills and correct PNG/CSS alpha? Cross-check alphaChannelIntact.
-.. Code style and implementation quality.
+4. Code style and implementation quality.
 5. Responsive and resize behavior across viewport sizes (web) or terminal resize (TUI).
 6. Do the user-intended FEATURES actually work: interactions, states, navigation (web); input handling, resize, scroll (TUI)? Trace the code paths.
 
 OUTPUT:
 VERDICT: PASS | REVISE | FAIL
 CONFIDENCE: HIGH | MEDIUM | LOW
-SUMMARY: .-3 sentences
+SUMMARY: 1-3 sentences
 FINDINGS: for each, [dimension] [severity] what is wrong, where (file/line or capture region), and the concrete fix
 WHAT IS GOOD: correct aspects that must not regress
 BLOCKING: items that must be fixed; empty if PASS
@@ -135,15 +135,15 @@ USE THE EVIDENCE:
 - TUI (tui-check): inspect maxWidth vs expectedColumns, every overflowLines[] entry, borderMisaligned, and wideCharColumns[].
 
 CHECK:
-.. Does the rendered output match what the user requested: layout, spacing, color, type, alignment?
+1. Does the rendered output match what the user requested: layout, spacing, color, type, alignment?
 2. CJK precision:
-   - Web: natural CJK line breaking for display and body text. Flag oversized headings that create orphaned one-character or final-syllable lines, split Korean/Japanese/Chinese semantic phrases unnaturally, detach labels such as `[Image #.]` from their content, clip baselines/descenders, drop glyphs (tofu), or show font metric mismatch. Treat the screenshot pattern `에이전트 오케스트 / 레이션 현황 및 미 / 래` as REVISE/FAIL, not acceptable wrapping.
-   - TUI: wide-character column drift (CJK cells counted as . instead of 2), box-drawing border misalignment, content overflowing past the terminal width.
+   - Web: natural CJK line breaking for display and body text. Flag oversized headings that create orphaned one-character or final-syllable lines, split Korean/Japanese/Chinese semantic phrases unnaturally, detach labels such as `[Image #1]` from their content, clip baselines/descenders, drop glyphs (tofu), or show font metric mismatch. Treat the screenshot pattern `에이전트 오케스트 / 레이션 현황 및 미 / 래` as REVISE/FAIL, not acceptable wrapping.
+   - TUI: wide-character column drift (CJK cells counted as 1 instead of 2), box-drawing border misalignment, content overflowing past the terminal width.
 
 OUTPUT:
 VERDICT: PASS | REVISE | FAIL
 CONFIDENCE: HIGH | MEDIUM | LOW
-SUMMARY: .-3 sentences
+SUMMARY: 1-3 sentences
 EVIDENCE TRACE: each hotspot or overflow line mapped to its visual cause
 FINDINGS: for each, [severity] what is wrong, where (hotspot grid or capture line:col), and the concrete fix
 BLOCKING: items that must be fixed; empty if PASS
@@ -151,7 +151,7 @@ BLOCKING: items that must be fixed; empty if PASS
 )
 ```
 
-## Step . - Synthesize one verdict
+## Step 4 - Synthesize one verdict
 
 When both passes return, submit them into a single report. Per dimension, mark good or bad with evidence. For each bad item, state what is wrong, where (file/line, hotspot grid, or capture line), and the concrete fix. Call out what is genuinely good so it is not regressed later.
 

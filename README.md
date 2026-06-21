@@ -88,15 +88,23 @@ The agent detects the engagement type, selects the matching mode and skill chain
 
 ## Installation
 
-Requires [OpenCode](https://github.com/opencode-ai/opencode) and [Bun](https://bun.sh).
+### OpenCode Plugin (Ultimate Edition)
 
-### Install
+Requires [OpenCode](https://github.com/opencode-ai/opencode) and [Bun](https://bun.sh).
 
 ```bash
 bunx oh-my-open-pentest install
 ```
 
 The wizard sets your engagement mode, AI provider, and model assignments, then verifies the installation.
+
+### Codex Light Edition
+
+Requires [Node.js](https://nodejs.org) (no Bun needed).
+
+```bash
+npx lazycodex-ai install
+```
 
 ### Register the plugin
 

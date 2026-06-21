@@ -58,7 +58,7 @@ When exploration is exhausted and the unknowns are answered, record the gate in 
 Fan out read-only research before deciding. Every spawn names DELIVERABLE / SCOPE / VERIFY inside `message`, states the role inside `message` (and passes `agent_type` as a routing hint - do not assume it alone selected a TOML role), and uses `fork_context: false` unless full parent history is truly required:
 
 ```
-multi_agent_v..spawn_agent({"message":"TASK: act as an explorer. DELIVERABLE: ... SCOPE: ... VERIFY: ...","agent_type":"explorer","fork_context":false})
+multi_agent_v1.spawn_agent({"message":"TASK: act as an explorer. DELIVERABLE: ... SCOPE: ... VERIFY: ...","agent_type":"explorer","fork_context":false})
 ```
 
 Roles: `explorer` (internal patterns/conventions/tests), `intel` (external docs/contracts), `vanguard` (gap analysis), `sentinel` (high-accuracy plan review). Full spawn/wait/fallback discipline is in `references/full-workflow.md`.

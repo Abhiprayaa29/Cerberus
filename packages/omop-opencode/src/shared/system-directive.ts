@@ -7,7 +7,7 @@
 
 export const SYSTEM_DIRECTIVE_PREFIX = "[SYSTEM DIRECTIVE: OH-MY-OPENCODE"
 
-const SYSTEM_DIRECTIVE_LEADING_KEYWORD_PATTERN = /^\s*(?:fullscan|ulw)\s+/i
+const SYSTEM_DIRECTIVE_LEADING_KEYWORD_PATTERN = /^\s*(?:fullscan|ulw|ultrawork)\s+/i
 
 /**
  * Creates a system directive header with the given type.

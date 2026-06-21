@@ -64,8 +64,8 @@ test("#given scaffold #when .omop/plans is a symlink outside the workspace #then
 	const dir = await mkdtemp(join(tmpdir(), "ulwp-"));
 	const outside = await mkdtemp(join(tmpdir(), "ulwp-outside-"));
 	try {
-		await mkdir(join(dir, ".omo"), { recursive: true });
-		await symlink(outside, join(dir, ".omo", "plans"), "dir");
+		await mkdir(join(dir, ".omop"), { recursive: true });
+		await symlink(outside, join(dir, ".omop", "plans"), "dir");
 
 		// when / then
 		await assert.rejects(() => scaffold(dir, { slug: "demo", intent: "clear" }), /refused/);
@@ -82,8 +82,8 @@ test("#given scaffold #when .omop/drafts is a symlink outside the workspace #the
 	const dir = await mkdtemp(join(tmpdir(), "ulwp-"));
 	const outside = await mkdtemp(join(tmpdir(), "ulwp-outside-"));
 	try {
-		await mkdir(join(dir, ".omo"), { recursive: true });
-		await symlink(outside, join(dir, ".omo", "drafts"), "dir");
+		await mkdir(join(dir, ".omop"), { recursive: true });
+		await symlink(outside, join(dir, ".omop", "drafts"), "dir");
 
 		// when / then
 		await assert.rejects(() => scaffold(dir, { slug: "demo", intent: "clear" }), /refused/);
@@ -118,7 +118,7 @@ test("#given an already-scaffolded plan #when the script is re-run plain #then i
 	const dir = await mkdtemp(join(tmpdir(), "ulwp-"));
 	try {
 		await scaffold(dir, { slug: "demo", intent: "unclear" });
-		const planPath = join(dir, ".omo", "plans", "demo.md");
+		const planPath = join(dir, ".omop", "plans", "demo.md");
 		const original = await readFile(planPath, "utf8");
 		const appended = original.replace(
 			"- [ ] 1. <title>",
@@ -145,7 +145,7 @@ test("#given a hand-edited plan #when --reset is used #then it refuses without -
 	const dir = await mkdtemp(join(tmpdir(), "ulwp-"));
 	try {
 		await scaffold(dir, { slug: "demo", intent: "clear" });
-		const planPath = join(dir, ".omo", "plans", "demo.md");
+		const planPath = join(dir, ".omop", "plans", "demo.md");
 		await writeFile(
 			planPath,
 			(await readFile(planPath, "utf8")).replace("- [ ] 1. <title>", "- [ ] 1. real work"),

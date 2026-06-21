@@ -95,7 +95,7 @@ After making changes, you can test your local build in OpenCode:
 
    ```json
    {
-     "plugin": ["file:///absolute/path/to/oh-my-open-pentest/dist/index.js"]
+     "plugin": ["file:///absolute/path/to/oh-my-open-pentest/packages/omop-opencode/dist/index.js"]
    }
    ```
 

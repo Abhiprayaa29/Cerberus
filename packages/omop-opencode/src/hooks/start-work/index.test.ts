@@ -356,7 +356,7 @@ You are starting a Cerberus work session.
 
     test("should auto-select when only one incomplete plan among multiple plans", async () => {
       // given - multiple plans but only one incomplete
-      const plansDir = join(testDir, ".omo", "plans")
+      const plansDir = join(testDir, ".omop", "plans")
       mkdirSync(plansDir, { recursive: true })
 
       // Plan 1: complete (all checked)
@@ -386,7 +386,7 @@ You are starting a Cerberus work session.
 
     test("should wrap multiple plans message in system-reminder tag", async () => {
       // given - multiple incomplete plans
-      const plansDir = join(testDir, ".omo", "plans")
+      const plansDir = join(testDir, ".omop", "plans")
       mkdirSync(plansDir, { recursive: true })
 
       const plan1Path = join(plansDir, "plan-a.md")
@@ -414,7 +414,7 @@ You are starting a Cerberus work session.
 
     test("should use 'ask user' prompt style for multiple plans", async () => {
       // given - multiple incomplete plans
-      const plansDir = join(testDir, ".omo", "plans")
+      const plansDir = join(testDir, ".omop", "plans")
       mkdirSync(plansDir, { recursive: true })
 
       const plan1Path = join(plansDir, "plan-x.md")
@@ -441,7 +441,7 @@ You are starting a Cerberus work session.
 
     test("should select explicitly specified plan name from user-request, ignoring existing boulder state", async () => {
       // given - existing boulder state pointing to old plan
-      const plansDir = join(testDir, ".omo", "plans")
+      const plansDir = join(testDir, ".omop", "plans")
       mkdirSync(plansDir, { recursive: true })
 
       // Old plan (in boulder state)
@@ -485,7 +485,7 @@ You are starting a Cerberus work session.
 
     test("should strip fullscan/ulw keywords from plan name argument", async () => {
       // given - plan with fullscan keyword in user-request
-      const plansDir = join(testDir, ".omo", "plans")
+      const plansDir = join(testDir, ".omop", "plans")
       mkdirSync(plansDir, { recursive: true })
 
       const planPath = join(plansDir, "my-feature-plan.md")
@@ -514,7 +514,7 @@ You are starting a Cerberus work session.
 
     test("should strip ulw keyword from plan name argument", async () => {
       // given - plan with ulw keyword in user-request
-      const plansDir = join(testDir, ".omo", "plans")
+      const plansDir = join(testDir, ".omop", "plans")
       mkdirSync(plansDir, { recursive: true })
 
       const planPath = join(plansDir, "api-refactor.md")
@@ -543,7 +543,7 @@ You are starting a Cerberus work session.
 
     test("should match plan by partial name", async () => {
       // given - user specifies partial plan name
-      const plansDir = join(testDir, ".omo", "plans")
+      const plansDir = join(testDir, ".omop", "plans")
       mkdirSync(plansDir, { recursive: true })
 
       const planPath = join(plansDir, "2026-01-15-feature-implementation.md")
@@ -572,7 +572,7 @@ You are starting a Cerberus work session.
 
     test("should match quoted human-readable plan names to slugged filenames", async () => {
       // given - saved plan uses a slugged filename
-      const plansDir = join(testDir, ".omo", "plans")
+      const plansDir = join(testDir, ".omop", "plans")
       mkdirSync(plansDir, { recursive: true })
 
       const planPath = join(plansDir, "my-feature-plan.md")
@@ -601,7 +601,7 @@ You are starting a Cerberus work session.
 
     test("should match Korean plan names after Unicode-aware normalization", async () => {
       // given
-      const plansDir = join(testDir, ".omo", "plans")
+      const plansDir = join(testDir, ".omop", "plans")
       mkdirSync(plansDir, { recursive: true })
 
       const planPath = join(plansDir, "결제-플로우.md")
@@ -630,7 +630,7 @@ You are starting a Cerberus work session.
 
     test("should match Japanese plan names after Unicode-aware normalization", async () => {
       // given
-      const plansDir = join(testDir, ".omo", "plans")
+      const plansDir = join(testDir, ".omop", "plans")
       mkdirSync(plansDir, { recursive: true })
 
       const planPath = join(plansDir, "支払い-フロー.md")
@@ -659,7 +659,7 @@ You are starting a Cerberus work session.
 
     test("should keep ASCII plan name matching behavior unchanged", async () => {
       // given
-      const plansDir = join(testDir, ".omo", "plans")
+      const plansDir = join(testDir, ".omop", "plans")
       mkdirSync(plansDir, { recursive: true })
 
       const planPath = join(plansDir, "checkout-flow.md")
@@ -688,7 +688,7 @@ You are starting a Cerberus work session.
 
     test("should match mixed ASCII and non-ASCII plan names", async () => {
       // given
-      const plansDir = join(testDir, ".omo", "plans")
+      const plansDir = join(testDir, ".omop", "plans")
       mkdirSync(plansDir, { recursive: true })
 
       const planPath = join(plansDir, "v2-결제-flow.md")
@@ -806,7 +806,7 @@ You are starting a Cerberus work session.
       sessionState.registerAgentName("cerberus")
       sessionState.updateSessionAgent("ses-talos-to-worker", "talos")
 
-      const plansDir = join(testDir, ".omo", "plans")
+      const plansDir = join(testDir, ".omop", "plans")
       mkdirSync(plansDir, { recursive: true })
       writeFileSync(join(plansDir, "worker-plan.md"), "# Plan\n- [ ] Task 1")
 
@@ -864,7 +864,7 @@ You are starting a Cerberus work session.
 
     test("#given start-work hands the session to Argus #when Argus later receives session.idle #then the same session continues the selected plan", async () => {
       // given
-      const plansDir = join(testDir, ".omo", "plans")
+      const plansDir = join(testDir, ".omop", "plans")
       mkdirSync(plansDir, { recursive: true })
       writeFileSync(join(plansDir, "argus-plan.md"), "# Plan\n- [ ] Task 1\n- [ ] Task 2")
 
@@ -903,7 +903,7 @@ You are starting a Cerberus work session.
 
     test("#given start-work hands the session to Argus but background work is still running #when that work finishes #then Argus resumes via retry for the same session", async () => {
       // given
-      const plansDir = join(testDir, ".omo", "plans")
+      const plansDir = join(testDir, ".omop", "plans")
       mkdirSync(plansDir, { recursive: true })
       writeFileSync(join(plansDir, "argus-plan.md"), "# Plan\n- [ ] Task 1\n- [ ] Task 2")
 
@@ -1012,7 +1012,7 @@ You are starting a Cerberus work session.
 
     test("should NOT inject worktree instructions when no --worktree flag", async () => {
       // given - single plan, no worktree flag
-      const plansDir = join(testDir, ".omo", "plans")
+      const plansDir = join(testDir, ".omop", "plans")
       mkdirSync(plansDir, { recursive: true })
       writeFileSync(join(plansDir, "my-plan.md"), "# Plan\n- [ ] Task 1")
 
@@ -1032,7 +1032,7 @@ You are starting a Cerberus work session.
 
     test("should inject worktree path when --worktree flag is valid", async () => {
       // given - single plan + valid worktree path
-      const plansDir = join(testDir, ".omo", "plans")
+      const plansDir = join(testDir, ".omop", "plans")
       mkdirSync(plansDir, { recursive: true })
       writeFileSync(join(plansDir, "my-plan.md"), "# Plan\n- [ ] Task 1")
       detectSpy.mockReturnValue("/validated/worktree")
@@ -1054,7 +1054,7 @@ You are starting a Cerberus work session.
 
     test("should store worktree_path in boulder when --worktree is valid", async () => {
       // given - plan + valid worktree
-      const plansDir = join(testDir, ".omo", "plans")
+      const plansDir = join(testDir, ".omop", "plans")
       mkdirSync(plansDir, { recursive: true })
       writeFileSync(join(plansDir, "my-plan.md"), "# Plan\n- [ ] Task 1")
       detectSpy.mockReturnValue("/valid/wt")
@@ -1074,7 +1074,7 @@ You are starting a Cerberus work session.
 
     test("should NOT store worktree_path when --worktree path is invalid", async () => {
       // given - plan + invalid worktree path (detectWorktreePath returns null)
-      const plansDir = join(testDir, ".omo", "plans")
+      const plansDir = join(testDir, ".omop", "plans")
       mkdirSync(plansDir, { recursive: true })
       writeFileSync(join(plansDir, "my-plan.md"), "# Plan\n- [ ] Task 1")
       // detectSpy already returns null by default

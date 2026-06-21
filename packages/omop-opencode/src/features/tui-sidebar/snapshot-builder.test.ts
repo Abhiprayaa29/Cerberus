@@ -32,7 +32,7 @@ function makeTempDir(label: string): string {
 }
 
 function writeLiveLoop(projectDir: string): void {
-  const filePath = join(projectDir, ".omo", "pentest-loop", "current", "goals.json")
+  const filePath = join(projectDir, ".omop", "pentest-loop", "current", "goals.json")
   mkdirSync(join(filePath, ".."), { recursive: true })
   writeFileSync(
     filePath,
@@ -52,7 +52,7 @@ function writeLiveLoop(projectDir: string): void {
 }
 
 function writeSensitiveLiveLoop(projectDir: string): void {
-  const filePath = join(projectDir, ".omo", "pentest-loop", "current", "goals.json")
+  const filePath = join(projectDir, ".omop", "pentest-loop", "current", "goals.json")
   mkdirSync(join(filePath, ".."), { recursive: true })
   writeFileSync(
     filePath,

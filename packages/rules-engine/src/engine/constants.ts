@@ -19,7 +19,7 @@ export const PROJECT_MARKERS: readonly string[] = [
  * the project root, second is the subdir scanned recursively.
  */
 export const PROJECT_RULE_SUBDIRS: ReadonlyArray<readonly [string, string]> = [
-	[".omo", "rules"],
+	[".omop", "rules"],
 	[".claude", "rules"],
 	[".cursor", "rules"],
 	[".github", "instructions"],

@@ -2,16 +2,16 @@ import { describe, expect, test } from "bun:test"
 import { AGENT_MODEL_REQUIREMENTS } from "./model-requirements"
 
 describe("AGENT_MODEL_REQUIREMENTS", () => {
-  test("oracle has valid fallbackChain with gpt-5.5 as primary", () => {
+  test("cipher has valid fallbackChain with gpt-5.5 as primary", () => {
     // given
-    const oracle = AGENT_MODEL_REQUIREMENTS["oracle"]
+    const cipher = AGENT_MODEL_REQUIREMENTS["cipher"]
 
     // when
-    const primary = oracle.fallbackChain[0]
+    const primary = cipher.fallbackChain[0]
 
     // then
-    expect(oracle.fallbackChain).toBeArray()
-    expect(oracle.fallbackChain.length).toBeGreaterThan(0)
+    expect(cipher.fallbackChain).toBeArray()
+    expect(cipher.fallbackChain.length).toBeGreaterThan(0)
     expect(primary?.providers).toContain("openai")
     expect(primary?.model).toBe("gpt-5.5")
     expect(primary?.variant).toBe("high")
@@ -75,15 +75,15 @@ describe("AGENT_MODEL_REQUIREMENTS", () => {
     expect(eighth?.model).toBe("gpt-5.4-nano")
   })
 
-  test("explore keeps fast OpenAI primary before qwen, minimax, haiku, and nano fallbacks", () => {
+  test("scout keeps fast OpenAI primary before qwen, minimax, haiku, and nano fallbacks", () => {
     // given
-    const explore = AGENT_MODEL_REQUIREMENTS["explore"]
+    const scout = AGENT_MODEL_REQUIREMENTS["scout"]
 
     // when
-    const [primary, second, third, fourth, fifth, sixth, seventh, eighth] = explore.fallbackChain
+    const [primary, second, third, fourth, fifth, sixth, seventh, eighth] = scout.fallbackChain
 
     // then
-    expect(explore.fallbackChain).toHaveLength(8)
+    expect(scout.fallbackChain).toHaveLength(8)
     expect(primary).toEqual({ providers: ["openai"], model: "gpt-5.4-mini-fast" })
     expect(second?.providers).toContain("opencode-go")
     expect(second?.providers).toContain("bailian-coding-plan")

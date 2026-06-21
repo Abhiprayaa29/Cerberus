@@ -66,7 +66,7 @@ test("#given aggregate SubagentStop hooks #when inspected #then start-work and L
 	assert.equal(verifierGroups.length, 1);
 	assert.equal(verifierGroups[0]?.groupIndex, 0);
 	assert.equal(verifierGroups[0]?.handler.timeout, 10);
-	assert.equal(verifierGroups[0]?.handler.statusMessage, "(OmO) Verifying LazyCodex Executor Evidence");
+	assert.equal(verifierGroups[0]?.handler.statusMessage, "(OmOP) Verifying LazyCodex Executor Evidence");
 });
 
 test("#given aggregate PostCompact hooks #when hooks are inspected #then LSP diagnostics cache reset is registered", async () => {
@@ -82,7 +82,7 @@ test("#given aggregate PostCompact hooks #when hooks are inspected #then LSP dia
 
 	// then
 	assert.equal(lspPostCompactHooks.length, 1);
-	assert.equal(lspPostCompactHooks[0]?.handler.statusMessage, "(OmO) Resetting LSP Diagnostics Cache");
+	assert.equal(lspPostCompactHooks[0]?.handler.statusMessage, "(OmOP) Resetting LSP Diagnostics Cache");
 });
 
 test("#given aggregate hook commands #when inspected #then every command exposes a Codex status message", async () => {

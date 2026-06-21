@@ -21,7 +21,7 @@ describe("checkForLegacyPluginEntry", () => {
 
     try {
       // given
-      writeFileSync(join(testConfigDir, "opencode.json"), JSON.stringify({ plugin: ["oh-my-open-pentest"] }, null, 2))
+      writeFileSync(join(testConfigDir, "opencode.json"), JSON.stringify({ plugin: ["oh-my-opencode"] }, null, 2))
 
       // when
       const result = checkForLegacyPluginEntry(testConfigDir)
@@ -29,7 +29,7 @@ describe("checkForLegacyPluginEntry", () => {
       // then
       expect(result.hasLegacyEntry).toBe(true)
       expect(result.hasCanonicalEntry).toBe(false)
-      expect(result.legacyEntries).toEqual(["oh-my-open-pentest"])
+      expect(result.legacyEntries).toEqual(["oh-my-opencode"])
       expect(result.configPath).toBe(join(testConfigDir, "opencode.json"))
     } finally {
       cleanupTestConfigDir(testConfigDir)
@@ -41,7 +41,7 @@ describe("checkForLegacyPluginEntry", () => {
 
     try {
       // given
-      writeFileSync(join(testConfigDir, "opencode.json"), JSON.stringify({ plugin: ["oh-my-open-pentest@3.10.0"] }, null, 2))
+      writeFileSync(join(testConfigDir, "opencode.json"), JSON.stringify({ plugin: ["oh-my-opencode@3.10.0"] }, null, 2))
 
       // when
       const result = checkForLegacyPluginEntry(testConfigDir)
@@ -49,7 +49,7 @@ describe("checkForLegacyPluginEntry", () => {
       // then
       expect(result.hasLegacyEntry).toBe(true)
       expect(result.hasCanonicalEntry).toBe(false)
-      expect(result.legacyEntries).toEqual(["oh-my-open-pentest@3.10.0"])
+      expect(result.legacyEntries).toEqual(["oh-my-opencode@3.10.0"])
     } finally {
       cleanupTestConfigDir(testConfigDir)
     }
@@ -79,14 +79,14 @@ describe("checkForLegacyPluginEntry", () => {
 
     try {
       // given
-      writeFileSync(join(testConfigDir, "opencode.jsonc"), '{\n  "plugin": ["oh-my-open-pentest"]\n}\n')
+      writeFileSync(join(testConfigDir, "opencode.jsonc"), '{\n  "plugin": ["oh-my-opencode"]\n}\n')
 
       // when
       const result = checkForLegacyPluginEntry(testConfigDir)
 
       // then
       expect(result.hasLegacyEntry).toBe(true)
-      expect(result.legacyEntries).toEqual(["oh-my-open-pentest"])
+      expect(result.legacyEntries).toEqual(["oh-my-opencode"])
     } finally {
       cleanupTestConfigDir(testConfigDir)
     }

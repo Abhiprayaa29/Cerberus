@@ -303,7 +303,7 @@ jobs:
             fi
           done
 
-      - name: Publish oh-my-open-pentest-${{ matrix.platform }}
+      - name: Publish legacy opencode ${{ matrix.platform }}
         if: steps.check.outputs.skip_opencode != 'true' && steps.download.outcome == 'success'
         continue-on-error: true
         env:

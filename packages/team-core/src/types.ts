@@ -196,20 +196,20 @@ export const AGENT_ELIGIBILITY_REGISTRY: Readonly<Record<string, {
     rejectionMessage:
       "Agent 'scylla' lacks teammate permission. Either apply D-36 (add teammate: \"allow\" in tool-config-handler.ts) or use subagent_type: \"cerberus\" instead.",
   },
-  oracle: {
+  cipher: {
     verdict: "hard-reject",
     rejectionMessage:
-      "Agent 'oracle' is read-only (cannot write files). Team members must write to mailbox inbox files. Use delegate-task with subagent_type: 'oracle' for read-only analysis instead.",
+      "Agent 'cipher' is read-only (cannot write files). Team members must write to mailbox inbox files. Use delegate-task with subagent_type: 'cipher' for read-only analysis instead.",
   },
   intel: {
     verdict: "hard-reject",
     rejectionMessage:
       "Agent 'intel' is read-only (write/edit denied). Cannot write to mailbox as team member. Use delegate-task for research queries instead.",
   },
-  explore: {
+  scout: {
     verdict: "hard-reject",
     rejectionMessage:
-      "Agent 'explore' is read-only (write/edit denied). Cannot write to mailbox as team member. Use delegate-task for codebase exploration instead.",
+      "Agent 'scout' is read-only (write/edit denied). Cannot write to mailbox as team member. Use delegate-task for target reconnaissance instead.",
   },
   "lens": {
     verdict: "hard-reject",
@@ -226,7 +226,7 @@ export const AGENT_ELIGIBILITY_REGISTRY: Readonly<Record<string, {
     rejectionMessage:
       "Agent 'sentinel' is read-only (plan reviewer). Cannot write to mailbox as team member. Use delegate-task for plan review instead.",
   },
-  atlas: { verdict: "eligible" },
+  argus: { verdict: "eligible" },
   talos: {
     verdict: "hard-reject",
     rejectionMessage:
@@ -237,7 +237,7 @@ export const AGENT_ELIGIBILITY_REGISTRY: Readonly<Record<string, {
 
 /**
  * §V.3 member validation error messages live in member-parser.ts.
- * Includes: "Unknown subagent_type '<name>'. Available ELIGIBLE agents: cerberus, atlas, cerberus-junior, scylla (if D-36 applied). Use delegate-task for read-only agents like oracle, intel, explore, vanguard, sentinel, lens."
+ * Includes: "Unknown subagent_type '<name>'. Available ELIGIBLE agents: cerberus, argus, cerberus-junior, scylla (if D-36 applied). Use delegate-task for read-only agents like cipher, intel, scout, vanguard, sentinel, lens."
  */
 
 const parseMemberBase = createParseMember(MemberSchema, AGENT_ELIGIBILITY_REGISTRY)

@@ -33,14 +33,14 @@ import { readCurrentTopLevelTask } from "./top-level-task"
 
 describe("boulder-state", () => {
   const TEST_DIR = join(tmpdir(), "boulder-state-test-" + Date.now())
-  const OMOP_DIR = join(TEST_DIR, ".omo")
+  const OMO_DIR = join(TEST_DIR, ".omo")
 
   beforeEach(() => {
     if (!existsSync(TEST_DIR)) {
       mkdirSync(TEST_DIR, { recursive: true })
     }
-    if (!existsSync(OMOP_DIR)) {
-      mkdirSync(OMOP_DIR, { recursive: true })
+    if (!existsSync(OMO_DIR)) {
+      mkdirSync(OMO_DIR, { recursive: true })
     }
     clearBoulderState(TEST_DIR)
   })
@@ -54,7 +54,7 @@ describe("boulder-state", () => {
   describe("readBoulderState", () => {
     test("should preserve legacy boulder.json fields during round-trip", () => {
       // given
-      const boulderFile = join(OMOP_DIR, "boulder.json")
+      const boulderFile = join(OMO_DIR, "boulder.json")
       const legacyRawState = {
         active_plan: "/path/to/legacy-plan.md",
         started_at: "2026-01-01T00:00:00.000Z",
@@ -87,7 +87,7 @@ describe("boulder-state", () => {
 
     test("should return null for JSON null value", () => {
       //#given - boulder.json containing null
-      const boulderFile = join(OMOP_DIR, "boulder.json")
+      const boulderFile = join(OMO_DIR, "boulder.json")
       writeFileSync(boulderFile, "null")
 
       //#when
@@ -99,7 +99,7 @@ describe("boulder-state", () => {
 
     test("should return null for JSON primitive value", () => {
       //#given - boulder.json containing a string
-      const boulderFile = join(OMOP_DIR, "boulder.json")
+      const boulderFile = join(OMO_DIR, "boulder.json")
       writeFileSync(boulderFile, '"just a string"')
 
       //#when
@@ -111,7 +111,7 @@ describe("boulder-state", () => {
 
     test("should default session_ids to [] when missing from JSON", () => {
       //#given - boulder.json without session_ids field
-      const boulderFile = join(OMOP_DIR, "boulder.json")
+      const boulderFile = join(OMO_DIR, "boulder.json")
       writeFileSync(boulderFile, JSON.stringify({
         active_plan: "/path/to/plan.md",
         started_at: "2026-01-01T00:00:00Z",
@@ -128,7 +128,7 @@ describe("boulder-state", () => {
 
     test("should default session_ids to [] when not an array", () => {
       //#given - boulder.json with session_ids as a string
-      const boulderFile = join(OMOP_DIR, "boulder.json")
+      const boulderFile = join(OMO_DIR, "boulder.json")
       writeFileSync(boulderFile, JSON.stringify({
         active_plan: "/path/to/plan.md",
         started_at: "2026-01-01T00:00:00Z",
@@ -146,7 +146,7 @@ describe("boulder-state", () => {
 
     test("should default session_ids to [] for empty object", () => {
       //#given - boulder.json with empty object
-      const boulderFile = join(OMOP_DIR, "boulder.json")
+      const boulderFile = join(OMO_DIR, "boulder.json")
       writeFileSync(boulderFile, JSON.stringify({}))
 
       //#when
@@ -159,7 +159,7 @@ describe("boulder-state", () => {
 
     test("should backfill missing origin as direct only for a single tracked session", () => {
       // given
-      const boulderFile = join(OMOP_DIR, "boulder.json")
+      const boulderFile = join(OMO_DIR, "boulder.json")
       writeFileSync(boulderFile, JSON.stringify({
         active_plan: "/path/to/plan.md",
         started_at: "2026-01-01T00:00:00Z",
@@ -176,7 +176,7 @@ describe("boulder-state", () => {
 
     test("should keep missing origins empty when multiple sessions are tracked", () => {
       // given
-      const boulderFile = join(OMOP_DIR, "boulder.json")
+      const boulderFile = join(OMO_DIR, "boulder.json")
       writeFileSync(boulderFile, JSON.stringify({
         active_plan: "/path/to/plan.md",
         started_at: "2026-01-01T00:00:00Z",
@@ -212,7 +212,7 @@ describe("boulder-state", () => {
 
     test("should default task_sessions to empty object when missing from JSON", () => {
       // given - boulder.json without task_sessions field
-      const boulderFile = join(OMOP_DIR, "boulder.json")
+      const boulderFile = join(OMO_DIR, "boulder.json")
       writeFileSync(boulderFile, JSON.stringify({
         active_plan: "/path/to/plan.md",
         started_at: "2026-01-01T00:00:00Z",
@@ -249,7 +249,7 @@ describe("boulder-state", () => {
       expect(readBack?.active_plan).toBe("/test/plan.md")
     })
 
-    test('should create .omop/.gitignore when .omo directory is first created', () => {
+    test('should create .omo/.gitignore when .omo directory is first created', () => {
       // given - a fresh temp directory without .omo
       const freshDir = join(tmpdir(), 'boulder-state-fresh-' + Date.now())
       try {
@@ -321,7 +321,7 @@ describe("boulder-state", () => {
 
     test("should not crash when boulder.json has no session_ids field", () => {
       //#given - boulder.json without session_ids
-      const boulderFile = join(OMOP_DIR, "boulder.json")
+      const boulderFile = join(OMO_DIR, "boulder.json")
       writeFileSync(boulderFile, JSON.stringify({
         active_plan: "/plan.md",
         started_at: "2026-01-01T00:00:00Z",
@@ -643,7 +643,7 @@ describe("boulder-state", () => {
         Date.parse("2026-01-01T01:00:00.000Z") - Date.parse(completedState!.works![firstWorkId]!.started_at),
       )
       expect(completedState?.works?.[secondWorkId]?.status).not.toBe("completed")
-      expect(existsSync(join(OMOP_DIR, "boulder.json"))).toBe(true)
+      expect(existsSync(join(OMO_DIR, "boulder.json"))).toBe(true)
     })
 
     test("should keep first completion timing when completeBoulder is called repeatedly", () => {
@@ -1133,7 +1133,7 @@ describe("boulder-state", () => {
 
     test("#given a legacy boulder file with bare session id #when read #then opencode prefix is migrated", () => {
       // given
-      const boulderFile = join(OMOP_DIR, "boulder.json")
+      const boulderFile = join(OMO_DIR, "boulder.json")
       writeFileSync(boulderFile, JSON.stringify({
         active_plan: "/path/to/legacy.md",
         started_at: "2026-01-01T00:00:00Z",

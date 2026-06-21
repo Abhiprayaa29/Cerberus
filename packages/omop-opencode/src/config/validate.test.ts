@@ -180,7 +180,7 @@ describe("validatePluginConfig", () => {
       const project = join(root, "project")
       const configDir = join(project, ".opencode")
       mkdirSync(configDir, { recursive: true })
-      writeJson(join(configDir, "oh-my-open-pentest.json"), {
+      writeJson(join(configDir, "oh-my-opencode.json"), {
         tui: { sidebar: { enabled: false } },
       })
       const before = snapshotFiles(configDir)

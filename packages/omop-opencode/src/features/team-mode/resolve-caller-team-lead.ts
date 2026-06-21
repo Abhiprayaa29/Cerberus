@@ -21,9 +21,7 @@ export function resolveCallerTeamLead(rawAgentName: string | undefined): CallerT
   const agentTypeId = getAgentConfigKey(strippedDisplayName)
   const canonicalDisplayName = getAgentDisplayName(agentTypeId)
   const isStructuredDisplayName = strippedDisplayName.includes(" - ")
-  const displayName = isStructuredDisplayName && strippedDisplayName.toLowerCase() === canonicalDisplayName.toLowerCase()
-    ? canonicalDisplayName
-    : strippedDisplayName
+  const displayName = isStructuredDisplayName ? canonicalDisplayName : strippedDisplayName
   const eligibility = AGENT_ELIGIBILITY_REGISTRY[agentTypeId]
   if (!eligibility || eligibility.verdict === "hard-reject") {
     return {

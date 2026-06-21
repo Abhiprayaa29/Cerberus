@@ -26,7 +26,7 @@ describe("auto-update-checker constants", () => {
     const { ACCEPTED_PACKAGE_NAMES } = await import(`./constants?test=${Date.now()}`)
 
     expect(ACCEPTED_PACKAGE_NAMES).toContain("oh-my-open-pentest")
-    expect(ACCEPTED_PACKAGE_NAMES).toContain("oh-my-open-pentest")
+    expect(ACCEPTED_PACKAGE_NAMES).toContain("oh-my-opencode")
   })
 
   it("INSTALLED_PACKAGE_JSON_CANDIDATES covers every accepted package name (GH-3257)", async () => {

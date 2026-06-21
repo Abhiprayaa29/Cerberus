@@ -23,7 +23,7 @@ export function isAllowedFile(filePath: string, workspaceRoot: string): boolean 
     return false
   }
 
-  if (!/(^|[/\\])\.omo([/\\]|$)/i.test(rel)) {
+  if (!/(^|[/\\])\.omop?([/\\]|$)/i.test(rel)) {
     return false
   }
 

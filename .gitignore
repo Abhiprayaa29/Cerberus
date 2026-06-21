@@ -1,8 +1,8 @@
 # Dependencies
-.omo/*
-!.omo/rules/
-!.omo/rules/**
-packages/*/.omo/*
+.omop/*
+!.omop/rules/
+!.omop/rules/**
+packages/*/.omop/*
 .sisyphus/*
 !.sisyphus/rules/
 !.sisyphus/rules/**
@@ -10,7 +10,7 @@ node_modules/
 
 # Build output
 dist/
-packages/omo-codex/plugin/skills/
+packages/omop-codex/plugin/skills/
 
 # Platform binaries (built, not committed)
 packages/*/bin/oh-my-opencode
@@ -35,7 +35,7 @@ npm-debug.log*
 package-lock.json
 !packages/lsp-tools-mcp/package-lock.json
 !packages/lsp-daemon/package-lock.json
-!packages/omo-codex/plugin/package-lock.json
+!packages/omop-codex/plugin/package-lock.json
 yarn.lock
 
 # Environment

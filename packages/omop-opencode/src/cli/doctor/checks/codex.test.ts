@@ -159,7 +159,7 @@ describe("codex doctor checks", () => {
   test("#given installed plugin without the omo runtime bin #when checking Codex doctor #then reports the missing omo command", async () => {
     // given
     const { codexHome, binDir } = await createInstalledCodexHome()
-    await rm(join(binDir, process.platform === "win32" ? "omo.cmd" : "omop"))
+    await rm(join(binDir, process.platform === "win32" ? "omop.cmd" : "omop"))
 
     // when
     const result = await checkCodex({
@@ -170,13 +170,13 @@ describe("codex doctor checks", () => {
 
     // then
     expect(result.status).toBe("fail")
-    expect(result.issues.map((issue) => issue.title)).toContain("omo runtime command is not linked")
+    expect(result.issues.map((issue) => issue.title)).toContain("omop runtime command is not linked")
   })
 
   test("#given generated omo wrapper points at a deleted runtime target #when checking runtime wrapper #then warns with reinstall guidance", async () => {
     // given
     const { codexHome, binDir, pluginRoot } = await createInstalledCodexHome()
-    const wrapperPath = join(binDir, process.platform === "win32" ? "omo.cmd" : "omop")
+    const wrapperPath = join(binDir, process.platform === "win32" ? "omop.cmd" : "omop")
     await rm(wrapperPath)
     const missingCliPath = join(pluginRoot, "dist", "cli", "index.js")
     await writeFile(
@@ -191,7 +191,7 @@ describe("codex doctor checks", () => {
 
     // then
     expect(result.status).toBe("warn")
-    const issue = result.issues.find((entry) => entry.title === "omo runtime wrapper target is missing")
+    const issue = result.issues.find((entry) => entry.title === "omop runtime wrapper target is missing")
     expect(issue).toBeDefined()
     expect(issue?.severity).toBe("warning")
     expect(issue?.description).toContain(missingCliPath)
@@ -216,7 +216,7 @@ describe("codex doctor checks", () => {
     expect(result.details).toContain("Plugin: omop@4.7.5")
     expect(result.details).toContain("Distribution: lazycodex-ai@4.7.5")
     expect(result.details).toContain("Enabled plugin: omop@cerberuslabs")
-    expect(result.details).toContain("Linked bins: omo, omop-rules")
+    expect(result.details).toContain("Linked bins: omop, omop-rules")
     expect(result.details).toContain("Agents: plan")
   })
 

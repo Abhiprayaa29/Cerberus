@@ -1,4 +1,4 @@
-import { constants, closeSync, openSync, writeSync } from "fs"
+import { appendFileSync } from "fs"
 import { getRegistryPath, MAX_AGE_MS, SECURE_FILE_MODE } from "./session-registry-paths"
 import { withRegistryLock, withRegistryLockOrWait } from "./session-registry-lock"
 import {
@@ -15,16 +15,7 @@ export function registerMessage(mapping: SessionMapping): boolean {
     () => {
       ensureRegistryDir()
       const line = JSON.stringify(mapping) + "\n"
-      const fd = openSync(
-        getRegistryPath(),
-        constants.O_WRONLY | constants.O_APPEND | constants.O_CREAT,
-        SECURE_FILE_MODE,
-      )
-      try {
-        writeSync(fd, line)
-      } finally {
-        closeSync(fd)
-      }
+      appendFileSync(getRegistryPath(), line, { mode: SECURE_FILE_MODE })
       return true
     },
     () => {

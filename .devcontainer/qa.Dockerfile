@@ -1,9 +1,9 @@
 # QA image for the opencode-qa / codex-qa skills.
-# Layered ON TOP of the devcontainer dev image (omo-dev) so the dev and QA
+# Layered ON TOP of the devcontainer dev image (omop-dev) so the dev and QA
 # environments share one base, plus the LATEST released opencode + codex CLIs
-# and the QA toolchain (sqlite3, jq, curl, rsync). Build order (omo-dev first,
-# then omo-qa) is handled by script/agent/qa-docker.sh.
-FROM omo-dev
+# and the QA toolchain (sqlite3, jq, curl, rsync). Build order (omop-dev first,
+# then omop-qa) is handled by script/agent/qa-docker.sh.
+FROM omop-dev
 
 USER root
 RUN apt-get update \

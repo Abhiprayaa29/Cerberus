@@ -308,7 +308,7 @@ function isSendOptOutFlag(value) {
 }
 function shouldDisableTelemetry(input) {
   const env2 = input.env ?? process.env;
-  const globalPrefix = input.globalEnvPrefix ?? "OMO";
+  const globalPrefix = input.globalEnvPrefix ?? "OMOP";
   const prefixes = Array.from(new Set([globalPrefix, input.productEnvPrefix]));
   for (const prefix of prefixes) {
     if (isDisableFlag(env2[`${prefix}_DISABLE_POSTHOG`])) {
@@ -3145,13 +3145,13 @@ var init_dist = __esm(() => {
   init_logs();
   init_uuidv7();
   init_validation();
+  init_error_tracking();
   init_utils();
   init_cookie();
   init_posthog_core();
   init_posthog_core_stateless();
   init_tracing_headers();
   init_types();
-  init_error_tracking();
 });
 
 // node_modules/posthog-node/dist/extensions/error-tracking/modifiers/context-lines.node.mjs
@@ -8713,7 +8713,8 @@ async function findProjectLocalCodexConfigs(startDirectory, codexHome) {
   if (startDirectoryStat !== null && !startDirectoryStat.isDirectory()) {
     throw new ProjectLocalCleanupStartDirectoryError(startDirectory);
   }
-  const codexHomeConfigPath = codexHome === undefined ? null : join20(resolve6(codexHome), "config.toml");
+  const codexHomeDir = codexHome === undefined ? null : resolve6(codexHome);
+  const codexHomeConfigPath = codexHomeDir === null ? null : join20(codexHomeDir, "config.toml");
   let current = resolve6(startDirectory);
   const configPathsFromCwd = [];
   while (true) {
@@ -8722,6 +8723,13 @@ async function findProjectLocalCodexConfigs(startDirectory, codexHome) {
       if (codexHomeConfigPath === null || resolve6(configPath) !== codexHomeConfigPath) {
         configPathsFromCwd.push(configPath);
       }
+    }
+    if (codexHomeDir !== null && resolve6(join20(current, ".codex")) === codexHomeDir) {
+      return configPathsFromCwd.length === 0 ? null : {
+        projectRoot: configPathsFromCwd.length === 0 ? current : dirname6(dirname6(configPathsFromCwd[0])),
+        configPaths: [...configPathsFromCwd].reverse(),
+        artifactRoots: artifactRootsForConfigPaths(configPathsFromCwd)
+      };
     }
     if (await exists5(join20(current, ".git"))) {
       return configPathsFromCwd.length === 0 ? null : {

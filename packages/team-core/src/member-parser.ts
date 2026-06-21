@@ -47,7 +47,7 @@ function translateMemberError(
     const subagentType = typeof input.subagent_type === "string" ? input.subagent_type : String(input.subagent_type)
     if (typeof input.subagent_type !== "string" || !agentEligibilityRegistry[input.subagent_type]) {
       return new MemberValidationError(
-        `Unknown subagent_type '${subagentType}'. Available ELIGIBLE agents: cerberus, atlas, cerberus-junior, scylla (if D-36 applied). Use delegate-task for read-only agents like oracle, intel, explore, vanguard, sentinel, lens.`,
+        `Unknown subagent_type '${subagentType}'. Available ELIGIBLE agents: cerberus, argus, cerberus-junior, scylla (if D-36 applied). Use delegate-task for read-only agents like cipher, intel, scout, vanguard, sentinel, lens.`,
         name,
         "unknown-subagent",
       )

@@ -39,6 +39,6 @@ describe("formatDoctorFailure", () => {
 
     // then
     expect(lines.join("\n")).toContain("bunx oh-my-open-pentest doctor --verbose")
-    expect(lines.join("\n")).not.toContain("bunx oh-my-open-pentest doctor")
+    expect(lines.join("\n")).not.toMatch(/bunx oh-my-open-pentest doctor(?! --verbose)/)
   })
 })

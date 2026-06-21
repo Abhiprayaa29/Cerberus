@@ -47,8 +47,16 @@ export ANTHROPIC_API_KEY="sk-ant-..."
 
 ## Install
 
+### OpenCode Plugin (Ultimate Edition)
+
 ```bash
 bunx oh-my-open-pentest install
+```
+
+### Codex Light Edition
+
+```bash
+npx lazycodex-ai install
 ```
 
 The interactive installer handles:

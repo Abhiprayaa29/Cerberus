@@ -29,11 +29,11 @@ describe("autoMigrateLegacyPluginEntry", () => {
   })
 
   describe("#given opencode.json has a bare legacy plugin entry", () => {
-    it("#then replaces oh-my-open-pentest with oh-my-open-pentest", async () => {
+    it("#then replaces oh-my-opencode with oh-my-open-pentest", async () => {
       // given
       writeFileSync(
         join(testConfigDir, "opencode.json"),
-        JSON.stringify({ plugin: ["oh-my-open-pentest"] }, null, 2) + "\n",
+        JSON.stringify({ plugin: ["oh-my-opencode"] }, null, 2) + "\n",
       )
 
       const { autoMigrateLegacyPluginEntry } = await autoMigrateModulePromise
@@ -43,7 +43,7 @@ describe("autoMigrateLegacyPluginEntry", () => {
 
       // then
       expect(result.migrated).toBe(true)
-      expect(result.from).toBe("oh-my-open-pentest")
+      expect(result.from).toBe("oh-my-opencode")
       expect(result.to).toBe("oh-my-open-pentest")
       expect(mockMigrateLegacyPluginEntry).toHaveBeenCalledWith(join(testConfigDir, "opencode.json"))
     })
@@ -54,7 +54,7 @@ describe("autoMigrateLegacyPluginEntry", () => {
       // given
       writeFileSync(
         join(testConfigDir, "opencode.json"),
-        JSON.stringify({ plugin: ["oh-my-open-pentest@3.10.0"] }, null, 2) + "\n",
+        JSON.stringify({ plugin: ["oh-my-opencode@3.10.0"] }, null, 2) + "\n",
       )
 
       const { autoMigrateLegacyPluginEntry } = await autoMigrateModulePromise
@@ -64,7 +64,7 @@ describe("autoMigrateLegacyPluginEntry", () => {
 
       // then
       expect(result.migrated).toBe(true)
-      expect(result.from).toBe("oh-my-open-pentest@3.10.0")
+      expect(result.from).toBe("oh-my-opencode@3.10.0")
       expect(result.to).toBe("oh-my-open-pentest@3.10.0")
       expect(mockMigrateLegacyPluginEntry).toHaveBeenCalledWith(join(testConfigDir, "opencode.json"))
     })
@@ -75,7 +75,7 @@ describe("autoMigrateLegacyPluginEntry", () => {
       // given
       writeFileSync(
         join(testConfigDir, "opencode.json"),
-        JSON.stringify({ plugin: ["oh-my-open-pentest", "oh-my-open-pentest"] }, null, 2) + "\n",
+        JSON.stringify({ plugin: ["oh-my-opencode", "oh-my-open-pentest"] }, null, 2) + "\n",
       )
 
       const { autoMigrateLegacyPluginEntry } = await autoMigrateModulePromise
@@ -110,7 +110,7 @@ describe("autoMigrateLegacyPluginEntry", () => {
       // given
       writeFileSync(
         join(testConfigDir, "opencode.jsonc"),
-        '{\n  // my config\n  "plugin": ["oh-my-open-pentest"]\n}\n',
+        '{\n  // my config\n  "plugin": ["oh-my-opencode"]\n}\n',
       )
 
       const { autoMigrateLegacyPluginEntry } = await autoMigrateModulePromise
@@ -134,7 +134,7 @@ describe("autoMigrateLegacyPluginEntry", () => {
   "nested": {
     "plugin": ["oh-my-open-pentest"]
   },
-  "plugin": ["oh-my-open-pentest@latest"]
+  "plugin": ["oh-my-opencode@latest"]
 }
 `,
       )
@@ -146,7 +146,7 @@ describe("autoMigrateLegacyPluginEntry", () => {
 
       // then
       expect(result.migrated).toBe(true)
-      expect(result.from).toBe("oh-my-open-pentest@latest")
+      expect(result.from).toBe("oh-my-opencode@latest")
       expect(result.to).toBe("oh-my-open-pentest@latest")
       expect(mockMigrateLegacyPluginEntry).toHaveBeenCalledWith(join(testConfigDir, "opencode.jsonc"))
     })

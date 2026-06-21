@@ -8,7 +8,7 @@ import { resolveValidFullscanVariant } from "./fullscan-variant-availability"
 
 const CODE_BLOCK = /```[\s\S]*?```/g
 const INLINE_CODE = /`[^`]+`/g
-const FULLSCAN_PATTERN = /\b(fullscan|ulw)\b/i
+const FULLSCAN_PATTERN = /\b(fullscan|ulw|ultrawork)\b/i
 
 export function detectFullscan(text: string): boolean {
   const clean = text.replace(CODE_BLOCK, "").replace(INLINE_CODE, "")

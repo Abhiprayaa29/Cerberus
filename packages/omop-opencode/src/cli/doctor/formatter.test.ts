@@ -166,7 +166,7 @@ describe("formatDoctorOutput", () => {
       expect(output).toContain("/usr/local/bin/codex")
       expect(output).toContain("Plugin     omop@4.7.5")
       expect(output).toContain("Package    lazycodex-ai@4.7.5")
-      expect(output).toContain("Bins       omo · omop-rules")
+      expect(output).toContain("Bins       omop · omop-rules")
       expect(output).not.toContain("opencode")
     })
   })

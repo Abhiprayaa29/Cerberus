@@ -3,7 +3,7 @@ import { mkdirSync, rmSync, writeFileSync } from "node:fs"
 import { tmpdir } from "node:os"
 import { join } from "node:path"
 
-import { PLUGIN_NAME } from "../../../shared"
+import { PLUGIN_NAME, LEGACY_PLUGIN_NAME } from "../../../shared"
 import { ensureTuiPluginEntry } from "../../config-manager/add-tui-plugin-to-tui-config"
 import { checkTuiPluginConfig } from "./tui-plugin-config"
 
@@ -183,7 +183,7 @@ describe("tui-plugin-config check", () => {
     //#given both package folders exist, but the registered server entry is canonical
     //#       and only the legacy folder exports ./tui
     writeInstalledPackage(PLUGIN_NAME)
-    writeInstalledPackage("oh-my-open-pentest", { ".": "./dist/index.js", "./tui": "./dist/tui.js" })
+    writeInstalledPackage(LEGACY_PLUGIN_NAME, { ".": "./dist/index.js", "./tui": "./dist/tui.js" })
     writeOpenCodeConfig([PLUGIN_NAME])
     writeTuiConfig([PLUGIN_NAME])
 

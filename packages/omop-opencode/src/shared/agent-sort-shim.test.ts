@@ -103,7 +103,7 @@ describe("agent-sort-shim", () => {
         })
 
         // then
-        expect(result).toEqual([cerberus, scylla, talos, argus, scout, cipher])
+        expect(result).toEqual([cerberus, scylla, talos, argus, cipher, scout])
       })
     })
   })
@@ -124,7 +124,7 @@ describe("agent-sort-shim", () => {
         )
 
         // then
-        expect(result).toEqual([cerberus, scout, intel, cipher])
+        expect(result).toEqual([cerberus, cipher, intel, scout])
       })
     })
   })

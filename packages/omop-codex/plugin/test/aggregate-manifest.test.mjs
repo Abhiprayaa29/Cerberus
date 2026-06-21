@@ -55,14 +55,14 @@ test("#given component directories #when scanned #then only intentional resource
 		"bootstrap",
 		"codegraph",
 		"comment-checker",
+		"fullscan",
 		"git-bash",
 		"lazycodex-executor-verify",
 		"lsp",
+		"pentest-loop",
 		"rules",
 		"start-work-continuation",
 		"telemetry",
-		"fullscan",
-		"pentest-loop",
 	]);
 	for (const name of componentNames) {
 		const expectedManifest = expectedComponentManifests.get(name);

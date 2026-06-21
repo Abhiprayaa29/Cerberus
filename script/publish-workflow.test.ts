@@ -30,7 +30,7 @@ const workflowChecks = [
 
 function sliceWorkflowSection(workflow: string, startMarker: string, endMarker: string): string {
   const start = workflow.indexOf(startMarker)
-  const end = workflow.indexOf(endMarker, start)
+  const end = workflow.indexOf(endMarker, start + startMarker.length)
   if (start < 0 || end < 0 || end <= start) {
     throw new Error(`missing workflow section between ${startMarker} and ${endMarker}`)
   }
@@ -378,7 +378,7 @@ describe("test workflows", () => {
     // #when
     const opencodePublishStep = sliceWorkflowSection(
       workflow,
-      "      - name: Publish oh-my-open-pentest-${{ matrix.platform }}",
+      "      - name: Publish legacy opencode ${{ matrix.platform }}",
       "      - name: Publish oh-my-open-pentest-${{ matrix.platform }}",
     )
     const openagentPublishStep = sliceWorkflowSection(
@@ -518,16 +518,18 @@ describe("test workflows", () => {
       readFileSync(new URL("../package.json", import.meta.url), "utf8"),
     )
     const buildBinariesPlatforms = PLATFORMS.map((entry) => entry.platform).sort()
-    const platformPrefix = "oh-my-open-pentest-"
+    const platformPrefix = "omop-"
 
     const optionalDependencyPlatforms = Object.keys(rootManifest.optionalDependencies ?? {})
       .filter((name) => name.startsWith(platformPrefix))
       .map((name) => name.slice(platformPrefix.length))
+      .filter((name) => /^(darwin|linux|windows)-/.test(name))
       .sort()
 
     const onDiskPlatforms = readdirSync(new URL("../packages/", import.meta.url))
       .filter((name) => name.startsWith(platformPrefix))
       .map((name) => name.slice(platformPrefix.length))
+      .filter((name) => /^(darwin|linux|windows)-/.test(name))
       .sort()
 
     // #when / #then

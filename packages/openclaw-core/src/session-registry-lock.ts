@@ -1,4 +1,4 @@
-import { constants, closeSync, existsSync, openSync, readFileSync, statSync, unlinkSync, writeSync } from "fs"
+import { existsSync, readFileSync, statSync, unlinkSync, writeFileSync } from "fs"
 import { randomUUID } from "crypto"
 import {
   getRegistryLockPath,
@@ -17,7 +17,6 @@ interface LockSnapshot {
 }
 
 interface LockHandle {
-  fd: number
   token: string
 }
 
@@ -83,14 +82,6 @@ function removeLockIfUnchanged(snapshot: LockSnapshot): boolean {
   }
 }
 
-function closeLockFd(fd: number): void {
-  try {
-    closeSync(fd)
-  } catch (error) {
-    if (error instanceof Error) return
-  }
-}
-
 function unlinkLockFile(): void {
   try {
     unlinkSync(getRegistryLockPath())
@@ -105,24 +96,13 @@ function acquireRegistryLock(): LockHandle | null {
   while (Date.now() - started < LOCK_TIMEOUT_MS) {
     try {
       const token = randomUUID()
-      const fd = openSync(
-        getRegistryLockPath(),
-        constants.O_CREAT | constants.O_EXCL | constants.O_WRONLY,
-        SECURE_FILE_MODE,
-      )
-      try {
-        const lockPayload = JSON.stringify({
-          pid: process.pid,
-          acquiredAt: Date.now(),
-          token,
-        })
-        writeSync(fd, lockPayload)
-      } catch (writeError) {
-        closeLockFd(fd)
-        unlinkLockFile()
-        throw writeError
-      }
-      return { fd, token }
+      const lockPayload = JSON.stringify({
+        pid: process.pid,
+        acquiredAt: Date.now(),
+        token,
+      })
+      writeFileSync(getRegistryLockPath(), lockPayload, { flag: "wx", mode: SECURE_FILE_MODE })
+      return { token }
     } catch (error) {
       if (!(error instanceof Error) || !("code" in error)) throw error
       if (error.code !== "EEXIST") throw error
@@ -166,7 +146,6 @@ function acquireRegistryLockOrWait(maxWaitMs = LOCK_WAIT_TIMEOUT_MS): LockHandle
 }
 
 function releaseRegistryLock(lock: LockHandle): void {
-  closeLockFd(lock.fd)
   const snapshot = readLockSnapshot()
   if (!snapshot || snapshot.token !== lock.token) return
   removeLockIfUnchanged(snapshot)

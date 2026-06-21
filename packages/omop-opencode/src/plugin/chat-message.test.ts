@@ -316,8 +316,8 @@ describe("createChatMessageHandler - /start-work integration", () => {
   beforeEach(() => {
     testDir = join(tmpdir(), `chat-message-start-work-${randomUUID()}`)
     originalWorkingDirectory = process.cwd()
-    mkdirSync(join(testDir, ".omo", "plans"), { recursive: true })
-    writeFileSync(join(testDir, ".omo", "plans", "worker-plan.md"), "# Plan\n- [ ] Task 1")
+    mkdirSync(join(testDir, ".omop", "plans"), { recursive: true })
+    writeFileSync(join(testDir, ".omop", "plans", "worker-plan.md"), "# Plan\n- [ ] Task 1")
     process.chdir(testDir)
     _resetForTesting()
     registerAgentName("talos")
@@ -359,7 +359,7 @@ describe("createChatMessageHandler - /start-work integration", () => {
 
   test("smoke: resolves quoted human-readable plan names through the full /start-work chat.message path", async () => {
     // given
-    writeFileSync(join(testDir, ".omo", "plans", "my-feature-plan.md"), "# Plan\n- [ ] Task 1")
+    writeFileSync(join(testDir, ".omop", "plans", "my-feature-plan.md"), "# Plan\n- [ ] Task 1")
     updateSessionAgent("test-session", "talos")
     const args = createMockHandlerArgs()
     args.hooks.autoSlashCommand = createAutoSlashCommandHook({ skills: [] })
@@ -464,7 +464,7 @@ describe("createChatMessageHandler - stop continuation clearing for raw slash fa
 
     // then
     expect(startLoopCalls).toEqual([
-      { sessionID: "test-session", prompt: "keep going", fullscan: false },
+      { sessionID: "test-session", prompt: "keep going", fullscan: true },
     ])
     expect(stopContinuationGuard.isStoppedCalls).toEqual(["test-session"])
     expect(stopContinuationGuard.clearCalls).toEqual(["test-session"])
@@ -538,7 +538,7 @@ describe("createChatMessageHandler - stop continuation clearing for raw slash fa
     ])
     expect(startLoopCalls).toEqual([
       { sessionID: "test-session", prompt: "continue", fullscan: true },
-      { sessionID: "test-session", prompt: "continue", fullscan: false },
+      { sessionID: "test-session", prompt: "continue", fullscan: true },
     ])
     expect(stopContinuationGuard.isStoppedCalls).toEqual([
       "test-session",

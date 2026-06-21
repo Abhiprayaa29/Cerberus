@@ -68,7 +68,7 @@ test("#given aggregate Codex skills #when source wiring is inspected #then share
 	assert.equal(rootPackageFiles.includes("packages/shared-skills/index.mjs"), true);
 	assert.equal(rootPackageFiles.includes("packages/shared-skills/skills"), true);
 	assert.equal(sharedSkillDependency, "file:../../shared-skills");
-	assert.match(syncScript, /from "@oh-my-open-pentest\/shared-skills"/);
+	assert.match(syncScript, /from "@omop\/shared-skills"/);
 	assert.doesNotMatch(syncScript, /shared-skills",\s*"skills"/);
 });
 
@@ -151,7 +151,7 @@ test("#given synced pentest-loop skill #when Codex hint metadata is inspected #t
 
 	// then
 	assert.match(skill, /^---\r?\nname: pentest-loop\r?\n/m);
-	assert.match(interfaceMetadata, /display_name: "\(OmO\) pentest-loop"/);
+	assert.match(interfaceMetadata, /display_name: "\(OmOP\) pentest-loop"/);
 	assert.doesNotMatch(interfaceMetadata, /pentest-loop \/ pentest-loop/);
 	assert.match(interfaceMetadata, /short_description: "Goal-like fullscan loop for systematic decomposition"/);
 	assert.match(interfaceMetadata, /default_prompt: "Use \$pentest-loop/);
@@ -184,7 +184,7 @@ test("#given synced git-master skill #when inspected #then commits and git histo
 	assert.match(skill, /Choose the Git tool by the question/);
 	assert.match(skill, /git log -S "text"/);
 	assert.match(skill, /git blame -L start,end -- file/);
-	assert.match(interfaceMetadata, /display_name: "\(OmO\) git-master"/);
+	assert.match(interfaceMetadata, /display_name: "\(OmOP\) git-master"/);
 	assert.match(interfaceMetadata, /- "git commit"/);
 	assert.match(interfaceMetadata, /- "history search"/);
 });

@@ -1,4 +1,4 @@
-﻿name = "lazycodex-executor"
+name = "lazycodex-executor"
 description = "Implementation executor for LazyCodex fullscan tasks. Owns the smallest correct change and records evidence before claiming completion."
 nickname_candidates = ["Executor"]
 model = "gpt-5.5"

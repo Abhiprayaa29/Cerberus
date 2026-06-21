@@ -6,7 +6,7 @@ import test from "node:test";
 import { readJson, root } from "./aggregate-plugin-fixture.mjs";
 
 const hookSlugPattern = /^\.\/hooks\/[a-z0-9]+(?:-[a-z0-9]+)*\.json$/;
-const displayNamePrefix = "(OmO) ";
+const displayNamePrefix = "(OmOP) ";
 
 async function exists(path) {
 	try {

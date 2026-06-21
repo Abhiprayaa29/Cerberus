@@ -583,7 +583,7 @@ describe("resolveSubagentExecution", () => {
     //#then
     expect(result.agentToUse).toBe("")
     expect(result.error).toBeDefined()
-    expect(result.error).toContain('Available agents: scout, cipher, plan')
+    expect(result.error).toContain('Available agents: cipher, plan, scout')
     expect(result.error).not.toContain("build")
   })
 
@@ -1440,7 +1440,7 @@ describe("resolveSubagentExecution - agent name sanitization", () => {
       connected: [],
       updatedAt: "2026-03-03T00:00:00.000Z",
     })
-    const args = createBaseArgs({ subagent_type: "Cerberus - Ultraworker" })
+    const args = createBaseArgs({ subagent_type: "Cerberus - fullscaner" })
     const executorCtx = createExecutorContext(async () => ([
       { name: "\u200BCerberus - fullscaner", mode: "subagent", model: "openai/gpt-5.5" },
     ]))

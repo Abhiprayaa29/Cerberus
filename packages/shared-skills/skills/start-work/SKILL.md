@@ -105,7 +105,7 @@ Each sub-task message must include:
 6. The adversarial classes that apply to this sub-task (from the 9 ultraqa classes) and how each is probed.
 7. Required artifact path and cleanup receipt.
 
-The 9 ultraqa classes are trigger-mapped: new input parsing → malformed input; untrusted external text → prompt injection; resumable or long-running flows → cancel/resume; generated or cached artifacts → stale state; uncommitted user files in scope → dirty engagement workspace; long external commands → hung or long commands; new or timing-sensitive tests → flaky tests; log-based success claims → misleading success output; mid-operation interrupts → repeated interruptions. A class applies when its trigger fact holds. Probe each applicable class; record the rest as not-applicable with a one-line reason.
+The 9 ultraqa classes are trigger-mapped: new input parsing → malformed input; untrusted external text → prompt injection; resumable or long-running flows → cancel/resume; generated or cached artifacts → stale state; uncommitted user files in scope → dirty worktree; long external commands → hung or long commands; new or timing-sensitive tests → flaky tests; log-based success claims → misleading success output; mid-operation interrupts → repeated interruptions. A class applies when its trigger fact holds. Probe each applicable class; record the rest as not-applicable with a one-line reason.
 
 ## Phase .: Verify and record evidence
 
@@ -147,7 +147,7 @@ Rules:
 - The verifier must be independent from the executor: use `lazycodex-gate-reviewer`, a scoped `worker` reviewer, or root only when root did not implement or materially rewrite that task.
 - A worker done claim must be independently verified before it becomes checkbox completion.
 - On any non-confirmed verdict, append the feedback to the ledger, reset the checkbox work to in-progress, and re-dispatch the executor with the exact failure.
-- The verifier must probe the applicable adversarial keys, including `stale_state`, `dirty_engagement workspace`, and `misleading_success_output`, before allowing `FullyDone`.
+- The verifier must probe the applicable adversarial keys, including `stale_state`, `dirty_worktree`, and `misleading_success_output`, before allowing `FullyDone`.
 
 ## Phase 5: Mark progress
 

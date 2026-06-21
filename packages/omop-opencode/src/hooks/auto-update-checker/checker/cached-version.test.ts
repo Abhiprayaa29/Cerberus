@@ -26,7 +26,7 @@ describe("getCachedVersion (GH-3257)", () => {
     cacheRoot = mkdtempSync(join(tmpdir(), "omop-cached-version-"))
     mockState.candidates = [
       join(cacheRoot, "node_modules", "oh-my-open-pentest", "package.json"),
-      join(cacheRoot, "node_modules", "oh-my-open-pentest", "package.json"),
+      join(cacheRoot, "node_modules", "oh-my-opencode", "package.json"),
     ]
     mockState.walkUpResult = null
   })
@@ -57,13 +57,13 @@ describe("getCachedVersion (GH-3257)", () => {
   })
 
   it("prefers oh-my-open-pentest when both are installed", () => {
-    const legacyDir = join(cacheRoot, "node_modules", "oh-my-open-pentest")
-    mkdirSync(legacyDir, { recursive: true })
-    writeFileSync(join(legacyDir, "package.json"), JSON.stringify({ name: "oh-my-open-pentest", version: "3.16.0" }))
+    const canonicalDir = join(cacheRoot, "node_modules", "oh-my-open-pentest")
+    mkdirSync(canonicalDir, { recursive: true })
+    writeFileSync(join(canonicalDir, "package.json"), JSON.stringify({ name: "oh-my-open-pentest", version: "3.16.0" }))
 
-    const aliasDir = join(cacheRoot, "node_modules", "oh-my-open-pentest")
-    mkdirSync(aliasDir, { recursive: true })
-    writeFileSync(join(aliasDir, "package.json"), JSON.stringify({ name: "oh-my-open-pentest", version: "3.15.0" }))
+    const legacyDir = join(cacheRoot, "node_modules", "oh-my-opencode")
+    mkdirSync(legacyDir, { recursive: true })
+    writeFileSync(join(legacyDir, "package.json"), JSON.stringify({ name: "oh-my-opencode", version: "3.15.0" }))
 
     expect(getIsolatedCachedVersion()).toBe("3.16.0")
   })
@@ -121,13 +121,13 @@ describe("getCachedVersion (GH-3257)", () => {
 
   it("tries the next candidate when reading a candidate throws a non-Error", () => {
     // given
-    const legacyDir = join(cacheRoot, "node_modules", "oh-my-open-pentest")
-    mkdirSync(legacyDir, { recursive: true })
-    writeFileSync(join(legacyDir, "package.json"), JSON.stringify({ name: "oh-my-open-pentest", version: "3.18.0" }))
+    const canonicalDir = join(cacheRoot, "node_modules", "oh-my-open-pentest")
+    mkdirSync(canonicalDir, { recursive: true })
+    writeFileSync(join(canonicalDir, "package.json"), JSON.stringify({ name: "oh-my-open-pentest", version: "3.18.0" }))
 
-    const aliasDir = join(cacheRoot, "node_modules", "oh-my-open-pentest")
-    mkdirSync(aliasDir, { recursive: true })
-    writeFileSync(join(aliasDir, "package.json"), JSON.stringify({ name: "oh-my-open-pentest", version: "3.18.1" }))
+    const legacyDir = join(cacheRoot, "node_modules", "oh-my-opencode")
+    mkdirSync(legacyDir, { recursive: true })
+    writeFileSync(join(legacyDir, "package.json"), JSON.stringify({ name: "oh-my-opencode", version: "3.18.1" }))
 
     const originalParse = JSON.parse
     const nonError = Symbol("candidate read failed")

@@ -9,7 +9,7 @@ import path from "node:path"
 import { TeamModeConfigSchema } from "../config"
 
 const ORACLE_REJECTION_MESSAGE =
-  "Agent 'oracle' is read-only (cannot write files). Team members must write to mailbox inbox files. Use delegate-task with subagent_type: 'oracle' for read-only analysis instead."
+  "Agent 'cipher' is read-only (cannot write files). Team members must write to mailbox inbox files. Use delegate-task with subagent_type: 'cipher' for read-only analysis instead."
 
 const { TeamSpecValidationError, loadAllTeamSpecs, loadTeamSpec } = await import("./loader")
 
@@ -199,15 +199,15 @@ describe("team-registry loader", () => {
     // given
     const rootDirectory = await createTemporaryRoot()
     temporaryDirectories.push(rootDirectory)
-    const fixturePaths = getFixturePaths(rootDirectory, "oracle-team")
-    const teamSpec = createBaseSpec("oracle-team")
-    teamSpec.members = [{ kind: "subagent_type", name: "lead", subagent_type: "oracle" }]
+    const fixturePaths = getFixturePaths(rootDirectory, "cipher-team")
+    const teamSpec = createBaseSpec("cipher-team")
+    teamSpec.members = [{ kind: "subagent_type", name: "lead", subagent_type: "cipher" }]
     await writeJsonFile(fixturePaths.userConfigPath, teamSpec)
 
     // when
     let thrownError: unknown
     try {
-      await loadTeamSpec("oracle-team", createConfig(fixturePaths.userBaseDir), fixturePaths.projectRoot)
+      await loadTeamSpec("cipher-team", createConfig(fixturePaths.userBaseDir), fixturePaths.projectRoot)
     } catch (error) {
       thrownError = error
     }

@@ -186,7 +186,7 @@ describe("system check", () => {
       //#given
       mockGetPluginInfo.mockReturnValue({
         registered: true,
-        entry: "oh-my-open-pentest",
+        entry: "oh-my-opencode",
         isPinned: false,
         pinnedVersion: null,
         configPath: null,
@@ -200,7 +200,7 @@ describe("system check", () => {
       const legacyEntryIssue = result.issues.find((issue) => issue.title === "Using legacy package name")
       expect(legacyEntryIssue?.severity).toBe("warning")
       expect(legacyEntryIssue?.fix).toBe(
-        'Update your opencode.json plugin entry: "oh-my-open-pentest" → "oh-my-open-pentest"'
+        'Update your opencode.json plugin entry: "oh-my-opencode" → "oh-my-open-pentest"'
       )
     })
 
@@ -208,7 +208,7 @@ describe("system check", () => {
       //#given
       mockGetPluginInfo.mockReturnValue({
         registered: true,
-        entry: "oh-my-open-pentest@3.0.0",
+        entry: "oh-my-opencode@3.0.0",
         isPinned: true,
         pinnedVersion: "3.0.0",
         configPath: null,
@@ -222,7 +222,7 @@ describe("system check", () => {
       const legacyEntryIssue = result.issues.find((issue) => issue.title === "Using legacy package name")
       expect(legacyEntryIssue?.severity).toBe("warning")
       expect(legacyEntryIssue?.fix).toBe(
-        'Update your opencode.json plugin entry: "oh-my-open-pentest@3.0.0" → "oh-my-open-pentest@3.0.0"'
+        'Update your opencode.json plugin entry: "oh-my-opencode@3.0.0" → "oh-my-open-pentest@3.0.0"'
       )
     })
 

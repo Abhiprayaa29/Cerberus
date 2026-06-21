@@ -136,7 +136,7 @@ test("#given hook status label #when formatting #then prefixes OmO display names
 	const message = formatLazyCodexHookStatusMessage(version, label);
 
 	// then
-	assert.equal(message, "(OmO) Checking Comments");
+	assert.equal(message, "(OmOP) Checking Comments");
 });
 
 test("#given hook status label with blank version #when formatting #then still prefixes OmO display namespace", () => {
@@ -148,7 +148,7 @@ test("#given hook status label with blank version #when formatting #then still p
 	const message = formatLazyCodexHookStatusMessage(version, label);
 
 	// then
-	assert.equal(message, "(OmO) Checking Comments");
+	assert.equal(message, "(OmOP) Checking Comments");
 });
 
 test("#given loose legacy status label #when normalizing #then removes OMO wording and title-cases label", async () => {
@@ -162,7 +162,7 @@ test("#given loose legacy status label #when normalizing #then removes OMO wordi
 
 	// then
 	assert.equal(normalized, "Checking Comments");
-	assert.equal(message, "(OmO) Checking Comments");
+	assert.equal(message, "(OmOP) Checking Comments");
 });
 
 test("#given LazyCodex appears inside hook label #when normalizing #then product casing is preserved", async () => {
@@ -176,7 +176,7 @@ test("#given LazyCodex appears inside hook label #when normalizing #then product
 
 	// then
 	assert.equal(normalized, "Verifying LazyCodex Executor Evidence");
-	assert.equal(message, "(OmO) Verifying LazyCodex Executor Evidence");
+	assert.equal(message, "(OmOP) Verifying LazyCodex Executor Evidence");
 });
 
 test("#given MCP appears inside hook label #when normalizing #then protocol casing is preserved", () => {
@@ -189,7 +189,7 @@ test("#given MCP appears inside hook label #when normalizing #then protocol casi
 
 	// then
 	assert.equal(normalized, "Recommending Git Bash MCP");
-	assert.equal(message, "(OmO) Recommending Git Bash MCP");
+	assert.equal(message, "(OmOP) Recommending Git Bash MCP");
 });
 test("#given aggregate comment-checker hook #when status is inspected #then it uses OmO comments label", async () => {
 	// given

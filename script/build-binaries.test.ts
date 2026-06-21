@@ -67,11 +67,11 @@ describe("build-binaries", () => {
 
       // then
       expect(packageDirs).toEqual(packageNames);
-      expect(packageDirs).toContain("oh-my-open-pentest-linux-x64-baseline");
-      expect(packageDirs).toContain("oh-my-open-pentest-linux-x64-musl-baseline");
-      expect(packageDirs).toContain("oh-my-open-pentest-darwin-x64-baseline");
-      expect(packageDirs).toContain("oh-my-open-pentest-windows-x64-baseline");
-      expect(packageDirs).toContain("oh-my-open-pentest-windows-arm64");
+      expect(packageDirs).toContain("omop-linux-x64-baseline");
+      expect(packageDirs).toContain("omop-linux-x64-musl-baseline");
+      expect(packageDirs).toContain("omop-darwin-x64-baseline");
+      expect(packageDirs).toContain("omop-windows-x64-baseline");
+      expect(packageDirs).toContain("omop-windows-arm64");
     });
 
     it("includes a windows-arm64 entry for Windows-on-ARM hosts", async () => {
@@ -83,8 +83,8 @@ describe("build-binaries", () => {
       const windowsArm64 = platforms.find((p) => p.platform === "windows-arm64");
 
       // then
-      expect(windowsArm64?.packageName).toBe("oh-my-open-pentest-windows-arm64");
-      expect(windowsArm64?.packageDir).toBe("oh-my-open-pentest-windows-arm64");
+      expect(windowsArm64?.packageName).toBe("omop-windows-arm64");
+      expect(windowsArm64?.packageDir).toBe("omop-windows-arm64");
     });
 
     it("uses JavaScript launcher names for baseline platforms", async () => {
@@ -111,7 +111,7 @@ describe("build-binaries", () => {
 
       // then
       expect(source).toContain("OMOP_WRAPPER_PACKAGE_ROOT");
-      expect(source).toContain('join(wrapperPackageRoot, "packages", "omo-codex", "scripts", "install-local.mjs")');
+      expect(source).toContain('join(wrapperPackageRoot, "packages", "omop-codex", "scripts", "install-local.mjs")');
       expect(source).toContain('spawnSync(process.execPath, [lazyCodexInstallerPath, ...process.argv.slice(2)]');
       expect(source).toContain('join(wrapperPackageRoot, "dist", "cli", "index.js")');
       expect(source).toContain('spawnSync(bunBinary, [cliPath, ...process.argv.slice(2)]');
@@ -150,8 +150,8 @@ describe("build-binaries", () => {
       const createPlatformLauncherSource = (module as { createPlatformLauncherSource: () => string }).createPlatformLauncherSource;
       const tempDir = await mkdtemp(join(tmpdir(), "omo-codex-only-launcher-"));
       const launcherPath = join(tempDir, "oh-my-open-pentest.js");
-      const installerPath = join(tempDir, "packages", "omo-codex", "scripts", "install-local.mjs");
-      await mkdir(join(tempDir, "packages", "omo-codex", "scripts"), { recursive: true });
+      const installerPath = join(tempDir, "packages", "omop-codex", "scripts", "install-local.mjs");
+      await mkdir(join(tempDir, "packages", "omop-codex", "scripts"), { recursive: true });
       await writeFile(launcherPath, createPlatformLauncherSource());
       await chmod(launcherPath, 0o755);
       await writeFile(
@@ -187,8 +187,8 @@ describe("build-binaries", () => {
       const createPlatformLauncherSource = (module as { createPlatformLauncherSource: () => string }).createPlatformLauncherSource;
       const tempDir = await mkdtemp(join(tmpdir(), "lazycodex-both-launcher-"));
       const launcherPath = join(tempDir, "oh-my-open-pentest.js");
-      const installerPath = join(tempDir, "packages", "omo-codex", "scripts", "install-local.mjs");
-      await mkdir(join(tempDir, "packages", "omo-codex", "scripts"), { recursive: true });
+      const installerPath = join(tempDir, "packages", "omop-codex", "scripts", "install-local.mjs");
+      await mkdir(join(tempDir, "packages", "omop-codex", "scripts"), { recursive: true });
       await writeFile(launcherPath, createPlatformLauncherSource());
       await chmod(launcherPath, 0o755);
       await writeFakeCli(tempDir);
@@ -259,7 +259,7 @@ describe("build-binaries", () => {
       // given
       const packagesDir = new URL("../packages/", import.meta.url);
       const platformPackageNames = readdirSync(packagesDir)
-        .filter((entry) => entry.startsWith("oh-my-open-pentest-"))
+        .filter((entry) => entry.startsWith("omop-") && !["omop-opencode", "omop-codex"].includes(entry))
         .sort();
 
       // when

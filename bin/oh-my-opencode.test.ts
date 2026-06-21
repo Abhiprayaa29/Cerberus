@@ -208,7 +208,7 @@ async function createLazyCodexFixture(options: { packageName?: string; wrapperFi
 }
 
 async function writeNodeInstallerFixture(root: string): Promise<void> {
-  const installerPath = join(root, "packages", "omo-codex", "scripts", "install-local.mjs");
+  const installerPath = join(root, "packages", "omop-codex", "scripts", "install-local.mjs");
   await mkdir(dirname(installerPath), { recursive: true });
   await writeFile(
     installerPath,

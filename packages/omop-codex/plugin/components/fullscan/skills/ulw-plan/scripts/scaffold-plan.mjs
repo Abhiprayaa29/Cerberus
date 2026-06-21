@@ -76,7 +76,7 @@ export function resolveSafeOmoPath(cwd, relPath) {
 	if (rel.startsWith("..") || isAbsolute(rel)) {
 		throw new Error(`refused: path escapes the workspace root: ${relPath}`);
 	}
-	if (!/(^|[/\\])\.omo([/\\]|$)/i.test(rel)) {
+	if (!/(^|[/\\])\.omop([/\\]|$)/i.test(rel)) {
 		throw new Error(`refused: ulw-plan may only write under .omop/: ${relPath}`);
 	}
 	if (!resolved.toLowerCase().endsWith(".md")) {
@@ -118,7 +118,7 @@ async function mkdirWithoutSymlinks(dir, stopAt) {
 async function assertSafeWriteParent(cwd, target) {
 	const workspaceReal = await realpath(cwd);
 	const workspaceRoot = resolve(cwd);
-	const omoRoot = resolve(cwd, ".omo");
+	const omoRoot = resolve(cwd, ".omop");
 	const parent = dirname(target);
 	assertContainedPath(workspaceRoot, parent, `refused: path escapes the workspace root: ${target}`);
 	assertContainedPath(omoRoot, parent, `refused: ulw-plan may only write under .omop/: ${target}`);
@@ -274,8 +274,8 @@ export async function writeGuarded(cwd, relPath, content, { reset = false, force
 }
 
 export async function scaffold(cwd, { slug, intent, reset = false, force = false }) {
-	const draftRel = join(".omo", "drafts", `${slug}.md`);
-	const planRel = join(".omo", "plans", `${slug}.md`);
+	const draftRel = join(".omop", "drafts", `${slug}.md`);
+	const planRel = join(".omop", "plans", `${slug}.md`);
 	const draft = await writeGuarded(cwd, draftRel, buildDraft(slug, intent), { reset, force });
 	const plan = await writeGuarded(cwd, planRel, buildPlanSkeleton(slug, intent), { reset, force });
 	return [draft, plan];

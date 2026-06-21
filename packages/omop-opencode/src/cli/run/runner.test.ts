@@ -81,7 +81,7 @@ describe("resolveRunAgent", () => {
 
   it("maps display-name style default_run_agent values to canonical prompt agent ids", () => {
     // given
-    const config = createConfig({ default_run_agent: "Cerberus - Ultraworker" })
+    const config = createConfig({ default_run_agent: "Cerberus - fullscaner" })
 
     // when
     const agent = resolveRunAgent({ message: "test" }, config, {})

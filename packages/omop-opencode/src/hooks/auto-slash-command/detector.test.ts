@@ -193,7 +193,7 @@ After`
       // given uppercase variants
       // when checking exclusion
       // then should still be excluded
-      expect(isExcludedCommand("RALPH-LOOP")).toBe(true)
+      expect(isExcludedCommand("PENTEST-LOOP")).toBe(true)
       expect(isExcludedCommand("Cancel-Ralph")).toBe(true)
     })
 

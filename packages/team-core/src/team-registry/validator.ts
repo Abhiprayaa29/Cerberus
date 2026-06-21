@@ -10,7 +10,7 @@ const HYPERPLAN_REQUIRED_CATEGORIES = [
   "artistry",
 ] as const
 const UNKNOWN_SUBAGENT_MESSAGE =
-  "Unknown subagent_type '<name>'. Available ELIGIBLE agents: cerberus, atlas, cerberus-junior, scylla (if D-36 applied). Use delegate-task for read-only agents like oracle, intel, explore, vanguard, sentinel, lens."
+  "Unknown subagent_type '<name>'. Available ELIGIBLE agents: cerberus, argus, cerberus-junior, scylla (if D-36 applied). Use delegate-task for read-only agents like cipher, intel, scout, vanguard, sentinel, lens."
 
 export class TeamSpecValidationError extends Error {
   constructor(

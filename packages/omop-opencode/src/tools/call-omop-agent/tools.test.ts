@@ -179,7 +179,7 @@ describe("createCallOmoAgent", () => {
       const executeFunc = toolDef.execute as Function
 
       const result = await executeFunc(
-        { description: "Test", prompt: "Scout", subagent_type: "EXPLORE", run_in_background: true },
+        { description: "Test", prompt: "Scout", subagent_type: "SCOUT", run_in_background: true },
         toolCtx
       )
 

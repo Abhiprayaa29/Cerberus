@@ -150,7 +150,7 @@ test("#given cerberuslabs marketplace #when installing #then registers the local
 	const marketplace = JSON.parse(
 		await readFile(join(codexHome, "plugins", "cache", "cerberuslabs", ".agents", "plugins", "marketplace.json"), "utf8"),
 	);
-	assert.deepEqual(marketplace.plugins, [{ name: "omop", source: { source: "local", path: "./omo/0.1.0" } }]);
+	assert.deepEqual(marketplace.plugins, [{ name: "omop", source: { source: "local", path: "./omop/0.1.0" } }]);
 	const cachedMcp = JSON.parse(await readFile(join(codexHome, "plugins", "cache", "cerberuslabs", "omop", "0.1.0", ".mcp.json"), "utf8"));
 	assert.equal(cachedMcp.mcpServers.lsp.args[0], join(repoRoot, "packages", "lsp-tools-mcp", "dist", "cli.js"));
 	assert.equal((await stat(cachedMcp.mcpServers.lsp.args[0])).isFile(), true);

@@ -65,24 +65,24 @@ describe("plugin-identity constants", () => {
   })
 
   describe("LEGACY_CONFIG_BASENAME", () => {
-    it("equals oh-my-open-pentest", () => {
+    it("equals oh-my-opencode", () => {
       // given
 
       // when
 
       // then
-      expect(LEGACY_CONFIG_BASENAME).toBe("oh-my-open-pentest")
+      expect(LEGACY_CONFIG_BASENAME).toBe("oh-my-opencode")
     })
   })
 
   describe("LEGACY_PLUGIN_NAME", () => {
-    it("equals oh-my-open-pentest", () => {
+    it("equals oh-my-opencode", () => {
       // given
 
       // when
 
       // then
-      expect(LEGACY_PLUGIN_NAME).toBe("oh-my-open-pentest")
+      expect(LEGACY_PLUGIN_NAME).toBe("oh-my-opencode")
     })
   })
 

@@ -541,7 +541,7 @@ describe("loadPluginConfig", () => {
     const userConfigDir = join(rootDir, "user-config")
     const projectDir = join(rootDir, "project")
     const projectConfigDir = join(projectDir, ".opencode")
-    const legacyConfigPath = join(projectConfigDir, "oh-my-open-pentest.jsonc")
+    const legacyConfigPath = join(projectConfigDir, "oh-my-opencode.jsonc")
     const backupConfigPath = `${legacyConfigPath}.bak`
     const canonicalConfigPath = join(projectConfigDir, "oh-my-open-pentest.jsonc")
 
@@ -608,7 +608,7 @@ describe("loadPluginConfig", () => {
     const userConfigDir = join(rootDir, "user-config")
     const projectDir = join(rootDir, "project")
     const projectConfigDir = join(projectDir, ".opencode")
-    const legacyConfigPath = join(projectConfigDir, "oh-my-open-pentest.jsonc")
+    const legacyConfigPath = join(projectConfigDir, "oh-my-opencode.jsonc")
     const canonicalConfigPath = join(projectConfigDir, "oh-my-open-pentest.jsonc")
 
     tempDirs.push(rootDir)
@@ -756,7 +756,7 @@ describe("loadPluginConfig", () => {
           enabled: true,
         },
       })
-      writeJsonFile(join(userConfigDir, "oh-my-open-pentest.json"), {
+      writeJsonFile(join(userConfigDir, "oh-my-opencode.json"), {
         agents: {
           cipher: {
             model: "openai/gpt-5.4",
@@ -782,7 +782,7 @@ describe("loadPluginConfig", () => {
       writeJsonFile(join(userConfigDir, "oh-my-open-pentest.json"), {
         hashline_edit: true,
       })
-      writeJsonFile(join(userConfigDir, "oh-my-open-pentest.json"), {
+      writeJsonFile(join(userConfigDir, "oh-my-opencode.json"), {
         team_mode: {
           enabled: true,
         },
@@ -806,7 +806,7 @@ describe("loadPluginConfig", () => {
       writeJsonFile(join(userConfigDir, "oh-my-open-pentest.json"), {
         hashline_edit: true,
       })
-      writeJsonFile(join(userConfigDir, "oh-my-open-pentest.json"), {
+      writeJsonFile(join(userConfigDir, "oh-my-opencode.json"), {
         team_mode: {
           enabled: true,
           tmux_visualization: true,
@@ -1161,7 +1161,7 @@ describe("loadPluginConfig", () => {
     const homeDir = join(rootDir, "home")
     const workDir = join(homeDir, "work")
     const projectDir = join(workDir, "project")
-    const ancestorLegacyPath = join(workDir, ".opencode", "oh-my-open-pentest.jsonc")
+    const ancestorLegacyPath = join(workDir, ".opencode", "oh-my-opencode.jsonc")
     const ancestorCanonicalPath = join(workDir, ".opencode", "oh-my-open-pentest.jsonc")
 
     tempDirs.push(rootDir)

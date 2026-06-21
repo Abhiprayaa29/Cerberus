@@ -4,7 +4,7 @@ import { join } from "node:path"
 
 const pluginConfigDetectionOptions = {
   basenames: ["oh-my-open-pentest"],
-  legacyBasenames: ["oh-my-open-pentest"],
+  legacyBasenames: ["oh-my-opencode"],
 } as const
 
 describe("detectPluginConfigFile memoization", () => {

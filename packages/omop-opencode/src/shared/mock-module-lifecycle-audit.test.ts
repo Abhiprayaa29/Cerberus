@@ -92,7 +92,7 @@ async function listPackageTestFiles(): Promise<string[]> {
   }
 
   const nestedFiles = await Promise.all(packageNames.map(async (name) => {
-    if (name === "omo-opencode") {
+    if (name === "omop-opencode") {
       return []
     }
     const packageSrc = path.join(packagesDir, name, "src")

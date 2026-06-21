@@ -4,9 +4,10 @@ import { AGENT_MODEL_REQUIREMENTS, CATEGORY_MODEL_REQUIREMENTS } from "./model-r
 const expectedAgents = [
   "cerberus",
   "scylla",
-  "oracle",
+  "cipher",
+  "argus",
   "intel",
-  "explore",
+  "scout",
   "lens",
   "talos",
   "vanguard",

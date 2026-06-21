@@ -215,7 +215,7 @@ test("#given managed legacy Codex LSP symlink #when linking bins #then removes s
 	await mkdir(binDir, { recursive: true });
 	await writeJson(join(pluginRoot, "package.json"), {
 		name: "@example/omo",
-		bin: { omo: "./dist/cli.js" },
+		bin: { omop: "./dist/cli.js" },
 	});
 	await writeFile(join(pluginRoot, "dist", "cli.js"), "#!/usr/bin/env node\n");
 	await writeFile(oldTarget, "#!/usr/bin/env node\n");
@@ -240,7 +240,7 @@ test("#given nested component declares reserved omo bin #when linking bins #then
 	await writeJson(join(componentRoot, "package.json"), {
 		name: "@example/pentest-loop",
 		bin: {
-			omo: "./dist/cli.js",
+			omop: "./dist/cli.js",
 			"omop-pentest-loop": "./dist/cli.js",
 		},
 	});

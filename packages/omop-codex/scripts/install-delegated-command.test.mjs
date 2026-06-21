@@ -74,5 +74,5 @@ test("#given a dry-run passthrough #when delegating #then logs the invocation wi
 
 	// then
 	assert.equal(ran, false);
-	assert.match(logged, /npx --yes --package oh-my-open-pentest omo doctor/);
+	assert.match(logged, /npx --yes --package oh-my-open-pentest omop doctor/);
 });

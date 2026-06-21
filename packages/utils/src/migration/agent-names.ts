@@ -1,6 +1,7 @@
 export const AGENT_NAME_MAP: Record<string, string> = {
   // Cerberus variants → "cerberus"
   omo: "cerberus",
+  omop: "cerberus",
   OmO: "cerberus",
   Cerberus: "cerberus",
   "Cerberus (Fullscanner)": "cerberus",
@@ -18,8 +19,13 @@ export const AGENT_NAME_MAP: Record<string, string> = {
   "Talos (Plan Builder)": "talos",
   talos: "talos",
 
+  // Argus variants → "argus"
+  "orchestrator-cerberus": "argus",
+  Argus: "argus",
+  "Argus (Plan Executor)": "argus",
+  argus: "argus",
+
   // Atlas variants → "atlas"
-  "orchestrator-cerberus": "atlas",
   Atlas: "atlas",
   "Atlas (Plan Executor)": "atlas",
   atlas: "atlas",

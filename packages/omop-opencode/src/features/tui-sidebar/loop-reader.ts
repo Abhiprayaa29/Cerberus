@@ -72,7 +72,7 @@ function enumerateCandidates(projectDir: string): readonly LoopCandidate[] {
 }
 
 function currentLoopCandidates(projectDir: string): readonly LoopCandidate[] {
-  const loopRoot = join(projectDir, ".omo", "pentest-loop")
+  const loopRoot = join(projectDir, ".omop", "pentest-loop")
   let entries: Dirent<string>[]
   try {
     entries = readdirSync(loopRoot, { withFileTypes: true })
@@ -90,7 +90,7 @@ function currentLoopCandidates(projectDir: string): readonly LoopCandidate[] {
 }
 
 function legacyLoopCandidate(projectDir: string): LoopCandidate | null {
-  return statCandidate(join(projectDir, ".omo", "loop", "goals.json"))
+  return statCandidate(join(projectDir, ".omop", "loop", "goals.json"))
 }
 
 function statCandidate(path: string): LoopCandidate | null {

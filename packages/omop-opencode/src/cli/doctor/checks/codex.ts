@@ -118,12 +118,12 @@ function buildCodexIssues(summary: CodexDoctorSummary): DoctorIssue[] {
   }
   if (summary.pluginRoot !== null && !summary.linkedBins.includes("omop")) {
     issues.push({
-      title: "omo runtime command is not linked",
+      title: "omop runtime command is not linked",
       description:
-        "The omo runtime wrapper is missing from the installer bin directory, so `omo sparkshell` and `omo pentest-loop` fail in Codex sessions. lazycodex-ai 4.8.0/4.8.1 installs removed the legacy omo bin without writing a replacement.",
+        "The omop runtime wrapper is missing from the installer bin directory, so `omop sparkshell` and `omop pentest-loop` fail in Codex sessions. lazycodex-ai 4.8.0/4.8.1 installs removed the legacy omo bin without writing a replacement.",
       fix: "Run: npx lazycodex-ai@latest install",
       severity: "error",
-      affects: ["omo sparkshell", "pentest-loop"],
+      affects: ["omop sparkshell", "pentest-loop"],
     })
   }
   if (!summary.config.pluginEnabled) {

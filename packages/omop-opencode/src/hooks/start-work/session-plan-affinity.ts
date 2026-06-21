@@ -3,7 +3,7 @@ import type { PluginInput } from "@opencode-ai/plugin"
 import { normalizeSDKResponse } from "../../shared"
 import { log } from "../../shared/logger"
 
-const PLAN_PATH_PATTERN = /[A-Za-z0-9_./\\:~-]*\.(?:cerberus|omo)[\\/]plans[\\/][A-Za-z0-9._/\\~-]+\.md/gi
+const PLAN_PATH_PATTERN = /[A-Za-z0-9_./\\:~-]*\.(?:cerberus|omop?)[\\/]plans[\\/][A-Za-z0-9._/\\~-]+\.md/gi
 
 interface SessionMessagePart {
   text?: string
@@ -88,9 +88,16 @@ export async function findRecentSessionPlanPath(input: {
     return null
   }
 
-  const availablePlansByKey = new Map(
-    input.availablePlans.map((planPath) => [normalizePlanPathKey(planPath), planPath]),
-  )
+  const availablePlansByKey = new Map<string, string>()
+  for (const planPath of input.availablePlans) {
+    const key = normalizePlanPathKey(planPath)
+    availablePlansByKey.set(key, planPath)
+    // Register omo↔omop alias so session messages using either name resolve to the file on disk
+    const aliasKey = key.includes("/.omop/")
+      ? key.replaceAll("/.omop/", "/.omo/")
+      : key.replaceAll("/.omo/", "/.omop/")
+    if (aliasKey !== key) availablePlansByKey.set(aliasKey, planPath)
+  }
   if (availablePlansByKey.size === 0) {
     return null
   }

@@ -64,7 +64,7 @@ describe("#given PR 4703 consensus removal", () => {
 
     // when
     const existingForbiddenPaths = forbiddenPaths.filter((path) => existsSync(join(REPO_ROOT, path)))
-    const sourceHits = collectSourceFiles(join(REPO_ROOT, "packages", "omo-opencode", "src"))
+    const sourceHits = collectSourceFiles(join(REPO_ROOT, "packages", "omop-opencode", "src"))
       .filter((path) => !path.endsWith("consensus-removal.test.ts"))
       .flatMap((path) => {
         const content = readFileSync(path, "utf8")

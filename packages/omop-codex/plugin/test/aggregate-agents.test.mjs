@@ -27,14 +27,14 @@ const lazycodexAgentInvariants = new Map([
 		"lazycodex-clone-fidelity-reviewer.toml",
 		{
 			effort: "xhigh",
-			includes: [/recommendation/, /blockers/, /\.omo\/evidence\/<goal>-clone-fidelity\.md/],
+			includes: [/recommendation/, /blockers/, /\.omop\/evidence\/<goal>-clone-fidelity\.md/],
 		},
 	],
 	[
 		"lazycodex-code-reviewer.toml",
 		{
 			effort: "xhigh",
-			includes: [/codeQualityStatus/, /recommendation/, /\.omo\/evidence\/<goal>-code-review\.md/],
+			includes: [/codeQualityStatus/, /recommendation/, /\.omop\/evidence\/<goal>-code-review\.md/],
 		},
 	],
 	[
@@ -48,7 +48,7 @@ const lazycodexAgentInvariants = new Map([
 		"lazycodex-gate-reviewer.toml",
 		{
 			effort: "xhigh",
-			includes: [/APPROVE\/REJECT/, /blockers/, /\.omo\/evidence\/<goal>-gate-review\.md/],
+			includes: [/APPROVE\/REJECT/, /blockers/, /\.omop\/evidence\/<goal>-gate-review\.md/],
 		},
 	],
 ]);
@@ -67,15 +67,15 @@ test("#given bundled Codex agents #when components/fullscan/agents directory is 
 
 	assert.deepEqual(entries, [
 		"explorer.toml",
+		"intel.toml",
 		"lazycodex-clone-fidelity-reviewer.toml",
 		"lazycodex-code-reviewer.toml",
 		"lazycodex-executor.toml",
 		"lazycodex-gate-reviewer.toml",
 		"lazycodex-qa-executor.toml",
-		"intel.toml",
-		"vanguard.toml",
-		"sentinel.toml",
 		"plan.toml",
+		"sentinel.toml",
+		"vanguard.toml",
 	]);
 
 	for (const fileName of entries) {
@@ -97,10 +97,10 @@ test("#given bundled Codex agents #when components/fullscan/agents directory is 
 test("#given planner agent prompt #when inspected #then generated artifacts stay under .omo", async () => {
 	const prompt = await readFile(join(root, "components", "fullscan", "agents", "plan.toml"), "utf8");
 
-	assert.match(prompt, /\.omo\/plans\/<slug>\.md/);
-	assert.match(prompt, /\.omo\/evidence\/task-<N>-<slug>\.<ext>/);
-	assert.doesNotMatch(prompt, /(?<!\.omo\/)plans\/<slug>\.md/);
-	assert.doesNotMatch(prompt, /(?<!\.omo\/)evidence\/task-/);
+	assert.match(prompt, /\.omop\/plans\/<slug>\.md/);
+	assert.match(prompt, /\.omop\/evidence\/task-<N>-<slug>\.<ext>/);
+	assert.doesNotMatch(prompt, /(?<!\.omop\/)plans\/<slug>\.md/);
+	assert.doesNotMatch(prompt, /(?<!\.omop\/)evidence\/task-/);
 });
 
 test("#given lazycodex agent prompts #when inspected #then each role pins model effort and evidence discipline", async () => {

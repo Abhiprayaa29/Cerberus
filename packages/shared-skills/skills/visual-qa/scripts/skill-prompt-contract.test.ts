@@ -4,7 +4,7 @@ import { dirname, join } from "node:path"
 
 const repoRoot = findRepoRoot(import.meta.dir)
 const sharedSkillPath = join(repoRoot, "packages", "shared-skills", "skills", "visual-qa", "SKILL.md")
-const codexSkillPath = join(repoRoot, "packages", "omo-codex", "plugin", "skills", "visual-qa", "SKILL.md")
+const codexSkillPath = join(repoRoot, "packages", "omop-codex", "plugin", "skills", "visual-qa", "SKILL.md")
 const referencesPath = join(
 	repoRoot,
 	"packages",

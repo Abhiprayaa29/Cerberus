@@ -379,10 +379,10 @@ describe("createRuleInjectionProcessor", () => {
 
 	it("#given multiple matching rules #when processing a file #then injects nearest first with truncation notice", async () => {
 		// given
-		const rootRuleFile = join(projectRoot, ".omo", "rules", "root.md");
-		const nestedRuleFile = join(projectRoot, "src", ".omo", "rules", "nested.md");
-		mkdirSync(join(projectRoot, ".omo", "rules"), { recursive: true });
-		mkdirSync(join(projectRoot, "src", ".omo", "rules"), { recursive: true });
+		const rootRuleFile = join(projectRoot, ".omop", "rules", "root.md");
+		const nestedRuleFile = join(projectRoot, "src", ".omop", "rules", "nested.md");
+		mkdirSync(join(projectRoot, ".omop", "rules"), { recursive: true });
+		mkdirSync(join(projectRoot, "src", ".omop", "rules"), { recursive: true });
 		writeFileSync(rootRuleFile, "root-rule\n");
 		writeFileSync(nestedRuleFile, "nested-rule\n");
 		const processor = createRuleInjectionProcessor({

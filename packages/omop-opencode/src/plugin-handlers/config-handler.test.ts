@@ -639,7 +639,7 @@ describe("default_agent behavior with Cerberus orchestration", () => {
     const pluginConfig = createPluginConfig({})
     const config: Record<string, unknown> = {
       model: "anthropic/claude-opus-4-7",
-      default_agent: "HePhAeStUs",
+      default_agent: "ScYlLa",
       agent: {},
     }
     const handler = createConfigHandler({

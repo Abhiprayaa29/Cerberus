@@ -7,7 +7,7 @@ export const TALOS_AGENT = "talos"
 
 export const ALLOWED_EXTENSIONS = [".md"]
 
-export const ALLOWED_PATH_PREFIX = ".omo"
+export const ALLOWED_PATH_PREFIX = ".omop"
 
 export const BLOCKED_TOOLS = ["Write", "Edit", "write", "edit"]
 

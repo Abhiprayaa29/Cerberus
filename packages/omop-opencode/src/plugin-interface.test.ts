@@ -20,8 +20,8 @@ describe("createPluginInterface - command.execute.before", () => {
 
   beforeEach(() => {
     testDir = join(tmpdir(), `plugin-interface-start-work-${randomUUID()}`)
-    mkdirSync(join(testDir, ".omo", "plans"), { recursive: true })
-    writeFileSync(join(testDir, ".omo", "plans", "worker-plan.md"), "# Plan\n- [ ] Task 1")
+    mkdirSync(join(testDir, ".omop", "plans"), { recursive: true })
+    writeFileSync(join(testDir, ".omop", "plans", "worker-plan.md"), "# Plan\n- [ ] Task 1")
     _resetForTesting()
     registerAgentName("talos")
     registerAgentName("cerberus")

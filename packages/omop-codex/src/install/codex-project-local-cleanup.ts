@@ -153,7 +153,8 @@ async function findProjectLocalCodexConfigs(
     throw new ProjectLocalCleanupStartDirectoryError(startDirectory)
   }
 
-  const codexHomeConfigPath = codexHome === undefined ? null : join(resolve(codexHome), "config.toml")
+  const codexHomeDir = codexHome === undefined ? null : resolve(codexHome)
+  const codexHomeConfigPath = codexHomeDir === null ? null : join(codexHomeDir, "config.toml")
   let current = resolve(startDirectory)
   const configPathsFromCwd: string[] = []
   while (true) {
@@ -162,6 +163,16 @@ async function findProjectLocalCodexConfigs(
       if (codexHomeConfigPath === null || resolve(configPath) !== codexHomeConfigPath) {
         configPathsFromCwd.push(configPath)
       }
+    }
+
+    if (codexHomeDir !== null && resolve(join(current, ".codex")) === codexHomeDir) {
+      return configPathsFromCwd.length === 0
+        ? null
+        : {
+            projectRoot: configPathsFromCwd.length === 0 ? current : dirname(dirname(configPathsFromCwd[0]!)),
+            configPaths: [...configPathsFromCwd].reverse(),
+            artifactRoots: artifactRootsForConfigPaths(configPathsFromCwd),
+          }
     }
 
     if (await exists(join(current, ".git"))) {

@@ -99,9 +99,9 @@ describe("project-discovery-dirs", () => {
 
     const { findProjectAgentsSkillDirs, findProjectClaudeSkillDirs } = await import("./project-discovery-dirs")
 
-    // when
-    const claudeDirectories = findProjectClaudeSkillDirs(childDir)
-    const agentsDirectories = findProjectAgentsSkillDirs(childDir)
+    // when — stop at TEST_DIR parent so global ~/.agents/skills on the host machine does not leak in
+    const claudeDirectories = findProjectClaudeSkillDirs(childDir, TEST_DIR)
+    const agentsDirectories = findProjectAgentsSkillDirs(childDir, TEST_DIR)
 
     // then
     expect(claudeDirectories).toEqual([canonicalPath(join(projectDir, ".claude", "skills"))])

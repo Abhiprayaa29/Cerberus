@@ -104,6 +104,7 @@ describe("createBuiltinSkills", () => {
 			expect(skills.find((s) => s.name === "security-research")).toBeDefined()
 			expect(skills.find((s) => s.name === "security-review")).toBeDefined()
 			expect(skills.find((s) => s.name === "visual-qa")).toBeDefined()
+			expect(skills.find((s) => s.name === "pentest-browser")).toBeDefined()
 		}
 	})
 
@@ -118,7 +119,7 @@ describe("createBuiltinSkills", () => {
 		expect(gitMaster).toBeDefined()
 	})
 
-	test("returns exactly 10 skills regardless of provider", () => {
+	test("returns exactly 11 skills regardless of provider", () => {
 		// given
 
 		// when
@@ -127,9 +128,9 @@ describe("createBuiltinSkills", () => {
 		const devBrowserSkills = createBuiltinSkills({ browserProvider: "dev-browser" })
 
 		// then
-		expect(defaultSkills).toHaveLength(10)
-		expect(agentBrowserSkills).toHaveLength(10)
-		expect(devBrowserSkills).toHaveLength(10)
+		expect(defaultSkills).toHaveLength(11)
+		expect(agentBrowserSkills).toHaveLength(11)
+		expect(devBrowserSkills).toHaveLength(11)
 	})
 
 	test("should exclude playwright when it is in disabledSkills", () => {
@@ -151,7 +152,8 @@ describe("createBuiltinSkills", () => {
 		expect(skills.map((s) => s.name)).toContain("security-research")
 		expect(skills.map((s) => s.name)).toContain("security-review")
 		expect(skills.map((s) => s.name)).toContain("visual-qa")
-		expect(skills.length).toBe(9)
+		expect(skills.map((s) => s.name)).toContain("pentest-browser")
+		expect(skills.length).toBe(10)
 	})
 
 	test("should exclude multiple skills when they are in disabledSkills", () => {
@@ -173,7 +175,8 @@ describe("createBuiltinSkills", () => {
 		expect(skills.map((s) => s.name)).toContain("security-research")
 		expect(skills.map((s) => s.name)).toContain("security-review")
 		expect(skills.map((s) => s.name)).toContain("visual-qa")
-		expect(skills.length).toBe(8)
+		expect(skills.map((s) => s.name)).toContain("pentest-browser")
+		expect(skills.length).toBe(9)
 	})
 
 	test("should return an empty array when all skills are disabled", () => {
@@ -190,6 +193,7 @@ describe("createBuiltinSkills", () => {
 				"security-research",
 				"security-review",
 				"visual-qa",
+				"pentest-browser",
 			]),
 		}
 
@@ -200,7 +204,7 @@ describe("createBuiltinSkills", () => {
 		expect(skills.length).toBe(0)
 	})
 
-	test("should return all 10 skills when disabledSkills set is empty", () => {
+	test("should return all 11 skills when disabledSkills set is empty", () => {
 		// #given
 		const options = { disabledSkills: new Set<string>() }
 
@@ -208,7 +212,7 @@ describe("createBuiltinSkills", () => {
 		const skills = createBuiltinSkills(options)
 
 		// #then
-		expect(skills.length).toBe(10)
+		expect(skills.length).toBe(11)
 	})
 
 	test("#given disabled_skills with debugging and visual-qa #when creating builtin skills #then both are filtered out", () => {

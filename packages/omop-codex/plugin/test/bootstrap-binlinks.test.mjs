@@ -197,7 +197,7 @@ test("#given platform win32 #when the worker setup links bins #then component bi
 		const shim = await readFile(join(fixture.binDir, `${COMPONENT_BIN_NAME}.cmd`), "utf8");
 		assert.match(shim, /@echo off/);
 		assert.ok(shim.includes(`node "${join(pluginRoot, "components", "toolbox", "dist", "cli.js")}"`));
-		const wrapper = await readFile(join(fixture.binDir, "omo.cmd"), "utf8");
+		const wrapper = await readFile(join(fixture.binDir, "omop.cmd"), "utf8");
 		assert.ok(wrapper.includes(join(pluginRoot, "dist", "cli", "index.js")));
 		await assert.rejects(() => lstat(join(fixture.binDir, COMPONENT_BIN_NAME)), "win32 must not leave posix symlinks behind");
 	});
@@ -211,7 +211,7 @@ test("#given a marketplace payload without dist/cli #when the worker setup runs 
 
 		assert.deepEqual(outcome.degraded, [OMOP_CLI_DEGRADED_ENTRY]);
 		await assert.rejects(() => lstat(join(fixture.binDir, "omop")), "no omo wrapper may be written without dist/cli");
-		await assert.rejects(() => lstat(join(fixture.binDir, "omo.cmd")), "no Windows omo wrapper may be written without dist/cli");
+		await assert.rejects(() => lstat(join(fixture.binDir, "omop.cmd")), "no Windows omo wrapper may be written without dist/cli");
 		await assertNoDanglingEntries(fixture.binDir);
 		const log = await readFile(join(fixture.pluginData, "bootstrap", "bootstrap.log"), "utf8");
 		const warning = JSON.parse(log)["warning"];
@@ -233,7 +233,7 @@ test("#given a payload shipping dist/cli #when the worker setup runs with no bin
 
 		assert.deepEqual(outcome.degraded, []);
 		const defaultBinDir = join(fixture.codexHome, "bin");
-		const wrapperName = process.platform === "win32" ? "omo.cmd" : "omop";
+		const wrapperName = process.platform === "win32" ? "omop.cmd" : "omop";
 		const wrapper = await readFile(join(defaultBinDir, wrapperName), "utf8");
 		assert.ok(wrapper.includes(join(pluginRoot, "dist", "cli", "index.js")));
 		if (process.platform !== "win32") {

@@ -202,7 +202,7 @@ describe("addPluginToOpenCodeConfig - single package writes", () => {
   it("rewrites quoted jsonc plugin field in place", async () => {
     // given
     testConfigPath = join(testConfigDir, "opencode.jsonc")
-    writeFileSync(testConfigPath, '{\n  "plugin": ["oh-my-open-pentest"]\n}\n', "utf-8")
+    writeFileSync(testConfigPath, '{\n  "plugin": ["oh-my-opencode"]\n}\n', "utf-8")
 
     // when
     const result = await addPluginToOpenCodeConfig("3.11.0")
@@ -211,7 +211,7 @@ describe("addPluginToOpenCodeConfig - single package writes", () => {
     expect(result.success).toBe(true)
     const savedContent = readFileSync(testConfigPath, "utf-8")
     expect(savedContent.includes('"plugin": [\n    "oh-my-open-pentest"\n  ]')).toBe(true)
-    expect(savedContent.includes("oh-my-open-pentest")).toBe(false)
+    expect(savedContent.includes("oh-my-opencode")).toBe(false)
   })
 
   it("mirrors an existing source plugin entry into profile configs", async () => {

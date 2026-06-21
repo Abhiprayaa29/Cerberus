@@ -22,7 +22,7 @@ You are starting a Cerberus work session.
 
   beforeEach(() => {
     testDir = join(tmpdir(), `start-work-hook-session-prefix-${randomUUID()}`)
-    mkdirSync(join(testDir, ".omo", "plans"), { recursive: true })
+    mkdirSync(join(testDir, ".omop", "plans"), { recursive: true })
     clearBoulderState(testDir)
   })
 
@@ -35,7 +35,7 @@ You are starting a Cerberus work session.
 
   test("#given raw chat session id #when processing start-work template #then boulder stores opencode-prefixed id", async () => {
     // given
-    writeFileSync(join(testDir, ".omo", "plans", "work.md"), "# Work\n- [ ] First task\n")
+    writeFileSync(join(testDir, ".omop", "plans", "work.md"), "# Work\n- [ ] First task\n")
     const hook = createStartWorkHook(unsafeTestValue<Parameters<typeof createStartWorkHook>[0]>({
       directory: testDir,
       client: {
@@ -58,7 +58,7 @@ You are starting a Cerberus work session.
 
   test("#given raw chat session id #when locating the recent session plan #then the SDK receives the bare ses id (#5285)", async () => {
     // given
-    writeFileSync(join(testDir, ".omo", "plans", "work.md"), "# Work\n- [ ] First task\n")
+    writeFileSync(join(testDir, ".omop", "plans", "work.md"), "# Work\n- [ ] First task\n")
     const sessionMessageIds: string[] = []
     const hook = createStartWorkHook(unsafeTestValue<Parameters<typeof createStartWorkHook>[0]>({
       directory: testDir,

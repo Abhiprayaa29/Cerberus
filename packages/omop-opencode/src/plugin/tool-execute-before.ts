@@ -12,7 +12,7 @@ import { readState, writeState } from "../hooks/pentest-loop/storage"
 
 import type { CreatedHooks } from "../create-hooks"
 
-function getLoopCommandArguments(args: Record<string, unknown>, command: "pentest-loop" | "pentest-loop"): string {
+function getLoopCommandArguments(args: Record<string, unknown>, command: "pentest-loop" | "ulw-loop"): string {
   const rawUserMessage = typeof args.user_message === "string" ? args.user_message.trim() : ""
   if (rawUserMessage) {
     return rawUserMessage
@@ -172,6 +172,7 @@ export function createToolExecuteBeforeHandler(args: {
           && hooks.ralphLoop.resumeLoop?.(sessionID) === true
         if (!resumed) {
           hooks.ralphLoop.startLoop(sessionID, parsedArguments.prompt, {
+            fullscan: true,
             maxIterations: parsedArguments.maxIterations,
             completionPromise: parsedArguments.completionPromise,
             strategy: parsedArguments.strategy,
@@ -179,19 +180,6 @@ export function createToolExecuteBeforeHandler(args: {
         }
       } else if (command === "cancel-ralph" && sessionID) {
         hooks.ralphLoop.cancelLoop(sessionID)
-      } else if (command === "pentest-loop" && sessionID) {
-        const rawArgs = getLoopCommandArguments(output.args, "pentest-loop")
-        const parsedArguments = parseRalphLoopArguments(rawArgs)
-        const resumed = isRalphLoopResumeArgument(rawArgs)
-          && hooks.ralphLoop.resumeLoop?.(sessionID) === true
-        if (!resumed) {
-          hooks.ralphLoop.startLoop(sessionID, parsedArguments.prompt, {
-            fullscan: true,
-            maxIterations: parsedArguments.maxIterations,
-            completionPromise: parsedArguments.completionPromise,
-            strategy: parsedArguments.strategy,
-          })
-        }
       }
     }
 

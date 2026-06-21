@@ -19,7 +19,7 @@ export async function checkCodexRuntimeWrapper(deps: CodexRuntimeWrapperDoctorDe
   const codexHome = resolve(deps.codexHome ?? process.env.CODEX_HOME ?? join(homedir(), ".codex"))
   const binDir = resolveCodexInstallerBinDir({ binDir: deps.binDir, codexHome, env: process.env })
   const platform = deps.platform ?? process.platform
-  const wrapperPath = join(binDir, platform === "win32" ? "omo.cmd" : "omop")
+  const wrapperPath = join(binDir, platform === "win32" ? "omop.cmd" : "omop")
   const wrapper = await readRuntimeWrapper(wrapperPath)
   const issues: DoctorIssue[] = []
 
@@ -27,11 +27,11 @@ export async function checkCodexRuntimeWrapper(deps: CodexRuntimeWrapperDoctorDe
     const targetPath = parseRuntimeTargetPath(wrapper)
     if (targetPath !== null && !existsSync(targetPath)) {
       issues.push({
-        title: "omo runtime wrapper target is missing",
-        description: `Generated omo runtime wrapper at ${wrapperPath} points to missing target ${targetPath}.`,
+        title: "omop runtime wrapper target is missing",
+        description: `Generated omop runtime wrapper at ${wrapperPath} points to missing target ${targetPath}.`,
         fix: `Run: ${REINSTALL_COMMAND}`,
         severity: "warning",
-        affects: ["omo sparkshell", "pentest-loop"],
+        affects: ["omop sparkshell", "pentest-loop"],
       })
     }
   }

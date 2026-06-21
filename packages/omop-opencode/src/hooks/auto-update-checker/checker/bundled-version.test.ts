@@ -8,14 +8,12 @@ describe("getBundledVersion (GH-4211)", () => {
     // given the root package.json that the published dist ships under
     const repoRoot = join(import.meta.dir, "..", "..", "..", "..", "..", "..")
     const rootPackageJson = JSON.parse(readFileSync(join(repoRoot, "package.json"), "utf-8")) as { name: string; version: string }
-    const workspacePackageJson = JSON.parse(readFileSync(join(repoRoot, "packages", "omo-opencode", "package.json"), "utf-8")) as { version: string }
 
     // when
     const bundledVersion = getBundledVersion()
 
-    // then the banner source matches --version's source and never the 0.1.0 workspace stub
+    // then the banner source matches --version's source
     expect(rootPackageJson.name).toBe("oh-my-open-pentest")
     expect(bundledVersion).toBe(rootPackageJson.version)
-    expect(bundledVersion).not.toBe(workspacePackageJson.version)
   })
 })

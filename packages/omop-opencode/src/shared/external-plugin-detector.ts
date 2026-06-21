@@ -29,9 +29,9 @@ const KNOWN_SKILL_PLUGINS = [
 ]
 
 const OMOP_PACKAGE_PLUGINS = [
+  "oh-my-opencode",
   "oh-my-open-pentest",
-  "oh-my-open-pentest",
-  "@code-yeongyu/oh-my-open-pentest",
+  "@code-yeongyu/oh-my-opencode",
   "@code-yeongyu/oh-my-open-pentest",
 ]
 
@@ -54,7 +54,7 @@ function isOmoFilePlugin(entry: string): boolean {
   const normalized = entry.toLowerCase().replaceAll("\\", "/")
   if (!normalized.startsWith("file://")) return false
 
-  return /\/(omo(?:-[^/]*)?|oh-my-open-pentest|oh-my-open-pentest)\/(src|dist)\/index\.(ts|js)$/.test(normalized)
+  return /\/(omop?(?:-[^/]*)?|oh-my-opencode|oh-my-open-pentest)\/(src|dist)\/index\.(ts|js)$/.test(normalized)
 }
 
 function matchesOmoPlugin(entry: string): string | null {

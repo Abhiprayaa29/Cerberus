@@ -27,7 +27,7 @@ describe("buildStartWorkContextInfo", () => {
   }
 
   function writePlan(planName: string, content: string): string {
-    const plansDirectory = join(testDirectory, ".omo", "plans")
+    const plansDirectory = join(testDirectory, ".omop", "plans")
     mkdirSync(plansDirectory, { recursive: true })
     const planPath = join(plansDirectory, `${planName}.md`)
     writeFileSync(planPath, content)
@@ -277,7 +277,7 @@ describe("buildStartWorkContextInfo", () => {
   test("#given one active work and stale preferred plan #when starting work #then active work resumes", () => {
     // given
     const activePlanPath = writePlan("single-active-plan", "## TODOs\n- [ ] 1. Continue")
-    const stalePreferredPlanPath = join(testDirectory, ".omo", "plans", "missing-plan.md")
+    const stalePreferredPlanPath = join(testDirectory, ".omop", "plans", "missing-plan.md")
     const initialState = createBoulderState(activePlanPath, "session-active", "argus", undefined)
     writeBoulderState(testDirectory, initialState)
 
@@ -363,7 +363,7 @@ describe("buildStartWorkContextInfo", () => {
     writePlan("new-plan-c", "## TODOs\n- [ ] 1. Work C")
 
     const initialState = createBoulderState(
-      join(testDirectory, ".omo", "plans", "work-a.md"),
+      join(testDirectory, ".omop", "plans", "work-a.md"),
       "session-a",
       "argus",
       "/tmp/worktree-a",

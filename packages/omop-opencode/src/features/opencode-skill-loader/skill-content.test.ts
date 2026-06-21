@@ -236,7 +236,7 @@ describe("resolveSkillContentAsync", () => {
 
 	it("is case-insensitive for short name matching async", async () => {
 		// given: a nested skill with lowercase name
-		createNestedSkill(testConfigDir, "toolkit", "systematic-vulnerability analysis", "case insensitive match")
+		createNestedSkill(testConfigDir, "toolkit", "systematic-debugging", "case insensitive match")
 
 		// when: resolving by uppercase short name
 		const result = await resolveSkillContentAsync("Systematic-Debugging")

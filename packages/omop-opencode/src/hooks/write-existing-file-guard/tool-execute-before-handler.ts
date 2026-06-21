@@ -86,7 +86,7 @@ function invalidateOtherSessions(
 }
 
 export function isOmoWorkspacePath(canonicalPath: string): boolean {
-  return /(^|[/\\])\.omo([/\\]|$)/.test(canonicalPath)
+  return /(^|[/\\])\.omop?([/\\]|$)/.test(canonicalPath)
 }
 
 export async function handleWriteExistingFileGuardToolExecuteBefore(params: {

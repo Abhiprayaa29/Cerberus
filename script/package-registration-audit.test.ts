@@ -32,7 +32,7 @@ const mcpPackagePaths: readonly string[] = [
 const adapterPackagePaths: readonly string[] = ["packages/omop-codex", "packages/omop-opencode"] as const
 const skillPackagePaths: readonly string[] = ["packages/shared-skills"] as const
 const shimSourceRoots: readonly string[] = ["packages/omop-opencode/src", "packages/omop-codex/src"] as const
-const reExportShimFirstLinePattern = /^export (\*|\{).*from ["'](@oh-my-open-pentest\/[^/"']+)/
+const reExportShimFirstLinePattern = /^export (\*|\{).*from ["'](@omop\/[^/"']+)/
 
 const layerRanks = {
   skill: 1,
@@ -223,7 +223,7 @@ describe("package registration audit", () => {
       isRootManagedTypecheckPackage,
     )
     const actualDevDependencyNames = Object.entries(root.devDependencies)
-      .filter((entry) => entry[1] === "workspace:*" && entry[0].startsWith("@oh-my-open-pentest/"))
+      .filter((entry) => (entry[1] === "workspace:*" || entry[1] === "*") && entry[0].startsWith("@omop/"))
       .map((entry) => entry[0])
       .toSorted()
 

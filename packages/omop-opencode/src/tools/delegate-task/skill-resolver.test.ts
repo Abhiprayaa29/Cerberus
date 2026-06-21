@@ -66,7 +66,7 @@ describe("resolveSkillContent — nativeSkills integration", () => {
     mkdirSync(skillsDir, { recursive: true })
     writeFileSync(
       join(skillsDir, "SKILL.md"),
-      "---\nname: shared-name-test-skill\ndescription: from disk\n---\nOMO_DISK_BODY",
+      "---\nname: shared-name-test-skill\ndescription: from disk\n---\nOMOP_DISK_BODY",
     )
     const native = makeNativeSkill(
       "shared-name-test-skill",
@@ -215,7 +215,7 @@ describe("resolveSkillContent — nativeSkills integration", () => {
     )
 
     // when
-    const result = await resolveSkillContent(["SYSTEMATIC-DEBUGGING"], {
+    const result = await resolveSkillContent(["SYSTEMATIC-VULNERABILITY ANALYSIS"], {
       directory: TEST_DIR,
     })
 

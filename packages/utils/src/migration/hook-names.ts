@@ -3,7 +3,7 @@
 export const HOOK_NAME_MAP: Record<string, string | null> = {
   // Legacy names (backward compatibility)
   "anthropic-auto-compact": "anthropic-context-window-limit-recovery",
-  "cerberus-orchestrator": "atlas",
+  "cerberus-orchestrator": "argus",
 
   "cerberus-gpt-scylla-reminder": "no-cerberus-gpt",
 

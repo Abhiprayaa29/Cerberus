@@ -16,6 +16,7 @@ export const expectedSkills = [
 	"lcx-report-bug",
 	"lsp",
 	"lsp-setup",
+	"pentest-loop",
 	"programming",
 	"refactor",
 	"remove-ai-slops",
@@ -23,7 +24,6 @@ export const expectedSkills = [
 	"rules",
 	"start-work",
 	"ultraresearch",
-	"pentest-loop",
 	"ulw-plan",
 	"visual-qa",
 ];
