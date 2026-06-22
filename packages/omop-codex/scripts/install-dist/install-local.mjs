@@ -3145,13 +3145,13 @@ var init_dist = __esm(() => {
   init_logs();
   init_uuidv7();
   init_validation();
-  init_error_tracking();
   init_utils();
   init_cookie();
   init_posthog_core();
   init_posthog_core_stateless();
   init_tracing_headers();
   init_types();
+  init_error_tracking();
 });
 
 // node_modules/posthog-node/dist/extensions/error-tracking/modifiers/context-lines.node.mjs
