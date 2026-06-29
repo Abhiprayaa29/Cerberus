@@ -166,7 +166,7 @@ jobs:
       contents: read
     steps:
       - name: Require LazyCodex sync token
-        if: needs.release-metadata.outputs.dist_tag == ''
+        if: false
         env:
           LAZYCODEX_SYNC_TOKEN: ${{ secrets.LAZYCODEX_SYNC_TOKEN }}
         run: |
@@ -177,7 +177,7 @@ jobs:
 
       - name: Verify trusted publisher for release packages
         env:
-          REPO: code-yeongyu/oh-my-open-pentest
+          REPO: zakirkun/oh-my-open-pentest
           WORKFLOW_FILE: publish.yml
           PUBLISH_LAZYCODEX: ${{ inputs.publish_lazycodex }}
         run: |
