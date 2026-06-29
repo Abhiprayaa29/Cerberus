@@ -86,27 +86,27 @@ jobs:
           PLATFORM_KEY="${PLATFORM_KEY//-/_}"
           
           # Check oh-my-open-pentest
-          OC_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://registry.npmjs.org/oh-my-open-pentest-${{ matrix.platform }}/${VERSION}")
+          OC_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://registry.npmjs.org/omop-${{ matrix.platform }}/${VERSION}")
           # Check oh-my-open-pentest
-          OA_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://registry.npmjs.org/oh-my-open-pentest-${{ matrix.platform }}/${VERSION}")
+          OA_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://registry.npmjs.org/omop-${{ matrix.platform }}/${VERSION}")
           
-          echo "oh-my-open-pentest-${{ matrix.platform }}@${VERSION}: ${OC_STATUS}"
-          echo "oh-my-open-pentest-${{ matrix.platform }}@${VERSION}: ${OA_STATUS}"
+          echo "omop-${{ matrix.platform }}@${VERSION}: ${OC_STATUS}"
+          echo "omop-${{ matrix.platform }}@${VERSION}: ${OA_STATUS}"
           
           if [ "$OC_STATUS" = "200" ]; then
             echo "skip_opencode=true" >> "$GITHUB_OUTPUT"
-            echo "? oh-my-open-pentest-${{ matrix.platform }}@${VERSION} already published"
+            echo "? omop-${{ matrix.platform }}@${VERSION} already published"
           else
             echo "skip_opencode=false" >> "$GITHUB_OUTPUT"
-            echo "? oh-my-open-pentest-${{ matrix.platform }}@${VERSION} needs publishing"
+            echo "? omop-${{ matrix.platform }}@${VERSION} needs publishing"
           fi
           
           if [ "$OA_STATUS" = "200" ]; then
             echo "skip_openagent=true" >> "$GITHUB_OUTPUT"
-            echo "? oh-my-open-pentest-${{ matrix.platform }}@${VERSION} already published"
+            echo "? omop-${{ matrix.platform }}@${VERSION} already published"
           else
             echo "skip_openagent=false" >> "$GITHUB_OUTPUT"
-            echo "? oh-my-open-pentest-${{ matrix.platform }}@${VERSION} needs publishing"
+            echo "? omop-${{ matrix.platform }}@${VERSION} needs publishing"
           fi
           
           # Skip build only if BOTH are already published
@@ -126,7 +126,7 @@ jobs:
           shell: bash
           command: |
             PLATFORM="${{ matrix.platform }}"
-            PACKAGE_DIR="packages/oh-my-open-pentest-${PLATFORM}"
+            PACKAGE_DIR="packages/omop-${PLATFORM}"
             bun run build:binaries
             OUTPUT="${PACKAGE_DIR}/bin/oh-my-open-pentest.js"
             echo "Built launcher:"
@@ -137,7 +137,7 @@ jobs:
         env:
           VERSION: ${{ steps.validate.outputs.version }}
         run: |
-          cd "packages/oh-my-open-pentest-${{ matrix.platform }}"
+          cd "packages/omop-${{ matrix.platform }}"
           jq --arg v "$VERSION" '.version = $v' package.json > tmp.json && mv tmp.json package.json
 
       - name: Set root package version
@@ -150,7 +150,7 @@ jobs:
       - name: Verify darwin launcher
         if: steps.check.outputs.skip != 'true' && startsWith(matrix.platform, 'darwin-')
         run: |
-          LAUNCHER="packages/oh-my-open-pentest-${{ matrix.platform }}/bin/oh-my-open-pentest.js"
+          LAUNCHER="packages/omop-${{ matrix.platform }}/bin/oh-my-open-pentest.js"
           file "$LAUNCHER"
           head -n 1 "$LAUNCHER" | grep -F "#!/usr/bin/env node"
 
@@ -158,7 +158,7 @@ jobs:
         if: steps.check.outputs.skip != 'true'
         run: |
           PLATFORM="${{ matrix.platform }}"
-          PACKAGE_DIR="packages/oh-my-open-pentest-${PLATFORM}"
+          PACKAGE_DIR="packages/omop-${PLATFORM}"
           cd "$PACKAGE_DIR"
           
           if [[ "$PLATFORM" == windows-* ]]; then
@@ -235,19 +235,19 @@ jobs:
         env:
           VERSION: ${{ steps.validate.outputs.version }}
         run: |
-          OC_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://registry.npmjs.org/oh-my-open-pentest-${{ matrix.platform }}/${VERSION}")
-          OA_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://registry.npmjs.org/oh-my-open-pentest-${{ matrix.platform }}/${VERSION}")
+          OC_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://registry.npmjs.org/omop-${{ matrix.platform }}/${VERSION}")
+          OA_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://registry.npmjs.org/omop-${{ matrix.platform }}/${VERSION}")
           
           if [ "$OC_STATUS" = "200" ]; then
             echo "skip_opencode=true" >> "$GITHUB_OUTPUT"
-            echo "? oh-my-open-pentest-${{ matrix.platform }}@${VERSION} already published"
+            echo "? omop-${{ matrix.platform }}@${VERSION} already published"
           else
             echo "skip_opencode=false" >> "$GITHUB_OUTPUT"
           fi
           
           if [ "$OA_STATUS" = "200" ]; then
             echo "skip_openagent=true" >> "$GITHUB_OUTPUT"
-            echo "? oh-my-open-pentest-${{ matrix.platform }}@${VERSION} already published"
+            echo "? omop-${{ matrix.platform }}@${VERSION} already published"
           else
             echo "skip_openagent=false" >> "$GITHUB_OUTPUT"
           fi
@@ -271,7 +271,7 @@ jobs:
         if: steps.check.outputs.skip_all != 'true' && steps.download.outcome == 'success'
         run: |
           PLATFORM="${{ matrix.platform }}"
-          PACKAGE_DIR="packages/oh-my-open-pentest-${PLATFORM}"
+          PACKAGE_DIR="packages/omop-${PLATFORM}"
           mkdir -p "$PACKAGE_DIR"
           
           if [[ "$PLATFORM" == windows-* ]]; then
@@ -312,7 +312,7 @@ jobs:
           DIST_TAG: ${{ steps.validate.outputs.dist_tag }}
           NPM_CONFIG_PROVENANCE: true
         run: |
-          cd "packages/oh-my-open-pentest-${{ matrix.platform }}"
+          cd "packages/omop-${{ matrix.platform }}"
 
           if [ -n "$DIST_TAG" ]; then
             npm publish --access public --provenance --tag "$DIST_TAG" --loglevel verbose
@@ -321,16 +321,16 @@ jobs:
           fi
         timeout-minutes: 15
 
-      - name: Publish oh-my-open-pentest-${{ matrix.platform }}
+      - name: Publish omop-${{ matrix.platform }}
         if: always() && steps.check.outputs.skip_openagent != 'true' && steps.download.outcome == 'success'
         env:
           DIST_TAG: ${{ steps.validate.outputs.dist_tag }}
           NPM_CONFIG_PROVENANCE: true
         run: |
-          cd "packages/oh-my-open-pentest-${{ matrix.platform }}"
+          cd "packages/omop-${{ matrix.platform }}"
 
           # Rename package for oh-my-open-pentest
-          jq --arg name "oh-my-open-pentest-${{ matrix.platform }}" \
+          jq --arg name "omop-${{ matrix.platform }}" \
              --arg desc "Platform-specific binary for oh-my-open-pentest (${{ matrix.platform }})" \
              '.name = $name | .description = $desc' \
              package.json > tmp.json && mv tmp.json package.json
