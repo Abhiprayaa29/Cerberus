@@ -1,4 +1,4 @@
-﻿name: publish-platform
+name: publish-platform
 run-name: "platform packages ${{ inputs.version }}"
 
 on:
@@ -60,10 +60,7 @@ jobs:
           INPUT_VERSION: ${{ inputs.version }}
           INPUT_DIST_TAG: ${{ inputs.dist_tag }}
         run: |
-          VERSION="$INPUT_VERSION"
-          DIST_TAG="$INPUT_DIST_TAG"
-
-          if ! [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z]+(\.[0-9A-Za-z]+)*)?$ ]]; then
+          VERSION="$INPUT_VERSION"`r`n          DIST_TAG="$INPUT_DIST_TAG"`r`n          echo "Debug: VERSION='$VERSION' DIST_TAG='$DIST_TAG'"`r`n`r`n          if ! [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z]+(\.[0-9A-Za-z]+)*)?$ ]]; then
             echo "::error::Invalid version: $VERSION"
             exit 1
           fi
@@ -94,18 +91,18 @@ jobs:
           
           if [ "$OC_STATUS" = "200" ]; then
             echo "skip_opencode=true" >> "$GITHUB_OUTPUT"
-            echo "✓ oh-my-open-pentest-${{ matrix.platform }}@${VERSION} already published"
+            echo "? oh-my-open-pentest-${{ matrix.platform }}@${VERSION} already published"
           else
             echo "skip_opencode=false" >> "$GITHUB_OUTPUT"
-            echo "→ oh-my-open-pentest-${{ matrix.platform }}@${VERSION} needs publishing"
+            echo "? oh-my-open-pentest-${{ matrix.platform }}@${VERSION} needs publishing"
           fi
           
           if [ "$OA_STATUS" = "200" ]; then
             echo "skip_openagent=true" >> "$GITHUB_OUTPUT"
-            echo "✓ oh-my-open-pentest-${{ matrix.platform }}@${VERSION} already published"
+            echo "? oh-my-open-pentest-${{ matrix.platform }}@${VERSION} already published"
           else
             echo "skip_openagent=false" >> "$GITHUB_OUTPUT"
-            echo "→ oh-my-open-pentest-${{ matrix.platform }}@${VERSION} needs publishing"
+            echo "? oh-my-open-pentest-${{ matrix.platform }}@${VERSION} needs publishing"
           fi
           
           # Skip build only if BOTH are already published
@@ -212,10 +209,7 @@ jobs:
           INPUT_VERSION: ${{ inputs.version }}
           INPUT_DIST_TAG: ${{ inputs.dist_tag }}
         run: |
-          VERSION="$INPUT_VERSION"
-          DIST_TAG="$INPUT_DIST_TAG"
-
-          if ! [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z]+(\.[0-9A-Za-z]+)*)?$ ]]; then
+          VERSION="$INPUT_VERSION"`r`n          DIST_TAG="$INPUT_DIST_TAG"`r`n          echo "Debug: VERSION='$VERSION' DIST_TAG='$DIST_TAG'"`r`n`r`n          if ! [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z]+(\.[0-9A-Za-z]+)*)?$ ]]; then
             echo "::error::Invalid version: $VERSION"
             exit 1
           fi
@@ -238,14 +232,14 @@ jobs:
           
           if [ "$OC_STATUS" = "200" ]; then
             echo "skip_opencode=true" >> "$GITHUB_OUTPUT"
-            echo "✓ oh-my-open-pentest-${{ matrix.platform }}@${VERSION} already published"
+            echo "? oh-my-open-pentest-${{ matrix.platform }}@${VERSION} already published"
           else
             echo "skip_opencode=false" >> "$GITHUB_OUTPUT"
           fi
           
           if [ "$OA_STATUS" = "200" ]; then
             echo "skip_openagent=true" >> "$GITHUB_OUTPUT"
-            echo "✓ oh-my-open-pentest-${{ matrix.platform }}@${VERSION} already published"
+            echo "? oh-my-open-pentest-${{ matrix.platform }}@${VERSION} already published"
           else
             echo "skip_openagent=false" >> "$GITHUB_OUTPUT"
           fi
