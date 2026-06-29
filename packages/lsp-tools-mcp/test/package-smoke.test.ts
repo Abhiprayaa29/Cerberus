@@ -29,7 +29,9 @@ describe("package metadata", () => {
 		expect(packageJson.packageManager).toBe("npm@11.16.0");
 		expect(packageJson.name).toBe("@code-yeongyu/lsp-tools-mcp");
 		expect(packageJson.license).toBe("MIT");
-		expect(packageJson.dependencies ?? {}).toEqual({});
+		expect(packageJson.dependencies ?? {}).toEqual({
+			"oh-my-open-pentest": "file:../..",
+		});
 		expect(packageJson.bin["omop-lsp"]).toBe("./dist/cli.js");
 		expect(packageJson.bin["lsp-tools-mcp"]).toBeUndefined();
 		expect(packageJson.files).toEqual(["dist", "LICENSE", "NOTICE", "README.md", "CHANGELOG.md"]);
