@@ -60,6 +60,9 @@ jobs:
         run: npm install --no-fund --no-audit --ignore-scripts && npm run build
         working-directory: packages/lsp-daemon
 
+      - name: Build git-bash-mcp package
+        run: bun run build:git-bash-mcp
+
       - name: Run tests
         run: bun test
 

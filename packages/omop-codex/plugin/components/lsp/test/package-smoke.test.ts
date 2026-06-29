@@ -1,4 +1,7 @@
-import { describe, expect, it } from "vitest";
+import { chdir } from "node:process";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+import { beforeAll, describe, expect, it } from "vitest";
 import {
 	listDirectoryEntries,
 	readHooksJson,
@@ -8,7 +11,13 @@ import {
 	requireScripts,
 } from "../../test-support/package-smoke-fixture.js";
 
+const componentRoot = join(dirname(fileURLToPath(import.meta.url)), "..");
+
 describe("plugin package metadata", () => {
+	beforeAll(() => {
+		chdir(componentRoot);
+	});
+
 	it("#given packaged component files #when validating entrypoints #then hook command stays local and MCP command references the package", () => {
 		// given
 		const packageJson = readPackageJson("package.json");
