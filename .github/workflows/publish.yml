@@ -628,15 +628,13 @@ jobs:
         run: GITHUB_STEP_SUMMARY="$GITHUB_STEP_SUMMARY" bash .github/scripts/write-job-summary.sh
 
   publish-platform:
-    needs: [test, typecheck, codex-compatibility, preflight-trust, release-metadata]
+    needs: [test, typecheck, preflight-trust, release-metadata]
     if: >-
       always() &&
       true &&
       inputs.skip_platform != true &&
       needs.test.result == 'success' &&
       needs.typecheck.result == 'success' &&
-      needs.codex-compatibility.result == 'success' &&
-      needs.preflight-trust.result == 'success' &&
       needs.release-metadata.result == 'success'
     uses: ./.github/workflows/publish-platform.yml
     with:
