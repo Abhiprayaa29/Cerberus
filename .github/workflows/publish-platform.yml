@@ -60,7 +60,11 @@ jobs:
           INPUT_VERSION: ${{ inputs.version }}
           INPUT_DIST_TAG: ${{ inputs.dist_tag }}
         run: |
-          VERSION="$INPUT_VERSION"`r`n          DIST_TAG="$INPUT_DIST_TAG"`r`n          echo "Debug: VERSION='$VERSION' DIST_TAG='$DIST_TAG'"`r`n`r`n          if ! [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z]+(\.[0-9A-Za-z]+)*)?$ ]]; then
+          VERSION="$INPUT_VERSION"
+          DIST_TAG="$INPUT_DIST_TAG"
+          echo "Debug: VERSION='$VERSION' DIST_TAG='$DIST_TAG'"
+
+          if ! [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z]+(\.[0-9A-Za-z]+)*)?$ ]]; then
             echo "::error::Invalid version: $VERSION"
             exit 1
           fi
@@ -209,7 +213,11 @@ jobs:
           INPUT_VERSION: ${{ inputs.version }}
           INPUT_DIST_TAG: ${{ inputs.dist_tag }}
         run: |
-          VERSION="$INPUT_VERSION"`r`n          DIST_TAG="$INPUT_DIST_TAG"`r`n          echo "Debug: VERSION='$VERSION' DIST_TAG='$DIST_TAG'"`r`n`r`n          if ! [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z]+(\.[0-9A-Za-z]+)*)?$ ]]; then
+          VERSION="$INPUT_VERSION"
+          DIST_TAG="$INPUT_DIST_TAG"
+          echo "Debug: VERSION='$VERSION' DIST_TAG='$DIST_TAG'"
+
+          if ! [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z]+(\.[0-9A-Za-z]+)*)?$ ]]; then
             echo "::error::Invalid version: $VERSION"
             exit 1
           fi
