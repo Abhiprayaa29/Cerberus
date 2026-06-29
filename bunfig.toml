@@ -1,6 +1,6 @@
 [test]
 preload = ["./test-setup.ts"]
-pathIgnorePatterns = ["packages/web/**", "packages/lsp-tools-mcp/**", "packages/lsp-daemon/**", "packages/omop-codex/**", "script/*lazycodex*", "script/*codex*", "script/package-layout*", "script/publish-lazycodex*"]
+pathIgnorePatterns = ["packages/web/", "packages/lsp-tools-mcp/", "packages/lsp-daemon/", "packages/omop-codex/", "script/.*lazycodex", "script/.*codex", "script/package-layout", "script/publish-lazycodex"]
 
 [loader]
 ".md" = "text"

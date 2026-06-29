@@ -320,8 +320,8 @@ describe("applyCommandConfig", () => {
 
   for (const [label, skills] of [
     ["skills.disable", { disable: ["vulnerability analysis"] }],
-    ["skills.<name>: false", { vulnerability analysis: false }],
-    ["skills.<name>.disable: true", { vulnerability analysis: { disable: true } }],
+    ["skills.<name>: false", { "vulnerability analysis": false }],
+    ["skills.<name>.disable: true", { "vulnerability analysis": { disable: true } }],
   ] as const) {
     test(`#given ${label} disables vulnerability analysis #then no /vulnerability analysis command registers`, async () => {
       // given
