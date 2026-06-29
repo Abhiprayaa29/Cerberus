@@ -64,7 +64,7 @@ jobs:
         run: bun run build:git-bash-mcp
 
       - name: Run tests
-        run: bun test
+        run: bun test packages/omop-opencode packages/rules-engine packages/delegate-core packages/mcp-stdio-core packages/mcp-client-core packages/lsp-core packages/utils packages/model-core packages/prompts-core packages/comment-checker-core packages/hashline-core packages/tmux-core packages/team-core packages/openclaw-core packages/boulder-state packages/telemetry-core packages/claude-code-compat-core packages/skills-loader-core packages/agents-md-core packages/git-bash-mcp packages/shared-skills
 
       - name: Write job summary
         if: always()
