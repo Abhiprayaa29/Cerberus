@@ -27,7 +27,10 @@ test("#given aggregate MCP config #when inspected #then code MCPs reference pack
 	// then
 	assert.deepEqual(codeMcpNames, ["codegraph", "git_bash", "lsp"]);
 	assert.equal(packageJson.workspaces.includes("components/lsp/packages/lsp-tools-mcp"), false);
-	assert.deepEqual(packageJson.dependencies, { "@omop/shared-skills": "file:../../shared-skills" });
+	assert.deepEqual(packageJson.dependencies, {
+		"@omop/shared-skills": "file:../../shared-skills",
+		"oh-my-open-pentest": "file:../../..",
+	});
 	assert.doesNotMatch(bundledMcpBuildScript, new RegExp(["ast", "grep", "mcp"].join("-")));
 	assert.match(bundledMcpBuildScript, /git-bash-mcp/);
 	assert.doesNotMatch(packageJson.scripts.build, /--workspaces/);
