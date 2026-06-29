@@ -116,21 +116,6 @@ jobs:
             echo "skip=false" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Update version in package.json
-        if: steps.check.outputs.skip != 'true'
-        env:
-          VERSION: ${{ steps.validate.outputs.version }}
-        run: |
-          cd "packages/oh-my-open-pentest-${{ matrix.platform }}"
-          jq --arg v "$VERSION" '.version = $v' package.json > tmp.json && mv tmp.json package.json
-
-      - name: Set root package version
-        if: steps.check.outputs.skip != 'true'
-        env:
-          VERSION: ${{ steps.validate.outputs.version }}
-        run: |
-          jq --arg v "$VERSION" '.version = $v' package.json > tmp.json && mv tmp.json package.json
-
       - name: Build launcher
         if: steps.check.outputs.skip != 'true'
         uses: nick-fields/retry@v4
@@ -146,6 +131,21 @@ jobs:
             OUTPUT="${PACKAGE_DIR}/bin/oh-my-open-pentest.js"
             echo "Built launcher:"
             ls -lh "$OUTPUT"
+
+      - name: Update version in package.json
+        if: steps.check.outputs.skip != 'true'
+        env:
+          VERSION: ${{ steps.validate.outputs.version }}
+        run: |
+          cd "packages/oh-my-open-pentest-${{ matrix.platform }}"
+          jq --arg v "$VERSION" '.version = $v' package.json > tmp.json && mv tmp.json package.json
+
+      - name: Set root package version
+        if: steps.check.outputs.skip != 'true'
+        env:
+          VERSION: ${{ steps.validate.outputs.version }}
+        run: |
+          jq --arg v "$VERSION" '.version = $v' package.json > tmp.json && mv tmp.json package.json
 
       - name: Verify darwin launcher
         if: steps.check.outputs.skip != 'true' && startsWith(matrix.platform, 'darwin-')
