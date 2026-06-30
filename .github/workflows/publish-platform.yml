@@ -126,7 +126,7 @@ jobs:
           shell: bash
           command: |
             PLATFORM="${{ matrix.platform }}"
-            PACKAGE_DIR="packages/@wibu-gaptek/oh-my-open-pentest-${PLATFORM}"
+            PACKAGE_DIR="packages/omop-${PLATFORM}"
             bun run build:binaries
             OUTPUT="${PACKAGE_DIR}/bin/oh-my-open-pentest.js"
             echo "Built launcher:"
@@ -158,7 +158,7 @@ jobs:
         if: steps.check.outputs.skip != 'true'
         run: |
           PLATFORM="${{ matrix.platform }}"
-          PACKAGE_DIR="packages/@wibu-gaptek/oh-my-open-pentest-${PLATFORM}"
+          PACKAGE_DIR="packages/omop-${PLATFORM}"
           cd "$PACKAGE_DIR"
           
           if [[ "$PLATFORM" == windows-* ]]; then
@@ -271,7 +271,7 @@ jobs:
         if: steps.check.outputs.skip_all != 'true' && steps.download.outcome == 'success'
         run: |
           PLATFORM="${{ matrix.platform }}"
-          PACKAGE_DIR="packages/@wibu-gaptek/oh-my-open-pentest-${PLATFORM}"
+          PACKAGE_DIR="packages/omop-${PLATFORM}"
           mkdir -p "$PACKAGE_DIR"
           
           if [[ "$PLATFORM" == windows-* ]]; then
@@ -301,7 +301,7 @@ jobs:
           DIST_TAG: ${{ steps.validate.outputs.dist_tag }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
-          cd "packages/@wibu-gaptek/oh-my-open-pentest-${{ matrix.platform }}"
+          cd "packages/omop-${{ matrix.platform }}"
 
           jq --arg name "@wibu-gaptek/oh-my-open-pentest-${{ matrix.platform }}" \
              --arg desc "Platform-specific binary for oh-my-open-pentest (${{ matrix.platform }})" \
