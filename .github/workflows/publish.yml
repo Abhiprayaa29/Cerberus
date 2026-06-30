@@ -443,35 +443,6 @@ jobs:
             npm publish --access public --provenance --tag latest --loglevel verbose
           fi
 
-      - name: Publish oh-my-open-pentest
-        if: steps.check-openagent.outputs.skip != 'true'
-        env:
-          VERSION: ${{ needs.release-metadata.outputs.version }}
-          DIST_TAG: ${{ needs.release-metadata.outputs.dist_tag }}
-          NPM_CONFIG_PROVENANCE: true
-        run: |
-          # Update package name, version, and optionalDependencies for oh-my-open-pentest
-          jq --arg v "$VERSION" '
-            .name = "oh-my-open-pentest" |
-            .version = $v |
-            .optionalDependencies = (
-              .optionalDependencies | to_entries |
-              map(.key = (.key | sub("^oh-my-open-pentest-"; "oh-my-open-pentest-")) | .value = $v) |
-              from_entries
-            )
-          ' package.json > tmp.json && mv tmp.json package.json
-
-          if [ -n "$DIST_TAG" ]; then
-            npm publish --access public --provenance --tag "$DIST_TAG" --loglevel verbose
-          else
-            npm publish --access public --provenance --tag latest --loglevel verbose
-          fi
-
-      - name: Restore package.json
-        if: always() && steps.check-openagent.outputs.skip != 'true'
-        run: |
-          git checkout -- package.json
-
       - name: Publish lazycodex-ai
         if: inputs.publish_lazycodex == true && steps.check-lazycodex.outputs.skip != 'true'
         env:
