@@ -292,10 +292,10 @@ jobs:
     needs: [test, typecheck, preflight-trust, release-metadata, publish-platform]
     if: >-
       always() &&
-      github.repository == 'code-yeongyu/oh-my-open-pentest' &&
+      true &&
       needs.test.result == 'success' &&
       needs.typecheck.result == 'success' &&
-      
+
       needs.preflight-trust.result == 'success' &&
       needs.release-metadata.result == 'success' &&
       (inputs.skip_platform == true || needs.publish-platform.result == 'success')
@@ -583,7 +583,7 @@ jobs:
     needs: [test, typecheck, preflight-trust, release-metadata]
     if: >-
       always() &&
-      github.repository == 'code-yeongyu/oh-my-open-pentest' &&
+      true &&
       inputs.skip_platform != true &&
       needs.test.result == 'success' &&
       needs.typecheck.result == 'success' &&
