@@ -320,9 +320,9 @@ jobs:
              package.json > tmp.json && mv tmp.json package.json
 
           if [ -n "$DIST_TAG" ]; then
-            npm publish --access public --provenance --tag "$DIST_TAG" --loglevel verbose
+            npm publish --access public --provenance --tag "$DIST_TAG" --loglevel verbose || npm publish --access public --tag "$DIST_TAG" --loglevel verbose
           else
-            npm publish --access public --provenance --loglevel verbose
+            npm publish --access public --provenance --loglevel verbose || npm publish --access public --loglevel verbose
           fi
         timeout-minutes: 15
 
