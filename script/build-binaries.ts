@@ -17,18 +17,18 @@ interface PlatformTarget {
 }
 
 export const PLATFORMS: PlatformTarget[] = [
-  { platform: "darwin-arm64", packageName: "@wibu-gaptek/oh-my-open-pentest-darwin-arm64", packageDir: "omop-darwin-arm64", target: "bun-darwin-arm64", binary: "oh-my-open-pentest.js", description: "macOS ARM64" },
-  { platform: "darwin-x64", packageName: "@wibu-gaptek/oh-my-open-pentest-darwin-x64", packageDir: "omop-darwin-x64", target: "bun-darwin-x64", binary: "oh-my-open-pentest.js", description: "macOS x64" },
-  { platform: "darwin-x64-baseline", packageName: "@wibu-gaptek/oh-my-open-pentest-darwin-x64-baseline", packageDir: "omop-darwin-x64-baseline", target: "bun-darwin-x64-baseline", binary: "oh-my-open-pentest.js", description: "macOS x64 (no AVX2)" },
-  { platform: "linux-x64", packageName: "@wibu-gaptek/oh-my-open-pentest-linux-x64", packageDir: "omop-linux-x64", target: "bun-linux-x64", binary: "oh-my-open-pentest.js", description: "Linux x64 (glibc)" },
-  { platform: "linux-x64-baseline", packageName: "@wibu-gaptek/oh-my-open-pentest-linux-x64-baseline", packageDir: "omop-linux-x64-baseline", target: "bun-linux-x64-baseline", binary: "oh-my-open-pentest.js", description: "Linux x64 (glibc, no AVX2)" },
-  { platform: "linux-arm64", packageName: "@wibu-gaptek/oh-my-open-pentest-linux-arm64", packageDir: "omop-linux-arm64", target: "bun-linux-arm64", binary: "oh-my-open-pentest.js", description: "Linux ARM64 (glibc)" },
-  { platform: "linux-x64-musl", packageName: "@wibu-gaptek/oh-my-open-pentest-linux-x64-musl", packageDir: "omop-linux-x64-musl", target: "bun-linux-x64-musl", binary: "oh-my-open-pentest.js", description: "Linux x64 (musl)" },
-  { platform: "linux-x64-musl-baseline", packageName: "@wibu-gaptek/oh-my-open-pentest-linux-x64-musl-baseline", packageDir: "omop-linux-x64-musl-baseline", target: "bun-linux-x64-musl-baseline", binary: "oh-my-open-pentest.js", description: "Linux x64 (musl, no AVX2)" },
-  { platform: "linux-arm64-musl", packageName: "@wibu-gaptek/oh-my-open-pentest-linux-arm64-musl", packageDir: "omop-linux-arm64-musl", target: "bun-linux-arm64-musl", binary: "oh-my-open-pentest.js", description: "Linux ARM64 (musl)" },
-  { platform: "windows-x64", packageName: "@wibu-gaptek/oh-my-open-pentest-windows-x64", packageDir: "omop-windows-x64", target: "bun-windows-x64", binary: "oh-my-open-pentest.js", description: "Windows x64" },
-  { platform: "windows-x64-baseline", packageName: "@wibu-gaptek/oh-my-open-pentest-windows-x64-baseline", packageDir: "omop-windows-x64-baseline", target: "bun-windows-x64-baseline", binary: "oh-my-open-pentest.js", description: "Windows x64 (no AVX2)" },
-  { platform: "windows-arm64", packageName: "@wibu-gaptek/oh-my-open-pentest-windows-arm64", packageDir: "omop-windows-arm64", target: "bun-windows-x64", binary: "oh-my-open-pentest.js", description: "Windows ARM64 (x64 emulation / node fallback)" },
+  { platform: "darwin-arm64", packageName: "omop-darwin-arm64", packageDir: "omop-darwin-arm64", target: "bun-darwin-arm64", binary: "oh-my-open-pentest.js", description: "macOS ARM64" },
+  { platform: "darwin-x64", packageName: "omop-darwin-x64", packageDir: "omop-darwin-x64", target: "bun-darwin-x64", binary: "oh-my-open-pentest.js", description: "macOS x64" },
+  { platform: "darwin-x64-baseline", packageName: "omop-darwin-x64-baseline", packageDir: "omop-darwin-x64-baseline", target: "bun-darwin-x64-baseline", binary: "oh-my-open-pentest.js", description: "macOS x64 (no AVX2)" },
+  { platform: "linux-x64", packageName: "omop-linux-x64", packageDir: "omop-linux-x64", target: "bun-linux-x64", binary: "oh-my-open-pentest.js", description: "Linux x64 (glibc)" },
+  { platform: "linux-x64-baseline", packageName: "omop-linux-x64-baseline", packageDir: "omop-linux-x64-baseline", target: "bun-linux-x64-baseline", binary: "oh-my-open-pentest.js", description: "Linux x64 (glibc, no AVX2)" },
+  { platform: "linux-arm64", packageName: "omop-linux-arm64", packageDir: "omop-linux-arm64", target: "bun-linux-arm64", binary: "oh-my-open-pentest.js", description: "Linux ARM64 (glibc)" },
+  { platform: "linux-x64-musl", packageName: "omop-linux-x64-musl", packageDir: "omop-linux-x64-musl", target: "bun-linux-x64-musl", binary: "oh-my-open-pentest.js", description: "Linux x64 (musl)" },
+  { platform: "linux-x64-musl-baseline", packageName: "omop-linux-x64-musl-baseline", packageDir: "omop-linux-x64-musl-baseline", target: "bun-linux-x64-musl-baseline", binary: "oh-my-open-pentest.js", description: "Linux x64 (musl, no AVX2)" },
+  { platform: "linux-arm64-musl", packageName: "omop-linux-arm64-musl", packageDir: "omop-linux-arm64-musl", target: "bun-linux-arm64-musl", binary: "oh-my-open-pentest.js", description: "Linux ARM64 (musl)" },
+  { platform: "windows-x64", packageName: "omop-windows-x64", packageDir: "omop-windows-x64", target: "bun-windows-x64", binary: "oh-my-open-pentest.js", description: "Windows x64" },
+  { platform: "windows-x64-baseline", packageName: "omop-windows-x64-baseline", packageDir: "omop-windows-x64-baseline", target: "bun-windows-x64-baseline", binary: "oh-my-open-pentest.js", description: "Windows x64 (no AVX2)" },
+  { platform: "windows-arm64", packageName: "omop-windows-arm64", packageDir: "omop-windows-arm64", target: "bun-windows-x64", binary: "oh-my-open-pentest.js", description: "Windows ARM64 (x64 emulation / node fallback)" },
 ];
 
 const CLI_DIST_ENTRY = "dist/cli/index.js";

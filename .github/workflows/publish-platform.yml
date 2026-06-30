@@ -1,4 +1,4 @@
-name: publish-platform
+﻿name: publish-platform
 run-name: "platform packages ${{ inputs.version }}"
 
 on:
@@ -63,7 +63,10 @@ jobs:
           VERSION="$INPUT_VERSION"
           DIST_TAG="$INPUT_DIST_TAG"
 
-          if ! echo "$VERSION" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z]+(\.[0-9A-Za-z]+)*)?$'; then
+          if ! [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z]+(\.[0-9A-Za-z]+)*)?$ ]]; then
+            echo "::error::Invalid version: $VERSION"
+            exit 1
+          fi
 
           if [ -n "$DIST_TAG" ] && ! [[ "$DIST_TAG" =~ ^[a-z][a-z0-9-]*$ ]]; then
             echo "::error::Invalid dist_tag: $DIST_TAG"
@@ -82,27 +85,27 @@ jobs:
           PLATFORM_KEY="${PLATFORM_KEY//-/_}"
           
           # Check oh-my-open-pentest
-          OC_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://registry.npmjs.org/@wibu-gaptek/oh-my-open-pentest-${{ matrix.platform }}/${VERSION}")
+          OC_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://registry.npmjs.org/oh-my-open-pentest-${{ matrix.platform }}/${VERSION}")
           # Check oh-my-open-pentest
-          OA_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://registry.npmjs.org/@wibu-gaptek/oh-my-open-pentest-${{ matrix.platform }}/${VERSION}")
+          OA_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://registry.npmjs.org/oh-my-open-pentest-${{ matrix.platform }}/${VERSION}")
           
-          echo "@wibu-gaptek/oh-my-open-pentest-${{ matrix.platform }}@${VERSION}: ${OC_STATUS}"
-          echo "@wibu-gaptek/oh-my-open-pentest-${{ matrix.platform }}@${VERSION}: ${OA_STATUS}"
+          echo "oh-my-open-pentest-${{ matrix.platform }}@${VERSION}: ${OC_STATUS}"
+          echo "oh-my-open-pentest-${{ matrix.platform }}@${VERSION}: ${OA_STATUS}"
           
           if [ "$OC_STATUS" = "200" ]; then
             echo "skip_opencode=true" >> "$GITHUB_OUTPUT"
-            echo "? @wibu-gaptek/oh-my-open-pentest-${{ matrix.platform }}@${VERSION} already published"
+            echo "✓ oh-my-open-pentest-${{ matrix.platform }}@${VERSION} already published"
           else
             echo "skip_opencode=false" >> "$GITHUB_OUTPUT"
-            echo "? @wibu-gaptek/oh-my-open-pentest-${{ matrix.platform }}@${VERSION} needs publishing"
+            echo "→ oh-my-open-pentest-${{ matrix.platform }}@${VERSION} needs publishing"
           fi
           
           if [ "$OA_STATUS" = "200" ]; then
             echo "skip_openagent=true" >> "$GITHUB_OUTPUT"
-            echo "? @wibu-gaptek/oh-my-open-pentest-${{ matrix.platform }}@${VERSION} already published"
+            echo "✓ oh-my-open-pentest-${{ matrix.platform }}@${VERSION} already published"
           else
             echo "skip_openagent=false" >> "$GITHUB_OUTPUT"
-            echo "? @wibu-gaptek/oh-my-open-pentest-${{ matrix.platform }}@${VERSION} needs publishing"
+            echo "→ oh-my-open-pentest-${{ matrix.platform }}@${VERSION} needs publishing"
           fi
           
           # Skip build only if BOTH are already published
@@ -111,6 +114,21 @@ jobs:
           else
             echo "skip=false" >> "$GITHUB_OUTPUT"
           fi
+
+      - name: Update version in package.json
+        if: steps.check.outputs.skip != 'true'
+        env:
+          VERSION: ${{ steps.validate.outputs.version }}
+        run: |
+          cd "packages/oh-my-open-pentest-${{ matrix.platform }}"
+          jq --arg v "$VERSION" '.version = $v' package.json > tmp.json && mv tmp.json package.json
+
+      - name: Set root package version
+        if: steps.check.outputs.skip != 'true'
+        env:
+          VERSION: ${{ steps.validate.outputs.version }}
+        run: |
+          jq --arg v "$VERSION" '.version = $v' package.json > tmp.json && mv tmp.json package.json
 
       - name: Build launcher
         if: steps.check.outputs.skip != 'true'
@@ -122,31 +140,16 @@ jobs:
           shell: bash
           command: |
             PLATFORM="${{ matrix.platform }}"
-            PACKAGE_DIR="packages/omop-${PLATFORM}"
+            PACKAGE_DIR="packages/oh-my-open-pentest-${PLATFORM}"
             bun run build:binaries
             OUTPUT="${PACKAGE_DIR}/bin/oh-my-open-pentest.js"
             echo "Built launcher:"
             ls -lh "$OUTPUT"
 
-      - name: Update version in package.json
-        if: steps.check.outputs.skip != 'true'
-        env:
-          VERSION: ${{ steps.validate.outputs.version }}
-        run: |
-          cd "packages/@wibu-gaptek/oh-my-open-pentest-${{ matrix.platform }}"
-          jq --arg v "$VERSION" '.version = $v' package.json > tmp.json && mv tmp.json package.json
-
-      - name: Set root package version
-        if: steps.check.outputs.skip != 'true'
-        env:
-          VERSION: ${{ steps.validate.outputs.version }}
-        run: |
-          jq --arg v "$VERSION" '.version = $v' package.json > tmp.json && mv tmp.json package.json
-
       - name: Verify darwin launcher
         if: steps.check.outputs.skip != 'true' && startsWith(matrix.platform, 'darwin-')
         run: |
-          LAUNCHER="packages/@wibu-gaptek/oh-my-open-pentest-${{ matrix.platform }}/bin/oh-my-open-pentest.js"
+          LAUNCHER="packages/oh-my-open-pentest-${{ matrix.platform }}/bin/oh-my-open-pentest.js"
           file "$LAUNCHER"
           head -n 1 "$LAUNCHER" | grep -F "#!/usr/bin/env node"
 
@@ -154,7 +157,7 @@ jobs:
         if: steps.check.outputs.skip != 'true'
         run: |
           PLATFORM="${{ matrix.platform }}"
-          PACKAGE_DIR="packages/omop-${PLATFORM}"
+          PACKAGE_DIR="packages/oh-my-open-pentest-${PLATFORM}"
           cd "$PACKAGE_DIR"
           
           if [[ "$PLATFORM" == windows-* ]]; then
@@ -230,19 +233,19 @@ jobs:
         env:
           VERSION: ${{ steps.validate.outputs.version }}
         run: |
-          OC_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://registry.npmjs.org/@wibu-gaptek/oh-my-open-pentest-${{ matrix.platform }}/${VERSION}")
-          OA_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://registry.npmjs.org/@wibu-gaptek/oh-my-open-pentest-${{ matrix.platform }}/${VERSION}")
+          OC_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://registry.npmjs.org/oh-my-open-pentest-${{ matrix.platform }}/${VERSION}")
+          OA_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://registry.npmjs.org/oh-my-open-pentest-${{ matrix.platform }}/${VERSION}")
           
           if [ "$OC_STATUS" = "200" ]; then
             echo "skip_opencode=true" >> "$GITHUB_OUTPUT"
-            echo "? @wibu-gaptek/oh-my-open-pentest-${{ matrix.platform }}@${VERSION} already published"
+            echo "✓ oh-my-open-pentest-${{ matrix.platform }}@${VERSION} already published"
           else
             echo "skip_opencode=false" >> "$GITHUB_OUTPUT"
           fi
           
           if [ "$OA_STATUS" = "200" ]; then
             echo "skip_openagent=true" >> "$GITHUB_OUTPUT"
-            echo "? @wibu-gaptek/oh-my-open-pentest-${{ matrix.platform }}@${VERSION} already published"
+            echo "✓ oh-my-open-pentest-${{ matrix.platform }}@${VERSION} already published"
           else
             echo "skip_openagent=false" >> "$GITHUB_OUTPUT"
           fi
@@ -266,7 +269,7 @@ jobs:
         if: steps.check.outputs.skip_all != 'true' && steps.download.outcome == 'success'
         run: |
           PLATFORM="${{ matrix.platform }}"
-          PACKAGE_DIR="packages/omop-${PLATFORM}"
+          PACKAGE_DIR="packages/oh-my-open-pentest-${PLATFORM}"
           mkdir -p "$PACKAGE_DIR"
           
           if [[ "$PLATFORM" == windows-* ]]; then
@@ -289,482 +292,51 @@ jobs:
         if: steps.check.outputs.skip_all != 'true' && steps.download.outcome == 'success'
         run: npm install -g npm@latest
 
-      - name: Publish legacy opencode ${{ matrix.platform }}
-        if: steps.check.outputs.skip_opencode != 'true' && steps.download.outcome == 'success'
-        continue-on-error: true
-        env:
-          DIST_TAG: ${{ steps.validate.outputs.dist_tag }}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: |
-          cd "packages/omop-${{ matrix.platform }}"
-
-          jq --arg name "@wibu-gaptek/oh-my-open-pentest-${{ matrix.platform }}" \
-             --arg desc "Platform-specific binary for oh-my-open-pentest (${{ matrix.platform }})" \
-             '.name = $name | .description = $desc' \
-             package.json > tmp.json && mv tmp.json package.json
-
-          if [ -n "$DIST_TAG" ]; then
-            npm publish --access public --tag "$DIST_TAG" --loglevel verbose
-          else
-            npm publish --access public --loglevel verbose
-          fi
-        timeout-minutes: 15
-
-      - name: Publish @wibu-gaptek/oh-my-open-pentest-${{ matrix.platform }}
-        if: false
-        env:
-          DIST_TAG: ${{ steps.validate.outputs.dist_tag }}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: |
-          cd "packages/@wibu-gaptek/oh-my-open-pentest-${{ matrix.platform }}"
-
-          # Rename package for oh-my-open-pentest
-          jq --arg name "@wibu-gaptek/oh-my-open-pentest-${{ matrix.platform }}" \
-             --arg desc "Platform-specific binary for oh-my-open-pentest (${{ matrix.platform }})" \
-             '.name = $name | .description = $desc' \
-             package.json > tmp.json && mv tmp.json package.json
-
-          if [ -n "$DIST_TAG" ]; then
-            npm publish --access public --tag "$DIST_TAG" --loglevel verbose
-          else
-            npm publish --access public --loglevel verbose
-          fi
-        timeout-minutes: 15
-
-      - name: Write job summary
-        if: always()
-        env:
-          JOB_SUMMARY_DIST_TAG: ${{ inputs.dist_tag || 'latest' }}
-        run: |
-          {
-            echo "## Platform publish (${{ matrix.platform }})"
-            echo
-            echo "| Field | Value |"
-            echo "| --- | --- |"
-            echo "| Result | \`${{ job.status }}\` |"
-            echo "| Workflow | \`${{ github.workflow }}\` |"
-            echo "| Platform | \`${{ matrix.platform }}\` |"
-            echo "| Dist tag | \`$JOB_SUMMARY_DIST_TAG\` |"
-            echo
-            echo "### What this job checks"
-            echo
-            echo "- Rechecks whether platform packages are already published."
-            echo "- Downloads the matching build artifact only when needed."
-            echo "- Publishes legacy and renamed platform packages with trusted publishing."
-            echo
-            echo "### If this fails"
-            echo
-            echo "Check artifact download status, npm trusted publishing, and the package-specific publish log."
-          } >> "$GITHUB_STEP_SUMMARY"
-; then
-            echo "::error::Invalid version: $VERSION"
-            exit 1
-          fi
-
-          if [ -n "$DIST_TAG" ] && ! [[ "$DIST_TAG" =~ ^[a-z][a-z0-9-]*$ ]]; then
-            echo "::error::Invalid dist_tag: $DIST_TAG"
-            exit 1
-          fi
-
-          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
-          echo "dist_tag=$DIST_TAG" >> "$GITHUB_OUTPUT"
-
-      - name: Check if already published
-        id: check
-        env:
-          VERSION: ${{ steps.validate.outputs.version }}
-        run: |
-          PLATFORM_KEY="${{ matrix.platform }}"
-          PLATFORM_KEY="${PLATFORM_KEY//-/_}"
-          
-          # Check oh-my-open-pentest
-          OC_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://registry.npmjs.org/@wibu-gaptek/oh-my-open-pentest-${{ matrix.platform }}/${VERSION}")
-          # Check oh-my-open-pentest
-          OA_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://registry.npmjs.org/@wibu-gaptek/oh-my-open-pentest-${{ matrix.platform }}/${VERSION}")
-          
-          echo "@wibu-gaptek/oh-my-open-pentest-${{ matrix.platform }}@${VERSION}: ${OC_STATUS}"
-          echo "@wibu-gaptek/oh-my-open-pentest-${{ matrix.platform }}@${VERSION}: ${OA_STATUS}"
-          
-          if [ "$OC_STATUS" = "200" ]; then
-            echo "skip_opencode=true" >> "$GITHUB_OUTPUT"
-            echo "? @wibu-gaptek/oh-my-open-pentest-${{ matrix.platform }}@${VERSION} already published"
-          else
-            echo "skip_opencode=false" >> "$GITHUB_OUTPUT"
-            echo "? @wibu-gaptek/oh-my-open-pentest-${{ matrix.platform }}@${VERSION} needs publishing"
-          fi
-          
-          if [ "$OA_STATUS" = "200" ]; then
-            echo "skip_openagent=true" >> "$GITHUB_OUTPUT"
-            echo "? @wibu-gaptek/oh-my-open-pentest-${{ matrix.platform }}@${VERSION} already published"
-          else
-            echo "skip_openagent=false" >> "$GITHUB_OUTPUT"
-            echo "? @wibu-gaptek/oh-my-open-pentest-${{ matrix.platform }}@${VERSION} needs publishing"
-          fi
-          
-          # Skip build only if BOTH are already published
-          if [ "$OC_STATUS" = "200" ] && [ "$OA_STATUS" = "200" ]; then
-            echo "skip=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "skip=false" >> "$GITHUB_OUTPUT"
-          fi
-
-      - name: Build launcher
-        if: steps.check.outputs.skip != 'true'
-        uses: nick-fields/retry@v4
-        with:
-          timeout_minutes: 5
-          max_attempts: 5
-          retry_wait_seconds: 10
-          shell: bash
-          command: |
-            PLATFORM="${{ matrix.platform }}"
-            PACKAGE_DIR="packages/omop-${PLATFORM}"
-            bun run build:binaries
-            OUTPUT="${PACKAGE_DIR}/bin/oh-my-open-pentest.js"
-            echo "Built launcher:"
-            ls -lh "$OUTPUT"
-
-      - name: Update version in package.json
-        if: steps.check.outputs.skip != 'true'
-        env:
-          VERSION: ${{ steps.validate.outputs.version }}
-        run: |
-          cd "packages/@wibu-gaptek/oh-my-open-pentest-${{ matrix.platform }}"
-          jq --arg v "$VERSION" '.version = $v' package.json > tmp.json && mv tmp.json package.json
-
-      - name: Set root package version
-        if: steps.check.outputs.skip != 'true'
-        env:
-          VERSION: ${{ steps.validate.outputs.version }}
-        run: |
-          jq --arg v "$VERSION" '.version = $v' package.json > tmp.json && mv tmp.json package.json
-
-      - name: Verify darwin launcher
-        if: steps.check.outputs.skip != 'true' && startsWith(matrix.platform, 'darwin-')
-        run: |
-          LAUNCHER="packages/@wibu-gaptek/oh-my-open-pentest-${{ matrix.platform }}/bin/oh-my-open-pentest.js"
-          file "$LAUNCHER"
-          head -n 1 "$LAUNCHER" | grep -F "#!/usr/bin/env node"
-
-      - name: Compress binary
-        if: steps.check.outputs.skip != 'true'
-        run: |
-          PLATFORM="${{ matrix.platform }}"
-          PACKAGE_DIR="packages/omop-${PLATFORM}"
-          cd "$PACKAGE_DIR"
-          
-          if [[ "$PLATFORM" == windows-* ]]; then
-            # Windows: use 7z (pre-installed on windows-latest)
-            7z a -tzip ../../binary-${PLATFORM}.zip bin/ package.json
-          else
-            # Unix: use tar.gz
-            tar -czvf ../../binary-${PLATFORM}.tar.gz bin/ package.json
-          fi
-          
-          cd ../..
-          echo "Compressed artifact:"
-          ls -lh binary-${PLATFORM}.*
-
-      - name: Upload artifact
-        if: steps.check.outputs.skip != 'true'
-        uses: actions/upload-artifact@v6
-        with:
-          name: binary-${{ matrix.platform }}
-          path: |
-            binary-${{ matrix.platform }}.tar.gz
-            binary-${{ matrix.platform }}.zip
-          retention-days: 1
-          if-no-files-found: error
-
-      - name: Write job summary
-        if: always()
-        shell: bash
-        env:
-          JOB_SUMMARY_TITLE: Platform build (${{ matrix.platform }})
-          JOB_SUMMARY_STATUS: ${{ job.status }}
-          JOB_SUMMARY_DETAILS: |
-            - Validates release inputs for `${{ matrix.platform }}`.
-            - Skips already-published platform packages.
-            - Builds and uploads the launcher artifact when publishing is needed.
-          JOB_SUMMARY_NEXT: Check validation output first, then the build launcher or artifact upload step for this platform.
-        run: GITHUB_STEP_SUMMARY="$GITHUB_STEP_SUMMARY" bash .github/scripts/write-job-summary.sh
-
-  publish:
-    needs: build
-    if: always() && !cancelled()
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      max-parallel: 2
-      matrix:
-        platform: [darwin-arm64, darwin-x64, darwin-x64-baseline, linux-x64, linux-x64-baseline, linux-arm64, linux-x64-musl, linux-x64-musl-baseline, linux-arm64-musl, windows-x64, windows-x64-baseline, windows-arm64]
-    steps:
-      - name: Validate release inputs
-        id: validate
-        env:
-          INPUT_VERSION: ${{ inputs.version }}
-          INPUT_DIST_TAG: ${{ inputs.dist_tag }}
-        run: |
-          VERSION="$INPUT_VERSION"
-          DIST_TAG="$INPUT_DIST_TAG"
-
-          if ! echo "$VERSION" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z]+(\.[0-9A-Za-z]+)*)?$'; then
-
-          if [ -n "$DIST_TAG" ] && ! [[ "$DIST_TAG" =~ ^[a-z][a-z0-9-]*$ ]]; then
-            echo "::error::Invalid dist_tag: $DIST_TAG"
-            exit 1
-          fi
-
-          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
-          echo "dist_tag=$DIST_TAG" >> "$GITHUB_OUTPUT"
-
-      - name: Check if already published
-        id: check
-        env:
-          VERSION: ${{ steps.validate.outputs.version }}
-        run: |
-          OC_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://registry.npmjs.org/@wibu-gaptek/oh-my-open-pentest-${{ matrix.platform }}/${VERSION}")
-          OA_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://registry.npmjs.org/@wibu-gaptek/oh-my-open-pentest-${{ matrix.platform }}/${VERSION}")
-          
-          if [ "$OC_STATUS" = "200" ]; then
-            echo "skip_opencode=true" >> "$GITHUB_OUTPUT"
-            echo "? @wibu-gaptek/oh-my-open-pentest-${{ matrix.platform }}@${VERSION} already published"
-          else
-            echo "skip_opencode=false" >> "$GITHUB_OUTPUT"
-          fi
-          
-          if [ "$OA_STATUS" = "200" ]; then
-            echo "skip_openagent=true" >> "$GITHUB_OUTPUT"
-            echo "? @wibu-gaptek/oh-my-open-pentest-${{ matrix.platform }}@${VERSION} already published"
-          else
-            echo "skip_openagent=false" >> "$GITHUB_OUTPUT"
-          fi
-          
-          # Need artifact if either package needs publishing
-          if [ "$OC_STATUS" = "200" ] && [ "$OA_STATUS" = "200" ]; then
-            echo "skip_all=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "skip_all=false" >> "$GITHUB_OUTPUT"
-          fi
-
-      - name: Download artifact
-        id: download
-        if: steps.check.outputs.skip_all != 'true'
-        uses: actions/download-artifact@v7
-        with:
-          name: binary-${{ matrix.platform }}
-          path: .
-
-      - name: Extract artifact
+      - name: Strip token auth from .npmrc to force OIDC
         if: steps.check.outputs.skip_all != 'true' && steps.download.outcome == 'success'
         run: |
-          PLATFORM="${{ matrix.platform }}"
-          PACKAGE_DIR="packages/omop-${PLATFORM}"
-          mkdir -p "$PACKAGE_DIR"
-          
-          if [[ "$PLATFORM" == windows-* ]]; then
-            unzip binary-${PLATFORM}.zip -d "$PACKAGE_DIR/"
-          else
-            tar -xzvf binary-${PLATFORM}.tar.gz -C "$PACKAGE_DIR/"
-          fi
-          
-          echo "Extracted contents:"
-          ls -la "$PACKAGE_DIR/"
-          ls -la "$PACKAGE_DIR/bin/"
-
-      - uses: actions/setup-node@v6
-        if: steps.check.outputs.skip_all != 'true' && steps.download.outcome == 'success'
-        with:
-          node-version: "24"
-          registry-url: "https://registry.npmjs.org"
-
-      - name: Upgrade npm for trusted publishing (>=11.5.1)
-        if: steps.check.outputs.skip_all != 'true' && steps.download.outcome == 'success'
-        run: npm install -g npm@latest
+          for f in .npmrc "$HOME/.npmrc"; do
+            if [ -f "$f" ]; then
+              sed -i.bak '/_authToken/d' "$f"
+              rm -f "$f.bak"
+              echo "Cleaned $f"
+            fi
+          done
 
       - name: Publish legacy opencode ${{ matrix.platform }}
         if: steps.check.outputs.skip_opencode != 'true' && steps.download.outcome == 'success'
         continue-on-error: true
         env:
           DIST_TAG: ${{ steps.validate.outputs.dist_tag }}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_CONFIG_PROVENANCE: true
         run: |
-          cd "packages/omop-${{ matrix.platform }}"
-
-          jq --arg name "@wibu-gaptek/oh-my-open-pentest-${{ matrix.platform }}" \
-             --arg desc "Platform-specific binary for oh-my-open-pentest (${{ matrix.platform }})" \
-             '.name = $name | .description = $desc' \
-             package.json > tmp.json && mv tmp.json package.json
+          cd "packages/oh-my-open-pentest-${{ matrix.platform }}"
 
           if [ -n "$DIST_TAG" ]; then
-            npm publish --access public --tag "$DIST_TAG" --loglevel verbose
+            npm publish --access public --provenance --tag "$DIST_TAG" --loglevel verbose
           else
-            npm publish --access public --loglevel verbose
+            npm publish --access public --provenance --loglevel verbose
           fi
         timeout-minutes: 15
 
-      - name: Publish @wibu-gaptek/oh-my-open-pentest-${{ matrix.platform }}
-        if: false
+      - name: Publish oh-my-open-pentest-${{ matrix.platform }}
+        if: always() && steps.check.outputs.skip_openagent != 'true' && steps.download.outcome == 'success'
         env:
           DIST_TAG: ${{ steps.validate.outputs.dist_tag }}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_CONFIG_PROVENANCE: true
         run: |
-          cd "packages/@wibu-gaptek/oh-my-open-pentest-${{ matrix.platform }}"
+          cd "packages/oh-my-open-pentest-${{ matrix.platform }}"
 
           # Rename package for oh-my-open-pentest
-          jq --arg name "@wibu-gaptek/oh-my-open-pentest-${{ matrix.platform }}" \
+          jq --arg name "oh-my-open-pentest-${{ matrix.platform }}" \
              --arg desc "Platform-specific binary for oh-my-open-pentest (${{ matrix.platform }})" \
              '.name = $name | .description = $desc' \
              package.json > tmp.json && mv tmp.json package.json
 
           if [ -n "$DIST_TAG" ]; then
-            npm publish --access public --tag "$DIST_TAG" --loglevel verbose
+            npm publish --access public --provenance --tag "$DIST_TAG" --loglevel verbose
           else
-            npm publish --access public --loglevel verbose
-          fi
-        timeout-minutes: 15
-
-      - name: Write job summary
-        if: always()
-        env:
-          JOB_SUMMARY_DIST_TAG: ${{ inputs.dist_tag || 'latest' }}
-        run: |
-          {
-            echo "## Platform publish (${{ matrix.platform }})"
-            echo
-            echo "| Field | Value |"
-            echo "| --- | --- |"
-            echo "| Result | \`${{ job.status }}\` |"
-            echo "| Workflow | \`${{ github.workflow }}\` |"
-            echo "| Platform | \`${{ matrix.platform }}\` |"
-            echo "| Dist tag | \`$JOB_SUMMARY_DIST_TAG\` |"
-            echo
-            echo "### What this job checks"
-            echo
-            echo "- Rechecks whether platform packages are already published."
-            echo "- Downloads the matching build artifact only when needed."
-            echo "- Publishes legacy and renamed platform packages with trusted publishing."
-            echo
-            echo "### If this fails"
-            echo
-            echo "Check artifact download status, npm trusted publishing, and the package-specific publish log."
-          } >> "$GITHUB_STEP_SUMMARY"
-; then
-            echo "::error::Invalid version: $VERSION"
-            exit 1
-          fi
-
-          if [ -n "$DIST_TAG" ] && ! [[ "$DIST_TAG" =~ ^[a-z][a-z0-9-]*$ ]]; then
-            echo "::error::Invalid dist_tag: $DIST_TAG"
-            exit 1
-          fi
-
-          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
-          echo "dist_tag=$DIST_TAG" >> "$GITHUB_OUTPUT"
-
-      - name: Check if already published
-        id: check
-        env:
-          VERSION: ${{ steps.validate.outputs.version }}
-        run: |
-          OC_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://registry.npmjs.org/@wibu-gaptek/oh-my-open-pentest-${{ matrix.platform }}/${VERSION}")
-          OA_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://registry.npmjs.org/@wibu-gaptek/oh-my-open-pentest-${{ matrix.platform }}/${VERSION}")
-          
-          if [ "$OC_STATUS" = "200" ]; then
-            echo "skip_opencode=true" >> "$GITHUB_OUTPUT"
-            echo "? @wibu-gaptek/oh-my-open-pentest-${{ matrix.platform }}@${VERSION} already published"
-          else
-            echo "skip_opencode=false" >> "$GITHUB_OUTPUT"
-          fi
-          
-          if [ "$OA_STATUS" = "200" ]; then
-            echo "skip_openagent=true" >> "$GITHUB_OUTPUT"
-            echo "? @wibu-gaptek/oh-my-open-pentest-${{ matrix.platform }}@${VERSION} already published"
-          else
-            echo "skip_openagent=false" >> "$GITHUB_OUTPUT"
-          fi
-          
-          # Need artifact if either package needs publishing
-          if [ "$OC_STATUS" = "200" ] && [ "$OA_STATUS" = "200" ]; then
-            echo "skip_all=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "skip_all=false" >> "$GITHUB_OUTPUT"
-          fi
-
-      - name: Download artifact
-        id: download
-        if: steps.check.outputs.skip_all != 'true'
-        uses: actions/download-artifact@v7
-        with:
-          name: binary-${{ matrix.platform }}
-          path: .
-
-      - name: Extract artifact
-        if: steps.check.outputs.skip_all != 'true' && steps.download.outcome == 'success'
-        run: |
-          PLATFORM="${{ matrix.platform }}"
-          PACKAGE_DIR="packages/omop-${PLATFORM}"
-          mkdir -p "$PACKAGE_DIR"
-          
-          if [[ "$PLATFORM" == windows-* ]]; then
-            unzip binary-${PLATFORM}.zip -d "$PACKAGE_DIR/"
-          else
-            tar -xzvf binary-${PLATFORM}.tar.gz -C "$PACKAGE_DIR/"
-          fi
-          
-          echo "Extracted contents:"
-          ls -la "$PACKAGE_DIR/"
-          ls -la "$PACKAGE_DIR/bin/"
-
-      - uses: actions/setup-node@v6
-        if: steps.check.outputs.skip_all != 'true' && steps.download.outcome == 'success'
-        with:
-          node-version: "24"
-          registry-url: "https://registry.npmjs.org"
-
-      - name: Upgrade npm for trusted publishing (>=11.5.1)
-        if: steps.check.outputs.skip_all != 'true' && steps.download.outcome == 'success'
-        run: npm install -g npm@latest
-
-      - name: Publish legacy opencode ${{ matrix.platform }}
-        if: steps.check.outputs.skip_opencode != 'true' && steps.download.outcome == 'success'
-        continue-on-error: true
-        env:
-          DIST_TAG: ${{ steps.validate.outputs.dist_tag }}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: |
-          cd "packages/omop-${{ matrix.platform }}"
-
-          jq --arg name "@wibu-gaptek/oh-my-open-pentest-${{ matrix.platform }}" \
-             --arg desc "Platform-specific binary for oh-my-open-pentest (${{ matrix.platform }})" \
-             '.name = $name | .description = $desc' \
-             package.json > tmp.json && mv tmp.json package.json
-
-          if [ -n "$DIST_TAG" ]; then
-            npm publish --access public --tag "$DIST_TAG" --loglevel verbose
-          else
-            npm publish --access public --loglevel verbose
-          fi
-        timeout-minutes: 15
-
-      - name: Publish @wibu-gaptek/oh-my-open-pentest-${{ matrix.platform }}
-        if: false
-        env:
-          DIST_TAG: ${{ steps.validate.outputs.dist_tag }}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: |
-          cd "packages/@wibu-gaptek/oh-my-open-pentest-${{ matrix.platform }}"
-
-          # Rename package for oh-my-open-pentest
-          jq --arg name "@wibu-gaptek/oh-my-open-pentest-${{ matrix.platform }}" \
-             --arg desc "Platform-specific binary for oh-my-open-pentest (${{ matrix.platform }})" \
-             '.name = $name | .description = $desc' \
-             package.json > tmp.json && mv tmp.json package.json
-
-          if [ -n "$DIST_TAG" ]; then
-            npm publish --access public --tag "$DIST_TAG" --loglevel verbose
-          else
-            npm publish --access public --loglevel verbose
+            npm publish --access public --provenance --loglevel verbose
           fi
         timeout-minutes: 15
 
