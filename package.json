@@ -1,5 +1,5 @@
 {
-  "name": "oh-my-open-pentest",
+  "name": "@wibu-gaptek/oh-my-open-pentest",
   "version": "1.4.0",
   "description": "Autonomous Pentest Platform - AI-Driven Security Testing with Multi-Agent Orchestration, Scope Enforcement, and Automated Finding Reports",
   "main": "./dist/index.js",

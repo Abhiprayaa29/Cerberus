@@ -149,13 +149,13 @@ jobs:
           fi
 
           PLATFORMS=(darwin-arm64 darwin-x64 darwin-x64-baseline linux-x64 linux-x64-baseline linux-arm64 linux-x64-musl linux-x64-musl-baseline linux-arm64-musl windows-x64 windows-x64-baseline windows-arm64)
-          ALL_PACKAGES=(oh-my-open-pentest oh-my-open-pentest)
+          ALL_PACKAGES=("@wibu-gaptek/oh-my-open-pentest" "@wibu-gaptek/oh-my-open-pentest")
           if [ "${PUBLISH_LAZYCODEX}" = "true" ]; then
-            ALL_PACKAGES+=(lazycodex-ai)
+            ALL_PACKAGES+=("@wibu-gaptek/lazycodex-ai")
           fi
           for plat in "${PLATFORMS[@]}"; do
-            ALL_PACKAGES+=("oh-my-open-pentest-${plat}")
-            ALL_PACKAGES+=("oh-my-open-pentest-${plat}")
+            ALL_PACKAGES+=("@wibu-gaptek/oh-my-open-pentest-${plat}")
+            ALL_PACKAGES+=("@wibu-gaptek/oh-my-open-pentest-${plat}")
           done
 
           FAILED=()
@@ -333,7 +333,7 @@ jobs:
           PLATFORMS=(darwin-arm64 darwin-x64 darwin-x64-baseline linux-x64 linux-x64-baseline linux-arm64 linux-x64-musl linux-x64-musl-baseline linux-arm64-musl windows-x64 windows-x64-baseline windows-arm64)
           FAILED=()
           for platform in "${PLATFORMS[@]}"; do
-            for family in oh-my-open-pentest; do
+            for family in "@wibu-gaptek/oh-my-open-pentest"; do
               pkg="${family}-${platform}"
               STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://registry.npmjs.org/${pkg}/${VERSION}")
               if [ "$STATUS" = "200" ]; then
