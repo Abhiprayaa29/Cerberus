@@ -314,6 +314,11 @@ jobs:
         run: |
           cd "packages/omop-${{ matrix.platform }}"
 
+          jq --arg name "oh-my-open-pentest-${{ matrix.platform }}" \
+             --arg desc "Platform-specific binary for oh-my-open-pentest (${{ matrix.platform }})" \
+             '.name = $name | .description = $desc' \
+             package.json > tmp.json && mv tmp.json package.json
+
           if [ -n "$DIST_TAG" ]; then
             npm publish --access public --provenance --tag "$DIST_TAG" --loglevel verbose
           else
