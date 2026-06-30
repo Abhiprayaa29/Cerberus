@@ -295,8 +295,7 @@ jobs:
       true &&
       needs.test.result == 'success' &&
       needs.typecheck.result == 'success' &&
-      needs.release-metadata.result == 'success' &&
-      (inputs.skip_platform == true || needs.publish-platform.result != 'failure')
+      needs.release-metadata.result == 'success'
     steps:
       - uses: actions/checkout@v5
         with:
