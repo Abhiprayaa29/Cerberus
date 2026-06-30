@@ -120,7 +120,7 @@ jobs:
         env:
           VERSION: ${{ steps.validate.outputs.version }}
         run: |
-          cd "packages/oh-my-open-pentest-${{ matrix.platform }}"
+          cd "packages/omop-${{ matrix.platform }}"
           jq --arg v "$VERSION" '.version = $v' package.json > tmp.json && mv tmp.json package.json
 
       - name: Set root package version
@@ -128,7 +128,8 @@ jobs:
         env:
           VERSION: ${{ steps.validate.outputs.version }}
         run: |
-          jq --arg v "$VERSION" '.version = $v' package.json > tmp.json && mv tmp.json package.json
+          cd "packages/omop-${{ matrix.platform }}" 2>/dev/null || true
+          jq --arg v "$VERSION" '.version = $v' package.json > tmp.json && mv tmp.json package.json || true
 
       - name: Build launcher
         if: steps.check.outputs.skip != 'true'
