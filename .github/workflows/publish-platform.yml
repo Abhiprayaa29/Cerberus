@@ -144,7 +144,7 @@ jobs:
           shell: bash
           command: |
             PLATFORM="${{ matrix.platform }}"
-            PACKAGE_DIR="packages/oh-my-open-pentest-${PLATFORM}"
+            PACKAGE_DIR="packages/omop-${PLATFORM}"
             bun run build:binaries
             OUTPUT="${PACKAGE_DIR}/bin/oh-my-open-pentest.js"
             echo "Built launcher:"
@@ -153,7 +153,7 @@ jobs:
       - name: Verify darwin launcher
         if: steps.check.outputs.skip != 'true' && startsWith(matrix.platform, 'darwin-')
         run: |
-          LAUNCHER="packages/oh-my-open-pentest-${{ matrix.platform }}/bin/oh-my-open-pentest.js"
+          LAUNCHER="packages/omop-${{ matrix.platform }}/bin/oh-my-open-pentest.js"
           file "$LAUNCHER"
           head -n 1 "$LAUNCHER" | grep -F "#!/usr/bin/env node"
 
@@ -161,7 +161,7 @@ jobs:
         if: steps.check.outputs.skip != 'true'
         run: |
           PLATFORM="${{ matrix.platform }}"
-          PACKAGE_DIR="packages/oh-my-open-pentest-${PLATFORM}"
+          PACKAGE_DIR="packages/omop-${PLATFORM}"
           cd "$PACKAGE_DIR"
           
           if [[ "$PLATFORM" == windows-* ]]; then
@@ -273,7 +273,7 @@ jobs:
         if: steps.check.outputs.skip_all != 'true' && steps.download.outcome == 'success'
         run: |
           PLATFORM="${{ matrix.platform }}"
-          PACKAGE_DIR="packages/oh-my-open-pentest-${PLATFORM}"
+          PACKAGE_DIR="packages/omop-${PLATFORM}"
           mkdir -p "$PACKAGE_DIR"
           
           if [[ "$PLATFORM" == windows-* ]]; then
@@ -314,7 +314,7 @@ jobs:
           DIST_TAG: ${{ steps.validate.outputs.dist_tag }}
           NPM_CONFIG_PROVENANCE: true
         run: |
-          cd "packages/oh-my-open-pentest-${{ matrix.platform }}"
+          cd "packages/omop-${{ matrix.platform }}"
 
           if [ -n "$DIST_TAG" ]; then
             npm publish --access public --provenance --tag "$DIST_TAG" --loglevel verbose
@@ -329,7 +329,7 @@ jobs:
           DIST_TAG: ${{ steps.validate.outputs.dist_tag }}
           NPM_CONFIG_PROVENANCE: true
         run: |
-          cd "packages/oh-my-open-pentest-${{ matrix.platform }}"
+          cd "packages/omop-${{ matrix.platform }}"
 
           # Rename package for oh-my-open-pentest
           jq --arg name "oh-my-open-pentest-${{ matrix.platform }}" \
