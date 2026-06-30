@@ -67,11 +67,11 @@ describe("build-binaries", () => {
 
       // then
       expect(packageDirs).toEqual(packageNames);
-      expect(packageDirs).toContain("omop-linux-x64-baseline");
-      expect(packageDirs).toContain("omop-linux-x64-musl-baseline");
-      expect(packageDirs).toContain("omop-darwin-x64-baseline");
-      expect(packageDirs).toContain("omop-windows-x64-baseline");
-      expect(packageDirs).toContain("omop-windows-arm64");
+      expect(packageDirs).toContain("oh-my-open-pentest-linux-x64-baseline");
+      expect(packageDirs).toContain("oh-my-open-pentest-linux-x64-musl-baseline");
+      expect(packageDirs).toContain("oh-my-open-pentest-darwin-x64-baseline");
+      expect(packageDirs).toContain("oh-my-open-pentest-windows-x64-baseline");
+      expect(packageDirs).toContain("oh-my-open-pentest-windows-arm64");
     });
 
     it("includes a windows-arm64 entry for Windows-on-ARM hosts", async () => {
@@ -83,8 +83,8 @@ describe("build-binaries", () => {
       const windowsArm64 = platforms.find((p) => p.platform === "windows-arm64");
 
       // then
-      expect(windowsArm64?.packageName).toBe("omop-windows-arm64");
-      expect(windowsArm64?.packageDir).toBe("omop-windows-arm64");
+      expect(windowsArm64?.packageName).toBe("oh-my-open-pentest-windows-arm64");
+      expect(windowsArm64?.packageDir).toBe("oh-my-open-pentest-windows-arm64");
     });
 
     it("uses JavaScript launcher names for baseline platforms", async () => {
