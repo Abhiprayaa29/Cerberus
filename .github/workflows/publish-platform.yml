@@ -63,7 +63,7 @@ jobs:
           VERSION="$INPUT_VERSION"
           DIST_TAG="$INPUT_DIST_TAG"
 
-          if ! echo "$VERSION" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z]+(\.[0-9A-Za-z]+)*)?
+          if ! echo "$VERSION" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z]+(\.[0-9A-Za-z]+)*)?$'; then
 
           if [ -n "$DIST_TAG" ] && ! [[ "$DIST_TAG" =~ ^[a-z][a-z0-9-]*$ ]]; then
             echo "::error::Invalid dist_tag: $DIST_TAG"
@@ -508,7 +508,7 @@ jobs:
           VERSION="$INPUT_VERSION"
           DIST_TAG="$INPUT_DIST_TAG"
 
-          if ! echo "$VERSION" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z]+(\.[0-9A-Za-z]+)*)?
+          if ! echo "$VERSION" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z]+(\.[0-9A-Za-z]+)*)?$'; then
 
           if [ -n "$DIST_TAG" ] && ! [[ "$DIST_TAG" =~ ^[a-z][a-z0-9-]*$ ]]; then
             echo "::error::Invalid dist_tag: $DIST_TAG"
