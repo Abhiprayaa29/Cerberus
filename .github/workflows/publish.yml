@@ -417,30 +417,16 @@ jobs:
           npm --prefix packages/omop-codex/plugin ci
           bun run --cwd packages/omop-codex/plugin build
 
-      - name: Strip token auth from .npmrc to force OIDC
-        if: >-
-          steps.check.outputs.skip != 'true' ||
-          steps.check-openagent.outputs.skip != 'true' ||
-          (inputs.publish_lazycodex == true && steps.check-lazycodex.outputs.skip != 'true')
-        run: |
-          for f in .npmrc "$HOME/.npmrc"; do
-            if [ -f "$f" ]; then
-              sed -i.bak '/_authToken/d' "$f"
-              rm -f "$f.bak"
-              echo "Cleaned $f"
-            fi
-          done
-
       - name: Publish oh-my-open-pentest
         if: steps.check.outputs.skip != 'true'
         env:
           DIST_TAG: ${{ needs.release-metadata.outputs.dist_tag }}
-          NPM_CONFIG_PROVENANCE: true
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           if [ -n "$DIST_TAG" ]; then
-            npm publish --access public --provenance --tag "$DIST_TAG" --loglevel verbose
+            npm publish --access public --tag "$DIST_TAG" --loglevel verbose
           else
-            npm publish --access public --provenance --tag latest --loglevel verbose
+            npm publish --access public --tag latest --loglevel verbose
           fi
 
       - name: Publish lazycodex-ai
@@ -448,7 +434,7 @@ jobs:
         env:
           OMOP_VERSION: ${{ needs.release-metadata.outputs.version }}
           DIST_TAG: ${{ needs.release-metadata.outputs.dist_tag }}
-          NPM_CONFIG_PROVENANCE: true
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           jq --arg omo_version "$OMOP_VERSION" '
             .name = "lazycodex-ai" |
@@ -463,9 +449,9 @@ jobs:
           ' package.json > tmp.json && mv tmp.json package.json
 
           if [ -n "$DIST_TAG" ]; then
-            npm publish --access public --provenance --tag "$DIST_TAG" --loglevel verbose
+            npm publish --access public --tag "$DIST_TAG" --loglevel verbose
           else
-            npm publish --access public --provenance --tag latest --loglevel verbose
+            npm publish --access public --tag latest --loglevel verbose
           fi
 
       - name: Smoke test published lazycodex-ai

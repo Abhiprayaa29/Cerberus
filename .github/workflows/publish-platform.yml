@@ -292,34 +292,19 @@ jobs:
           node-version: "24"
           registry-url: "https://registry.npmjs.org"
 
-      - name: Upgrade npm for trusted publishing (>=11.5.1)
-        if: steps.check.outputs.skip_all != 'true' && steps.download.outcome == 'success'
-        run: npm install -g npm@latest
-
-      - name: Strip token auth from .npmrc to force OIDC
-        if: steps.check.outputs.skip_all != 'true' && steps.download.outcome == 'success'
-        run: |
-          for f in .npmrc "$HOME/.npmrc"; do
-            if [ -f "$f" ]; then
-              sed -i.bak '/_authToken/d' "$f"
-              rm -f "$f.bak"
-              echo "Cleaned $f"
-            fi
-          done
-
       - name: Publish legacy opencode ${{ matrix.platform }}
         if: steps.check.outputs.skip_opencode != 'true' && steps.download.outcome == 'success'
         continue-on-error: true
         env:
           DIST_TAG: ${{ steps.validate.outputs.dist_tag }}
-          NPM_CONFIG_PROVENANCE: true
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           cd "packages/oh-my-open-pentest-${{ matrix.platform }}"
 
           if [ -n "$DIST_TAG" ]; then
-            npm publish --access public --provenance --tag "$DIST_TAG" --loglevel verbose
+            npm publish --access public --tag "$DIST_TAG" --loglevel verbose
           else
-            npm publish --access public --provenance --loglevel verbose
+            npm publish --access public --loglevel verbose
           fi
         timeout-minutes: 15
 
@@ -327,14 +312,14 @@ jobs:
         if: always() && steps.check.outputs.skip_openagent != 'true' && steps.download.outcome == 'success'
         env:
           DIST_TAG: ${{ steps.validate.outputs.dist_tag }}
-          NPM_CONFIG_PROVENANCE: true
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           cd "packages/oh-my-open-pentest-${{ matrix.platform }}"
 
           if [ -n "$DIST_TAG" ]; then
-            npm publish --access public --provenance --tag "$DIST_TAG" --loglevel verbose
+            npm publish --access public --tag "$DIST_TAG" --loglevel verbose
           else
-            npm publish --access public --provenance --loglevel verbose
+            npm publish --access public --loglevel verbose
           fi
         timeout-minutes: 15
 
