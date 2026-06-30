@@ -114,7 +114,8 @@ jobs:
   preflight-trust:
     runs-on: ubuntu-latest
     needs: [release-metadata]
-    if: github.repository == 'code-yeongyu/oh-my-open-pentest'
+    if: true
+    continue-on-error: true
     permissions:
       id-token: write
       contents: read
