@@ -294,23 +294,12 @@ jobs:
         if: steps.check.outputs.skip_all != 'true' && steps.download.outcome == 'success'
         run: npm install -g npm@latest
 
-      - name: Strip token auth from .npmrc to force OIDC
-        if: steps.check.outputs.skip_all != 'true' && steps.download.outcome == 'success'
-        run: |
-          for f in .npmrc "$HOME/.npmrc"; do
-            if [ -f "$f" ]; then
-              sed -i.bak '/_authToken/d' "$f"
-              rm -f "$f.bak"
-              echo "Cleaned $f"
-            fi
-          done
-
       - name: Publish legacy opencode ${{ matrix.platform }}
         if: steps.check.outputs.skip_opencode != 'true' && steps.download.outcome == 'success'
         continue-on-error: true
         env:
           DIST_TAG: ${{ steps.validate.outputs.dist_tag }}
-          NPM_CONFIG_PROVENANCE: true
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           cd "packages/omop-${{ matrix.platform }}"
 
@@ -320,9 +309,9 @@ jobs:
              package.json > tmp.json && mv tmp.json package.json
 
           if [ -n "$DIST_TAG" ]; then
-            npm publish --access public --provenance --tag "$DIST_TAG" --loglevel verbose || npm publish --access public --tag "$DIST_TAG" --loglevel verbose
+            npm publish --access public --tag "$DIST_TAG" --loglevel verbose || npm publish --access public --tag "$DIST_TAG" --loglevel verbose
           else
-            npm publish --access public --provenance --loglevel verbose || npm publish --access public --loglevel verbose
+            npm publish --access public --loglevel verbose || npm publish --access public --loglevel verbose
           fi
         timeout-minutes: 15
 
@@ -330,7 +319,7 @@ jobs:
         if: false
         env:
           DIST_TAG: ${{ steps.validate.outputs.dist_tag }}
-          NPM_CONFIG_PROVENANCE: true
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           cd "packages/omop-${{ matrix.platform }}"
 
@@ -341,9 +330,9 @@ jobs:
              package.json > tmp.json && mv tmp.json package.json
 
           if [ -n "$DIST_TAG" ]; then
-            npm publish --access public --provenance --tag "$DIST_TAG" --loglevel verbose
+            npm publish --access public --tag "$DIST_TAG" --loglevel verbose
           else
-            npm publish --access public --provenance --loglevel verbose
+            npm publish --access public --loglevel verbose
           fi
         timeout-minutes: 15
 
