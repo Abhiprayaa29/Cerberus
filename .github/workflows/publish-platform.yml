@@ -62,7 +62,6 @@ jobs:
         run: |
           VERSION="$INPUT_VERSION"
           DIST_TAG="$INPUT_DIST_TAG"
-          echo "Debug: VERSION='$VERSION' DIST_TAG='$DIST_TAG'"
 
           if ! [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z]+(\.[0-9A-Za-z]+)*)?$ ]]; then
             echo "::error::Invalid version: $VERSION"
@@ -215,7 +214,6 @@ jobs:
         run: |
           VERSION="$INPUT_VERSION"
           DIST_TAG="$INPUT_DIST_TAG"
-          echo "Debug: VERSION='$VERSION' DIST_TAG='$DIST_TAG'"
 
           if ! [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z]+(\.[0-9A-Za-z]+)*)?$ ]]; then
             echo "::error::Invalid version: $VERSION"
