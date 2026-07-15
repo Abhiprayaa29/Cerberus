@@ -23,7 +23,7 @@ Tracks bugs that are present in the current release but have been intentionally 
 
 **Status: resolved** on current `dev`.
 
-Delegated child sessions register the first prompt via `registerDelegatedChildSessionBootstrap` (`packages/omop-opencode/src/shared/delegated-child-session-bootstrap.ts`) before dispatch. When runtime-fallback retries an empty-history child, `getLastUserRetryPayload` consumes that bootstrap payload once (`hooks/runtime-fallback/last-user-retry-parts.ts`). Call sites: `features/background-agent/manager.ts`, `tools/delegate-task/sync-session-lifecycle.ts`, `tools/call-omop-agent/sync-executor.ts`. Covered by `hooks/runtime-fallback/index.test.ts` (bootstrap / empty-history paths).
+Delegated child sessions register the first prompt via `registerDelegatedChildSessionBootstrap` (`packages/omop-opencode/src/shared/delegated-child-session-bootstrap.ts`) before dispatch. When runtime-fallback retries an empty-history child, `getLastUserRetryPayload` consumes that bootstrap payload once (`packages/omop-opencode/src/hooks/runtime-fallback/last-user-retry-parts.ts`). Call sites: `packages/omop-opencode/src/features/background-agent/manager.ts`, `packages/omop-opencode/src/tools/delegate-task/sync-session-lifecycle.ts`, `packages/omop-opencode/src/tools/call-omop-agent/sync-executor.ts`. Covered by `packages/omop-opencode/src/hooks/runtime-fallback/index.test.ts` (bootstrap / empty-history paths).
 
 **History (for archaeology only):** PR #3825 landed then was briefly reverted after a flaky regression on clean root `bun test`; bootstrap was re-landed and is present in tree. Do not re-open this as a deferred product gap without a failing test against current code.
 

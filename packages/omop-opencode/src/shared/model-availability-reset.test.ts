@@ -1,4 +1,4 @@
-﻿import { describe, expect, test } from "bun:test"
+import { describe, expect, test } from "bun:test"
 import { mkdtempSync, rmSync } from "fs"
 import { tmpdir } from "os"
 import { join } from "path"
@@ -19,7 +19,6 @@ describe("__resetModelCache", () => {
 			})
 			expect(connectedProvidersCache.hasProviderModelsCache()).toBe(true)
 			rmSync(tempDir, { recursive: true, force: true })
-			// process flag still true until reset
 			expect(connectedProvidersCache.hasProviderModelsCache()).toBe(true)
 
 			// when
