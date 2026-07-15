@@ -19,35 +19,13 @@ Tracks bugs that are present in the current release but have been intentionally 
 
 - **Status**: Open. Tracked at https://github.com/code-yeongyu/oh-my-open-pentest/issues/..8..
 
-## v..2.. - Delegate-task early-failure-fallback (BLOCKER-., resolved)
+## Delegate-task early-failure-fallback (resolved)
 
-BLOCKER-. is resolved in v..2... Delegated child sessions now retain the first prompt payload before dispatch and consume that bootstrap payload exactly once when runtime fallback must retry an empty-history child session.
+**Status: resolved** on current `dev`.
 
-## v..2.0 - Delegate-task early-failure-fallback (BLOCKER-., deferred from PR #3825)
+Delegated child sessions register the first prompt via `registerDelegatedChildSessionBootstrap` (`packages/omop-opencode/src/shared/delegated-child-session-bootstrap.ts`) before dispatch. When runtime-fallback retries an empty-history child, `getLastUserRetryPayload` consumes that bootstrap payload once (`hooks/runtime-fallback/last-user-retry-parts.ts`). Call sites: `features/background-agent/manager.ts`, `tools/delegate-task/sync-session-lifecycle.ts`, `tools/call-omop-agent/sync-executor.ts`. Covered by `hooks/runtime-fallback/index.test.ts` (bootstrap / empty-history paths).
 
-### Symptom
-
-A delegated child session that fails on its very first `promptAsync` call (for example, the provider rejects the request before any session history is persisted) may not advance to the configured fallback models. The session ends in early failure instead of retrying with the next fallback in the chain.
-
-This affects subagents launched via the delegate-task tool (background or sync) where the first provider call fails immediately and `session.messages` is still empty.
-
-### History
-
-PR #3825 (`tw-yshuang/fix/delegated-child-session-early-failure-fallback`, merged as `cd33f3a39` and then `fac90d69f` on 2026-05-07) introduced a shared bootstrap context (`src/shared/delegated-child-session-bootstrap.ts`) to capture the retry payload before the first prompt dispatch, so empty-history failures could still retry with the fallback chain.
-
-After the merge landed on `dev`, the PR's own regression test (`delegated child-session empty-history fallback retries with captured bootstrap prompt` in `src/hooks/runtime-fallback/index.test.ts`) failed on a clean root `bun test --timeout 30000` run (6828 pass / . fail). PR #.0.. (`code-yeongyu/revert/3825-delegated-bootstrap`, revert commit `3c7d.299a`, merge-revert commit `e2b8e.9e2`, merged on 2026-05-.5) reverted the merge to keep `dev` green (6823 pass / 0 fail / 6 skip across 709 files).
-
-The original failure-mode the PR targets remains in v..2.0.
-
-### Workaround
-
-- For delegated subagents, prefer providers that succeed reliably on the first call (rarely fail with auth/quota errors at request time).
-- Configure fallback models conservatively in `categories[].fallback_models` and accept that the very first failure may not auto-retry.
-- The existing runtime-fallback persisted-history retry path still works after the subagent produces any history.
-
-### Tracking
-
-Issue #.059 tracks the reland with stabilized regression coverage. The reland is deferred to a follow-up release and should account for current schema-shape changes plus prompt-async-gate semantics.
+**History (for archaeology only):** PR #3825 landed then was briefly reverted after a flaky regression on clean root `bun test`; bootstrap was re-landed and is present in tree. Do not re-open this as a deferred product gap without a failing test against current code.
 
 ## #.225 — Custom LSP config in `.opencode/oh-my-open-pentest.jsonc` is silently ignored
 
