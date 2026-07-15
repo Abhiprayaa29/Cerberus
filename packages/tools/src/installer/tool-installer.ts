@@ -1,53 +1,26 @@
-import type { ToolEntry, ToolAvailability, InstallationConfig, PlatformInstallation } from "@omop/pentest-core"
-import type { ToolPermission, ToolPermissionConfig, ToolInstallResult, ToolStatusReport } from "../types"
-import { checkPermission } from "./permission-manager"
+import type { ToolEntry, ToolAvailability } from "@omop/pentest-core"
+import {
+  checkToolInstalled as coreCheckToolInstalled,
+  checkAllToolsInstalled as coreCheckAllToolsInstalled,
+  getInstallCommand as coreGetInstallCommand,
+  getInstallCommands as coreGetInstallCommands,
+  installTool as coreInstallTool,
+  getMissingTools as coreGetMissingTools,
+  getInstalledTools as coreGetInstalledTools,
+} from "@omop/pentest-core"
 import { exec } from "child_process"
 import { promisify } from "util"
+import type { ToolPermission, ToolPermissionConfig, ToolInstallResult, ToolStatusReport } from "../types"
+import { checkPermission } from "./permission-manager"
 
 const execAsync = promisify(exec)
 
-export async function checkToolInstalled(tool: ToolEntry): Promise<ToolAvailability> {
-  try {
-    const { stdout } = await execAsync(tool.check_installed.command, { timeout: 10000 })
-    
-    let version: string | undefined
-    if (tool.check_installed.parse_version) {
-      const match = stdout.match(new RegExp(tool.check_installed.parse_version))
-      version = match?.[1]
-    }
-
-    return {
-      tools_name: tool.tools_name,
-      installed: true,
-      version
-    }
-  } catch (error) {
-    return {
-      tools_name: tool.tools_name,
-      installed: false,
-      error: error instanceof Error ? error.message : "Unknown error"
-    }
-  }
-}
-
-export async function checkAllToolsInstalled(tools: readonly ToolEntry[]): Promise<ToolAvailability[]> {
-  return Promise.all(tools.map(checkToolInstalled))
-}
-
-export function getInstallCommand(tool: ToolEntry, platform: NodeJS.Platform = process.platform): string | null {
-  const config = tool.installation[platform as keyof InstallationConfig]
-  return config?.command ?? null
-}
-
-export function getInstallCommands(tool: ToolEntry): Partial<Record<NodeJS.Platform, PlatformInstallation>> {
-  const result: Partial<Record<NodeJS.Platform, PlatformInstallation>> = {}
-  
-  if (tool.installation.linux) result.linux = tool.installation.linux
-  if (tool.installation.darwin) result.darwin = tool.installation.darwin
-  if (tool.installation.win32) result.win32 = tool.installation.win32
-  
-  return result
-}
+export const checkToolInstalled = coreCheckToolInstalled
+export const checkAllToolsInstalled = coreCheckAllToolsInstalled
+export const getInstallCommand = coreGetInstallCommand
+export const getInstallCommands = coreGetInstallCommands
+export const getMissingTools = coreGetMissingTools
+export const getInstalledTools = coreGetInstalledTools
 
 export async function installTool(
   tool: ToolEntry,
@@ -55,51 +28,29 @@ export async function installTool(
   platform: NodeJS.Platform = process.platform,
 ): Promise<ToolInstallResult> {
   const permission = checkPermission(tool.tools_name, permissionConfig)
-  
+
   if (permission === "deny") {
     return {
       tools_name: tool.tools_name,
       success: false,
       message: `Installation denied by permission policy for: ${tool.tools_name}`,
-      permission
+      permission,
     }
   }
 
-  const config = tool.installation[platform as keyof InstallationConfig]
-  
-  if (!config) {
-    return {
-      tools_name: tool.tools_name,
-      success: false,
-      message: `No installation command available for platform: ${platform}`,
-      permission
-    }
+  const result = await coreInstallTool(tool, platform)
+  let version: string | undefined
+  if (result.success && tool.check_installed.parse_version) {
+    const recheck = await coreCheckToolInstalled(tool)
+    version = recheck.version
   }
 
-  try {
-    const { stdout, stderr } = await execAsync(config.command, { timeout: 300000 })
-    const message = stdout || stderr || "Installation completed"
-    
-    let version: string | undefined
-    if (tool.check_installed.parse_version) {
-      const match = (stdout || "").match(new RegExp(tool.check_installed.parse_version))
-      version = match?.[1]
-    }
-
-    return {
-      tools_name: tool.tools_name,
-      success: true,
-      message,
-      version,
-      permission
-    }
-  } catch (error) {
-    return {
-      tools_name: tool.tools_name,
-      success: false,
-      message: error instanceof Error ? error.message : "Installation failed",
-      permission
-    }
+  return {
+    tools_name: tool.tools_name,
+    success: result.success,
+    message: result.message,
+    version,
+    permission,
   }
 }
 
@@ -113,30 +64,30 @@ export async function installToolWithSudo(
   }
 
   const permission = checkPermission(tool.tools_name, permissionConfig)
-  
+
   if (permission === "deny") {
     return {
       tools_name: tool.tools_name,
       success: false,
       message: `Installation denied by permission policy for: ${tool.tools_name} (requires root)`,
-      permission
+      permission,
     }
   }
 
-  const config = tool.installation[platform as keyof InstallationConfig]
-  
+  const config = tool.installation[platform as keyof typeof tool.installation]
   if (!config) {
     return {
       tools_name: tool.tools_name,
       success: false,
       message: `No installation command available for platform: ${platform}`,
-      permission
+      permission,
     }
   }
 
-  const sudoCommand = platform === "win32" 
-    ? `Start-Process -Verb RunAs -Wait -FilePath "${config.command.split(" ")[0]}" -ArgumentList "${config.command.split(" ").slice(1).join(" ")}"`
-    : `sudo ${config.command}`
+  const sudoCommand =
+    platform === "win32"
+      ? `Start-Process -Verb RunAs -Wait -FilePath "${config.command.split(" ")[0]}" -ArgumentList "${config.command.split(" ").slice(1).join(" ")}"`
+      : `sudo ${config.command}`
 
   try {
     const { stdout, stderr } = await execAsync(sudoCommand, { timeout: 300000 })
@@ -144,24 +95,16 @@ export async function installToolWithSudo(
       tools_name: tool.tools_name,
       success: true,
       message: stdout || stderr || "Installation completed (with elevated privileges)",
-      permission
+      permission,
     }
   } catch (error) {
     return {
       tools_name: tool.tools_name,
       success: false,
       message: error instanceof Error ? error.message : "Installation with sudo failed",
-      permission
+      permission,
     }
   }
-}
-
-export function getMissingTools(availability: ToolAvailability[]): ToolAvailability[] {
-  return availability.filter(a => !a.installed)
-}
-
-export function getInstalledTools(availability: ToolAvailability[]): ToolAvailability[] {
-  return availability.filter(a => a.installed)
 }
 
 export async function ensureToolsInstalled(
@@ -174,14 +117,14 @@ export async function ensureToolsInstalled(
   missing: ToolAvailability[]
   failed: ToolInstallResult[]
 }> {
-  const availability = await checkAllToolsInstalled(tools)
-  const missing = getMissingTools(availability)
+  const availability = await coreCheckAllToolsInstalled(tools)
+  const missing = coreGetMissingTools(availability)
   const installed: ToolInstallResult[] = []
   const denied: ToolInstallResult[] = []
   const failed: ToolInstallResult[] = []
 
   for (const toolAvail of missing) {
-    const toolEntry = tools.find(t => t.tools_name === toolAvail.tools_name)
+    const toolEntry = tools.find((t) => t.tools_name === toolAvail.tools_name)
     if (!toolEntry) continue
 
     const result = toolEntry.requires_root
@@ -197,7 +140,12 @@ export async function ensureToolsInstalled(
     }
   }
 
-  return { installed, denied, missing: getMissingTools(await checkAllToolsInstalled(tools)), failed }
+  return {
+    installed,
+    denied,
+    missing: coreGetMissingTools(await coreCheckAllToolsInstalled(tools)),
+    failed,
+  }
 }
 
 export async function getToolStatusReport(
@@ -205,13 +153,13 @@ export async function getToolStatusReport(
   permissionConfig: ToolPermissionConfig,
   platform: NodeJS.Platform = process.platform,
 ): Promise<ToolStatusReport[]> {
-  const availability = await checkAllToolsInstalled(tools)
-  
-  return tools.map(tool => {
-    const avail = availability.find(a => a.tools_name === tool.tools_name)
-    const permission = checkPermission(tool.tools_name, permissionConfig)
-    const installCmd = getInstallCommand(tool, platform)
-    
+  const availability = await coreCheckAllToolsInstalled(tools)
+
+  return tools.map((tool) => {
+    const avail = availability.find((a) => a.tools_name === tool.tools_name)
+    const permission: ToolPermission = checkPermission(tool.tools_name, permissionConfig)
+    const installCmd = coreGetInstallCommand(tool, platform)
+
     return {
       tools_name: tool.tools_name,
       installed: avail?.installed ?? false,
