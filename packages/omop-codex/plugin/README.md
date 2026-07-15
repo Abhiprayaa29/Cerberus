@@ -4,6 +4,7 @@
 
 Internally each component remains isolated under `components/`:
 
+- `components/codegraph` — SessionStart background CodeGraph bootstrap
 - `components/comment-checker`
 - `components/rules`
 - `components/lsp`
@@ -12,6 +13,9 @@ Internally each component remains isolated under `components/`:
 - `components/fullscan`
 - `components/pentest-loop`
 - `components/telemetry`
+- `components/lazycodex-executor-verify`
+
+Also on disk: `components/bootstrap` (SessionStart provisioner). Aggregate hooks live as split files under `hooks/*.json`, mounted from `.codex-plugin/plugin.json` (not a single `hooks/hooks.json`).
 
 The root plugin manifest exports one Codex plugin named `omo`, with aggregate hooks, skills, and plugin-scoped MCP servers for `grep_app`, `context7`, `git_bash`, and `lsp`. AST-aware search ships as the `ast-grep` skill, not as an MCP server.
 
