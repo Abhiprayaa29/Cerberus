@@ -8,6 +8,7 @@ import {
   createDirectoryAgentsInjectorHook,
   createDirectoryReadmeInjectorHook,
   createEmptyTaskResponseDetectorHook,
+  createTaskReminderHook,
   createRulesInjectorHook,
   createTasksTodowriteDisablerHook,
   createWriteExistingFileGuardHook,
@@ -36,6 +37,7 @@ export type ToolGuardHooks = {
   directoryAgentsInjector: ReturnType<typeof createDirectoryAgentsInjectorHook> | null
   directoryReadmeInjector: ReturnType<typeof createDirectoryReadmeInjectorHook> | null
   emptyTaskResponseDetector: ReturnType<typeof createEmptyTaskResponseDetectorHook> | null
+  taskReminder: ReturnType<typeof createTaskReminderHook> | null
   rulesInjector: ReturnType<typeof createRulesInjectorHook> | null
   tasksTodowriteDisabler: ReturnType<typeof createTasksTodowriteDisablerHook> | null
   writeExistingFileGuard: ReturnType<typeof createWriteExistingFileGuardHook> | null
@@ -97,6 +99,10 @@ export function createToolGuardHooks(args: {
 
   const emptyTaskResponseDetector = isHookEnabled("empty-task-response-detector")
     ? safeHook("empty-task-response-detector", () => createEmptyTaskResponseDetectorHook(ctx))
+    : null
+
+  const taskReminder = isHookEnabled("task-reminder")
+    ? safeHook("task-reminder", () => createTaskReminderHook(ctx))
     : null
 
   const cc = pluginConfig.claude_code
@@ -163,6 +169,7 @@ export function createToolGuardHooks(args: {
     directoryAgentsInjector,
     directoryReadmeInjector,
     emptyTaskResponseDetector,
+    taskReminder,
     rulesInjector,
     tasksTodowriteDisabler,
     writeExistingFileGuard,
