@@ -7,6 +7,7 @@ import {
   installTool as coreInstallTool,
   getMissingTools as coreGetMissingTools,
   getInstalledTools as coreGetInstalledTools,
+  type ToolInstallerDeps,
 } from "@omop/pentest-core"
 import { exec } from "child_process"
 import { promisify } from "util"
@@ -26,6 +27,7 @@ export async function installTool(
   tool: ToolEntry,
   permissionConfig: ToolPermissionConfig,
   platform: NodeJS.Platform = process.platform,
+  deps?: ToolInstallerDeps,
 ): Promise<ToolInstallResult> {
   const permission = checkPermission(tool.tools_name, permissionConfig)
 
@@ -38,10 +40,10 @@ export async function installTool(
     }
   }
 
-  const result = await coreInstallTool(tool, platform)
+  const result = await coreInstallTool(tool, platform, deps)
   let version: string | undefined
   if (result.success && tool.check_installed.parse_version) {
-    const recheck = await coreCheckToolInstalled(tool)
+    const recheck = await coreCheckToolInstalled(tool, deps)
     version = recheck.version
   }
 
@@ -58,9 +60,10 @@ export async function installToolWithSudo(
   tool: ToolEntry,
   permissionConfig: ToolPermissionConfig,
   platform: NodeJS.Platform = process.platform,
+  deps?: ToolInstallerDeps,
 ): Promise<ToolInstallResult> {
   if (!tool.requires_root) {
-    return installTool(tool, permissionConfig, platform)
+    return installTool(tool, permissionConfig, platform, deps)
   }
 
   const permission = checkPermission(tool.tools_name, permissionConfig)
@@ -84,13 +87,14 @@ export async function installToolWithSudo(
     }
   }
 
+  const run = deps?.execAsync ?? execAsync
   const sudoCommand =
     platform === "win32"
       ? `Start-Process -Verb RunAs -Wait -FilePath "${config.command.split(" ")[0]}" -ArgumentList "${config.command.split(" ").slice(1).join(" ")}"`
       : `sudo ${config.command}`
 
   try {
-    const { stdout, stderr } = await execAsync(sudoCommand, { timeout: 300000 })
+    const { stdout, stderr } = await run(sudoCommand, { timeout: 300000 })
     return {
       tools_name: tool.tools_name,
       success: true,
@@ -111,13 +115,14 @@ export async function ensureToolsInstalled(
   tools: readonly ToolEntry[],
   permissionConfig: ToolPermissionConfig,
   platform: NodeJS.Platform = process.platform,
+  deps?: ToolInstallerDeps,
 ): Promise<{
   installed: ToolInstallResult[]
   denied: ToolInstallResult[]
   missing: ToolAvailability[]
   failed: ToolInstallResult[]
 }> {
-  const availability = await coreCheckAllToolsInstalled(tools)
+  const availability = await coreCheckAllToolsInstalled(tools, deps)
   const missing = coreGetMissingTools(availability)
   const installed: ToolInstallResult[] = []
   const denied: ToolInstallResult[] = []
@@ -128,8 +133,8 @@ export async function ensureToolsInstalled(
     if (!toolEntry) continue
 
     const result = toolEntry.requires_root
-      ? await installToolWithSudo(toolEntry, permissionConfig, platform)
-      : await installTool(toolEntry, permissionConfig, platform)
+      ? await installToolWithSudo(toolEntry, permissionConfig, platform, deps)
+      : await installTool(toolEntry, permissionConfig, platform, deps)
 
     if (result.permission === "deny") {
       denied.push(result)
@@ -143,7 +148,7 @@ export async function ensureToolsInstalled(
   return {
     installed,
     denied,
-    missing: coreGetMissingTools(await coreCheckAllToolsInstalled(tools)),
+    missing: coreGetMissingTools(await coreCheckAllToolsInstalled(tools, deps)),
     failed,
   }
 }
@@ -152,8 +157,9 @@ export async function getToolStatusReport(
   tools: readonly ToolEntry[],
   permissionConfig: ToolPermissionConfig,
   platform: NodeJS.Platform = process.platform,
+  deps?: ToolInstallerDeps,
 ): Promise<ToolStatusReport[]> {
-  const availability = await coreCheckAllToolsInstalled(tools)
+  const availability = await coreCheckAllToolsInstalled(tools, deps)
 
   return tools.map((tool) => {
     const avail = availability.find((a) => a.tools_name === tool.tools_name)
