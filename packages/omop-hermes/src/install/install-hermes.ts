@@ -92,10 +92,22 @@ export function ensureSkillsExternalDir(configText: string, skillsPath: string):
   }
 
   if (/^skills\s*:/m.test(configText)) {
-    if (/external_dirs\s*:/.test(configText)) {
+    if (/external_dirs\s*:\s*\[\s*\]/.test(configText)) {
+      return configText.replace(
+        /external_dirs\s*:\s*\[\s*\]/,
+        `external_dirs:\n    - ${JSON.stringify(normalized)}`,
+      )
+    }
+    if (/external_dirs\s*:\s*\n/.test(configText)) {
       return configText.replace(
         /(external_dirs\s*:\s*\n)/,
         `$1    - ${JSON.stringify(normalized)}\n`,
+      )
+    }
+    if (/external_dirs\s*:\s*\[/.test(configText)) {
+      return configText.replace(
+        /(external_dirs\s*:\s*\[)/,
+        `$1${JSON.stringify(normalized)}, `,
       )
     }
     return configText.replace(

@@ -53,6 +53,16 @@ describe("ensureSkillsExternalDir", () => {
     expect(out).toContain("/tmp/skills")
   })
 
+  test("#given empty external_dirs list #when adding path #then expands list", () => {
+    // given
+    const input = "skills:\n  external_dirs: []\n"
+    // when
+    const out = ensureSkillsExternalDir(input, "/tmp/skills")
+    // then
+    expect(out).toContain("/tmp/skills")
+    expect(out).not.toMatch(/external_dirs:\s*\[\s*\]/)
+  })
+
   test("#given path already present #when adding #then unchanged", () => {
     // given
     const input = 'skills:\n  external_dirs:\n    - "/tmp/skills"\n'
