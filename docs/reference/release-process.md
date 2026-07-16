@@ -43,7 +43,8 @@ bun run build          # full product
 bun run build:dev      # adapter + assets only (daily)
 ```
 
-CI bootstrap: `.github/actions/setup-omop` (Node 24, Bun 1.3.12, frozen install, vendored LSP).
+CI bootstrap: `.github/actions/setup-omop` (Node 24, Bun 1.3.12, frozen install, bun + npm vendored caches, vendored LSP).  
+Local vendored builds: `bun run build:vendored` runs git-bash-mcp / lsp-tools-mcp / lsp-daemon / codex-plugin **in parallel**.
 
 ## How to publish
 

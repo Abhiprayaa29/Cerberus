@@ -17,6 +17,10 @@ inputs:
     description: Cache ~/.bun/install/cache
     required: false
     default: "true"
+  cache-npm:
+    description: Cache ~/.npm for vendored package installs
+    required: false
+    default: "true"
   vendored:
     description: Vendored LSP builds — none | tools | all
     required: false
@@ -42,6 +46,12 @@ runs:
         path: ~/.bun/install/cache
         key: ${{ runner.os }}-bun-${{ inputs.bun-version }}-${{ hashFiles('bun.lock') }}
 
+    - uses: actions/cache@v5
+      if: inputs.cache-npm == 'true' && (inputs.vendored == 'tools' || inputs.vendored == 'all')
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-npm-vendored-${{ hashFiles('packages/lsp-tools-mcp/package-lock.json', 'packages/lsp-daemon/package-lock.json') }}
+
     - name: Install dependencies
       if: inputs.install == 'true'
       shell: bash
@@ -53,9 +63,9 @@ runs:
       working-directory: packages/lsp-tools-mcp
       run: |
         if [ "${{ inputs.vendored-install }}" = "ci" ]; then
-          npm ci
+          npm ci --prefer-offline
         else
-          npm install --no-fund --no-audit --ignore-scripts
+          npm install --no-fund --no-audit --ignore-scripts --prefer-offline
         fi
         npm run build
 
@@ -65,8 +75,8 @@ runs:
       working-directory: packages/lsp-daemon
       run: |
         if [ "${{ inputs.vendored-install }}" = "ci" ]; then
-          npm ci
+          npm ci --prefer-offline
         else
-          npm install --no-fund --no-audit --ignore-scripts
+          npm install --no-fund --no-audit --ignore-scripts --prefer-offline
         fi
         npm run build

@@ -43,15 +43,8 @@ describe("build script layers", () => {
     const assets = script("build:assets")
     const cli = script("build:cli")
 
-    // when / then — same leaves as pre-split mega-build
-    for (const leaf of [
-      "build:git-bash-mcp",
-      "build:lsp-tools-mcp",
-      "build:lsp-daemon",
-      "build:codex-plugin",
-    ]) {
-      expect(vendored).toContain(leaf)
-    }
+    // when / then
+    expect(vendored).toBe("bun run script/build-vendored.ts")
 
     expect(adapter).toContain("packages/omop-opencode/src/index.ts")
     expect(adapter).toContain("packages/omop-opencode/src/tui.ts")
@@ -64,6 +57,22 @@ describe("build script layers", () => {
     expect(cli).toContain("packages/omop-opencode/src/cli/index.ts")
     expect(cli).toContain("build:cli-node")
     expect(cli).toContain("build:codex-install")
+  })
+
+  test("build-vendored.ts runs leaf packages in parallel", () => {
+    // given
+    const source = readFileSync(`${repositoryRoot}/script/build-vendored.ts`, "utf8")
+
+    // when / then
+    expect(source).toContain("Promise.allSettled")
+    for (const leaf of [
+      "packages/git-bash-mcp",
+      "packages/lsp-tools-mcp",
+      "packages/lsp-daemon",
+      "packages/omop-codex/plugin",
+    ]) {
+      expect(source).toContain(leaf)
+    }
   })
 
   test("build:all still chains full build then binaries", () => {
