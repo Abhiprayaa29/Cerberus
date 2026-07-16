@@ -62,7 +62,9 @@ describe("hashline-edit-diff-enhancer", () => {
     )
 
     // then
-    expect(afterOut.metadata.diff).toBeUndefined()
-    rmSync(dir, { recursive: true, force: true })
-  })
+    try {
+      expect(afterOut.metadata.diff).toBeUndefined()
+    } finally {
+      rmSync(dir, { recursive: true, force: true })
+    }
 })
