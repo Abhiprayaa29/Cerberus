@@ -60,6 +60,11 @@ export { createTasksTodowriteDisablerHook } from "./tasks-todowrite-disabler";
 export { createRuntimeFallbackHook, type RuntimeFallbackHook, type RuntimeFallbackOptions } from "./runtime-fallback";
 export { createWriteExistingFileGuardHook } from "./write-existing-file-guard";
 export { createBashFileReadGuardHook } from "./bash-file-read-guard";
+export {
+  createCatalogToolInstallerHook,
+  extractCatalogToolToken,
+  resetCatalogToolInstallerStateForTests,
+} from "./catalog-tool-installer";
 export { createHashlineReadEnhancerHook } from "./hashline-read-enhancer";
 export { createHashlineEditDiffEnhancerHook } from "./hashline-edit-diff-enhancer";
 export { createJsonErrorRecoveryHook, JSON_ERROR_TOOL_EXCLUDE_LIST, JSON_ERROR_PATTERNS, JSON_ERROR_REMINDER } from "./json-error-recovery";

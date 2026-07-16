@@ -13,6 +13,7 @@ import {
   createTasksTodowriteDisablerHook,
   createWriteExistingFileGuardHook,
   createBashFileReadGuardHook,
+  createCatalogToolInstallerHook,
   createHashlineReadEnhancerHook,
   createHashlineEditDiffEnhancerHook,
   createReadImageResizerHook,
@@ -43,6 +44,7 @@ export type ToolGuardHooks = {
   tasksTodowriteDisabler: ReturnType<typeof createTasksTodowriteDisablerHook> | null
   writeExistingFileGuard: ReturnType<typeof createWriteExistingFileGuardHook> | null
   bashFileReadGuard: ReturnType<typeof createBashFileReadGuardHook> | null
+  catalogToolInstaller: ReturnType<typeof createCatalogToolInstallerHook> | null
   hashlineReadEnhancer: ReturnType<typeof createHashlineReadEnhancerHook> | null
   hashlineEditDiffEnhancer: ReturnType<typeof createHashlineEditDiffEnhancerHook> | null
   jsonErrorRecovery: ReturnType<typeof createJsonErrorRecoveryHook> | null
@@ -129,6 +131,15 @@ export function createToolGuardHooks(args: {
     ? safeHook("bash-file-read-guard", () => createBashFileReadGuardHook())
     : null
 
+  const toolsAutoInstallEnabled = pluginConfig.experimental?.tools_auto_install !== false
+  const catalogToolInstaller =
+    isHookEnabled("catalog-tool-installer") && toolsAutoInstallEnabled
+      ? safeHook("catalog-tool-installer", () =>
+          createCatalogToolInstallerHook({
+            enabled: true,
+          }))
+      : null
+
   const hashlineReadEnhancer = isHookEnabled("hashline-read-enhancer")
     ? safeHook("hashline-read-enhancer", () => createHashlineReadEnhancerHook(ctx, { hashline_edit: { enabled: pluginConfig.hashline_edit ?? false } }))
     : null
@@ -181,6 +192,7 @@ export function createToolGuardHooks(args: {
     tasksTodowriteDisabler,
     writeExistingFileGuard,
     bashFileReadGuard,
+    catalogToolInstaller,
     hashlineReadEnhancer,
     hashlineEditDiffEnhancer,
     jsonErrorRecovery,
