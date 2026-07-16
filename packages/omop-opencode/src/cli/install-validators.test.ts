@@ -37,6 +37,7 @@ describe("argsToConfig", () => {
     expect(config.platform).toBe("opencode")
     expect(config.hasOpenCode).toBe(true)
     expect(config.hasCodex).toBe(false)
+    expect(config.hasHermes).toBe(false)
   })
 
   test("enables Codex autonomous mode by default when platform is codex", () => {
@@ -50,7 +51,22 @@ describe("argsToConfig", () => {
     expect(config.platform).toBe("codex")
     expect(config.hasOpenCode).toBe(false)
     expect(config.hasCodex).toBe(true)
+    expect(config.hasHermes).toBe(false)
     expect(config.codexAutonomous).toBe(true)
+  })
+
+  test("enables Hermes only when platform is hermes", () => {
+    // #given
+    const args = createArgs({ platform: "hermes" })
+
+    // #when
+    const config = argsToConfig(args)
+
+    // #then
+    expect(config.platform).toBe("hermes")
+    expect(config.hasOpenCode).toBe(false)
+    expect(config.hasCodex).toBe(false)
+    expect(config.hasHermes).toBe(true)
   })
 
   test("leaves Codex permission settings unchanged when explicitly disabled", () => {
@@ -199,6 +215,18 @@ describe("validateNonTuiArgs", () => {
   test("allows codex-only non-TUI installs", () => {
     // #given
     const args: InstallArgs = { tui: false, platform: "codex" }
+
+    // #when
+    const result = validateNonTuiArgs(args)
+
+    // #then
+    expect(result.valid).toBe(true)
+    expect(result.errors).toEqual([])
+  })
+
+  test("allows hermes-only non-TUI installs", () => {
+    // #given
+    const args: InstallArgs = { tui: false, platform: "hermes" }
 
     // #when
     const result = validateNonTuiArgs(args)

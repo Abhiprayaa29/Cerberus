@@ -27,6 +27,7 @@
     "packages/agents-md-core",
     "packages/shared-skills",
     "packages/omop-codex",
+    "packages/omop-hermes",
     "packages/omop-opencode",
     "packages/pentest-core",
     "packages/tools",
@@ -68,7 +69,14 @@
     "!packages/omop-codex/plugin/node_modules",
     "!packages/omop-codex/plugin/**/node_modules",
     "packages/omop-codex/scripts",
-    "!packages/omop-codex/scripts/install"
+    "!packages/omop-codex/scripts/install",
+    "packages/omop-hermes/package.json",
+    "packages/omop-hermes/plugin",
+    "packages/omop-hermes/src",
+    "packages/omop-hermes/AGENTS.md",
+    "packages/omop-hermes/README.md",
+    "packages/omop-hermes/index.d.ts",
+    "packages/omop-hermes/tsconfig.json"
   ],
   "exports": {
     ".": {

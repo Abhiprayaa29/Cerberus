@@ -1,6 +1,6 @@
 export type ClaudeSubscription = "no" | "yes" | "max20"
 export type BooleanArg = "no" | "yes"
-export type InstallPlatform = "opencode" | "codex" | "both"
+export type InstallPlatform = "opencode" | "codex" | "hermes" | "both"
 
 export interface InstallArgs {
   tui: boolean
@@ -30,6 +30,7 @@ export interface InstallConfig {
   hasGemini: boolean
   hasCopilot: boolean
   hasCodex: boolean
+  hasHermes: boolean
   hasOpencodeZen: boolean
   hasZaiCodingPlan: boolean
   hasKimiForCoding: boolean

@@ -13,6 +13,7 @@ import { detectedToInitialValues, formatConfigSummary, SYMBOLS } from "./install
 import { getUnsupportedOpenCodeVersionMessage } from "./minimum-opencode-version"
 import { promptInstallConfig, promptInstallPlatform } from "./tui-install-prompts"
 import { detectCodexInstallation, formatCodexInstallationWarning, runCodexInstaller } from "./install-codex"
+import { runHermesInstaller } from "./install-hermes/install-hermes"
 import { starGitHubRepositories } from "./star-request"
 import { getNoModelProvidersWarning, hasAnyConfiguredProvider } from "./provider-availability"
 import { ensureTuiPluginEntry } from "./config-manager/add-tui-plugin-to-tui-config"
@@ -165,7 +166,7 @@ export async function runTuiInstaller(args: InstallArgs, version: string): Promi
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error)
       spinner.stop(`Codex install failed ${color.yellow("[!]")}`)
-      if (!config.hasOpenCode) {
+      if (!config.hasOpenCode && !config.hasHermes) {
         p.log.error(`Codex install failed: ${message}`)
         p.outro(color.red("Installation failed."))
         return 1
@@ -174,9 +175,34 @@ export async function runTuiInstaller(args: InstallArgs, version: string): Promi
     }
   }
 
+  if (config.hasHermes) {
+    spinner.start("Installing Hermes harness adapter")
+    try {
+      const hermesResult = await runHermesInstaller({ linkSkills: true })
+      spinner.stop(`Hermes plugin installed to ${color.cyan(hermesResult.pluginPath)}`)
+      p.log.info(`Config ${color.cyan(hermesResult.configPath)}`)
+      if (hermesResult.skillsDir) {
+        p.log.info(`Skills external_dirs ${color.cyan(hermesResult.skillsDir)}`)
+      }
+      p.log.info("Restart hermes or run: hermes plugins list")
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error)
+      spinner.stop(`Hermes install failed ${color.yellow("[!]")}`)
+      if (!config.hasOpenCode && !config.hasCodex) {
+        p.log.error(`Hermes install failed: ${message}`)
+        p.outro(color.red("Installation failed."))
+        return 1
+      }
+      p.log.warn(`Hermes install failed (other platforms may still be complete): ${message}`)
+    }
+  }
+
   p.log.success(color.bold(isUpdate ? "Configuration updated!" : "Installation complete!"))
   if (config.hasOpenCode) {
     p.log.message(`Run ${color.cyan("opencode")} to start!`)
+  }
+  if (config.hasHermes) {
+    p.log.message(`Run ${color.cyan("hermes")} after plugin enable.`)
   }
   p.log.info("Anonymous telemetry is enabled by default. Disable it with OMOP_SEND_ANONYMOUS_TELEMETRY=0 or OMOP_DISABLE_POSTHOG=1.")
   p.log.info("Docs: docs/legal/privacy-policy.md and docs/legal/terms-of-service.md")

@@ -10,6 +10,7 @@ function createConfig(overrides: Partial<InstallConfig> = {}): InstallConfig {
     platform: "opencode",
     hasOpenCode: true,
     hasCodex: false,
+    hasHermes: false,
     codexAutonomous: false,
     hasClaude: false,
     isMax20: false,

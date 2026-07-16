@@ -161,6 +161,16 @@
         "bun-types": "1.3.14",
       },
     },
+    "packages/omop-hermes": {
+      "name": "@omop/omop-hermes",
+      "version": "1.4.0",
+      "dependencies": {
+        "@omop/utils": "*",
+      },
+      "devDependencies": {
+        "bun-types": "1.3.14",
+      },
+    },
     "packages/omop-opencode": {
       "name": "@omop/omop-opencode",
       "version": "1.4.0",
@@ -176,6 +186,7 @@
         "@omop/mcp-client-core": "*",
         "@omop/model-core": "*",
         "@omop/omop-codex": "*",
+        "@omop/omop-hermes": "*",
         "@omop/openclaw-core": "*",
         "@omop/pentest-core": "*",
         "@omop/prompts-core": "*",
@@ -425,6 +436,8 @@
     "@omop/model-core": ["@omop/model-core@workspace:packages/model-core"],
 
     "@omop/omop-codex": ["@omop/omop-codex@workspace:packages/omop-codex"],
+
+    "@omop/omop-hermes": ["@omop/omop-hermes@workspace:packages/omop-hermes"],
 
     "@omop/omop-opencode": ["@omop/omop-opencode@workspace:packages/omop-opencode"],
 
