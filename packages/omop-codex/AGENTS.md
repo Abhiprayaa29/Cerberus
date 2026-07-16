@@ -35,14 +35,32 @@
 | `marketplace.json` | Codex marketplace manifest. Declares marketplace `cerberuslabs`, single installable plugin `omo`. |
 | `MARKETPLACE.md` | Native Codex marketplace notes for `cerberuslabs` / `omo`. |
 | `index.d.ts` | Type barrel re-exporting `src/`. |
-| `plugin/` | Vendored Codex plugin namespace `omo`; pkg `@cerberuslabs/omop-codex-plugin` (dep `@omop/shared-skills`). Holds `.codex-plugin/plugin.json` (brandColor `#7C3AED`), `hooks/hooks.json` (aggregate event wiring), `components/` (8 workspaces), generated aggregate `skills/`, `.mcp.json`. |
+| `plugin/` | Vendored Codex plugin namespace `omo`; pkg `@cerberuslabs/omop-codex-plugin` (dep `@omop/shared-skills`). Holds `.codex-plugin/plugin.json` (brandColor `#7C3AED`), split `hooks/*.json` mounted from `plugin.json`, `components/` (npm workspaces), generated aggregate `skills/`, `.mcp.json`. |
 | `scripts/` | Generated/bundled Node ESM install entrypoints and parity tests. Published paths such as `scripts/install-local.mjs` stay stable while source lives in `src/install/`. |
 | `src/` | TypeScript runtime consumed by the CLI: `install/` (Codex cache install, config mutation, agent links, local marketplace snapshot, cleanup, routing) + `telemetry/`. |
 | `tsconfig.json` | Bun-targeted strict config; included in root `typecheck:packages`. |
 
-## COMPONENTS (8)
+## COMPONENTS
 
-`comment-checker`, `git-bash`, `lsp`, `rules`, `start-work-continuation`, `telemetry`, `fullscan`, `pentest-loop`. Each is an isolated workspace under `plugin/components/<name>/` with its own `AGENTS.md` + `hooks/hooks.json` when it owns hook behavior. The root plugin build runs `plugin/scripts/sync-skills.mjs` to generate the aggregate `plugin/skills/` directory from shared skills plus component-local skills. Wired to Codex lifecycle events `SessionStart` / `UserPromptSubmit` / `PreToolUse` / `PostToolUse` / `PostCompact` / `Stop` / `SubagentStop`. Implementations originate from `code-yeongyu/codex-{rules,comment-checker,lsp,fullscan,pentest-loop,start-work-continuation}`.
+**npm workspaces (10):** `codegraph`, `comment-checker`, `git-bash`, `lazycodex-executor-verify`, `rules`, `lsp`, `telemetry`, `start-work-continuation`, `pentest-loop`, `fullscan`.
+
+**Also on disk (not always in workspaces):** `bootstrap` (SessionStart provisioner; aggregate hook `session-start-checking-bootstrap-provisioning.json`), `test-support` (fixtures).
+
+| Component | Lifecycle | Notes |
+|-----------|-----------|--------|
+| `comment-checker` | PostToolUse | Comment slop check |
+| `git-bash` | PreToolUse / PostCompact | Windows git_bash MCP reminder |
+| `lsp` | PostToolUse / PostCompact | Diagnostics |
+| `rules` | SessionStart / UserPromptSubmit / PostToolUse / PostCompact | Rule inject |
+| `start-work-continuation` | Stop / SubagentStop | Boulder continuation |
+| `telemetry` | SessionStart | Daily-active |
+| `fullscan` | UserPromptSubmit | Keyword / directive |
+| `pentest-loop` | UserPromptSubmit / PreToolUse | Loop steering |
+| **`codegraph`** | **SessionStart** | Background CodeGraph bootstrap; aggregate + `components/codegraph/hooks/hooks.json` |
+| `lazycodex-executor-verify` | SubagentStop | Executor evidence verify |
+| `bootstrap` | SessionStart | Runtime dep provision (see plugin hooks) |
+
+Each isolated workspace under `plugin/components/<name>/` should ship `AGENTS.md` + `hooks/hooks.json` when it owns hook behavior. Aggregate mounts live in `plugin/.codex-plugin/plugin.json` → `plugin/hooks/*.json`. Build: `plugin/scripts/sync-skills.mjs` + `build-components.mjs`.
 
 ## INSTALL (mechanics)
 

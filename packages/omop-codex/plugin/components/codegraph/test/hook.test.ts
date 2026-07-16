@@ -13,8 +13,11 @@ import {
 	type WorkerSpawnInvocation,
 } from "../src/hook.ts";
 
-const pluginRoot = resolve(fileURLToPath(new URL("../../..", import.meta.url)));
-const hooksConfigPath = resolve(pluginRoot, "hooks/hooks.json");
+	const pluginRoot = resolve(fileURLToPath(new URL("../../..", import.meta.url)));
+const pluginManifestPath = resolve(pluginRoot, ".codex-plugin/plugin.json");
+const codegraphAggregateHookPath = resolve(pluginRoot, "hooks/session-start-checking-codegraph-bootstrap.json");
+const bootstrapAggregateHookPath = resolve(pluginRoot, "hooks/session-start-checking-bootstrap-provisioning.json");
+const componentHooksPath = resolve(pluginRoot, "components/codegraph/hooks/hooks.json");
 
 describe("CodeGraph SessionStart hook", () => {
 	it("#given hook session-start cli args #when invoked with empty JSON input #then it emits valid JSON and exits zero", async () => {
@@ -535,21 +538,28 @@ describe("CodeGraph SessionStart hook", () => {
 		expect(stdout.join("")).toBe("");
 	});
 
-	it("#given plugin hook config #when inspected #then CodeGraph is registered after bootstrap SessionStart", () => {
+	it("#given plugin aggregate hooks #when inspected #then CodeGraph SessionStart is registered after bootstrap", () => {
 		// given
-		const hooksConfig = JSON.parse(readFileSync(hooksConfigPath, "utf8"));
+		const manifest = JSON.parse(readFileSync(pluginManifestPath, "utf8")) as { hooks: string[] };
+		const codegraphHook = JSON.parse(readFileSync(codegraphAggregateHookPath, "utf8"));
+		const bootstrapHook = JSON.parse(readFileSync(bootstrapAggregateHookPath, "utf8"));
+		const componentHooks = JSON.parse(readFileSync(componentHooksPath, "utf8"));
 
 		// when
-		const sessionStartHooks = hooksConfig.hooks.SessionStart;
-		const commands = sessionStartHooks.map((entry: { readonly hooks: readonly [{ readonly command: string }] }) => {
-			return entry.hooks[0].command;
-		});
+		const codegraphCommand = codegraphHook.hooks.SessionStart[0].hooks[0].command as string;
+		const bootstrapCommand = bootstrapHook.hooks.SessionStart[0].hooks[0].command as string;
+		const componentCommand = componentHooks.hooks.SessionStart[0].hooks[0].command as string;
 
 		// then
-		expect(commands).toContain('node "${PLUGIN_ROOT}/components/codegraph/dist/cli.js" hook session-start');
-		expect(commands.indexOf('node "${PLUGIN_ROOT}/components/bootstrap/dist/cli.js" hook session-start')).toBeLessThan(
-			commands.indexOf('node "${PLUGIN_ROOT}/components/codegraph/dist/cli.js" hook session-start'),
+		expect(manifest.hooks).toContain("./hooks/session-start-checking-bootstrap-provisioning.json");
+		expect(manifest.hooks).toContain("./hooks/session-start-checking-codegraph-bootstrap.json");
+		expect(manifest.hooks.indexOf("./hooks/session-start-checking-bootstrap-provisioning.json")).toBeLessThan(
+			manifest.hooks.indexOf("./hooks/session-start-checking-codegraph-bootstrap.json"),
 		);
+		expect(codegraphCommand).toContain("components/codegraph/dist/cli.js");
+		expect(codegraphCommand).toContain("hook session-start");
+		expect(bootstrapCommand).toContain("components/bootstrap/dist/cli.js");
+		expect(componentCommand).toContain("hook session-start");
 	});
 });
 

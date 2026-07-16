@@ -14,6 +14,7 @@ Codex harness adapter for **oh-my-open-pentest**. Brings the OMO experience (rul
 
 ## Components Vendored
 
+- `codegraph` (TypeScript) - SessionStart background CodeGraph bootstrap (`hooks/session-start-checking-codegraph-bootstrap.json` + component `hooks/hooks.json`).
 - `rules` (TypeScript) - injects `CONTEXT.md` / `.omop/rules/**` and other explicit rule sources into context via `SessionStart`, `UserPromptSubmit`, `PostToolUse`, `PostCompact`; `AGENTS.md` is left to Codex native handling.
 - `comment-checker` (TypeScript) - runs `@code-yeongyu/comment-checker` after `apply_patch` / `edit` / `write` tool use.
 - `lsp` (TypeScript + LSP MCP) - exposes LSP diagnostics, navigation, symbols, rename via MCP + post-edit hooks.
@@ -22,6 +23,8 @@ Codex harness adapter for **oh-my-open-pentest**. Brings the OMO experience (rul
 - `pentest-loop` (TypeScript) - durable multi-goal orchestration backed by `.omop/pentest-loop/` evidence audit.
 - `start-work-continuation` (TypeScript) - `Stop` / `SubagentStop` continuation hook for `.omop/boulder.json` start-work plans.
 - `telemetry` (TypeScript) - anonymous daily active telemetry hook.
+- `lazycodex-executor-verify` (TypeScript) - SubagentStop executor evidence verify.
+- `bootstrap` (on disk) - SessionStart runtime provisioner (aggregate hook; not always an npm workspace).
 
 ## Install
 
