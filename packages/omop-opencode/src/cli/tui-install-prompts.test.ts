@@ -50,7 +50,7 @@ describe("promptInstallPlatform", () => {
     mock.restore()
   })
 
-  test("offers OpenCode, Codex, and Both choices", async () => {
+  test("offers OpenCode, Codex, Hermes, and Both choices", async () => {
     // given
     const selectSpy = spyOn(p, "select").mockResolvedValue("opencode")
 
@@ -65,6 +65,7 @@ describe("promptInstallPlatform", () => {
       options: [
         { value: "opencode" },
         { value: "codex" },
+        { value: "hermes" },
         { value: "both" },
       ],
     })
@@ -85,6 +86,7 @@ describe("promptInstallPlatform", () => {
       options: [
         { value: "opencode" },
         { value: "codex" },
+        { value: "hermes" },
         { value: "both" },
       ],
     })
@@ -115,6 +117,7 @@ describe("promptInstallConfig platform branching", () => {
       platform: "codex",
       hasOpenCode: false,
       hasCodex: true,
+      hasHermes: false,
       codexAutonomous: true,
     } satisfies Partial<InstallConfig>)
     expect(selectSpy).not.toHaveBeenCalled()
@@ -165,6 +168,7 @@ describe("promptInstallConfig platform branching", () => {
     expect(config).toMatchObject({
       platform: "codex",
       hasCodex: true,
+      hasHermes: false,
       codexAutonomous: false,
     } satisfies Partial<InstallConfig>)
     expect(selectSpy).not.toHaveBeenCalled()

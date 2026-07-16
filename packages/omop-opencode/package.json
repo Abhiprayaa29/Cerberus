@@ -19,6 +19,7 @@
     "@omop/mcp-client-core": "*",
     "@omop/model-core": "*",
     "@omop/omop-codex": "*",
+    "@omop/omop-hermes": "*",
     "@omop/pentest-core": "*",
     "@omop/tools": "*",
     "@omop/openclaw-core": "*",

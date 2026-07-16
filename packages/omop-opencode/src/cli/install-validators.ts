@@ -36,6 +36,9 @@ export function formatConfigSummary(config: InstallConfig): string {
   if (config.hasCodex) {
     lines.push(`  ${SYMBOLS.info} Codex autonomous mode: ${config.codexAutonomous ? "enabled" : "disabled"}`)
   }
+  if (config.hasHermes) {
+    lines.push(`  ${SYMBOLS.info} Hermes plugin: omop → HERMES_HOME/plugins/omop`)
+  }
 
   if (!config.hasOpenCode) return lines.join("\n")
 
@@ -157,20 +160,22 @@ export function validateNonTuiArgs(args: InstallArgs): { valid: boolean; errors:
   const platform = resolvePlatform(args)
   const hasOpenCode = platform === "opencode" || platform === "both"
   const hasCodexOnly = platform === "codex"
+  const hasHermesOnly = platform === "hermes"
+  const skipOpenCodeProviderFlags = hasCodexOnly || hasHermesOnly
 
-  if (hasOpenCode && args.claude === undefined) {
+  if (!skipOpenCodeProviderFlags && hasOpenCode && args.claude === undefined) {
     errors.push("--claude is required (values: no, yes, max20)")
   } else if (args.claude !== undefined && !["no", "yes", "max20"].includes(args.claude)) {
     errors.push(`Invalid --claude value: ${args.claude} (expected: no, yes, max20)`)
   }
 
-  if (hasOpenCode && args.gemini === undefined) {
+  if (!skipOpenCodeProviderFlags && hasOpenCode && args.gemini === undefined) {
     errors.push("--gemini is required (values: no, yes)")
   } else if (args.gemini !== undefined && !["no", "yes"].includes(args.gemini)) {
     errors.push(`Invalid --gemini value: ${args.gemini} (expected: no, yes)`)
   }
 
-  if (hasOpenCode && args.copilot === undefined) {
+  if (!skipOpenCodeProviderFlags && hasOpenCode && args.copilot === undefined) {
     errors.push("--copilot is required (values: no, yes)")
   } else if (args.copilot !== undefined && !["no", "yes"].includes(args.copilot)) {
     errors.push(`Invalid --copilot value: ${args.copilot} (expected: no, yes)`)
@@ -212,8 +217,8 @@ export function validateNonTuiArgs(args: InstallArgs): { valid: boolean; errors:
     errors.push(`Invalid --vercel-ai-gateway value: ${args.vercelAiGateway} (expected: no, yes)`)
   }
 
-  if (hasCodexOnly) {
-    const opencodeFlagErrors = collectCodexOnlyOpenCodeFlagErrors(args)
+  if (hasCodexOnly || hasHermesOnly) {
+    const opencodeFlagErrors = collectCodexOnlyOpenCodeFlagErrors(args, platform)
     errors.push(...opencodeFlagErrors)
   }
 
@@ -224,20 +229,21 @@ function resolvePlatform(args: InstallArgs): InstallPlatform {
   return args.platform ?? "opencode"
 }
 
-function collectCodexOnlyOpenCodeFlagErrors(args: InstallArgs): string[] {
+function collectCodexOnlyOpenCodeFlagErrors(args: InstallArgs, platform: InstallPlatform): string[] {
+  const label = `--platform=${platform}`
   const errors: string[] = []
-  if (args.claude !== undefined) errors.push("--claude cannot be used with --platform=codex")
-  if (args.openai !== undefined) errors.push("--openai cannot be used with --platform=codex")
-  if (args.gemini !== undefined) errors.push("--gemini cannot be used with --platform=codex")
-  if (args.copilot !== undefined) errors.push("--copilot cannot be used with --platform=codex")
-  if (args.opencodeZen !== undefined) errors.push("--opencode-zen cannot be used with --platform=codex")
-  if (args.zaiCodingPlan !== undefined) errors.push("--zai-coding-plan cannot be used with --platform=codex")
-  if (args.kimiForCoding !== undefined) errors.push("--kimi-for-coding cannot be used with --platform=codex")
-  if (args.opencodeGo !== undefined) errors.push("--opencode-go cannot be used with --platform=codex")
-  if (args.bailianCodingPlan !== undefined) errors.push("--bailian-coding-plan cannot be used with --platform=codex")
-  if (args.minimaxCnCodingPlan !== undefined) errors.push("--minimax-cn-coding-plan cannot be used with --platform=codex")
-  if (args.minimaxCodingPlan !== undefined) errors.push("--minimax-coding-plan cannot be used with --platform=codex")
-  if (args.vercelAiGateway !== undefined) errors.push("--vercel-ai-gateway cannot be used with --platform=codex")
+  if (args.claude !== undefined) errors.push(`--claude cannot be used with ${label}`)
+  if (args.openai !== undefined) errors.push(`--openai cannot be used with ${label}`)
+  if (args.gemini !== undefined) errors.push(`--gemini cannot be used with ${label}`)
+  if (args.copilot !== undefined) errors.push(`--copilot cannot be used with ${label}`)
+  if (args.opencodeZen !== undefined) errors.push(`--opencode-zen cannot be used with ${label}`)
+  if (args.zaiCodingPlan !== undefined) errors.push(`--zai-coding-plan cannot be used with ${label}`)
+  if (args.kimiForCoding !== undefined) errors.push(`--kimi-for-coding cannot be used with ${label}`)
+  if (args.opencodeGo !== undefined) errors.push(`--opencode-go cannot be used with ${label}`)
+  if (args.bailianCodingPlan !== undefined) errors.push(`--bailian-coding-plan cannot be used with ${label}`)
+  if (args.minimaxCnCodingPlan !== undefined) errors.push(`--minimax-cn-coding-plan cannot be used with ${label}`)
+  if (args.minimaxCodingPlan !== undefined) errors.push(`--minimax-coding-plan cannot be used with ${label}`)
+  if (args.vercelAiGateway !== undefined) errors.push(`--vercel-ai-gateway cannot be used with ${label}`)
   return errors
 }
 
@@ -245,6 +251,7 @@ export function argsToConfig(args: InstallArgs): InstallConfig {
   const platform = resolvePlatform(args)
   const hasOpenCode = platform === "opencode" || platform === "both"
   const hasCodex = platform === "codex" || platform === "both"
+  const hasHermes = platform === "hermes"
 
   return {
     platform,
@@ -255,6 +262,7 @@ export function argsToConfig(args: InstallArgs): InstallConfig {
     hasGemini: hasOpenCode && args.gemini === "yes",
     hasCopilot: hasOpenCode && args.copilot === "yes",
     hasCodex,
+    hasHermes,
     hasOpencodeZen: hasOpenCode && args.opencodeZen === "yes",
     hasZaiCodingPlan: hasOpenCode && args.zaiCodingPlan === "yes",
     hasKimiForCoding: hasOpenCode && args.kimiForCoding === "yes",

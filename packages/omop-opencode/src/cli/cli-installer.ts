@@ -25,6 +25,7 @@ import {
 } from "./install-validators"
 import { getUnsupportedOpenCodeVersionMessage } from "./minimum-opencode-version"
 import { runCodexInstaller } from "./install-codex"
+import { runHermesInstaller } from "./install-hermes/install-hermes"
 import { starGitHubRepositories } from "./star-request"
 import { getNoModelProvidersWarning, hasAnyConfiguredProvider } from "./provider-availability"
 import { ensureTuiPluginEntry } from "./config-manager/add-tui-plugin-to-tui-config"
@@ -153,11 +154,32 @@ export async function runCliInstaller(args: InstallArgs, version: string): Promi
       printSuccess(`Codex plugin installed ${SYMBOLS.arrow} ${color.dim(codexResult.configPath)}`)
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error)
-      if (!config.hasOpenCode) {
+      if (!config.hasOpenCode && !config.hasHermes) {
         printError(`Codex install failed: ${message}`)
         return 1
       }
       printWarning(`Codex install failed (OpenCode install is still complete): ${message}`)
+    }
+    console.log()
+  }
+
+  if (config.hasHermes) {
+    printInfo("Installing Hermes harness adapter...")
+    try {
+      const hermesResult = await runHermesInstaller({ linkSkills: true })
+      printSuccess(`Hermes plugin installed ${SYMBOLS.arrow} ${color.dim(hermesResult.pluginPath)}`)
+      printInfo(`Config ${SYMBOLS.arrow} ${color.dim(hermesResult.configPath)}`)
+      if (hermesResult.skillsDir) {
+        printInfo(`Skills external_dirs ${SYMBOLS.arrow} ${color.dim(hermesResult.skillsDir)}`)
+      }
+      printInfo("Enable already written. Restart hermes / run: hermes plugins list")
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error)
+      if (!config.hasOpenCode && !config.hasCodex) {
+        printError(`Hermes install failed: ${message}`)
+        return 1
+      }
+      printWarning(`Hermes install failed (other platforms may still be complete): ${message}`)
     }
     console.log()
   }
