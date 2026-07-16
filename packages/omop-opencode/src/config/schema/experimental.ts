@@ -23,6 +23,12 @@ export const ExperimentalConfigSchema = z.object({
   max_tools: z.number().int().min(1).optional(),
   /** Disable routing parent-targeted internal prompts through the live opencode listener (rollback to pre-migration in-process dispatch) */
   disable_live_parent_wake_routing: z.boolean().optional(),
+  /**
+   * When true (default if unset), Bash tool.execute.before auto-installs missing
+   * tools-catalog binaries before the command runs. Disable with false or
+   * disabled_hooks: ["catalog-tool-installer"].
+   */
+  tools_auto_install: z.boolean().optional(),
 })
 
 export type ExperimentalConfig = z.infer<typeof ExperimentalConfigSchema>
