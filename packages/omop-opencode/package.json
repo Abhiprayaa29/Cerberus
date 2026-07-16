@@ -20,6 +20,7 @@
     "@omop/model-core": "*",
     "@omop/omop-codex": "*",
     "@omop/pentest-core": "*",
+    "@omop/tools": "*",
     "@omop/openclaw-core": "*",
     "@omop/prompts-core": "*",
     "@omop/rules-engine": "*",
