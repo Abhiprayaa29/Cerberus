@@ -27,6 +27,11 @@ on:
         required: false
         type: boolean
         default: true
+      dry_run:
+        description: "Resolve version and run gates only; skip npm publish and release writes"
+        required: false
+        type: boolean
+        default: false
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
@@ -91,48 +96,52 @@ jobs:
       version: ${{ steps.version.outputs.version }}
       dist_tag: ${{ steps.version.outputs.dist_tag }}
       previous_lazycodex_version: ${{ steps.version.outputs.previous_lazycodex_version }}
+      base_version: ${{ steps.version.outputs.base_version }}
+      dry_run: ${{ steps.version.outputs.dry_run }}
     steps:
-      - name: Calculate version
+      - uses: actions/checkout@v5
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: "1.3.12"
+
+      - name: Calculate version from package.json
         id: version
         env:
           RAW_VERSION: ${{ inputs.version }}
           BUMP: ${{ inputs.bump }}
+          DRY_RUN: ${{ inputs.dry_run }}
         run: |
-          VERSION="$RAW_VERSION"
-          if [ -z "$VERSION" ]; then
-            PREV=$(curl -s https://registry.npmjs.org/oh-my-open-pentest/latest | jq -r '.version // "0.0.0"')
-            BASE="${PREV%%-*}"
-            IFS='.' read -r MAJOR MINOR PATCH <<< "$BASE"
-            case "$BUMP" in
-              major) VERSION="$((MAJOR+1)).0.0" ;;
-              minor) VERSION="${MAJOR}.$((MINOR+1)).0" ;;
-              *) VERSION="${MAJOR}.${MINOR}.$((PATCH+1))" ;;
-            esac
-          fi
+          set -euo pipefail
+          BASE=$(node -p "require('./package.json').version")
+          echo "base_version=$BASE" >> "$GITHUB_OUTPUT"
+          echo "dry_run=${DRY_RUN}" >> "$GITHUB_OUTPUT"
 
-          if ! [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z]+(\.[0-9A-Za-z]+)*)?$ ]]; then
-            echo "::error::Invalid version: $VERSION"
-            exit 1
-          fi
+          OUT=$(BASE="$BASE" BUMP="$BUMP" VERSION="$RAW_VERSION" bun -e '
+            import { resolveReleaseVersion } from "./script/release-manifest.ts";
+            const r = resolveReleaseVersion({
+              baseVersion: process.env.BASE!,
+              bump: (process.env.BUMP as "major" | "minor" | "patch") || "patch",
+              override: process.env.VERSION || undefined,
+            });
+            console.log(JSON.stringify(r));
+          ')
+
+          VERSION=$(printf '%s' "$OUT" | node -p "JSON.parse(require('fs').readFileSync(0,'utf8')).version")
+          DIST_TAG=$(printf '%s' "$OUT" | node -p "JSON.parse(require('fs').readFileSync(0,'utf8')).distTag || ''")
 
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
-
-          if [[ "$VERSION" == *"-"* ]]; then
-            DIST_TAG=$(printf '%s' "$VERSION" | cut -d'-' -f2 | cut -d'.' -f1)
-            if ! [[ "$DIST_TAG" =~ ^[a-z][a-z0-9-]*$ ]]; then
-              echo "::error::Invalid dist_tag: $DIST_TAG"
-              exit 1
-            fi
-            echo "dist_tag=${DIST_TAG:-next}" >> "$GITHUB_OUTPUT"
-          else
-            DIST_TAG=""
-            echo "dist_tag=" >> "$GITHUB_OUTPUT"
-          fi
+          echo "dist_tag=$DIST_TAG" >> "$GITHUB_OUTPUT"
 
           LAZYCODEX_COMPARE_TAG="${DIST_TAG:-latest}"
           PREVIOUS_LAZYCODEX_VERSION=$(npm view "lazycodex-ai@${LAZYCODEX_COMPARE_TAG}" version 2>/dev/null || true)
           echo "previous_lazycodex_version=${PREVIOUS_LAZYCODEX_VERSION}" >> "$GITHUB_OUTPUT"
+          echo "Base (package.json): $BASE"
           echo "Version: $VERSION"
+          echo "Dist tag: ${DIST_TAG:-latest}"
+          if [ "$DRY_RUN" = "true" ]; then
+            echo "Dry run: true (publish jobs will skip writes)"
+          fi
 
       - name: Write job summary
         if: always()
@@ -143,18 +152,20 @@ jobs:
             echo "| Field | Value |"
             echo "| --- | --- |"
             echo "| Result | \`${{ job.status }}\` |"
+            echo "| Base (package.json) | \`${{ steps.version.outputs.base_version || 'n/a' }}\` |"
             echo "| Version | \`${{ steps.version.outputs.version || 'not calculated' }}\` |"
             echo "| Dist tag | \`${{ steps.version.outputs.dist_tag || 'latest' }}\` |"
+            echo "| Dry run | \`${{ steps.version.outputs.dry_run || 'false' }}\` |"
             echo "| Previous LazyCodex | \`${{ steps.version.outputs.previous_lazycodex_version || 'none' }}\` |"
             echo
             echo "### What this job checks"
             echo
-            echo "- Resolves the release version from manual inputs."
+            echo "- Resolves the release version from root package.json (bump or override)."
             echo "- Computes the npm dist tag and previous LazyCodex comparison version."
             echo
             echo "### If this fails"
             echo
-            echo "Check the requested version format, bump input, or npm metadata lookup."
+            echo "Check package.json version, override format, or bump input."
           } >> "$GITHUB_STEP_SUMMARY"
 
   publish-main:
@@ -163,6 +174,7 @@ jobs:
     if: >-
       always() &&
       true &&
+      inputs.dry_run != true &&
       needs.test.result == 'success' &&
       needs.typecheck.result == 'success' &&
       needs.release-metadata.result == 'success'
@@ -398,7 +410,9 @@ jobs:
     if: >-
       always() &&
       true &&
+      inputs.dry_run != true &&
       inputs.skip_platform != true &&
+      inputs.dry_run != true &&
       needs.test.result == 'success' &&
       needs.typecheck.result == 'success' &&
       needs.release-metadata.result == 'success'
@@ -413,6 +427,7 @@ jobs:
     needs: [release-metadata, publish-main, publish-platform]
     if: >-
       always() &&
+      inputs.dry_run != true &&
       needs.release-metadata.result == 'success' &&
       needs.publish-main.result != 'failure' &&
       (inputs.skip_platform == true || needs.publish-platform.result != 'failure')

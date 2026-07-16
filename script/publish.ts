@@ -4,26 +4,19 @@ import { $ } from "bun"
 import { existsSync } from "node:fs"
 import { join } from "node:path"
 
-const PACKAGE_NAME = "oh-my-open-pentest"
-const bump = process.env.BUMP as "major" | "minor" | "patch" | undefined
+import {
+  PACKAGE_NAME,
+  PLATFORM_PACKAGE_IDS,
+  getDistTag,
+  readRootPackageVersion,
+  resolveReleaseVersion,
+  type ReleaseBump,
+} from "./release-manifest"
+
+const bump = process.env.BUMP as ReleaseBump | undefined
 const versionOverride = process.env.VERSION
 const republishMode = process.env.REPUBLISH === "true"
 const prepareOnly = process.argv.includes("--prepare-only")
-
-const PLATFORM_PACKAGE_IDS = [
-  "darwin-arm64",
-  "darwin-x64",
-  "darwin-x64-baseline",
-  "linux-x64",
-  "linux-x64-baseline",
-  "linux-arm64",
-  "linux-x64-musl",
-  "linux-x64-musl-baseline",
-  "linux-arm64-musl",
-  "windows-x64",
-  "windows-x64-baseline",
-  "windows-arm64",
-] as const
 
 const PLATFORM_PACKAGES = PLATFORM_PACKAGE_IDS.map((platform) => ({
   platform,
@@ -32,33 +25,6 @@ const PLATFORM_PACKAGES = PLATFORM_PACKAGE_IDS.map((platform) => ({
 }))
 
 console.log("=== Publishing oh-my-open-pentest (multi-package) ===\n")
-
-async function fetchPreviousVersion(): Promise<string> {
-  try {
-    const res = await fetch(`https://registry.npmjs.org/${PACKAGE_NAME}/latest`)
-    if (!res.ok) throw new Error(`Failed to fetch: ${res.statusText}`)
-    const data = (await res.json()) as { version: string }
-    console.log(`Previous version: ${data.version}`)
-    return data.version
-  } catch {
-    console.log("No previous version found, starting from 0.0.0")
-    return "0.0.0"
-  }
-}
-
-function bumpVersion(version: string, type: "major" | "minor" | "patch"): string {
-  // Handle prerelease versions (e.g., 3.0.0-beta.7)
-  const baseVersion = version.split("-")[0]
-  const [major, minor, patch] = baseVersion.split(".").map(Number)
-  switch (type) {
-    case "major":
-      return `${major + 1}.0.0`
-    case "minor":
-      return `${major}.${minor + 1}.0`
-    case "patch":
-      return `${major}.${minor}.${patch + 1}`
-  }
-}
 
 async function updatePackageVersion(pkgPath: string, newVersion: string): Promise<void> {
   let pkg = await Bun.file(pkgPath).text()
@@ -184,13 +150,6 @@ async function getContributors(previous: string): Promise<string[]> {
   }
 
   return notes
-}
-
-function getDistTag(version: string): string | null {
-  if (!version.includes("-")) return null
-  const prerelease = version.split("-")[1]
-  const tag = prerelease?.split(".")[0]
-  return tag || "next"
 }
 
 interface PublishResult {
@@ -398,8 +357,15 @@ async function checkVersionExists(version: string): Promise<boolean> {
 }
 
 async function main() {
-  const previous = await fetchPreviousVersion()
-  const newVersion = versionOverride || (bump ? bumpVersion(previous, bump) : bumpVersion(previous, "patch"))
+  const baseVersion = readRootPackageVersion()
+  const resolved = resolveReleaseVersion({
+    baseVersion,
+    bump,
+    override: versionOverride,
+  })
+  const newVersion = resolved.version
+  const previous = baseVersion
+  console.log(`Base (package.json): ${baseVersion}`)
   console.log(`New version: ${newVersion}\n`)
 
   if (prepareOnly) {

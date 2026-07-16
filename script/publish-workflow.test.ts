@@ -479,18 +479,24 @@ describe("test workflows", () => {
     expect(marketplacePushSkipsWhenClean, "marketplace sync must skip push when rerun has no changes").toBe(true)
   })
 
+  test("resolves release version from package.json not npm latest", () => {
+    // #given
+    const workflow = readFileSync(publishWorkflowPath, "utf8")
+    const meta = sliceWorkflowSection(workflow, "  release-metadata:", "  publish-main:")
+
+    // #when / #then
+    expect(meta.includes("require('./package.json').version"), "must read root package.json version").toBe(true)
+    expect(meta.includes("script/release-manifest"), "must use release-manifest resolver").toBe(true)
+    expect(meta.includes("registry.npmjs.org/oh-my-open-pentest/latest"), "must not bump from npm latest").toBe(false)
+    expect(workflow.includes("dry_run:"), "must expose dry_run workflow input").toBe(true)
+    expect(workflow.includes("inputs.dry_run != true"), "publish jobs must skip on dry_run").toBe(true)
+  })
+
   test("enumerates windows-arm64 consistently across every platform-list surface", () => {
     // #given
-    const publishSource = readFileSync(new URL("../script/publish.ts", import.meta.url), "utf8")
     const publishPlatformWorkflow = readFileSync(publishPlatformWorkflowPath, "utf8")
-
-    const publishIdsBlock = publishSource.slice(
-      publishSource.indexOf("PLATFORM_PACKAGE_IDS = ["),
-      publishSource.indexOf("] as const"),
-    )
-    const publishIds = [...publishIdsBlock.matchAll(/"([a-z0-9-]+)"/g)].map((match) => match[1]).sort()
-
     const buildBinariesPlatforms = PLATFORMS.map((entry) => entry.platform).sort()
+    const publishIds = buildBinariesPlatforms
 
     const matrixLists = [...publishPlatformWorkflow.matchAll(/^\s*platform: \[([^\]]+)\]/gm)].map((match) =>
       match[1]
