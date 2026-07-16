@@ -82,7 +82,7 @@
   "scripts": {
     "build": "bun run build:vendored && bun run build:adapter && bun run build:assets && bun run build:cli",
     "build:dev": "bun run build:adapter && bun run build:assets",
-    "build:vendored": "bun run build:git-bash-mcp && bun run build:lsp-tools-mcp && bun run build:lsp-daemon && bun run build:codex-plugin",
+    "build:vendored": "bun run script/build-vendored.ts",
     "build:adapter": "bun build packages/omop-opencode/src/index.ts --outdir dist --target bun --format esm --external zod && bun build packages/omop-opencode/src/tui.ts --outdir dist --target bun --format esm --external @opentui/core --external @opentui/keymap --external @opentui/solid && bun run build:node-require-shim && tsc --emitDeclarationOnly",
     "build:assets": "bun run build:shared-skills-assets && bun run build:schema",
     "build:cli": "bun build packages/omop-opencode/src/cli/index.ts --outdir dist/cli --target bun --format esm && bun run build:cli-node && bun run build:codex-install",
