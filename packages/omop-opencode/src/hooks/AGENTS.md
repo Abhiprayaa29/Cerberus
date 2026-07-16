@@ -6,7 +6,9 @@
 
 53 base registered hooks (60 with team-mode), composed from 52 `index.ts` hook dirs (5. wired + `task-reminder/` unwired) plus 5 standalone hook `.ts` files at the `src/hooks/` top level (bash-file-read-guard, empty-task-response-detector, preemptive-compaction, session-notification, tool-output-truncator). The 60 directories = 52 with `index.ts` + 8 without (`shared/`, `team-session-events/`, `hashline-edit-diff-enhancer/` unwired, and 5 `zauc-mocks-*`/`zauc-sync-mocks`). 5-tier composition wired in `src/plugin/hooks/`. All hooks follow `createXXXHook(deps) -> HookFunction` factory pattern.
 
-**Unwired WIP (do not modify casually):** `task-reminder/` (has `index.ts` + `createTaskReminderHook` but NOT exported from barrel, NOT imported by any composer) and `hashline-edit-diff-enhancer/` (has only `hook.ts`, NOT registered). Treat as orphaned until wired in.
+**Unwired WIP (do not modify casually):** `hashline-edit-diff-enhancer/` (has only `hook.ts`, NOT registered). Treat as orphaned until wired in.
+
+**Wired:** `task-reminder/` — Tool Guard (`tool.execute.after` + `session.deleted` cleanup). Disable via `disabled_hooks: ["task-reminder"]`.
 
 ## TIER COMPOSITION
 
