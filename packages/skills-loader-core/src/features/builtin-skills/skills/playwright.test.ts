@@ -39,6 +39,8 @@ describe("playwright browser skill facade", () => {
     expect(playwrightFacade.playwrightSkill.name).toBe("playwright")
     expect(playwrightFacade.playwrightSkill.description).toContain("MUST USE")
     expect(template).toStartWith("# Playwright Browser Automation")
+    expect(template).toContain("browser_close")
+    expect(template).toContain("REQUIRED cleanup")
     expect(template).not.toContain("---")
     expect(mcpConfig).toEqual({
       command: "npx",

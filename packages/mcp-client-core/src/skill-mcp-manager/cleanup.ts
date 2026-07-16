@@ -1,4 +1,5 @@
 import type { ManagedClient, SkillMcpManagerState } from "./types"
+import { killProcessTree, readTransportPid } from "./process-tree-kill"
 
 async function closeIgnoringErrors(close: () => Promise<void>): Promise<void> {
   try {
@@ -12,9 +13,33 @@ async function closeIgnoringErrors(close: () => Promise<void>): Promise<void> {
   }
 }
 
-async function closeManagedClient(managed: ManagedClient): Promise<void> {
+export async function closeManagedClient(managed: ManagedClient): Promise<void> {
+  const pid = managed.connectionType === "stdio" ? readTransportPid(managed.transport) : null
+
   await closeIgnoringErrors(() => managed.client.close())
   await closeIgnoringErrors(() => managed.transport.close())
+
+  // Playwright MCP spawns Chromium as a child of the npx MCP process.
+  // Transport close may leave orphan browsers if only the parent exits uncleanly.
+  if (pid !== null) {
+    killProcessTree(pid)
+  }
+}
+
+const BROWSER_SKILL_IDLE_MS = 60_000
+
+function idleTimeoutForClient(state: SkillMcpManagerState, managed: ManagedClient): number {
+  const name = managed.skillName.toLowerCase()
+  if (
+    name === "playwright" ||
+    name === "playwright-cli" ||
+    name === "agent-browser" ||
+    name === "dev-browser" ||
+    name.includes("browser")
+  ) {
+    return Math.min(state.idleTimeoutMs, BROWSER_SKILL_IDLE_MS)
+  }
+  return state.idleTimeoutMs
 }
 
 export function registerProcessCleanup(state: SkillMcpManagerState): void {
@@ -63,7 +88,7 @@ export function startCleanupTimer(state: SkillMcpManagerState): void {
 
   state.cleanupInterval = setInterval(() => {
     void cleanupIdleClients(state).catch(() => {})
-  }, 60_000)
+  }, 30_000)
 
   state.cleanupInterval.unref()
 }
@@ -78,7 +103,7 @@ async function cleanupIdleClients(state: SkillMcpManagerState): Promise<void> {
   const now = Date.now()
 
   for (const [key, managed] of state.clients) {
-    if (now - managed.lastUsedAt > state.idleTimeoutMs) {
+    if (now - managed.lastUsedAt > idleTimeoutForClient(state, managed)) {
       state.clients.delete(key)
       await closeManagedClient(managed)
     }
