@@ -29,6 +29,7 @@
 		"./hooks/user-prompt-submit-checking-fullscan-trigger.json",
 		"./hooks/user-prompt-submit-checking-pentest-loop-steering.json",
 		"./hooks/pre-tool-use-recommending-git-bash-mcp.json",
+		"./hooks/pre-tool-use-ensuring-catalog-tools.json",
 		"./hooks/pre-tool-use-enforcing-unlimited-goal-budget.json",
 		"./hooks/post-tool-use-checking-comments.json",
 		"./hooks/post-tool-use-checking-lsp-diagnostics.json",
