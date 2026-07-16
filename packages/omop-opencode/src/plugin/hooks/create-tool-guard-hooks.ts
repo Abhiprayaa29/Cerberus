@@ -14,6 +14,7 @@ import {
   createWriteExistingFileGuardHook,
   createBashFileReadGuardHook,
   createHashlineReadEnhancerHook,
+  createHashlineEditDiffEnhancerHook,
   createReadImageResizerHook,
   createJsonErrorRecoveryHook,
   createTodoDescriptionOverrideHook,
@@ -43,6 +44,7 @@ export type ToolGuardHooks = {
   writeExistingFileGuard: ReturnType<typeof createWriteExistingFileGuardHook> | null
   bashFileReadGuard: ReturnType<typeof createBashFileReadGuardHook> | null
   hashlineReadEnhancer: ReturnType<typeof createHashlineReadEnhancerHook> | null
+  hashlineEditDiffEnhancer: ReturnType<typeof createHashlineEditDiffEnhancerHook> | null
   jsonErrorRecovery: ReturnType<typeof createJsonErrorRecoveryHook> | null
   readImageResizer: ReturnType<typeof createReadImageResizerHook> | null
   todoDescriptionOverride: ReturnType<typeof createTodoDescriptionOverrideHook> | null
@@ -131,6 +133,11 @@ export function createToolGuardHooks(args: {
     ? safeHook("hashline-read-enhancer", () => createHashlineReadEnhancerHook(ctx, { hashline_edit: { enabled: pluginConfig.hashline_edit ?? false } }))
     : null
 
+  const hashlineEditDiffEnhancer = isHookEnabled("hashline-edit-diff-enhancer")
+    ? safeHook("hashline-edit-diff-enhancer", () =>
+        createHashlineEditDiffEnhancerHook({ hashline_edit: { enabled: pluginConfig.hashline_edit ?? false } }))
+    : null
+
   const jsonErrorRecovery = isHookEnabled("json-error-recovery")
     ? safeHook("json-error-recovery", () => createJsonErrorRecoveryHook(ctx))
     : null
@@ -175,6 +182,7 @@ export function createToolGuardHooks(args: {
     writeExistingFileGuard,
     bashFileReadGuard,
     hashlineReadEnhancer,
+    hashlineEditDiffEnhancer,
     jsonErrorRecovery,
     readImageResizer,
     todoDescriptionOverride,
