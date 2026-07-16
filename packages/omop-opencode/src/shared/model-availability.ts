@@ -275,7 +275,9 @@ export async function fetchAvailableModels(
 	return modelSet
 }
 
-export function __resetModelCache(): void {}
+export function __resetModelCache(): void {
+	connectedProvidersCache._resetMemCacheForTesting()
+}
 
 export function isModelCacheAvailable(): boolean {
 	if (connectedProvidersCache.hasProviderModelsCache()) {

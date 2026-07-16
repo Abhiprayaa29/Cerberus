@@ -9,6 +9,9 @@
 **Wired:** `hashline-edit-diff-enhancer/` — Tool Guard (before/after Write when `hashline_edit` is true). Disable via `disabled_hooks: ["hashline-edit-diff-enhancer"]`.
 
 **Also unwired elsewhere:** `task-reminder/` may still be WIP on some branches; prefer checking `create-tool-guard-hooks.ts` for current registration.
+**Unwired WIP (do not modify casually):** `hashline-edit-diff-enhancer/` (has only `hook.ts`, NOT registered). Treat as orphaned until wired in.
+
+**Wired:** `task-reminder/` — Tool Guard (`tool.execute.after` + `session.deleted` cleanup). Disable via `disabled_hooks: ["task-reminder"]`.
 
 ## TIER COMPOSITION
 
