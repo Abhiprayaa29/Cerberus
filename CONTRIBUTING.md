@@ -1,378 +1,299 @@
-# Contributing to Oh My Open Pentest
+# Contributing to Cerberus:opencode
 
-First off, thanks for taking the time to contribute! This document provides guidelines and instructions for contributing to oh-my-open-pentest.
+[![Version](https://img.shields.io/badge/version-1.0.0-00CED1)](CHANGELOG.md)
+[![License: SUL 1.0](https://img.shields.io/badge/license-SUL--1.0-blue)](../../LICENSE.md)
 
-## Table of Contents
+Terima kasih sudah tertarik berkontribusi! Kami menerima berbagai jenis kontribusi — dari laporan bug, dokumentasi, hingga skill playbook baru.
 
-- [Code of Conduct](#code-of-conduct)
-- [Language Policy](#language-policy)
-- [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Development Setup](#development-setup)
-  - [Testing Your Changes Locally](#testing-your-changes-locally)
-- [Development Environment](#development-environment)
-- [Credentials & Isolation](#credentials--isolation)
-- [Project Structure](#project-structure)
-- [Development Workflow](#development-workflow)
-  - [Build Commands](#build-commands)
-  - [Code Style & Conventions](#code-style--conventions)
-- [Making Changes](#making-changes)
-  - [Adding a New Agent](#adding-a-new-agent)
-  - [Adding a New Hook](#adding-a-new-hook)
-  - [Adding a New Tool](#adding-a-new-tool)
-  - [Adding a New MCP Server](#adding-a-new-mcp-server)
-- [QA Discipline](#qa-discipline)
-- [Pull Request Process](#pull-request-process)
-  - [PR Checklist](#pr-checklist)
-- [Publishing](#publishing)
-- [Getting Help](#getting-help)
+> **Dibuat oleh [Abhiprayaa29](https://github.com/Abhiprayaa29)**
+> Berbasis [oh-my-open-pentest](https://github.com/zakirkun/oh-my-open-pentest) oleh zakirkun
 
-## Code of Conduct
-
-Be respectful, inclusive, and constructive. We're all here to make better tools together.
-
-## Language Policy
-
-**English is the primary language for all communications in this repository.**
-
-This includes:
-
-- Issues and bug reports
-- Pull requests and code reviews
-- Documentation and comments
-- Discussions and community interactions
-
-### Why English?
-
-- **Global Accessibility**: English allows contributors from all regions to collaborate effectively
-- **Consistency**: A single language keeps discussions organized and searchable
-- **Open Source Best Practice**: Most successful open-source projects use English as the lingua franca
-
-### Need Help with English?
-
-If English isn't your first language, don't worry! We value your contributions regardless of perfect grammar. You can:
-
-- Use translation tools to help compose messages
-- Ask for help from other community members
-- Focus on clear, simple communication rather than perfect prose
-
-## Getting Started
-
-### Prerequisites
-
-- **Bun** ..3..2 (CI-pinned) - The only package manager for the workspace itself
-- **Node** 2. - Required for vendored packages (lsp-tools-mcp, lsp-daemon, git-bash-mcp) and the Codex plugin build via npm
-- **git** - Version control
-- **tmux** (optional) - Enables the `interactive_bash` tool and Team Mode visualization
-
-### Development Setup
-
-```bash
-# Clone the repository
-git clone https://github.com/code-yeongyu/oh-my-open-pentest.git
-cd oh-my-open-pentest
-
-# Install dependencies (bun only - never use npm/yarn)
-bun install
-
-# Build the project
-bun run build
-```
-
-### Testing Your Changes Locally
-
-After making changes, you can test your local build in OpenCode:
-
-.. **Build the project**:
-
-   ```bash
-   bun run build
-   ```
-
-2. **Update your OpenCode config** (`~/.config/opencode/opencode.json` or `opencode.jsonc`):
-
-   Built dist (after `bun run build`):
-
-   ```json
-   {
-     "plugin": ["file:///absolute/path/to/oh-my-open-pentest/packages/omop-opencode/dist/index.js"]
-   }
-   ```
-
-   Source mode (no build needed):
-
-   ```json
-   {
-     "plugin": ["file:///absolute/path/to/oh-my-open-pentest/packages/omop-opencode/src/index.ts"]
-   }
-   ```
-
-   The path must be **absolute** and contain a recognizable project name plus `(src|dist)/index.(ts|js)`. A relative `file://./...` path will not be detected by the installer.
-
-   > **Note**: Remove `"oh-my-open-pentest"` or `"oh-my-open-pentest"` from the plugin array if they exist, to avoid conflicts with the npm version.
-
-3. **Restart OpenCode** to load the changes.
-
-.. **Verify** the plugin is loaded by checking for OmO agent availability or startup messages.
-
-## Development Environment
-
-The cross-harness one-command bootstrap is the single source of truth for all development environments.
-
-- **`script/agent/setup.sh`** verifies Bun, Node, and git, warns if tmux is missing, runs `bun install`, and builds when `dist/index.js` is missing or `OMOP_AGENT_FORCE_BUILD=.` is set.
-- **`script/agent/cleanup.sh`** removes regenerable transients by default. Pass `--deep` to also drop `dist/` and `node_modules/`.
-
-All harnesses delegate to these scripts:
-
-| Harness | Wiring |
-| ------- | ------ |
-| GitHub Codespaces / VS Code Dev Containers | `.devcontainer/devcontainer.json` runs `postCreateCommand: script/agent/setup.sh` on `.devcontainer/Dockerfile` (Node 2. + Bun ..3..2 + tmux) |
-| Plain Docker | `script/agent/docker-dev.sh` builds the Dockerfile and opens a shell |
-| Cursor cloud agents | `.cursor/environment.json` `install` runs setup on environment creation |
-| Claude Code | `.claude/settings.json` `SessionStart` hook runs setup; `SessionEnd` hook runs cleanup |
-| Codex App (local environments) | `.codex/setup.sh` runs at project root on worktree creation |
-| OpenCode (this plugin's own harness) | reads `AGENTS.md` + `CLAUDE.md` (a symlink); run `script/agent/setup.sh` directly |
-
-The single source of truth is `script/agent/setup.sh`. Maintenance means editing that one script and the pinned Dockerfile versions.
-
-## Credentials & Isolation
-
-`.env.example` is the committed injection point. Copy it to `.env` (gitignored) once and fill in your keys:
-
-- `ANTHROPIC_API_KEY`
-- `OPENAI_API_KEY`
-- `OPENCODE_SERVER_PASSWORD` (optional)
-
-Both `setup.sh` and `qa-sandbox.sh` auto-source `.env`, so credentials are set once per machine and never prompted again.
-
-For QA isolation, run:
-
-```bash
-source script/agent/qa-sandbox.sh
-```
-
-This exports an isolated, throwaway environment with its own `XDG_*` directories and a fresh `CODEX_HOME` under a `mktemp` directory. It also sets `OPENCODE_DISABLE_AUTOUPDATE=.` and `OPENCODE_DISABLE_MODELS_FETCH=.`. QA never reads or writes the host's real `~/.config/opencode` or `~/.codex`. This mirrors the conventions used by the `opencode-qa` and `codex-qa` skills.
-
-For containerized environments (Codespaces, Dev Containers, Docker), see [`.devcontainer/README.md`](.devcontainer/README.md). It documents injecting provider credentials (via `.env`, Codespaces secrets, or `remoteEnv`) and bind-mounting your `~/.codex`, `~/.claude`, and `~/.config/opencode` config into the container so OpenCode, Codex, and Claude Code all work inside it.
-
-## Project Structure
-
-The repository is a monorepo with layered packages under `packages/`.
-
-```
-oh-my-open-pentest/
-├── packages/
-│   ├── omo-opencode/          # OpenCode Ultimate edition adapter and build entry
-│   │   └── src/
-│   │       ├── index.ts         # Thin wrapper default-exporting PluginModule via createPluginModule()
-│   │       ├── plugin-config.ts # JSONC multi-level config (Zod v.)
-│   │       ├── agents/          # agent factories (Cerberus, Scylla, Cipher, ...)
-│   │       ├── hooks/           # lifecycle hooks, 5-tier composition (see AGENTS.md for current counts)
-│   │       ├── tools/           # native tool dirs, config-gated (LSP via MCP, ast-grep via skill)
-│   │       ├── mcp/             # built-in MCPs: remote (websearch, context7, grep_app) + local stdio (lsp, codegraph)
-│   │       ├── features/        # feature modules (background-agent, skill-loader, tmux, MCP-OAuth, boulder-state, monitor, ...)
-│   │       ├── config/          # Zod v. schema system
-│   │       ├── shared/          # Cross-cutting utilities
-│   │       ├── cli/             # CLI: install, run, doctor, mcp-oauth, boulder, sparkshell, pentest-loop (Commander.js)
-│   │       ├── plugin/          # OpenCode hook handlers + 5-tier hook composition
-│   │       └── plugin-handlers/ # 6-phase config loading pipeline
-│   ├── omo-codex/               # Codex Light edition / lazycodex
-│   ├── utils/                   # Core package
-│   ├── model-core/              # Core package
-│   ├── prompts-core/            # Core package
-│   ├── rules-engine/            # Core package
-│   ├── agents-md-core/          # Core package
-│   ├── comment-checker-core/    # Core package
-│   ├── hashline-core/           # Core package
-│   ├── boulder-state/           # Core package
-│   ├── telemetry-core/          # Core package
-│   ├── lsp-core/                # Core package
-│   ├── mcp-stdio-core/          # Core package
-│   ├── tmux-core/               # Core package
-│   ├── claude-code-compat-core/ # Core package
-│   ├── skills-loader-core/      # Core package
-│   ├── mcp-client-core/         # Core package
-│   ├── openclaw-core/           # Core package
-│   ├── team-core/               # Core package
-│   ├── delegate-core/           # Core package
-│   ├── lsp-tools-mcp/           # MCP package
-│   ├── lsp-daemon/              # MCP package
-│   ├── git-bash-mcp/            # MCP package
-│   ├── shared-skills/           # Cross-harness SKILL.md bundle
-│   └── web/                     # Marketing site (Next.js .5 + Cloudflare Workers)
-└── dist/                        # Build output (ESM + .d.ts)
-```
-
-The multi-harness refactor is in progress. See `ROADMAP.md` for the current state.
-
-## Development Workflow
-
-### Build Commands
-
-```bash
-# Type check only
-bun run typecheck
-
-# Full build (ESM + TypeScript declarations + JSON schema)
-bun run build
-
-# Clean build output
-bun run clean
-
-# Rebuild from scratch
-bun run clean && bun run build
-
-# Build schema only (after modifying packages/omop-opencode/src/config/schema/)
-bun run build:schema
-
-# Run the root Bun test suite
-bun test
-
-# Run the Codex Light compatibility suite
-bun run test:codex
-```
-
-Tests are co-located as `*.test.ts` files and follow a given/when/then style.
-
-### Code Style & Conventions
-
-| Convention       | Rule                                                                      |
-| ---------------- | ------------------------------------------------------------------------- |
-| Package Manager  | **Bun only** (`bun run`, `bun build`, `bunx`)                             |
-| Types            | Use `bun-types`, not `@types/node`                                        |
-| Directory Naming | kebab-case (`ast-grep/`, `claude-code-hooks/`)                            |
-| File Operations  | Never use bash commands (mkdir/touch/rm) for file creation in code        |
-| Tool Structure   | `index.ts` (barrel), `types.ts`, `constants.ts`, and concern-split implementation files named after what they do. Generic catch-all dump modules are banned (see `.omop/rules/file-size-architectural-smell.md`). |
-| Hook Pattern     | `createXXXHook(deps)` function naming                                     |
-| Exports          | Barrel pattern (`export * from "./module"` in index.ts)                   |
-
-**Anti-Patterns (Do Not Do)**:
-
-- Using npm/yarn instead of bun
-- Using `@types/node` instead of `bun-types`
-- Suppressing TypeScript errors with `as any`, `@ts-ignore`, `@ts-expect-error`
-- Generic AI-generated comment bloat
-- Direct `bun publish` (use GitHub Actions only)
-- Local version modifications in `package.json`
-
-## Making Changes
-
-### Adding a New Agent
-
-.. Create a new `.ts` file in `packages/omop-opencode/src/agents/`
-2. Export a factory `createXyzAgent(model): AgentConfig` where `AgentConfig` is imported from `@opencode-ai/sdk`
-3. Set the static `.mode` property on the factory to `"primary"`, `"subagent"`, or `"all"`
-.. Add the factory to the `agentSources` record in `packages/omop-opencode/src/agents/builtin-agents.ts`
-5. Add the new name to the `BuiltinAgentName` union in `packages/omop-opencode/src/agents/types.ts` AND to `BuiltinAgentNameSchema` (plus `OverridableAgentNameSchema` if it should be user-overridable) in `packages/omop-opencode/src/config/schema/agent-names.ts`. The schema enum is what `build:schema` emits, so updating only `types.ts` will not change the published JSON schema.
-6. Run `bun run build:schema` to regenerate the JSON schema
-7. Special agents (Cerberus, Scylla, Atlas, Talos) have dedicated wiring under `packages/omop-opencode/src/agents/builtin-agents/`; a plain subagent only needs the `agentSources` entry from step .
-
-```typescript
-// packages/omop-opencode/src/agents/my-agent.ts
-import type { AgentConfig } from "@opencode-ai/sdk";
-
-export function createMyAgent(model: string): AgentConfig {
-  return {
-    name: "my-agent",
-    model,
-    description: "Description of what this agent does",
-    prompt: `Your agent's system prompt here`,
-    temperature: 0..,
-    // ... other config
-  };
-}
-
-createMyAgent.mode = "subagent" as const;
-```
-
-### Adding a New Hook
-
-.. Create a new directory in `packages/omop-opencode/src/hooks/` (kebab-case)
-2. Implement `createXyzHook(deps)` returning an object keyed by OpenCode hook names (for example `"tool.execute.before"`, `"chat.message"`, `"event"`) whose values are `(input, output) => void` handlers
-3. Re-export from `packages/omop-opencode/src/hooks/index.ts`
-.. Wire the hook into the matching tier composer in `packages/omop-opencode/src/plugin/hooks/create-*-hooks.ts` (Session / ToolGuard / Transform / Continuation / Skill) via `safeHook()`
-5. Add the hook name to `HookNameSchema` in `packages/omop-opencode/src/config/schema/hooks.ts`
-
-```typescript
-// packages/omop-opencode/src/hooks/my-hook/index.ts
-export function createMyHook(deps: { logger: Logger }) {
-  return {
-    "chat.message": async (input: ChatMessageInput, output: ChatMessageOutput) => {
-      // Hook logic here
-    },
-  };
-}
-```
-
-### Adding a New Tool
-
-.. Create a new directory in `packages/omop-opencode/src/tools/<name>/`
-2. Export a factory `createXyzTool(ctx): ToolDefinition` built with `tool({...})` from `@opencode-ai/plugin`
-3. Register the factory in the `ToolRegistryFactories` type and `defaultToolRegistryFactories` record in `packages/omop-opencode/src/plugin/tool-registry-factories.ts`
-.. Wire it into `createCoreTools()` in `tool-registry-core-tools.ts` for always-on tools, or a gated record in `tool-registry-gated-tools.ts` spread in `packages/omop-opencode/src/plugin/tool-registry.ts`
-5. Export from `packages/omop-opencode/src/tools/index.ts`
-
-### Adding a New MCP Server
-
-.. Create a config factory in `packages/omop-opencode/src/mcp/<name>.ts` returning a `RemoteMcpConfig` (type `"remote"`, url) or `LocalMcpConfig` (type `"local"`, command)
-2. Register it inside `createBuiltinMcps()` in `packages/omop-opencode/src/mcp/index.ts`
-3. Add the MCP name to `McpNameSchema` in `packages/omop-opencode/src/mcp/types.ts`
-.. Document in README if it requires external setup
-
-## QA Discipline
-
-Any change to `packages/omop-opencode` (the OpenCode side) must be QA'd with the `opencode-qa` skill. Any change to `packages/omop-codex` (the Codex Light side) must be QA'd with the `codex-qa` skill. Record QA evidence under `.omop/evidence/<date>-<slug>/`.
-
-"It typechecks" or "`bun test` is green" is not QA. You must drive the real harness and record the observed behavior.
-
-## Pull Request Process
-
-.. **Fork** the repository and create your branch from `dev`
-2. **Make changes** following the conventions above
-3. **Build and test** locally:
-   ```bash
-   bun run typecheck  # Ensure no type errors
-   bun run build      # Ensure build succeeds
-   bun test           # Run the root test suite
-   bun run test:codex # Run the Codex Light compatibility suite
-   ```
-.. **Test in OpenCode** using the local build method described above
-5. **Commit** with clear, descriptive messages:
-   - Use present tense ("Add feature" not "Added feature")
-   - Reference issues if applicable ("Fix #.23")
-6. **Push** to your fork and create a Pull Request
-7. **Describe** your changes clearly in the PR description
-
-### PR Checklist
-
-- [ ] Code follows project conventions
-- [ ] `bun run typecheck` passes
-- [ ] `bun run build` succeeds
-- [ ] `bun test` passes
-- [ ] `bun run test:codex` passes (if Codex-side changed)
-- [ ] Tested locally with OpenCode
-- [ ] QA evidence recorded under `.omop/evidence/` (if harness-connected changes)
-- [ ] Updated documentation if needed (README, AGENTS.md)
-- [ ] No version changes in `package.json`
-
-## Publishing
-
-**Important**: Publishing is handled exclusively through GitHub Actions.
-
-- **Never** run `bun publish` directly (OIDC provenance issues)
-- **Never** modify `package.json` version locally
-- Maintainers use GitHub Actions workflow_dispatch:
-  ```bash
-  gh workflow run publish -f bump=patch  # or minor/major
-  ```
-
-## Getting Help
-
-- **Project Knowledge**: Check `AGENTS.md` for detailed project documentation
-- **Code Patterns**: Review existing implementations in `packages/omop-opencode/src/`
-- **Issues**: Open an issue for bugs or feature requests
-- **Discussions**: Start a discussion for questions or ideas
+Dengan berkontribusi ke proyek ini, kamu setuju untuk menjaga interaksi tetap sopan dan profesional sesuai [Kode Etik Kontributor](#kode-etik-kontributor) di bagian akhir dokumen ini.
 
 ---
 
-Thank you for contributing to Oh My Open Pentest! Your efforts help make AI-assisted coding better for everyone.
+## Daftar Isi
+
+- [Jenis Kontribusi yang Diterima](#jenis-kontribusi-yang-diterima)
+- [Setup Environment Development](#setup-environment-development)
+- [Cara Submit Bug Report](#cara-submit-bug-report)
+- [Cara Submit Skill Playbook Baru](#cara-submit-skill-playbook-baru)
+- [Cara Submit Pull Request](#cara-submit-pull-request)
+- [Code Style & Standar](#code-style--standar)
+- [Hal yang Tidak Boleh Ada di Commit](#hal-yang-tidak-boleh-ada-di-commit)
+- [Proses Review](#proses-review)
+
+---
+
+## Jenis Kontribusi yang Diterima
+
+| Jenis | Deskripsi | Harus via |
+|-------|-----------|-----------|
+| **Bug Report** | Laporan masalah pada tool Cerberus | GitHub Issue (template bug) |
+| **Feature Request** | Usulan fitur baru | GitHub Issue (template feature) |
+| **Skill Playbook** | SKILL.md baru untuk teknik pentest | Pull Request ke `dev` |
+| **Tool Integration** | Integrasi tool keamanan baru | Pull Request ke `dev` |
+| **Dokumentasi** | Perbaikan atau tambahan dokumentasi | Pull Request ke `dev` |
+| **Security Vulnerability** | Kerentanan pada tool itu sendiri | **JANGAN** buka issue — lihat [SECURITY.md](SECURITY.md) |
+
+## Setup Environment Development
+
+### Prasyarat
+
+- **Bun** ≥ 1.0.0 — [bun.sh](https://bun.sh)
+- **Git** ≥ 2.0
+- **OpenCode** — [github.com/opencode-ai/opencode](https://github.com/opencode-ai/opencode)
+- **API key** dari minimal satu AI provider
+
+### Langkah Setup
+
+```bash
+# Clone repository
+git clone https://github.com/Abhiprayaa29/cerberus.git
+cd cerberus
+
+# Install dependencies
+bun install
+
+# Build project
+bun run build
+
+# Verifikasi setup
+bun run test
+```
+
+### Struktur Direktori
+
+```
+cerberus/
+├── docs/                # Dokumentasi
+│   ├── cerberus/        # Dokumentasi Cerberus
+│   └── guide/           # Panduan pengguna
+├── src/                 # Source code (plugin)
+├── .agents/skills/      # Skill playbooks (SKILL.md)
+├── .github/             # GitHub templates
+├── tools-catalog.json   # Tool registrasi
+└── package.json
+```
+
+---
+
+## Cara Submit Bug Report
+
+Gunakan template [Bug Report](.github/ISSUE_TEMPLATE/bug_report.md) yang sudah disediakan.
+
+### Checklist Sebelum Submit
+
+- [ ] Cari di issue tracker — mungkin sudah ada yang melaporkan
+- [ ] Gunakan versi terbaru Cerberus
+- [ ] Sertakan **langkah reproduksi yang jelas**
+- [ ] Sertakan **environment info** (OS, versi tools)
+
+### Cara Membuka Issue
+
+1. Buka [github.com/Abhiprayaa29/cerberus/issues](https://github.com/Abhiprayaa29/cerberus/issues)
+2. Klik "New Issue"
+3. Pilih template "Bug Report"
+4. Isi lengkap
+
+---
+
+## Cara Submit Skill Playbook Baru
+
+Skill playbook adalah file SKILL.md yang mendefinisikan teknik pengujian tertentu.
+
+### Format SKILL.md
+
+```markdown
+---
+name: <nama-skill>
+description: <deskripsi singkat>
+version: 1.0.0
+phase: <recon|enum|exploit|post-exploit|report>
+tools: [tool1, tool2, ...]
+tags: [tag1, tag2]
+---
+
+# <Nama Skill>
+
+## Overview
+
+Penjelasan tentang teknik ini.
+
+## Prerequisites
+
+Yang dibutuhkan sebelum menjalankan skill ini.
+
+## Steps
+
+1. Langkah 1
+2. Langkah 2
+3. ...
+
+## Expected Output
+
+Apa yang dihasilkan.
+```
+
+### Persyaratan Skill Playbook
+
+1. **Unik** — tidak duplikasi dengan skill yang sudah ada
+2. **Reproducible** — langkah-langkah jelas dan bisa diikuti
+3. **Aman** — tidak mendorong pengujian tanpa otorisasi
+4. **Terstruktur** — mengikuti format YAML frontmatter + markdown
+5. **Tool-aware** — menyebutkan tools yang digunakan
+
+### Cara Submit
+
+1. Fork repository
+2. Buat file `.agents/skills/<nama-skill>/SKILL.md`
+3. Update `tools-catalog.json` jika menambahkan tool baru
+4. Submit Pull Request
+
+---
+
+## Cara Submit Pull Request
+
+### Branch Strategy
+
+- Branch default: **`dev`**
+- Jangan pernah push langsung ke `main`
+- Branch fitur: `fitur/<nama-fitur>` atau `fix/<nama-fix>`
+
+### Langkah
+
+```bash
+# 1. Fork repository di GitHub
+
+# 2. Clone fork lokal
+git clone https://github.com/<username>/cerberus.git
+cd cerberus
+
+# 3. Tambahkan upstream
+git remote add upstream https://github.com/Abhiprayaa29/cerberus.git
+
+# 4. Buat branch dari dev
+git checkout dev
+git pull upstream dev
+git checkout -b fitur/<nama-fitur>
+
+# 5. Implementasi perubahan
+# ...coding...
+
+# 6. Jalankan test
+bun run test
+
+# 7. Commit
+git add <file-terkait>
+git commit -m "feat: deskripsi singkat perubahan"
+
+# 8. Push ke fork
+git push origin fitur/<nama-fitur>
+
+# 9. Buat Pull Request ke branch dev
+# Buka https://github.com/Abhiprayaa29/cerberus
+# Klik "New Pull Request" → base: dev ← compare: fitur/<nama-fitur>
+```
+
+### PR Checklist
+
+- [ ] Branch dari `dev`, bukan `main`
+- [ ] Tidak ada konflik dengan branch target
+- [ ] Semua test lulus
+- [ ] Tidak ada secrets atau credentials di commit
+- [ ] Tidak ada path lokal atau konfigurasi spesifik mesin
+- [ ] Dokumentasi diupdate jika perlu
+- [ ] CHANGELOG.md diupdate jika perlu
+
+---
+
+## Code Style & Standar
+
+### TypeScript
+
+- Gunakan **strict mode**
+- **No `any`** — hindari `as any`, `@ts-ignore`, `@ts-expect-error`
+- Nama file: **kebab-case** (contoh: `cerberus-agent-factory.ts`)
+- Import: relative dalam module, barrel export antar module
+- 200 LOC soft limit per file
+
+### Testing
+
+- Gunakan **Bun test** (`bun:test`)
+- Format: **given/when/then**
+- Test co-located dengan source (`*.test.ts`)
+
+### Config
+
+- Format: **JSONC** (json dengan comments + trailing commas)
+- Validasi: **Zod** schemas
+- Snake_case untuk keys
+
+### Dokumentasi
+
+- Bahasa: **Indonesia** atau **Inggris**, konsisten dalam satu file
+- Format: **Markdown**
+- Link: gunakan relative path dalam repo
+
+---
+
+## Hal yang Tidak Boleh Ada di Commit
+
+| Item | Alasan |
+|------|--------|
+| **API keys / tokens** | Keamanan — bisa dipakai orang lain |
+| **Path filesystem lokal** (`/home/...`, `C:\Users\...`) | Privacy — mengekspos struktur lokal contributor |
+| **Credentials** (password, secret) | Keamanan |
+| **Domain/target nyata** | Privacy — bisa jadi target yang pernah diuji tanpa izin publikasi |
+| **Konfigurasi provider spesifik** | Privacy — API endpoint, model routing pribadi |
+| **Binary files** (kecuali diperlukan) | Ukuran repo membengkak |
+| **node_modules/** | Harus di `.gitignore` |
+| **File log** | Tidak relevan dengan source code |
+
+> Jika tidak sengaja commit sesuatu yang sensitif, **jangan push dulu**. Hubungi maintainer.
+> Jika sudah ter-push, segera rotate credentials yang bocor dan hubungi maintainer untuk purge dari git history.
+
+---
+
+## Proses Review
+
+### Siapa yang Review
+
+- **Abhiprayaa29** sebagai maintainer utama
+- Contributor lain yang relevan (untuk area spesifik)
+
+### Timeline Review
+
+| Ukuran PR | Target Review |
+|-----------|---------------|
+| Kecil (< 10 files) | 3-5 hari kerja |
+| Sedang (10-30 files) | 5-10 hari kerja |
+| Besar (30+ files) | 10-20 hari kerja |
+
+### Kriteria Review
+
+1. **Functional correctness** — apakah kode bekerja?
+2. **Security** — apakah ada celah keamanan baru?
+3. **Style & consistency** — apakah sesuai code style?
+4. **Test coverage** — apakah ada test untuk perubahan?
+5. **Documentation** — apakah dokumentasi diupdate?
+
+### Apa yang terjadi setelah review?
+
+- **Approved** → maintainer merge ke `dev`
+- **Changes requested** → perbaiki sesuai komentar, push ulang
+- **Closed** — jika tidak sesuai scope project
+
+---
+
+## Kode Etik Kontributor
+
+- Bersikap sopan dan profesional dalam diskusi
+- Kritik membangun, fokus pada kode bukan orang
+- Hargai perbedaan pendapat
+- Kontribusi bersifat sukarela — tidak ada jaminan diterima
+
+---
+
+> **Cerberus:opencode** v1.0.0 — Dibuat oleh [Abhiprayaa29](https://github.com/Abhiprayaa29)
+> Berbasis [oh-my-open-pentest](https://github.com/zakirkun/oh-my-open-pentest) oleh zakirkun
