@@ -1,0 +1,101 @@
+{
+  // =========================================================================
+  // Cerberus:opencode — Project-Level OpenCode Configuration
+  // =========================================================================
+  // Dibuat oleh Abhiprayaa29 (https://github.com/Abhiprayaa29)
+  // =========================================================================
+
+  "$schema": "https://raw.githubusercontent.com/Abhiprayaa29/cerberus/main/schema/opencode-settings.json",
+
+  "agent": "cerberus",
+
+  "agents": {
+    "cerberus": {
+      "description": "Cerberus:opencode — AI Orchestrator for Penetration Testing. Created by Abhiprayaa29.",
+      "model": "claude-opus-4-7",
+      "prompt": "file://AGENTS.md",
+      "color": "#00CED1",
+      "maxTokens": 64000
+    },
+    "argus": {
+      "description": "Todo orchestrator and session manager",
+      "model": "claude-sonnet-4.5"
+    },
+    "atlas": {
+      "description": "Plan executor and task distributor",
+      "model": "claude-haiku-4.5"
+    },
+    "scylla": {
+      "description": "Autonomous deep worker for complex GPT-native tasks",
+      "model": "gpt-5.5",
+      "variant": "medium"
+    },
+    "cipher": {
+      "description": "Read-only high-IQ consultant for architecture and vulnerability analysis",
+      "model": "claude-sonnet-4.5",
+      "temperature": 0.1
+    },
+    "scout": {
+      "description": "Fast contextual grep for codebase search",
+      "model": "claude-haiku-4.5",
+      "temperature": 0.1
+    },
+    "intel": {
+      "description": "External documentation and OSS code search",
+      "model": "gpt-5.4-mini-fast",
+      "temperature": 0.1
+    },
+    "lens": {
+      "description": "Vision, PDF, and media file analysis",
+      "model": "claude-sonnet-4.5",
+      "temperature": 0.1
+    },
+    "cerberus-junior": {
+      "description": "Category-based task executor",
+      "model": "claude-haiku-4.5",
+      "temperature": 0.1
+    }
+  },
+
+  "categories": {
+    "quick": {
+      "description": "Fast simple tasks — grep, search, single edits",
+      "model": "claude-haiku-4.5",
+      "temperature": 0.1
+    },
+    "deep": {
+      "description": "Complex research and multi-file implementation",
+      "model": "claude-sonnet-4.5",
+      "temperature": 0.1
+    },
+    "ultrabrain": {
+      "description": "Hard logic, architecture, exploit development",
+      "model": "claude-sonnet-4.5",
+      "temperature": 0.1
+    },
+    "artistry": {
+      "description": "Creative and unconventional problem-solving",
+      "model": "claude-sonnet-4.5",
+      "temperature": 0.1
+    },
+    "writing": {
+      "description": "Documentation, reports, and prose",
+      "model": "claude-sonnet-4.5"
+    }
+  },
+
+  "disabled_agents": [],
+
+  "plugin": [],
+
+  "commands": {
+    "cerberus-scan": {
+      "description": "Run a full pentest scan on target",
+      "prompt": "Run fullscan on target with auto mode. Follow all ethical boundaries."
+    },
+    "cerberus-recon": {
+      "description": "Quick passive reconnaissance on target",
+      "prompt": "Load cerberus-quick-recon skill and execute passive reconnaissance."
+    }
+  }
+}

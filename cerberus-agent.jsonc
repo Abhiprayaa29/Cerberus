@@ -12,8 +12,7 @@
   //
   /// PERINGATAN KEAMANAN:
   //   JANGAN memodifikasi bagian "prompt", "permissions", atau "identity"
-  //   dari konfigurasi ini. Modifikasi tidak sah akan melanggar lisensi
-  //   dan berpotensi menyebabkan masalah keamanan.
+  //   dari konfigurasi ini.
   //
   //   Untuk update, kunjungi: https://github.com/Abhiprayaa29
   // =========================================================================
@@ -36,11 +35,7 @@
     "mode": "primary",
     "color": "#00CED1",
     "model": "claude-opus-4-7",
-
-    // Maximum tokens untuk response
     "maxTokens": 64000,
-
-    // Temperature: null = default model (biarkan model menentukan)
     "temperature": null
   },
 
@@ -117,11 +112,9 @@
   ],
 
   // -----------------------------------------------------------------------
-  // Tool Permissions — Hanya tool yang diperlukan yang diizinkan
-  // Ini mencegah penyalahgunaan akses sistem.
+  // Tool Permissions
   // -----------------------------------------------------------------------
   "permissions": {
-    // Tool yang tersedia untuk Cerberus
     "tools": {
       "bash": "allow",
       "read": "allow",
@@ -129,7 +122,6 @@
       "grep": "allow",
       "glob": "allow",
 
-      // LSP tools
       "lsp_diagnostics": "allow",
       "lsp_goto_definition": "allow",
       "lsp_find_references": "allow",
@@ -138,30 +130,25 @@
       "lsp_symbols": "allow",
       "lsp_status": "allow",
 
-      // Web tools
       "webfetch": "allow",
       "websearch_web_search_exa": "allow",
       "context7_query-docs": "allow",
       "context7_resolve-library-id": "allow",
       "grep_app_searchGitHub": "allow",
 
-      // Session tools
       "session_list": "allow",
       "session_read": "allow",
       "session_search": "allow",
       "session_info": "allow",
 
-      // Background task tools
       "background_output": "allow",
       "background_cancel": "allow",
 
-      // Agent tools
       "question": "allow",
       "task": "allow",
       "skill": "allow",
       "skill_mcp": "allow",
 
-      // Utility
       "todowrite": "allow",
       "look_at": "allow",
       "interactive_bash": "allow"
@@ -169,30 +156,32 @@
   },
 
   // -----------------------------------------------------------------------
-  // Category Configuration (untuk task routing)
+  // Category Configuration
   // -----------------------------------------------------------------------
   "categories": {
     "quick": {
-      "description": "Fast, simple tasks",
-      "model": "gpt-5.1-nano",
+      "description": "Fast simple tasks",
+      "model": "claude-haiku-4.5",
       "temperature": 0.1
     },
     "deep": {
       "description": "Complex research and implementation",
-      "model": "gpt-5.5",
-      "variant": "medium",
+      "model": "claude-sonnet-4.5",
       "temperature": 0.1
     },
     "ultrabrain": {
       "description": "Hard logic and architecture decisions",
-      "model": "gpt-5.5",
-      "variant": "xhigh",
+      "model": "claude-sonnet-4.5",
+      "temperature": 0.1
+    },
+    "artistry": {
+      "description": "Creative and unconventional problem-solving",
+      "model": "claude-sonnet-4.5",
       "temperature": 0.1
     },
     "writing": {
       "description": "Documentation and prose",
-      "model": "claude-opus-4-7",
-      "variant": "high"
+      "model": "claude-sonnet-4.5"
     }
   }
 }

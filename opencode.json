@@ -1,0 +1,57 @@
+{
+  "//": "============================================================",
+  "//": "Cerberus:opencode — OpenCode Root Configuration",
+  "//": "File ini otomatis terdeteksi OpenCode saat dibuka di repo ini.",
+  "//": "Dibuat oleh Abhiprayaa29 (https://github.com/Abhiprayaa29)",
+  "//": "============================================================",
+
+  "agent": "cerberus",
+
+  "agents": {
+    "cerberus": {
+      "description": "Cerberus:opencode — AI Orchestrator for Penetration Testing. Created by Abhiprayaa29.",
+      "model": "claude-opus-4-7",
+      "prompt": "file://AGENTS.md",
+      "maxTokens": 64000,
+      "color": "#00CED1"
+    },
+    "argus": {
+      "description": "Todo orchestrator and session manager",
+      "model": "claude-sonnet-4.5"
+    },
+    "atlas": {
+      "description": "Plan executor and task distributor",
+      "model": "claude-haiku-4.5"
+    },
+    "scylla": {
+      "description": "Autonomous deep worker for complex tasks",
+      "model": "gpt-5.5",
+      "variant": "medium"
+    },
+    "cipher": {
+      "description": "High-IQ consultant for architecture and vulnerability analysis",
+      "model": "claude-sonnet-4.5",
+      "temperature": 0.1
+    },
+    "scout": {
+      "description": "Fast codebase grep dan pattern discovery",
+      "model": "claude-haiku-4.5",
+      "temperature": 0.1
+    },
+    "intel": {
+      "description": "External documentation and OSS code search",
+      "model": "gpt-5.4-mini-fast",
+      "temperature": 0.1
+    },
+    "lens": {
+      "description": "PDF, image, and media file analysis",
+      "model": "claude-sonnet-4.5",
+      "temperature": 0.1
+    },
+    "cerberus-junior": {
+      "description": "Category-based task executor for domain-specific delegation",
+      "model": "claude-haiku-4.5",
+      "temperature": 0.1
+    }
+  }
+}

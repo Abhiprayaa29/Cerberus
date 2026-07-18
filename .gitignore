@@ -1,64 +1,44 @@
-# Dependencies
-.omop/*
-!.omop/rules/
-!.omop/rules/**
-packages/*/.omop/*
-.sisyphus/*
-!.sisyphus/rules/
-!.sisyphus/rules/**
-node_modules/
+# Cerberus:opencode — .gitignore
 
-# Build output
-dist/
-packages/omop-codex/plugin/skills/
-
-# Platform binaries (built, not committed)
-packages/*/bin/oh-my-opencode
-packages/*/bin/oh-my-opencode.exe
-packages/*/bin/*.map
-
-# IDE
-.idea/
-.vscode/
-*.swp
-*.swo
-
-# OS
+# OS files
 .DS_Store
 Thumbs.db
+*.swp
+*.swo
+*~
+
+# Environment & credentials
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# Node / Bun
+node_modules/
+dist/
+build/
+*.tsbuildinfo
 
 # Logs
 *.log
 npm-debug.log*
 
-# Lock files (use bun.lockb instead)
-package-lock.json
-!packages/lsp-tools-mcp/package-lock.json
-!packages/lsp-daemon/package-lock.json
-!packages/omop-codex/plugin/package-lock.json
-yarn.lock
+# IDE
+.idea/
+.vscode/
+*.sublime-*
 
-# Environment
-.env
-.env.local
-test-injection/
-notepad.md
-oauth-success.html
-*.bun-build
-.dori-sync/
-.dori/
-.playwright-mcp/
+# OS-specific
+.DS_Store*
+Desktop.ini
+ehthumbs.db
 
-# Debugging / session artifacts (skill workspace residue)
-.debugging
-.debug-journal*.md
-session-ses_*.md
-pr-*.md
-plans/
-.ulw/
-.claude/*
-!.claude/skills
-!.claude/commands
-!.claude/settings.json
+# Temp
+tmp/
+temp/
+*.tmp
 
-.omo/
+# AI / agent artifacts
+.opencode/state/
+.omop/evidence/
